@@ -1,0 +1,2 @@
+class WbaSelfViewLogsController < ApplicationController
+end

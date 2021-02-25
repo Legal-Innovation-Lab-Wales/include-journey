@@ -1,0 +1,2 @@
+class WbaSelfPermissionsController < ApplicationController
+end

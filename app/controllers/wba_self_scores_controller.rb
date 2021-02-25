@@ -1,0 +1,2 @@
+class WbaSelfScoresController < ApplicationController
+end

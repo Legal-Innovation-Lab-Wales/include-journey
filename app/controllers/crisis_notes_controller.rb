@@ -1,0 +1,2 @@
+class CrisisNotesController < ApplicationController
+end

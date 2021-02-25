@@ -1,0 +1,2 @@
+class WbaTeamMembersController < ApplicationController
+end

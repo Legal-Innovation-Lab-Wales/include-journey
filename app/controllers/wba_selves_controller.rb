@@ -1,0 +1,2 @@
+class WbaSelvesController < ApplicationController
+end

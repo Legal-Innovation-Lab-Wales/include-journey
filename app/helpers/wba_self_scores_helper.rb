@@ -1,0 +1,2 @@
+module WbaSelfScoresHelper
+end
