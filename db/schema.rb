@@ -64,6 +64,20 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.integer "mobile_number"
+    t.boolean "admin", default: false
+    t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_team_members_on_email", unique: true
