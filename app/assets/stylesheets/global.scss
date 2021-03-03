@@ -1,0 +1,14 @@
+// Place all styles that need to be applied globally here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+body {
+  font-family: $font;
+  background-color: $brand-primary;
+
+  a {
+    font-family: $font-link;
+  }
+}
