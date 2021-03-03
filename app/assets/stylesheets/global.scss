@@ -1,0 +1,13 @@
+// Place all styles that need to be applied globally here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+body#overboot {
+  font-family: $font;
+
+  a {
+    font-family: $font-link;
+  }
+}

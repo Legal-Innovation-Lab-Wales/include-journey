@@ -18,13 +18,14 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
   create_table "crisis_events", force: :cascade do |t|
     t.text "additional_info"
     t.boolean "closed"
-    t.integer "closed_by"
+    t.bigint "team_member_id"
     t.datetime "closed_at"
     t.bigint "user_id", null: false
     t.bigint "crisis_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crisis_type_id"], name: "index_crisis_events_on_crisis_type_id"
+    t.index ["team_member_id"], name: "index_crisis_events_on_team_member_id"
     t.index ["user_id"], name: "index_crisis_events_on_user_id"
   end
 
@@ -63,6 +64,20 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.integer "mobile_number"
+    t.boolean "admin", default: false
+    t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_team_members_on_email", unique: true
@@ -75,6 +90,20 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.integer "mobile_number"
+    t.datetime "release_date"
+    t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
