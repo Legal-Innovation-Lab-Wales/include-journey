@@ -1,16 +1,28 @@
-<h2>Resend confirmation instructions</h2>
+<main class="ij-form min-vh-100 d-flex align-items-center justify-content-center">
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+    <h2 class="text-white">Resend confirmation instructions</h2>
 
-<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "team_members/shared/error_messages", resource: resource %>
+    <div class="form-group">
+      <%= render "team_members/shared/error_messages", resource: resource %>
+      <p class="text-danger">
+        <% if flash[:alert] %>
+          <%= flash[:alert] %>
+        <% end %>
+      </p>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-  </div>
+    <div class="form-floating mb-2">
+      <%= f.email_field :email, autofocus: true, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+      <%= f.label :email %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Resend confirmation instructions" %>
-  </div>
-<% end %>
 
-<%= render "team_members/shared/links" %>
+    <div class="form-group mb-2">
+      <%= f.submit "Resend confirmation instructions", class: 'w-100 btn btn-lg btn-primary' %>
+    </div>
+
+    <div class="other-actions">
+      <%= render "team_members/shared/links" %>
+    </div>
+  <% end %>
+</main>

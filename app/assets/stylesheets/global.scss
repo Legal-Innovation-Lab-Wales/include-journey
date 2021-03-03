@@ -5,6 +5,7 @@
 @import "variables";
 
 body#overboot {
+  background-color: $bg-main;
   font-family: $font;
 
   a {
