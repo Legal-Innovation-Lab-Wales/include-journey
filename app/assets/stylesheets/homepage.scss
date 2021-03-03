@@ -1,0 +1,17 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+body#overboot {
+  font-family: $font;
+  .d-flex{
+    color: white;
+    background-color: $brand-primary;
+  }
+}
+
+footer{
+  color: white;
+}
