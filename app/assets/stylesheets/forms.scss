@@ -6,4 +6,22 @@
   margin: 56px auto auto;
   padding: 10px;
   background-color: $brand-secondary;
+
+  .other-actions {
+    a {
+      display: inline-block;
+      color: $brand-primary;
+      text-decoration: none;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      border: 1px solid $brand-primary;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: $brand-primary;
+        color: $brand-secondary;
+        text-decoration: underline;
+      }
+    }
+  }
 }

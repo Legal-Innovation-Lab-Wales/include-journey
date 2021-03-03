@@ -30,12 +30,14 @@
           </div>
         <% end %>
 
-        <div class="actions form-group mb-2">
+        <div class="form-group mb-2">
           <%= f.submit "Log in", class: 'btn btn-success' %>
         </div>
       <% end %>
 
-      <%= render "users/shared/links" %>
+      <div class="other-actions">
+        <%= render "users/shared/links" %>
+      </div>
     </div>
   </div>
 </div>
