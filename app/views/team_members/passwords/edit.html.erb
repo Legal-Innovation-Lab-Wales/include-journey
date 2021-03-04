@@ -1,6 +1,6 @@
-<main class="ij-form min-vh-100 d-flex align-items-center justify-content-center">
+<main class="ij-form">
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-    <h2 class="text-white">Change your password</h2>
+    <h2>Change your password</h2>
 
     <div class="form-group">
       <%= render "team_members/shared/error_messages", resource: resource %>
@@ -12,17 +12,17 @@
     </div>
     <%= f.hidden_field :reset_password_token %>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "New Password - 6 characters minimum" %>
       <%= f.label :password, "New Password (6 characters minimum)" %>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       <%= f.label :password_confirmation, "Confirm new password" %><br />
     </div>
 
-    <div class="form-group mb-2">
+    <div class="form-group">
       <%= f.submit "Change my password", class: 'w-100 btn btn-lg btn-primary' %>
     </div>
 

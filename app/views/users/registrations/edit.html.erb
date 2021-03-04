@@ -1,6 +1,6 @@
-<main class="ij-form min-vh-100 d-flex align-items-center justify-content-center">
+<main class="ij-form">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <h2 class="text-white">Edit <%= resource_name.to_s.humanize %></h2>
+    <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
     <div class="form-group">
       <%= render "users/shared/error_messages", resource: resource %>
@@ -11,7 +11,7 @@
       </p>
     </div>
 
-    <div class="row g-2 mb-2">
+    <div class="row g-2">
       <div class="col-md">
         <div class="form-floating">
           <%= f.text_field :first_name, autofocus: true, class: 'form-control', autocomplete: "first-name", placeholder: "First Name" %>
@@ -27,17 +27,17 @@
       </div>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.number_field :mobile_number, class: 'form-control', autocomplete: "mobile-number", placeholder: "Mobile No." %>
       <%= f.label :mobile_number %>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.date_field :release_date, class: 'form-control', autocomplete: "release-date", placeholder: "Release Date" %>
       <%= f.label :release_date %>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
       <%= f.label :email %>
     </div>
@@ -46,22 +46,22 @@
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "Password - 6 characters minimum" %>
       <%= f.label :password, "Password (leave blank if you don't want to change it)" %>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "password", placeholder: "Password Again"  %>
       <%= f.label :password_confirmation %>
     </div>
 
-    <div class="form-floating mb-2">
+    <div class="form-floating">
       <%= f.password_field :current_password, class: 'form-control', autocomplete: "password", placeholder: "Password (we need your current password to confirm your changes)" %>
       <%= f.label :current_password, "Current password to confirm your changes" %>
     </div>
 
-    <div class="form-group mb-2">
+    <div class="form-group">
       <%= f.submit "Update", class: 'w-100 btn btn-lg btn-primary' %>
     </div>
 

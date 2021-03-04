@@ -1,13 +1,37 @@
 @import "variables";
 
 .ij-form {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin: auto;
+  background-color: $brand-secondary;
+
+  @media screen and (min-width: $screen-md) {
+    background-color: $bg-main;
+  }
 
   form {
     background-color: $brand-secondary;
     border-radius: 5px;
     padding: 15px 50px;
+
+    h2 {
+      color: white;
+    }
+
+    .col-md {
+      margin-top: 0;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: var(--bs-gutter-y);
+      }
+    }
+
+    .form-group, .form-floating {
+      margin-bottom: 0.5rem;
+    }
 
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
@@ -19,6 +43,17 @@
     /* Firefox */
     input[type=number] {
       -moz-appearance: textfield;
+    }
+
+    .btn-primary {
+      background-color: $brand-primary;
+      border-color: $brand-primary;
+      color: $brand-secondary;
+
+      &:hover {
+        background-color: $brand-primary-dark;
+        border-color: $brand-primary-dark;
+      }
     }
 
     .other-actions {
@@ -35,7 +70,6 @@
         &:hover {
           background-color: $brand-primary;
           color: $brand-secondary;
-          text-decoration: underline;
         }
       }
     }
