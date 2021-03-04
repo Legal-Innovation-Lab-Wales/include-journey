@@ -1,16 +1,27 @@
-<h2>Resend unlock instructions</h2>
+<main class="ij-form">
+  <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+    <h2>Resend unlock instructions</h2>
 
-<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+    <div class="form-group">
+      <%= render "users/shared/error_messages", resource: resource %>
+      <p class="text-danger">
+        <% if flash[:alert] %>
+          <%= flash[:alert] %>
+        <% end %>
+      </p>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="form-floating">
+      <%= f.email_field :email, autofocus: true, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+      <%= f.label :email %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Resend unlock instructions" %>
-  </div>
-<% end %>
+    <div class="form-group">
+      <%= f.submit "Resend unlock instructions", class: 'w-100 btn btn-lg btn-primary' %>
+    </div>
 
-<%= render "users/shared/links" %>
+    <div class="other-actions">
+      <%= render "users/shared/links" %>
+    </div>
+  <% end %>
+</main>
