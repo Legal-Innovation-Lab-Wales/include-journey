@@ -10,6 +10,7 @@
 
   @media screen and (min-width: $screen-md) {
     background-color: $black;
+    form {min-width: 480px}
   }
 
   form {
@@ -70,18 +71,21 @@
     .btn-primary {
       width: 80%;
       color: $grey;
+      font-family: $font-link;
     }
 
     .other-actions {
+      margin-top: 2rem;
       a {
         display: inline-block;
-        width: 80%;
+        width: 60%;
         color: $brand-primary;
         text-decoration: none;
         padding: 5px 10px;
         margin-bottom: 5px;
         border: 1px solid $brand-primary;
-        border-radius: 5px;
+        border-radius: 0.6rem;
+        font-size: 0.875rem;
 
         &:hover {
           background-color: $brand-primary;
