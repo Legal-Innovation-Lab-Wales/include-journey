@@ -29,7 +29,6 @@
         </ul>
         <div class="d-flex">
           <% if current_team_member %>
-            <a href="/admin" class="btn btn-secondary">Admin</a>
             <%= link_to 'Edit Profile', edit_team_member_registration_path, class: "btn btn-success" %>
             <%= link_to 'Logout', destroy_team_member_session_path, method: :delete, class: "btn btn-warning" %>
           <% end %>
