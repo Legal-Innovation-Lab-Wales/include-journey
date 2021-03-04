@@ -1,16 +1,33 @@
-<html lang="en" class="h-100">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<body class="d-flex h-100 text-center">
-  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <main class="px-3 mb-auto">
-      <h1>Journey Application</h1>
-      <p class="lead">Some text goes here that will explain the application in one line</p>
-      <p class="lead">
-        <a href="/team_members/sign_in" class="btn btn-lg btn-secondary fw-bold border-white bg-white text-black-50">
-          Include Uk Staff</a>
-        <a href="/users/sign_in" class="btn btn-lg btn-secondary fw-bold border-white bg-white text-black-50">User</a>
-      </p>
-    </main>
-  </div>
-</body>
-</html>
+
+<section class="d-flex min-vh-100 homepage-cover min-vw-100">
+    <div class="mx-auto col-12 col-md-10 col-lg-8">
+      <div class="mt-5 text-center homepage-header homepage-section">
+        <h1>Your Include Journey</h1>
+        <p>track and progress on your journey to make the changes you want and need.</p>
+        <p>Built for Include UK by the Legal Innovation lab Wales</p>
+        <%= link_to 'staff sign in', new_team_member_session_path, class: 'btn btn-secondary' %>
+        <%= link_to 'user sign in', new_user_session_path, class: 'btn btn-success' %>
+      </div>
+      <div class="homepage-section">
+        <h2 class="text-center">about this project</h2>
+        <h4 class="text-center">by Gemma Morgan</h4>
+        <p>At present criminal justice agencies both in the UK and internationally do not fully realise the opportunities that digital technologies offer to improve service delivery and the lives of service users. As a result, there has been little digital innovation within the realms of offender rehabilitation. The Ministry of Justice (2019) estimate that the economic and social cost of reoffending is £18.1 billion per annum. For these reasons, this project seeks to develop digital technologies to support desistance from crime and improve the lives of people who have offended and their wider communities.</p>
+        <p>I have a long-standing research collaboration with Include UK (http://include-uk.com) - a third sector organisation who provide support for a range of offending populations. Through this collaboration, the aim is to implement digital technologies that can support desistance. It is envisaged that these technologies can be used across the sector in a local, national and global context. </p>
+        <p>Supporting people to desist from crime is a global issue. On a national level, this is evidenced by high percentages of re-offending rates and high prison populations. Supporting pro-social change in offenders is a challenge for statutory, private and third sector criminal justice organisations. </p>
+        <p>The development and implementation of digital technologies in the area of offender rehabilitation are cutting edge. Currently, there is little to no innovation in this area.  As such, a range of technology can be developed to support organisations and their service users.</p>
+      </div>
+      <div class="homepage-section">
+        <h2 class="text-center">About Include</h2>
+        <p>A not for profit enterprise that has been providing free independent community support to offenders across Wales for the last 10 years, supporting over 2,500 people in this time.</p>
+        <p>The 'include hub' in Swansea is our flagship project, the ‘include community hub’ is run by ex-offenders for ex-offenders, their families and the wider community. The idea is to harness the potential of people who have lived experience of the challenges faced by disadvantaged groups, and for them to help others turn their lives around.</p>
+        <p>The development of the include hub is an opportunity to create a new model of working that’s genuinely co-produced by the people who benefit from the service, with the flexibility to offer members what they want</p>
+        <div class="text-center"><a href="https://include-uk.com/" class="btn btn-primary">visit our site</a></div>
+      </div>
+      <div class="homepage-section">
+        <h2 class="text-center">About The Legal Innovation Lab Wales</h2>
+        <p>A £5.6M initiative within Swansea University’s Hillary Rodham Clinton School of Law at Swansea University. The operation has been part-funded by the European Regional Development Fund through the Welsh Government and Swansea University.</p>
+        <p>Working in partnership with organisations across the sector, our vision is to support the growth and sustainability of a vibrant LegalTech economy, improve access to justice, transform the delivery of legal services in Wales and beyond, and help grow an open, inclusive and collaborative LegalTech community.</p>
+        <div class="text-center"><a href="https://legaltech.wales/" class="btn btn-info">visit our site</a></div>
+      </div>
+    </div>
+</section>
