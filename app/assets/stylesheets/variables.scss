@@ -3,6 +3,25 @@
 $font: 'Open Sans', sans-serif;
 $font-link: 'Montserrat', sans-serif;
 
+
+
 // Brand Colours
 $brand-primary: #F4E311;
-$brand-secondary: #565656;
+$brand-primary-dark: #EADB0B;
+$brand-secondary: #DB5461;
+
+// Utility Colours
+$grey: #8C949A;
+$black: #252331;
+$white: #F6F8F7;
+
+// Bootstrap Colours
+$success: #7ebc41;
+$warning: #fbac09;
+$danger: #f44336;
+
+// Screen Breakpoints
+$screen-md: 768px;
+
+//
+$bg-main: $white;
