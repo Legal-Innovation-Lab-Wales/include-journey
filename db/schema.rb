@@ -73,6 +73,9 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.integer "mobile_number"
@@ -80,8 +83,10 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,6 +104,9 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.integer "mobile_number"
@@ -106,8 +114,10 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   create_table "wba_self_permissions", force: :cascade do |t|
