@@ -1,0 +1,139 @@
+@import "variables";
+
+body#overboot {
+  .btn {
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+    border-radius: 0.6rem;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  .btn-primary {
+    background-color: $brand-primary;
+    border-color: $brand-primary;
+    color: $grey;
+
+    &:hover {
+      background-color: $brand-primary-dark;
+      border-color: $brand-primary-dark;
+    }
+  }
+
+  .btn-outline-primary {
+    color: $brand-primary;
+    border-color: $brand-primary;
+
+    &:hover {
+      color: $grey;
+      background-color: $brand-primary;
+    }
+  }
+
+  .btn-secondary {
+    background-color: $brand-secondary;
+    border-color: $brand-secondary;
+    color: $white;
+
+    &:hover {
+      background-color: $brand-secondary-dark;
+      border-color: $brand-secondary-dark;
+    }
+  }
+
+  .btn-outline-primary {
+    color: $brand-secondary;
+    border-color: $brand-secondary;
+
+    &:hover {
+      color: $white;
+      background-color: $brand-secondary-dark;
+    }
+  }
+
+  .btn-success {
+    background-color: $success;
+    border-color: $success;
+    color: $white;
+
+    &:hover {
+      background-color: $success-dark;
+      border-color: $success-dark;
+    }
+  }
+
+  .btn-outline-success {
+    color: $success;
+    border-color: $success;
+
+    &:hover {
+      color: $white;
+      background-color: $success;
+    }
+  }
+
+  .btn-info {
+    background-color: $info;
+    border-color: $info;
+    color: $white;
+
+    &:hover {
+      background-color: $info-dark;
+      border-color: $info-dark;
+    }
+  }
+
+  .btn-outline-info{
+    color: $info;
+    border-color: $info;
+
+    &:hover {
+      color: $white;
+      background-color: $info;
+    }
+  }
+
+  .btn-warning {
+    background-color: $warning;
+    border-color: $warning;
+    color: $white;
+
+    &:hover {
+      background-color: $warning-dark;
+      border-color: $warning-dark;
+    }
+  }
+
+  .btn-outline-warning{
+    color: $warning;
+    border-color: $warning;
+
+    &:hover {
+      color: $white;
+      background-color: $warning;
+    }
+  }
+
+  .btn-danger {
+    background-color: $danger;
+    border-color: $danger;
+    color: $white;
+
+    &:hover {
+      background-color: $danger-dark;
+      border-color: $danger-dark;
+    }
+  }
+
+  .btn-outline-danger{
+    color: $danger;
+    border-color: $danger;
+
+    &:hover {
+      color: $white;
+      background-color: $danger;
+    }
+  }
+}
