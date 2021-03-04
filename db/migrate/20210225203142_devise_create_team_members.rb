@@ -28,9 +28,9 @@ class DeviseCreateTeamMembers < ActiveRecord::Migration[6.1]
       t.string   :unconfirmed_email # Only if using reconfirmable
 
       ## Lockable
-      # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
-      # t.string   :unlock_token # Only if unlock strategy is :email or :both
-      # t.datetime :locked_at
+      t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
+      t.string   :unlock_token # Only if unlock strategy is :email or :both
+      t.datetime :locked_at
 
       ## Additional Fields
       # Non standard devise fields
@@ -45,7 +45,7 @@ class DeviseCreateTeamMembers < ActiveRecord::Migration[6.1]
 
     add_index :team_members, :email,                unique: true
     add_index :team_members, :reset_password_token, unique: true
-    # add_index :team_members, :confirmation_token,   unique: true
-    # add_index :team_members, :unlock_token,         unique: true
+    add_index :team_members, :confirmation_token,   unique: true
+    add_index :team_members, :unlock_token,         unique: true
   end
 end
