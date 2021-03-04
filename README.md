@@ -1,28 +1,112 @@
-# README
+<p align="center">
+  <img src="logo-header-svg.jpg">
+</p>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<p align="center">
+  <a href="#introduction">Introduction & Motivation</a> •
+  <a href="#tech-stack-&-requirements">Tech Stack & Requirements</a> •
+  <a href="#local-installation">Local Installation</a> •
+    <a href="#credit-and-license">Credit and License</a> •
+  <br>
+</p>
 
-Things you may want to cover:
 
-* Ruby version
+## Introduction
 
-* System dependencies
+This project is a web application for Include Uk. The application is a journey tracker allowing
+users to track their wellbeing journey. The features includes:
+* Journaling + Sharing with Staff
+* Visual analytics to track progress and wellbeing
+* Self assesments
+ 
 
-* Configuration
+---
 
-* Database creation
+## Tech Stack & Requirements
 
-* Database initialization
+The core technologies used for this project are:
 
+* Ruby (2.7.2) (we recommend using rbenv for managing Ruby versions)
+* Rails (6.1.3)
+* Webpacker (5.0)
+* Pg (1.1)
+* Puma (5.0)
+* Bootstrap (5.0.0.beta2)
+
+---
+## Local Installation
+Follow these instuctions for local installation:
+
+### Install dependencies
+<details>
+<summary>Some additional dependency steps might include:</summary>
+
+#### Postgres
+
+```zsh
+sudo apt install postgresql postgresql-contrib`
+sudo apt install libpq-dev
+```
+Setup postgres local db
+
+#### Node
+
+```zsh
+sudo apt install nodejs
+sudo apt install npm
+sudo npm install -g npm@latest
+sudo npm install --global yarn
+```
+</details>
+
+Install Gems
+
+`bundle`
+
+Install Webpack
+
+`rails webpacker:install`
+
+Create the database and run migrations:
+
+```zsh
+rails db:create
+rails db:migrate
+rails db:seed
+```
+
+### Run the application
+
+`rails s`
+
+You should now be able to view the main web page at
+
+``http://localhost:3000``
+
+### Other Potential Fixes
+
+
+You might be asked to override your local webpacker environment to work
+
+```javascript
+config/webpack/environment.js
+```
+
+---
+
+
+## Credits and license
+[MIT License](https://github.com/Legal-Innovation-Lab-Wales/expertise-directory/blob/add-license-1/LICENSE)
+
+[Legal Innovation Lab Wales](https://legaltech.wales/)
+
+---
+##TODO Sections:
 * How to run the test suite
+* Services - 
+job queues, cache servers, search engines, etc.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+---
 
 ## Before Initial Commit
 
