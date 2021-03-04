@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="#introduction">Introduction & Motivation</a> •
-  <a href="#tech-stack-&-requirements">Tech Stack & Requirements</a> •
+  <a href="#tech-stack-and-requirements">Tech Stack & Requirements</a> •
   <a href="#local-installation">Local Installation</a> •
     <a href="#credit-and-license">Credit and License</a> •
   <br>
@@ -22,7 +22,7 @@ users to track their wellbeing journey. The features includes:
 
 ---
 
-## Tech Stack & Requirements
+## Tech Stack and Requirements
 
 The core technologies used for this project are:
 
@@ -96,7 +96,7 @@ config/webpack/environment.js
 
 
 ## Credits and license
-[MIT License](https://github.com/Legal-Innovation-Lab-Wales/expertise-directory/blob/add-license-1/LICENSE)
+[MIT License](https://github.com/Legal-Innovation-Lab-Wales/include-journey/blob/main/LICENSE)
 
 [Legal Innovation Lab Wales](https://legaltech.wales/)
 
