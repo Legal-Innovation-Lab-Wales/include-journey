@@ -41,6 +41,12 @@
     </div>
   </nav>
 
+  <% flash.each do |type, msg| %>
+    <div class="alert <%= alert_class_for(type) %> position-absolute top-0 start-50 translate-middle-x px-5">
+      <%= msg %>
+    </div>
+  <% end %>
+
     <%= yield %>
 
   </body>
