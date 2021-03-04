@@ -29,7 +29,7 @@
       }
     }
 
-    .form-group, .form-floating {
+    .form-group, .form-floating, .form-check {
       margin-bottom: 0.5rem;
     }
 
@@ -43,6 +43,20 @@
     /* Firefox */
     input[type=number] {
       -moz-appearance: textfield;
+    }
+
+    .form-check {
+      .form-check-input {
+        float: none;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .form-check-label {
+        color: white;
+      }
     }
 
     .btn-primary {
