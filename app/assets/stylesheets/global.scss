@@ -5,6 +5,8 @@
 @import "variables";
 
 body#overboot {
+  min-height: 100vh;
+  background-color: $bg-main;
   font-family: $font;
   
   .bg-brand {
