@@ -1,13 +1,14 @@
 @import "fonts";
 
 $font: 'Open Sans', sans-serif;
+$heading-font: 'Rubik', sans-serif;
 $font-link: 'Montserrat', sans-serif;
-
 
 // Brand Colours
 $brand-primary: #F4E311;
 $brand-primary-dark: #EADB0B;
 $brand-secondary: #DB5461;
+$brand-secondary-dark: #D43545;
 
 // Utility Colours
 $grey: #8C949A;
@@ -15,9 +16,15 @@ $black: #252331;
 $white: #F6F8F7;
 
 // Bootstrap Colours
+$primary: $brand-primary;
 $success: #7ebc41;
+$success-dark: #70A739;
+$info: #32BDEC;
+$info-dark: #15ADE0;
 $warning: #fbac09;
+$warning-dark: #DD9403;
 $danger: #f44336;
+$danger-dark: #F32516;
 
 // Screen Breakpoints
 $screen-md: 768px;
