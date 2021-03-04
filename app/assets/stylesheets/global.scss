@@ -7,6 +7,10 @@
 body#overboot {
   font-family: $font;
 
+  .bg-brand {
+    background-color: $brand-primary;
+  }
+
   a {
     font-family: $font-link;
   }

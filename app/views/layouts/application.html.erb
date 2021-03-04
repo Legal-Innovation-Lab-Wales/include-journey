@@ -12,34 +12,36 @@
 
   <body id="overboot">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-brand">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-        </ul>
-        <div class="d-flex">
-          <% if current_team_member %>
-            <%= link_to 'Edit Profile', edit_team_member_registration_path, class: "btn btn-success" %>
-            <%= link_to 'Logout', destroy_team_member_session_path, method: :delete, class: "btn btn-warning" %>
-          <% end %>
-          <% if current_user %>
-            <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-success" %>
-            <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-warning" %>
-          <% end %>
+  <% if user_signed_in? || team_member_signed_in? %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-brand">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <% if current_team_member %>
+              <%= link_to 'Edit Profile', edit_team_member_registration_path, class: "btn btn-success" %>
+              <%= link_to 'Logout', destroy_team_member_session_path, method: :delete, class: "btn btn-warning" %>
+            <% end %>
+            <% if current_user %>
+              <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-success" %>
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-warning" %>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  <% end %>
 
   <% flash.each do |type, msg| %>
     <div class="alert <%= alert_class_for(type) %> position-absolute top-0 start-50 translate-middle-x px-5">
