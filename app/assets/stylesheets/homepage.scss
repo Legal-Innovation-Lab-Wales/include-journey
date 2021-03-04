@@ -4,13 +4,10 @@
 
 @import "variables";
 
-body#overboot {
-  font-family: $font;
-  .d-flex{
+.d-flex{
     color: white;
     background-color: $brand-primary;
   }
-}
 
 footer{
   color: white;
