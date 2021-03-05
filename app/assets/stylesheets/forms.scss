@@ -6,20 +6,29 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: $brand-secondary;
+  background-color: $grey;
 
   @media screen and (min-width: $screen-md) {
-    background-color: $bg-main;
+    background-color: $black;
+    form {min-width: 480px}
   }
 
   form {
-    background-color: $brand-secondary;
+    background-color: $grey;
     border-radius: 5px;
     padding: 15px 50px;
     max-width: 500px;
 
     h2 {
-      color: white;
+      color: $white;
+    }
+    a {
+      text-decoration: none;
+      font-weight: 600;
+      color: $black;
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .col-md {
@@ -61,31 +70,27 @@
     }
 
     .btn-primary {
-      width: 100%;
-      background-color: $brand-primary;
-      border-color: $brand-primary;
-      color: $brand-secondary;
-
-      &:hover {
-        background-color: $brand-primary-dark;
-        border-color: $brand-primary-dark;
-      }
+      width: 80%;
+      color: $grey;
+      font-family: $font-link;
     }
 
     .other-actions {
+      margin-top: 2rem;
       a {
         display: inline-block;
-        width: 100%;
+        width: 60%;
         color: $brand-primary;
         text-decoration: none;
         padding: 5px 10px;
         margin-bottom: 5px;
         border: 1px solid $brand-primary;
-        border-radius: 5px;
+        border-radius: 0.6rem;
+        font-size: 0.875rem;
 
         &:hover {
           background-color: $brand-primary;
-          color: $brand-secondary;
+          color: $grey;
         }
       }
     }

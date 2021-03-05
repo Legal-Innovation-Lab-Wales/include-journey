@@ -1,0 +1,25 @@
+// Place all the styles related to the pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+.homepage-cover {
+  display: flex;
+  background-color: $black;
+  .homepage-section {
+    border-radius: 0.6rem;
+    padding: 2rem 4rem;
+    margin-bottom: max(2rem);
+    background-color: $white;
+    color: $black;
+    h1 {
+      font-size: 4rem;
+    }
+  }
+  .homepage-header {
+    background-color: $brand-primary;
+    color: $black;
+  }
+
+}
