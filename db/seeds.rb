@@ -10,69 +10,77 @@ require 'faker'
 
 # Create users
 ## Create Static Users
-# team_member = TeamMember.new(
-#   first_name: 'Phil',
-#   last_name: 'Reynolds',
-#   email: 'philr@purpleriver.dev',
-#   mobile_number: '07888777666',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Alex',
-#   last_name: 'Wing',
-#   email: 'a.j.wing@swansea.ac.uk',
-#   mobile_number: '07777666555',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Ieuan',
-#   last_name: 'Skinner',
-#   email: 'ieuan.skinner@swansea.ac.uk',
-#   mobile_number: '07666555444',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Ben',
-#   last_name: 'Harrison',
-#   email: 'benmharrison@me.com',
-#   mobile_number: '07555444333',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-#
-# 10.times do
-#   user = User.new(
-#     first_name: Faker::Name.unique.first_name,
-#     last_name: Faker::Name.unique.last_name,
-#     email: Faker::Internet.unique.email,
-#     mobile_number: Faker::Number.leading_zero_number(digits: 11),
-#     release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
-#     terms: true,
-#     password: 'password'
-#   )
-#   user.skip_confirmation!
-#   user.save!
-#
-# end
+unless TeamMember.find_by_email('philr@purpleriver.dev').present?
+  team_member = TeamMember.new(
+    first_name: 'Phil',
+    last_name: 'Reynolds',
+    email: 'philr@purpleriver.dev',
+    mobile_number: '07888777666',
+    admin: true,
+    terms: true,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
+  team_member = TeamMember.new(
+    first_name: 'Alex',
+    last_name: 'Wing',
+    email: 'a.j.wing@swansea.ac.uk',
+    mobile_number: '07777666555',
+    admin: true,
+    terms: true,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
+  team_member = TeamMember.new(
+    first_name: 'Ieuan',
+    last_name: 'Skinner',
+    email: 'ieuan.skinner@swansea.ac.uk',
+    mobile_number: '07666555444',
+    admin: true,
+    terms: true,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+unless TeamMember.find_by_email('benmharrison@me.com').present?
+  team_member = TeamMember.new(
+    first_name: 'Ben',
+    last_name: 'Harrison',
+    email: 'benmharrison@me.com',
+    mobile_number: '07555444333',
+    admin: true,
+    terms: true,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+if User.count.zero?
+  10.times do
+    user = User.new(
+      first_name: Faker::Name.unique.first_name,
+      last_name: Faker::Name.unique.last_name,
+      email: Faker::Internet.unique.email,
+      mobile_number: Faker::Number.leading_zero_number(digits: 11),
+      release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
+      terms: true,
+      password: 'password'
+    )
+    user.skip_confirmation!
+    user.save!
+  end
+end
 
 Note.create!(
   team_member_id: 1,
@@ -151,7 +159,6 @@ if WellbeingMetric.count.zero?
 end
 
 WbaSelf.create!(
-
   # id: 1
   user_id: User.first.id
 )
@@ -159,57 +166,57 @@ WbaSelf.create!(
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 1, # housing
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 2, # Benefits / Money
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 3,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 4,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 5,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 6,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 7,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 8,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 9,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 10,
-  value: 8
+  value: rand(1..10)
 )
 WbaSelfScore.create!(
   wba_self_id: 1,
   wellbeing_metric_id: 11,
-  value: 8
+  value: rand(1..10)
 )
 
 WbaSelfPermission.create!(
