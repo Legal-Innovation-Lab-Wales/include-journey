@@ -6,15 +6,19 @@ $border-width: 1px;
 
 .user_dashboard {
   min-height: calc(100vh - 56px);
-  background-color: $bg-main;
+  color: $white;
+  background-color: $black;
   text-align: center;
 
-  section.journey {
-    background-color: $brand-primary;
+  section {
+    border-radius: 5px;
+    background-color: $grey;
     text-align: center;
+    margin: 1rem;
 
-    .container {
-      padding: 0;
+    @media screen and (min-width: $screen-md){
+      margin: 1rem;
+      padding: 1rem;
     }
 
     .buttons {
@@ -23,10 +27,10 @@ $border-width: 1px;
       a {
         height: $max-width/4;
         margin: $margin/4 $margin/2;
-        border: $border-width solid white;
-        border-radius: $margin*2;
-        background-color: white;
-        color: black;
+        border: $border-width solid $brand-primary;
+        border-radius: $margin*2 !important;
+        background-color: $brand-primary;
+        color: $black;
         text-decoration: none;
         font-size: 0.9rem;
 
@@ -40,33 +44,22 @@ $border-width: 1px;
         }
 
         &:hover {
-          font-size: 1rem;
-          box-shadow: 0 0 10px 5px $brand-secondary;
-
-          i {
-            font-size: 2.75rem;
-          }
+          background-color: $brand-primary-dark;
+          color: $brand-secondary;
         }
       }
     }
-  }
 
-  section.wellbeing {
-    .services .container {
-      a {
-        display: block;
-        width: 150px;
-        background-color: lightgreen;
-        text-decoration: none;
-        color: black;
-        margin: auto;
-        padding: 5px;
-        border-radius: 10px;
+    &.journey {
+      .container {
+        padding: 0;
       }
     }
 
-    .sliders .container {
-      text-align: left;
+    &.wellbeing {
+      .sliders .container {
+        text-align: left;
+      }
     }
   }
 }
