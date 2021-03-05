@@ -65,11 +65,13 @@ team_member.save!
     last_name: Faker::Name.unique.last_name,
     email: Faker::Internet.unique.email,
     mobile_number: Faker::Number.leading_zero_number(digits: 11),
-    release_date: (rand(1..2).even?) ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
+    release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
     terms: true,
-    password: 'password',
+    password: 'password'
   )
   user.skip_confirmation!
   user.save!
 
 end
+
+
