@@ -10,7 +10,7 @@ require 'faker'
 
 # Create users
 #Create Static Users
-teamMember = TeamMember.new(
+team_member = TeamMember.new(
   first_name: 'Phil',
   last_name: 'Reynolds',
   email: 'philr@purpleriver.dev',
@@ -19,10 +19,10 @@ teamMember = TeamMember.new(
   terms: true,
   password: 'password'
 )
-teamMember.skip_confirmation!
-teamMember.save!
+team_member.skip_confirmation!
+team_member.save!
 
-teamMember = TeamMember.new(
+team_member = TeamMember.new(
   first_name: 'Alex',
   last_name: 'Wing',
   email: 'a.j.wing@swansea.ac.uk',
@@ -31,10 +31,10 @@ teamMember = TeamMember.new(
   terms: true,
   password: 'password'
 )
-teamMember.skip_confirmation!
-teamMember.save!
+team_member.skip_confirmation!
+team_member.save!
 
-teamMember = TeamMember.new(
+team_member = TeamMember.new(
   first_name: 'Ieuan',
   last_name: 'Skinner',
   email: 'ieuan.skinner@swansea.ac.uk',
@@ -43,10 +43,10 @@ teamMember = TeamMember.new(
   terms: true,
   password: 'password'
 )
-teamMember.skip_confirmation!
-teamMember.save!
+team_member.skip_confirmation!
+team_member.save!
 
-teamMember = TeamMember.new(
+team_member = TeamMember.new(
   first_name: 'Ben',
   last_name: 'Harrison',
   email: 'benmharrison@me.com',
@@ -55,8 +55,8 @@ teamMember = TeamMember.new(
   terms: true,
   password: 'password'
 )
-teamMember.skip_confirmation!
-teamMember.save!
+team_member.skip_confirmation!
+team_member.save!
 
 
 10.times do
