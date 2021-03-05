@@ -9,70 +9,70 @@
 require 'faker'
 
 # Create users
-#Create Static Users
-# team_member = TeamMember.new(
-#   first_name: 'Phil',
-#   last_name: 'Reynolds',
-#   email: 'philr@purpleriver.dev',
-#   mobile_number: '07888777666',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Alex',
-#   last_name: 'Wing',
-#   email: 'a.j.wing@swansea.ac.uk',
-#   mobile_number: '07777666555',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Ieuan',
-#   last_name: 'Skinner',
-#   email: 'ieuan.skinner@swansea.ac.uk',
-#   mobile_number: '07666555444',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-# team_member = TeamMember.new(
-#   first_name: 'Ben',
-#   last_name: 'Harrison',
-#   email: 'benmharrison@me.com',
-#   mobile_number: '07555444333',
-#   admin: true,
-#   terms: true,
-#   password: 'password'
-# )
-# team_member.skip_confirmation!
-# team_member.save!
-#
-#
-# 10.times do
-#   user = User.new(
-#     first_name: Faker::Name.unique.first_name,
-#     last_name: Faker::Name.unique.last_name,
-#     email: Faker::Internet.unique.email,
-#     mobile_number: Faker::Number.leading_zero_number(digits: 11),
-#     release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
-#     terms: true,
-#     password: 'password'
-#   )
-#   user.skip_confirmation!
-#   user.save!
-#
-# end
+## Create Static Users
+team_member = TeamMember.new(
+  first_name: 'Phil',
+  last_name: 'Reynolds',
+  email: 'philr@purpleriver.dev',
+  mobile_number: '07888777666',
+  admin: true,
+  terms: true,
+  password: 'password'
+)
+team_member.skip_confirmation!
+team_member.save!
+
+team_member = TeamMember.new(
+  first_name: 'Alex',
+  last_name: 'Wing',
+  email: 'a.j.wing@swansea.ac.uk',
+  mobile_number: '07777666555',
+  admin: true,
+  terms: true,
+  password: 'password'
+)
+team_member.skip_confirmation!
+team_member.save!
+
+team_member = TeamMember.new(
+  first_name: 'Ieuan',
+  last_name: 'Skinner',
+  email: 'ieuan.skinner@swansea.ac.uk',
+  mobile_number: '07666555444',
+  admin: true,
+  terms: true,
+  password: 'password'
+)
+team_member.skip_confirmation!
+team_member.save!
+
+team_member = TeamMember.new(
+  first_name: 'Ben',
+  last_name: 'Harrison',
+  email: 'benmharrison@me.com',
+  mobile_number: '07555444333',
+  admin: true,
+  terms: true,
+  password: 'password'
+)
+team_member.skip_confirmation!
+team_member.save!
+
+
+10.times do
+  user = User.new(
+    first_name: Faker::Name.unique.first_name,
+    last_name: Faker::Name.unique.last_name,
+    email: Faker::Internet.unique.email,
+    mobile_number: Faker::Number.leading_zero_number(digits: 11),
+    release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
+    terms: true,
+    password: 'password'
+  )
+  user.skip_confirmation!
+  user.save!
+
+end
 
 Note.create!(
   team_member_id: 1,
@@ -80,3 +80,61 @@ Note.create!(
   user_id: User.first.id,
   content: Faker::TvShows::TheExpanse.quote
 )
+
+if WellbeingMetric.count.zero?
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Housing',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Benefits / Money',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Food',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Physical Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Mental Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Emotional Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Behaviour',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Addiction',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Relationships',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Sense of Community ',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Employment/Education/Training',
+    category: 'Personal'
+  )
+end

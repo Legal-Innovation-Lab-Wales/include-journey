@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
-    t.boolean "visible_to_user"
+    t.boolean "visible_to_user", default: false, null: false
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
 
   create_table "wellbeing_metrics", force: :cascade do |t|
     t.string "name"
-    t.string "type"
+    t.string "category"
     t.bigint "team_member_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
