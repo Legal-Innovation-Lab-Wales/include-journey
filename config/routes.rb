@@ -24,4 +24,7 @@ Rails.application.routes.draw do
   authenticated :team_member do
     root 'team_members/dashboard#main', as: :authenticated_team_member_root
   end
+
+  get '/dashboard', to: 'pages#demo-dashboard'
+
 end
