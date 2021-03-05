@@ -7,6 +7,7 @@ $border-width: 1px;
 .user_dashboard {
   min-height: calc(100vh - 56px);
   background-color: $bg-main;
+  text-align: center;
 
   section.journey {
     background-color: $brand-primary;
@@ -47,6 +48,25 @@ $border-width: 1px;
           }
         }
       }
+    }
+  }
+
+  section.wellbeing {
+    .services .container {
+      a {
+        display: block;
+        width: 150px;
+        background-color: lightgreen;
+        text-decoration: none;
+        color: black;
+        margin: auto;
+        padding: 5px;
+        border-radius: 10px;
+      }
+    }
+
+    .sliders .container {
+      text-align: left;
     }
   }
 }
