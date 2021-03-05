@@ -158,68 +158,85 @@ if WellbeingMetric.count.zero?
   )
 end
 
-WbaSelf.create!(
-  # id: 1
-  user_id: User.first.id
-)
+wbaselfcount = 0
+50.times do
+  wbaselfcount += 1
+  puts("Creating WbaSelf #{wbaselfcount}")
 
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 1, # housing
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 2, # Benefits / Money
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 3,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 4,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 5,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 6,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 7,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 8,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 9,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 10,
-  value: rand(1..10)
-)
-WbaSelfScore.create!(
-  wba_self_id: 1,
-  wellbeing_metric_id: 11,
-  value: rand(1..10)
-)
+  WbaSelf.create!(
+    # id: wbaselfcount
+    user_id: rand(1..10)
+  )
 
-WbaSelfPermission.create!(
-  wba_self_id: 1,
-  team_member_id: 1
-)
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 1, # housing
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 2, # Benefits / Money
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 3,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 4,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 5,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 6,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 7,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 8,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 9,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 10,
+    value: rand(1..10)
+  )
+  WbaSelfScore.create!(
+    wba_self_id: wbaselfcount,
+    wellbeing_metric_id: 11,
+    value: rand(1..10)
+  )
+  WbaSelfPermission.create!(
+    wba_self_id: wbaselfcount,
+    team_member_id: 1
+  )
+  WbaSelfPermission.create!(
+    wba_self_id: wbaselfcount,
+    team_member_id: 2
+  )
+  WbaSelfPermission.create!(
+    wba_self_id: wbaselfcount,
+    team_member_id: 3
+  )
+  WbaSelfPermission.create!(
+    wba_self_id: wbaselfcount,
+    team_member_id: 4
+  )
+end
