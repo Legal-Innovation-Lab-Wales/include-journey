@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.datetime "locked_at"
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
-    t.integer "mobile_number"
+    t.bigint "mobile_number"
     t.boolean "admin", default: false
     t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.datetime "locked_at"
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
-    t.integer "mobile_number"
+    t.bigint "mobile_number"
     t.datetime "release_date"
     t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false

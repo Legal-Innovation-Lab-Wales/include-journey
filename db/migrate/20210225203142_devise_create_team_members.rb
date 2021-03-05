@@ -36,7 +36,7 @@ class DeviseCreateTeamMembers < ActiveRecord::Migration[6.1]
       # Non standard devise fields
       t.string    :first_name, null: false, default: ''
       t.string    :last_name, null: false, default: ''
-      t.integer   :mobile_number
+      t.bigint   :mobile_number
       t.boolean   :admin, default: false
       t.boolean   :terms, default: false
 
