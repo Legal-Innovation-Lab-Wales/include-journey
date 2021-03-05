@@ -36,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       # Non standard devise fields
       t.string    :first_name, null: false, default: ''
       t.string    :last_name, null: false, default: ''
-      t.integer   :mobile_number
+      t.bigint    :mobile_number
       t.datetime  :release_date
       t.boolean   :terms, default: false
 

@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-    def main
-      render template: 'pages/main'
-    end
+  skip_before_action :authenticate_user!, :only => [:main]
+
+  def main
+    render template: 'pages/main'
+  end
 end

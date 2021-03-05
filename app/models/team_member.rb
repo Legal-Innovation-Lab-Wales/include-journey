@@ -20,4 +20,12 @@ class TeamMember < ApplicationRecord
   has_many :crisis_events, foreign_key: 'closed_by'
   has_many :crisis_notes, foreign_key: true
 
+  # validations
+  validates_presence_of :first_name,
+                        :last_name,
+                        :mobile_number,
+                        :email,
+                        :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
 end
