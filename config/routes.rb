@@ -5,13 +5,13 @@ Rails.application.routes.draw do
                                     confirmations: 'users/confirmations',
                                     sessions: 'users/sessions',
                                     passwords: 'users/passwords',
-                                    unlocks: 'users/unlocks_controller' }
+                                    unlocks: 'users/unlocks' }
   devise_for :team_members, path: 'team_members',
                             controllers: { registrations: 'team_members/registrations',
                                            confirmations: 'team_members/confirmations',
                                            sessions: 'team_members/sessions',
                                            passwords: 'team_members/passwords',
-                                           unlocks: 'team_members/unlocks_controller' }
+                                           unlocks: 'team_members/unlocks' }
 
   unauthenticated do
     root 'pages#main'

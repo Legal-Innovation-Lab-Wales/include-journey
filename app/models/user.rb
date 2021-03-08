@@ -11,4 +11,15 @@ class User < ApplicationRecord
   has_many :wba_team_members, foreign_key: :user_id
 
   has_many :crisis_events, foreign_key: :user_id
+
+  private
+
+  # validations
+  validates_presence_of :first_name,
+                        :last_name,
+                        :mobile_number,
+                        :email,
+                        :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
 end

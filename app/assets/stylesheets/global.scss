@@ -4,11 +4,19 @@
 
 @import "variables";
 
-body#overboot {
+html, body {
   min-height: 100vh;
-  background-color: $bg-main;
+}
+
+body#overboot {
+  h1, h2, h3 {
+    font-family: $heading-font;
+    font-weight: 800;
+    text-transform: lowercase;
+  }
+  background-color: $black;
   font-family: $font;
-  
+
   .bg-brand {
     background-color: $brand-primary;
   }

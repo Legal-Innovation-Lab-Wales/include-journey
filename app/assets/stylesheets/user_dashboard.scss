@@ -1,0 +1,65 @@
+@import "variables";
+
+$max-width: 550px;
+$margin: 20px;
+$border-width: 1px;
+
+.user_dashboard {
+  min-height: calc(100vh - 56px);
+  color: $white;
+  background-color: $black;
+  text-align: center;
+
+  section {
+    border-radius: 5px;
+    background-color: $grey;
+    text-align: center;
+    margin: 1rem;
+
+    @media screen and (min-width: $screen-md){
+      margin: 1rem;
+      padding: 1rem;
+    }
+
+    .buttons {
+      max-width: $max-width;
+
+      a {
+        height: $max-width/4;
+        margin: $margin/4 $margin/2;
+        border: $border-width solid $brand-primary;
+        border-radius: $margin*2 !important;
+        background-color: $brand-primary;
+        color: $black;
+        text-decoration: none;
+        font-size: 0.9rem;
+
+        @media screen and (min-width: $max-width) {
+          height: ($max-width/3) - $margin*2 + $border-width*2;
+          margin: $margin/2 $margin;
+        }
+
+        i {
+          font-size: 2.5rem;
+        }
+
+        &:hover {
+          background-color: $brand-primary-dark;
+          color: $brand-secondary;
+        }
+      }
+    }
+
+    &.journey {
+      .container {
+        padding: 0;
+      }
+    }
+
+    &.wellbeing {
+      .sliders .container {
+        text-align: left;
+      }
+    }
+  }
+}
