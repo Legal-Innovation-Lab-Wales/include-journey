@@ -1,12 +1,40 @@
 
-<section class="d-flex min-vh-100 homepage-cover min-vw-100">
+<section class="d-flex min-vh-100 homepage-cover">
     <div class="mx-auto col-12 col-md-10 col-lg-8">
       <div class="mt-5 text-center homepage-header homepage-section">
         <h1>Your Include Journey</h1>
         <p>track and progress on your journey to make the changes you want and need.</p>
         <p>Built for Include UK by the Legal Innovation lab Wales</p>
-        <%= link_to 'staff sign in', new_team_member_session_path, class: 'btn btn-secondary' %>
-        <%= link_to 'user sign in', new_user_session_path, class: 'btn btn-success' %>
+        <div class="container">
+          <div class="row">
+            <div class="col"></div>
+            <%= link_to new_team_member_session_path, class: 'col d-flex align-items-center btn btn-secondary m-1' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-users"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Staff Sign In</div>
+                </div>
+              </div>
+            <% end %>
+            <%= link_to new_user_session_path, class: 'col d-flex align-items-center btn btn-success m-1' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-user"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">User Sign In</div>
+                </div>
+              </div>
+            <% end %>
+            <div class="col"></div>
+          </div>
+        </div>
       </div>
       <div class="homepage-section">
         <h2 class="text-center">about this project</h2>
