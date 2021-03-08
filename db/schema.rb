@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
+    t.boolean "approved", default: false
     t.boolean "admin", default: false
     t.boolean "terms", default: false
     t.datetime "created_at", precision: 6, null: false
