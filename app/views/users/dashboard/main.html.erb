@@ -1,4 +1,202 @@
-<main>
-  <h1>Dashboard</h1>
-  <p>Hello <%= current_user.first_name %>!</p>
+<main class="container user_dashboard">
+  <section class="row journey">
+    <div class="col mb-3">
+      <h2 class="mb-3">Your Journey</h2>
+      <div class="container buttons">
+        <div class="row">
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-book"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Diary</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-calendar-alt"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Appointments</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-heart"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Needs</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="row">
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-address-book"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Contacts</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-road"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Journey</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-info-circle"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Support</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="row">
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-tasks"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Goals</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-calendar-alt"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Include: What's On</div>
+              </div>
+            </div>
+          </a>
+          <a href="#" class="col d-flex align-items-center btn">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-comments"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">My Voice</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="row wellbeing">
+    <div class="col services mt-5">
+      <h3>Your Services</h3>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col">
+            <a class="btn btn-success" href="#">Service 1</a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <a class="btn btn-success" href="#">Service 2</a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <a class="btn btn-success" href="#">Service 3</a>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <a class="btn btn-success" href="#">Service 4</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Your Wellbeing</h3>
+    </div>
+    <div class="col sliders mt-5">
+      <h3>How are you today?</h3>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col"><label for="emotionalHealth">Emotional Health</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="emotionalHealth"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="mentalHealth">Mental Health</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="mentalHealth"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="physicalHealth">Physical Health</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="physicalHealth"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="housing">Housing</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="housing"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="benefitsMoney">Benefits/Money</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="benefitsMoney"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="food">Food</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="food"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="behaviour">Behaviour</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="behaviour"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="addiction">Addiction</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="addiction"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="community">Sense of Community</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="community"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="relationships">Relationships</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="relationships"></div>
+        </div>
+        <div class="row">
+          <div class="col"><label for="employmentEducationTraining">Emp/Edu/Training</label></div>
+          <div class="col"><input type="range" class="form-range" min="0" max="10" id="employmentEducationTraining"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
