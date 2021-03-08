@@ -30,12 +30,20 @@
           </ul>
           <div class="d-flex">
             <% if current_team_member %>
-              <%= link_to 'Edit Profile', edit_team_member_registration_path, class: "btn btn-success m-1" %>
-              <%= link_to 'Logout', destroy_team_member_session_path, method: :delete, class: "btn btn-warning m-1" %>
+              <%= link_to edit_team_member_registration_path, class: "btn btn-success m-1" do %>
+                Edit Profile <i class="fas fa-edit"></i>
+              <% end %>
+              <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning m-1" do %>
+                Logout <i class="fas fa-sign-out-alt"></i>
+              <% end %>
             <% end %>
             <% if current_user %>
-              <%= link_to 'Edit Profile', edit_user_registration_path, class: "btn btn-success m-1" %>
-              <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-warning m-1" %>
+              <%= link_to edit_user_registration_path, class: "btn btn-success m-1" do %>
+                Edit Profile <i class="fas fa-edit"></i>
+              <% end %>
+              <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning m-1" do %>
+                Logout<i class="fas fa-sign-out-alt"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
