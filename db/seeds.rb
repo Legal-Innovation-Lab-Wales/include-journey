@@ -137,7 +137,7 @@ if WellbeingMetric.count.zero?
   )
   WellbeingMetric.create!(
     team_member_id: 1,
-    name: 'Sense of Community ',
+    name: 'Sense of Community',
     category: 'Personal'
   )
   WellbeingMetric.create!(
