@@ -4,14 +4,14 @@ $max-width: 550px;
 $margin: 20px;
 $border-width: 1px;
 
-.user_dashboard {
+.dashboard {
   min-height: calc(100vh - 56px);
   color: $white;
   background-color: $black;
   text-align: center;
 
   section {
-    border-radius: 5px;
+    border-radius: 0.6rem;
     background-color: $grey;
     text-align: center;
     margin: 1rem;
@@ -23,6 +23,7 @@ $border-width: 1px;
 
     .buttons {
       max-width: $max-width;
+      padding: 0;
 
       a {
         height: $max-width/4;
@@ -47,19 +48,15 @@ $border-width: 1px;
           background-color: $brand-primary-dark;
           color: $brand-secondary;
         }
-      }
-    }
 
-    &.journey {
-      .container {
-        padding: 0;
+        .container {
+          padding: 0;
+        }
       }
     }
+  }
 
-    &.wellbeing {
-      .sliders .container {
-        text-align: left;
-      }
-    }
+  &.user section.wellbeing .sliders {
+    text-align: left;
   }
 }
