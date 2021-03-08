@@ -17,15 +17,15 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
 
   create_table "crisis_events", force: :cascade do |t|
     t.text "additional_info"
-    t.boolean "closed"
-    t.bigint "team_member_id"
+    t.boolean "closed", default: false
+    t.bigint "closed_by_id"
     t.datetime "closed_at"
     t.bigint "user_id", null: false
     t.bigint "crisis_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["closed_by_id"], name: "index_crisis_events_on_closed_by_id"
     t.index ["crisis_type_id"], name: "index_crisis_events_on_crisis_type_id"
-    t.index ["team_member_id"], name: "index_crisis_events_on_team_member_id"
     t.index ["user_id"], name: "index_crisis_events_on_user_id"
   end
 
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
   end
 
   create_table "crisis_types", force: :cascade do |t|
-    t.string "type"
+    t.string "category"
     t.bigint "team_member_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
   end
 
   add_foreign_key "crisis_events", "crisis_types"
+  add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"
   add_foreign_key "crisis_notes", "crisis_events"
   add_foreign_key "crisis_notes", "team_members"

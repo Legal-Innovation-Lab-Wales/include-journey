@@ -73,7 +73,7 @@ if User.count.zero?
       last_name: Faker::Name.unique.last_name,
       email: Faker::Internet.unique.email,
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
-      release_date: rand(1..2).even? ? Faker::Date.between(from: '20201-03-05', to: '2025-03-05') : '',
+      release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
       password: 'password'
     )
@@ -158,85 +158,171 @@ if WellbeingMetric.count.zero?
   )
 end
 
-wbaselfcount = 0
-50.times do
-  wbaselfcount += 1
-  puts("Creating WbaSelf #{wbaselfcount}")
+if WbaSelf.count.zero?
 
-  WbaSelf.create!(
-    # id: wbaselfcount
-    user_id: rand(1..10)
-  )
+  wbaselfcount = 0
+  50.times do
+    wbaselfcount += 1
+    puts("Creating WbaSelf #{wbaselfcount}")
 
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 1, # housing
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 2, # Benefits / Money
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 3,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 4,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 5,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 6,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 7,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 8,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 9,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 10,
-    value: rand(1..10)
-  )
-  WbaSelfScore.create!(
-    wba_self_id: wbaselfcount,
-    wellbeing_metric_id: 11,
-    value: rand(1..10)
-  )
-  WbaSelfPermission.create!(
-    wba_self_id: wbaselfcount,
-    team_member_id: 1
-  )
-  WbaSelfPermission.create!(
-    wba_self_id: wbaselfcount,
-    team_member_id: 2
-  )
-  WbaSelfPermission.create!(
-    wba_self_id: wbaselfcount,
-    team_member_id: 3
-  )
-  WbaSelfPermission.create!(
-    wba_self_id: wbaselfcount,
-    team_member_id: 4
+    WbaSelf.create!(
+      # id: wbaselfcount
+      user_id: rand(1..10)
+    )
+
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 1, # housing
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 2, # Benefits / Money
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 3,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 4,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 5,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 6,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 7,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 8,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 9,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 10,
+      value: rand(1..10)
+    )
+    WbaSelfScore.create!(
+      wba_self_id: wbaselfcount,
+      wellbeing_metric_id: 11,
+      value: rand(1..10)
+    )
+    WbaSelfPermission.create!(
+      wba_self_id: wbaselfcount,
+      team_member_id: 1
+    )
+    WbaSelfPermission.create!(
+      wba_self_id: wbaselfcount,
+      team_member_id: 2
+    )
+    WbaSelfPermission.create!(
+      wba_self_id: wbaselfcount,
+      team_member_id: 3
+    )
+    WbaSelfPermission.create!(
+      wba_self_id: wbaselfcount,
+      team_member_id: 4
+    )
+  end
+end
+
+CrisisType.create!(
+  # id: 1
+  category: 'SELF HARM',
+  team_member_id: 1,
+)
+
+CrisisType.create!(
+  # id: 2
+  category: 'HARMING OTHERS',
+  team_member_id: 1,
+)
+
+CrisisType.create!(
+  # id: 3
+  category: 'SUICIDE',
+  team_member_id: 1,
+)
+
+CrisisType.create!(
+  # id: 4
+  category: 'OVER DOSE',
+  team_member_id: 1,
+)
+
+CrisisType.create!(
+  # id: 5
+  category: 'DOMESTIC VIOLENCE',
+  team_member_id: 1,
+)
+
+10.times do
+
+  isClosed = [true, false].sample
+
+  if isClosed
+
+    CrisisEvent.create!(
+      additional_info: Faker::Hipster.sentences(number: 1),
+      closed: true,
+      closed_at: Faker::Date.between(from: '2020-03-05', to: '2021-03-05'),
+      closed_by: TeamMember.first,
+      user_id: rand(1..10),
+      crisis_type_id: rand(1..5)
+    )
+  else
+    CrisisEvent.create!(
+      additional_info: Faker::Hipster.sentences(number: 1),
+      user_id: rand(1..10),
+      crisis_type_id: rand(1..5)
+    )
+  end
+end
+
+
+wbaselfcount = WbaSelf.count
+
+WbaSelfViewLog.create!(
+  wba_self_id: rand(1..wbaselfcount),
+  team_member_id: rand(1..4)
+)
+
+
+
+10.times do
+  WbaTeamMember.create!(
+    team_member_id: rand(1..4),
+    user_id: rand(1..10),
+    )
+end
+
+
+wbaTeamMemberCount = WbaTeamMember.count
+
+10.times do
+  WbaTeamMemberScore.create!(
+    wba_team_member_id: rand(1..wbaTeamMemberCount) ,
+    wellbeing_metric_id: rand(1..11),
+    value: rand(1..10),
+    priority: rand(1..3)
+
   )
 end
