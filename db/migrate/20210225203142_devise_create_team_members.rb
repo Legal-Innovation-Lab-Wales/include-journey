@@ -37,6 +37,7 @@ class DeviseCreateTeamMembers < ActiveRecord::Migration[6.1]
       t.string    :first_name, null: false, default: ''
       t.string    :last_name, null: false, default: ''
       t.bigint    :mobile_number
+      t.boolean   :approved, default: false
       t.boolean   :admin, default: false
       t.boolean   :terms, default: false
 

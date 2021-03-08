@@ -17,6 +17,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
     email: 'philr@purpleriver.dev',
     mobile_number: '07888777666',
     admin: true,
+    approved: true,
     terms: true,
     password: 'password'
   )
@@ -31,6 +32,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
     email: 'a.j.wing@swansea.ac.uk',
     mobile_number: '07777666555',
     admin: true,
+    approved: true,
     terms: true,
     password: 'password'
   )
@@ -45,6 +47,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
     email: 'ieuan.skinner@swansea.ac.uk',
     mobile_number: '07666555444',
     admin: true,
+    approved: true,
     terms: true,
     password: 'password'
   )
@@ -59,6 +62,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     email: 'benmharrison@me.com',
     mobile_number: '07555444333',
     admin: true,
+    approved: true,
     terms: true,
     password: 'password'
   )
