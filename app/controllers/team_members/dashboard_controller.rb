@@ -1,8 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/dashboard_controller.rb
   class DashboardController < TeamMemberController
-    before_action :require_admin, only: %i[set_team_member, approve_team_member, toggle_admin]
-    before_action :set_team_member, only: %i[approve_team_member, toggle_admin]
+    before_action :require_admin, only: [:set_team_member, :approve_team_member, :toggle_admin]
+    before_action :set_team_member, only: [:approve_team_member, :toggle_admin]
 
     def main
       render template: 'team_members/dashboard/main'
@@ -11,6 +11,7 @@ module TeamMembers
     # PUT /team_members/:team_member_id/approve
     def approve_team_member
       respond_to do |format|
+        debugger
         format.html { redirect_to authenticated_team_member_root_path,
                                   alert: @team_member.update(approved: true) ?
                                            "#{@team_member.first_name} has been approved" :
