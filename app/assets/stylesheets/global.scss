@@ -24,4 +24,16 @@ body#overboot {
   a {
     font-family: $font-link;
   }
+
+  table {
+    border-radius: 0.6rem;
+
+    .fa-check-circle {
+      color: $success;
+    }
+
+    .fa-times-circle {
+      color: $danger;
+    }
+  }
 }

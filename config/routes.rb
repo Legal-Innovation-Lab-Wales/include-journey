@@ -13,15 +13,15 @@ Rails.application.routes.draw do
                                            passwords: 'team_members/passwords',
                                            unlocks: 'team_members/unlocks' }
 
-  unauthenticated do
-    root 'pages#main'
-  end
-
   authenticated :user do
     root 'users/dashboard#main', as: :authenticated_user_root
   end
 
   authenticated :team_member do
     root 'team_members/dashboard#main', as: :authenticated_team_member_root
+  end
+
+  unauthenticated do
+    root 'pages#main'
   end
 end

@@ -1,4 +1,4 @@
-<main class="ij-form">
+<main class="ij-form edit">
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
@@ -48,7 +48,9 @@
 
     <div class="form-floating">
       <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "Password - 6 characters minimum" %>
-      <%= f.label :password, "Password (leave blank if you don't want to change it)" %>
+      <%= f.label :password do %>
+        Password <span class="small-text">(leave blank if you don't want to change it)</span>
+      <% end %>
     </div>
 
     <div class="form-floating">
