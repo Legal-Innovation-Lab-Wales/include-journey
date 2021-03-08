@@ -45,6 +45,38 @@
     </div>
   </section>
   <% if current_team_member.admin? %>
+    <% if TeamMember.all.where(approved: false).count > 0 %>
+      <section class="row" id="awaiting_approval">
+        <div class="col">
+          <h3>Awaiting Approval</h3>
+          <table class="table table-dark table-striped align-middle">
+            <thead>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Email</th>
+              <th scope="col">Last Sign In Attempt</th>
+              <th scope="col"></th>
+            </thead>
+            <tbody>
+            <% TeamMember.all.where(approved: false).each do |team_member| %>
+              <tr>
+                <td><%= team_member.first_name %></td>
+                <td><%= team_member.last_name %></td>
+                <td><%= team_member.email %></td>
+                <td><%= team_member.last_sign_in_at %></td>
+                <td>
+                  <%= form_with url: approve_team_member_path(team_member.id), method: :put do |form| %>
+                    <%= form.hidden_field :team_member_id, value: team_member.id %>
+                    <%= form.submit 'Approve', class: 'btn btn-primary' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    <% end %>
     <section class="row" id="staff">
       <div class="col">
         <h3>Staff</h3>
@@ -57,7 +89,7 @@
             <th scope="col">Last Sign In</th>
           </thead>
           <tbody>
-            <% TeamMember.all.each do |team_member| %>
+            <% TeamMember.all.where(approved: true).each do |team_member| %>
               <tr>
                 <td><%= team_member.first_name %></td>
                 <td><%= team_member.last_name %></td>

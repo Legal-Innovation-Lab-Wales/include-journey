@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   authenticated :team_member do
     root 'team_members/dashboard#main', as: :authenticated_team_member_root
+    put '/team_members/:team_member_id/approve', to: 'team_members/dashboard#approve_team_member', as: :approve_team_member
   end
 
   unauthenticated do
