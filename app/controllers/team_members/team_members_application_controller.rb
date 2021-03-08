@@ -1,6 +1,6 @@
 module TeamMembers
-  # app/controllers/team_members/team_member_controller.rb
-  class TeamMemberController < ApplicationController
+  # app/controllers/team_members/team_members_application_controller.rb
+  class TeamMembersApplicationController < ApplicationController
     before_action :authenticate_team_member!
     before_action :require_approval
 
