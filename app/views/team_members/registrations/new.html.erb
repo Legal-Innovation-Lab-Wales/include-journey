@@ -49,7 +49,9 @@
 
     <div class="form-check form-switch">
       <%= f.check_box :terms, class: 'form-check-input' %>
-      <label class="form-check-label" for="terms">I have read and agree to the sites <a href="/terms">Terms and Conditions</a></label>
+      <%= f.label :terms, class: 'form-check-label' do %>
+        I have read and agree to the sites <%= link_to 'Terms and Conditions', '/terms' %>
+      <% end %>
     </div>
 
     <div class="form-group">
