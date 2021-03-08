@@ -90,67 +90,56 @@ Note.create!(
 )
 
 if WellbeingMetric.count.zero?
-  # id: 1
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Housing',
     category: 'Environment'
   )
-  # id: 2
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Benefits / Money',
     category: 'Environment'
   )
-  # id: 3
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Food',
     category: 'Environment'
   )
-  # id: 4
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Physical Health',
     category: 'Health'
   )
-  # id: 5
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Mental Health',
     category: 'Health'
   )
-  # id: 6
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Emotional Health',
     category: 'Health'
   )
-  # id: 7
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Behaviour',
     category: 'Personal'
   )
-  # id: 8
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Addiction',
     category: 'Health'
   )
-  # id: 9
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Relationships',
     category: 'Personal'
   )
-  # id: 10
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Sense of Community ',
     category: 'Personal'
   )
-  # id: 11
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Employment/Education/Training',
@@ -160,116 +149,57 @@ end
 
 if WbaSelf.count.zero?
 
-  wbaselfcount = 0
-  50.times do
+  50.times do |wbaselfcount|
     wbaselfcount += 1
     puts("Creating WbaSelf #{wbaselfcount}")
 
     WbaSelf.create!(
-      # id: wbaselfcount
       user_id: rand(1..10)
     )
 
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 1, # housing
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 2, # Benefits / Money
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 3,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 4,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 5,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 6,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 7,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 8,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 9,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 10,
-      value: rand(1..10)
-    )
-    WbaSelfScore.create!(
-      wba_self_id: wbaselfcount,
-      wellbeing_metric_id: 11,
-      value: rand(1..10)
-    )
-    WbaSelfPermission.create!(
-      wba_self_id: wbaselfcount,
-      team_member_id: 1
-    )
-    WbaSelfPermission.create!(
-      wba_self_id: wbaselfcount,
-      team_member_id: 2
-    )
-    WbaSelfPermission.create!(
-      wba_self_id: wbaselfcount,
-      team_member_id: 3
-    )
-    WbaSelfPermission.create!(
-      wba_self_id: wbaselfcount,
-      team_member_id: 4
-    )
+    WellbeingMetric.count.times do |wellbeing_metric_id|
+      WbaSelfScore.create!(
+        wba_self_id: wbaselfcount,
+        wellbeing_metric_id: wellbeing_metric_id+1, # housing
+        value: rand(1..10)
+      )
+    end
+
+    TeamMember.count.times do |id|
+      WbaSelfPermission.create!(
+        wba_self_id: wbaselfcount,
+        team_member_id: id+1
+      )
+
+      WbaSelfViewLog.create!(
+        wba_self_id: wbaselfcount,
+        team_member_id: id+1
+      )
+    end
   end
 end
 
 CrisisType.create!(
-  # id: 1
   category: 'SELF HARM',
   team_member_id: 1,
 )
 
 CrisisType.create!(
-  # id: 2
   category: 'HARMING OTHERS',
   team_member_id: 1,
 )
 
 CrisisType.create!(
-  # id: 3
   category: 'SUICIDE',
   team_member_id: 1,
 )
 
 CrisisType.create!(
-  # id: 4
   category: 'OVER DOSE',
   team_member_id: 1,
 )
 
 CrisisType.create!(
-  # id: 5
   category: 'DOMESTIC VIOLENCE',
   team_member_id: 1,
 )
@@ -297,32 +227,22 @@ CrisisType.create!(
   end
 end
 
+if WbaTeamMember.count.zero?
+  10.times do |wba_team_member_count|
+    wba_team_member_count += 1
+    puts("Creating WbaTeamMember #{wba_team_member_count}")
 
-wbaselfcount = WbaSelf.count
-
-WbaSelfViewLog.create!(
-  wba_self_id: rand(1..wbaselfcount),
-  team_member_id: rand(1..4)
-)
-
-
-
-10.times do
-  WbaTeamMember.create!(
-    team_member_id: rand(1..4),
-    user_id: rand(1..10),
+    WbaTeamMember.create!(
+      team_member_id: rand(1..4),
+      user_id: rand(1..10),
     )
-end
 
-
-wbaTeamMemberCount = WbaTeamMember.count
-
-10.times do
-  WbaTeamMemberScore.create!(
-    wba_team_member_id: rand(1..wbaTeamMemberCount) ,
-    wellbeing_metric_id: rand(1..11),
-    value: rand(1..10),
-    priority: rand(1..3)
-
-  )
+    WellbeingMetric.count.times do |wellbeing_metric_id|
+      WbaTeamMemberScore.create!(
+        wba_team_member_id: wba_team_member_count,
+        wellbeing_metric_id: wellbeing_metric_id + 1,
+        value: rand(1..10)
+      )
+    end
+  end
 end
