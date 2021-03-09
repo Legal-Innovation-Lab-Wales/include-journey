@@ -62,7 +62,7 @@
               <td><%= team_member.first_name %></td>
               <td><%= team_member.last_name %></td>
               <td><%= team_member.email %></td>
-              <td><%= team_member.last_sign_in_at %></td>
+              <td><%= team_member.get_last_sign_in %></td>
               <td>
                 <%= form_with url: approve_team_member_path(team_member.id), method: :put do |form| %>
                   <%= form.hidden_field :team_member_id, value: team_member.id %>
@@ -116,7 +116,7 @@
                   <% end %>
                 <% end %>
               </td>
-              <td><%= team_member.last_sign_in_at %></td>
+              <td><%= team_member.get_last_sign_in %></td>
             </tr>
           <% end %>
         </tbody>
@@ -132,22 +132,16 @@
           <th scope="col">Last</th>
           <th scope="col">Release Date</th>
           <th scope="col">Email</th>
-          <th scope="col">Last Login</th>
+          <th scope="col">Last Sign In</th>
         </thead>
         <tbody>
           <% @users.each do |user| %>
             <tr>
               <td><%= user.first_name %></td>
               <td><%= user.last_name %></td>
-              <td>
-                <% if user.release_date %>
-                  <%= user.release_date %>
-                <% else %>
-                  Unknown
-                <% end %>
-              </td>
+              <td><%= user.get_release_date %></td>
               <td><%= user.email %></td>
-              <td><%= user.last_sign_in_at %></td>
+              <td><%= user.get_last_sign_in %></td>
             </tr>
           <% end %>
         </tbody>
