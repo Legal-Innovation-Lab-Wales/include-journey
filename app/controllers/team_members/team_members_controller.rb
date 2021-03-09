@@ -4,8 +4,8 @@ module TeamMembers
     before_action :require_admin, :set_team_member
 
     # GET /team_members/:team_member_id
-    def main
-      render template: 'team_members/team_members/main'
+    def show
+      render template: 'team_members/team_members/show'
     end
 
     # PUT /team_members/:team_member_id/approve

@@ -54,21 +54,11 @@ $border-width: 1px;
         }
       }
     }
-  }
 
-  &.user section.wellbeing .sliders {
-    text-align: left;
-
-    input {
-      cursor: pointer;
-    }
-  }
-
-  &.team_members {
-    section#team_members, section#users {
+    table {
       td {
-        height: 55px;
-        line-height: 55px;
+        height: 50px;
+        line-height: 50px;
         padding: 0;
 
         a {
@@ -80,6 +70,14 @@ $border-width: 1px;
           cursor: pointer;
         }
       }
+    }
+  }
+
+  &.user section.wellbeing .sliders {
+    text-align: left;
+
+    input {
+      cursor: pointer;
     }
   }
 }

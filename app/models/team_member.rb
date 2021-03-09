@@ -20,8 +20,6 @@ class TeamMember < ApplicationRecord
   has_many :crisis_events, foreign_key: 'closed_by'
   has_many :crisis_notes, foreign_key: :team_member_id
 
-  private
-
   # validations
   validates_presence_of :first_name,
                         :last_name,

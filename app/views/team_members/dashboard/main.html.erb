@@ -64,7 +64,7 @@
               <td><%= team_member.first_name %></td>
               <td><%= team_member.last_name %></td>
               <td><%= team_member.email %></td>
-              <td><%= team_member.get_last_sign_in %></td>
+              <td><%= team_member.last_sign_in %></td>
               <td>
                 <%= form_with url: approve_team_member_path(team_member.id), method: :put do |form| %>
                   <%= form.hidden_field :team_member_id, value: team_member.id %>
@@ -135,7 +135,7 @@
                 </td>
                 <td>
                   <%= link_to team_member_path(team_member) do %>
-                    <%= team_member.get_last_sign_in %>
+                    <%= team_member.last_sign_in %>
                   <% end %>
                 </td>
               </tr>
@@ -159,11 +159,31 @@
         <tbody>
           <% @users.each do |user| %>
             <tr>
-              <td><%= user.first_name %></td>
-              <td><%= user.last_name %></td>
-              <td><%= user.get_release_date %></td>
-              <td><%= user.email %></td>
-              <td><%= user.get_last_sign_in %></td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.first_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.last_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.release %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.email %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.last_sign_in %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
