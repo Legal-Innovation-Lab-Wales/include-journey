@@ -3,6 +3,11 @@ module TeamMembers
   class TeamMembersController < TeamMembersApplicationController
     before_action :require_admin, :set_team_member
 
+    # GET /team_members/:team_member_id
+    def show
+      render template: 'team_members/team_members/show'
+    end
+
     # PUT /team_members/:team_member_id/approve
     def approve_team_member
       respond_to do |format|

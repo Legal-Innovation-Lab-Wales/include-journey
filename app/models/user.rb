@@ -12,7 +12,9 @@ class User < ApplicationRecord
 
   has_many :crisis_events, foreign_key: :user_id
 
-  private
+  def release
+    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+  end
 
   # validations
   validates_presence_of :first_name,
