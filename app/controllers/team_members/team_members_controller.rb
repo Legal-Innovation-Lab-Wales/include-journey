@@ -5,7 +5,7 @@ module TeamMembers
 
     # GET /team_members/:team_member_id
     def show
-      render template: 'team_members/team_members/main'
+      render template: 'team_members/team_members/show'
     end
 
     # PUT /team_members/:team_member_id/approve

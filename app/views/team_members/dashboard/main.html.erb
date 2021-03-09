@@ -159,11 +159,31 @@
         <tbody>
           <% @users.each do |user| %>
             <tr>
-              <td><%= user.first_name %></td>
-              <td><%= user.last_name %></td>
-              <td><%= user.release %></td>
-              <td><%= user.email %></td>
-              <td><%= user.last_sign_in %></td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.first_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.last_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.release %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.email %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to user_path(user) do %>
+                  <%= user.last_sign_in %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

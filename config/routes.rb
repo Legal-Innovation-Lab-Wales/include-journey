@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     get '/team_members/:team_member_id', to: 'team_members/team_members#show', as: :team_member
     put '/team_members/:team_member_id/approve', to: 'team_members/team_members#approve_team_member', as: :approve_team_member
     put '/team_members/:team_member_id/admin', to: 'team_members/team_members#toggle_admin', as: :toggle_admin
+
+    get '/users/:user_id', to: 'team_members/users#show', as: :user
   end
 
   unauthenticated do

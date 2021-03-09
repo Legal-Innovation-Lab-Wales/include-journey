@@ -70,9 +70,21 @@
           <tbody>
             <% @team_member.wba_team_members.order(:created_at).each do |wba_team_member| %>
               <tr>
-                <td><%= wba_team_member.user.first_name %> <%= wba_team_member.user.last_name %></td>
-                <td><%= wba_team_member.created %>
-                <td><%= wba_team_member.last_update %>
+                <td>
+                  <%= link_to user_path(wba_team_member.user) do %>
+                    <%= wba_team_member.user.first_name %> <%= wba_team_member.user.last_name %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to user_path(wba_team_member.user) do %>
+                    <%= wba_team_member.created %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to user_path(wba_team_member.user) do %>
+                    <%= wba_team_member.last_update %>
+                  <% end %>
+              </td>
               </tr>
             <% end %>
           </tbody>
