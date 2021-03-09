@@ -103,9 +103,9 @@
           <th scope="col">Last Update</th>
           </thead>
           <tbody>
-          <% @team_member.wba_self_view_logs.order(:created_at).each do |wba_self_view_log| %>
+          <% @team_member.wba_self_view_logs.includes(:user).order(:created_at).each do |wba_self_view_log| %>
             <tr>
-              <td><%= wba_self_view_log.wba_self.user.first_name %> <%= wba_self_view_log.wba_self.user.last_name %></td>
+              <td><%= wba_self_view_log.user.first_name %> <%= wba_self_view_log.user.last_name %></td>
               <td><%= wba_self_view_log.created %>
               <td><%= wba_self_view_log.last_update %>
             </tr>
