@@ -23,3 +23,14 @@
   }
 
 }
+
+.footers{
+  .title {
+    color: white;
+    text-decoration: none;
+  }
+  a:hover{
+    text-decoration: underline;
+    color: grey;
+  }
+}
