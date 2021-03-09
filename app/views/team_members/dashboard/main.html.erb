@@ -4,17 +4,19 @@
       <h3>Dashboard</h3>
       <div class="container buttons">
         <div class="row">
-          <%= link_to '#team_members', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-users"></i>
+          <% if current_team_member.admin? %>
+            <%= link_to '#team_members', class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-users"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Team Members</div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">Team Members</div>
-              </div>
-            </div>
+            <% end %>
           <% end %>
           <%= link_to '#users', class: 'col d-flex align-items-center btn' do %>
             <div class="container">
@@ -76,71 +78,73 @@
       </div>
     </section>
   <% end %>
-  <section class="row" id="team_members">
-    <div class="col">
-      <h3>Team Members</h3>
-      <table class="table table-dark table-striped align-middle">
-        <thead>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Email</th>
-          <th scope="col">Admin</th>
-          <th scope="col">Last Sign In</th>
-        </thead>
-        <tbody>
-          <% @approved_team_members.each do |team_member| %>
-            <tr>
-              <td>
-                <%= link_to team_member_path(team_member) do %>
-                  <%= team_member.first_name %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to team_member_path(team_member) do %>
-                  <%= team_member.last_name %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to team_member_path(team_member) do %>
-                  <%= team_member.email %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to team_member_path(team_member) do %>
-                  <% if current_team_member.admin? and current_team_member.id != team_member.id %>
-                    <%= form_with url: toggle_admin_path(team_member.id), method: :put do |form| %>
-                      <%= form.hidden_field :team_member_id, value: team_member.id %>
-                      <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
-                        confirm: team_member.admin ?
-                                   "Demote #{team_member.first_name} #{team_member.last_name} from an admin role?" :
-                                   "Promote #{team_member.first_name} #{team_member.last_name} to an admin role?" }} do %>
-                        <% if team_member.admin %>
-                          <i class="fas fa-check-circle"></i>
-                        <% else %>
-                          <i class="fas fa-times-circle"></i>
+  <% if current_team_member.admin? %>
+    <section class="row" id="team_members">
+      <div class="col">
+        <h3>Team Members</h3>
+        <table class="table table-dark table-striped align-middle">
+          <thead>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Email</th>
+            <th scope="col">Admin</th>
+            <th scope="col">Last Sign In</th>
+          </thead>
+          <tbody>
+            <% @approved_team_members.each do |team_member| %>
+              <tr>
+                <td>
+                  <%= link_to team_member_path(team_member) do %>
+                    <%= team_member.first_name %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to team_member_path(team_member) do %>
+                    <%= team_member.last_name %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to team_member_path(team_member) do %>
+                    <%= team_member.email %>
+                  <% end %>
+                </td>
+                <td>
+                  <%= link_to team_member_path(team_member) do %>
+                    <% if current_team_member.id != team_member.id %>
+                      <%= form_with url: toggle_admin_path(team_member.id), method: :put do |form| %>
+                        <%= form.hidden_field :team_member_id, value: team_member.id %>
+                        <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
+                          confirm: team_member.admin ?
+                                     "Demote #{team_member.first_name} #{team_member.last_name} from an admin role?" :
+                                     "Promote #{team_member.first_name} #{team_member.last_name} to an admin role?" }} do %>
+                          <% if team_member.admin %>
+                            <i class="fas fa-check-circle"></i>
+                          <% else %>
+                            <i class="fas fa-times-circle"></i>
+                          <% end %>
                         <% end %>
                       <% end %>
-                    <% end %>
-                  <% else %>
-                    <% if team_member.admin %>
-                      <i class="fas fa-check-circle"></i>
                     <% else %>
-                      <i class="fas fa-times-circle"></i>
+                      <% if team_member.admin %>
+                        <i class="fas fa-check-circle"></i>
+                      <% else %>
+                        <i class="fas fa-times-circle"></i>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to team_member_path(team_member) do %>
-                  <%= team_member.get_last_sign_in %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </section>
+                </td>
+                <td>
+                  <%= link_to team_member_path(team_member) do %>
+                    <%= team_member.get_last_sign_in %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% end %>
   <section class="row" id="users">
     <div class="col">
       <h2 class="mb-3">User</h2>
