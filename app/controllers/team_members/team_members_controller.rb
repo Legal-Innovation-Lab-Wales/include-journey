@@ -4,7 +4,7 @@ module TeamMembers
     before_action :require_admin, :set_team_member
 
     # GET /team_members/:team_member_id
-    def main
+    def show
       render template: 'team_members/team_members/main'
     end
 
