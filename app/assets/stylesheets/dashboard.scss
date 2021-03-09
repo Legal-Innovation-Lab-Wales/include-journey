@@ -59,4 +59,23 @@ $border-width: 1px;
   &.user section.wellbeing .sliders {
     text-align: left;
   }
+
+  &.team_member {
+    section#staff, section#users {
+      td {
+        height: 55px;
+        line-height: 55px;
+        padding: 0;
+
+        a {
+          display: block;
+          width: 100%;
+          height: 100%;
+          text-decoration: none;
+          color: $white;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

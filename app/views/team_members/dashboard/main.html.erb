@@ -1,4 +1,4 @@
-<main class="container dashboard">
+<main class="container dashboard team_member">
   <section class="row">
     <div class="col mb-3">
       <h2 class="mb-3">Dashboard</h2>
@@ -90,33 +90,51 @@
         <tbody>
           <% @approved_team_members.each do |team_member| %>
             <tr>
-              <td><%= team_member.first_name %></td>
-              <td><%= team_member.last_name %></td>
-              <td><%= team_member.email %></td>
               <td>
-                <% if current_team_member.admin? and current_team_member.id != team_member.id %>
-                  <%= form_with url: toggle_admin_path(team_member.id), method: :put do |form| %>
-                    <%= form.hidden_field :team_member_id, value: team_member.id %>
-                    <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
-                      confirm: team_member.admin ?
-                                 "Demote #{team_member.first_name} #{team_member.last_name} from an admin role?" :
-                                 "Promote #{team_member.first_name} #{team_member.last_name} to an admin role?" }} do %>
-                      <% if team_member.admin %>
-                        <i class="fas fa-check-circle"></i>
-                      <% else %>
-                        <i class="fas fa-times-circle"></i>
+                <%= link_to team_member_path(team_member) do %>
+                  <%= team_member.first_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to team_member_path(team_member) do %>
+                  <%= team_member.last_name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to team_member_path(team_member) do %>
+                  <%= team_member.email %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to team_member_path(team_member) do %>
+                  <% if current_team_member.admin? and current_team_member.id != team_member.id %>
+                    <%= form_with url: toggle_admin_path(team_member.id), method: :put do |form| %>
+                      <%= form.hidden_field :team_member_id, value: team_member.id %>
+                      <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
+                        confirm: team_member.admin ?
+                                   "Demote #{team_member.first_name} #{team_member.last_name} from an admin role?" :
+                                   "Promote #{team_member.first_name} #{team_member.last_name} to an admin role?" }} do %>
+                        <% if team_member.admin %>
+                          <i class="fas fa-check-circle"></i>
+                        <% else %>
+                          <i class="fas fa-times-circle"></i>
+                        <% end %>
                       <% end %>
                     <% end %>
-                  <% end %>
-                <% else %>
-                  <% if team_member.admin %>
-                    <i class="fas fa-check-circle"></i>
                   <% else %>
-                    <i class="fas fa-times-circle"></i>
+                    <% if team_member.admin %>
+                      <i class="fas fa-check-circle"></i>
+                    <% else %>
+                      <i class="fas fa-times-circle"></i>
+                    <% end %>
                   <% end %>
                 <% end %>
               </td>
-              <td><%= team_member.get_last_sign_in %></td>
+              <td>
+                <%= link_to team_member_path(team_member) do %>
+                  <%= team_member.get_last_sign_in %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
