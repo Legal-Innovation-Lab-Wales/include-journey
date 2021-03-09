@@ -1,7 +1,115 @@
-<main class="container dashboard">
-  <section class="row">
+<main class="container dashboard team_member">
+  <section class="row" id="details">
     <div class="col">
-      <h3>This page is for <%= @team_member.email %></h3>
+      <h2 class="mb-3">Team Member Details</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <form>
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_first_name" class="form-control" value="<%= @team_member.first_name %>" disabled>
+                    <label for="team_member_first_name">First Name</label>
+                  </div>
+                </div>
+
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_last_name" class="form-control" value="<%= @team_member.last_name %>" disabled>
+                    <label for="team_member_last_name">Last Name</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_admin" class="form-control" value="<%= @team_member.admin %>" disabled>
+                    <label for="team_member_admin">Admin</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_email" class="form-control" value="<%= @team_member.email %>" disabled>
+                    <label for="team_member_email">Email</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_mobile_number" class="form-control" value="0<%= @team_member.mobile_number %>" disabled>
+                    <label for="team_member_mobile_number">Mobile Number</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_created_at" class="form-control" value="<%= @team_member.get_created_at %>" disabled>
+                    <label for="team_member_created_at">Created At</label>
+                  </div>
+                </div>
+
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_last_update" class="form-control" value="<%= @team_member.last_update %>" disabled>
+                    <label for="team_member_last_update">Last Update</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_sign_in_count" class="form-control" value="<%= @team_member.sign_in_count %>" disabled>
+                    <label for="team_member_sign_in_count">Sign In Count</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_current_sign_in" class="form-control" value="<%= @team_member.get_current_sign_in %>" disabled>
+                    <label for="team_member_current_sign_in">Current Sign In</label>
+                  </div>
+                </div>
+
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_current_sign_in_ip" class="form-control" value="<%= @team_member.current_sign_in_ip %>" disabled>
+                    <label for="team_member_current_sign_in_ip">Current Sign In IP</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_last_sign_in" class="form-control" value="<%= @team_member.get_last_sign_in %>" disabled>
+                    <label for="team_member_last_sign_in">Last Sign In</label>
+                  </div>
+                </div>
+
+                <div class="col-md">
+                  <div class="form-floating">
+                    <input type="text-field" name="team_member_last_sign_in_ip" class="form-control" value="<%= @team_member.last_sign_in_ip %>" disabled>
+                    <label for="team_member_last_sign_in_ip">Last Sign In IP</label>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>

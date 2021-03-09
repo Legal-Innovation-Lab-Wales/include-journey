@@ -60,7 +60,7 @@ $border-width: 1px;
     text-align: left;
   }
 
-  &.team_member {
+  &.team_members {
     section#staff, section#users {
       td {
         height: 55px;
@@ -74,6 +74,20 @@ $border-width: 1px;
           text-decoration: none;
           color: $white;
           cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &.team_member section#details {
+    .container {
+      max-width: 500px;
+
+      .form-group, .form-floating {
+        margin-bottom: 0.5rem;
+
+        label {
+          color: $black;
         }
       }
     }
