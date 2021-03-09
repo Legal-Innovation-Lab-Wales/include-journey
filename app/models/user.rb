@@ -12,10 +12,6 @@ class User < ApplicationRecord
 
   has_many :crisis_events, foreign_key: :user_id
 
-  def get_last_sign_in
-    self.last_sign_in_at.present? ? self.last_sign_in_at.strftime("%d/%m/%Y %I:%M %p") : ''
-  end
-
   def get_release_date
     self.release_date.present? ? self.release_date.strftime("%d/%m/%Y") : ''
   end

@@ -20,22 +20,6 @@ class TeamMember < ApplicationRecord
   has_many :crisis_events, foreign_key: 'closed_by'
   has_many :crisis_notes, foreign_key: :team_member_id
 
-  def get_last_sign_in
-    self.last_sign_in_at.present? ? self.last_sign_in_at.strftime("%d/%m/%Y %I:%M %p") : ''
-  end
-
-  def get_current_sign_in
-    self.current_sign_in_at.present? ? self.current_sign_in_at.strftime("%d/%m/%Y %I:%M %p") : ''
-  end
-
-  def get_created_at
-    self.created_at.strftime("%d/%m/%Y %I:%M %p")
-  end
-
-  def last_update
-    self.updated_at.strftime("%d/%m/%Y %I:%M %p")
-  end
-
   private
 
   # validations

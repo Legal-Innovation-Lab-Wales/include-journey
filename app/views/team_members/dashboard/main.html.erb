@@ -1,10 +1,10 @@
 <main class="container dashboard team_members">
   <section class="row">
     <div class="col mb-3">
-      <h2 class="mb-3">Dashboard</h2>
+      <h3>Dashboard</h3>
       <div class="container buttons">
         <div class="row">
-          <%= link_to '#staff', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to '#team_members', class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -12,7 +12,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col">Staff</div>
+                <div class="col">Team Members</div>
               </div>
             </div>
           <% end %>
@@ -47,7 +47,7 @@
   <% if current_team_member.admin? and @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
       <div class="col">
-        <h3>Staff Awaiting Approval</h3>
+        <h3>Team Members Awaiting Approval</h3>
         <table class="table table-dark table-striped align-middle">
           <thead>
             <th scope="col">First</th>
@@ -76,9 +76,9 @@
       </div>
     </section>
   <% end %>
-  <section class="row" id="staff">
+  <section class="row" id="team_members">
     <div class="col">
-      <h3>Staff</h3>
+      <h3>Team Members</h3>
       <table class="table table-dark table-striped align-middle">
         <thead>
           <th scope="col">First</th>
@@ -143,7 +143,7 @@
   </section>
   <section class="row" id="users">
     <div class="col">
-      <h3>User</h3>
+      <h2 class="mb-3">User</h2>
       <table class="table table-dark table-striped">
         <thead>
           <th scope="col">First</th>
