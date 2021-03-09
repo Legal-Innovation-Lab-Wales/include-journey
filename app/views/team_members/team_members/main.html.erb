@@ -32,29 +32,31 @@
       </table>
     </div>
   </section>
-  <section class="row">
-    <div class="col">
-      <h3>Team Member Sign In</h3>
-      <table class="table table-dark table-striped">
-        <thead>
-          <th scope="col">Sign In Count</th>
-          <th scope="col">Current Sign In</th>
-          <th scope="col">Current Sign In IP</th>
-          <th scope="col">Last Sign In</th>
-          <th scope="col">Last Sign In IP</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= @team_member.sign_in_count %></td>
-            <td><%= @team_member.get_current_sign_in %></td>
-            <td><%= @team_member.current_sign_in_ip %></td>
-            <td><%= @team_member.get_last_sign_in %></td>
-            <td><%= @team_member.last_sign_in_ip %></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <% if @team_member.sign_in_count > 0 %>
+    <section class="row">
+      <div class="col">
+        <h3>Team Member Sign In</h3>
+        <table class="table table-dark table-striped">
+          <thead>
+            <th scope="col">Sign In Count</th>
+            <th scope="col">Current Sign In</th>
+            <th scope="col">Current Sign In IP</th>
+            <th scope="col">Last Sign In</th>
+            <th scope="col">Last Sign In IP</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @team_member.sign_in_count %></td>
+              <td><%= @team_member.get_current_sign_in %></td>
+              <td><%= @team_member.current_sign_in_ip %></td>
+              <td><%= @team_member.get_last_sign_in %></td>
+              <td><%= @team_member.last_sign_in_ip %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% end %>
   <% if @team_member.wba_team_members.count > 0 %>
     <section class="row">
       <div class="col">
