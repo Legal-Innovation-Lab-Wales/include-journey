@@ -76,12 +76,12 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to user_path(wba_team_member.user) do %>
+                  <%= link_to wba_team_member_path(@team_member, wba_team_member) do %>
                     <%= wba_team_member.created %>
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to user_path(wba_team_member.user) do %>
+                  <%= link_to wba_team_member_path(@team_member, wba_team_member) do %>
                     <%= wba_team_member.last_update %>
                   <% end %>
               </td>
