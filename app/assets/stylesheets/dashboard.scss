@@ -73,13 +73,33 @@ $border-width: 1px;
     }
   }
 
-  &.user section.wellbeing .sliders .container {
-    .col-md-5 {
-      text-align: left;
+  &.user section.wellbeing {
+    .services, .sliders {
+      margin-top: 1rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 3rem;
+      }
     }
 
-    input {
-      cursor: pointer;
+    .chart {
+      margin-top: 1rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+    }
+
+    .sliders {
+      .col-3, .col-md-5 {
+        &:first-child {
+          text-align: left;
+        }
+      }
+
+      input {
+        cursor: pointer;
+      }
     }
   }
 }
