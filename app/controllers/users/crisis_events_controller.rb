@@ -4,6 +4,7 @@ module Users
   # app/controllers/users/crisis_events_controller.rb
   class CrisisEventsController < UsersApplicationController
     before_action :crisis_event_params, only: :new
+    after_action :sms, :email, only: :new
 
     # POST /crisis_events/new
     def new
@@ -14,6 +15,24 @@ module Users
       else
         render @crisis_event.errors, status: :unprocessable_entity
       end
+    end
+
+    protected
+
+    def sms
+      puts '=========================================================================================================='
+      puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
+      puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"
+      puts "User: #{current_user.first_name} #{current_user.last_name} 0#{current_user.mobile_number}"
+      puts '=========================================================================================================='
+    end
+
+    def email
+      puts '=========================================================================================================='
+      puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
+      puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"
+      puts "User: #{current_user.first_name} #{current_user.last_name} 0#{current_user.email}"
+      puts '=========================================================================================================='
     end
 
     private
