@@ -4,34 +4,34 @@ window.addEventListener('DOMContentLoaded',() => {
         // TODO: These can be stored against a DB record rather than hardcoded
         scale = [{
           description: "Abysmal",
-          colour: "#E04444BF"
+          colour: "#E04444"
         },{
           description: "Dreadful",
-          colour: "#E64D52BF"
+          colour: "#E64D52"
         },{
           description: "Rubbish",
-          colour: "#E86754BF"
+          colour: "#E86754"
         },{
           description: "Bad",
-          colour: "#EC8754BF"
+          colour: "#EC8754"
         },{
           description: "Mediocre",
-          colour: "#F0A656BF"
+          colour: "#F0A656"
         },{
           description: "Fine",
-          colour: "#DFC54CBF"
+          colour: "#DFC54C"
         },{
           description: "Good",
-          colour: "#BFCA48BF"
+          colour: "#BFCA48"
         },{
           description: "Great",
-          colour: "#9ECB46BF"
+          colour: "#9ECB46"
         },{
           description: "Superb",
-          colour: "#BFCB43BF"
+          colour: "#BFCB43"
         },{
           description: "Perfect",
-          colour: "#5DAD3ABF"
+          colour: "#5DAD3A"
         }]
 
   if (wellbeing_chart) {
@@ -57,7 +57,8 @@ window.addEventListener('DOMContentLoaded',() => {
           ticks: {
             max: 10,
             min: 0,
-            stepSize: 1
+            stepSize: 1,
+            display: false
           }
         },
         animation: {
