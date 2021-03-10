@@ -74,7 +74,9 @@ $border-width: 1px;
   }
 
   &.user section.wellbeing .sliders .container {
-    text-align: left;
+    .col-md-5 {
+      text-align: left;
+    }
 
     input {
       cursor: pointer;
