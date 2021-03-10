@@ -184,28 +184,28 @@ if WbaSelf.count.zero?
 end
 
 CrisisType.create!(
-  category: 'SELF HARM',
+  category: 'Self Harm',
+  team_member_id: 1
+)
+
+CrisisType.create!(
+  category: 'Harming Others',
+  team_member_id: 1
+)
+
+CrisisType.create!(
+  category: 'Suicide',
   team_member_id: 1,
 )
 
 CrisisType.create!(
-  category: 'HARMING OTHERS',
-  team_member_id: 1,
+  category: 'Overdose',
+  team_member_id: 1
 )
 
 CrisisType.create!(
-  category: 'SUICIDE',
-  team_member_id: 1,
-)
-
-CrisisType.create!(
-  category: 'OVER DOSE',
-  team_member_id: 1,
-)
-
-CrisisType.create!(
-  category: 'DOMESTIC VIOLENCE',
-  team_member_id: 1,
+  category: 'Domestic Violence',
+  team_member_id: 1
 )
 
 10.times do

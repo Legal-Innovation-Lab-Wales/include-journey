@@ -38,17 +38,51 @@
               <% end %>
             <% end %>
             <% if current_user %>
+              <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#sosModal">
+                SOS <i class="fas fa-exclamation-circle"></i>
+              </a>
               <%= link_to edit_user_registration_path, class: "btn btn-success m-1" do %>
                 Edit Profile <i class="fas fa-user-edit"></i>
               <% end %>
               <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning m-1" do %>
-                Logout<i class="fas fa-sign-out-alt"></i>
+                Logout <i class="fas fa-sign-out-alt"></i>
               <% end %>
             <% end %>
           </div>
         </div>
       </div>
     </nav>
+
+    <% if current_user %>
+      <div class="modal fade" id="sosModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="sosModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="sosModalLabel">SOS Request</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>If you are in need of help please let us know of the situation you are currently dealing with along
+              with any additional information you can share at this time.</p>
+
+              <%= form_with model: @crisis_event do |f| %>
+                <div class="form-floating mb-2">
+                  <%= f.collection_select :crisis_type_id, CrisisType.all, :id, :category, {}, { class: 'form-select' } %>
+                  <%= f.label :crisis_type_id, 'Situation'%>
+                </div>
+
+                <div class="form-floating mb-2">
+                  <%= f.text_area :additional_info, class: 'form-control', style: 'height: 150px' %>
+                  <%= f.label :additional_info, 'Additional Information'%>
+                </div>
+
+                <%= f.submit 'Request Help', class: 'btn btn-primary mt-2' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
   <% flash.each do |type, msg| %>
@@ -57,7 +91,7 @@
     </div>
   <% end %>
 
-    <%= yield %>
+  <%= yield %>
 
   </body>
 </html>
