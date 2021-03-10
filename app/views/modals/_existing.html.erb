@@ -8,7 +8,7 @@
       <div class="modal-body">
         <p>You currently have the following open SOS requests raised in the past hour.</p>
         <% current_user.active_crisis_events.each do |crisis_event| %>
-          <div class="card">
+          <div class="card mb-3">
             <div class="card-header">
               <span><%= crisis_event.crisis_type.category %></span>
               <span style="float: right"><%= crisis_event.created %></span>
@@ -24,7 +24,7 @@
             </div>
           </div>
         <% end %>
-        <button class="btn btn-primary mt-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#sosModal">
+        <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#sosModal">
           Create New Request
         </button>
       </div>

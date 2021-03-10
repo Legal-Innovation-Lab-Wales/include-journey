@@ -3,11 +3,11 @@
 module Users
   # app/controllers/users/crisis_events_controller.rb
   class CrisisEventsController < UsersApplicationController
-    before_action :crisis_event_params, only: :new
-    after_action :sms, :email, only: :new
+    before_action :crisis_event_params, only: :create
+    after_action :sms, :email, only: :create
 
-    # POST /crisis_events/new
-    def new
+    # POST /crisis_events/create
+    def create
       if (@crisis_event = current_user.crisis_events.create!(crisis_event_params))
         respond_to do |format|
           format.html { redirect_to authenticated_user_root_path, alert: crisis_event_alert }
