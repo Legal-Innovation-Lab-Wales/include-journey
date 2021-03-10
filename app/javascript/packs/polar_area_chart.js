@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded',() => {
   const wellbeing_chart = document.getElementById('wellbeing-chart'),
         sliders = document.querySelectorAll('.sliders input'),
-        // TODO: These can be stored against a DB record rather than hardcoded
         scale = [{
           description: "Abysmal",
           colour: "#E04444"
