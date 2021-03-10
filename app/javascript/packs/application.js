@@ -7,6 +7,10 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+require("chartkick")
+require("chart.js")
+
+import "./polar_area_chart"
 
 Rails.start()
 Turbolinks.start()
