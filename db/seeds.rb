@@ -195,7 +195,7 @@ CrisisType.create!(
 
 CrisisType.create!(
   category: 'Suicide',
-  team_member_id: 1,
+  team_member_id: 1
 )
 
 CrisisType.create!(
