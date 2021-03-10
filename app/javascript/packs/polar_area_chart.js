@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded',() => {
   const wellbeing_chart = document.getElementById('wellbeing-chart'),
-        sliders = document.querySelectorAll('.sliders input'),
+        sliders = document.querySelectorAll('.sliders input[type="range"]'),
         scale = [{
           description: "Abysmal",
           colour: "#E04444"
@@ -73,16 +73,21 @@ window.addEventListener('DOMContentLoaded',() => {
       }
     })
 
+    const setDescription = function(input) {
+      const description = input.closest('.row').querySelector('.description')
+      description.innerText = scale[input.value - 1].description
+    }
+
     sliders.forEach((input,index) => {
       input.addEventListener('change',() => {
         chart.data.datasets[0].data[index] = input.value
         chart.data.datasets[0].backgroundColor[index] = scale[input.value - 1].colour
-
-        const description = input.closest('.row').querySelector('.description')
-        description.innerText = scale[input.value - 1].description
+        setDescription(input)
 
         chart.update()
       })
+
+      setDescription(input)
     })
   }
 })

@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'users/dashboard#main', as: :authenticated_user_root
 
+    post '/wba_selves/create', to: 'users/wba_selves#create', as: :wba_selves
+
     post '/crisis_events/create', to: 'users/crisis_events#create', as: :crisis_events
   end
 
