@@ -65,7 +65,7 @@
               <p>If you are in need of help please let us know of the situation you are currently dealing with along
               with any additional information you can share at this time.</p>
 
-              <%= form_with model: @crisis_event do |f| %>
+              <%= form_with model: CrisisEvent.new do |f| %>
                 <div class="form-floating mb-2">
                   <%= f.collection_select :crisis_type_id, CrisisType.all, :id, :category, {}, { class: 'form-select' } %>
                   <%= f.label :crisis_type_id, 'Situation'%>
