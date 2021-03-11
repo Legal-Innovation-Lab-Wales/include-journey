@@ -57,8 +57,10 @@
     </nav>
 
      <% if current_user %>
-      <%= render partial: '/modals/sos/new' %>
-      <%= render partial: '/modals/sos/existing' %>
+      <% unless devise_controller? %>
+          <%= render partial: '/modals/sos/new' %>
+          <%= render partial: '/modals/sos/existing' %>
+      <% end %>
     <% end %>
   <% end %>
 
