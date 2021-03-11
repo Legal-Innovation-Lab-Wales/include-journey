@@ -26,11 +26,24 @@
 
 .footers{
   .title {
-    color: $grey;
+    color: $black;
     text-decoration: none;
+
+    h3:hover {
+      color: $brand-secondary;
+    }
   }
-  a:hover{
-    text-decoration: underline;
-    color: $grey;
+
+  h3 {
+    color: $black;
+  }
+
+  a.btn {
+    color: $white;
+    background-color: $black;
+
+    &:hover {
+      color: $brand-secondary;
+    }
   }
 }
