@@ -51,10 +51,11 @@
 
     <%= yield %>
 
-  <footer class="text-center text-white bg-brand";>
-    <div class="footers container pt-4">
-      <a class="title" href="https://include-uk.com"><h3> Include uk</h3></a>
-      x
+  <% if user_signed_in? %>
+    <footer class="text-center text-white bg-brand";>
+      <div class="footers container pt-4">
+       <a class="title" href="https://include-uk.com"><h3> Include uk</h3></a>
+      <h3>x</h3>
       <a class="title" href="https://legaltech.wales/"><h3>Legal Innovation Lab Wales</h3></a>
       <section class="mb-4">
         <a class="btn btn-link btn-floating btn-lg text-dark m-1 bg-white" href="https://www.facebook.com/includehub" role="button"
@@ -69,6 +70,7 @@
       © 2021 Copyright:
       <a class="text-dark" href="https://legaltech.wales/">Legal Innovation Lab Wales</a>
     </div>
-  </footer>
-  </body>
+    </footer>
+  <% end %>
+    </body>
 </html>
