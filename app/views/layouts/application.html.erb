@@ -66,9 +66,27 @@
               with any additional information you can share at this time.</p>
 
               <%= form_with model: CrisisEvent.new do |f| %>
-                <div class="form-floating mb-2">
-                  <%= f.collection_select :crisis_type_id, CrisisType.all, :id, :category, {}, { class: 'form-select' } %>
-                  <%= f.label :crisis_type_id, 'Situation'%>
+<!--                <div class="form-floating mb-2">-->
+                  <%#= f.collection_select :crisis_type_id, CrisisType.all, :id, :category, {}, { class: 'form-select' } %>
+                  <%#= f.label :crisis_type_id, 'Situation'%>
+<!--                </div>-->
+
+                <div class="row mb-2">
+                  <div class="col-md">
+                    <%= f.collection_radio_buttons :crisis_type_id, CrisisType.all.limit((CrisisType.all.count/2.0).ceil), :id, :category, {} do |b| %>
+                      <div class="form-check">
+                        <%= b.radio_button(class: 'form-check-input') + b.label(class: 'form-check-label') %>
+                      </div>
+                    <% end %>
+                  </div>
+
+                  <div class="col-md">
+                    <%= f.collection_radio_buttons :crisis_type_id, CrisisType.all.offset((CrisisType.all.count/2.0).ceil), :id, :category, {} do |b| %>
+                      <div class="form-check">
+                        <%= b.radio_button(class: 'form-check-input') + b.label(class: 'form-check-label') %>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
 
                 <div class="form-floating mb-2">
@@ -86,8 +104,9 @@
   <% end %>
 
   <% flash.each do |type, msg| %>
-    <div class="alert <%= alert_class_for(type) %> position-absolute top-0 start-50 translate-middle-x px-5">
+    <div class="alert <%= alert_class_for(type) %> alert-dismissible fade show position-absolute top-0 start-50 translate-middle-x px-5" role="alert">
       <%= msg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 
