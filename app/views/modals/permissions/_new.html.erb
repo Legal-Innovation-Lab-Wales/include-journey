@@ -1,0 +1,46 @@
+<div class="modal fade show" id="permissionsModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     aria-labelledby="permissionsModalLabel" style="display: block" aria-modal="true" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="permissionsModalLabel">Permissions</h5>
+      </div>
+      <div class="modal-body">
+        <p>Please let us know which Include UK team members you are happy sharing your data with.</p>
+
+        <%= form_with model: @last_wba_self, url: wba_self_permissions_path(@last_wba_self), method: :post do |f| %>
+
+          <div class="container mb-2">
+            <div class="row">
+              <%  @team_members.each do |team_member| %>
+                <div class="col-6">
+                  <div class="form-check form-switch">
+                    <%= f.check_box "team_member_#{team_member.id}".to_sym, class: 'form-check-input', checked: true %>
+                    <%= f.label "team_member_#{team_member.id}".to_sym, "#{team_member.first_name} #{team_member.last_name}" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <%= f.submit 'Share', class: 'btn btn-primary mt-2' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('modal-open')
+
+      const permissionsModal = document.querySelector('#permissionsModal')
+
+      permissionsModal.addEventListener('click', e => {
+          if (e.target === permissionsModal) {
+              permissionsModal.classList.add('modal-static')
+              setTimeout(() => permissionsModal.classList.remove('modal-static'), 500)
+          }
+      })
+  })
+</script>

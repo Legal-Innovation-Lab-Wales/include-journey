@@ -7,7 +7,7 @@ module Users
     private
 
     def active_crisis_events
-      @active_crisis_events = current_user.crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
+      @active_crisis_events = current_user.active_crisis_events
     end
 
     def crisis_event

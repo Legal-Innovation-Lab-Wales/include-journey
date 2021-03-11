@@ -3,7 +3,8 @@
 module Users
   # app/controllers/users/dashboard_controller.rb
   class DashboardController < UsersApplicationController
-    before_action :wba_self, :wellbeing_metrics, :last_scores, only: :main
+    before_action :wba_self, :wellbeing_metrics, :last_scores, :last_wba_self, only: :main
+    before_action :last_wba_self, :team_members, only: :main, if: -> { wba_self_permissions_required? }
 
     def main
       render template: 'users/dashboard/main'
@@ -23,6 +24,10 @@ module Users
       @wba_self = WbaSelf.new
     end
 
+    def wba_self_permissions_required?
+      current_user.wba_self_permissions_required?
+    end
+
     def last_scores
       last_wba_self = current_user.wba_selves.includes(:wba_self_scores).last
 
@@ -33,6 +38,14 @@ module Users
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all
+    end
+
+    def last_wba_self
+      @last_wba_self = current_user.wba_selves.last
+    end
+
+    def team_members
+      @team_members = TeamMember.all
     end
   end
 end

@@ -4,6 +4,7 @@ module Users
   # app/controllers/users/wba_selves_controller.rb
   class WbaSelvesController < UsersApplicationController
     before_action :wellbeing_metrics, :wba_selves_params, only: :create
+    before_action :wba_self, :team_members, :wba_self_permissions_params, only: :create_permissions
 
     # POST /wba_selves/create
     def create
@@ -24,10 +25,39 @@ module Users
       end
     end
 
+    # POST /wba_selves/:wba_self_id/permissions
+    def create_permissions
+      @team_members.each do |team_member|
+        allowed = wba_self_permissions_params[team_member_id(team_member.id)]
+
+        next if allowed == '0'
+
+        unless WbaSelfPermission.create!({ wba_self_id: @wba_self.id, team_member_id: team_member.id })
+          puts("WBA Self Permission for user #{team_member.email} was not recorded for WBA Self #{@wba_self.id}")
+        end
+      end
+
+      respond_to do |format|
+        format.html { redirect_to authenticated_user_root_path, alert: 'Permissions Set' }
+      end
+    end
+
     private
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all
+    end
+
+    def team_members
+      @team_members = TeamMember.all
+    end
+
+    def wba_self
+      @wba_self = WbaSelf.find(params[:wba_self_id])
+    end
+
+    def wba_self_permissions_params
+      params.require(:wba_self).permit(@team_members.map { |team_member| team_member_id(team_member.id) })
     end
 
     def wba_selves_params
@@ -36,6 +66,10 @@ module Users
 
     def metric_id(metric_id)
       "wellbeing_metric_#{metric_id}".to_sym
+    end
+
+    def team_member_id(team_member_id)
+      "team_member_#{team_member_id}".to_sym
     end
   end
 end

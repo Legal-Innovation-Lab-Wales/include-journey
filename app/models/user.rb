@@ -16,6 +16,16 @@ class User < ApplicationRecord
     release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
   end
 
+  def active_crisis_events
+    crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
+  end
+
+  def wba_self_permissions_required?
+    return unless wba_selves.last.present?
+
+    !wba_selves.includes(:wba_self_permissions).last.wba_self_permissions.present?
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,
