@@ -1,7 +1,8 @@
 module Users
   # app/controllers/users/users_application_controller.rb
   class UsersApplicationController < ApplicationController
-    before_action :authenticate_user!, :crisis_event, :crisis_types
+    before_action :authenticate_user!
+    before_action :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
     private
 

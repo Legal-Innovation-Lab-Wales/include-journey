@@ -16,7 +16,7 @@
             <div class="card-body">
               <p>
               <% if crisis_event.additional_info.present? %>
-                <%= crisis_event.additional_info %>
+                <%= simple_format(crisis_event.additional_info) %>
               <% else %>
                 No additional information was provided.
               <% end %>
