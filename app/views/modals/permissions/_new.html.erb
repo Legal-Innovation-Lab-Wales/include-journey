@@ -6,25 +6,33 @@
         <h5 class="modal-title" id="permissionsModalLabel">Permissions</h5>
       </div>
       <div class="modal-body">
-        <p>Please let us know which Include UK Team Members you are happy sharing the Wellbeing Asessment you submitted
-          at <%= @last_wba_self.created %> with.</p>
+        <p>Please let us know which Include UK team members you are happy sharing the below information with.</p>
 
-        <%= form_with model: @last_wba_self, url: wba_self_permissions_path(@last_wba_self), method: :post do |f| %>
-
-          <div class="container mb-2">
+        <% if @last_wba_self.present? %>
+          <div class="container mb-4">
             <div class="row">
-              <%  @team_members.each do |team_member| %>
-                <div class="col-6">
-                  <div class="form-check form-switch">
-                    <%= f.check_box "team_member_#{team_member.id}".to_sym, class: 'form-check-input', checked: last_wba_self_permission(team_member.id) %>
-                    <%= f.label "team_member_#{team_member.id}".to_sym, "#{team_member.first_name} #{team_member.last_name}" %>
-                  </div>
-                </div>
-              <% end %>
+              <div class="col"><strong>Wellbeing Asessment</strong></div>
+              <div class="col" style="text-align: right"><strong><%= @last_wba_self.created %></strong></div>
             </div>
           </div>
 
-          <%= f.submit 'Share', class: 'btn btn-primary mt-2' %>
+          <%= form_with model: @last_wba_self, url: wba_self_permissions_path(@last_wba_self), method: :post do |f| %>
+            <div class="container mb-2">
+              <div class="row">
+                <%  @team_members.each do |team_member| %>
+                  <div class="col-6 p-1">
+                    <%= f.check_box "team_member_#{team_member.id}".to_sym, class: 'btn-check', checked: last_wba_self_permission(team_member.id) %>
+                    <%= f.label "team_member_#{team_member.id}".to_sym, "#{team_member.first_name} #{team_member.last_name}", class: 'btn btn-outline-primary w-100' %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  <%= f.submit 'Share', class: 'btn btn-primary mt-2' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
