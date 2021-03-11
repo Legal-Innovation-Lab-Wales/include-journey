@@ -1,0 +1,26 @@
+@import "variables";
+
+#sosModal {
+  form {
+    label.btn {
+      color: $black;
+    }
+  }
+}
+
+#existingSosModal {
+  form {
+    textarea {
+      height: 150px;
+      border: none;
+    }
+
+    .card-footer {
+      padding: 0;
+
+      input[type="submit"] {
+        float: right;
+      }
+    }
+  }
+}

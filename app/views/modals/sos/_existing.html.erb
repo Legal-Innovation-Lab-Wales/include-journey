@@ -1,0 +1,44 @@
+<div class="modal fade" id="existingSosModal" tabindex="-1" aria-labelledby="existingSosModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="existingSosModalLabel">Existing SOS Requests</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>You currently have the following open SOS requests raised in the past hour.</p>
+
+        <% @active_crisis_events.each do |crisis_event| %>
+          <%= form_with model: crisis_event, url: update_crisis_event_path(crisis_event), method: :put do |f| %>
+            <div class="card mb-3">
+                <div class="card-header">
+                  <%= f.hidden_field :crisis_type_id, value: crisis_event.crisis_type.id %>
+                  <span><%= crisis_event.crisis_type.category %></span>
+                  <span style="float: right"><%= crisis_event.created %></span>
+                </div>
+                <div class="form-floating">
+                  <%= f.text_area :additional_info, class: 'form-control' do %>
+                    <%= simple_format(crisis_event.additional_info) %>
+                  <% end %>
+                  <%= f.label :additional_info, 'Additional Information'%>
+                </div>
+              <div class="card-footer">
+                <%= f.submit 'Update', class: 'btn btn-primary m-2' %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#sosModal">
+                Create New Request
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
