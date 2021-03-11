@@ -29,9 +29,7 @@ module Users
 
     def create_wba_self_permissions
       @team_members.each do |team_member|
-        allowed = wba_self_permissions_params[team_member_id(team_member.id)]
-
-        next if allowed == '0'
+        next if wba_self_permissions_params[team_member_id(team_member.id)] == '0'
 
         unless WbaSelfPermission.create!({ wba_self_id: @wba_self.id, team_member_id: team_member.id })
           puts("WBA Self Permission for user #{team_member.email} was not recorded for WBA Self #{@wba_self.id}")
