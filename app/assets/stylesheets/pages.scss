@@ -26,11 +26,11 @@
 
 .footers{
   .title {
-    color: white;
+    color: $grey;
     text-decoration: none;
   }
   a:hover{
     text-decoration: underline;
-    color: grey;
+    color: $grey;
   }
 }
