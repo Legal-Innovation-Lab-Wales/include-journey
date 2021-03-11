@@ -29,7 +29,7 @@ module Users
 
     def create_wba_self_permissions
       @team_members.each do |team_member|
-        next unless @wba_self_permissions_params[team_member_id(team_member.id)] == '1'
+        next unless wba_self_permissions_params[team_member_id(team_member.id)] == '1'
 
         unless WbaSelfPermission.create!({ wba_self_id: @wba_self.id, team_member_id: team_member.id })
           puts("WBA Self Permission for user #{team_member.email} was not recorded for WBA Self #{@wba_self.id}")
@@ -60,7 +60,7 @@ module Users
     end
 
     def wba_self_permissions_params
-      @wba_self_permissions_params = params.require(:wba_self).permit(@team_members.map { |team_member| team_member_id(team_member.id) })
+      params.require(:wba_self).permit(@team_members.map { |team_member| team_member_id(team_member.id) })
     end
 
     def wba_selves_params
@@ -68,7 +68,7 @@ module Users
     end
 
     def validate_wba_self_permissions_params
-      return if @team_members.map { |team_member| @wba_self_permissions_params[team_member_id(team_member.id)] }.include? '1'
+      return if @team_members.map { |team_member| wba_self_permissions_params[team_member_id(team_member.id)] }.include? '1'
 
       redirect_to authenticated_user_root_path, alert: 'You must select at least one team member!'
     end
