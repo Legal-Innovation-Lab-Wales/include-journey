@@ -18,10 +18,8 @@
           <div class="container mb-2">
             <div class="row">
               <%= f.collection_radio_buttons :crisis_type_id, @crisis_types, :id, :category, {} do |b| %>
-                <div class="col-6">
-                  <div class="form-check">
-                    <%= b.radio_button(class: 'form-check-input', required: true) + b.label(class: 'form-check-label') %>
-                  </div>
+                <div class="col-6 p-1">
+                    <%= b.radio_button(class: 'btn-check', required: true) + b.label(class: 'btn btn-outline-primary w-100') %>
                 </div>
               <% end %>
             </div>
@@ -32,7 +30,13 @@
             <%= f.label :additional_info, 'Additional Information'%>
           </div>
 
-          <%= f.submit 'Request Help', class: 'btn btn-primary mt-2' %>
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <%= f.submit 'Request Help', class: 'btn btn-primary mt-2' %>
+              </div>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
