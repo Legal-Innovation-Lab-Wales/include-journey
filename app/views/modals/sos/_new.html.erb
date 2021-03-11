@@ -15,10 +15,9 @@
             <%#= f.label :crisis_type_id, 'Situation'%>
 <!--          </div>-->
 
-
           <div class="row mb-2">
             <div class="col-md">
-              <%= f.collection_radio_buttons :crisis_type_id, @crisis_types.limit((CrisisType.all.count/2.0).ceil), :id, :category, {} do |b| %>
+              <%= f.collection_radio_buttons :crisis_type_id, @crisis_types_first_half, :id, :category, {} do |b| %>
                 <div class="form-check">
                   <%= b.radio_button(class: 'form-check-input', required: true) + b.label(class: 'form-check-label') %>
                 </div>
@@ -26,7 +25,7 @@
             </div>
 
             <div class="col-md">
-              <%= f.collection_radio_buttons :crisis_type_id, @crisis_types.offset((CrisisType.all.count/2.0).ceil), :id, :category, {} do |b| %>
+              <%= f.collection_radio_buttons :crisis_type_id, @crisis_types_last_half, :id, :category, {} do |b| %>
                 <div class="form-check">
                   <%= b.radio_button(class: 'form-check-input', required: true) + b.label(class: 'form-check-label') %>
                 </div>

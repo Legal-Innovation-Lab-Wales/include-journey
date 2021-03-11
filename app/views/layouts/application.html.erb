@@ -40,7 +40,7 @@
             <% if current_user %>
               <% unless devise_controller? %>
                 <a class="btn btn-danger m-1" data-bs-toggle="modal"
-                   data-bs-target="<%= current_user.active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
+                   data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
                   SOS <i class="fas fa-exclamation-circle"></i>
                 </a>
               <% end %>

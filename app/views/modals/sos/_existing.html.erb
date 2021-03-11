@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <p>You currently have the following open SOS requests raised in the past hour.</p>
-        <% current_user.active_crisis_events.each do |crisis_event| %>
+        <% @active_crisis_events.each do |crisis_event| %>
           <%= form_with model: crisis_event, url: update_crisis_event_path(crisis_event), method: :put do |f| %>
             <div class="card mb-3">
                 <div class="card-header">
