@@ -25,17 +25,17 @@
 }
 
 .footers{
-  .title {
-    color: $black;
-    text-decoration: none;
-
-    h3:hover {
-      color: $brand-secondary;
-    }
-  }
-
   h3 {
     color: $black;
+
+    a {
+      color: $black;
+      text-decoration: none;
+
+      &:hover {
+        color: $brand-secondary;
+      }
+    }
   }
 
   a.btn {
