@@ -4,21 +4,14 @@ module Users
   # app/controllers/users/wba_selves_controller.rb
   class WbaSelvesController < UsersApplicationController
     before_action :wellbeing_metrics, :wba_selves_params, only: :create
-    before_action :wba_self, :team_members, :wba_self_permissions_params, only: :create_permissions
+    after_action :create_wba_self_scores, only: :create
+    before_action :wba_self, :team_members, :wba_self_permissions_params, :create_wba_self_permissions, only: :permissions
 
     # POST /wba_selves/create
     def create
       if (@wba_self = current_user.wba_selves.create!({ user_id: current_user.id }))
-        @wellbeing_metrics.each do |metric|
-          value = wba_selves_params[metric_id(metric.id)]
-
-          unless WbaSelfScore.create!({ wba_self_id: @wba_self.id, wellbeing_metric_id: metric.id, value: value })
-            puts("Wellbeing Metric #{metric.name} of value #{value} was not recorded for WBA Self #{@wba_self.id}")
-          end
-        end
-
         respond_to do |format|
-          format.html { redirect_to authenticated_user_root_path, alert: 'Success!' }
+          format.html { redirect_to authenticated_user_root_path, alert: 'Wellbeing assessment successfully submit' }
         end
       else
         render @wba_self.errors, status: :unprocessable_entity
@@ -26,7 +19,15 @@ module Users
     end
 
     # POST /wba_selves/:wba_self_id/permissions
-    def create_permissions
+    def permissions
+      respond_to do |format|
+        format.html { redirect_to authenticated_user_root_path, alert: 'Sharing permissions for team members successfully set' }
+      end
+    end
+
+    private
+
+    def create_wba_self_permissions
       @team_members.each do |team_member|
         allowed = wba_self_permissions_params[team_member_id(team_member.id)]
 
@@ -36,13 +37,17 @@ module Users
           puts("WBA Self Permission for user #{team_member.email} was not recorded for WBA Self #{@wba_self.id}")
         end
       end
-
-      respond_to do |format|
-        format.html { redirect_to authenticated_user_root_path, alert: 'Permissions Set' }
-      end
     end
 
-    private
+    def create_wba_self_scores
+      @wellbeing_metrics.each do |metric|
+        value = wba_selves_params[metric_id(metric.id)]
+
+        unless WbaSelfScore.create!({ wba_self_id: @wba_self.id, wellbeing_metric_id: metric.id, value: value })
+          puts("Wellbeing Metric #{metric.name} of value #{value} was not recorded for WBA Self #{@wba_self.id}")
+        end
+      end
+    end
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all

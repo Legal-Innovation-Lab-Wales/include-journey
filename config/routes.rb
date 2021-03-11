@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     root 'users/dashboard#main', as: :authenticated_user_root
 
     post '/wba_selves/create', to: 'users/wba_selves#create', as: :wba_selves
-    post '/wba_selves/:wba_self_id/permissions', to: 'users/wba_selves#create_permissions', as: :wba_self_permissions
+    post '/wba_selves/:wba_self_id/permissions', to: 'users/wba_selves#permissions', as: :wba_self_permissions
 
     post '/crisis_events/create', to: 'users/crisis_events#create', as: :crisis_events
     put '/crisis_events/:crisis_event_id', to: 'users/crisis_events#update', as: :update_crisis_event

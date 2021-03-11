@@ -3,8 +3,8 @@
 module Users
   # app/controllers/users/dashboard_controller.rb
   class DashboardController < UsersApplicationController
-    before_action :wba_self, :wellbeing_metrics, :last_scores, :last_wba_self, only: :main
-    before_action :last_wba_self, :team_members, only: :main, if: -> { wba_self_permissions_required? }
+    before_action :wba_self, :wellbeing_metrics, :last_wba_self, :last_scores, only: :main
+    before_action :team_members, :second_to_last_wba_self, :last_wba_self_permissions, only: :main, if: -> { current_user.wba_self_permissions_required? }
 
     def main
       render template: 'users/dashboard/main'
@@ -13,10 +13,16 @@ module Users
     def last_score(wellbeing_metric_id)
       return 6 unless @last_scores.present?
 
-      @last_scores.filter { |score| score[:id] == wellbeing_metric_id }.first[:value]
+      @last_scores.select { |score| score[:id] == wellbeing_metric_id }.first[:value]
     end
 
-    helper_method :last_score
+    def last_wba_self_permission(team_member_id)
+      return true unless @last_wba_self.present?
+
+      @last_wba_self_permissions.select { |team_member| team_member[:id] == team_member_id }.present?
+    end
+
+    helper_method :last_score, :last_wba_self_permission
 
     private
 
@@ -24,16 +30,16 @@ module Users
       @wba_self = WbaSelf.new
     end
 
-    def wba_self_permissions_required?
-      current_user.wba_self_permissions_required?
+    def last_scores
+      return unless @last_wba_self.present?
+
+      @last_scores = @last_wba_self.wba_self_scores.collect { |wba_self_score| { id: wba_self_score.wellbeing_metric_id, value: wba_self_score.value }}
     end
 
-    def last_scores
-      last_wba_self = current_user.wba_selves.includes(:wba_self_scores).last
+    def last_wba_self_permissions
+      return unless @second_to_last_wba_self.present?
 
-      return unless last_wba_self.present?
-
-      @last_scores = last_wba_self.wba_self_scores.collect { |wba_self_score| { id: wba_self_score.wellbeing_metric_id, value: wba_self_score.value }}
+      @last_wba_self_permissions = @second_to_last_wba_self.wba_self_permissions.collect { |wba_self_permission| { id: wba_self_permission.team_member_id }}
     end
 
     def wellbeing_metrics
@@ -41,7 +47,11 @@ module Users
     end
 
     def last_wba_self
-      @last_wba_self = current_user.wba_selves.last
+      @last_wba_self = current_user.wba_selves.includes(:wba_self_scores).last
+    end
+
+    def second_to_last_wba_self
+      @second_to_last_wba_self = current_user.wba_selves.includes(:wba_self_permissions).second_to_last
     end
 
     def team_members
