@@ -15,10 +15,7 @@ module Users
     end
 
     def crisis_types
-      # @crisis_types = CrisisType.all
-      half_count = (CrisisType.all.count / 2.0).ceil
-      @crisis_types_first_half = CrisisType.all.limit(half_count)
-      @crisis_types_last_half = CrisisType.all.offset(half_count)
+      @crisis_types = CrisisType.all
     end
   end
 end
