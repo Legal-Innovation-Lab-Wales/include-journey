@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root 'users/dashboard#main', as: :authenticated_user_root
+
+    post '/crisis_events/new', to: 'users/crisis_events#new', as: :crisis_events
   end
 
   authenticated :team_member do
