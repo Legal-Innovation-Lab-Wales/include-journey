@@ -1,3 +1,13 @@
+@import "variables";
+
+#sosModal {
+  form {
+    label.btn {
+      color: $black;
+    }
+  }
+}
+
 #existingSosModal {
   form {
     textarea {
