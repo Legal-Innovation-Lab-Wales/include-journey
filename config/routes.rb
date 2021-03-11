@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     post '/wba_selves/create', to: 'users/wba_selves#create', as: :wba_selves
 
     post '/crisis_events/create', to: 'users/crisis_events#create', as: :crisis_events
+    put '/crisis_events/:crisis_event_id', to: 'users/crisis_events#update', as: :update_crisis_event
   end
 
   authenticated :team_member do
