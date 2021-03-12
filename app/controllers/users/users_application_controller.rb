@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/users_application_controller.rb
   class UsersApplicationController < ApplicationController
-    before_action :wba_self_permissions_required, :journal_entry_permissions_required
+    before_action :authenticate_user!, :wba_self_permissions_required, :journal_entry_permissions_required
     before_action :active_crisis_events, :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
     private
