@@ -35,7 +35,7 @@ module Users
 
     def create_wba_self_permissions
       @team_members.each do |team_member|
-        next unless wba_self_permissions_params["team_member_#{team_member.id}".to_sym] == '1'
+        next unless wba_self_permissions_params["team_member_#{team_member.id}"] == '1'
 
         WbaSelfPermission.create!({ wba_self_id: @wba_self.id, team_member_id: team_member.id })
       end
@@ -58,11 +58,11 @@ module Users
     end
 
     def wba_self_permissions_params
-      params.require(:wba_self).permit(@team_members.map { |team_member| "team_member_#{team_member.id}".to_sym })
+      params.require(:wba_self).permit(@team_members.map { |team_member| "team_member_#{team_member.id}" })
     end
 
     def validate_permissions_params
-      return if @team_members.map { |team_member| wba_self_permissions_params["team_member_#{team_member.id}".to_sym] }.include? '1'
+      return if @team_members.map { |team_member| wba_self_permissions_params["team_member_#{team_member.id}"] }.include? '1'
 
       redirect_to new_wba_self_wba_self_permission_path(@wba_self), alert: 'You must select at least one team member!'
     end

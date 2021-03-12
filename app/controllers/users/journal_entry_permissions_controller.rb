@@ -35,7 +35,7 @@ module Users
 
     def create_journal_entry_permissions
       @team_members.each do |team_member|
-        next unless journal_entry_permissions_params["team_member_#{team_member.id}".to_sym] == '1'
+        next unless journal_entry_permissions_params["team_member_#{team_member.id}"] == '1'
 
         JournalEntryPermission.create!({ journal_entry_id: @journal_entry.id, team_member_id: team_member.id })
       end
@@ -54,7 +54,7 @@ module Users
     end
 
     def journal_entry_permissions_params
-      params.require(:journal_entry).permit(@team_members.map { |team_member| "team_member_#{team_member.id}".to_sym })
+      params.require(:journal_entry).permit(@team_members.map { |team_member| "team_member_#{team_member.id}" })
     end
 
     def team_members
@@ -62,7 +62,7 @@ module Users
     end
 
     def validate_permissions_params
-      return if @team_members.map { |team_member| journal_entry_permissions_params["team_member_#{team_member.id}".to_sym] }.include? '1'
+      return if @team_members.map { |team_member| journal_entry_permissions_params["team_member_#{team_member.id}"] }.include? '1'
 
       redirect_to new_journal_entry_journal_entry_permission_path(@journal_entry), alert: 'You must select at least one team member!'
     end
