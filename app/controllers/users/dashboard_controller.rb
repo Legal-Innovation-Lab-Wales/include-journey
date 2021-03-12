@@ -3,7 +3,7 @@
 module Users
   # app/controllers/users/dashboard_controller.rb
   class DashboardController < UsersApplicationController
-    before_action :wba_self, :wellbeing_metrics, :last_wba_self, :last_scores, :permissions_required, only: :main
+    before_action :wba_self_today, :wba_self, :wellbeing_metrics, :last_wba_self, :last_scores, :permissions_required, only: :main
     before_action :team_members, :second_to_last_wba_self, :last_wba_self_permissions, only: :main, if: -> { @permissions_required }
 
     def main
@@ -27,7 +27,13 @@ module Users
     private
 
     def wba_self
+      return if @wba_self_today
+
       @wba_self = WbaSelf.new
+    end
+
+    def wba_self_today
+      @wba_self_today = current_user.wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).present?
     end
 
     def last_scores

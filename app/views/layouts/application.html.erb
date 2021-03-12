@@ -56,17 +56,19 @@
       </div>
     </nav>
 
-     <% if current_user && !devise_controller? %>
+    <% if current_user && !devise_controller? %>
       <%= render partial: '/modals/sos/new' %>
       <%= render partial: '/modals/sos/existing' %>
     <% end %>
   <% end %>
 
   <% flash.each do |type, msg| %>
-    <div class="alert <%= alert_class_for(type) %> alert-dismissible fade show position-absolute top-0 start-50 translate-middle-x px-5" role="alert">
-      <%= msg %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    <% if type != 'timedout' %>
+      <div class="alert <%= alert_class_for(type) %> alert-dismissible fade show position-absolute top-0 start-50 translate-middle-x px-5" role="alert">
+        <%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
   <% end %>
 
   <%= yield %>
