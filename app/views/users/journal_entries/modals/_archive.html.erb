@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <form>
-          <% @journal_entries.each_with_index do |journal_entry, index| %>
+          <% journal_entries.each_with_index do |journal_entry, index| %>
             <div class="card mb-3">
               <div class="card-header">
                 <span><%= journal_entry.feeling %></span>

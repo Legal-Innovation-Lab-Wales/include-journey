@@ -14,16 +14,22 @@ Rails.application.routes.draw do
                                            unlocks: 'team_members/unlocks' }
 
   authenticated :user do
-    root 'users/dashboard#main', as: :authenticated_user_root
+    root 'users/pages#main', as: :authenticated_user_root
 
-    post '/wba_selves/create', to: 'users/wba_selves#create', as: :wba_selves
-    post '/wba_selves/:wba_self_id/wba_self_permissions/create', to: 'users/wba_self_permissions#create', as: :wba_self_permissions
+    get '/dashboard', to: 'users/dashboard#show', as: :authenticated_user_dashboard
+
+    scope '/dashboard', module: 'users' do
+      resources :wba_selves, only: %i[new create] do
+        resources :wba_self_permissions, only: %i[new create]
+      end
+
+      resources :journal_entries, only: %i[new create] do
+        resources :journal_entry_permissions, only: %i[new create]
+      end
+    end
 
     post '/crisis_events/create', to: 'users/crisis_events#create', as: :crisis_events
     put '/crisis_events/:crisis_event_id', to: 'users/crisis_events#update', as: :update_crisis_event
-
-    post '/journal_entries/create', to: 'users/journal_entries#create', as: :journal_entries
-    post '/journal_entries/:journal_entry_id/journal_entry_permissions/create', to: 'users/journal_entry_permissions#create', as: :journal_entry_permissions
   end
 
   authenticated :team_member do

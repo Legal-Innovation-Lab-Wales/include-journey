@@ -12,7 +12,7 @@
             <div class="col-6" style="text-align: right"><strong><%= Time.zone.now.strftime('%d/%m/%Y') %></strong></div>
           </div>
           <div class="row">
-            <%= form_with model: @journal_entry do |f| %>
+            <%= form_with model: journal_entry do |f| %>
               <div class="col-12">
                 <div class="form-floating mb-4">
                   <%= f.text_area :entry, class: 'form-control', style: 'height: 150px' %>

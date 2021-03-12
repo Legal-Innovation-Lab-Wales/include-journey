@@ -1,0 +1,11 @@
+@import "variables";
+
+.permissions {
+  &.container {
+    max-width: 550px;
+  }
+
+  label.btn {
+    color: $black !important;
+  }
+}

@@ -1,0 +1,38 @@
+<main class="container user dashboard">
+    <section class="row">
+      <div class="col">
+        <h2 class="mb-3">journal</h2>
+        <div class="container buttons two">
+          <div class="row">
+            <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntryModal">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-book-medical"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">New Entry</div>
+                </div>
+              </div>
+            </a>
+            <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntriesModal">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-archive"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Archive</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+</main>
+
+<%= render partial: '/users/journal_entries/modals/new', locals: { journal_entry: @journal_entry }%>
+<%= render partial: '/users/journal_entries/modals/archive', locals: { journal_entries: @journal_entries } %>
