@@ -146,9 +146,6 @@
         </div>
       </div>
     </div>
-    <% unless @wba_self.present? %>
-      <div class="col-md-1"></div>
-    <%  end %>
     <div class="col-md-4 chart">
       <h3>Your Wellbeing</h3>
       <div class="container mt-3">
@@ -159,8 +156,8 @@
         </div>
       </div>
     </div>
-    <% if @wba_self.present? %>
-      <div class="col-md-5 sliders">
+    <div class="col-md-5 sliders">
+      <% if @wba_self.present? %>
         <h3>How are you today?</h3>
         <%= form_with model: @wba_self, url: wba_selves_path, method: :post do |f| %>
           <div class="container mt-3">
@@ -185,23 +182,21 @@
             </div>
           </div>
         <% end %>
-      </div>
-    <% else %>
-      <div class="col-md-4 sliders">
-        <h3>Today</h3>
-        <div class="container mt-3">
-        <% @wellbeing_metrics.each do |wellbeing_metric| %>
-          <div class="row">
-            <div class="col-9">
-              <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+      <% else %>
+          <h3>Today</h3>
+          <div class="container mt-3">
+          <% @wellbeing_metrics.each do |wellbeing_metric| %>
+            <div class="row">
+              <div class="col-9">
+                <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+              </div>
+              <input class="hidden" type="range" value=<%= last_score(wellbeing_metric.id) %> id=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>>
+              <div class="col-3 description"></div>
             </div>
-            <input class="hidden" type="range" value=<%= last_score(wellbeing_metric.id) %> id=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>>
-            <div class="col-3 description"></div>
+          <% end %>
           </div>
-        <% end %>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </section>
 </main>
 <% if @team_members.present? %>
