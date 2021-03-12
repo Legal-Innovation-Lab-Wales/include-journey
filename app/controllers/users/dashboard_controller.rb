@@ -5,7 +5,7 @@ module Users
   class DashboardController < UsersApplicationController
     before_action :permissions_required, only: :main
     before_action :wba_self_today, :wellbeing_metrics, :last_wba_self, only: :main, unless: -> { @permissions_required }
-    before_action :journal_entry, only: :main, unless: -> { @permissions_required }
+    before_action :journal_entry, :journal_entries, only: :main, unless: -> { @permissions_required }
 
     before_action :last_scores, only: :main, if: -> { @last_wba_self.present? }
     before_action :wba_self, only: :main, unless: -> { @wba_self_today }
@@ -43,6 +43,10 @@ module Users
 
     def journal_entry
       @journal_entry = JournalEntry.new
+    end
+
+    def journal_entries
+      @journal_entries = current_user.journal_entries.order(created_at: :desc)
     end
 
     def last_scores

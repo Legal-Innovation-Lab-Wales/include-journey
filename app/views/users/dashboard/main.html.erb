@@ -5,116 +5,35 @@
       <div class="container buttons">
         <div class="row">
           <%= link_to '#journal', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-book"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Journal</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-book', text: 'My Journal' } %>
           <% end %>
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-calendar-alt"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Appointments</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-calendar-alt', text: 'My Appointments' } %>
           <% end %>
           <%= link_to '#wellbeing', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-heart"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Needs</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-heart', text: 'My Needs' } %>
           <% end %>
         </div>
         <div class="row">
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-address-book"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Contacts</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-address-book', text: 'My Contacts' } %>
           <% end %>
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-road"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Journey</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-road', text: 'My Journey' } %>
           <% end %>
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-info-circle"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Support</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-info-circle', text: 'My Support' } %>
           <% end %>
         </div>
         <div class="row">
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-tasks"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Goals</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-tasks', text: 'My Goals' } %>
           <% end %>
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-calendar-alt"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">Include: What's On</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-calendar-alt', text: 'Include: What\'s On' } %>
           <% end %>
           <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-comments"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">My Voice</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-comments', text: 'My Voice' } %>
           <% end %>
         </div>
       </div>
@@ -124,26 +43,13 @@
     <div class="col-md-3 services">
       <h3>Your Services</h3>
       <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            <%= link_to 'Service 1', '#', class: 'btn btn-success' %>
+        <% [*1..4].each do |i| %>
+          <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
+            <div class="col">
+              <%= link_to "Service #{i}", '#', class: 'btn btn-success' %>
+            </div>
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 2', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 3', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 4', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
     <div class="col-md-4 chart">
@@ -204,29 +110,11 @@
       <div class="container buttons two">
         <div class="row">
           <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntryModal">
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-book-medical"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">New Entry</div>
-              </div>
-            </div>
+            <%= render partial: 'icon', locals: { icon: 'fa-book-medical', text: 'New Entry' } %>
           </a>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-archive"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">Archive</div>
-              </div>
-            </div>
-          <% end %>
+          <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntriesModal">
+            <%= render partial: 'icon', locals: { icon: 'fa-archive', text: 'Archive' } %>
+          </a>
         </div>
       </div>
     </div>
@@ -234,7 +122,9 @@
 </main>
 <% if @permissions_required %>
   <%= render partial: '/modals/permissions/new' %>
+<% else %>
+  <%= render partial: '/modals/journal/new' %>
+  <%= render partial: '/modals/journal/archive' %>
 <% end %>
-<%= render partial: '/modals/journal/new' %>
 
 <%= javascript_pack_tag 'polar_area_chart' %>
