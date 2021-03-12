@@ -54,11 +54,11 @@ module Users
     end
 
     def check_wba_self_today
-      wba_self_today = current_user.wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id)
+      wba_self_today = current_user.wba_self_today
 
       return unless wba_self_today.present?
 
-      redirect_to wba_self_path(wba_self_today.last)
+      redirect_to wba_self_path(wba_self_today)
     end
 
     def create_wba_self_scores

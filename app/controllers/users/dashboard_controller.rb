@@ -10,8 +10,8 @@ module Users
     private
 
     def latest_wba_self_path
-      wba_self_today = current_user.wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id)
-      wba_self_today.empty? ? new_wba_self_path : wba_self_path(wba_self_today.last)
+      wba_self_today = current_user.wba_self_today
+      wba_self_today.present? ? wba_self_path(wba_self_today) : new_wba_self_path
     end
 
     helper_method :latest_wba_self_path

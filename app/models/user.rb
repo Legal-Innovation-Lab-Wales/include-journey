@@ -21,6 +21,10 @@ class User < ApplicationRecord
     crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
   end
 
+  def wba_self_today
+    wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
+  end
+
   def wba_self_permissions_required?
     last_wba_self = wba_selves.includes(:wba_self_permissions).last
 
