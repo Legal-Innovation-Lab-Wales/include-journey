@@ -5,7 +5,7 @@ module Users
   class WbaSelfPermissionsController < UsersApplicationController
     before_action :wba_self, :team_members, :wba_self_permissions_params, :validate_permissions_params, :create_wba_self_permissions, only: :create
 
-    # POST /wba_selves/:wba_self_id/permissions
+    # POST /wba_selves/:wba_self_id/wba_self_permissions/create
     def create
       respond_to do |format|
         format.html { redirect_to authenticated_user_root_path, alert: wba_self_permissions_alert }
