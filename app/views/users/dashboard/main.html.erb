@@ -4,7 +4,7 @@
       <h2 class="mb-3">Your Journey</h2>
       <div class="container buttons">
         <div class="row">
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to '#journal', class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -12,7 +12,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col">My Diary</div>
+                <div class="col">My Journal</div>
               </div>
             </div>
           <% end %>
@@ -198,9 +198,43 @@
       <% end %>
     </div>
   </section>
+  <section class="row" id="journal">
+    <div class="col mb-3">
+      <h2 class="mb-3">journal</h2>
+      <div class="container buttons two">
+        <div class="row">
+          <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntryModal">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-book-medical"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">New Entry</div>
+              </div>
+            </div>
+          </a>
+          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-archive"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Archive</div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
-<% if @team_members.present? %>
+<% if @permissions_required %>
   <%= render partial: '/modals/permissions/new' %>
 <% end %>
+<%= render partial: '/modals/journal/new' %>
 
 <%= javascript_pack_tag 'polar_area_chart' %>

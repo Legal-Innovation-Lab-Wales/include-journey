@@ -3,8 +3,15 @@
 module Users
   # app/controllers/users/dashboard_controller.rb
   class DashboardController < UsersApplicationController
-    before_action :wba_self_today, :wba_self, :wellbeing_metrics, :last_wba_self, :last_scores, :permissions_required, only: :main
-    before_action :team_members, :second_to_last_wba_self, :last_wba_self_permissions, only: :main, if: -> { @permissions_required }
+    before_action :permissions_required, only: :main
+    before_action :wba_self_today, :wellbeing_metrics, :last_wba_self, only: :main, unless: -> { @permissions_required }
+    before_action :journal_entry, only: :main, unless: -> { @permissions_required }
+
+    before_action :last_scores, only: :main, if: -> { @last_wba_self.present? }
+    before_action :wba_self, only: :main, unless: -> { @wba_self_today }
+
+    before_action :team_members, :second_to_last_wba_self, only: :main, if: -> { @permissions_required }
+    before_action :last_wba_self_permissions, only: :main, if: -> { @second_to_last_wba_self.present? }
 
     def main
       render template: 'users/dashboard/main'
@@ -27,8 +34,6 @@ module Users
     private
 
     def wba_self
-      return if @wba_self_today
-
       @wba_self = WbaSelf.new
     end
 
@@ -36,15 +41,15 @@ module Users
       @wba_self_today = current_user.wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).present?
     end
 
-    def last_scores
-      return unless @last_wba_self.present?
+    def journal_entry
+      @journal_entry = JournalEntry.new
+    end
 
+    def last_scores
       @last_scores = @last_wba_self.wba_self_scores.collect { |wba_self_score| { id: wba_self_score.wellbeing_metric_id, value: wba_self_score.value }}
     end
 
     def last_wba_self_permissions
-      return unless @second_to_last_wba_self.present?
-
       @last_wba_self_permissions = @second_to_last_wba_self.wba_self_permissions.collect { |wba_self_permission| { id: wba_self_permission.team_member_id }}
     end
 

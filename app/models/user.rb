@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :wba_team_members, foreign_key: :user_id
 
   has_many :crisis_events, foreign_key: :user_id
+  has_many :journal_entries, foreign_key: :user_id
 
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : ''

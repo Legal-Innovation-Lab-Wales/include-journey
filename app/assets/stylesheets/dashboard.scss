@@ -53,6 +53,10 @@ $border-width: 1px;
           padding: 0;
         }
       }
+
+      &.two {
+        max-width: 400px;
+      }
     }
 
     table {
