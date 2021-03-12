@@ -22,15 +22,19 @@ class User < ApplicationRecord
   end
 
   def wba_self_permissions_required?
-    return unless wba_selves.last.present?
+    last_wba_self = wba_selves.includes(:wba_self_permissions).last
 
-    !wba_selves.includes(:wba_self_permissions).last.wba_self_permissions.present?
+    return unless last_wba_self.present?
+
+    last_wba_self.wba_self_permissions.empty?
   end
 
   def journal_entry_permissions_required?
-    return unless journal_entries.last.present?
+    last_journal_entry = journal_entries.includes(:journal_entry_permissions).last
 
-    !journal_entries.includes(:journal_entry_permissions).last.journal_entry_permissions.present?
+    return unless last_journal_entry.present?
+
+    last_journal_entry.journal_entry_permissions.empty?
   end
 
   # validations

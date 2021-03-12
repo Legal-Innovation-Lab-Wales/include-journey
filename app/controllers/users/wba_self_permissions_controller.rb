@@ -21,7 +21,7 @@ module Users
       end
     end
 
-    protected
+    private
 
     def last_wba_self_permission(team_member_id)
       return true unless @second_to_last_wba_self.present?
@@ -30,8 +30,6 @@ module Users
     end
 
     helper_method :last_wba_self_permission
-
-    private
 
     def create_wba_self_permissions
       @team_members.each do |team_member|

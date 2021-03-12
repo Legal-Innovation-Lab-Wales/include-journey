@@ -21,7 +21,7 @@ module Users
       end
     end
 
-    protected
+    private
 
     def last_journal_entry_permission(team_member_id)
       return true unless @second_to_last_journal_entry.present?
@@ -30,8 +30,6 @@ module Users
     end
 
     helper_method :last_journal_entry_permission
-
-    private
 
     def create_journal_entry_permissions
       @team_members.each do |team_member|
