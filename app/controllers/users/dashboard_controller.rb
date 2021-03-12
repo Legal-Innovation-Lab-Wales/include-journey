@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   # app/controllers/users/dashboard_controller.rb
   class DashboardController < UsersApplicationController

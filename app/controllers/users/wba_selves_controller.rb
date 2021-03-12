@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   # app/controllers/users/wba_selves_controller.rb
   class WbaSelvesController < UsersApplicationController

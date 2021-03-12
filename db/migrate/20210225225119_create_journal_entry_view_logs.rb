@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # db/migrate/20210225225119_create_journal_entry_view_logs.rb
 class CreateJournalEntryViewLogs < ActiveRecord::Migration[6.1]
   def change

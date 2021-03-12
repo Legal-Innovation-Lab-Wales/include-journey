@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   # app/controllers/users/unlocks_controller.rb
   class UnlocksController < Devise::UnlocksController

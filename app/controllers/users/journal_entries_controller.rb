@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   # app/controllers/users/journal_entries_controller.rb
   class JournalEntriesController < UsersApplicationController
