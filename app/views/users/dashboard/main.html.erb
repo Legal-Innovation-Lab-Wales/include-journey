@@ -28,7 +28,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to '#wellbeing', class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -120,7 +120,7 @@
       </div>
     </div>
   </section>
-  <section class="row wellbeing">
+  <section class="row pb-4" id="wellbeing">
     <div class="col-md-3 services">
       <h3>Your Services</h3>
       <div class="container mt-3">
@@ -157,64 +157,50 @@
       </div>
     </div>
     <div class="col-md-5 sliders">
-      <h3>How are you today?</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="emotionalHealth">Emotional Health</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="emotionalHealth"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="mentalHealth">Mental Health</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="mentalHealth"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="physicalHealth">Physical Health</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="physicalHealth"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="housing">Housing</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="housing"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="benefitsMoney">Benefits/Money</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="benefitsMoney"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="food">Food</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="food"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="behaviour">Behaviour</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="behaviour"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="addiction">Addiction</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="addiction"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="community">Sense of Community</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="community"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="relationships">Relationships</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="relationships"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md-5"><label for="employmentEducationTraining">Employment/Education/Training</label></div>
-          <div class="col-9 col-md-5"><input type="range" class="form-range" min="1" max="10" id="employmentEducationTraining"></div>
-          <div class="col-3 col-md-2 description">Mediocre</div>
-        </div>
-      </div>
+      <% if @wba_self.present? %>
+        <h3>How are you today?</h3>
+        <%= form_with model: @wba_self, url: wba_selves_path, method: :post do |f| %>
+          <div class="container mt-3">
+
+            <% @wellbeing_metrics.each do |wellbeing_metric| %>
+              <div class="row">
+                <div class="col-12 col-md-5">
+                  <%= f.label "wellbeing_metric_#{wellbeing_metric.id}".to_sym, wellbeing_metric.name %>
+                </div>
+                <div class="col-9 col-md-5">
+                  <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
+                                    value: last_score(wellbeing_metric.id) %>
+                </div>
+                <div class="col-3 col-md-2 description"></div>
+              </div>
+            <% end %>
+
+            <div class="row">
+              <div class="col">
+                <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+          <h3>Today</h3>
+          <div class="container mt-3">
+          <% @wellbeing_metrics.each do |wellbeing_metric| %>
+            <div class="row">
+              <div class="col-9">
+                <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+              </div>
+              <input class="hidden" type="range" value=<%= last_score(wellbeing_metric.id) %> id=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>>
+              <div class="col-3 description"></div>
+            </div>
+          <% end %>
+          </div>
+      <% end %>
     </div>
   </section>
 </main>
+<% if @team_members.present? %>
+  <%= render partial: '/modals/permissions/new' %>
+<% end %>
+
+<%= javascript_pack_tag 'polar_area_chart' %>

@@ -11,8 +11,6 @@ import "channels"
 require("chartkick")
 require("chart.js")
 
-import "./polar_area_chart"
-
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

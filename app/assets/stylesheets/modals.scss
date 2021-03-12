@@ -1,10 +1,8 @@
 @import "variables";
 
-#sosModal {
-  form {
-    label.btn {
-      color: $black;
-    }
+.modal-dialog {
+  label.btn {
+    color: $black !important;
   }
 }
 
