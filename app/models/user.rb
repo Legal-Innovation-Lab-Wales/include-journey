@@ -27,6 +27,12 @@ class User < ApplicationRecord
     !wba_selves.includes(:wba_self_permissions).last.wba_self_permissions.present?
   end
 
+  def journal_entry_permissions_required?
+    return unless journal_entries.last.present?
+
+    !journal_entries.includes(:journal_entry_permissions).last.journal_entry_permissions.present?
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,

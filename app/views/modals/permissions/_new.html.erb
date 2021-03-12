@@ -8,7 +8,7 @@
       <div class="modal-body">
         <p>Please let us know which Include UK team members you are happy sharing the below information with.</p>
 
-        <% if @last_wba_self.present? %>
+        <% if @wba_self_permissions_required %>
           <div class="container mb-4">
             <div class="row">
               <div class="col"><strong>Wellbeing Asessment</strong></div>
@@ -22,6 +22,31 @@
                 <%  @team_members.each do |team_member| %>
                   <div class="col-6 p-1">
                     <%= f.check_box "team_member_#{team_member.id}".to_sym, class: 'btn-check', checked: last_wba_self_permission(team_member.id) %>
+                    <%= f.label "team_member_#{team_member.id}".to_sym, "#{team_member.first_name} #{team_member.last_name}", class: 'btn btn-outline-primary w-100' %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="row">
+                <div class="col text-center">
+                  <%= f.submit 'Share', class: 'btn btn-primary mt-2' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% elsif @journal_entry_permissions_required %>
+          <div class="container mb-4">
+            <div class="row">
+              <div class="col"><strong>Journal Entry</strong></div>
+              <div class="col" style="text-align: right"><strong><%= @last_journal_entry.created %></strong></div>
+            </div>
+          </div>
+
+          <%= form_with model: @last_journal_entry, url: journal_entry_permissions_path(@last_journal_entry), method: :post do |f| %>
+            <div class="container mb-2">
+              <div class="row">
+                <%  @team_members.each do |team_member| %>
+                  <div class="col-6 p-1">
+                    <%= f.check_box "team_member_#{team_member.id}".to_sym, class: 'btn-check', checked: last_journal_entry_permission(team_member.id) %>
                     <%= f.label "team_member_#{team_member.id}".to_sym, "#{team_member.first_name} #{team_member.last_name}", class: 'btn btn-outline-primary w-100' %>
                   </div>
                 <% end %>

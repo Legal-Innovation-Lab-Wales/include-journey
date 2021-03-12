@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     put '/crisis_events/:crisis_event_id', to: 'users/crisis_events#update', as: :update_crisis_event
 
     post '/journal_entries/create', to: 'users/journal_entries#create', as: :journal_entries
+    post '/journal_entries/:journal_entry_id/journal_entry_permissions/create', to: 'users/journal_entry_permissions#create', as: :journal_entry_permissions
   end
 
   authenticated :team_member do
