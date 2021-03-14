@@ -21,7 +21,8 @@ Rails.application.routes.draw do
         resources :wba_self_permissions, only: %i[new create]
       end
 
-      resources :journal_entries, only: %i[new create] do
+      resources :journal_entries, only: %i[new create index] do
+        get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
         resources :journal_entry_permissions, only: %i[new create]
       end
 

@@ -1,38 +1,38 @@
-<main class="container user dashboard">
-    <section class="row">
-      <div class="col">
-        <h2 class="mb-3">journal</h2>
-        <div class="container buttons two">
-          <div class="row">
-            <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntryModal">
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-book-medical"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">New Entry</div>
-                </div>
-              </div>
-            </a>
-            <a class="col d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#journalEntriesModal">
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-archive"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Archive</div>
-                </div>
-              </div>
-            </a>
+<main class="container user dashboard" style="max-width: 550px">
+  <section class="row">
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="mb-3">New Journal Entry</h2>
           </div>
+          <%= form_with model: @journal_entry do |f| %>
+            <div class="col-12">
+              <div class="form-floating mb-4">
+                <%= f.text_area :entry, class: 'form-control', style: 'height: 150px' %>
+                <%= f.label :entry, 'Dear Diary,', class: 'text-dark' %>
+              </div>
+            </div>
+            <div class="col-12">
+              <%= f.hidden_field :feeling %>
+              <div class="container p-0" id="emojis">
+                <div class="row g-2">
+                  <!-- ☺️,😔,😡,💩,😐 -->
+                  <% %w[1F60A 1F614 1F620 1F4A9 1F610].each_with_index do |unicode, index| %>
+                    <div class="col">
+                      <input class="btn-check" type="radio" value="&#x<%= unicode %>;" name="journal_entry[feeling]" id="journal_feeling_id_<%= index %>">
+                      <label class="btn btn-outline-primary w-100" for="journal_feeling_id_<%= index %>">&#x<%= unicode %>;</label>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-center">
+              <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+            </div>
+          <% end %>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 </main>
-
-<%= render partial: '/users/journal_entries/modals/new', locals: { journal_entry: @journal_entry }%>
-<%= render partial: '/users/journal_entries/modals/archive', locals: { journal_entries: @journal_entries } %>

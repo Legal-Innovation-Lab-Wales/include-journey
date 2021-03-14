@@ -6,7 +6,7 @@
   }
 }
 
-#existingSosModal, #journalEntriesModal {
+#existingSosModal {
   form {
     textarea {
       height: 150px;
@@ -19,14 +19,6 @@
       input[type="submit"] {
         float: right;
       }
-    }
-  }
-}
-
-#journalEntryModal {
-  #emojis {
-    label {
-      font-size: 2.5rem;
     }
   }
 }
