@@ -68,7 +68,9 @@ module Users
     end
 
     def last_scores
-      @last_scores = @last_wba_self.wba_self_scores.collect { |wba_self_score| { id: wba_self_score.wellbeing_metric_id, value: wba_self_score.value }}
+      @last_scores = @last_wba_self.wba_self_scores.collect do |wba_self_score|
+        { id: wba_self_score.wellbeing_metric_id, value: wba_self_score.value }
+      end
     end
 
     def new_wba_self

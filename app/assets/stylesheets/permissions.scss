@@ -3,9 +3,32 @@
 .permissions {
   &.container {
     max-width: 550px;
+
+    .model-info {
+      .col {
+        &:first-child {
+          text-align: left;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
   }
 
   label.btn {
-    color: $black !important;
+    color: $white !important;
+
+    i {
+      float: right;
+      line-height: 1.5;
+    }
+  }
+
+  section.row {
+    @media screen and (max-width: $screen-md){
+      background-color: $black;
+    }
   }
 }
