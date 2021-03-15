@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_team_member_root
 
       resources :team_members, only: :show do
-        put 'approve', to: 'team_members#approve_team_member', on: :member, as: :approve_team_member
+        put 'approve', to: 'team_members#approve_team_member', on: :member, as: :approve
         put 'admin', to: 'team_members#toggle_admin', on: :member, as: :toggle_admin
         resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
       end
