@@ -7,7 +7,7 @@
             <h2 class="mb-3">Archive</h2>
           </div>
           <% @journal_entries.each_with_index do |journal_entry, index| %>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
               <div class="card mb-3">
                 <div class="card-header">
                   <span><%= journal_entry.feeling %></span>
@@ -21,15 +21,15 @@
             </div>
           <% end %>
             <div class="col-12">
-              <div class="container p-0">
+              <div class="container controls">
                 <div class="row">
-                  <div class="col-1">
+                  <div class="col">
                     <% unless @page == 1 %>
                       <%= link_to 'Previous', pages_journal_entries_path(@page - 1), class: 'btn btn-primary' %>
                     <% end %>
                   </div>
-                  <div class="col-10"></div>
-                  <div class="col-1">
+                  <div class="col"></div>
+                  <div class="col">
                     <% unless last_page %>
                       <%= link_to 'Next', pages_journal_entries_path(@page + 1), class: 'btn btn-primary' %>
                     <% end %>

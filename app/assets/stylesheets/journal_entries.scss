@@ -6,6 +6,34 @@
     margin: 1rem auto;
   }
 
+  &.new, &.index {
+    padding: 0;
+
+    .row {
+      @media screen and (max-width: $screen-md){
+        background-color: $black;
+      }
+
+      .container {
+        padding: 0;
+      }
+    }
+  }
+
+  &.index {
+    .controls {
+      .col {
+        &:first-child {
+          text-align: left;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+
   textarea {
     height: 150px !important;
   }
