@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       end
 
       resources :crisis_events, only: :create do
-        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update_crisis_event
+        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update
       end
     end
   end

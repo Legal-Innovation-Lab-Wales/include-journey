@@ -9,7 +9,7 @@
         <p>You currently have the following open SOS requests raised in the past hour.</p>
 
         <% @active_crisis_events.each do |crisis_event| %>
-          <%= form_with model: crisis_event, url: update_crisis_event_crisis_events_path(crisis_event), method: :put do |f| %>
+          <%= form_with model: crisis_event, url: update_crisis_events_path(crisis_event), method: :put do |f| %>
             <div class="card mb-3">
                 <div class="card-header">
                   <%= f.hidden_field :crisis_type_id, value: crisis_event.crisis_type.id %>
