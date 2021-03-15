@@ -21,6 +21,10 @@ module Users
 
     protected
 
+    def new_path
+      new_journal_entry_journal_entry_permission_path(@model)
+    end
+
     def model
       @model = JournalEntry.includes(:journal_entry_permissions).find(params[:journal_entry_id])
     end

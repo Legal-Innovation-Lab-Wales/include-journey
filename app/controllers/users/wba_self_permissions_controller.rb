@@ -21,12 +21,16 @@ module Users
 
     protected
 
-    def second_to_last
-      @second_to_last = current_user.wba_selves.includes(:wba_self_permissions).second_to_last
+    def new_path
+      new_wba_self_wba_self_permission_path(@model)
     end
 
     def model
       @model = WbaSelf.include(:wba_self_permissions).find(params[:wba_self_id])
+    end
+
+    def second_to_last
+      @second_to_last = current_user.wba_selves.includes(:wba_self_permissions).second_to_last
     end
   end
 end

@@ -1,9 +1,17 @@
 module Users
   # app/controllers/users/wba_self_permission_controller.rb
   class PermissionsController < UsersApplicationController
-    before_action :team_members, :model, :verify_user, :verify_permissions_needed
-    before_action :permissions_params, :validate_params, only: :create
+    before_action :team_members, :model
+    before_action :restrict_user, unless: -> { @model.user == current_user }
+    before_action :permissions_set, if: -> { @model.permissions.present? }
+
+    before_action :permissions_params, only: :create
+    before_action :at_least_one, only: :create, unless: lambda {
+      @team_members.map { |t_m| permissions_params["team_member_#{t_m.id}"] }.include? '1'
+    }
+
     before_action :second_to_last, only: :new
+    before_action :last_permissions, only: :new, if: -> { @second_to_last.present? }
 
     def new
       raise 'Subclass has not overridden permissions new function'
@@ -15,6 +23,10 @@ module Users
 
     protected
 
+    def new_path
+      raise 'Subclass has not overridden new path function'
+    end
+
     def last_permission(team_member_id)
       return true unless @last_permissions.present?
 
@@ -25,8 +37,6 @@ module Users
 
 
     def last_permissions
-      return unless @second_to_last.present?
-
       @last_permissions = @second_to_last.permissions.collect { |permission| { id: permission.team_member_id } }
     end
 
@@ -46,21 +56,15 @@ module Users
       @team_members = TeamMember.all
     end
 
-    def validate_params
-      return if @team_members.map { |t_m| permissions_params["team_member_#{t_m.id}"] }.include? '1'
-
-      redirect_to :back, alert: 'You must select at least one team member'
+    def at_least_one
+      redirect_to new_path, alert: 'You must select at least one team member'
     end
 
-    def verify_user
-      return if @model.user == current_user
-
+    def restrict_user
       redirect_to authenticated_user_root_path, alert: 'You cannot view that record'
     end
 
-    def verify_permissions_needed
-      return unless @model.permissions.present?
-
+    def permissions_set
       redirect_to authenticated_user_root_path, alert: 'Permissions have already been set for that record'
     end
   end
