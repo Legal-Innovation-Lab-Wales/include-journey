@@ -14,9 +14,9 @@ Rails.application.routes.draw do
                                            unlocks: 'team_members/unlocks' }
 
   authenticated :user do
-    root 'users/dashboard#show', as: :authenticated_user_root
-
     scope module: 'users' do
+      root 'dashboard#show', as: :authenticated_user_root
+
       resources :wba_selves, only: %i[show new create] do
         resources :wba_self_permissions, only: %i[new create]
       end
