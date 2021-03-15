@@ -3,9 +3,12 @@
 $max-width: 550px;
 $margin: 20px;
 $border-width: 1px;
+$nav: 62px;
+$footer: 286px;
+$margins: 1rem;
 
 .dashboard, .user {
-  min-height: calc(100vh - 62px - 286px - 1rem);
+  min-height: calc(100vh - #{$nav} - #{$footer} - #{$margins});
   color: $white;
   background-color: $black;
   text-align: center;
