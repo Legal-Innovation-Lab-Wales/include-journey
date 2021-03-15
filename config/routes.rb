@@ -22,10 +22,10 @@ Rails.application.routes.draw do
       end
 
       resources :journal_entries, only: %i[new create] do
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+
         get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
         get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
-
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
 
       resources :crisis_events, only: :create do
@@ -39,8 +39,11 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_team_member_root
 
       resources :team_members, only: :show do
-        put 'approve', to: 'team_members#approve_team_member', on: :member, as: :approve
-        put 'admin', to: 'team_members#toggle_admin', on: :member, as: :toggle_admin
+        scope controller: 'team_members' do
+          put 'approve', action: 'approve_team_member', on: :member, as: :approve
+          put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
+        end
+
         resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
       end
 
