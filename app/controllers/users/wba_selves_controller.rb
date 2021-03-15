@@ -57,7 +57,7 @@ module Users
 
       return unless wba_self_today.present?
 
-      redirect_to wba_self_path(wba_self_today)
+      redirect_to wba_self_path(wba_self_today), alert: 'You completed the below wellbeing assessment today'
     end
 
     def create_wba_self_scores
