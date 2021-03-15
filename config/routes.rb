@@ -33,14 +33,17 @@ Rails.application.routes.draw do
   end
 
   authenticated :team_member do
-    root 'team_members/dashboard#main', as: :authenticated_team_member_root
+    scope module: 'team_members' do
+      root 'dashboard#show', as: :authenticated_team_member_root
 
-    get '/team_members/:team_member_id', to: 'team_members/team_members#show', as: :team_member
-    put '/team_members/:team_member_id/approve', to: 'team_members/team_members#approve_team_member', as: :approve_team_member
-    put '/team_members/:team_member_id/admin', to: 'team_members/team_members#toggle_admin', as: :toggle_admin
-    get '/team_members/:team_member_id/wba/:wba_team_member_id', to: 'team_members/wba_team_members#show', as: :wba_team_member
+      resources :team_members, only: :show do
+        put 'approve', to: 'team_members#approve_team_member', on: :member, as: :approve_team_member
+        put 'admin', to: 'team_members#toggle_admin', on: :member, as: :toggle_admin
+        resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
+      end
 
-    get '/users/:user_id', to: 'team_members/users#show', as: :user
+      resources :users, only: :show, as: :user
+    end
   end
 
   unauthenticated do
