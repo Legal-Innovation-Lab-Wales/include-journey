@@ -23,9 +23,10 @@ module Users
     # POST /wba_selves/create
     def create
       if (@wba_self = current_user.wba_selves.create!({ user_id: current_user.id }))
-        redirect_to new_wba_self_wba_self_permission_path(@wba_self)
+        redirect_to new_wba_self_permission_path(@wba_self)
       else
-        render @wba_self.errors, status: :unprocessable_entity
+        redirect_to authenticated_user_root_path,
+                    alert: "Wellbeing assessment could not be created: #{@wba_self.errors}"
       end
     end
 
@@ -60,9 +61,11 @@ module Users
     end
 
     def create_wba_self_scores
+      debugger
+
       @wellbeing_metrics.each do |metric|
         WbaSelfScore.create!({ wba_self_id: @wba_self.id, wellbeing_metric_id: metric.id,
-                               value: wba_selves_params["wellbeing_metric_#{metric.id}".to_sym] })
+                               value: wba_selves_params["wellbeing_metric_#{metric.id}"] })
       end
     end
 
@@ -75,6 +78,8 @@ module Users
     end
 
     def wba_self
+      debugger
+
       @wba_self = WbaSelf.includes(:wba_self_scores).find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_wba_self_path, alert: 'No such wellbeing assessment could be found'

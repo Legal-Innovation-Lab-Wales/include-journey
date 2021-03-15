@@ -21,14 +21,14 @@ module Users
     def wba_self_permissions_required
       return unless current_user.wba_self_permissions_required?
 
-      redirect_to new_wba_self_wba_self_permission_path(current_user.wba_selves.last),
+      redirect_to new_wba_self_permission_path(current_user.wba_selves.last),
                   alert: 'Please specify which team members can view this wellbeing assessment'
     end
 
     def journal_entry_permissions_required
       return unless current_user.journal_entry_permissions_required?
 
-      redirect_to new_journal_entry_journal_entry_permission_path(current_user.journal_entries.last),
+      redirect_to new_journal_entry_permission_path(current_user.journal_entries.last),
                   alert: 'Please specify which team members can view this journal entry'
     end
   end

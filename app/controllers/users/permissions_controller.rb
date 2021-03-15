@@ -27,15 +27,6 @@ module Users
       raise 'Subclass has not overridden new path function'
     end
 
-    def last_permission(team_member_id)
-      return true unless @last_permissions.present?
-
-      @last_permissions.select { |team_member| team_member[:id] == team_member_id }.present?
-    end
-
-    helper_method :last_permission
-
-
     def last_permissions
       @last_permissions = @second_to_last.permissions.collect { |permission| { id: permission.team_member_id } }
     end

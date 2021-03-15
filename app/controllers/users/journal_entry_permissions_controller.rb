@@ -22,7 +22,7 @@ module Users
     protected
 
     def new_path
-      new_journal_entry_journal_entry_permission_path(@model)
+      new_journal_entry_permission_path(@model)
     end
 
     def model

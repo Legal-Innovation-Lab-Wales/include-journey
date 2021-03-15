@@ -22,11 +22,11 @@ module Users
     protected
 
     def new_path
-      new_wba_self_wba_self_permission_path(@model)
+      new_wba_self_permission_path(@model)
     end
 
     def model
-      @model = WbaSelf.include(:wba_self_permissions).find(params[:wba_self_id])
+      @model = WbaSelf.includes(:wba_self_permissions).find(params[:wba_self_id])
     end
 
     def second_to_last

@@ -8,14 +8,14 @@ module TeamMembers
       render 'show'
     end
 
-    def unapproved_team_members
-      @unapproved_team_members = TeamMember.all.where(approved: false).order(:id)
-    end
-
     private
 
+    def unapproved_team_members
+      @unapproved_team_members = TeamMember.unapproved.order(:id)
+    end
+
     def approved_team_members
-      @approved_team_members = TeamMember.all.where(approved: true).order(:id)
+      @approved_team_members = TeamMember.approved.order(:id)
     end
 
     def users

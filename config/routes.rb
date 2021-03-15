@@ -18,14 +18,14 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_user_root
 
       resources :wba_selves, only: %i[show new create] do
-        resources :wba_self_permissions, only: %i[new create]
+        resources :wba_self_permissions, only: %i[new create], as: :permissions
       end
 
       resources :journal_entries, only: %i[new create] do
         get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
         get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
 
-        resources :journal_entry_permissions, only: %i[new create]
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
 
       resources :crisis_events, only: :create do

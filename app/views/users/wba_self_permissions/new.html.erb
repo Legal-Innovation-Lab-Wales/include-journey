@@ -9,17 +9,19 @@
         </div>
         <div class="row mb-3">
           <div class="col"><strong>Wellbeing Asessment</strong></div>
-          <div class="col" style="text-align: right"><strong><%= @wba_self.created %></strong></div>
+          <div class="col" style="text-align: right"><strong><%= @model.created %></strong></div>
         </div>
         <div class="row">
           <div class="col">
-            <%= form_with model: @wba_self, url: wba_self_wba_self_permissions_path(@wba_self), method: :post do |f| %>
+            <%= form_with model: @model, url: wba_self_permissions_path(@model), method: :post do |f| %>
               <div class="container mb-2">
                 <div class="row">
                   <%  @team_members.each do |team_member| %>
                     <div class="col-6 p-1">
-                      <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check', checked: last_wba_self_permission(team_member.id) %>
-                      <%= f.label "team_member_#{team_member.id}", "#{team_member.first_name} #{team_member.last_name}", class: 'btn btn-outline-primary w-100' %>
+                      <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check',
+                                      checked: last_permission(@last_permissions, team_member.id) %>
+                      <%= f.label "team_member_#{team_member.id}", "#{team_member.first_name} #{team_member.last_name}",
+                                  class: 'btn btn-outline-primary w-100' %>
                     </div>
                   <% end %>
                 </div>

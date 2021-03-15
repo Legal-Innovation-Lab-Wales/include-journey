@@ -3,7 +3,7 @@ module Users
   class JournalEntriesDashboardController < UsersApplicationController
     # GET /journal_entries/dashboard
     def show
-      render 'users/journal_entries/dashboard/show'
+      render 'show'
     end
   end
 end
