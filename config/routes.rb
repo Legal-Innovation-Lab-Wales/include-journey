@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'users/dashboard#show', as: :authenticated_user_root
 
-    scope '/', module: 'users' do
+    scope module: 'users' do
       resources :wba_selves, only: %i[show new create] do
         resources :wba_self_permissions, only: %i[new create]
       end
@@ -26,9 +26,8 @@ Rails.application.routes.draw do
         resources :journal_entry_permissions, only: %i[new create]
       end
 
-      scope 'crisis_events' do
-        post '/create', to: 'crisis_events#create', as: :crisis_events
-        put '/:crisis_event_id', to: 'crisis_events#update', as: :update_crisis_event
+      resources :crisis_events, only: :create do
+        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update_crisis_event
       end
     end
   end
