@@ -4,7 +4,7 @@ $max-width: 550px;
 $margin: 20px;
 $border-width: 1px;
 
-.dashboard {
+.dashboard, .user {
   min-height: calc(100vh - 62px - 286px - 1rem);
   color: $white;
   background-color: $black;
@@ -75,42 +75,42 @@ $border-width: 1px;
         }
       }
     }
-  }
 
-  &.user section#wellbeing {
-    .services, .sliders {
-      margin-top: 1rem;
+    &#wellbeing {
+      .services, .sliders {
+        margin-top: 1rem;
 
-      @media screen and (min-width: $screen-md) {
-        margin-top: 3rem;
-      }
-    }
-
-    .chart {
-      margin-top: 1rem;
-
-      @media screen and (min-width: $screen-md) {
-        margin-top: 0;
-      }
-    }
-
-    .sliders {
-      .hidden {
-        display: none;
-      }
-
-      .col-3, .col-9, .col-md-5 {
-        &:first-child {
-          text-align: left;
+        @media screen and (min-width: $screen-md) {
+          margin-top: 3rem;
         }
       }
 
-      .col-3.description {
-        text-align: right;
+      .chart {
+        margin-top: 1rem;
+
+        @media screen and (min-width: $screen-md) {
+          margin-top: 0;
+        }
       }
 
-      input {
-        cursor: pointer;
+      .sliders {
+        .hidden {
+          display: none;
+        }
+
+        .col-3, .col-9, .col-md-5 {
+          &:first-child {
+            text-align: left;
+          }
+        }
+
+        .col-3.description {
+          text-align: right;
+        }
+
+        input {
+          cursor: pointer;
+        }
       }
     }
   }
