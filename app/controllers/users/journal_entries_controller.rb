@@ -2,17 +2,11 @@ module Users
   # app/controllers/users/journal_entries_controller.rb
   class JournalEntriesController < UsersApplicationController
     before_action :new_journal_entry, only: :new
-    before_action :journal_entries, only: :index
     before_action :journal_entry_params, only: :create
 
     # GET /journal_entries/new
     def new
       render 'new'
-    end
-
-    # GET /journal_entries
-    def index
-      render 'index'
     end
 
     # POST /journal_entries/create
@@ -28,16 +22,12 @@ module Users
 
     private
 
-    def new_journal_entry
-      @journal_entry = JournalEntry.new
-    end
-
-    def journal_entries
-      @journal_entries = current_user.journal_entries.order(created_at: :desc)
-    end
-
     def journal_entry_params
       params.require(:journal_entry).permit(:entry, :feeling)
+    end
+
+    def new_journal_entry
+      @journal_entry = JournalEntry.new
     end
   end
 end
