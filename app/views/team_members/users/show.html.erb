@@ -1,8 +1,8 @@
-<head>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
+<!--<head>-->
+<!--  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+<!--</head>-->
 
 <main class="container dashboard">
   <!-- User bio / details section -->
@@ -25,24 +25,25 @@
   <!-- SOS section -->
   <section class="row" id="awaiting_approval">
     <div class="col">
-      <%if @user.crisis_events.where("closed = false").count > 0 %>
-        <h3>SOS status: <span class="text-danger">Crisis </span><i class="fas fa-exclamation-triangle text-danger"></i> </h3>
-      <%else %>
+      <% if @user.crisis_events.where("closed = false").count > 0 %>
+        <h3>SOS status: <span class="text-danger">Crisis </span><i class="fas fa-exclamation-triangle text-danger"></i>
+        </h3>
+      <% else %>
         <h3>SOS status: <span class="text-success">none</span></h3>
-      <%end %>
+      <% end %>
     </div>
     <div class="row text-start">
-      <%if @user.crisis_events.where("closed = false").count > 0 %>
-        <%for crisis in @user.crisis_events.where("closed = false") do %>
+      <% if @user.crisis_events.where("closed = false").count > 0 %>
+        <% for crisis in @user.crisis_events.where("closed = false") do %>
           <p><span class="h5">When? </span><%= crisis.created_at %></p>
           <p><span class="h5">Type? </span> <%= crisis.crisis_type %></p>
           <p><span class="h5">Info: </span> <%= crisis.additional_info %></p>
-        <%end %>
-      <%else %>
+        <% end %>
+      <% else %>
         <p class="text-start">
           This user has no active crisis events. Any active Crisis Events will be displayed here.
         </p>
-      <%end %>
+      <% end %>
     </div>
   </section>
   <%# end %>
@@ -67,7 +68,7 @@
       <div class="row text-start">
         <h4>Latest journal entry</h4>
         <p class="my-3">You'll see the user's latest journal entry here</p>
-        <a href="#" class="btn btn-primary" role="button">
+        <a href="#" class="btn btn-primary" type="button">
           View User's journal <i class="fa fa-angle-right"></i>
         </a>
       </div>
@@ -79,43 +80,39 @@
   <div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form action="#" enctype="multipart/form-data">
+        <%= form_with model: @note,
+                      url: add_user_note_path(@user.id) do |form| %>
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Sorry...</h5>
+            <h5 class="modal-title text-black-50" id="">Add a note for this user</h5>
           </div>
           <div class="modal-body">
-            <div class="input-group">
-              <textarea class="form-control" rows="8" name="note"
-                        placeholder="Add your note"
-                        aria-label="Add your note"
-                        required
-                        class="form-control">
-              </textarea>
+            <div class="input-group mb-3">
+              <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
             </div>
-            <div class="input-group">
-              <label for="userView">
-                Allow user to see this note?
-              </label>
-              <input type="checkbox" id="userView" name="userView">
+            <div class="form-check form-switch d-flex justify-content-between px-0">
+              <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
+                Allow user to see this note?<small> (default = 'no')</small>
+              <% end %>
+              <%= form.check_box :visible_to_user, class: 'form-check-input' %>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Add note</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <%= form.submit 'Add note', class: 'btn btn-primary' %>
           </div>
-        </form>
+        <% end %>
       </div>
     </div>
   </div>
-    <!-- End modal -->
+  <!-- End modal -->
 
 
   <section class="row" id="users">
     <div class="col">
-      <h3>Team Notes</h3>
+      <h3>User Notes</h3>
       <div class="row text-start">
-        <p class="">Note added by <strong><%=  %> </strong> on <strong><%=   %></strong></p>
-        <button class="btn btn-primary my-2" type="button" data-toggle="modal" data-target="#note-modal">
+        <p class="">Note added by <strong><%= %> </strong> on <strong><%= %></strong></p>
+        <button class="btn btn-primary my-2" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
           Add note <i class="fa fa-angle-right ml-2"></i>
         </button>
       </div>
