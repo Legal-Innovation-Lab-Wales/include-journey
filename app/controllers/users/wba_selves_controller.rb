@@ -61,8 +61,6 @@ module Users
     end
 
     def create_wba_self_scores
-      debugger
-
       @wellbeing_metrics.each do |metric|
         WbaSelfScore.create!({ wba_self_id: @wba_self.id, wellbeing_metric_id: metric.id,
                                value: wba_selves_params["wellbeing_metric_#{metric.id}"] })
@@ -78,8 +76,6 @@ module Users
     end
 
     def wba_self
-      debugger
-
       @wba_self = WbaSelf.includes(:wba_self_scores).find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to new_wba_self_path, alert: 'No such wellbeing assessment could be found'
