@@ -1,4 +1,4 @@
-<main class="container user">
+<main class="container user journal-entry index">
   <section class="row">
     <div class="col">
       <div class="container">
@@ -7,15 +7,15 @@
             <h2 class="mb-3">Archive</h2>
           </div>
           <% @journal_entries.each_with_index do |journal_entry, index| %>
-            <div class="col-4">
+            <div class="col-12">
               <div class="card mb-3">
                 <div class="card-header">
-                  <span style="float: left"><%= journal_entry.feeling %></span>
-                  <span class="text-dark" style="float: right"><%= journal_entry.created %></span>
+                  <span><%= journal_entry.feeling %></span>
+                  <span><%= journal_entry.created %></span>
                 </div>
                 <div class="form-floating">
-                  <textarea class="form-control" id="journal_entry_<%= index %>" style="height: 150px; border: none" disabled><%= journal_entry.entry %></textarea>
-                  <label class="text-dark" for="journal_entry_<%= index %>">Dear Diary,</label>
+                  <textarea class="form-control" id="journal_entry_<%= index %>" disabled><%= journal_entry.entry %></textarea>
+                  <label for="journal_entry_<%= index %>">Entry</label>
                 </div>
               </div>
             </div>

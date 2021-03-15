@@ -1,0 +1,32 @@
+@import "variables";
+
+.journal-entry {
+  max-width: 550px !important;
+
+  textarea {
+    height: 150px !important;
+  }
+
+  label {
+    color: $black;
+  }
+
+  &.index {
+    .card-header {
+      span {
+        &:first-child {
+          float: left;
+        }
+
+        &:last-child {
+          color: $black;
+          float: right;
+        }
+      }
+    }
+
+    textarea {
+      border: none;
+    }
+  }
+}

@@ -75,43 +75,5 @@ $border-width: 1px;
         }
       }
     }
-
-    &#wellbeing {
-      .services, .sliders {
-        margin-top: 1rem;
-
-        @media screen and (min-width: $screen-md) {
-          margin-top: 3rem;
-        }
-      }
-
-      .chart {
-        margin-top: 1rem;
-
-        @media screen and (min-width: $screen-md) {
-          margin-top: 0;
-        }
-      }
-
-      .sliders {
-        .hidden {
-          display: none;
-        }
-
-        .col-3, .col-9, .col-md-5 {
-          &:first-child {
-            text-align: left;
-          }
-        }
-
-        .col-3.description {
-          text-align: right;
-        }
-
-        input {
-          cursor: pointer;
-        }
-      }
-    }
   }
 }
