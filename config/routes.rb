@@ -51,6 +51,8 @@ Rails.application.routes.draw do
       resources :crisis_events, only: %i[show index], as: :crisis_events do
         put 'close', action: 'close', on: :member, as: :close
         get 'page/:page_number', to: 'crisis_events_pages#index', on: :collection, as: :pages
+
+        resources :crisis_events_notes, only: %i[new create], as: :notes
       end
     end
   end

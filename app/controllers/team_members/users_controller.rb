@@ -21,7 +21,7 @@ module TeamMembers
     end
 
     def users
-      @users = User.all.order(:id)
+      @users = User.all.order(created_at: :desc)
     end
   end
 end

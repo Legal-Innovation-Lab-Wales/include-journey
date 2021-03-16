@@ -17,19 +17,20 @@ module TeamMembers
 
     # PUT /team_members/:id/approve
     def approve_team_member
+      debugger
       if @team_member.update(approved: true)
-        redirect_to authenticated_team_member_root_path, alert: "#{@team_member.first_name} has been approved"
+        redirect_to team_members_path, alert: "#{@team_member.first_name} has been approved"
       else
-        redirect_to authenticated_team_member_root_path, warning: "#{@team_member.first_name} could not be approved"
+        redirect_to team_members_path, warning: "#{@team_member.first_name} could not be approved"
       end
     end
 
     # PUT /team_members/:id/admin
     def toggle_admin
       if @team_member.update(admin: !@team_member.admin?)
-        redirect_to authenticated_team_member_root_path, alert: admin_alert
+        redirect_to team_members_path, alert: admin_alert
       else
-        redirect_to authenticated_team_member_root_path, warning: "#{@team_member.first_name} admin status could not be changed"
+        redirect_to team_members_path, warning: "#{@team_member.first_name} admin status could not be changed"
       end
     end
 
@@ -40,7 +41,7 @@ module TeamMembers
     end
 
     def approved_team_members
-      @approved_team_members = TeamMember.approved.order(:id)
+      @approved_team_members = TeamMember.approved.order(created_at: :desc)
     end
 
     def team_member
@@ -48,7 +49,7 @@ module TeamMembers
     end
 
     def unapproved_team_members
-      @unapproved_team_members = TeamMember.unapproved.order(:id)
+      @unapproved_team_members = TeamMember.unapproved.order(created_at: :desc)
     end
   end
 end

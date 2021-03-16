@@ -3,6 +3,7 @@ module TeamMembers
   class CrisisEventsController < TeamMembersApplicationController
     before_action :crisis_events, only: :index
     before_action :crisis_event, only: %i[show close]
+    before_action :note, :notes, only: :show
 
     # GET /crisis_events
     def index
@@ -30,7 +31,15 @@ module TeamMembers
     end
 
     def crisis_events
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(:updated_at)
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+    end
+
+    def note
+      @note = CrisisNote.new
+    end
+
+    def notes
+      @notes = @crisis_event.crisis_notes.includes(:team_member).order(updated_at: :desc)
     end
   end
 end

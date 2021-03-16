@@ -18,14 +18,73 @@
           <h5 class="card-title mb-3">Crisis Type: <%= @crisis_event.crisis_type.category %></h5>
           <p class="card-text">Additional Info: <%= @crisis_event.additional_info %></p>
         </div>
-        <% unless @crisis_event.closed %>
           <div class="card-footer">
-            <%= link_to 'Close', close_crisis_event_path(@crisis_event), class: 'btn btn-primary',
-                        data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } %>
+            <div class="container p-0">
+              <div class="row">
+                <div class="col-6">
+                  <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#noteModal">New Note</a>
+                </div>
+                <div class="col-6">
+                  <% unless @crisis_event.closed %>
+                    <%= link_to 'Close', close_crisis_event_path(@crisis_event), class: 'btn btn-danger m-1',
+                                data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           </div>
-        <% end %>
       </div>
     </div>
     <div class="col-lg-3"></div>
   </section>
+  <% if @notes.present? %>
+    <section class="row">
+      <div class="col">
+        <h3>Notes</h3>
+
+        <div class="container">
+          <div class="row">
+            <% @notes.each do |note| %>
+              <div class="col-4">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <span><%= note.team_member.first_name %> <%= note.team_member.last_name %></span>
+                    <span><%= note.last_update %> </span>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text"><%= note.content %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% end %>
 </main>
+<div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sosModalLabel">New Note</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_with model: @note, url: crisis_event_notes_path(@crisis_event), method: :post do |f| %>
+          <div class="mb-2">
+            <%= f.text_area :content, class: 'form-control', style: 'height: 150px' %>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <%= f.submit 'Add', class: 'btn btn-primary mt-2' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

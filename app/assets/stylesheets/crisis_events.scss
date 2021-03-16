@@ -15,6 +15,18 @@
           float: right;
         }
       }
+
+      .card-footer {
+        .col-6 {
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+      }
     }
   }
 

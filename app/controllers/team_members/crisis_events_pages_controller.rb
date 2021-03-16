@@ -19,7 +19,7 @@ module TeamMembers
     end
 
     def crisis_events
-      @crisis_events = CrisisEvent.closed.includes(:user, :crisis_type).offset(@offset).limit(LIMIT).order(:updated_at)
+      @crisis_events = CrisisEvent.closed.includes(:user, :crisis_type).offset(@offset).limit(LIMIT).order(updated_at: :desc)
     end
 
     def last_page
