@@ -2,7 +2,7 @@ module Users
   # app/controllers/users/journal_entries_controller.rb
   class JournalEntriesPagesController < UsersApplicationController
     before_action :page, :offset, :journal_entries, only: :index
-    before_action :count, only: :index, if: -> { @journal_entries.present? }
+    before_action :count, :last_page, only: :index, if: -> { @journal_entries.present? }
     before_action :redirect, only: :index, unless: -> { @journal_entries.present? }
 
     LIMIT = 3
@@ -12,12 +12,6 @@ module Users
       render 'users/journal_entries/index'
     end
 
-    def last_page
-      @offset + LIMIT >= @count
-    end
-
-    helper_method :last_page
-
     private
 
     def count
@@ -26,6 +20,10 @@ module Users
 
     def journal_entries
       @journal_entries = current_user.journal_entries.offset(@offset).limit(LIMIT).order(created_at: :desc)
+    end
+
+    def last_page
+      @last_page = @offset + LIMIT >= @count
     end
 
     def offset

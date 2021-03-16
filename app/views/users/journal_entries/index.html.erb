@@ -20,23 +20,23 @@
               </div>
             </div>
           <% end %>
-            <div class="col-12">
-              <div class="container controls">
-                <div class="row">
-                  <div class="col">
-                    <% unless @page == 1 %>
-                      <%= link_to 'Previous', pages_journal_entries_path(@page - 1), class: 'btn btn-primary' %>
-                    <% end %>
-                  </div>
-                  <div class="col"></div>
-                  <div class="col">
-                    <% unless last_page %>
-                      <%= link_to 'Next', pages_journal_entries_path(@page + 1), class: 'btn btn-primary' %>
-                    <% end %>
-                  </div>
+          <div class="col-12">
+            <div class="container controls">
+              <div class="row">
+                <div class="col">
+                  <% unless @page == 1 %>
+                    <%= link_to 'Previous', pages_journal_entries_path(@page - 1), class: 'btn btn-primary' %>
+                  <% end %>
+                </div>
+                <div class="col"></div>
+                <div class="col">
+                  <% unless @last_page %>
+                    <%= link_to 'Next', pages_journal_entries_path(@page + 1), class: 'btn btn-primary' %>
+                  <% end %>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
