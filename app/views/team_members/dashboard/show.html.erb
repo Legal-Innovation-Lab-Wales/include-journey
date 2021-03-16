@@ -42,23 +42,39 @@
               </div>
             </div>
           <% end %>
-        </div>
-        <div class="row">
-          <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-exclamation-circle"></i>
+          <% unless current_team_member.admin? %>
+            <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-exclamation-circle"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Crisis Events</div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">Crisis Events</div>
-              </div>
-            </div>
+            <% end %>
           <% end %>
-          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
-          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
         </div>
+        <% if current_team_member.admin?  %>
+          <div class="row">
+            <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-exclamation-circle"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Crisis Events</div>
+                </div>
+              </div>
+            <% end %>
+            <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+            <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+          </div>
+        <% end %>
       </div>
     </div>
   </section>
