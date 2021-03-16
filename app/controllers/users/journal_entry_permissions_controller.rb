@@ -11,12 +11,12 @@ module Users
     # POST /journal_entries/:journal_entry_id/journal_entry_permissions/create
     def create
       @team_members.each do |team_member|
-        next unless permissions_params["team_member_#{team_member.id}"] == '1'
+        next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
 
-        JournalEntryPermission.create!({ journal_entry_id: @model.id, team_member_id: team_member.id })
+        JournalEntryPermission.create!({ journal_entry: @model, team_member: team_member })
       end
 
-      redirect_to authenticated_user_root_path, alert: 'Sharing permissions for team members successfully set'
+      redirect_to pages_journal_entries_path(1), alert: 'Sharing permissions for team members successfully set'
     end
 
     protected

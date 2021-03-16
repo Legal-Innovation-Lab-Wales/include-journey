@@ -41,7 +41,7 @@ module TeamMembers
     end
 
     def approved_team_members
-      @approved_team_members = TeamMember.approved.order(created_at: :desc)
+      @approved_team_members = TeamMember.approved.order(:created_at)
     end
 
     def team_member
