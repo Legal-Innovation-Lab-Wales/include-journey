@@ -34,7 +34,7 @@
     </div>
     <div class="row text-start">
       <% if @user.crisis_events.where("closed = false").count > 0 %>
-        <% for crisis in @user.crisis_events.where("closed = false") do %>
+        <% @user.crisis_events.where("closed = false").each do |crisis| %>
           <p><span class="h5">When? </span><%= crisis.created_at %></p>
           <p><span class="h5">Type? </span> <%= crisis.crisis_type %></p>
           <p><span class="h5">Info: </span> <%= crisis.additional_info %></p>
@@ -82,7 +82,7 @@
       <div class="modal-content">
         <%= form_with model: @note,
                       url: add_user_note_path(@user.id) do |form| %>
-          <div class="modal-header">
+          <div class="modal-header border-0">
             <h5 class="modal-title text-black-50" id="">Add a note for this user</h5>
           </div>
           <div class="modal-body">
@@ -107,15 +107,31 @@
   <!-- End modal -->
 
 
-  <section class="row" id="users">
-    <div class="col">
+  <section class="card px-0" id="users">
+    <div class="card-header border-0 bg-transparent">
       <h3>User Notes</h3>
-      <div class="row text-start">
-        <p class="">Note added by <strong><%= %> </strong> on <strong><%= %></strong></p>
-        <button class="btn btn-primary my-2" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
-          Add note <i class="fa fa-angle-right ml-2"></i>
-        </button>
-      </div>
+    </div>
+    <div class="card-body bg-transparent" style="max-height: 40vh; overflow: scroll;">
+      <% @user_notes.each do |note| %>
+        <div class="card bg-transparent my-2">
+          <div class="card-header d-flex justify-content-between">
+            <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created_at.strftime('%d/%m/%Y %I:%M %p') %></strong></span>
+            <span>Visible to user?
+              <% if note.visible_to_user? %><i class="fa fa-check-circle text-success ms-2"></i>
+              <% else %> <i class="fa fa-times-circle ms-2 text-danger"></i>
+              <% end %>
+            </span>
+          </div>
+          <div class="card-body text-start">
+            <p><%= note.content %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary my-2 col-12" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+        Add note <i class="fa fa-angle-right ml-2"></i>
+      </button>
     </div>
   </section>
 

@@ -37,11 +37,10 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1 or /notes/1.json
   def update
 
-      if @note.update!(note_params)
-        redirect_to user_path(params[:user_id]), notice: "Note updated!"
-      else
-        redirect_to user_path(params[:user_id]), notice: "We couldn't create the note. Please try again."
-      end
+    if @note.update!(note_params)
+      redirect_to user_path(params[:user_id]), notice: "Note updated!"
+    else
+      redirect_to user_path(params[:user_id]), notice: "We couldn't create the note. Please try again."
     end
   end
 
