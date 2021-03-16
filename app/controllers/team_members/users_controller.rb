@@ -11,7 +11,7 @@ module TeamMembers
 
     # GET /users/:id
     def show
-      redirect_to authenticated_team_member_root_path, alert: "#{@user.first_name} #{@user.last_name} clicked!"
+      redirect_to users_path, alert: "#{@user.first_name} #{@user.last_name} clicked!"
     end
 
     private
