@@ -1,37 +1,42 @@
 const wellbeing_chart = document.getElementById('wellbeing-chart'),
-    sliders = document.querySelectorAll('.sliders input[type="range"]'),
-    scale = [{
-        description: "Abysmal",
-        colour: "#E04444"
-    }, {
-        description: "Dreadful",
-        colour: "#E64D52"
-    }, {
-        description: "Rubbish",
-        colour: "#E86754"
-    }, {
-        description: "Bad",
-        colour: "#EC8754"
-    }, {
-        description: "Mediocre",
-        colour: "#F0A656"
-    }, {
-        description: "Fine",
-        colour: "#DFC54C"
-    }, {
-        description: "Good",
-        colour: "#BFCA48"
-    }, {
-        description: "Great",
-        colour: "#9ECB46"
-    }, {
-        description: "Superb",
-        colour: "#BFCB43"
-    }, {
-        description: "Perfect",
-        colour: "#5DAD3A"
-    }],
-    chart = new Chart(wellbeing_chart.getContext('2d'), {
+      sliders = document.querySelectorAll('.sliders input[type="range"]'),
+      scale = [{
+          description: "Abysmal",
+          colour: "#E04444"
+      }, {
+          description: "Dreadful",
+          colour: "#E64D52"
+      }, {
+          description: "Rubbish",
+          colour: "#E86754"
+      }, {
+          description: "Bad",
+          colour: "#EC8754"
+      }, {
+          description: "Mediocre",
+          colour: "#F0A656"
+      }, {
+          description: "Fine",
+          colour: "#DFC54C"
+      }, {
+          description: "Good",
+          colour: "#BFCA48"
+      }, {
+          description: "Great",
+          colour: "#9ECB46"
+      }, {
+          description: "Superb",
+          colour: "#BFCB43"
+      }, {
+          description: "Perfect",
+          colour: "#5DAD3A"
+      }],
+      hasRendered = function() {
+          return wellbeing_chart.classList.contains('chartjs-render-monitor')
+      }
+
+if (wellbeing_chart && !hasRendered()) {
+    const chart = new Chart(wellbeing_chart.getContext('2d'), {
         type: 'polarArea',
         data: {
             datasets: [{
@@ -74,14 +79,15 @@ const wellbeing_chart = document.getElementById('wellbeing-chart'),
         description.innerText = scale[input.value - 1].description
     }
 
-sliders.forEach((input, index) => {
-    input.addEventListener('change', () => {
-        chart.data.datasets[0].data[index] = input.value
-        chart.data.datasets[0].backgroundColor[index] = scale[input.value - 1].colour
+    sliders.forEach((input, index) => {
+        input.addEventListener('change', () => {
+            chart.data.datasets[0].data[index] = input.value
+            chart.data.datasets[0].backgroundColor[index] = scale[input.value - 1].colour
+            setDescription(input)
+
+            chart.update()
+        })
+
         setDescription(input)
-
-        chart.update()
     })
-
-    setDescription(input)
-})
+}
