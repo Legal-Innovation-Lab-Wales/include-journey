@@ -1,4 +1,4 @@
-<main class="container dashboard team_members">
+<main class="container team_members">
   <section class="row">
     <div class="col mb-3">
       <h3>Dashboard</h3>
@@ -42,6 +42,22 @@
               </div>
             </div>
           <% end %>
+        </div>
+        <div class="row">
+          <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-exclamation-circle"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Crisis Events</div>
+              </div>
+            </div>
+          <% end %>
+          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
         </div>
       </div>
     </div>

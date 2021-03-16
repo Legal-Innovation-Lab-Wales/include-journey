@@ -7,7 +7,7 @@ $nav: 62px;
 $footer: 286px;
 $margins: 1rem;
 
-.dashboard, .user {
+.team_members, .user {
   min-height: calc(100vh - #{$nav} - #{$footer} - #{$margins});
   color: $white;
   background-color: $black;

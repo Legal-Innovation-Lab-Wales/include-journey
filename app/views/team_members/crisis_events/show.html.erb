@@ -1,0 +1,31 @@
+<main class="container team_members crisis_event">
+  <section class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+      <h3 class="mb-3">Crisis Event - <%= @crisis_event.user.first_name %> <%= @crisis_event.user.last_name %></h3>
+      <div class="card mb-3">
+        <div class="card-header">
+          <span>
+            <% if @crisis_event.closed %>
+              <strong>Closed</strong> <i class="fas fa-times-circle"></i>
+            <% else %>
+              <strong>Active</strong> <i class="fas fa-exclamation-circle"></i>
+            <% end %>
+          </span>
+          <span><%= @crisis_event.last_update %></span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title mb-3">Crisis Type: <%= @crisis_event.crisis_type.category %></h5>
+          <p class="card-text">Additional Info: <%= @crisis_event.additional_info %></p>
+        </div>
+        <% unless @crisis_event.closed %>
+          <div class="card-footer">
+            <%= link_to 'Close', close_crisis_event_path(@crisis_event), class: 'btn btn-primary',
+                        data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-3"></div>
+  </section>
+</main>

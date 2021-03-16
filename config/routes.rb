@@ -48,6 +48,9 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: :show, as: :user
+      resources :crisis_events, only: %i[show index], as: :crisis_events do
+        put 'close', action: 'close', on: :member, as: :close
+      end
     end
   end
 
