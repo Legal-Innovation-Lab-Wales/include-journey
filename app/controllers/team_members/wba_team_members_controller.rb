@@ -1,7 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/wba_team_members_controller.rb
   class WbaTeamMembersController < TeamMembersApplicationController
-    before_action :require_admin, :set_team_member, :set_wba
+    before_action :require_admin, :team_member, :wba
 
     # GET /team_members/:team_member_id/wba/:wba_team_member_id
     def show
@@ -11,12 +11,12 @@ module TeamMembers
 
     private
 
-    def set_team_member
+    def team_member
       @team_member = TeamMember.find(params[:team_member_id])
     end
 
-    def set_wba
-      @wba = WbaTeamMember.find(params[:wba_team_member_id])
+    def wba
+      @wba = WbaTeamMember.find(params[:id])
     end
   end
 end

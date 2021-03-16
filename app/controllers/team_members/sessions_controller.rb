@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module TeamMembers
   # app/controllers/team_members/sessions_controller.rb
   class SessionsController < Devise::SessionsController

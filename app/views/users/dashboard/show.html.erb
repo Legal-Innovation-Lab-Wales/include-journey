@@ -1,10 +1,10 @@
-<main class="container user dashboard">
+<main class="container user">
   <section class="row journey">
     <div class="col mb-3">
       <h2 class="mb-3">Your Journey</h2>
       <div class="container buttons">
         <div class="row">
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to dashboard_journal_entries_path, class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -12,7 +12,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col">My Diary</div>
+                <div class="col">My Journal</div>
               </div>
             </div>
           <% end %>
@@ -28,7 +28,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to '#wellbeing', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to new_wba_self_path, class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -120,87 +120,4 @@
       </div>
     </div>
   </section>
-  <section class="row pb-4" id="wellbeing">
-    <div class="col-md-3 services">
-      <h3>Your Services</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            <%= link_to 'Service 1', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 2', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 3', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to 'Service 4', '#', class: 'btn btn-success' %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 chart">
-      <h3>Your Wellbeing</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            <canvas id="wellbeing-chart" width="400" height="400"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5 sliders">
-      <% if @wba_self.present? %>
-        <h3>How are you today?</h3>
-        <%= form_with model: @wba_self, url: wba_selves_path, method: :post do |f| %>
-          <div class="container mt-3">
-
-            <% @wellbeing_metrics.each do |wellbeing_metric| %>
-              <div class="row">
-                <div class="col-12 col-md-5">
-                  <%= f.label "wellbeing_metric_#{wellbeing_metric.id}".to_sym, wellbeing_metric.name %>
-                </div>
-                <div class="col-9 col-md-5">
-                  <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
-                                    value: last_score(wellbeing_metric.id) %>
-                </div>
-                <div class="col-3 col-md-2 description"></div>
-              </div>
-            <% end %>
-
-            <div class="row">
-              <div class="col">
-                <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-          <h3>Today</h3>
-          <div class="container mt-3">
-          <% @wellbeing_metrics.each do |wellbeing_metric| %>
-            <div class="row">
-              <div class="col-9">
-                <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
-              </div>
-              <input class="hidden" type="range" value=<%= last_score(wellbeing_metric.id) %> id=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>>
-              <div class="col-3 description"></div>
-            </div>
-          <% end %>
-          </div>
-      <% end %>
-    </div>
-  </section>
 </main>
-<% if @team_members.present? %>
-  <%= render partial: '/modals/permissions/new' %>
-<% end %>
-
-<%= javascript_pack_tag 'polar_area_chart' %>

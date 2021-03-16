@@ -1,3 +1,4 @@
+# app/models/wba_team_member.rb
 class WbaTeamMember < ApplicationRecord
   belongs_to :team_member
   belongs_to :user

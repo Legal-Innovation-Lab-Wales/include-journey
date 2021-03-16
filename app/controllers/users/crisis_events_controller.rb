@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Users
   # app/controllers/users/crisis_events_controller.rb
   class CrisisEventsController < UsersApplicationController
