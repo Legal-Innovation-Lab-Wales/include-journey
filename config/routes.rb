@@ -14,24 +14,41 @@ Rails.application.routes.draw do
                                            unlocks: 'team_members/unlocks' }
 
   authenticated :user do
-    root 'users/dashboard#main', as: :authenticated_user_root
+    scope module: 'users' do
+      root 'dashboard#show', as: :authenticated_user_root
 
-    post '/wba_selves/create', to: 'users/wba_selves#create', as: :wba_selves
-    post '/wba_selves/:wba_self_id/wba_self_permissions/create', to: 'users/wba_self_permissions#create', as: :wba_self_permissions
+      resources :wba_selves, only: %i[show new create] do
+        resources :wba_self_permissions, only: %i[new create], as: :permissions
+      end
 
-    post '/crisis_events/create', to: 'users/crisis_events#create', as: :crisis_events
-    put '/crisis_events/:crisis_event_id', to: 'users/crisis_events#update', as: :update_crisis_event
+      resources :journal_entries, only: %i[new create] do
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+
+        get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
+        get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
+      end
+
+      resources :crisis_events, only: :create do
+        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update
+      end
+    end
   end
 
   authenticated :team_member do
-    root 'team_members/dashboard#main', as: :authenticated_team_member_root
+    scope module: 'team_members' do
+      root 'dashboard#show', as: :authenticated_team_member_root
 
-    get '/team_members/:team_member_id', to: 'team_members/team_members#show', as: :team_member
-    put '/team_members/:team_member_id/approve', to: 'team_members/team_members#approve_team_member', as: :approve_team_member
-    put '/team_members/:team_member_id/admin', to: 'team_members/team_members#toggle_admin', as: :toggle_admin
-    get '/team_members/:team_member_id/wba/:wba_team_member_id', to: 'team_members/wba_team_members#show', as: :wba_team_member
+      resources :team_members, only: :show do
+        scope controller: 'team_members' do
+          put 'approve', action: 'approve_team_member', on: :member, as: :approve
+          put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
+        end
 
-    get '/users/:user_id', to: 'team_members/users#show', as: :user
+        resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
+      end
+
+      resources :users, only: :show, as: :user
+    end
   end
 
   unauthenticated do

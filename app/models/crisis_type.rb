@@ -1,3 +1,4 @@
+# app/models/crisis_type.rb
 class CrisisType < ApplicationRecord
   belongs_to :team_member
 

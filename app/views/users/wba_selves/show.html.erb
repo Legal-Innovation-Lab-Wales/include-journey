@@ -1,0 +1,43 @@
+<main class="container user">
+  <section class="row pb-4" id="wellbeing">
+    <div class="col-md-3 services">
+      <h3>Your Services</h3>
+      <div class="container mt-3">
+        <% [*1..4].each do |i| %>
+          <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
+            <div class="col">
+              <%= link_to "Service #{i}", '#', class: 'btn btn-success' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-4 chart">
+      <h3>Your Wellbeing</h3>
+      <div class="container mt-3">
+        <div class="row">
+          <div class="col">
+            <canvas id="wellbeing-chart" width="400" height="400"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 sliders">
+      <h5><%= @wba_self.created %></h5>
+      <div class="container mt-3">
+        <% @wellbeing_metrics.each do |wellbeing_metric| %>
+          <div class="row">
+            <div class="col-9">
+              <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+            </div>
+            <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
+                   value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
+            <div class="col-3 description"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'polar_area_chart' %>

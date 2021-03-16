@@ -1,14 +1,14 @@
 module TeamMembers
   # app/controllers/team_members/team_members_controller.rb
   class TeamMembersController < TeamMembersApplicationController
-    before_action :require_admin, :set_team_member
+    before_action :require_admin, :team_member
 
-    # GET /team_members/:team_member_id
+    # GET /team_members/:id
     def show
       render template: 'team_members/team_members/show'
     end
 
-    # PUT /team_members/:team_member_id/approve
+    # PUT /team_members/:id/approve
     def approve_team_member
       respond_to do |format|
         if @team_member.update(approved: true)
@@ -19,7 +19,7 @@ module TeamMembers
       end
     end
 
-    # PUT /team_members/:team_member_id/admin
+    # PUT /team_members/:id/admin
     def toggle_admin
       respond_to do |format|
         if @team_member.update(admin: !@team_member.admin?)
@@ -36,8 +36,8 @@ module TeamMembers
       @team_member.admin? ? "#{@team_member.first_name} is now an admin" : "#{@team_member.first_name} is no longer an admin"
     end
 
-    def set_team_member
-      @team_member = TeamMember.find(params[:team_member_id].to_i)
+    def team_member
+      @team_member = TeamMember.find(params[:id])
     end
   end
 end

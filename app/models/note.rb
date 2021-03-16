@@ -1,4 +1,4 @@
-# app/model/note.rb
+# app/models/note.rb
 class Note < ApplicationRecord
   belongs_to :team_member
   belongs_to :user

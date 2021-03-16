@@ -1,0 +1,67 @@
+@import "variables";
+
+.journal-entry {
+  &.new {
+    max-width: 550px !important;
+    margin: 1rem auto;
+
+    label.btn {
+      font-size: 2rem;
+    }
+  }
+
+  &.new, &.index {
+    padding: 0;
+
+    .row {
+      @media screen and (max-width: $screen-md){
+        background-color: $black;
+      }
+
+      .container {
+        padding: 0;
+      }
+    }
+  }
+
+  &.index {
+    .controls {
+      .col {
+        &:first-child {
+          text-align: left;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  textarea {
+    height: 150px !important;
+  }
+
+  label {
+    color: $black;
+  }
+
+  &.index {
+    .card-header {
+      span {
+        &:first-child {
+          float: left;
+        }
+
+        &:last-child {
+          color: $black;
+          float: right;
+        }
+      }
+    }
+
+    textarea {
+      border: none;
+    }
+  }
+}
