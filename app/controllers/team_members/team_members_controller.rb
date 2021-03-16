@@ -17,7 +17,6 @@ module TeamMembers
 
     # PUT /team_members/:id/approve
     def approve_team_member
-      debugger
       if @team_member.update(approved: true)
         redirect_to team_members_path, alert: "#{@team_member.first_name} has been approved"
       else
