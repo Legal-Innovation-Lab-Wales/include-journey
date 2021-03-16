@@ -4,6 +4,10 @@
   &.new {
     max-width: 550px !important;
     margin: 1rem auto;
+
+    label.btn {
+      font-size: 2rem;
+    }
   }
 
   &.new, &.index {
