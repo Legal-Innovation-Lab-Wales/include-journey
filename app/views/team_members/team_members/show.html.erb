@@ -1,7 +1,52 @@
 <main class="container team_members team_member">
   <section class="row">
-    <div class="col">
-      <h3>Team Member Details</h3>
+    <div class="col mb-3">
+      <h3><%= @team_member.first_name %> <%= @team_member.last_name %> </h3>
+      <div class="container buttons">
+        <div class="row">
+          <%= link_to '#info', class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-user"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Details</div>
+              </div>
+            </div>
+          <% end %>
+          <%= link_to '#wba_team_members', class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-clipboard"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Wellbeing Assessments</div>
+              </div>
+            </div>
+          <% end %>
+          <%= link_to pages_team_member_wba_self_view_logs_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-eye"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">WBA View Logs</div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="row" id="info">
+    <div class="col mb-3">
+      <h3>Details</h3>
       <table class="table table-dark table-striped">
         <thead>
           <th scope="col">First Name</th>
@@ -34,7 +79,7 @@
   </section>
   <% if @team_member.sign_in_count > 0 %>
     <section class="row">
-      <div class="col">
+      <div class="col mb-3">
         <h3>Team Member Sign In</h3>
         <table class="table table-dark table-striped">
           <thead>
@@ -58,7 +103,7 @@
     </section>
   <% end %>
   <% if @team_member.wba_team_members.count > 0 %>
-    <section class="row">
+    <section class="row" id="wba_team_members">
       <div class="col">
         <h3>wellbeing assessments</h3>
         <table class="table table-dark table-striped">
@@ -76,40 +121,17 @@
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to team_member_wba_team_member_path(@team_member, wba_team_member) do %>
+                  <%= link_to wba_team_member_path(wba_team_member) do %>
                     <%= wba_team_member.created %>
                   <% end %>
                 </td>
                 <td>
-                  <%= link_to team_member_wba_team_member_path(@team_member, wba_team_member) do %>
+                  <%= link_to wba_team_member_path(wba_team_member) do %>
                     <%= wba_team_member.last_update %>
                   <% end %>
               </td>
               </tr>
             <% end %>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  <% end %>
-  <% if @team_member.wba_self_view_logs.count > 0 %>
-    <section class="row">
-      <div class="col">
-        <h3>wellbeing assessment view logs</h3>
-        <table class="table table-dark table-striped">
-          <thead>
-          <th scope="col">User</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Last Update</th>
-          </thead>
-          <tbody>
-          <% @team_member.wba_self_view_logs.includes(:user).order(:created_at).each do |wba_self_view_log| %>
-            <tr>
-              <td><%= wba_self_view_log.user.first_name %> <%= wba_self_view_log.user.last_name %></td>
-              <td><%= wba_self_view_log.created %>
-              <td><%= wba_self_view_log.last_update %>
-            </tr>
-          <% end %>
           </tbody>
         </table>
       </div>

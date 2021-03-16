@@ -1,22 +1,17 @@
 module TeamMembers
   # app/controllers/team_members/wba_team_members_controller.rb
   class WbaTeamMembersController < TeamMembersApplicationController
-    before_action :require_admin, :team_member, :wba
+    before_action :wba_team_member, only: :show
 
-    # GET /team_members/:team_member_id/wba/:wba_team_member_id
+    # GET /wba_team_member/:id
     def show
-      redirect_to team_member_path(@team_member),
-                  alert: "WBA for #{@wba.user.first_name} #{@wba.user.last_name} created by #{@team_member.first_name} #{@team_member.last_name} clicked!"
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: "WBA for #{@wba_team_member.user.first_name} #{@wba_team_member.user.last_name} created by #{@wba_team_member.team_member.first_name} #{@wba_team_member.team_member.last_name} clicked!")
     end
 
     private
 
-    def team_member
-      @team_member = TeamMember.find(params[:team_member_id])
-    end
-
-    def wba
-      @wba = WbaTeamMember.find(params[:id])
+    def wba_team_member
+      @wba_team_member = WbaTeamMember.includes(:user, :team_member).find(params[:id])
     end
   end
 end

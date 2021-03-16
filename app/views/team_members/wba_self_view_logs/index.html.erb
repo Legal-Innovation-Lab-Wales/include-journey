@@ -1,0 +1,38 @@
+<main class="container team_members wba_self_view_logs">
+  <section class="row">
+    <div class="col">
+      <h3><%= @team_member.first_name %> <%= @team_member.last_name %> wellbeing Assessment View Logs</h3>
+      <table class="table table-dark table-striped">
+        <thead>
+        <th scope="col">User</th>
+        <th scope="col">Created At</th>
+        </thead>
+        <tbody>
+        <% @wba_self_view_logs.each do |wba_self_view_log| %>
+          <tr>
+            <td><%= wba_self_view_log.user.first_name %> <%= wba_self_view_log.user.last_name %></td>
+            <td><%= wba_self_view_log.created %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12">
+      <div class="container pagination_controls">
+        <div class="row">
+          <div class="col">
+            <% unless @page == 1 %>
+              <%= link_to 'Previous', pages_team_member_wba_self_view_logs_url(@team_member, @page - 1), class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+          <div class="col"></div>
+          <div class="col">
+            <% unless @last_page %>
+              <%= link_to 'Next', pages_team_member_wba_self_view_logs_url(@team_member, @page + 1), class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
