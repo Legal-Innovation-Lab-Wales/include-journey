@@ -22,10 +22,9 @@ Rails.application.routes.draw do
       end
 
       resources :journal_entries, only: %i[new create] do
+        get 'page/:page_number', action: :index, on: :collection, as: :pages
+        get 'dashboard', action: :dashboard, on: :collection
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
-
-        get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
-        get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
       end
 
       resources :crisis_events, only: :create do
