@@ -55,7 +55,7 @@ module TeamMembers
     end
 
     def offset
-      @offset = @page * LIMIT
+      @offset = (@page - 1) * LIMIT
     end
 
     def page

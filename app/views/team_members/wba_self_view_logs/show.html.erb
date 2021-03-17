@@ -1,0 +1,45 @@
+<main class="container team_members">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to team_member_path(@team_member), class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Back to <%= @team_member.first_name %> <%= @team_member.last_name %>
+      <% end %>
+    </div>
+  </div>
+  <section class="row">
+    <div class="col">
+      <h3><%= @team_member.first_name %> <%= @team_member.last_name %> wellbeing Assessment View Logs</h3>
+      <table class="table table-dark table-striped">
+        <thead>
+        <th scope="col">User</th>
+        <th scope="col">Created At</th>
+        </thead>
+        <tbody>
+        <% @view_logs.each do |view_log| %>
+          <tr>
+            <td><%= view_log.user.first_name %> <%= view_log.user.last_name %></td>
+            <td><%= view_log.created %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12">
+      <div class="container pagination_controls">
+        <div class="row">
+          <div class="col">
+            <% unless @page == 1 %>
+              <%= link_to 'Previous', team_member_wba_self_view_log_path(@team_member, @page - 1), class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+          <div class="col"></div>
+          <div class="col">
+            <% unless @last_page %>
+              <%= link_to 'Next', team_member_wba_self_view_log_path(@team_member, @page + 1), class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

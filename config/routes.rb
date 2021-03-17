@@ -44,9 +44,8 @@ Rails.application.routes.draw do
           put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
         end
 
-        resources :wba_self_view_logs, only: :index do
-          get 'page/:page_number', action: :page_index, on: :collection, as: :pages
-        end
+        resources :wba_self_view_logs, only: %i[show index], param: :page_number
+        resources :journal_entry_view_logs, only: %i[show index], param: :page_number
       end
 
       resources :users, only: %i[index show]

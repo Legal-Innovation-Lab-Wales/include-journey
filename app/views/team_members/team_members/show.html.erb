@@ -35,7 +35,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to pages_team_member_wba_self_view_logs_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
+          <%= link_to team_member_wba_self_view_log_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -44,6 +44,22 @@
               </div>
               <div class="row">
                 <div class="col">WBA View Logs</div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+          <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+          <%= link_to team_member_journal_entry_view_log_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-eye"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Journal Entries View Logs</div>
               </div>
             </div>
           <% end %>
