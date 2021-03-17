@@ -7,4 +7,8 @@ class CrisisEvent < ApplicationRecord
 
   scope :active, -> { where(closed: false) }
   scope :closed, -> { where(closed: true) }
+
+  def closed_formatted
+    closed_at.strftime('%d/%m/%Y %I:%M %p')
+  end
 end
