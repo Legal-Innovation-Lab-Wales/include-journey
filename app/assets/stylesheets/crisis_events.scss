@@ -45,4 +45,10 @@
       }
     }
   }
+
+  &.crisis_event, &.crisis_events {
+    .row:first-child {
+      text-align: left;
+    }
+  }
 }

@@ -1,33 +1,50 @@
 <main class="container team_members crisis_event">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to :back, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Back
+      <% end %>
+    </div>
+  </div>
   <section class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
-      <h3 class="mb-3">Crisis Event - <%= @crisis_event.user.first_name %> <%= @crisis_event.user.last_name %></h3>
+      <h3 class="mb-3">Crisis Event</h3>
+      <h5 class="mb-3"><u><%= @crisis_event.user.first_name %> <%= @crisis_event.user.last_name %></u>
+        raised an SOS <u><%= time_ago_in_words(@crisis_event.created_at) %> ago</u></h5>
       <div class="card mb-3">
         <div class="card-header">
-          <span>
-            <% if @crisis_event.closed %>
-              <strong>Closed</strong> <i class="fas fa-times-circle"></i>
-            <% else %>
-              <strong>Active</strong> <i class="fas fa-exclamation-circle"></i>
-            <% end %>
-          </span>
-          <span><%= @crisis_event.last_update %></span>
+          <% if @crisis_event.closed %>
+            <span><strong>Closed</strong> <i class="fas fa-times-circle"></i></span>
+            <span><strong>Closed At:</strong> <%= @crisis_event.closed_formatted %></span>
+          <% else %>
+            <span><strong>Active</strong> <i class="fas fa-exclamation-circle"></i></span>
+            <span><strong>Last Update At:</strong> <%= @crisis_event.last_update %></span>
+          <% end %>
         </div>
         <div class="card-body">
           <h5 class="card-title mb-3">Crisis Type: <%= @crisis_event.crisis_type.category %></h5>
-          <p class="card-text">Additional Info: <%= @crisis_event.additional_info %></p>
+
+          <p class="card-text">
+            <% if @crisis_event.additional_info.empty? %>
+              User has not provided any additional info
+            <%  else  %>
+              Additional Info: <%=  @crisis_event.additional_info  %>
+            <%  end %>
+          </p>
         </div>
           <div class="card-footer">
             <div class="container p-0">
               <div class="row">
                 <div class="col-6">
-                  <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#noteModal">New Note</a>
+                  <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#noteModal">New Note <i class="fas fa-plus-circle"></i></a>
                 </div>
                 <div class="col-6">
                   <% unless @crisis_event.closed %>
-                    <%= link_to 'Close', close_crisis_event_path(@crisis_event), class: 'btn btn-danger m-1',
-                                data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } %>
+                    <%= link_to close_crisis_event_path(@crisis_event), class: 'btn btn-danger m-1',
+                                data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } do %>
+                      Close Event <i class="fas fa-times-circle"></i>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
@@ -42,10 +59,10 @@
       <div class="col">
         <h3>Notes</h3>
 
-        <div class="container">
+        <div class="container p-0">
           <div class="row">
             <% @notes.each do |note| %>
-              <div class="col-4">
+              <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mb-3">
                   <div class="card-header">
                     <span><%= note.team_member.first_name %> <%= note.team_member.last_name %></span>

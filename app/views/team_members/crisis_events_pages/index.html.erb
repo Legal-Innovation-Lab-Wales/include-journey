@@ -1,4 +1,11 @@
 <main class="container team_members crisis_events">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Back to active
+      <% end %>
+    </div>
+  </div>
   <section class="row">
     <div class="col">
       <h3>Closed Crisis Events</h3>
@@ -37,13 +44,17 @@
         <div class="row">
           <div class="col">
             <% unless @page == 1 %>
-              <%= link_to 'Previous', pages_crisis_events_path(@page - 1), class: 'btn btn-primary' %>
+              <%= link_to pages_crisis_events_path(@page - 1), class: 'btn btn-primary' do %>
+                <i class="fas fa-arrow-circle-left"></i> Previous
+              <% end %>
             <% end %>
           </div>
           <div class="col"></div>
           <div class="col">
             <% unless @last_page %>
-              <%= link_to 'Next', pages_crisis_events_path(@page + 1), class: 'btn btn-primary' %>
+              <%= link_to pages_crisis_events_path(@page + 1), class: 'btn btn-primary' do %>
+                Next <i class="fas fa-arrow-circle-right"></i>
+              <% end %>
             <% end %>
           </div>
         </div>
