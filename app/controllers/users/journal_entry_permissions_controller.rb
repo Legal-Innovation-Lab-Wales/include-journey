@@ -8,18 +8,11 @@ module Users
       render 'new'
     end
 
-    # POST /journal_entries/:journal_entry_id/journal_entry_permissions/create
-    def create
-      @team_members.each do |team_member|
-        next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
-
-        JournalEntryPermission.create!({ journal_entry: @model, team_member: team_member })
-      end
-
-      redirect_to pages_journal_entries_path(1), alert: 'Sharing permissions for team members successfully set'
-    end
-
     protected
+
+    def path
+      pages_journal_entries_path(1)
+    end
 
     def new_path
       new_journal_entry_permission_path(@model)

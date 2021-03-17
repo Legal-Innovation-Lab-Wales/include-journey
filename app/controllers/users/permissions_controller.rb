@@ -18,13 +18,23 @@ module Users
     end
 
     def create
-      raise 'Subclass has not overridden permissions create function'
+      @team_members.each do |team_member|
+        next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
+
+        @model.permissions.create!({ team_member: team_member })
+      end
+
+      redirect_to path, alert: 'Sharing permissions for team members successfully set'
     end
 
     protected
 
     def new_path
       raise 'Subclass has not overridden new path function'
+    end
+
+    def path
+      raise 'Subclass has not overridden path function'
     end
 
     def last_permissions
