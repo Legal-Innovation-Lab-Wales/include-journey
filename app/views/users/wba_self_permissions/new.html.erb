@@ -16,15 +16,11 @@
             <div class="row">
               <%  @team_members.each do |team_member| %>
                 <div class="col-6 p-1">
-                  <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check',
-                                  checked: last_permission(@last_permissions, team_member.id) %>
-                  <%= f.label "team_member_#{team_member.id}", class: 'btn w-100' do %>
+                  <% permitted = last_permission(@last_permissions, team_member.id) %>
+                  <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check', checked: permitted %>
+                  <%= f.label "team_member_#{team_member.id}", class: "btn w-100 #{ permitted ? 'selected' : '' }" do %>
                     <%= team_member.first_name %> <%= team_member.last_name %>
-                    <% if last_permission(@last_permissions, team_member.id) %>
-                      <i class="fas fa-check-circle"></i>
-                    <% else %>
-                      <i class="fas fa-times-circle"></i>
-                    <% end %>
+                    <i class="fas <%= permitted ? 'fa-check-circle' : 'fa-times-circle'%>"></i>
                   <% end %>
                 </div>
               <% end %>

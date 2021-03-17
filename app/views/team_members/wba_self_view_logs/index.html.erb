@@ -1,4 +1,11 @@
 <main class="container team_members wba_self_view_logs">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to team_member_path(@team_member), class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Back to <%= @team_member.first_name %> <%= @team_member.last_name %>
+      <% end %>
+    </div>
+  </div>
   <section class="row">
     <div class="col">
       <h3><%= @team_member.first_name %> <%= @team_member.last_name %> wellbeing Assessment View Logs</h3>

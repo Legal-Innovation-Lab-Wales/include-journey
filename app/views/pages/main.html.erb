@@ -5,37 +5,13 @@
         <h1>Your Include Journey</h1>
         <p>track and progress on your journey to make the changes you want and need.</p>
         <p>Built for Include UK by the Legal Innovation lab Wales</p>
-        <div class="container">
-          <div class="row">
-            <div class="col"></div>
-            <%= link_to new_team_member_session_path, class: 'col d-flex align-items-center btn btn-secondary m-1' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-users"></i>
-                    <i class="mb-1 fas fa-sign-in-alt"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">staff sign in</div>
-                </div>
-              </div>
-            <% end %>
-            <%= link_to new_user_session_path, class: 'col d-flex align-items-center btn btn-success m-1' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-user"></i>
-                    <i class="mb-1 fas fa-sign-in-alt"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">user sign in</div>
-                </div>
-              </div>
-            <% end %>
-            <div class="col"></div>
-          </div>
+        <div class="text-center">
+          <%= link_to new_team_member_session_path, class: 'btn btn-secondary' do %>
+            team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
+          <% end %>
+          <%= link_to new_user_session_path, class: 'btn btn-success' do %>
+            user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
+          <% end %>
         </div>
       </div>
       <div class="homepage-section">
@@ -46,8 +22,12 @@
         <p>The development and implementation of digital technologies in the area of offender rehabilitation are cutting edge. Currently, there is little to no innovation in this area.  As such, a range of technology can be developed to support organisations and their service users.</p>
 
         <div class="text-center">
-          <%= link_to 'new staff sign up', new_team_member_registration_path, class: 'btn btn-secondary' %>
-          <%= link_to 'new user sign up', new_user_registration_path, class: 'btn btn-success' %>
+          <%= link_to new_team_member_registration_path, class: 'btn btn-secondary' do %>
+            team member sign up <i class="fas fa-user-plus"></i>
+          <% end %>
+          <%= link_to new_user_registration_path, class: 'btn btn-success' do %>
+            user sign up <i class="fas fa-user-plus"></i>
+          <% end %>
         </div>
       </div>
       <div class="homepage-section">
