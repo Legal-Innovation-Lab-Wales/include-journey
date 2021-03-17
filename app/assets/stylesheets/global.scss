@@ -39,9 +39,12 @@ body#overboot {
     }
 
     td {
+      max-width: 400px;
       height: 50px;
       line-height: 50px;
       padding: 0 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       a {
         display: block;
@@ -51,6 +54,8 @@ body#overboot {
         color: $white;
         cursor: pointer;
         padding: 0 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
