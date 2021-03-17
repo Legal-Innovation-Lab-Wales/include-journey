@@ -7,19 +7,23 @@
 .homepage-cover {
   display: flex;
   background-color: $black;
+
   .homepage-section {
     border-radius: 0.6rem;
     padding: 2rem 4rem;
     margin-bottom: max(2rem);
     background-color: $white;
     color: $black;
+
     h1 {
       font-size: 4rem;
     }
+
     a.col {
       max-width: 200px;
     }
   }
+
   .homepage-header {
     background-color: $brand-primary;
     color: $black;
@@ -27,7 +31,7 @@
 
 }
 
-.footers{
+.footers {
   .title {
     color: $black;
     text-decoration: none;
@@ -49,4 +53,37 @@
       color: $brand-secondary;
     }
   }
+}
+
+nav.navbar {
+  .navbar-items {
+    overflow: hidden;
+    max-width: 480px;
+    max-height: 48px;
+
+    .btn {
+      margin: -0.25rem;
+      max-height: 38px;
+    }
+
+    @media (min-width: 576px) {
+      .btn {
+        margin: 0.25rem;
+
+        .nav-label {
+          display: none;
+        }
+
+        &:hover {
+          color: $brand-secondary;
+
+          .nav-label {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+
 }

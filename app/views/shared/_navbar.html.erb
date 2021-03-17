@@ -5,14 +5,39 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <% if current_user %>
-        <% unless dashboard_controller? %>
-          <a class="btn btn-danger m-1" data-bs-toggle="modal"
-          data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
-          SOS <i class="fas fa-exclamation-circle"></i>
-        </a>
+      <% unless dashboard_controller? %>
+          <span class="navbar-items">
+          <%= link_to dashboard_journal_entries_path, class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-book"></i>
+            <span class="nav-label">my journal</span>
           <% end %>
-        <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-calendar-alt"></i>
+            <span class="nav-label">my thingy</span>
+          <% end %>
+            <%= link_to new_wba_self_path, class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-heart"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-calendar-alt"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-road"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-info-circle"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-tasks"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-calendar-alt"></i>
+          <% end %>
+            <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-comments"></i>
+          <% end %>
+      <% end %>
+      </span>
 
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -29,7 +54,7 @@
         <% if current_user %>
           <% unless devise_controller? %>
             <a class="btn btn-danger m-1" data-bs-toggle="modal"
-               data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
+               data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
               SOS <i class="fas fa-exclamation-circle"></i>
             </a>
           <% end %>
