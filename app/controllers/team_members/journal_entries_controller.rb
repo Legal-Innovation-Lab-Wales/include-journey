@@ -42,6 +42,8 @@ module TeamMembers
 
     def journal_entry
       @journal_entry = current_team_member.journal_entries.includes(:user).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: journal_entries_path, alert: 'That journal entry doesn\'t exist or you do not have permission to view it')
     end
 
     def journal_entry_view_logs
