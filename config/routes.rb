@@ -50,14 +50,18 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: %i[index show]
+
       resources :crisis_events, only: %i[show index] do
         put 'close', action: 'close', on: :member, as: :close
         get 'page/:page_number', to: 'crisis_events_pages#index', on: :collection, as: :pages
 
         resources :crisis_events_notes, only: %i[new create], as: :notes
       end
-
       resources :wba_team_members, only: :show
+
+      resources :journal_entries, only: %i[show index] do
+        get 'page/:page_number', action: :page_index, on: :collection
+      end
     end
   end
 

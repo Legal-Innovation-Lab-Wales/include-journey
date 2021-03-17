@@ -71,6 +71,34 @@
                 </div>
               </div>
             <% end %>
+            <%= link_to pages_journal_entries_path(1), class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-book-open"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Journal Entries</div>
+                </div>
+              </div>
+            <% end %>
+            <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
+          </div>
+        <% else %>
+          <div class="row">
+            <%= link_to pages_journal_entries_path(1), class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-book-open"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Journal Entries</div>
+                </div>
+              </div>
+            <% end %>
             <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
             <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent"></a>
           </div>

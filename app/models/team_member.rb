@@ -24,6 +24,10 @@ class TeamMember < DeviseRecord
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
 
+  has_many :journal_entry_permissions, foreign_key: :team_member_id
+  has_many :journal_entry_view_logs, foreign_key: :team_member_id
+  has_many :journal_entries, through: :journal_entry_permissions
+
   # validations
   validates_presence_of :first_name,
                         :last_name,
