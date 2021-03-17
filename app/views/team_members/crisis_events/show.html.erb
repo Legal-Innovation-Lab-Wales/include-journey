@@ -10,8 +10,14 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
       <h3 class="mb-3">Crisis Event</h3>
-      <h5 class="mb-3"><u><%= @crisis_event.user.first_name %> <%= @crisis_event.user.last_name %></u>
-        raised an SOS <u><%= time_ago_in_words(@crisis_event.created_at) %> ago</u></h5>
+      <h5 class="mb-3"><%= @crisis_event.user.first_name %> <%= @crisis_event.user.last_name %>
+        raised an SOS <%= time_ago_in_words(@crisis_event.created_at) %> ago</h5>
+      <% unless @crisis_event.closed %>
+        <h5 class="mb-3">
+          Mobile Number: <a href="tel:0<%= @crisis_event.user.mobile_number %>">0<%= @crisis_event.user.mobile_number %></a>
+        </h5>
+      <% end %>
+
       <div class="card mb-3">
         <div class="card-header">
           <% if @crisis_event.closed %>
@@ -24,7 +30,6 @@
         </div>
         <div class="card-body">
           <h5 class="card-title mb-3">Crisis Type: <%= @crisis_event.crisis_type.category %></h5>
-
           <p class="card-text">
             <% if @crisis_event.additional_info.empty? %>
               User has not provided any additional info
