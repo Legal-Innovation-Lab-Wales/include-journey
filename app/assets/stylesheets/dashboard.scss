@@ -3,11 +3,6 @@
 $max-width: 550px;
 $margin: 20px;
 $border-width: 1px;
-$nav-sm: 56px;
-$nav: 62px;
-$footer-sm: 270px;
-$footer: 286px;
-$margins: 1rem;
 
 .team_members, .user {
   min-height: calc(100vh - #{$nav-sm} - #{$footer-sm} - #{$margins});
