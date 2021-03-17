@@ -5,7 +5,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <% unless dashboard_controller? %>
+      <% if current_user %>
+        <% unless dashboard_controller? %>
           <span class="navbar-items">
           <%= link_to dashboard_journal_entries_path, class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-book"></i>
@@ -43,6 +44,7 @@
             <i class="mb-1 fas fa-comments"></i>
               <span class="nav-label">My Voice</span>
           <% end %>
+        <% end %>
       <% end %>
       </span>
 
