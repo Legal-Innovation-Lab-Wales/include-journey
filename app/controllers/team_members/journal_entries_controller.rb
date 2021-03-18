@@ -12,7 +12,7 @@ module TeamMembers
     protected
 
     def resources
-      @resources = CrisisEvent.closed.includes(:user, :crisis_type)
+      @resources = current_team_member.journal_entries.includes(:user)
     end
 
     private
@@ -25,7 +25,9 @@ module TeamMembers
     end
 
     def journal_entry_view_logs
-      @journal_entry_view_logs = current_team_member.journal_entry_view_logs.collect { |view_log| { id: view_log.journal_entry_id } }
+      @journal_entry_view_logs = current_team_member.journal_entry_view_logs.collect do |view_log|
+        { id: view_log.journal_entry_id }
+      end
     end
 
     def view_log
