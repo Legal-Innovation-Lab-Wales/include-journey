@@ -12,7 +12,7 @@ module Users
       redirect_to authenticated_user_root_path, alert: @crisis_event ? crisis_event_alert : 'SOS request could not be created'
     end
 
-    # PUT /crisis_events/:crisis_event_id
+    # PUT /crisis_events/:id
     def update
       redirect_to authenticated_user_root_path, alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
     end
@@ -38,7 +38,7 @@ module Users
     private
 
     def crisis_event
-      @crisis_event = CrisisEvent.find(params[:crisis_event_id])
+      @crisis_event = CrisisEvent.find(params[:id])
     end
 
     def update_alert

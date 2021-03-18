@@ -28,9 +28,7 @@ Rails.application.routes.draw do
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
 
-      resources :crisis_events, only: :create do
-        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update
-      end
+      resources :crisis_events, only: %i[create update]
     end
   end
 
@@ -49,11 +47,12 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show]
 
       resources :crisis_events, only: :show do
-        get 'active', action: 'active', on: :collection
         get 'page/:page_number', action: :index, on: :collection, as: :pages
+        get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
         post 'note', action: 'add_note', on: :member, as: :notes
       end
+
       resources :wba_team_members, only: :show
 
       resources :journal_entries, only: :show do
