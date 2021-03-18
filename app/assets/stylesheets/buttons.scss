@@ -3,7 +3,7 @@
 body#overboot {
   .btn {
     font-family: $font-link;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.4);
     transition: 0.2s;
     border-radius: 0.6rem;
     font-weight: 700;
@@ -16,9 +16,66 @@ body#overboot {
   .btn-primary {
 
     &:hover {
-      background-color: $brand-primary-dark;
-      border-color: $brand-primary-dark;
+      background-color: $brand-secondary;
+      border-color: $brand-secondary;
+      color: $brand-primary;
     }
   }
+
+  .header-buttons {
+    max-width: $header-buttons--max-width;
+    padding: 0;
+
+    a {
+      color: $brand-primary;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 2rem !important;
+      border: $header-buttons--border-width solid $brand-primary;
+      height: $header-buttons--max-width/5;
+      margin: $header-buttons--margin/2;
+      box-shadow: none;
+
+      i {
+        font-size: 2.5rem;
+      }
+
+      .display-on-wide {
+        display: none;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      @media screen and (min-width: $header-buttons--max-width) {
+        color: $black;
+        background-color: $brand-primary;
+        height: ($header-buttons--max-width/3) - $header-buttons--margin*2 + $header-buttons--border-width*2;
+        margin: $header-buttons--margin/2 $header-buttons--margin;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
+        transition: 0.6s;
+
+        i {
+          font-size: 2.5rem;
+        }
+
+        .display-on-wide {
+          display: inline;
+        }
+
+        &:hover {
+          background-color: $brand-secondary;
+          border-color: $brand-secondary;
+          color: $brand-primary;
+        }
+      }
+    }
+
+    &.two {
+      max-width: 400px;
+    }
+  }
+
 
 }
