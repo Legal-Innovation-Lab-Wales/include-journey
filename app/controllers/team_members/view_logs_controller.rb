@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/view_logs_controller.rb
   class ViewLogsController < AdminApplicationController
     before_action :team_member, only: %i[index show]
-    before_action :page, :offset, :view_logs, only: :show
+    before_action :page, :offset, :resources, :view_logs, only: :show
     before_action :count, :last_page, only: :show, if: -> { @view_logs.present? }
     before_action :redirect, only: :show, unless: -> { @view_logs.present? }
 
@@ -19,7 +19,7 @@ module TeamMembers
     protected
 
     def count
-      raise 'Subclass has not overridden show function'
+      @count = @resources.count
     end
 
     def last_page
@@ -32,10 +32,10 @@ module TeamMembers
 
     def page
       @page = params[:page_number].to_i
+    end
 
-      return if @page.positive?
-
-      redirect_to view_log_path, alert: 'Page number cannot be below 1'
+    def resources
+      raise 'Subclass has not overridden resources function'
     end
 
     def team_member
@@ -43,15 +43,11 @@ module TeamMembers
     end
 
     def view_logs
-      raise 'Subclass has not overridden view_log_path function'
+      @view_logs = @resources.offset(@offset).limit(VIEW_LOGS_PER_PAGE).order(created_at: :desc)
     end
 
     def redirect
-      redirect_to team_member_path(@team_member), alert: 'No view logs found'
-    end
-
-    def view_log_path
-      raise 'Subclass has not overridden view_log_path function'
+      redirect_back(fallback_location: root_path, alert: 'No view logs found')
     end
   end
 end

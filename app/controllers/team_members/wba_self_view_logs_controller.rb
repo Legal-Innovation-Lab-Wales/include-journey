@@ -4,20 +4,12 @@ module TeamMembers
 
     protected
 
-    def count
-      @count = @team_member.wba_self_view_logs.count
+    def resources
+      @resources = @team_member.wba_self_view_logs.includes(:user, :wba_self)
     end
 
     def team_member
       @team_member = TeamMember.includes(:wba_self_view_logs).find(params[:team_member_id])
-    end
-
-    def view_logs
-      @view_logs = @team_member.wba_self_view_logs.includes(:user, :wba_self).offset(@offset).limit(VIEW_LOGS_PER_PAGE).order(created_at: :desc)
-    end
-
-    def view_log_path
-      team_member_wba_self_view_log_path(@team_member, 1)
     end
   end
 end

@@ -18,7 +18,7 @@ module Users
     end
 
     def resources
-      raise 'Mixin class has not overridden resources function'
+      raise 'Subclass has not overridden resources function'
     end
 
     def last_page
