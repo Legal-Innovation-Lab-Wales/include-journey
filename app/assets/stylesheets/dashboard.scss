@@ -57,15 +57,15 @@ $border-width: 1px;
         .container {
           padding: 0;
         }
+
+        &.clear {
+          background-color: transparent;
+          border-color: transparent;
+        }
       }
 
       &.two {
         max-width: 400px;
-      }
-
-      &.clear {
-        background-color: transparent;
-        border-color: transparent;
       }
     }
 

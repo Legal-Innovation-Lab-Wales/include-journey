@@ -1,16 +1,11 @@
 module TeamMembers
   # app/controllers/team_members/view_logs_controller.rb
   class ViewLogsController < AdminApplicationController
-    before_action :team_member, only: %i[index show]
-    before_action :page, :offset, :resources, :view_logs, only: :show
+    before_action :page, :offset, :team_member, :resources, :view_logs, only: :show
     before_action :count, :last_page, only: :show, if: -> { @view_logs.present? }
     before_action :redirect, only: :show, unless: -> { @view_logs.present? }
 
     VIEW_LOGS_PER_PAGE = 5
-
-    def index
-      redirect_to view_log_path
-    end
 
     def show
       render 'show'

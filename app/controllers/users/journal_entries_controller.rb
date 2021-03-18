@@ -1,6 +1,6 @@
 module Users
   # app/controllers/users/journal_entries_controller.rb
-  class JournalEntriesController < IndexPagesController
+  class JournalEntriesController < PaginationController
     before_action :journal_entry, only: :new
     before_action :journal_entry_params, only: :create
 

@@ -1,6 +1,6 @@
 module Users
-  # app/controllers/index_pages_controller.rb
-  class IndexPagesController < UsersApplicationController
+  # app/controllers/pagination_controller.rb
+  class PaginationController < UsersApplicationController
     before_action :page, :limit, :offset, :resources, :page_resources, only: :index
     before_action :count, :last_page, only: :index, if: -> { @page_resources.present? }
     before_action :redirect, only: :index, unless: -> { @page_resources.present? }
@@ -11,7 +11,7 @@ module Users
 
     protected
 
-    DEFAULT_LIMIT = 3
+    RESOURCES_PER_PAGE = 3
 
     def count
       @count = @resources.count
@@ -26,7 +26,7 @@ module Users
     end
 
     def limit
-      @limit = DEFAULT_LIMIT
+      @limit = RESOURCES_PER_PAGE
     end
 
     def offset
