@@ -1,6 +1,6 @@
-module Users
-  # app/controllers/users/pagination_controller.rb
-  class PaginationController < UsersApplicationController
+module TeamMembers
+  # app/controllers/team_members/pagination_controller.rb
+  class PaginationController < TeamMembersApplicationController
     before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, only: :index
     before_action :redirect, only: :index, unless: -> { @resources.present? }
 

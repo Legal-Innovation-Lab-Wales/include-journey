@@ -14,10 +14,10 @@ module Users
       render 'dashboard'
     end
 
-    # POST /journal_entries/create
+    # POST /journal_entries
     def create
       if (@journal_entry = current_user.journal_entries.create!(journal_entry_params))
-        redirect_to new_journal_entry_permission_path(@journal_entry)
+        redirect_to new_journal_entry_permission_path(@journal_entry), alert: 'New journal entry added'
       else
         redirect_to authenticated_user_root_path, alert: "Journal entry could not be created: #{@journal_entry.errors}"
       end
@@ -34,7 +34,7 @@ module Users
     end
 
     def resources
-      @resources = current_user.journal_entries
+      @resources = current_user.journal_entries.includes(:journal_entry_view_logs)
     end
   end
 end

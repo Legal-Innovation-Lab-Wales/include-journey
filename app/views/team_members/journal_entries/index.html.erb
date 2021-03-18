@@ -18,7 +18,7 @@
           <th scope="col">Created At</th>
           </thead>
           <tbody>
-          <% @journal_entries.each do |journal_entry| %>
+          <% @resources.each do |journal_entry| %>
             <tr>
               <td>
                 <%= link_to "#{journal_entry.user.first_name} #{journal_entry.user.last_name}",
