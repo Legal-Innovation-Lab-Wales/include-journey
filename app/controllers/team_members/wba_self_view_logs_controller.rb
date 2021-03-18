@@ -13,7 +13,7 @@ module TeamMembers
     end
 
     def view_logs
-      @view_logs = @team_member.wba_self_view_logs.includes(:user).offset(@offset).limit(LIMIT).order(created_at: :desc)
+      @view_logs = @team_member.wba_self_view_logs.includes(:user, :wba_self).offset(@offset).limit(LIMIT).order(created_at: :desc)
     end
 
     def view_log_path
