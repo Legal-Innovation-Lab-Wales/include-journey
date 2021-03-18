@@ -5,16 +5,18 @@ module Users
     before_action :crisis_event, only: :update
     after_action :sms, :email, only: %i[create update]
 
-    # POST /crisis_events/create
+    # POST /crisis_events
     def create
       @crisis_event = current_user.crisis_events.create!(crisis_event_params)
 
-      redirect_to authenticated_user_root_path, alert: @crisis_event ? crisis_event_alert : 'SOS request could not be created'
+      redirect_to authenticated_user_root_path,
+                  alert: @crisis_event ? crisis_event_alert : 'SOS request could not be created'
     end
 
     # PUT /crisis_events/:id
     def update
-      redirect_to authenticated_user_root_path, alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
+      redirect_to authenticated_user_root_path,
+                  alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
     end
 
     protected
