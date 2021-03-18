@@ -62,6 +62,11 @@ $border-width: 1px;
       &.two {
         max-width: 400px;
       }
+
+      &.clear {
+        background-color: transparent;
+        border-color: transparent;
+      }
     }
 
     .table-container {
