@@ -57,7 +57,6 @@ $brand-secondary-alt-light: $color-secondary-2-2 ;
 $brand-secondary-alt-lightest: $color-secondary-2-1;
 
 // Utility Colours
-$light-grey: #f8f9fa;
 $grey: #b0bec5;
 $dark-grey: #8C949A;
 $black: #252331;
@@ -65,33 +64,23 @@ $white: #F6F8F7;
 
 // Bootstrap Colours
 $primary: $brand-primary;
-$secondary: $brand-secondary;
+$secondary: $brand-secondary-alt;
 $success: #54CB54;
 $info: #02B7F9;
 $warning: #ffa719;
-$danger: #FF442B;
-$light: $light-grey;
+$danger: #FF5C3F;
+$light: #f8f9fa;
 $dark: $black;
 
 // Bootstrap Derivatives
 $success-dark: #258935;
 $success-light: #DAFDC9;
-
 $info-dark: #004C90;
 $info-light: #99F8FE;
 $warning-dark: #DB8612;
 $warning-light: #FFC352;
-$danger-dark: #DB261F;
-$danger-light: #FF7F60;
-
-//$success: #7ebc41;
-//$success-dark: #70A739;
-//$info: #32BDEC;
-//$info-dark: #15ADE0;
-//$warning: #fbac09;
-//$warning-dark: #DD9403;
-//$danger: #f44336;
-//$danger-dark: #F32516;
+$danger-dark: #DB3A2E;
+$danger-light: #FF8F6F;
 
 // Screen Breakpoints
 $screen-md: 768px;
