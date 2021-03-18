@@ -1,8 +1,8 @@
 <main class="container team_members crisis_event">
   <div class="row m-1 mt-3">
     <div class="col">
-      <%= link_to :back, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back
+      <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Active crisis events
       <% end %>
     </div>
   </div>
@@ -74,7 +74,7 @@
                     <span><%= note.last_update %> </span>
                   </div>
                   <div class="card-body">
-                    <p class="card-text"><%= note.content %></p>
+                    <p class="card-text"><%= simple_format(note.content) %></p>
                   </div>
                 </div>
               </div>
