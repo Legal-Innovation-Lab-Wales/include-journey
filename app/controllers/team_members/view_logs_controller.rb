@@ -6,7 +6,7 @@ module TeamMembers
     before_action :count, :last_page, only: :show, if: -> { @view_logs.present? }
     before_action :redirect, only: :show, unless: -> { @view_logs.present? }
 
-    LIMIT = 5
+    VIEW_LOGS_PER_PAGE = 5
 
     def index
       redirect_to view_log_path
@@ -23,11 +23,11 @@ module TeamMembers
     end
 
     def last_page
-      @last_page = @offset + LIMIT >= @count
+      @last_page = @offset + VIEW_LOGS_PER_PAGE >= @count
     end
 
     def offset
-      @offset = (@page - 1) * LIMIT
+      @offset = (@page - 1) * VIEW_LOGS_PER_PAGE
     end
 
     def page
