@@ -1,32 +1,35 @@
 module TeamMembers
   # app/controllers/team_members/team_members_controller.rb
   class TeamMembersController < TeamMembersApplicationController
-    before_action :require_admin, :team_member
+    before_action :require_admin
+    before_action :team_member, only: %i[show approve_team_member toggle_admin]
+    before_action :unapproved_team_members, :approved_team_members, only: :index
+
+    # GET /team_members
+    def index
+      render 'index'
+    end
 
     # GET /team_members/:id
     def show
-      render template: 'team_members/team_members/show'
+      render 'show'
     end
 
     # PUT /team_members/:id/approve
     def approve_team_member
-      respond_to do |format|
-        if @team_member.update(approved: true)
-          format.html { redirect_to authenticated_team_member_root_path, alert: "#{@team_member.first_name} has been approved" }
-        else
-          format.html { redirect_to authenticated_team_member_root_path, warning: "#{@team_member.first_name} could not be approved" }
-        end
+      if @team_member.update(approved: true)
+        redirect_to team_members_path, alert: "#{@team_member.first_name} has been approved"
+      else
+        redirect_to team_members_path, warning: "#{@team_member.first_name} could not be approved"
       end
     end
 
     # PUT /team_members/:id/admin
     def toggle_admin
-      respond_to do |format|
-        if @team_member.update(admin: !@team_member.admin?)
-          format.html { redirect_to authenticated_team_member_root_path, alert: admin_alert }
-        else
-          format.html { redirect_to authenticated_team_member_root_path, warning: "#{@team_member.first_name} admin status could not be changed" }
-        end
+      if @team_member.update(admin: !@team_member.admin?)
+        redirect_to team_members_path, alert: admin_alert
+      else
+        redirect_to team_members_path, warning: "#{@team_member.first_name} admin status could not be changed"
       end
     end
 
@@ -36,8 +39,16 @@ module TeamMembers
       @team_member.admin? ? "#{@team_member.first_name} is now an admin" : "#{@team_member.first_name} is no longer an admin"
     end
 
+    def approved_team_members
+      @approved_team_members = TeamMember.approved.order(:created_at)
+    end
+
     def team_member
       @team_member = TeamMember.find(params[:id])
+    end
+
+    def unapproved_team_members
+      @unapproved_team_members = TeamMember.unapproved.order(created_at: :desc)
     end
   end
 end

@@ -17,12 +17,22 @@
     }
   }
 
-  label.btn {
-    color: $white !important;
+  label {
+    background-color: $danger-dark;
+    border-color: $danger-dark;
 
-    i {
-      float: right;
-      line-height: 1.5;
+    &.selected {
+      background-color: $success-dark;
+      border-color: $success-dark;
+    }
+
+    &.btn {
+      color: $white !important;
+
+      i {
+        float: right;
+        line-height: 1.5;
+      }
     }
   }
 

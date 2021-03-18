@@ -11,12 +11,12 @@ module Users
     # POST /wba_selves/:wba_self_id/wba_self_permissions/create
     def create
       @team_members.each do |team_member|
-        next unless permissions_params["team_member_#{team_member.id}"] == '1'
+        next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
 
-        WbaSelfPermission.create!({ wba_self_id: @model.id, team_member_id: team_member.id })
+        WbaSelfPermission.create!({ wba_self: @model, team_member: team_member })
       end
 
-      redirect_to authenticated_user_root_path, alert: 'Sharing permissions for team members successfully set'
+      redirect_to wba_self_path(@model), alert: 'Sharing permissions for team members successfully set'
     end
 
     protected

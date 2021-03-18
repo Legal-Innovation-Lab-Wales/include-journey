@@ -5,7 +5,7 @@ module TeamMembers
 
     # GET /team_members/:team_member_id/wba/:wba_team_member_id
     def show
-      redirect_to authenticated_team_member_root_path,
+      redirect_to team_member_path(@team_member),
                   alert: "WBA for #{@wba.user.first_name} #{@wba.user.last_name} created by #{@team_member.first_name} #{@team_member.last_name} clicked!"
     end
 

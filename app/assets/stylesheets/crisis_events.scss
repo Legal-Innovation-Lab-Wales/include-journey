@@ -1,3 +1,54 @@
 // Place all the styles related to the CrisisEvents controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+.team_members {
+  &.crisis_event {
+    .card {
+      text-align: left;
+      color: $black;
+
+      .card-header {
+        span:last-child {
+          float: right;
+        }
+      }
+
+      .card-footer {
+        .col-6 {
+          &:first-child {
+            text-align: left;
+          }
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+
+  &.crisis_events {
+    .controls {
+      padding: 0;
+
+      .col {
+        &:first-child {
+          text-align: left;
+        }
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  &.crisis_event, &.crisis_events {
+    .row:first-child {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<main class="container team_members">
+  <section class="row">
+    <div class="col">
+      <h3>Active Crisis Events</h3>
+      <% if @crisis_events.count > 0 %>
+        <div class="table-container">
+          <table class="table table-dark table-striped link-table">
+            <thead>
+              <th scope="col">User</th>
+              <th scope="col">Crisis Type</th>
+              <th scope="col">Additional Info</th>
+              <th scope="col">Last Update</th>
+            </thead>
+            <tbody>
+              <% @crisis_events.each do |crisis_event| %>
+                <tr>
+                  <td>
+                    <%= link_to "#{crisis_event.user.first_name} #{crisis_event.user.last_name}",
+                                crisis_event_path(crisis_event) %>
+                  </td>
+                  <td>
+                    <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
+                  </td>
+                  <td>
+                    <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                  </td>
+                  <td>
+                    <%= link_to "#{crisis_event.last_update}", crisis_event_path(crisis_event) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <h3>No active crisis events</h3>
+      <% end %>
+      <%= link_to 'View Closed', pages_crisis_events_path(1), class: 'btn btn-primary' %>
+    </div>
+  </section>
+</main>
