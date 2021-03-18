@@ -1,48 +1,22 @@
 module TeamMembers
   # app/controllers/team_members/view_logs_controller.rb
-  class ViewLogsController < AdminApplicationController
-    before_action :page, :offset, :team_member, :resources, :view_logs, only: :show
-    before_action :count, :last_page, only: :show, if: -> { @view_logs.present? }
-    before_action :redirect, only: :show, unless: -> { @view_logs.present? }
-
-    VIEW_LOGS_PER_PAGE = 5
-
-    def show
-      render 'show'
-    end
+  class ViewLogsController < PaginationController
+    before_action :require_admin
+    before_action :page, :limit, :offset, :team_member, :resources, :count, :last_page, :limit_resources, only: :index
+    before_action :redirect, only: :index, unless: -> { @resources.present? }
 
     protected
-
-    def count
-      @count = @resources.count
-    end
-
-    def last_page
-      @last_page = @offset + VIEW_LOGS_PER_PAGE >= @count
-    end
-
-    def offset
-      @offset = (@page - 1) * VIEW_LOGS_PER_PAGE
-    end
-
-    def page
-      @page = params[:page_number].to_i
-    end
-
-    def resources
-      raise 'Subclass has not overridden resources function'
-    end
 
     def team_member
       raise 'Subclass has not overridden view_log_path function'
     end
 
-    def view_logs
-      @view_logs = @resources.offset(@offset).limit(VIEW_LOGS_PER_PAGE).order(created_at: :desc)
-    end
+    private
 
-    def redirect
-      redirect_back(fallback_location: root_path, alert: 'No view logs found')
+    def require_admin
+      return if current_team_member.admin?
+
+      redirect_to authenticated_team_member_root_path, error: 'You are not an admin'
     end
   end
 end

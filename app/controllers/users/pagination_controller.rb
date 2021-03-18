@@ -41,7 +41,7 @@ module Users
     end
 
     def redirect
-      redirect_back(fallback_location: root_path, alert: 'No resources found')
+      redirect_back(fallback_location: root_path, alert: 'None found')
     end
   end
 end

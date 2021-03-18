@@ -40,8 +40,8 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        resources :wba_self_view_logs, only: :show, param: :page_number
-        resources :journal_entry_view_logs, only: :show, param: :page_number
+        get 'wba_self_view_logs/page/:page_number', to: 'wba_self_view_logs#index', on: :member, as: :wba_self_view_logs
+        get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
       end
 
       resources :users, only: %i[index show]

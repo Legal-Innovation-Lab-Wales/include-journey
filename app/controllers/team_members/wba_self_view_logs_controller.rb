@@ -9,7 +9,7 @@ module TeamMembers
     end
 
     def team_member
-      @team_member = TeamMember.includes(:wba_self_view_logs).find(params[:team_member_id])
+      @team_member = TeamMember.includes(:wba_self_view_logs).find(params[:id])
     end
   end
 end
