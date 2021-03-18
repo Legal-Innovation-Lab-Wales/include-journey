@@ -1,7 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/journal_entries_controller.rb
   class JournalEntriesController < PaginationController
-    before_action :journal_entry_view_logs, only: :index
     before_action :journal_entry, :view_log, only: :show
 
     # GET /journal_entries/:id
@@ -12,7 +11,7 @@ module TeamMembers
     protected
 
     def resources
-      @resources = current_team_member.journal_entries.includes(:user)
+      @resources = current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
     end
 
     private
@@ -22,12 +21,6 @@ module TeamMembers
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: journal_entries_path,
                     alert: "That journal entry doesn't exist or you do not have permission to view it")
-    end
-
-    def journal_entry_view_logs
-      @journal_entry_view_logs = current_team_member.journal_entry_view_logs.collect do |view_log|
-        { id: view_log.journal_entry_id }
-      end
     end
 
     def view_log

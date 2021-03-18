@@ -29,10 +29,10 @@
               </td>
               <td>
                 <%= link_to journal_entry_path(journal_entry) do %>
-                  <% if viewed(@journal_entry_view_logs, journal_entry.id) %>
-                    <i class="fas fa-check-circle"></i>
-                  <% else %>
+                  <% if journal_entry.journal_entry_view_logs.empty? %>
                     <i class="fas fa-times-circle"></i>
+                  <% else %>
+                    <i class="fas fa-check-circle"></i>
                   <% end %>
                 <% end %>
               </td>

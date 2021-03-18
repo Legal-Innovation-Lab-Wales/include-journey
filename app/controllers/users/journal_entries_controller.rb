@@ -33,8 +33,12 @@ module Users
       params.require(:journal_entry).permit(:entry, :feeling)
     end
 
+    def limit
+      @limit = 3
+    end
+
     def resources
-      @resources = current_user.journal_entries.includes(:journal_entry_view_logs)
+      @resources = current_user.journal_entries
     end
   end
 end
