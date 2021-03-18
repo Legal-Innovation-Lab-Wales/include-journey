@@ -6,7 +6,7 @@ module TeamMembers
     before_action :count, :last_page, only: :page_index, if: -> { @wba_self_view_logs.present? }
     before_action :redirect, only: :page_index, unless: -> { @wba_self_view_logs.present? }
 
-    LIMIT = 5
+    LOGS_PER_PAGE = 5
 
     # GET /team_members/:team_member_id/wba_self_view_logs
     def index
@@ -25,11 +25,11 @@ module TeamMembers
     end
 
     def last_page
-      @last_page = @offset + LIMIT >= @count
+      @last_page = @offset + LOGS_PER_PAGE >= @count
     end
 
     def offset
-      @offset = @page * LIMIT
+      @offset = @page * LOGS_PER_PAGE
     end
 
     def page
@@ -45,7 +45,7 @@ module TeamMembers
     end
 
     def wba_self_view_logs
-      @wba_self_view_logs = @team_member.wba_self_view_logs.includes(:user).offset(@offset).limit(LIMIT).order(created_at: :desc)
+      @wba_self_view_logs = @team_member.wba_self_view_logs.includes(:user, :wba_self).offset(@offset).limit(LOGS_PER_PAGE).order(created_at: :desc)
     end
 
     def redirect
