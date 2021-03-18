@@ -8,14 +8,14 @@
   }
 
   &.journal_entry {
-    max-width: 550px !important;
+    max-width: 550px;
   }
 }
 
 .user {
   &.journal_entry {
     &.new {
-      max-width: 550px !important;
+      max-width: 550px;
       margin: 1rem auto;
 
       label.btn {
@@ -28,7 +28,7 @@
 .team_members, .user {
   &.journal_entry {
     textarea {
-      height: 150px !important;
+      height: 150px;
     }
 
     .card-header {
