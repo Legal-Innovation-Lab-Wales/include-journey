@@ -1,6 +1,6 @@
 @import "variables";
 
-.team_members {
+.team-members {
   &.journal_entries {
     .feeling {
       font-size: 2rem;
@@ -25,7 +25,7 @@
   }
 }
 
-.team_members, .user {
+.team-members, .user {
   &.journal_entry {
     textarea {
       height: 150px;
