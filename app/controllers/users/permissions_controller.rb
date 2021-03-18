@@ -44,7 +44,7 @@ module Users
     end
 
     def team_members
-      @team_members = TeamMember.all
+      @team_members = TeamMember.all.order(:created_at)
     end
 
     def at_least_one

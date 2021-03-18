@@ -30,7 +30,34 @@ body#overboot {
   }
 
   table {
-    border-radius: 0.6rem;
+    white-space: nowrap;
+
+    &.link-table {
+      td {
+        padding: 0 !important;
+      }
+    }
+
+    td {
+      max-width: 400px;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: $white;
+        cursor: pointer;
+        padding: 0 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
 
     .fa-check-circle {
       color: $success;

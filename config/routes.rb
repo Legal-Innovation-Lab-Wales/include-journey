@@ -38,16 +38,26 @@ Rails.application.routes.draw do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
 
-      resources :team_members, only: :show do
+      resources :team_members, only: %i[index show] do
         scope controller: 'team_members' do
           put 'approve', action: 'approve_team_member', on: :member, as: :approve
           put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
         end
 
-        resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
+        resources :wba_self_view_logs, only: :index do
+          get 'page/:page_number', action: :page_index, on: :collection, as: :pages
+        end
       end
 
-      resources :users, only: :show, as: :user
+      resources :users, only: %i[index show]
+      resources :crisis_events, only: %i[show index] do
+        put 'close', action: 'close', on: :member, as: :close
+        get 'page/:page_number', to: 'crisis_events_pages#index', on: :collection, as: :pages
+
+        resources :crisis_events_notes, only: %i[new create], as: :notes
+      end
+
+      resources :wba_team_members, only: :show
     end
   end
 

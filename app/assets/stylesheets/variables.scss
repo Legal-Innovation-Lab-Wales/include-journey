@@ -62,6 +62,8 @@ $dark-grey: #8C949A;
 $black: #252331;
 $white: #F6F8F7;
 
+$bg-main: $white;
+
 // Bootstrap Colours
 $primary: $brand-primary;
 $secondary: $brand-secondary-alt;
@@ -85,5 +87,9 @@ $danger-light: #FF8F6F;
 // Screen Breakpoints
 $screen-md: 768px;
 
-$bg-main: $white;
-
+// Core Layout Elements Heights
+$nav-sm: 56px;
+$nav: 62px;
+$footer-sm: 270px;
+$footer: 286px;
+$margins: 1rem;

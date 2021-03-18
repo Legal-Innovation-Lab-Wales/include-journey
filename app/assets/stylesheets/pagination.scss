@@ -1,0 +1,13 @@
+.pagination_controls {
+  padding: 0 !important;
+
+  .col {
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}

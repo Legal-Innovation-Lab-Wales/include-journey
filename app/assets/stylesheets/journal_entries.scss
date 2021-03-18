@@ -24,20 +24,6 @@
     }
   }
 
-  &.index {
-    .controls {
-      .col {
-        &:first-child {
-          text-align: left;
-        }
-
-        &:last-child {
-          text-align: right;
-        }
-      }
-    }
-  }
-
   textarea {
     height: 150px !important;
   }
