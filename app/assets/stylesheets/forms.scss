@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: $grey;
+  background-color: $black;
 
   &.edit {
     margin: 0;
@@ -22,13 +22,8 @@
     }
   }
 
-  @media screen and (min-width: $screen-md) {
-    background-color: $black;
-    form {min-width: 480px}
-  }
-
   form {
-    background-color: $grey;
+    background-color: $black;
     border-radius: 5px;
     padding: 1rem 2rem;
     max-width: 500px;
@@ -36,6 +31,7 @@
     h2 {
       color: $white;
     }
+
     a {
       text-decoration: none;
       font-weight: 600;
@@ -106,5 +102,12 @@
         }
       }
     }
+  }
+
+  @media screen and (min-width: $screen-md) {
+    background-color: $black;
+    form {
+      min-width: 480px;
+      background-color: $grey;}
   }
 }
