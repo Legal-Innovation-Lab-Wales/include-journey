@@ -29,26 +29,4 @@
       }
     }
   }
-
-  &.crisis_events {
-    .controls {
-      padding: 0;
-
-      .col {
-        &:first-child {
-          text-align: left;
-        }
-
-        &:last-child {
-          text-align: right;
-        }
-      }
-    }
-  }
-
-  &.crisis_event, &.crisis_events {
-    .row:first-child {
-      text-align: left;
-    }
-  }
 }

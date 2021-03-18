@@ -1,7 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/team_members_controller.rb
-  class TeamMembersController < TeamMembersApplicationController
-    before_action :require_admin
+  class TeamMembersController < AdminApplicationController
     before_action :team_member, only: %i[show approve_team_member toggle_admin]
     before_action :unapproved_team_members, :approved_team_members, only: :index
 

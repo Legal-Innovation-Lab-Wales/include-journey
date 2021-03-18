@@ -9,7 +9,13 @@
   background-color: $grey;
 
   &.edit {
-    min-height: calc(100vh - 62px);
+    margin: 0;
+    min-height: calc(100vh - #{$nav-sm} - #{$footer-sm} - #{$margins});
+
+    @media screen and (min-width: $screen-md) {
+      margin: $margins;
+      min-height: calc(100vh - #{$nav} - #{$footer} - #{$margins});
+    }
 
     .small-text {
       font-size: 0.8rem;
@@ -24,7 +30,7 @@
   form {
     background-color: $grey;
     border-radius: 5px;
-    padding: 15px 50px;
+    padding: 1rem 2rem;
     max-width: 500px;
 
     h2 {

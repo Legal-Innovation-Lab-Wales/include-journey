@@ -1,4 +1,11 @@
 <main class="container team_members">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Dashboard
+      <% end %>
+    </div>
+  </div>
   <section class="row" id="users">
     <div class="col">
       <h3>Users</h3>
