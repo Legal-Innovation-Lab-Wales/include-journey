@@ -1,19 +1,19 @@
 @import "variables";
 
 .team-members {
-  &.journal_entries {
+  &.journal-entries {
     .feeling {
       font-size: 2rem;
     }
   }
 
-  &.journal_entry {
+  &.journal-entry {
     max-width: 550px;
   }
 }
 
 .user {
-  &.journal_entry {
+  &.journal-entry {
     &.new {
       max-width: 550px;
       margin: 1rem auto;
@@ -26,7 +26,7 @@
 }
 
 .team-members, .user {
-  &.journal_entry {
+  &.journal-entry {
     textarea {
       height: 150px;
     }
