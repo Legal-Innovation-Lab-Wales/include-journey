@@ -13,7 +13,7 @@ module TeamMembers
     end
 
     def view_logs
-      @view_logs = @team_member.journal_entry_view_logs.includes(:user).offset(@offset).limit(VIEW_LOGS_PER_PAGE).order(created_at: :desc)
+      @view_logs = @team_member.journal_entry_view_logs.includes(:user, :journal_entry).offset(@offset).limit(VIEW_LOGS_PER_PAGE).order(created_at: :desc)
     end
 
     def view_log_path

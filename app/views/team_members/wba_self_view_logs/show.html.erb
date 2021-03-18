@@ -13,11 +13,13 @@
         <thead>
         <th scope="col">User</th>
         <th scope="col">Created At</th>
+        <th scope="col">Viewed At</th>
         </thead>
         <tbody>
         <% @view_logs.each do |view_log| %>
           <tr>
             <td><%= view_log.user.first_name %> <%= view_log.user.last_name %></td>
+            <td><%= view_log.wba_self.created %></td>
             <td><%= view_log.created %>
           </tr>
         <% end %>
