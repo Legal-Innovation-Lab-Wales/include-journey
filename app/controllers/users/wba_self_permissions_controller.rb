@@ -19,7 +19,7 @@ module Users
     end
 
     def model
-      @model = WbaSelf.includes(:wba_self_permissions).find(params[:wba_self_id])
+      @model = current_user.wba_selves.includes(:wba_self_permissions).find(params[:wba_self_id])
     end
 
     def second_to_last

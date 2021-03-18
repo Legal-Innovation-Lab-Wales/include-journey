@@ -2,12 +2,11 @@ module Users
   # app/controllers/users/wba_self_permission_controller.rb
   class PermissionsController < UsersApplicationController
     before_action :team_members, :model
-    before_action :restrict_user, unless: -> { @model.user == current_user }
     before_action :permissions_set, if: -> { @model.permissions.present? }
 
     before_action :permissions_params, only: :create
     before_action :at_least_one, only: :create, unless: lambda {
-      @team_members.map { |t_m| permissions_params["team_member_#{t_m.id}"] }.include? '1'
+      @team_members.map { |team_member| permissions_params["team_member_#{team_member.id}"] }.include? '1'
     }
 
     before_action :second_to_last, only: :new
@@ -59,10 +58,6 @@ module Users
 
     def at_least_one
       redirect_to new_path, alert: 'You must select at least one team member'
-    end
-
-    def restrict_user
-      redirect_to authenticated_user_root_path, alert: 'You cannot view that record'
     end
 
     def permissions_set

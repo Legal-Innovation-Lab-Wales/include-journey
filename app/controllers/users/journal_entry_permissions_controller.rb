@@ -19,7 +19,7 @@ module Users
     end
 
     def model
-      @model = JournalEntry.includes(:journal_entry_permissions).find(params[:journal_entry_id])
+      @model = current_user.journal_entries.includes(:journal_entry_permissions).find(params[:journal_entry_id])
     end
 
     def second_to_last
