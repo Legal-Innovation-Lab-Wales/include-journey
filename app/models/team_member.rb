@@ -26,7 +26,13 @@ class TeamMember < DeviseRecord
 
   has_many :journal_entry_permissions, foreign_key: :team_member_id
   has_many :journal_entry_view_logs, foreign_key: :team_member_id
+  has_many :viewed_journal_entries, through: :journal_entry_view_logs, source: :journal_entry
   has_many :journal_entries, through: :journal_entry_permissions
+
+
+  def unread_journal_entries(user)
+    (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count
+  end
 
   # validations
   validates_presence_of :first_name,

@@ -33,7 +33,7 @@ module Users
     protected
 
     def last_wba_self
-      @last_wba_self = current_user.wba_selves.includes(:wba_self_scores).last
+      @last_wba_self = current_user.last_wba_self
     end
 
     private
@@ -70,7 +70,7 @@ module Users
     end
 
     def wba_selves_params
-      params.require(:wba_self).permit(@wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}".to_sym })
+      params.require(:wba_self).permit(@wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
     end
 
     def wellbeing_metrics

@@ -21,16 +21,16 @@ module TeamMembers
       @active_users = @users.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now)
     end
 
+    def pinned_users
+      @pinned_users = @users.where(id: [1..6])
+    end
+
     def user
       @user = User.find(params[:id])
     end
 
     def users
       @users = User.includes(:wba_selves).all.order(created_at: :desc)
-    end
-
-    def pinned_users
-      @pinned_users = @users.where(id: [1..6])
     end
   end
 end
