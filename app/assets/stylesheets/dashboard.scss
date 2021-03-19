@@ -17,10 +17,10 @@
     margin: 1rem 0;
 
     @media screen and (min-width: $screen-md) {
-      background-color: $grey;
       margin: 1rem;
       padding: 1rem;
     }
+
     &.journey {
       background-color: $black;
     }
