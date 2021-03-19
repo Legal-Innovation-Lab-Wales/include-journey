@@ -1,24 +1,27 @@
 @import "variables";
 
 .team-members.users.index {
-  .pinned-users {
+  section.row {
     background-color: transparent;
+    margin: 0 0 2rem 0;
+    padding: 0;
   }
 
   .card {
     background-color: $brand-primary;
     color: $black;
 
-
     a {
       color: $black;
       font-weight: bold;
       text-decoration: none;
       padding: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       &:hover {
         color: $brand-secondary;
-        text-decoration: underline;
       }
     }
 
@@ -72,6 +75,10 @@
                 background-color: $brand-secondary;
               }
             }
+          }
+
+          span {
+            padding: 0;
           }
         }
       }

@@ -11,25 +11,27 @@
       <h3>Users Info</h3>
       <div class="container p-0">
         <div class="row">
-          <div class="table-container">
-            <table class="table table-dark table-striped link-table">
-              <thead>
-                <th scope="col">Total Users</th>
-                <th scope="col">Active Users</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><%= @users.count %></td>
-                  <td><%= @active_users.count %></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <div class="input-group">
+              <span class="input-group-text" id="total-users">Total Users</span>
+              <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
+              value="<%= @users.count %>" disabled>
+              <span class="input-group-text"><i class="fas fa-users"></i></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="input-group">
+              <span class="input-group-text" id="active-users">Active Users</span>
+              <input type="text" class="form-control" aria-label="Active Users" aria-describedby="active-users"
+              value="<%= @active_users.count %>" disabled>
+              <span class="input-group-text"><i class="fas fa-users"></i></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section class="row pinned-users">
+  <section class="row">
     <div class="col">
       <h3>Pinned Users</h3>
       <div class="container p-0">
@@ -38,7 +40,11 @@
             <div class="col-12 col-md-6 mb-3">
               <div class="card">
                 <div class="card-header">
-                  <span><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></span>
+                  <span>
+                    <%= link_to user_path(user) do %>
+                      <%= user.first_name %> <%= user.last_name %> <i class="fas fa-external-link-alt"></i>
+                    <% end %>
+                  </span>
                   <span><i class="fas fa-unlink"></i></span>
                 </div>
                 <div class="card-body">
@@ -47,13 +53,17 @@
                       <div class="col-12 col-md-6">
                         <div class="container">
                           <div class="row">
-                            <%= link_to user.email, "mailto:#{user.email}" %>
+                            <%= link_to "mailto:#{user.email}" do %>
+                              <i class="fas fa-envelope"></i> <%= user.email %>
+                            <% end %>
                           </div>
                           <div class="row">
-                            <%= link_to "0#{user.mobile_number}", "tel:0#{user.mobile_number}" %>
+                            <%= link_to "tel:0#{user.mobile_number}" do %>
+                              <i class="fas fa-phone-alt"></i> <%= "0#{user.mobile_number}" %>
+                            <% end %>
                           </div>
                           <div class="row">
-                            <%= user.release %>
+                            <span><i class="fas fa-calendar"></i> <%= user.release %></span>
                           </div>
                         </div>
                       </div>
