@@ -18,7 +18,7 @@
   }
 
   .card {
-    background-color: $brand-primary;
+    background-color: $grey;
     color: $black;
 
     a {
@@ -49,8 +49,6 @@
     }
 
     .card-header, .card-footer {
-      background-color: $brand-primary-dark;
-
       span {
         &:first-child {
           float: left;
