@@ -5,7 +5,8 @@
 @import "variables";
 
 section#wellbeing {
-
+  background-color: $white;
+  color: $black;
 
   .services, .sliders {
     margin-top: 1rem;
@@ -34,8 +35,13 @@ section#wellbeing {
       }
     }
 
-    .col-3.description {
+    .col-3.description-col {
       text-align: right;
+      padding: 0;
+      .description {
+        font-family: $font-link;
+        transition: all 0.5s;
+      }
     }
 
     input {

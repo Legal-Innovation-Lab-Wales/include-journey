@@ -39,7 +39,11 @@
             </div>
             <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
                    value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
-            <div class="col-3 description"></div>
+            <div class="col-3 description-col">
+              <div class="description badge rounded-pill wba-score__<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
+
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
