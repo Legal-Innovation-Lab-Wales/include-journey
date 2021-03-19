@@ -1,17 +1,19 @@
 @import "variables";
 
 .team-members.users.index {
+  .pinned-users {
+    background-color: transparent;
+  }
+
   .card {
-    font-family: "Rubik", sans-serif;
     background-color: $brand-primary;
     color: $black;
 
 
     a {
-      font-family: "Rubik", sans-serif;
+      color: $black;
       font-weight: bold;
       text-decoration: none;
-      color: $black;
       padding: 0;
 
       &:hover {
@@ -53,6 +55,23 @@
 
           &:last-child {
             margin-bottom: 0;
+          }
+
+          .chart {
+            text-align: center;
+
+            .wellbeing-chart-wrapper {
+              padding: 0.75rem;
+              border-radius: 1rem;
+            }
+
+            a:hover {
+              color: $white;
+
+              .wellbeing-chart-wrapper {
+                background-color: $brand-secondary;
+              }
+            }
           }
         }
       }

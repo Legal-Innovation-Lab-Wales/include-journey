@@ -24,7 +24,7 @@
       <div class="container mt-3">
         <div class="row">
           <div class="col">
-            <canvas id="wellbeing-chart" width="400" height="400"></canvas>
+            <canvas class="wellbeing-chart" width="400" height="400"></canvas>
           </div>
         </div>
       </div>
@@ -32,13 +32,13 @@
     <div class="col-md-5 sliders">
       <h5><%= @wba_self.created %></h5>
       <div class="container mt-3">
-        <% @wellbeing_metrics.each do |wellbeing_metric| %>
+        <% @wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
           <div class="row">
             <div class="col-9">
-              <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+              <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
             </div>
-            <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
-                   value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
+            <input class="hidden" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                   value="<%= score.value %>">
             <div class="col-3 description"></div>
           </div>
         <% end %>

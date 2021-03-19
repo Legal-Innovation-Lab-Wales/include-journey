@@ -26,11 +26,11 @@ module TeamMembers
     end
 
     def users
-      @users = User.all.order(created_at: :desc)
+      @users = User.includes(:wba_selves).all.order(created_at: :desc)
     end
 
     def pinned_users
-      @pinned_users = @users.where(id: 1..4)
+      @pinned_users = @users.where(id: [1..6])
     end
   end
 end

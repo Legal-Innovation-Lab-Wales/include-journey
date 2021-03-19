@@ -1,9 +1,9 @@
 module Users
   # app/controllers/users/wba_selves_controller.rb
   class WbaSelvesController < UsersApplicationController
-    before_action :wellbeing_metrics
     before_action :wba_self, only: :show
 
+    before_action :wellbeing_metrics, only: %i[new create]
     before_action :check_wba_self_today, :new_wba_self, :last_wba_self, only: :new
     before_action :last_scores, only: :new, if: -> { @last_wba_self.present? }
 

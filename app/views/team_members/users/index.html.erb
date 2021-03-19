@@ -26,11 +26,10 @@
             </table>
           </div>
         </div>
-        <div class="row"></div>
       </div>
     </div>
   </section>
-  <section class="row">
+  <section class="row pinned-users">
     <div class="col">
       <h3>Pinned Users</h3>
       <div class="container p-0">
@@ -45,7 +44,7 @@
                 <div class="card-body">
                   <div class="container">
                     <div class="row">
-                      <div class="col-8">
+                      <div class="col-12 col-md-6">
                         <div class="container">
                           <div class="row">
                             <%= link_to user.email, "mailto:#{user.email}" %>
@@ -58,7 +57,25 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-4"></div>
+                      <div class="col-12 col-md-6 chart">
+                        <% last_wba_self = user.wba_selves.includes(:wba_self_scores).last %>
+                        <% if last_wba_self.present? %>
+                          <a href='#'>
+                            <div class="wellbeing-chart-wrapper">
+                              <canvas class="wellbeing-chart" width="400" height="400"></canvas>
+                              <div class="sliders hidden">
+                                <% last_wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
+                                  <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
+                                    <%= score.wellbeing_metric.name %>
+                                  </label>
+                                  <input  type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>" value="<%= score.value %>">
+                                <% end %>
+                              </div>
+                              <div class="mt-3 w-100"><%= last_wba_self.created %></div>
+                            </div>
+                          </a>
+                        <% end %>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -121,3 +138,5 @@
     </div>
   </section>
 </main>
+
+<%= javascript_pack_tag 'polar_area_chart' %>
