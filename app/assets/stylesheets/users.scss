@@ -7,6 +7,16 @@
     padding: 0;
   }
 
+  #search {
+    .input-group-text {
+      cursor: pointer;
+
+      &:hover {
+        color: $brand-secondary-dark;
+      }
+    }
+  }
+
   .card {
     background-color: $brand-primary;
     color: $black;
