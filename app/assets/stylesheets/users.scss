@@ -36,9 +36,15 @@
     }
 
     .card-header {
-      i:hover {
-        color: $brand-secondary;
-        cursor: pointer;
+      i {
+        &.unpinned {
+          transform: rotate(45deg);
+        }
+
+        &:hover {
+          color: $brand-secondary-dark;
+          cursor: pointer;
+        }
       }
     }
 
