@@ -183,7 +183,8 @@
                 </div>
                 <div class="card-footer">
                   <span>Last Sign In</span>
-                  <span><%= user.last_sign_in %></span>
+                  <span><%= user.last_sign_in_at.present? ?
+                              "#{time_ago_in_words(user.last_sign_in_at)} ago" : user.last_sign_in %></span>
                 </div>
               </div>
             </div>
