@@ -15,7 +15,7 @@ class User < DeviseRecord
   has_many :journal_entries, foreign_key: :user_id
 
   def release
-    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+    release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
   end
 
   def active_crisis_events

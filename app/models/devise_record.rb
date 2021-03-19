@@ -3,7 +3,7 @@ class DeviseRecord < ApplicationRecord
   self.abstract_class = true
 
   def last_sign_in
-    last_sign_in_at.present? ? last_sign_in_at.strftime('%d/%m/%Y %I:%M %p') : ''
+    last_sign_in_at.present? ? last_sign_in_at.strftime('%d/%m/%Y %I:%M %p') : 'Never'
   end
 
   def current_sign_in

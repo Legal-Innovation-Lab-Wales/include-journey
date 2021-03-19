@@ -1,0 +1,61 @@
+@import "variables";
+
+.team-members.users.index {
+  .card {
+    font-family: "Rubik", sans-serif;
+    background-color: $brand-primary;
+    color: $black;
+
+
+    a {
+      font-family: "Rubik", sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+      color: $black;
+      padding: 0;
+
+      &:hover {
+        color: $brand-secondary;
+        text-decoration: underline;
+      }
+    }
+
+    .card-header {
+      i:hover {
+        color: $brand-secondary;
+        cursor: pointer;
+      }
+    }
+
+    .card-header, .card-footer {
+      background-color: $brand-primary-dark;
+
+      span {
+        &:first-child {
+          float: left;
+        }
+
+        &:last-child {
+          float: right;
+        }
+      }
+    }
+
+    .card-body {
+      text-align: left;
+
+      .container {
+        padding: 0;
+
+        .row {
+          padding-left: 0.5rem;
+          margin-bottom: 0.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
