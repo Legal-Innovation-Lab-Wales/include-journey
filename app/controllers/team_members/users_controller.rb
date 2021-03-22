@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
-    before_action :user, only: %i[show pin unpin]
+    before_action :user, except: :index
+    before_action :maximum, :user_pin, except: %i[show index]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
     before_action :pinned_users, :users, :active_users, only: :index
@@ -13,38 +14,51 @@ module TeamMembers
 
     # GET /users/:id
     def show
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: "#{@user.first_name} #{@user.last_name} clicked!")
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('clicked!'))
     end
 
     # PUT /users/:id/pin
     def pin
-      maximum = current_team_member.user_pins.maximum(:order)
+      @user_pin = current_team_member.user_pins.create!({ user: @user, order: @maximum.present? ? @maximum.next : 1 })
 
-      if current_team_member.user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
-        redirect_back(fallback_location: authenticated_team_member_root_path,
-                      alert: "#{@user.first_name} #{@user.last_name} has been pinned")
-      else
-        redirect_back(fallback_location: authenticated_team_member_root_path,
-                      alert: "#{@user.first_name} #{@user.last_name} could not be pinned")
-      end
+      redirect_back(fallback_location: authenticated_team_member_root_path,
+                    alert: @user_pin ? message('has been pinned') : message('could not be pinned'))
     end
 
     # PUT /users/:id/unpin
     def unpin
-      if current_team_member.user_pins.find_by(user_id: @user.id).destroy!
-        redirect_back(fallback_location: authenticated_team_member_root_path,
-                      alert: "#{@user.first_name} #{@user.last_name} has been unpinned")
-      else
-        redirect_back(fallback_location: authenticated_team_member_root_path,
-                      alert: "#{@user.first_name} #{@user.last_name} could not be unpinned")
-      end
+      redirect_back(fallback_location: authenticated_team_member_root_path,
+                    alert: @user_pin.destroy! ? message('has been unpinned') : message('could not be unpinned'))
+    end
+
+    # PUT /users/:id/increment
+    def increment
+      redirect_back(fallback_location: authenticated_team_member_root_path,
+                    alert: @user_pin.increment ? message('pin successfully moved') : message('pin could not be moved'))
+    end
+
+    # PUT /users/:id/decrement
+    def decrement
+      redirect_back(fallback_location: authenticated_team_member_root_path,
+                    alert: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
     end
 
     private
 
     def active_users
       @active_users = @users.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now)
+    end
+
+    def maximum
+      @maximum = current_team_member.user_pins.maximum(:order)
+    end
+
+    def message(message)
+      "#{@user.full_name} #{message}"
+    end
+
+    def user_pin
+      @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
     end
 
     def pinned_users
@@ -60,17 +74,15 @@ module TeamMembers
     end
 
     def verify_pin
-      return unless current_team_member.user_pins.find_by(user_id: @user.id).present?
+      return unless @user_pin.present?
 
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: "#{@user.first_name} #{@user.last_name} is already pinned")
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is already pinned'))
     end
 
     def verify_unpin
-      return if current_team_member.user_pins.find_by(user_id: @user.id).present?
+      return if @user_pin.present?
 
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: "#{@user.first_name} #{@user.last_name} is not currently pinned")
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
   end
 end

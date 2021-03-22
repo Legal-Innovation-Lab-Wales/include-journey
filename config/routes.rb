@@ -43,6 +43,8 @@ Rails.application.routes.draw do
 
       resources :users, only: %i[index show] do
         put 'pin', action: 'pin', on: :member, as: :pin
+        put 'increment', action: 'increment', on: :member, as: :increment
+        put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
       end
 

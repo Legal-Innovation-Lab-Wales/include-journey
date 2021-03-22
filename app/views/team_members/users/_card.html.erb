@@ -9,6 +9,16 @@
       </span>
       <span>
         <% if pinned %>
+          <% unless first %>
+            <%= link_to decrement_user_path(user), method: :put do %>
+              <i class="fas fa-chevron-circle-left"></i>
+            <% end %>
+          <% end %>
+          <% unless last %>
+            <%= link_to increment_user_path(user), method: :put do %>
+            <i class="fas fa-chevron-circle-right"></i>&nbsp;
+            <% end %>
+          <% end %>
           <%= link_to unpin_user_path(user), method: :put do %>
             <i class="fas fa-thumbtack"></i>
           <% end %>
