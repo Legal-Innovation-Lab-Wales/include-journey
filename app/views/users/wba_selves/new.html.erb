@@ -41,7 +41,7 @@
               </div>
               <div class="col-9 col-md-5">
                 <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
-                                  value: last_score(wellbeing_metric.id) %>
+                                  value: last_score(@last_scores, wellbeing_metric.id) %>
               </div>
               <div class="col-3 col-md-2 description"></div>
             </div>
