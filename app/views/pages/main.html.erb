@@ -14,11 +14,11 @@
         <p>Supporting people to desist from crime is a global issue. On a national level, this is evidenced by high percentages of re-offending rates and high prison populations. Supporting pro-social change in offenders is a challenge for statutory, private and third sector criminal justice organisations. </p>
         <p>The development and implementation of digital technologies in the area of offender rehabilitation are cutting edge. Currently, there is little to no innovation in this area.  As such, a range of technology can be developed to support organisations and their service users.</p>
         <div class="text-center">
-          <%= link_to new_user_session_path, class: 'btn btn-success' do %>
-            user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
-          <% end %>
           <%= link_to new_user_registration_path, class: 'btn btn-secondary' do %>
             user sign up <i class="fas fa-user-plus"></i>
+          <% end %>
+          <%= link_to new_user_session_path, class: 'btn btn-success' do %>
+            user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
           <% end %>
         </div>
       </div>
@@ -29,11 +29,11 @@
         <p>The development of the include hub is an opportunity to create a new model of working that’s genuinely co-produced by the people who benefit from the service, with the flexibility to offer members what they want</p>
         <div class="text-center mb-2"><a href="https://include-uk.com/" class="btn btn-primary">visit our site</a></div>
         <div class="text-center">
-          <%= link_to new_team_member_session_path, class: 'btn btn-success' do %>
-            team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
-          <% end %>
           <%= link_to new_team_member_registration_path, class: 'btn btn-secondary' do %>
             team member sign up <i class="fas fa-user-plus"></i>
+          <% end %>
+          <%= link_to new_team_member_session_path, class: 'btn btn-success' do %>
+            team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
           <% end %>
         </div>
       </div>
