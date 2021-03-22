@@ -64,4 +64,6 @@ Rails.application.routes.draw do
   unauthenticated do
     root 'pages#main'
   end
+
+  get 'terms', to: 'pages#terms'
 end
