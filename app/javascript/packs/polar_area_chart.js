@@ -86,7 +86,7 @@ wellbeing_charts.forEach((wellbeing_chart, index) => {
                 description.innerText = scale[input.value - 1].description
             }
 
-        if (!slider.classList.contains('hidden')) {
+        if (!slider.classList.contains('d-none')) {
             inputs.forEach((input, index) => {
                 input.addEventListener('change', () => {
                     chart.data.datasets[0].data[index] = input.value

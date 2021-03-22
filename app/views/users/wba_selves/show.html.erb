@@ -37,7 +37,7 @@
             <div class="col-9">
               <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
             </div>
-            <input class="hidden" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+            <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
                    value="<%= score.value %>">
             <div class="col-3 description"></div>
           </div>
