@@ -46,7 +46,7 @@ module TeamMembers
     private
 
     def active_users
-      @active_users = @users.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now)
+      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
     end
 
     def maximum
