@@ -1,5 +1,6 @@
 <div class="col-12 col-md-6 mb-3">
-  <div class="card">
+  <% active_crisis_events = user.crisis_events.active %>
+  <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %>">
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
@@ -35,6 +36,13 @@
                     <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
                   <% end %>
                 </div>
+                <% unless active_crisis_events.empty? %>
+                  <div class="row">
+                    <%= link_to active_crisis_events_path do %>
+                      <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis events
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -63,8 +71,9 @@
     </div>
     <div class="card-footer">
       <span>Last Sign In</span>
-      <span><%= user.last_sign_in_at.present? ?
-                  "#{time_ago_in_words(user.last_sign_in_at)} ago" : user.last_sign_in %></span>
+      <span>
+        <%= user.last_sign_in_at.present? ? "#{time_ago_in_words(user.last_sign_in_at)} ago" : user.last_sign_in %>
+      </span>
     </div>
   </div>
 </div>

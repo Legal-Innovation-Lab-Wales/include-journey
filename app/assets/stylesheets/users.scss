@@ -35,6 +35,23 @@
       }
     }
 
+    &.has-crisis {
+      background-color: $brand-secondary;
+
+      i, a {
+        &:hover {
+          color: $white !important;
+        }
+      }
+
+      .chart a:hover {
+        .wellbeing-chart-wrapper {
+          background-color: $white !important;
+          color: $black;
+        }
+      }
+    }
+
     .card-header {
       i {
         &.unpinned {
