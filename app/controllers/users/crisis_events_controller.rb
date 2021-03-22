@@ -25,7 +25,7 @@ module Users
       puts '=========================================================================================================='
       puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
       puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"
-      puts "User: #{current_user.first_name} #{current_user.last_name} 0#{current_user.mobile_number}"
+      puts "User: #{current_user.full_name} 0#{current_user.mobile_number}"
       puts '=========================================================================================================='
     end
 
@@ -33,7 +33,7 @@ module Users
       puts '=========================================================================================================='
       puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
       puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"
-      puts "User: #{current_user.first_name} #{current_user.last_name} #{current_user.email}"
+      puts "User: #{current_user.full_name} #{current_user.email}"
       puts '=========================================================================================================='
     end
 

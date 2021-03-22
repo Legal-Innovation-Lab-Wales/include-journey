@@ -10,7 +10,7 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
       <h3 class="mb-3">Crisis Event</h3>
-      <h5 class="mb-3"><%= link_to "#{@crisis_event.user.first_name} #{@crisis_event.user.last_name}", user_path(@crisis_event.user) %>
+      <h5 class="mb-3"><%= link_to "#{@crisis_event.user.full_name}", user_path(@crisis_event.user) %>
         raised an SOS <%= time_ago_in_words(@crisis_event.created_at) %> ago</h5>
       <% unless @crisis_event.closed %>
         <h5 class="mb-3">

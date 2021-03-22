@@ -18,7 +18,7 @@
         <tbody>
         <% @resources.each do |view_log| %>
           <tr>
-            <td><%= view_log.user.first_name %> <%= view_log.user.last_name %></td>
+            <td><%= view_log.user.full_name %></td>
             <td><%= view_log.journal_entry.created %></td>
             <td><%= view_log.created %>
           </tr>

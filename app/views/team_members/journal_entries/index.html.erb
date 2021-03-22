@@ -21,8 +21,7 @@
           <% @resources.each do |journal_entry| %>
             <tr>
               <td>
-                <%= link_to "#{journal_entry.user.first_name} #{journal_entry.user.last_name}",
-                            journal_entry_path(journal_entry) %>
+                <%= link_to "#{journal_entry.user.full_name}", journal_entry_path(journal_entry) %>
               </td>
               <td>
                 <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
