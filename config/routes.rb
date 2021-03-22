@@ -41,7 +41,10 @@ Rails.application.routes.draw do
         get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
       end
 
-      resources :users, only: %i[index show]
+      resources :users, only: %i[index show] do
+        put 'pin', action: 'pin', on: :member, as: :pin
+        put 'unpin', action: 'unpin', on: :member, as: :unpin
+      end
 
       resources :crisis_events, only: :show do
         get 'page/:page_number', action: :index, on: :collection, as: :pages

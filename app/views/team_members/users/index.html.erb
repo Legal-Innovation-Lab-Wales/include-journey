@@ -46,7 +46,7 @@
       <div class="container p-0">
         <div class="row">
           <% @pinned_users.each do |user| %>
-            <%= render 'card', user: user %>
+            <%= render 'card', user: user, pinned: true %>
           <% end %>
         </div>
       </div>
@@ -58,7 +58,7 @@
       <div class="container p-0">
         <div class="row">
           <% @users.each do |user| %>
-            <%= render 'card', user: user %>
+            <%= render 'card', user: user, pinned: false %>
           <% end %>
         </div>
       </div>

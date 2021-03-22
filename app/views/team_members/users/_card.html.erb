@@ -7,7 +7,17 @@
           <%= user.first_name %> <%= user.last_name %> <i class="fas fa-external-link-alt"></i>
         <% end %>
       </span>
-      <span><i class="fas fa-thumbtack"></i></span>
+      <span>
+        <% if pinned %>
+          <%= link_to unpin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack"></i>
+          <% end %>
+        <% else %>
+          <%= link_to pin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack unpinned"></i>
+          <% end %>
+        <% end %>
+      </span>
     </div>
     <div class="card-body">
       <div class="container">
