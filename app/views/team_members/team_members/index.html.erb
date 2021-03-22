@@ -76,8 +76,8 @@
                     <%= form.hidden_field :team_member_id, value: team_member.id %>
                     <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
                       confirm: team_member.admin ?
-                                 "Demote #{team_member.first_name} #{team_member.last_name} from an admin role?" :
-                                 "Promote #{team_member.first_name} #{team_member.last_name} to an admin role?" }} do %>
+                                 "Demote #{team_member.full_name} from an admin role?" :
+                                 "Promote #{team_member.full_name} to an admin role?" }} do %>
                       <% if team_member.admin %>
                         <i class="fas fa-check-circle"></i>
                       <% else %>

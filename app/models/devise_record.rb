@@ -9,4 +9,8 @@ class DeviseRecord < ApplicationRecord
   def current_sign_in
     current_sign_in_at.present? ? current_sign_in_at.strftime('%d/%m/%Y %I:%M %p') : ''
   end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

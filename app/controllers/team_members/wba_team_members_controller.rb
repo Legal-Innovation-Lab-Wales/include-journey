@@ -6,7 +6,7 @@ module TeamMembers
     # GET /wba_team_member/:id
     def show
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: "WBA for #{@wba_team_member.user.full_name} created by #{@wba_team_member.team_member.first_name} #{@wba_team_member.team_member.last_name} clicked!")
+                    alert: "WBA for #{@wba_team_member.user.full_name} created by #{@wba_team_member.team_member.full_name} clicked!")
     end
 
     private

@@ -22,10 +22,6 @@ class User < DeviseRecord
     crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
   end
 
-  def full_name
-    "#{first_name} #{last_name}"
-  end
-
   def last_wba_self
     wba_selves.includes(:wba_self_scores).last
   end
