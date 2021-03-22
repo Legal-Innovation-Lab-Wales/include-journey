@@ -71,11 +71,13 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
 end
 
 if User.count.zero?
+  user_count = 0
   10.times do
+    user_count += 1
     user = User.new(
       first_name: Faker::Name.unique.first_name,
       last_name: Faker::Name.unique.last_name,
-      email: Faker::Internet.unique.email,
+      email: 'IJ-test-user-'+user_count.to_s+'@purpleriver.dev',
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
@@ -184,28 +186,28 @@ if WbaSelf.count.zero?
 end
 
 CrisisType.create!(
-  category: 'SELF HARM',
-  team_member_id: 1,
+  category: 'Self Harm',
+  team_member_id: 1
 )
 
 CrisisType.create!(
-  category: 'HARMING OTHERS',
-  team_member_id: 1,
+  category: 'Harming Others',
+  team_member_id: 1
 )
 
 CrisisType.create!(
-  category: 'SUICIDE',
-  team_member_id: 1,
+  category: 'Suicide',
+  team_member_id: 1
 )
 
 CrisisType.create!(
-  category: 'OVER DOSE',
-  team_member_id: 1,
+  category: 'Overdose',
+  team_member_id: 1
 )
 
 CrisisType.create!(
-  category: 'DOMESTIC VIOLENCE',
-  team_member_id: 1,
+  category: 'Domestic Violence',
+  team_member_id: 1
 )
 
 10.times do

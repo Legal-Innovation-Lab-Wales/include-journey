@@ -1,10 +1,8 @@
 module TeamMembers
-
+  # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
     # need to add before_action :is_team_member? or similar
-    before_action :set_unapproved_team_members, :set_approved_team_members,
-                  :set_users, :set_user, :set_user_location, :note, :user_notes, only: :show
-
+    before_action :user, :user_location, :note, :user_notes, :wba_self, :wellbeing_metrics, :journal_entries, only: :show
 
     def show
       render 'show'
@@ -16,29 +14,30 @@ module TeamMembers
       @note = Note.new
     end
 
-    def set_user
-      @user = User.find(params[:user_id])
+    def user
+      @user = User.includes(:notes).find(params[:id])
     end
 
     def user_notes
       @user_notes = @user.notes.order(created_at: :desc)
     end
 
-    def set_user_location
+    def user_location
       @user_location = @user.last_sign_in_ip
     end
 
-    def set_unapproved_team_members
-      @unapproved_team_members = TeamMember.find(1, 2)
+    def wellbeing_metrics
+      @wellbeing_metrics = WellbeingMetric.all
     end
 
-    def set_approved_team_members
-      @approved_team_members = TeamMember.find(3, 4)
+    def wba_self
+      @wba_self = WbaSelf.includes(:wba_self_scores).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      session notice: 'No wellbeing assessment could be found'
     end
 
-    def set_users
-      @users = User.find(5, 6, 7)
+    def journal_entries
+      @journal_entries = @user.journal_entries
     end
-
   end
 end

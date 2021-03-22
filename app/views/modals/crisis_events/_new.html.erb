@@ -1,0 +1,44 @@
+<div class="modal fade" id="sosModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="sosModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sosModalLabel">SOS Request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>If you are in need of help please let us know of the situation you are currently dealing with along
+          with any additional information you can share at this time.</p>
+
+        <%= form_with model: @crisis_event do |f| %>
+<!--          <div class="form-floating mb-2">-->
+            <%#= f.collection_select :crisis_type_id, @crisis_types, :id, :category, {}, { class: 'form-select' } %>
+            <%#= f.label :crisis_type_id, 'Situation'%>
+<!--          </div>-->
+
+          <div class="container mb-2">
+            <div class="row">
+              <%= f.collection_radio_buttons :crisis_type_id, @crisis_types, :id, :category, {} do |b| %>
+                <div class="col-6 p-1">
+                    <%= b.radio_button(class: 'btn-check', required: true) + b.label(class: 'btn btn-outline-primary w-100') %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-floating mb-2">
+            <%= f.text_area :additional_info, class: 'form-control', style: 'height: 150px' %>
+            <%= f.label :additional_info, 'Additional Information'%>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col text-center">
+                <%= f.submit 'Request Help', class: 'btn btn-primary mt-2' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

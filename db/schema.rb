@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_225116) do
+ActiveRecord::Schema.define(version: 2021_02_25_225119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,33 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.text "entry"
+    t.text "feeling"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_journal_entries_on_user_id"
+  end
+
+  create_table "journal_entry_permissions", force: :cascade do |t|
+    t.bigint "journal_entry_id", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_entry_id"], name: "index_journal_entry_permissions_on_journal_entry_id"
+    t.index ["team_member_id"], name: "index_journal_entry_permissions_on_team_member_id"
+  end
+
+  create_table "journal_entry_view_logs", force: :cascade do |t|
+    t.bigint "journal_entry_id", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_entry_id"], name: "index_journal_entry_view_logs_on_journal_entry_id"
+    t.index ["team_member_id"], name: "index_journal_entry_view_logs_on_team_member_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -192,6 +219,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_225116) do
   add_foreign_key "crisis_notes", "crisis_events"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
+  add_foreign_key "journal_entries", "users"
+  add_foreign_key "journal_entry_permissions", "journal_entries"
+  add_foreign_key "journal_entry_permissions", "team_members"
+  add_foreign_key "journal_entry_view_logs", "journal_entries"
+  add_foreign_key "journal_entry_view_logs", "team_members"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "wba_self_permissions", "team_members"

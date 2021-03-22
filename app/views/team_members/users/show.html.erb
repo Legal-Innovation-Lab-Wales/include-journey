@@ -1,59 +1,76 @@
 <main class="container dashboard">
+  <h2 class="my-3">User</h2>
   <!-- User bio / details section -->
-  <section class="row">
-    <div class="col mb-3">
-      <h2 class="mb-3">User</h2>
+  <div class="row d-flex justify-content-around">
+    <section class="col-lg-5">
       <div class="container d-flex justify-content-between">
         <div class="col-4 d-flex flex-column">
           <i class="mb-1 h1 fas fa-user"></i>
-          <span><%= @user.first_name + ' ' + @user.last_name %></span>
+          <h3><%= @user.first_name + ' ' + @user.last_name %></h3>
         </div>
         <div class="col-7 text-start">
-          <p><strong>Last logged in:</strong><%= @user.last_sign_in_at %></p>
-          <p><strong>Logged in from:</strong><%= @user_location %></p>
+          <p><strong>Last logged in: </strong><%= @user.last_sign_in_at %></p>
+          <p><strong>Logged in from: </strong><%= @user_location %></p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- SOS section -->
-  <section class="row" id="awaiting_approval">
-    <div class="col">
+    </section>
+    <!-- End User bio / details section -->
+
+    <!-- SOS section -->
+    <section class="col-lg-5" id="awaiting_approval">
       <% if @user.crisis_events.where("closed = false").count > 0 %>
         <h3>SOS status: <span class="text-danger">Crisis </span><i class="fas fa-exclamation-triangle text-danger"></i>
         </h3>
       <% else %>
         <h3>SOS status: <span class="text-success">none</span></h3>
       <% end %>
-    </div>
-    <div class="row text-start">
-      <% if @user.crisis_events.where("closed = false").count > 0 %>
-        <% @user.crisis_events.where("closed = false").each do |crisis| %>
-          <p><span class="h5">When? </span><%= crisis.created_at %></p>
-          <p><span class="h5">Type? </span> <%= crisis.crisis_type %></p>
-          <p><span class="h5">Info: </span> <%= crisis.additional_info %></p>
+      <div class="row text-start">
+        <% if @user.crisis_events.where("closed = false").count > 0 %>
+          <% @user.crisis_events.where("closed = false").each do |crisis| %>
+            <div class="card bg-transparent col-md-6 offset-md-3 py-4 px-3 shadow-lg">
+              <p><span class="h5">When? </span><%= crisis.created %></p>
+              <p><span class="h5">Type? </span> <%= crisis.crisis_type %></p>
+              <p><span class="h5">Info: </span> <%= crisis.additional_info %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-start">
+            This user has no active crisis events. Any active Crisis Events will be displayed here.
+          </p>
         <% end %>
-      <% else %>
-        <p class="text-start">
-          This user has no active crisis events. Any active Crisis Events will be displayed here.
-        </p>
-      <% end %>
-    </div>
-  </section>
-  <%# end %>
+      </div>
+    </section>
+    <%# end %>
+    <!-- End SOS section -->
+  </div>
 
   <!-- Wellbeing Metrics section -->
-  <section class="row" id="wellbeing">
-    <div class="col">
-      <h3 class="mb-5">User Wellbeing</h3>
-      <div class="row text-start pb-5">
-        <h4>Donut</h4>
+  <div class="row d-flex justify-content-center px-5">
+    <section id="wellbeing">
+      <h3 class="mb-5">User wellbeing</h3>
+      <div class="row pb-5">
+        <div class="col-md-4 text-start">
+          <h4>Current wellbeing</h4>
+          <span><strong>Last updated: </strong><%= @wba_self.created %></span>
+          <canvas class="mt-4" id="wellbeing-chart" width="400" height="400"></canvas>
+          <div class="col-md-4 sliders">
+            <% @wellbeing_metrics.each do |wellbeing_metric| %>
+              <label class="hidden" for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+              <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
+                     value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
+            <% end %>
+          </div>
+        </div>
+        <div class="col-md-7 text-start">
+          <h4>Wellbeing history</h4>
+          <canvas class="mt-4" id="wellbeing-history" width="400"></canvas>
+        </div>
       </div>
-      <div class="row text-start pb-5">
-        <h4>Wellbeing history</h4>
-      </div>
-    </div>
-  </section>
+
+    </section>
+  </div>
+  <!-- End Wellbeing Metrics Section -->
 
   <!-- Journal section -->
   <section class="row" id="users">
@@ -61,13 +78,25 @@
       <h3>Journal</h3>
       <div class="row text-start">
         <h4>Latest journal entry</h4>
-        <p class="my-3">You'll see the user's latest journal entry here</p>
-        <a href="#" class="btn btn-primary" type="button">
-          View User's journal <i class="fa fa-angle-right"></i>
-        </a>
+        <% if @journal_entries.count > 0 %>
+          <div class="card bg-transparent px-0 my-3">
+            <div class="card-header px-0">
+              <span class="mx-3"><strong>Entered on: </strong></span><%= @journal_entries.last.created %>
+            </div>
+            <div class="card-body text-start">
+              <p><%= @journal_entries.last.entry %></p>
+            </div>
+          </div>
+        <% else %>
+          <span>The User hasn't completed any Journal entries yet</span>
+        <% end %>
       </div>
+      <a href="#" class="btn btn-primary" type="button">
+        View User's journal <i class="fa fa-angle-right"></i>
+      </a>
     </div>
   </section>
+  <!-- End Journal Section -->
 
   <!-- Notes section -->
   <!-- Add note modal -->
@@ -75,7 +104,8 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <%= form_with model: @note,
-                      url: add_user_note_path(@user.id) do |form| %>
+                      url: user_add_note_index_path(@user),
+                      method: :post do |form| %>
           <div class="modal-header border-0">
             <h5 class="modal-title text-black-50" id="">Add a note for this user</h5>
           </div>
@@ -100,7 +130,6 @@
   </div>
   <!-- End modal -->
 
-
   <section class="card px-0" id="users">
     <div class="card-header border-0 bg-transparent">
       <h3>User Notes</h3>
@@ -109,7 +138,7 @@
       <% @user_notes.each do |note| %>
         <div class="card bg-transparent my-2">
           <div class="card-header d-flex justify-content-between">
-            <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created_at.strftime('%d/%m/%Y %I:%M %p') %></strong></span>
+            <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
             <span>Visible to user?
               <% if note.visible_to_user? %><i class="fa fa-check-circle text-success ms-2"></i>
               <% else %> <i class="fa fa-times-circle ms-2 text-danger"></i>
@@ -123,10 +152,13 @@
       <% end %>
     </div>
     <div class="card-footer">
-      <button class="btn btn-primary my-2 col-12" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+      <button class="btn btn-primary my-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
         Add note <i class="fa fa-angle-right ml-2"></i>
       </button>
     </div>
   </section>
-
+  <!-- End Notes Section -->
 </main>
+
+<%= javascript_pack_tag 'polar_area_chart' %>
+<%= javascript_pack_tag 'line_chart' %>

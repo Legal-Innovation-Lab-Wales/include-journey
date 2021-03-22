@@ -1,8 +1,8 @@
 module Users
   # app/controllers/users/dashboard_controller.rb
-  class DashboardController < ApplicationController
-    def main
-      render template: 'users/dashboard/main'
+  class DashboardController < UsersApplicationController
+    def show
+      render 'show'
     end
   end
 end

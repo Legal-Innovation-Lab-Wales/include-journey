@@ -38,26 +38,61 @@
               <% end %>
             <% end %>
             <% if current_user %>
+              <% unless devise_controller? %>
+                <a class="btn btn-danger m-1" data-bs-toggle="modal"
+                   data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
+                  SOS <i class="fas fa-exclamation-circle"></i>
+                </a>
+              <% end %>
               <%= link_to edit_user_registration_path, class: "btn btn-success m-1" do %>
                 Edit Profile <i class="fas fa-user-edit"></i>
               <% end %>
               <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning m-1" do %>
-                Logout<i class="fas fa-sign-out-alt"></i>
+                Logout <i class="fas fa-sign-out-alt"></i>
               <% end %>
             <% end %>
           </div>
         </div>
       </div>
     </nav>
+
+    <% if current_user && !devise_controller? %>
+      <%= render partial: '/modals/crisis_events/new' %>
+      <%= render partial: '/modals/crisis_events/existing' %>
+    <% end %>
   <% end %>
 
   <% flash.each do |type, msg| %>
-    <div class="alert <%= alert_class_for(type) %> position-absolute top-0 start-50 translate-middle-x px-5">
-      <%= msg %>
-    </div>
+    <% if type != 'timedout' %>
+      <div class="alert <%= alert_class_for(type) %> alert-dismissible fade show position-absolute top-0 start-50 translate-middle-x px-5" role="alert">
+        <%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
   <% end %>
 
-    <%= yield %>
+  <%= yield %>
 
+  <% if user_signed_in? %>
+    <footer class="text-center text-white bg-brand">
+      <div class="footers container pt-4">
+        <a class="title" href="https://include-uk.com"><h3> Include uk</h3></a>
+        <h3>x</h3>
+        <a class="title" href="https://legaltech.wales/"><h3>Legal Innovation Lab Wales</h3></a>
+        <section class="mb-4">
+          <a class="btn btn-link btn-floating btn-lg m-1" href="https://www.facebook.com/includehub" role="button"
+             data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
+          <a class="btn btn-link btn-floating btn-lg m-1" href="https://twitter.com/includeHub" role="button"
+            data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
+          <a class="btn btn-link btn-floating btn-lg m-1" href="https://include-uk.com" role="button"
+            data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
+        </section>
+      </div>
+      <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2021 Copyright:
+        <a class="text-dark" href="https://legaltech.wales/">Legal Innovation Lab Wales</a>
+      </div>
+    </footer>
+  <% end %>
   </body>
 </html>
