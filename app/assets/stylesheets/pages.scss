@@ -61,7 +61,7 @@ nav.navbar {
   .navbar-right-buttons{
     margin-right: auto;
     margin-left: auto;
-    @media (min-width: 576px) {
+    @media (min-width: $screensize-min) {
       margin-right: 0;
       min-width: 364px;
     }
@@ -76,7 +76,7 @@ nav.navbar {
       width: 11rem;
     }
 
-    @media (min-width: 576px) {
+    @media (min-width: $screensize-min) {
       .btn {
         margin: 0.15rem;
         width: auto;

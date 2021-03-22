@@ -12,45 +12,42 @@
             <i class="mb-1 fas fa-book"></i>
             <span class="nav-label">My journal</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light', id: 'navbar-item-1' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-calendar-alt"></i>
             <span class="nav-label">Appointments</span>
           <% end %>
-            <%= link_to new_wba_self_path, class: 'btn btn-light', id: 'navbar-item-2' do %>
+          <%= link_to new_wba_self_path, class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-heart"></i>
-              <span class="nav-label">My Needs</span>
+            <span class="nav-label">My Needs</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light', id: 'navbar-item-3' do %>
-            <i class="mb-1 fas fa-calendar-alt"></i>
-              <span class="nav-label">My Contacts</span>
+          <%= link_to '#', class: 'btn btn-light' do %>
+            <i class="mb-1 fas fa-address-book"></i>
+            <span class="nav-label">My Contacts</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-road"></i>
-              <span class="nav-label">My Journey</span>
+            <span class="nav-label">My Journey</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-info-circle"></i>
-              <span class="nav-label">My Support</span>
+            <span class="nav-label">My Support</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-tasks"></i>
-              <span class="nav-label">My Goals</span>
+            <span class="nav-label">My Goals</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light', id: 'navbar-item-8' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-calendar-check"></i>
-              <span class="nav-label">What's on</span>
+            <span class="nav-label">What's on</span>
           <% end %>
-            <%= link_to '#', class: 'btn btn-light', id: 'navbar-item-9' do %>
+          <%= link_to '#', class: 'btn btn-light' do %>
             <i class="mb-1 fas fa-comments"></i>
-              <span class="nav-label">My Voice</span>
+            <span class="nav-label">My Voice</span>
           <% end %>
+          </span>
         <% end %>
       <% end %>
-      </span>
 
-
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      </ul>
       <div class="navbar-right-buttons">
         <% if current_team_member %>
           <%= link_to edit_team_member_registration_path, class: "btn btn-success m-1" do %>
@@ -75,7 +72,6 @@
           <% end %>
         <% end %>
       </div>
-    </div>
     </div>
   </div>
 </nav>
