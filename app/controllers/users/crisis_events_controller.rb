@@ -20,7 +20,7 @@ module Users
     def update
       if @crisis_event.update(crisis_event_params)
         respond_to do |format|
-          format.html { redirect_to authenticated_user_root_path, alert: update_alert }
+          format.html { redirect_to authenticated_user_root_path, notice: update_alert }
         end
       else
         render @crisis_event.errors, status: :unprocessable_entity

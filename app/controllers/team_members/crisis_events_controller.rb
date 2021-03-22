@@ -18,9 +18,9 @@ module TeamMembers
     # PUT /crisis_events/:id/close
     def close
       if @crisis_event.update({ closed: true, closed_by: current_team_member, closed_at: Time.now })
-        redirect_to crisis_event_path(@crisis_event), alert: 'Crisis event has been closed'
+        redirect_to crisis_event_path(@crisis_event), notice: 'Crisis event has been closed'
       else
-        redirect_to crisis_event_path(@crisis_event), alert: 'Crisis event could not be closed'
+        redirect_to crisis_event_path(@crisis_event), error: 'Crisis event could not be closed'
       end
     end
 

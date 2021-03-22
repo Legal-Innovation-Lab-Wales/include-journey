@@ -6,9 +6,9 @@ module TeamMembers
     # POST /crisis_events/:crisis_event_id/crisis_events_notes
     def create
       if (@note = CrisisNote.create!({ team_member: current_team_member, crisis_event: @crisis_event, content: crisis_notes_params[:content] }))
-        redirect_to crisis_event_path(@crisis_event), alert: 'Note created'
+        redirect_to crisis_event_path(@crisis_event), success: 'Note created'
       else
-        redirect_to crisis_event_path(@crisis_event), alert: 'Note could not be created'
+        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
       end
     end
 

@@ -16,7 +16,7 @@ module Users
         WbaSelfPermission.create!({ wba_self: @model, team_member: team_member })
       end
 
-      redirect_to wba_self_path(@model), alert: 'Sharing permissions for team members successfully set'
+      redirect_to wba_self_path(@model), success: 'Sharing permissions for team members successfully set'
     end
 
     protected

@@ -52,7 +52,7 @@ module Users
     end
 
     def restrict_user
-      redirect_to authenticated_user_root_path, alert: 'You cannot view that record'
+      redirect_to authenticated_user_root_path, error: 'You cannot view that record'
     end
 
     def permissions_set

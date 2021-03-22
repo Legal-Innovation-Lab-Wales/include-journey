@@ -16,7 +16,7 @@ module Users
         JournalEntryPermission.create!({ journal_entry: @model, team_member: team_member })
       end
 
-      redirect_to pages_journal_entries_path(1), alert: 'Sharing permissions for team members successfully set'
+      redirect_to pages_journal_entries_path(1), success: 'Sharing permissions for team members successfully set'
     end
 
     protected
