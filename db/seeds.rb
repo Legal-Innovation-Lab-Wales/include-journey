@@ -170,18 +170,6 @@ if WbaSelf.count.zero?
         value: rand(1..10)
       )
     end
-
-    TeamMember.count.times do |id|
-      WbaSelfPermission.create!(
-        wba_self_id: wbaselfcount,
-        team_member_id: id+1
-      )
-
-      WbaSelfViewLog.create!(
-        wba_self_id: wbaselfcount,
-        team_member_id: id+1
-      )
-    end
   end
 end
 

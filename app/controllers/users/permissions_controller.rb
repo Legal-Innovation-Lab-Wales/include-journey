@@ -1,5 +1,5 @@
 module Users
-  # app/controllers/users/wba_self_permission_controller.rb
+  # app/controllers/users/permissions_controller.rb
   class PermissionsController < UsersApplicationController
     before_action :team_members, :model
     before_action :permissions_set, if: -> { @model.permissions.present? }
