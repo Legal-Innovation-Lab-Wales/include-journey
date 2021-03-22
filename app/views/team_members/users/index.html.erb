@@ -73,7 +73,7 @@
                           </div>
                           <% if user.release_date.present? %>
                             <div class="row">
-                              <span><i class="fas fa-calendar"></i> <%= user.release %></span>
+                              <span><i class="fas fa-calendar"></i> Release: <%= user.release %></span>
                             </div>
                           <% end %>
                           <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
@@ -92,7 +92,7 @@
                           <a href='#'>
                             <div class="wellbeing-chart-wrapper">
                               <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-                              <div class="sliders hidden">
+                              <div class="sliders d-none">
                                 <% last_wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
                                   <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
                                     <%= score.wellbeing_metric.name %>
@@ -154,7 +154,7 @@
                           </div>
                           <% if user.release_date.present? %>
                             <div class="row">
-                              <span><i class="fas fa-calendar"></i> <%= user.release %></span>
+                              <span><i class="fas fa-calendar"></i> Release: <%= user.release %></span>
                             </div>
                           <% end %>
                           <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
@@ -173,7 +173,7 @@
                           <a href='#'>
                             <div class="wellbeing-chart-wrapper">
                               <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-                              <div class="sliders hidden">
+                              <div class="sliders d-none">
                                 <% last_wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
                                   <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
                                     <%= score.wellbeing_metric.name %>
