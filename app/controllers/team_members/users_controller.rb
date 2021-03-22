@@ -30,7 +30,7 @@ module TeamMembers
     end
 
     def users
-      @users = User.includes(:wba_selves).all.order(created_at: :desc)
+      @users = User.includes(:wba_selves, :crisis_events).all.order(created_at: :desc)
     end
   end
 end
