@@ -51,7 +51,7 @@
 
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       </ul>
-      <div class="d-flex">
+      <div class="navbar-right-buttons">
         <% if current_team_member %>
           <%= link_to edit_team_member_registration_path, class: "btn btn-success m-1" do %>
             Edit Profile <i class="fas fa-user-edit"></i>
@@ -75,6 +75,7 @@
           <% end %>
         <% end %>
       </div>
+    </div>
     </div>
   </div>
 </nav>

@@ -56,18 +56,30 @@
 }
 
 nav.navbar {
+  text-align: center;
+
+  .navbar-right-buttons{
+    margin-right: auto;
+    margin-left: auto;
+    @media (min-width: 576px) {
+      margin-right: 0;
+      min-width: 364px;
+    }
+  }
+
+
   .navbar-items {
     overflow: hidden;
-    max-width: 480px;
-    max-height: 48px;
+    max-height: 44px;
 
     .btn {
-      max-height: 38px;
+      width: 11rem;
     }
 
     @media (min-width: 576px) {
       .btn {
         margin: 0.15rem;
+        width: auto;
 
         .nav-label {
           display: none;
