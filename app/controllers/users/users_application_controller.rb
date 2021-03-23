@@ -22,7 +22,7 @@ module Users
       return unless current_user.permissions_required?
 
       redirect_to new_journal_entry_permission_path(current_user.journal_entries.last),
-                  alert: 'Please specify which team members can view this journal entry'
+                  notice: 'Please specify which team members can view this journal entry'
     end
   end
 end
