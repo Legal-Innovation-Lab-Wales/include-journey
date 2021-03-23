@@ -1,6 +1,6 @@
 @import "variables";
 
-.team_members, .user {
+.team-members, .user {
   min-height: calc(100vh - #{$nav-sm} - #{$footer-sm} - #{$margins});
 
   @media screen and (min-width: $screen-md) {
