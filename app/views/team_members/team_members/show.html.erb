@@ -1,4 +1,4 @@
-<main class="container team_members team_member">
+<main class="container team-members team_member">
   <div class="row m-1 mt-3">
     <div class="col">
       <%= link_to team_members_path, class: 'btn btn-primary' do %>
@@ -23,7 +23,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to '#wba_team_members', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to '#wba-team-members', class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -35,7 +35,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to pages_team_member_wba_self_view_logs_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
+          <%= link_to wba_self_view_logs_team_member_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -44,6 +44,22 @@
               </div>
               <div class="row">
                 <div class="col">WBA View Logs</div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <a class="col clear d-flex align-items-center"></a>
+          <a class="col clear d-flex align-items-center"></a>
+          <%= link_to journal_entry_view_logs_team_member_path(@team_member, 1), class: 'col d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-eye"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Journal Entries View Logs</div>
               </div>
             </div>
           <% end %>
@@ -114,7 +130,7 @@
     </section>
   <% end %>
   <% if @team_member.wba_team_members.count > 0 %>
-    <section class="row" id="wba_team_members">
+    <section class="row" id="wba-team-members">
       <div class="col">
         <h3>wellbeing assessments</h3>
         <div class="table-container">

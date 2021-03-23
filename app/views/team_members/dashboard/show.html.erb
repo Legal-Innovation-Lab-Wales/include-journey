@@ -1,4 +1,4 @@
-<main class="container team_members">
+<main class="container team-members">
   <section class="row">
     <div class="col mb-3">
       <h3>Dashboard</h3>
@@ -43,7 +43,7 @@
             </div>
           <% end %>
           <% unless current_team_member.admin? %>
-            <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
+            <%= link_to active_crisis_events_path, class: 'col d-flex align-items-center btn' do %>
               <div class="container">
                 <div class="row">
                   <div class="col">
@@ -59,7 +59,7 @@
         </div>
         <% if current_team_member.admin?  %>
           <div class="row">
-            <%= link_to crisis_events_path, class: 'col d-flex align-items-center btn' do %>
+            <%= link_to active_crisis_events_path, class: 'col d-flex align-items-center btn' do %>
               <div class="container">
                 <div class="row">
                   <div class="col">
@@ -71,8 +71,36 @@
                 </div>
               </div>
             <% end %>
-            <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent; box-shadow: none;"></a>
-            <a class="col col d-flex align-items-center" style="background-color: transparent; border-color: transparent; box-shadow: none;"></a>
+            <%= link_to pages_journal_entries_path(1), class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-book-open"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Journal Entries</div>
+                </div>
+              </div>
+            <% end %>
+            <a class="col clear d-flex align-items-center"></a>
+          </div>
+        <% else %>
+          <div class="row">
+            <%= link_to pages_journal_entries_path(1), class: 'col d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-book-open"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Journal Entries</div>
+                </div>
+              </div>
+            <% end %>
+            <a class="col clear d-flex align-items-center"></a>
+            <a class="col clear d-flex align-items-center"></a>
           </div>
         <% end %>
       </div>

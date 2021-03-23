@@ -48,7 +48,6 @@
     }
   }
 
-  &.index {
     .card {
       max-height: 50vh;
       @media screen and (min-width: $screen-md) {
@@ -71,6 +70,10 @@
       .journal-text {
         overflow: auto;
       }
+    }
+
+    label {
+      color: $black;
     }
   }
 }

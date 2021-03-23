@@ -1,13 +1,13 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
-  class CrisisEventsController < TeamMembersApplicationController
-    before_action :crisis_events, only: :index
-    before_action :crisis_event, only: %i[show close]
+  class CrisisEventsController < PaginationController
+    before_action :crisis_events, only: :active
+    before_action :crisis_event, only: %i[show close add_note]
     before_action :note, :notes, only: :show
 
-    # GET /crisis_events
-    def index
-      render 'index'
+    # GET /crisis_events/active
+    def active
+      render 'active'
     end
 
     # GET /crisis_events/:id
@@ -17,11 +17,25 @@ module TeamMembers
 
     # PUT /crisis_events/:id/close
     def close
-      if @crisis_event.update({ closed: true, closed_by: current_team_member, closed_at: Time.now })
-        redirect_to crisis_event_path(@crisis_event), notice: 'Crisis event has been closed'
+      closed = @crisis_event.update({ closed: true, closed_by: current_team_member, closed_at: Time.now })
+
+      redirect_to crisis_event_path(@crisis_event), alert: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
+    end
+
+    # POST /crisis_events/:id/note
+    def add_note
+      if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
+                                              content: crisis_notes_params[:content] })
+        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
       else
-        redirect_to crisis_event_path(@crisis_event), error: 'Crisis event could not be closed'
+        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
       end
+    end
+
+    protected
+
+    def resources
+      @resources = CrisisEvent.closed.includes(:user, :crisis_type)
     end
 
     private

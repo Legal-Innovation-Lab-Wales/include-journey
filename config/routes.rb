@@ -22,15 +22,13 @@ Rails.application.routes.draw do
       end
 
       resources :journal_entries, only: %i[new create] do
+        get 'page/:page_number', action: :index, on: :collection, as: :pages
+        get 'dashboard', action: :dashboard, on: :collection
+
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
-
-        get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
-        get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
       end
 
-      resources :crisis_events, only: :create do
-        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update
-      end
+      resources :crisis_events, only: %i[create update]
     end
   end
 
@@ -39,25 +37,27 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_team_member_root
 
       resources :team_members, only: %i[index show] do
-        scope controller: 'team_members' do
-          put 'approve', action: 'approve_team_member', on: :member, as: :approve
-          put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        end
+        put 'approve', action: 'approve_team_member', on: :member, as: :approve
+        put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        resources :wba_self_view_logs, only: :index do
-          get 'page/:page_number', action: :page_index, on: :collection, as: :pages
-        end
+        get 'wba_self_view_logs/page/:page_number', to: 'wba_self_view_logs#index', on: :member, as: :wba_self_view_logs
+        get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
       end
 
       resources :users, only: %i[index show]
-      resources :crisis_events, only: %i[show index] do
-        put 'close', action: 'close', on: :member, as: :close
-        get 'page/:page_number', to: 'crisis_events_pages#index', on: :collection, as: :pages
 
-        resources :crisis_events_notes, only: %i[new create], as: :notes
+      resources :crisis_events, only: :show do
+        get 'page/:page_number', action: :index, on: :collection, as: :pages
+        get 'active', action: 'active', on: :collection
+        put 'close', action: 'close', on: :member, as: :close
+        post 'note', action: 'add_note', on: :member, as: :notes
       end
 
       resources :wba_team_members, only: :show
+
+      resources :journal_entries, only: :show do
+        get 'page/:page_number', action: :index, on: :collection
+      end
     end
   end
 

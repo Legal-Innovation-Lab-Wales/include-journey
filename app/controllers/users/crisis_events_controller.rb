@@ -5,26 +5,18 @@ module Users
     before_action :crisis_event, only: :update
     after_action :sms, :email, only: %i[create update]
 
-    # POST /crisis_events/create
+    # POST /crisis_events
     def create
-      if (@crisis_event = current_user.crisis_events.create!(crisis_event_params))
-        respond_to do |format|
-          format.html { redirect_to authenticated_user_root_path, alert: crisis_event_alert }
-        end
-      else
-        render @crisis_event.errors, status: :unprocessable_entity
-      end
+      @crisis_event = current_user.crisis_events.create!(crisis_event_params)
+
+      redirect_to authenticated_user_root_path,
+                  alert: @crisis_event ? crisis_event_alert : 'SOS request could not be created'
     end
 
-    # PUT /crisis_events/:crisis_event_id
+    # PUT /crisis_events/:id
     def update
-      if @crisis_event.update(crisis_event_params)
-        respond_to do |format|
-          format.html { redirect_to authenticated_user_root_path, notice: update_alert }
-        end
-      else
-        render @crisis_event.errors, status: :unprocessable_entity
-      end
+      redirect_to authenticated_user_root_path,
+                  alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
     end
 
     protected
@@ -48,7 +40,7 @@ module Users
     private
 
     def crisis_event
-      @crisis_event = CrisisEvent.find(params[:crisis_event_id])
+      @crisis_event = CrisisEvent.find(params[:id])
     end
 
     def update_alert

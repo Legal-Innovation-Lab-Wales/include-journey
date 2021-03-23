@@ -72,6 +72,11 @@ body#overboot {
       }
     }
 
+    &.clear {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
     &.two {
       max-width: 400px;
     }
