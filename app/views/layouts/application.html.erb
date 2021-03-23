@@ -33,7 +33,7 @@
 
   <%= yield %>
 
-  <% if user_signed_in? %>
+  <% if user_signed_in? || team_member_signed_in? %>
     <footer class="text-center text-white bg-brand">
       <div class="footers container pt-4">
         <a class="title" href="https://include-uk.com"><h3> Include uk</h3></a>

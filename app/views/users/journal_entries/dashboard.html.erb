@@ -1,8 +1,15 @@
 <main class="container user">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Dashboard
+      <% end %>
+    </div>
+  </div>
     <section class="row">
       <div class="col">
         <h2 class="mb-3">Journal</h2>
-        <div class="container buttons two">
+        <div class="container header-buttons two">
           <div class="row">
             <%= link_to new_journal_entry_path, class: 'col d-flex align-items-center btn' do %>
               <div class="container">

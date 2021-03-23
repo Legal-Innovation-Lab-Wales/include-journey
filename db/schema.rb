@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_225119) do
+ActiveRecord::Schema.define(version: 2021_02_25_225120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,16 @@ ActiveRecord::Schema.define(version: 2021_02_25_225119) do
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
+  end
+
+  create_table "user_pins", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_user_pins_on_team_member_id"
+    t.index ["user_id"], name: "index_user_pins_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -226,6 +236,8 @@ ActiveRecord::Schema.define(version: 2021_02_25_225119) do
   add_foreign_key "journal_entry_view_logs", "team_members"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "user_pins", "team_members"
+  add_foreign_key "user_pins", "users"
   add_foreign_key "wba_self_permissions", "team_members"
   add_foreign_key "wba_self_permissions", "wba_selves"
   add_foreign_key "wba_self_scores", "wba_selves"

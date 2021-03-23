@@ -2,7 +2,8 @@
 
 body#overboot {
   .btn {
-    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2);
+    font-family: $font-link;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
     transition: 0.2s;
     border-radius: 0.6rem;
     font-weight: 700;
@@ -13,129 +14,70 @@ body#overboot {
   }
 
   .btn-primary {
-    background-color: $brand-primary;
-    border-color: $brand-primary;
-    color: $black;
 
     &:hover {
-      background-color: $brand-primary-dark;
-      border-color: $brand-primary-dark;
-      color: $white;
+      background-color: $brand-secondary;
+      border-color: $brand-secondary;
+      color: $brand-primary;
     }
   }
 
-  .btn-outline-primary {
-    color: $brand-primary;
-    border-color: $brand-primary;
+  .header-buttons {
+    max-width: $header-buttons--max-width;
+    padding: 0;
 
-    &:hover {
-      color: $black;
-      background-color: $brand-primary;
+    a {
+      color: $brand-primary;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 2rem !important;
+      border: $header-buttons--border-width solid $brand-primary;
+      height: $header-buttons--max-width/5;
+      margin: $header-buttons--margin/2;
+      box-shadow: none;
+
+      i {
+        font-size: 2.5rem;
+      }
+
+      .display-on-wide {
+        display: none;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      @media screen and (min-width: $header-buttons--max-width) {
+        color: $black;
+        background-color: $brand-primary;
+        height: ($header-buttons--max-width/3) - $header-buttons--margin*2 + $header-buttons--border-width*2;
+        margin: $header-buttons--margin/2 $header-buttons--margin;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
+        transition: 0.6s;
+
+        i {
+          font-size: 2.5rem;
+        }
+
+        .display-on-wide {
+          display: inline;
+        }
+
+        &:hover {
+          background-color: $brand-secondary;
+          border-color: $brand-secondary;
+          color: $brand-primary;
+        }
+      }
     }
-  }
 
-  .btn-secondary {
-    background-color: $brand-secondary;
-    border-color: $brand-secondary;
-    color: $white;
-
-    &:hover {
-      background-color: $brand-secondary-dark;
-      border-color: $brand-secondary-dark;
+    .clear {
+      visibility: hidden;
     }
-  }
 
-  .btn-outline-secondary {
-    color: $brand-secondary;
-    border-color: $brand-secondary;
-
-    &:hover {
-      color: $white;
-      background-color: $brand-secondary-dark;
-    }
-  }
-
-  .btn-success {
-    background-color: $success;
-    border-color: $success;
-    color: $white;
-
-    &:hover {
-      background-color: $success-dark;
-      border-color: $success-dark;
-    }
-  }
-
-  .btn-outline-success {
-    color: $success;
-    border-color: $success;
-
-    &:hover {
-      color: $white;
-      background-color: $success;
-    }
-  }
-
-  .btn-info {
-    background-color: $info;
-    border-color: $info;
-    color: $white;
-
-    &:hover {
-      background-color: $info-dark;
-      border-color: $info-dark;
-    }
-  }
-
-  .btn-outline-info{
-    color: $info;
-    border-color: $info;
-
-    &:hover {
-      color: $white;
-      background-color: $info;
-    }
-  }
-
-  .btn-warning {
-    background-color: $warning;
-    border-color: $warning;
-    color: $white;
-
-    &:hover {
-      background-color: $warning-dark;
-      border-color: $warning-dark;
-    }
-  }
-
-  .btn-outline-warning{
-    color: $warning;
-    border-color: $warning;
-
-    &:hover {
-      color: $white;
-      background-color: $warning;
-    }
-  }
-
-  .btn-danger {
-    background-color: $danger;
-    border-color: $danger;
-    color: $white;
-
-    &:hover {
-      background-color: $danger-dark;
-      border-color: $danger-dark;
-    }
-  }
-
-  .btn-outline-danger{
-    color: $danger;
-    border-color: $danger;
-
-    &:hover {
-      color: $white;
-      background-color: $danger;
+    &.two {
+      max-width: 400px;
     }
   }
 }

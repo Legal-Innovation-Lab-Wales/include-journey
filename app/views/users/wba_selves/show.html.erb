@@ -1,4 +1,11 @@
 <main class="container user">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Dashboard
+      <% end %>
+    </div>
+  </div>
   <section class="row pb-4" id="wellbeing">
     <div class="col-md-3 services">
       <h3>Your Services</h3>
@@ -10,6 +17,11 @@
             </div>
           </div>
         <% end %>
+        <div class="row mt-2">
+          <div class="col">
+            <%= link_to "Add New Wellbeing Assessment", new_wba_self_path, class: 'btn btn-outline-secondary' %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4 chart">
@@ -17,22 +29,25 @@
       <div class="container mt-3">
         <div class="row">
           <div class="col">
-            <canvas id="wellbeing-chart" width="400" height="400"></canvas>
+            <canvas class="wellbeing-chart" width="400" height="400"></canvas>
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-5 sliders">
+      <h3 class="mb-0">Recorded At</h3>
       <h5><%= @wba_self.created %></h5>
       <div class="container mt-3">
-        <% @wellbeing_metrics.each do |wellbeing_metric| %>
+        <% @wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
           <div class="row">
             <div class="col-9">
-              <label for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
+              <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
             </div>
-            <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
-                   value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
-            <div class="col-3 description"></div>
+            <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                   value="<%= score.value %>">
+            <div class="col-3 description-col">
+              <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
+            </div>
           </div>
         <% end %>
       </div>

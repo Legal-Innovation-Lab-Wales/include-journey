@@ -1,5 +1,12 @@
 <main class="container user">
-  <section class="row pb-4" id="wellbeing">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Dashboard
+      <% end %>
+    </div>
+  </div>
+  <section class="row pb-4">
     <div class="col-md-3 services">
       <h3>Your Services</h3>
       <div class="container mt-3">
@@ -10,6 +17,11 @@
             </div>
           </div>
         <% end %>
+        <div class="row mt-2">
+          <div class="col">
+            <%= link_to "View Last Wellbeing Assessment", wba_self_url(@last_wba_self), class: 'btn btn-secondary'%>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4 chart">
@@ -17,7 +29,7 @@
       <div class="container mt-3">
         <div class="row">
           <div class="col">
-            <canvas id="wellbeing-chart" width="400" height="400"></canvas>
+            <canvas class="wellbeing-chart" width="400" height="400"></canvas>
           </div>
         </div>
       </div>
@@ -34,9 +46,11 @@
               </div>
               <div class="col-9 col-md-5">
                 <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
-                                  value: last_score(wellbeing_metric.id) %>
+                                  value: last_score(@last_scores, wellbeing_metric.id) %>
               </div>
-              <div class="col-3 col-md-2 description"></div>
+              <div class="col-3 col-md-2 description-col">
+                <div class="description badge rounded-pill wba-score__<%= last_score(@last_scores, wellbeing_metric.id) %>"></div>
+              </div>
             </div>
           <% end %>
 

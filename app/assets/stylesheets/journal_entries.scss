@@ -2,8 +2,38 @@
 
 .journal-entry {
   &.new {
-    max-width: 550px !important;
     margin: 1rem auto;
+
+    textarea {
+      min-height: 40vh;
+    }
+
+    label {
+      color: $black;
+    }
+
+    #emojis {
+      width: 550px;
+      max-width: 100vw;
+      margin-left: -12px;
+    }
+
+    @media screen and (min-width: $screen-md) {
+      section {
+        background-color: $grey;
+        max-width: 60vw !important;
+
+        #emojis {
+          max-width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        textarea {
+          min-height: 20vh;
+        }
+      }
+    }
 
     label.btn {
       font-size: 2rem;
@@ -13,40 +43,17 @@
   &.new, &.index {
     padding: 0;
 
-    .row {
-      @media screen and (max-width: $screen-md){
-        background-color: $black;
-      }
-
-      .container {
-        padding: 0;
-      }
+    .container {
+      padding: 0;
     }
   }
 
-  &.index {
-    .controls {
-      .col {
-        &:first-child {
-          text-align: left;
-        }
-
-        &:last-child {
-          text-align: right;
-        }
-      }
+  .card {
+    max-height: 50vh;
+    @media screen and (min-width: $screen-md) {
+      height: 50vh;
     }
-  }
 
-  textarea {
-    height: 150px !important;
-  }
-
-  label {
-    color: $black;
-  }
-
-  &.index {
     .card-header {
       span {
         &:first-child {
@@ -60,8 +67,9 @@
       }
     }
 
-    textarea {
-      border: none;
+    .journal-text {
+      text-align: start;
+      overflow: auto;
     }
   }
 }
