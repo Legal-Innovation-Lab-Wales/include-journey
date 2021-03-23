@@ -23,7 +23,7 @@ module Users
         @model.permissions.create!({ team_member: team_member })
       end
 
-      redirect_to path, alert: 'Sharing permissions for team members successfully set'
+      redirect_to path, success: 'Sharing permissions for team members successfully set'
     end
 
     protected
