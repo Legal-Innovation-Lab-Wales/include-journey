@@ -48,32 +48,31 @@
     }
   }
 
-    .card {
-      max-height: 50vh;
-      @media screen and (min-width: $screen-md) {
-        height: 50vh;
-      }
+  .card {
+    max-height: 50vh;
+    @media screen and (min-width: $screen-md) {
+      height: 50vh;
+    }
 
-      .card-header {
-        span {
-          &:first-child {
-            float: left;
-          }
+    .card-header {
+      span {
+        &:first-child {
+          float: left;
+        }
 
-          &:last-child {
-            color: $black;
-            float: right;
-          }
+        &:last-child {
+          color: $black;
+          float: right;
         }
       }
-
-      .journal-text {
-        overflow: auto;
-      }
     }
 
-    label {
-      color: $black;
+    .journal-text {
+      overflow: auto;
     }
+  }
+
+  label {
+    color: $black;
   }
 }
