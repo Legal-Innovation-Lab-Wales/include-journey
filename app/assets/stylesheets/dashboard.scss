@@ -1,9 +1,5 @@
 @import "variables";
 
-$max-width: 550px;
-$margin: 20px;
-$border-width: 1px;
-
 .team-members, .user {
   min-height: calc(100vh - #{$nav-sm} - #{$footer-sm} - #{$margins});
 
@@ -21,52 +17,12 @@ $border-width: 1px;
     margin: 1rem 0;
 
     @media screen and (min-width: $screen-md) {
-      background-color: $grey;
       margin: 1rem;
       padding: 1rem;
     }
 
-    .buttons {
-      max-width: $max-width;
-      padding: 0;
-
-      a {
-        height: $max-width/4;
-        margin: $margin/4 $margin/2;
-        border: $border-width solid $brand-primary;
-        border-radius: 2rem !important;
-        background-color: $brand-primary;
-        color: $black;
-        text-decoration: none;
-        font-size: 0.9rem;
-
-        @media screen and (min-width: $max-width) {
-          height: ($max-width/3) - $margin*2 + $border-width*2;
-          margin: $margin/2 $margin;
-        }
-
-        i {
-          font-size: 2.5rem;
-        }
-
-        &:hover {
-          background-color: $brand-primary-dark;
-          color: $brand-secondary;
-        }
-
-        .container {
-          padding: 0;
-        }
-
-        &.clear {
-          background-color: transparent;
-          border-color: transparent;
-        }
-      }
-
-      &.two {
-        max-width: 400px;
-      }
+    &.journey {
+      background-color: $black;
     }
 
     .table-container {

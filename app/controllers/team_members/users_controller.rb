@@ -14,7 +14,7 @@ module TeamMembers
 
     # GET /users/:id
     def show
-      redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('clicked!'))
+      redirect_back(fallback_location: authenticated_team_member_root_path, notice: message('clicked!'))
     end
 
     # PUT /users/:id/pin

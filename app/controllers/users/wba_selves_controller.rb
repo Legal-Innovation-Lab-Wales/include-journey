@@ -26,7 +26,7 @@ module Users
         redirect_to wba_self_path(@wba_self)
       else
         redirect_to authenticated_user_root_path,
-                    alert: "Wellbeing assessment could not be created: #{@wba_self.errors}"
+                    error: "Wellbeing assessment could not be created: #{@wba_self.errors}"
       end
     end
 
@@ -43,7 +43,7 @@ module Users
 
       return unless wba_self_today.present?
 
-      redirect_to wba_self_path(wba_self_today), alert: 'You completed the below wellbeing assessment today'
+      redirect_to wba_self_path(wba_self_today), notice: 'You completed the below wellbeing assessment today'
     end
 
     def wba_self_scores
@@ -66,7 +66,7 @@ module Users
     def wba_self
       @wba_self = current_user.wba_selves.includes(:wba_self_scores).find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to new_wba_self_path, alert: 'No such wellbeing assessment could be found'
+      redirect_to new_wba_self_path, error: 'No such wellbeing assessment could be found'
     end
 
     def wba_selves_params

@@ -84,6 +84,9 @@ wellbeing_charts.forEach((wellbeing_chart, index) => {
                 // The description field is only relevant when a the wellbeing charts sliders are visible.
                 const description = input.closest('.row').querySelector('.description')
                 description.innerText = scale[input.value - 1].description
+                const classes = [...Array(10).keys()].map(i => `wba-score__${i+1}`)
+                description.classList.remove(...classes)
+                description.classList.add("wba-score__" + input.value)
             }
 
         if (!slider.classList.contains('d-none')) {

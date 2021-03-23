@@ -1,34 +1,57 @@
 @import "variables";
 
-.team-members {
-  &.journal-entries {
-    .feeling {
+.journal-entry {
+  &.new {
+    margin: 1rem auto;
+
+    textarea {
+      min-height: 40vh;
+    }
+
+    label {
+      color: $black;
+    }
+
+    #emojis {
+      width: 550px;
+      max-width: 100vw;
+      margin-left: -12px;
+    }
+
+    @media screen and (min-width: $screen-md) {
+      section {
+        background-color: $grey;
+        max-width: 60vw !important;
+
+        #emojis {
+          max-width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        textarea {
+          min-height: 20vh;
+        }
+      }
+    }
+
+    label.btn {
       font-size: 2rem;
     }
   }
 
-  &.journal-entry {
-    max-width: 550px;
-  }
-}
+  &.new, &.index {
+    padding: 0;
 
-.user {
-  &.journal-entry {
-    &.new {
-      max-width: 550px;
-      margin: 1rem auto;
-
-      label.btn {
-        font-size: 2rem;
-      }
+    .container {
+      padding: 0;
     }
   }
-}
 
-.team-members, .user {
-  &.journal-entry {
-    textarea {
-      height: 150px;
+  .card {
+    max-height: 50vh;
+    @media screen and (min-width: $screen-md) {
+      height: 50vh;
     }
 
     .card-header {
@@ -44,12 +67,9 @@
       }
     }
 
-    textarea {
-      border: none;
-    }
-
-    label {
-      color: $black;
+    .journal-text {
+      text-align: start;
+      overflow: auto;
     }
   }
 }
