@@ -4,6 +4,10 @@ module TeamMembers
     before_action :authenticate_team_member!
     before_action :require_approval
 
+    def home
+      render 'pages/main'
+    end
+
     protected
 
     def require_approval
