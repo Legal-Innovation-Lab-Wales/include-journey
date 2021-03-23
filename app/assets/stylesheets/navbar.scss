@@ -1,0 +1,105 @@
+@import "variables";
+
+nav.navbar {
+  text-align: center;
+
+  .desktop-sos {
+    display: none;
+  }
+
+  .mobile-sos {
+    max-width: 7rem;
+    margin: 0 !important;
+  }
+
+  @media (min-width: $screen-lg) {
+    .mobile-sos {
+      display: none !important;
+    }
+  }
+
+  .navbar-right-buttons{
+    margin-right: auto;
+    margin-left: auto;
+
+    @media (min-width: $screen-sm) {
+      margin-right: 0;
+    }
+
+    .navbar-items {
+      justify-content: end;
+
+      .btn {
+        .nav-label {
+          margin-left: 0;
+          margin-right: 0.2rem;
+
+          &.always-show, &.show {
+            margin-left: 0;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+
+  .navbar-collapse {
+    @media (max-width: $screen-sm) {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .navbar-items {
+    @media (min-width: $screen-sm) {
+      overflow: hidden;
+      max-height: 44px;
+    }
+
+    .btn {
+      &.btn-nav {
+        background-color: $black;
+        color: $white;
+      }
+
+      width: 11rem;
+      margin-bottom: 1rem;
+      margin-left: 1rem;
+      padding: 0.4rem;
+
+      i, .nav-label {
+        display: inline-block;
+      }
+
+      .nav-label {
+        height: 1.1rem;
+        line-height: 1;
+        margin-left: 0.2rem;
+      }
+    }
+
+    @media (min-width: $screen-sm) {
+      display: flex;
+
+      .btn {
+        display: flex;
+        margin: 0.15rem;
+        width: auto;
+        padding: 0.5rem 1rem;
+
+        .nav-label {
+          max-width: 0;
+          margin-left: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: all .5s cubic-bezier(0, 1, 0, 1);
+
+          &.always-show, &.show {
+            margin-left: 0.5rem;
+            max-width: 11rem;
+            transition: all .5s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}

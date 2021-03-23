@@ -1,6 +1,10 @@
 # app/helpers/application_helper.rb
 module ApplicationHelper
 
+  def dashboard_controller?
+    controller_name == "dashboard"
+  end
+
   def alert_class_for(flash_type)
     {
       success: 'alert-success',

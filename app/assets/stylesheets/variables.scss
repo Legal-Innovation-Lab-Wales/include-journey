@@ -114,7 +114,9 @@ $danger-dark: #DB3A2E;
 $danger-light: #FF8F6F;
 
 // Screen Breakpoints
+$screen-lg: 992px;
 $screen-md: 768px;
+$screen-sm: 576px;
 
 // Core Layout Elements Heights
 $nav-sm: 56px;
@@ -128,3 +130,4 @@ $header-buttons--max-width: 550px;
 $header-buttons--margin: 20px;
 $header-buttons--border-width: 1px;
 
+$bg-main: $white;
