@@ -12,7 +12,7 @@ module TeamMembers
     # GET /users/:id
     def show
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: "#{@user.first_name} #{@user.last_name} clicked!")
+                    notice: "#{@user.first_name} #{@user.last_name} clicked!")
     end
 
     private

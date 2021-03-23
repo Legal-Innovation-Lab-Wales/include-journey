@@ -17,6 +17,11 @@
             </div>
           </div>
         <% end %>
+        <div class="row mt-2">
+          <div class="col">
+            <%= link_to "View Last Wellbeing Assessment", wba_self_url(@last_wba_self), class: 'btn btn-secondary'%>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4 chart">
@@ -43,7 +48,9 @@
                 <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
                                   value: last_score(@last_scores, wellbeing_metric.id) %>
               </div>
-              <div class="col-3 col-md-2 description"></div>
+              <div class="col-3 col-md-2 description-col">
+                <div class="description badge rounded-pill wba-score__<%= last_score(@last_scores, wellbeing_metric.id) %>"></div>
+              </div>
             </div>
           <% end %>
 
