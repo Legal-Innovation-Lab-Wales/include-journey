@@ -77,6 +77,9 @@ if (wellbeing_chart && !hasRendered()) {
     setDescription = function (input) {
         const description = input.closest('.row').querySelector('.description')
         description.innerText = scale[input.value - 1].description
+        const classes = [...Array(10).keys()].map(i => `wba-score__${i+1}`)
+        description.classList.remove(...classes)
+        description.classList.add("wba-score__" + input.value)
     }
 
     sliders.forEach((input, index) => {

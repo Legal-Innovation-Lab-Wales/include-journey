@@ -17,18 +17,18 @@ module TeamMembers
     # PUT /team_members/:id/approve
     def approve_team_member
       if @team_member.update(approved: true)
-        redirect_to team_members_path, alert: "#{@team_member.first_name} has been approved"
+        redirect_to team_members_path, success: "#{@team_member.first_name} has been approved"
       else
-        redirect_to team_members_path, warning: "#{@team_member.first_name} could not be approved"
+        redirect_to team_members_path, error: "#{@team_member.first_name} could not be approved"
       end
     end
 
     # PUT /team_members/:id/admin
     def toggle_admin
       if @team_member.update(admin: !@team_member.admin?)
-        redirect_to team_members_path, alert: admin_alert
+        redirect_to team_members_path, notice: admin_alert
       else
-        redirect_to team_members_path, warning: "#{@team_member.first_name} admin status could not be changed"
+        redirect_to team_members_path, error: "#{@team_member.first_name} admin status could not be changed"
       end
     end
 

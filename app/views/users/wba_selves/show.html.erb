@@ -17,6 +17,11 @@
             </div>
           </div>
         <% end %>
+        <div class="row mt-2">
+          <div class="col">
+            <%= link_to "Add New Wellbeing Assessment", new_wba_self_path, class: 'btn btn-outline-secondary' %>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-4 chart">
@@ -30,6 +35,7 @@
       </div>
     </div>
     <div class="col-md-5 sliders">
+      <h3 class="mb-0">Recorded At</h3>
       <h5><%= @wba_self.created %></h5>
       <div class="container mt-3">
         <% @wellbeing_metrics.each do |wellbeing_metric| %>
@@ -39,7 +45,11 @@
             </div>
             <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
                    value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
-            <div class="col-3 description"></div>
+            <div class="col-3 description-col">
+              <div class="description badge rounded-pill wba-score__<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
+
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
