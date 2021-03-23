@@ -1,9 +1,9 @@
 module Users
   # app/controllers/users/wba_selves_controller.rb
   class WbaSelvesController < UsersApplicationController
-    before_action :wellbeing_metrics
     before_action :wba_self, only: :show
 
+    before_action :wellbeing_metrics, only: %i[new create]
     before_action :check_wba_self_today, :new_wba_self, :last_wba_self, only: :new
     before_action :last_scores, only: :new, if: -> { @last_wba_self.present? }
 
@@ -33,7 +33,7 @@ module Users
     protected
 
     def last_wba_self
-      @last_wba_self = current_user.wba_selves.includes(:wba_self_scores).last
+      @last_wba_self = current_user.last_wba_self
     end
 
     private
@@ -70,7 +70,7 @@ module Users
     end
 
     def wba_selves_params
-      params.require(:wba_self).permit(@wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}".to_sym })
+      params.require(:wba_self).permit(@wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
     end
 
     def wellbeing_metrics
