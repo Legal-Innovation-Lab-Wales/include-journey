@@ -25,25 +25,25 @@ module TeamMembers
       @user_pin = current_team_member.user_pins.create!({ user: @user, order: @maximum.present? ? @maximum.next : 1 })
 
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: @user_pin ? message('has been pinned') : message('could not be pinned'))
+                    notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
     end
 
     # PUT /users/:id/unpin
     def unpin
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: @user_pin.destroy! ? message('has been unpinned') : message('could not be unpinned'))
+                    notice: @user_pin.destroy! ? message('has been unpinned') : message('could not be unpinned'))
     end
 
     # PUT /users/:id/increment
     def increment
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: @user_pin.increment ? message('pin successfully moved') : message('pin could not be moved'))
+                    notice: @user_pin.increment ? message('pin successfully moved') : message('pin could not be moved'))
     end
 
     # PUT /users/:id/decrement
     def decrement
       redirect_back(fallback_location: authenticated_team_member_root_path,
-                    alert: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
+                    notice: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
     end
 
     private
