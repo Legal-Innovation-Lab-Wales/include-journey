@@ -38,7 +38,7 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
+        resources :journal_entry_view_logs, only: :index, on: :member
       end
 
       resources :users, only: %i[index show] do
@@ -48,18 +48,14 @@ Rails.application.routes.draw do
         put 'unpin', action: 'unpin', on: :member, as: :unpin
       end
 
-      resources :crisis_events, only: :show do
-        get 'page/:page_number', action: :index, on: :collection, as: :pages
+      resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
         post 'note', action: 'add_note', on: :member, as: :notes
       end
 
       resources :wba_team_members, only: :show
-
-      resources :journal_entries, only: :show do
-        get 'page/:page_number', action: :index, on: :collection
-      end
+      resources :journal_entries, only: %i[show index]
     end
   end
 
