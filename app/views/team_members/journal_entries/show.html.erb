@@ -16,9 +16,8 @@
           <span><%= @journal_entry.feeling %></span>
           <span><strong>Created At:</strong> <%= @journal_entry.created %></span>
         </div>
-        <div class="form-floating">
-          <textarea class="form-control" id="journal_entry" disabled><%= @journal_entry.entry %></textarea>
-          <label for="journal_entry">Journal Entry</label>
+        <div class="journal-text text-dark p-1">
+          <%= simple_format(@journal_entry.entry) %>
         </div>
       </div>
     </div>
