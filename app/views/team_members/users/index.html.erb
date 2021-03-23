@@ -1,8 +1,8 @@
 <main class="container team-members users index">
   <div class="row m-1 mt-3">
     <div class="col">
-      <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
+      <%= link_to @query.present? ? users_path : authenticated_team_member_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> <%= @query.present? ? 'Back to users' : 'Dashboard' %>
       <% end %>
     </div>
   </div>
@@ -28,33 +28,33 @@
             </div>
           </div>
           <div class="col-12 col-md-4">
-            <form id='search'>
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search Users" aria-label="User Search"
-                       aria-describedby="user-search">
-                <span class="input-group-text" id="user-search"><i class="fas fa-search"></i></span>
-              </div>
-            </form>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search Users" aria-label="User Search"
+                     aria-describedby="user-search">
+              <span class="input-group-text" id="user-search"><i class="fas fa-search"></i></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <section class="row">
-    <div class="col">
-      <h3>Pinned Users</h3>
-      <div class="container p-0">
-        <div class="row">
-          <% @pinned_users.each_with_index do |user, index| %>
-            <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
-          <% end %>
+  <% unless @query.present? %>
+    <section class="row">
+      <div class="col">
+        <h3>Pinned Users</h3>
+        <div class="container p-0">
+          <div class="row">
+            <% @pinned_users.each_with_index do |user, index| %>
+              <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  <% end %>
   <section class="row">
     <div class="col">
-      <h3>All Users</h3>
+      <h3><%= @query.present? ? '' : 'All' %> users</h3>
       <div class="container p-0">
         <div class="row">
           <% @users.each do |user| %>
@@ -66,4 +66,5 @@
   </section>
 </main>
 
+<%= javascript_pack_tag 'user_search' %>
 <%= javascript_pack_tag 'polar_area_chart' %>

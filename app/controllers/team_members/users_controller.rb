@@ -1,13 +1,16 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
-    before_action :user, except: :index
-    before_action :maximum, :user_pin, except: %i[show index]
+    before_action :user, except: %i[index search]
+    before_action :maximum, :user_pin, except: %i[show index search]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
-    before_action :pinned_users, :users, :active_users, only: :index
+    before_action :query, :pinned_users, :active_users, only: :index
 
-    # GET /users
+    before_action :users, only: :index, unless: -> { @query.present? }
+    before_action :search_users, only: :index, if: -> { @query.present? }
+
+    # GET /users?query=:query
     def index
       render 'index'
     end
@@ -57,16 +60,25 @@ module TeamMembers
       "#{@user.full_name} #{message}"
     end
 
-    def user_pin
-      @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
-    end
-
     def pinned_users
       @pinned_users = current_team_member.pinned_users.order(:order)
     end
 
+    def query
+      @query = params[:query]
+    end
+
+    def search_users
+      @users = User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)',
+                          "%#{@query}%", "%#{@query}%")
+    end
+
     def user
       @user = User.find(params[:id])
+    end
+
+    def user_pin
+      @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
     end
 
     def users

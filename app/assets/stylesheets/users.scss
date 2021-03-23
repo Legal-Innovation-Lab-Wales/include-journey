@@ -7,8 +7,8 @@
     padding: 0;
   }
 
-  #search {
-    .input-group-text {
+  #user-search {
+    &.input-group-text {
       cursor: pointer;
 
       &:hover {
