@@ -4,10 +4,30 @@
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
-          <%= user.first_name %> <%= user.last_name %> <i class="fas fa-external-link-alt"></i>
+          <%= user.full_name %> <i class="fas fa-external-link-alt"></i>
         <% end %>
       </span>
-      <span><i class="fas fa-thumbtack"></i></span>
+      <span>
+        <% if pinned %>
+          <% unless first %>
+            <%= link_to decrement_user_path(user), method: :put do %>
+              <i class="fas fa-chevron-circle-left"></i>
+            <% end %>
+          <% end %>
+          <% unless last %>
+            <%= link_to increment_user_path(user), method: :put do %>
+            <i class="fas fa-chevron-circle-right"></i>&nbsp;
+            <% end %>
+          <% end %>
+          <%= link_to unpin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack"></i>
+          <% end %>
+        <% else %>
+          <%= link_to pin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack unpinned"></i>
+          <% end %>
+        <% end %>
+      </span>
     </div>
     <div class="card-body">
       <div class="container">

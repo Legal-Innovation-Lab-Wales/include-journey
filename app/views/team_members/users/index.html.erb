@@ -15,7 +15,7 @@
             <div class="input-group">
               <span class="input-group-text" id="total-users">Total Users</span>
               <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
-              value="<%= @users.count %>" disabled>
+              value="<%= @users.count + @pinned_users.count %>" disabled>
               <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
           </div>
@@ -23,7 +23,7 @@
             <div class="input-group">
               <span class="input-group-text" id="active-users">Active Users</span>
               <input type="text" class="form-control" aria-label="Active Users" aria-describedby="active-users"
-              value="<%= @active_users.count %>" disabled>
+              value="<%= @active_users %>" disabled>
               <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
           </div>
@@ -45,8 +45,8 @@
       <h3>Pinned Users</h3>
       <div class="container p-0">
         <div class="row">
-          <% @pinned_users.each do |user| %>
-            <%= render 'card', user: user %>
+          <% @pinned_users.each_with_index do |user, index| %>
+            <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
           <% end %>
         </div>
       </div>
@@ -58,7 +58,7 @@
       <div class="container p-0">
         <div class="row">
           <% @users.each do |user| %>
-            <%= render 'card', user: user %>
+            <%= render 'card', user: user, pinned: false %>
           <% end %>
         </div>
       </div>
