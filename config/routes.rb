@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
       resources :crisis_events, only: %i[create update]
     end
+
+    get 'terms', to: redirect('/')
   end
 
   authenticated :team_member do
@@ -59,12 +61,12 @@ Rails.application.routes.draw do
         get 'page/:page_number', action: :index, on: :collection
       end
     end
+
+    get 'terms', to: redirect('/')
   end
 
   unauthenticated do
     root 'pages#main'
     get 'terms', to: 'pages#terms'
   end
-
-
 end
