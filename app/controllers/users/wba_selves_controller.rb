@@ -23,7 +23,7 @@ module Users
     # POST /wba_selves/create
     def create
       if (@wba_self = current_user.wba_selves.create!)
-        redirect_to new_wba_self_permission_path(@wba_self)
+        redirect_to wba_self_path(@wba_self)
       else
         redirect_to authenticated_user_root_path,
                     error: "Wellbeing assessment could not be created: #{@wba_self.errors}"

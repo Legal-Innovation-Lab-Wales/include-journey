@@ -17,9 +17,7 @@ Rails.application.routes.draw do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
 
-      resources :wba_selves, only: %i[show new create] do
-        resources :wba_self_permissions, only: %i[new create], as: :permissions
-      end
+      resources :wba_selves, only: %i[show new create]
 
       resources :journal_entries, only: %i[new create] do
         get 'page/:page_number', action: :index, on: :collection, as: :pages
@@ -40,7 +38,6 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        get 'wba_self_view_logs/page/:page_number', to: 'wba_self_view_logs#index', on: :member, as: :wba_self_view_logs
         get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
       end
 
