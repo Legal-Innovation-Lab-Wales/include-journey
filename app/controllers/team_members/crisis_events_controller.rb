@@ -55,5 +55,9 @@ module TeamMembers
     def notes
       @notes = @crisis_event.crisis_notes.includes(:team_member).order(updated_at: :desc)
     end
+
+    def crisis_notes_params
+      params.require(:crisis_note).permit(:content)
+    end
   end
 end
