@@ -49,7 +49,7 @@
                                   value: last_score(@last_scores, wellbeing_metric.id) %>
               </div>
               <div class="col-3 col-md-2 description-col">
-                <div class="description badge rounded-pill wba-score__<%= last_score(wellbeing_metric.id) %>"></div>
+                <div class="description badge rounded-pill wba-score__<%= last_score(@last_scores, wellbeing_metric.id) %>"></div>
               </div>
             </div>
           <% end %>
