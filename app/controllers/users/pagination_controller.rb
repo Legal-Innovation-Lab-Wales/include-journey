@@ -1,8 +1,8 @@
 module Users
   # app/controllers/users/pagination_controller.rb
   class PaginationController < UsersApplicationController
-    before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, only: :index
-    before_action :redirect, only: :index, unless: -> { @resources.present? }
+    before_action :query_params, :page, :limit, :offset, :resources,
+                  :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
       render 'index'
@@ -33,14 +33,22 @@ module Users
     end
 
     def page
-      @page = params[:page_number].to_i
+      @page = params[:page].to_i
+
+      @page = 1 if @page < 1
     end
 
     def limit_resources
       @resources = @resources.offset(@offset).limit(@limit).order(created_at: :desc)
     end
 
+    def query_params
+      params.permit(:page)
+    end
+
     def redirect
+      return if @resources.present?
+
       redirect_back(fallback_location: root_path, alert: 'None found')
     end
   end

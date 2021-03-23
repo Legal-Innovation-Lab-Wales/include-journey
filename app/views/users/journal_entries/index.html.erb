@@ -28,12 +28,12 @@
     <div class="row pagination-controls">
       <div class="col">
         <% unless @page == 1 %>
-          <%= link_to 'Previous', pages_journal_entries_path(@page - 1), class: 'btn btn-primary' %>
+          <%= link_to 'Previous', journal_entries_path(page: @page - 1), class: 'btn btn-primary' %>
         <% end %>
       </div>
       <div class="col text-end">
         <% unless @last_page %>
-          <%= link_to 'Next', pages_journal_entries_path(@page + 1), class: 'btn btn-primary' %>
+          <%= link_to 'Next', journal_entries_path(page: @page + 1), class: 'btn btn-primary' %>
         <% end %>
       </div>
     </div>

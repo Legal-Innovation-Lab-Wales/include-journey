@@ -19,8 +19,7 @@ Rails.application.routes.draw do
 
       resources :wba_selves, only: %i[show new create]
 
-      resources :journal_entries, only: %i[new create] do
-        get 'page/:page_number', action: :index, on: :collection, as: :pages
+      resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
