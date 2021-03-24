@@ -18,7 +18,7 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_user_root
       get 'home', to: 'users_application#home'
 
-      resources :wba_selves, only: %i[show new create]
+      resources :wellbeing_assessments, only: %i[show new create]
 
       resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
@@ -55,7 +55,7 @@ Rails.application.routes.draw do
         post 'note', action: 'add_note', on: :member, as: :notes
       end
 
-      resources :wba_team_members, only: :show
+      resources :wellbeing_assessments, only: :show
       resources :journal_entries, only: %i[show index]
     end
   end

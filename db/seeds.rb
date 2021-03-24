@@ -153,20 +153,20 @@ if WellbeingMetric.count.zero?
   )
 end
 
-if WbaSelf.count.zero?
+if WellbeingAssessment.count.zero?
 
-  50.times do |wbaselfcount|
-    wbaselfcount += 1
-    puts("Creating WbaSelf #{wbaselfcount}")
+  50.times do |wba_count|
+    wba_count += 1
+    puts("Creating Wellbeing Asessment #{wba_count}")
 
-    WbaSelf.create!(
+    WellbeingAssessment.create!(
       user_id: rand(1..10)
     )
 
     WellbeingMetric.count.times do |wellbeing_metric_id|
-      WbaSelfScore.create!(
-        wba_self_id: wbaselfcount,
-        wellbeing_metric_id: wellbeing_metric_id+1, # housing
+      WbaScore.create!(
+        wellbeing_assessment_id: wba_count,
+        wellbeing_metric_id: wellbeing_metric_id + 1,
         value: rand(1..10)
       )
     end
@@ -200,10 +200,9 @@ CrisisType.create!(
 
 10.times do
 
-  isClosed = [true, false].sample
+  is_closed = [true, false].sample
 
-  if isClosed
-
+  if is_closed
     CrisisEvent.create!(
       additional_info: Faker::Hipster.sentences(number: 1),
       closed: true,
@@ -218,25 +217,5 @@ CrisisType.create!(
       user_id: rand(1..10),
       crisis_type_id: rand(1..5)
     )
-  end
-end
-
-if WbaTeamMember.count.zero?
-  10.times do |wba_team_member_count|
-    wba_team_member_count += 1
-    puts("Creating WbaTeamMember #{wba_team_member_count}")
-
-    WbaTeamMember.create!(
-      team_member_id: rand(1..4),
-      user_id: rand(1..10),
-    )
-
-    WellbeingMetric.count.times do |wellbeing_metric_id|
-      WbaTeamMemberScore.create!(
-        wba_team_member_id: wba_team_member_count,
-        wellbeing_metric_id: wellbeing_metric_id + 1,
-        value: rand(1..10)
-      )
-    end
   end
 end

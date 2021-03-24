@@ -46,7 +46,7 @@ module TeamMembers
     end
 
     def resources
-      @resources = User.includes(:wba_selves, :crisis_events).where.not(id: current_team_member.pinned_users)
+      @resources = User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
                        .order(created_at: :desc)
     end
 

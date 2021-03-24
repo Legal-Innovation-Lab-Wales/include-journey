@@ -113,7 +113,7 @@
       </div>
     </section>
   <% end %>
-  <% if @team_member.wba_team_members.count > 0 %>
+  <% if @team_member.wellbeing_assessments.count > 0 %>
     <section class="row" id="wba-team-members">
       <div class="col">
         <h3>wellbeing assessments</h3>
@@ -125,21 +125,21 @@
               <th scope="col">Last Update</th>
             </thead>
             <tbody>
-              <% @team_member.wba_team_members.order(:created_at).each do |wba_team_member| %>
+              <% @team_member.wellbeing_assessments.order(:created_at).each do |wellbeing_assessment| %>
                 <tr>
                   <td>
-                    <%= link_to user_path(wba_team_member.user) do %>
-                      <%= wba_team_member.user.full_name %>
+                    <%= link_to user_path(wellbeing_assessment.user) do %>
+                      <%= wellbeing_assessment.user.full_name %>
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to wba_team_member_path(wba_team_member) do %>
-                      <%= wba_team_member.created %>
+                    <%= link_to wellbeing_assessments_paths(wellbeing_assessment) do %>
+                      <%= wellbeing_assessment.created %>
                     <% end %>
                   </td>
                   <td>
-                    <%= link_to wba_team_member_path(wba_team_member) do %>
-                      <%= wba_team_member.last_update %>
+                    <%= link_to wellbeing_assessments_paths(wellbeing_assessment) do %>
+                      <%= wellbeing_assessment.last_update %>
                     <% end %>
                 </td>
                 </tr>

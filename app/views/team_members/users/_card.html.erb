@@ -67,13 +67,13 @@
             </div>
           </div>
           <div class="col-12 col-md-6 chart">
-            <% last_wba_self = user.last_wba_self %>
-            <% if last_wba_self.present? %>
+            <% last_wellbeing_assessment = user.last_wellbeing_assessment %>
+            <% if last_wellbeing_assessment.present? %>
               <a href='#'>
                 <div class="wellbeing-chart-wrapper">
                   <canvas class="wellbeing-chart" width="400" height="400"></canvas>
                   <div class="sliders d-none">
-                    <% last_wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
+                    <% last_wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
                       <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
                         <%= score.wellbeing_metric.name %>
                       </label>
@@ -81,7 +81,7 @@
                              value="<%= score.value %>">
                     <% end %>
                   </div>
-                  <div class="mt-3 w-100"><%= last_wba_self.created %></div>
+                  <div class="mt-3 w-100"><%= last_wellbeing_assessment.created %></div>
                 </div>
               </a>
             <% end %>
