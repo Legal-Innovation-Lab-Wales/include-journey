@@ -11,7 +11,7 @@
       <h2 class="mb-3">Archive</h2>
     </div>
     <div class="row">
-      <% @resources.each_with_index do |journal_entry, index| %>
+      <% @resources.each do |journal_entry| %>
         <div class="col-12 col-md-4">
           <div class="card mb-3">
             <div class="card-header">
@@ -25,16 +25,23 @@
         </div>
       <% end %>
     </div>
-    <div class="row pagination-controls">
-      <div class="col">
-        <% unless @page == 1 %>
-          <%= link_to 'Previous', journal_entries_path(page: @page - 1), class: 'btn btn-primary' %>
-        <% end %>
-      </div>
-      <div class="col text-end">
-        <% unless @last_page %>
-          <%= link_to 'Next', journal_entries_path(page: @page + 1), class: 'btn btn-primary' %>
-        <% end %>
+    <div class="row">
+      <div class="col-12">
+        <div class="container pagination-controls">
+          <div class="row">
+            <div class="col">
+              <% unless @page == 1 %>
+                <%= link_to 'Previous', journal_entries_path(page: @page - 1), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+              <% unless @last_page %>
+                <%= link_to 'Next', journal_entries_path(page: @page + 1), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
