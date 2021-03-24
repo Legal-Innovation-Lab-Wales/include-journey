@@ -1,6 +1,5 @@
 @import "variables";
-
-.team-members.users.index {
+.team-members.users {
   section.row {
     background-color: transparent;
     margin: 0 0 2rem 0;
@@ -59,18 +58,6 @@
       }
     }
 
-    .card-header, .card-footer {
-      span {
-        &:first-child {
-          float: left;
-        }
-
-        &:last-child {
-          float: right;
-        }
-      }
-    }
-
     .card-body {
       text-align: left;
 
@@ -104,6 +91,21 @@
 
           span {
             padding: 0;
+          }
+        }
+      }
+    }
+  }
+  &.index {
+    .card {
+      .card-header, .card-footer {
+        span {
+          &:first-child {
+            float: left;
+          }
+
+          &:last-child {
+            float: right;
           }
         }
       }

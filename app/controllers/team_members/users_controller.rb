@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
     before_action :user, except: %i[index search]
-    before_action :user_location, :note, :user_notes, :wba_self, :wellbeing_metrics, :journal_entries, only: :show
+    before_action :user_location, :note, :user_notes, :wba_self, :wellbeing_metrics, :journal_entries, :active_crisis, only: :show
     before_action :maximum, :user_pin, except: %i[show index search]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
@@ -62,10 +62,6 @@ module TeamMembers
       @user = User.includes(:notes).find(params[:id])
     end
 
-    # def user
-    #   @user = User.find(params[:id])
-    # end
-
     def user_notes
       @user_notes = @user.notes.order(created_at: :desc)
     end
@@ -82,6 +78,10 @@ module TeamMembers
       @wba_self = WbaSelf.includes(:wba_self_scores).find(params[:id])
     rescue ActiveRecord::RecordNotFound
       session notice: 'No wellbeing assessment could be found'
+    end
+
+    def active_crisis
+      @active_crisis = @user.crisis_events.active
     end
 
     def journal_entries
