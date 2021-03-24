@@ -56,13 +56,13 @@
                     <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
                   <% end %>
                 </div>
-                <% unless active_crisis_events.empty? %>
-                  <div class="row">
-                    <%= link_to active_crisis_events_path do %>
-                      <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis events
-                    <% end %>
-                  </div>
-                <% end %>
+              <% end %>
+              <% unless active_crisis_events.empty? %>
+                <div class="row">
+                  <%= link_to active_crisis_events_path do %>
+                    <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis events
+                  <% end %>
+                </div>
               <% end %>
             </div>
           </div>
