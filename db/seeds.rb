@@ -222,6 +222,16 @@ if User.count.zero?
           journal_entry: journal_entry
         )
       end
+
+      ## Create View Log for every 5th journal entry
+      next unless (journal_count % 5).zero?
+
+      TeamMember.all.each do |team_member|
+        JournalEntryViewLog.create!(
+          team_member: team_member,
+          journal_entry: journal_entry
+        )
+      end
     end
   end
 
