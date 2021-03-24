@@ -67,7 +67,7 @@ module TeamMembers
     end
 
     def user_location
-      @user_location = @user.last_sign_in_ip
+      @user_location = Timeout::timeout(5) { Net::HTTP.get_response(URI.parse('http://api.hostip.info/country.php?ip=' + @user.last_sign_in_ip )).body } rescue "Unknown"
     end
 
     def wellbeing_metrics

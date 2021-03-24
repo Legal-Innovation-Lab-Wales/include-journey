@@ -138,8 +138,8 @@
           <h3>Journal</h3>
         </div>
         <div class="card-body">
-          <h4>Latest journal entry</h4>
           <% if @journal_entries.count > 0 %>
+            <h4>Latest journal entry</h4>
             <div class="card bg-transparent px-0 my-3">
               <div class="card-header px-0">
                 <span class="mx-3"><strong>Entered on: </strong></span><%= @journal_entries.last.created %>
@@ -200,20 +200,25 @@
           <h3>User Notes</h3>
         </div>
         <div class="card-body bg-transparent notes-card" style="max-height: 40vh; overflow: scroll;">
-          <% @user_notes.each do |note| %>
-            <div class="card bg-transparent my-2">
-              <div class="card-header d-flex justify-content-between">
-                <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
-                <span>Visible to user?
-                  <% if note.visible_to_user? %><i class="fa fa-check-circle text-success ms-2"></i>
-                  <% else %> <i class="fa fa-times-circle ms-2 text-danger"></i>
-                  <% end %>
-                </span>
+          <% if @user_notes.empty? %>
+            <span>There are no notes on this user yet.</span>
+          <% end %>
+          <% unless @user_notes.empty? %>
+            <% @user_notes.each do |note| %>
+              <div class="card bg-transparent my-2">
+                <div class="card-header d-flex justify-content-between">
+                  <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
+                  <span>Visible to user?
+                    <% if note.visible_to_user? %><i class="fa fa-check-circle text-success ms-2"></i>
+                    <% else %> <i class="fa fa-times-circle ms-2 text-danger"></i>
+                    <% end %>
+                  </span>
+                </div>
+                <div class="card-body text-start">
+                  <p><%= note.content %></p>
+                </div>
               </div>
-              <div class="card-body text-start">
-                <p><%= note.content %></p>
-              </div>
-            </div>
+            <% end %>
           <% end %>
         </div>
         <div class="card-footer text-center">
