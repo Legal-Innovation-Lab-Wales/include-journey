@@ -1,15 +1,11 @@
 const search_btn = document.querySelector('#search-btn'),
       search_input = document.querySelector('#search-input'),
       search = function() {
-          const search_params = new URLSearchParams(window.location.search)
-          search_params.set('query', search_input.value)
+          const url = new URL(location.href)
+          url.searchParams.set('query', search_input.value)
+          if (url.searchParams.has('page')) url.searchParams.delete('page')
 
-          // if (search_params.has('page')) {
-          //     search_params.delete('page')
-          // }
-
-          history.pushState(null, null, `?${search_params.toString()}`)
-          location.reload()
+          location.href = url.href
       }
 
 search_btn.addEventListener('click', search)

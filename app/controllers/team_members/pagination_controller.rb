@@ -50,7 +50,7 @@ module TeamMembers
     def redirect
       return if @resources.present?
 
-      redirect_back(fallback_location: root_path, alert: 'No Results Found')
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'No Results Found')
     end
   end
 end
