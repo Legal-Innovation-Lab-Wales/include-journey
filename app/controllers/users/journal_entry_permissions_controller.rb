@@ -11,7 +11,7 @@ module Users
     protected
 
     def path
-      pages_journal_entries_path(1)
+      journal_entries_path
     end
 
     def new_path

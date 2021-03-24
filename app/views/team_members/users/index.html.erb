@@ -15,7 +15,7 @@
             <div class="input-group">
               <span class="input-group-text" id="total-users">Total Users</span>
               <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
-              value="<%= @users.count + @pinned_users.count %>" disabled>
+              value="<%= @resources.count + @pinned_users.count %>" disabled>
               <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
           </div>
@@ -52,17 +52,36 @@
       </div>
     </section>
   <% end %>
-  <section class="row">
+  <section class="row" id="users">
     <div class="col">
       <h3><%= @query.present? ? '' : 'All' %> users</h3>
       <div class="container p-0">
         <div class="row">
-          <% @users.each do |user| %>
+          <% @resources.each do |user| %>
             <%= render 'card', user: user, pinned: false %>
           <% end %>
         </div>
       </div>
     </div>
+    <% unless @query.present? %>
+      <div class="col-12">
+        <div class="container pagination-controls">
+          <div class="row">
+            <div class="col">
+              <% unless @page == 1 %>
+                <%= link_to 'Previous', users_path(page: @page - 1, anchor: "users"), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+              <% unless @last_page %>
+                <%= link_to 'Next', users_path(page: @page + 1, anchor: "users"), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </section>
 </main>
 

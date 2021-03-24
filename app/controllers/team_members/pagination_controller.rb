@@ -1,8 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, only: :index
-    before_action :redirect, only: :index, unless: -> { @resources.present? }
+    before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
       render 'index'
@@ -33,15 +32,23 @@ module TeamMembers
     end
 
     def page
-      @page = params[:page_number].to_i
+      @page = query_params[:page].to_i
+
+      @page = 1 if @page < 1
     end
 
     def limit_resources
-      @resources = @resources.offset(@offset).limit(@limit).order(created_at: :desc)
+      @resources = @resources.offset(@offset).limit(@limit)
+    end
+
+    def query_params
+      params.permit(:page)
     end
 
     def redirect
-      redirect_back(fallback_location: root_path, alert: 'None found')
+      return if @resources.present?
+
+      redirect_back(fallback_location: root_path, alert: 'No Results Found')
     end
   end
 end

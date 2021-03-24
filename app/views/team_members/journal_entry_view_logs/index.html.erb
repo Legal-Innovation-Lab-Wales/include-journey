@@ -31,13 +31,13 @@
         <div class="row">
           <div class="col">
             <% unless @page == 1 %>
-              <%= link_to 'Previous', journal_entry_view_logs_team_member_path(@team_member, @page - 1), class: 'btn btn-primary' %>
+              <%= link_to 'Previous', team_member_journal_entry_view_logs_path(@team_member, page: @page - 1), class: 'btn btn-primary' %>
             <% end %>
           </div>
           <div class="col"></div>
           <div class="col">
             <% unless @last_page %>
-              <%= link_to 'Next', journal_entry_view_logs_team_member_path(@team_member, @page + 1), class: 'btn btn-primary' %>
+              <%= link_to 'Next', team_member_journal_entry_view_logs_path(@team_member, page: @page + 1), class: 'btn btn-primary' %>
             <% end %>
           </div>
         </div>
