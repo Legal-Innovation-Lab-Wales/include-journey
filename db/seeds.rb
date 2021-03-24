@@ -8,7 +8,7 @@
 
 require 'faker'
 
-total_user_count = 1000
+total_user_count = 10
 wellbeing_assessments_for_each_user = 10
 journal_entries_for_each_user = 10
 crisis_events_count = 100
@@ -211,7 +211,7 @@ if User.count.zero?
       journal_entry = JournalEntry.new(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[1F60A 1F614 1F620 1F4A9 1F610].sample
+        feeling: %w[😊 😔 😠 💩 😐].sample
       )
       journal_entry.save!
 
