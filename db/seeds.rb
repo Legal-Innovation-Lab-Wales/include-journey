@@ -8,8 +8,14 @@
 
 require 'faker'
 
-# Create users
-## Create Static Users
+total_user_count = 1000
+wellbeing_assessments_for_each_user = 10
+journal_entries_for_each_user = 10
+crisis_events_count = 100
+notes_count = 1000
+start_time = Time.now
+
+# Create Static Team Members
 unless TeamMember.find_by_email('philr@purpleriver.dev').present?
   team_member = TeamMember.new(
     first_name: 'Phil',
@@ -70,10 +76,102 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
   team_member.save!
 end
 
+# Create Wellbeing Metrics
+if WellbeingMetric.count.zero?
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Housing',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Benefits / Money',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Food',
+    category: 'Environment'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Physical Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Mental Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Emotional Health',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Behaviour',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Addiction',
+    category: 'Health'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Relationships',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Sense of Community',
+    category: 'Personal'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Employment/Education/Training',
+    category: 'Personal'
+  )
+end
+
+# Create Crisis Types
+if CrisisType.count.zero?
+  CrisisType.create!(
+    category: 'Self Harm',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Harming Others',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Suicide',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Overdose',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Domestic Violence',
+    team_member_id: 1
+  )
+end
+
+# Create Service Users & Associated Records
+user_count = 0
+wba_count = 0
+journal_count = 0
 if User.count.zero?
-  user_count = 0
-  10.times do
+  total_user_count.times do
     user_count += 1
+    puts("Creating User: #{user_count}")
+    puts("Elapsed Time: #{Time.now - start_time}")
     user = User.new(
       first_name: Faker::Name.unique.first_name,
       last_name: Faker::Name.unique.last_name,
@@ -81,10 +179,50 @@ if User.count.zero?
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
-      password: 'password'
+      password: 'test1234'
     )
     user.skip_confirmation!
     user.save!
+
+    ## Create User Wellbeing Assessments for each user
+    wellbeing_assessments_for_each_user.times do
+      wba_count += 1
+      # puts("Creating Wellbeing Asessment #{wba_count} for user #{user_count}")
+
+      wellbeing_assessment = WellbeingAssessment.create!(
+        user: user
+      )
+
+      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
+
+      WellbeingMetric.all.each do |wellbeing_metric|
+        WbaScore.create!(
+          wellbeing_assessment: wellbeing_assessment,
+          wellbeing_metric: wellbeing_metric,
+          value: rand(1..10)
+        )
+      end
+    end
+
+    ## Create Journal Entries for each User
+    journal_entries_for_each_user.times do
+      journal_count += 1
+      # puts("Creating Journal #{journal_count} for user #{user_count}")
+      journal_entry = JournalEntry.new(
+        user: user,
+        entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
+        feeling: %w[1F60A 1F614 1F620 1F4A9 1F610].sample
+      )
+      journal_entry.save!
+
+      ## Create pemissions for each journal entry
+      TeamMember.all.each do |team_member|
+        JournalEntryPermission.create!(
+          team_member: team_member,
+          journal_entry: journal_entry
+        )
+      end
+    end
   end
 
   user = User.new(
@@ -100,119 +238,16 @@ if User.count.zero?
   user.save!
 end
 
-Note.create!(
-  team_member_id: rand(1..TeamMember.count),
-  visible_to_user: true,
-  user_id: rand(1..User.count),
-  content: Faker::TvShows::TheExpanse.quote
-)
-
-if WellbeingMetric.count.zero?
-  WellbeingMetric.create!(
+notes_count.times do
+  Note.create!(
     team_member_id: rand(1..TeamMember.count),
-    name: 'Housing',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Benefits / Money',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Food',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Physical Health',
-    category: 'Health'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Mental Health',
-    category: 'Health'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Emotional Health',
-    category: 'Health'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Behaviour',
-    category: 'Personal'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Addiction',
-    category: 'Health'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Relationships',
-    category: 'Personal'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Sense of Community',
-    category: 'Personal'
-  )
-  WellbeingMetric.create!(
-    team_member_id: rand(1..TeamMember.count),
-    name: 'Employment/Education/Training',
-    category: 'Personal'
+    visible_to_user: true,
+    user_id: rand(1..User.count),
+    content: Faker::TvShows::TheExpanse.quote
   )
 end
 
-if WellbeingAssessment.count.zero?
-
-  50.times do |wba_count|
-    wba_count += 1
-    puts("Creating Wellbeing Asessment #{wba_count}")
-
-    wellbeing_assessment = WellbeingAssessment.create!(
-      user_id: rand(1..User.count)
-    )
-
-    wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
-
-    WellbeingMetric.all.each do |wellbeing_metric|
-      WbaScore.create!(
-        wellbeing_assessment: wellbeing_assessment,
-        wellbeing_metric: wellbeing_metric,
-        value: rand(1..10)
-      )
-    end
-  end
-end
-
-CrisisType.create!(
-  category: 'Self Harm',
-  team_member_id: rand(1..TeamMember.count)
-)
-
-CrisisType.create!(
-  category: 'Harming Others',
-  team_member_id: rand(1..TeamMember.count)
-)
-
-CrisisType.create!(
-  category: 'Suicide',
-  team_member_id: rand(1..TeamMember.count)
-)
-
-CrisisType.create!(
-  category: 'Overdose',
-  team_member_id: rand(1..TeamMember.count)
-)
-
-CrisisType.create!(
-  category: 'Domestic Violence',
-  team_member_id: rand(1..TeamMember.count)
-)
-
-10.times do
+crisis_events_count.times do
   crisis_event = CrisisEvent.create!(
     additional_info: Faker::Hipster.sentences(number: 1)[0],
     user_id: rand(1..User.count),
@@ -227,3 +262,10 @@ CrisisType.create!(
     closed_by: TeamMember.find(rand(1..TeamMember.count))
   )
 end
+
+puts("Team Members in DatabaseL #{TeamMember.count}")
+puts("Users Created: #{user_count}")
+puts("Users in Database: #{User.count}")
+
+puts("Wellbeing Assessments Created: #{wba_count}")
+puts("Journals Created: #{journal_count}")
