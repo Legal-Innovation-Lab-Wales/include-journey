@@ -1,42 +1,18 @@
-
 <section class="d-flex min-vh-100 homepage-cover">
     <div class="mx-auto col-12 col-md-10 col-lg-8">
-      <div class="mt-5 text-center homepage-header homepage-section">
+      <% if team_member_signed_in? %>
+        <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary mt-3' do %>
+          <i class="fas fa-arrow-circle-left"></i> Dashboard
+        <% end %>
+      <% elsif user_signed_in? %>
+        <%= link_to authenticated_user_root_path, class: 'btn btn-primary mt-3' do %>
+          <i class="fas fa-arrow-circle-left"></i> Dashboard
+        <% end %>
+      <% end %>
+      <div class="mt-3 text-center homepage-header homepage-section">
         <h1>Your Include Journey</h1>
-        <p>track and progress on your journey to make the changes you want and need.</p>
-        <p>Built for Include UK by the Legal Innovation lab Wales</p>
-        <div class="container">
-          <div class="row">
-            <div class="col"></div>
-            <%= link_to new_team_member_session_path, class: 'col d-flex align-items-center btn btn-secondary m-1' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-users"></i>
-                    <i class="mb-1 fas fa-sign-in-alt"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">staff sign in</div>
-                </div>
-              </div>
-            <% end %>
-            <%= link_to new_user_session_path, class: 'col d-flex align-items-center btn btn-success m-1' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-user"></i>
-                    <i class="mb-1 fas fa-sign-in-alt"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">user sign in</div>
-                </div>
-              </div>
-            <% end %>
-            <div class="col"></div>
-          </div>
-        </div>
+        <h4>track and progress on your journey to make the changes you want and need.</h4>
+        <p class="lead">Built for Include UK by the Legal Innovation lab Wales</p>
       </div>
       <div class="homepage-section">
         <h2 class="text-center">about this project</h2>
@@ -44,18 +20,33 @@
         <p>At present criminal justice agencies both in the UK and internationally do not fully realise the opportunities that digital technologies offer to improve service delivery and the lives of service users. As a result, there has been little digital innovation within the realms of offender rehabilitation. The Ministry of Justice (2019) estimate that the economic and social cost of reoffending is £18.1 billion per annum. For these reasons, this project seeks to develop digital technologies to support desistance from crime and improve the lives of people who have offended and their wider communities.</p>
         <p>Supporting people to desist from crime is a global issue. On a national level, this is evidenced by high percentages of re-offending rates and high prison populations. Supporting pro-social change in offenders is a challenge for statutory, private and third sector criminal justice organisations. </p>
         <p>The development and implementation of digital technologies in the area of offender rehabilitation are cutting edge. Currently, there is little to no innovation in this area.  As such, a range of technology can be developed to support organisations and their service users.</p>
-
-        <div class="text-center">
-          <%= link_to 'new staff sign up', new_team_member_registration_path, class: 'btn btn-secondary' %>
-          <%= link_to 'new user sign up', new_user_registration_path, class: 'btn btn-success' %>
-        </div>
+        <% unless user_signed_in? || team_member_signed_in?  %>
+          <div class="text-center">
+            <%= link_to new_user_registration_path, class: 'btn btn-secondary' do %>
+              user sign up <i class="fas fa-user-plus"></i>
+            <% end %>
+            <%= link_to new_user_session_path, class: 'btn btn-success' do %>
+              user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
+            <% end %>
+          </div>
+        <% end %>
       </div>
       <div class="homepage-section">
         <h2 class="text-center">About Include</h2>
         <p>A not for profit enterprise that has been providing free independent community support to offenders across Wales for the last 10 years, supporting over 2,500 people in this time.</p>
         <p>The 'include hub' in Swansea is our flagship project, the ‘include community hub’ is run by ex-offenders for ex-offenders, their families and the wider community. The idea is to harness the potential of people who have lived experience of the challenges faced by disadvantaged groups, and for them to help others turn their lives around.</p>
         <p>The development of the include hub is an opportunity to create a new model of working that’s genuinely co-produced by the people who benefit from the service, with the flexibility to offer members what they want</p>
-        <div class="text-center"><a href="https://include-uk.com/" class="btn btn-primary">visit our site</a></div>
+        <div class="text-center mb-2"><a href="https://include-uk.com/" class="btn btn-primary">visit our site</a></div>
+        <% unless user_signed_in? || team_member_signed_in?  %>
+          <div class="text-center">
+            <%= link_to new_team_member_registration_path, class: 'btn btn-secondary' do %>
+              team member sign up <i class="fas fa-user-plus"></i>
+            <% end %>
+            <%= link_to new_team_member_session_path, class: 'btn btn-success' do %>
+              team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
+            <% end %>
+          </div>
+        <% end %>
       </div>
       <div class="homepage-section">
         <h2 class="text-center">About The Legal Innovation Lab Wales</h2>

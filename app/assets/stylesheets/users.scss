@@ -1,0 +1,112 @@
+@import "variables";
+
+.team-members.users.index {
+  section.row {
+    background-color: transparent;
+    margin: 0 0 2rem 0;
+    padding: 0;
+  }
+
+  #user-search {
+    &.input-group-text {
+      cursor: pointer;
+
+      &:hover {
+        color: $brand-secondary-dark;
+      }
+    }
+  }
+
+  .card {
+    background-color: $grey;
+    color: $black;
+
+    a {
+      color: $black;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &:hover {
+        color: $white;
+      }
+    }
+
+    &.has-crisis {
+      background-color: $danger-light;
+
+      .chart a:hover {
+        .wellbeing-chart-wrapper {
+          background-color: $white !important;
+          color: $black;
+        }
+      }
+    }
+
+    .card-header {
+      i {
+        &.unpinned {
+          transform: rotate(45deg);
+        }
+
+        &:hover {
+          color: $brand-secondary-dark;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .card-header, .card-footer {
+      span {
+        &:first-child {
+          float: left;
+        }
+
+        &:last-child {
+          float: right;
+        }
+      }
+    }
+
+    .card-body {
+      text-align: left;
+
+      .container {
+        padding: 0;
+
+        .row {
+          padding-left: 0.5rem;
+          margin-bottom: 0.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .chart {
+            text-align: center;
+
+            .wellbeing-chart-wrapper {
+              padding: 0.75rem;
+              border-radius: 1rem;
+            }
+
+            a:hover {
+              color: $brand-primary;
+
+              .wellbeing-chart-wrapper {
+                background-color: $brand-secondary-dark;
+              }
+            }
+          }
+
+          span {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+}

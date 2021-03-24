@@ -13,54 +13,14 @@
   <body id="overboot">
 
   <% if user_signed_in? || team_member_signed_in? %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-brand">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-          <div class="d-flex">
-            <% if current_team_member %>
-              <%= link_to edit_team_member_registration_path, class: "btn btn-success m-1" do %>
-                Edit Profile <i class="fas fa-user-edit"></i>
-              <% end %>
-              <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning m-1" do %>
-                Logout <i class="fas fa-sign-out-alt"></i>
-              <% end %>
-            <% end %>
-            <% if current_user %>
-              <% unless devise_controller? %>
-                <a class="btn btn-danger m-1" data-bs-toggle="modal"
-                   data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal'%>">
-                  SOS <i class="fas fa-exclamation-circle"></i>
-                </a>
-              <% end %>
-              <%= link_to edit_user_registration_path, class: "btn btn-success m-1" do %>
-                Edit Profile <i class="fas fa-user-edit"></i>
-              <% end %>
-              <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning m-1" do %>
-                Logout <i class="fas fa-sign-out-alt"></i>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <%= render "shared/navbar" %>
 
     <% if current_user && !devise_controller? %>
       <%= render partial: '/modals/crisis_events/new' %>
       <%= render partial: '/modals/crisis_events/existing' %>
     <% end %>
   <% end %>
+
 
   <% flash.each do |type, msg| %>
     <% if type != 'timedout' %>
@@ -73,7 +33,7 @@
 
   <%= yield %>
 
-  <% if user_signed_in? %>
+  <% if user_signed_in? || team_member_signed_in? %>
     <footer class="text-center text-white bg-brand">
       <div class="footers container pt-4">
         <a class="title" href="https://include-uk.com"><h3> Include uk</h3></a>

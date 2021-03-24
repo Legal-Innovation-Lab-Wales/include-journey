@@ -23,33 +23,43 @@ Rails.application.routes.draw do
 
       resources :journal_entries, only: %i[new create] do
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
-
-        get 'dashboard', to: 'journal_entries_dashboard#show', on: :collection, as: :dashboard
-        get 'page/:page_number', to: 'journal_entries_pages#index', on: :collection, as: :pages
       end
 
-      resources :crisis_events, only: :create do
-        put '/:crisis_event_id', to: 'crisis_events#update', on: :collection, as: :update
-      end
+      resources :crisis_events, only: %i[create update]
     end
   end
 
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
+      get 'home', to: 'team_members_application#home'
 
-      resources :team_members, only: :show do
-        scope controller: 'team_members' do
-          put 'approve', action: 'approve_team_member', on: :member, as: :approve
-          put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        end
+      resources :team_members, only: %i[index show] do
+        put 'approve', action: 'approve_team_member', on: :member, as: :approve
+        put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        resources :wba_team_members, path: 'wba', only: :show, as: :wba_team_member
+        resources :journal_entry_view_logs, only: :index, on: :member
+      end
+
+      resources :users, only: %i[index show] do
+        put 'pin', action: 'pin', on: :member, as: :pin
+        put 'increment', action: 'increment', on: :member, as: :increment
+        put 'decrement', action: 'decrement', on: :member, as: :decrement
+        put 'unpin', action: 'unpin', on: :member, as: :unpin
       end
 
       resources :users, only: :show, as: :user do
         resources :notes, only: :create, as: :add_note
       end
+
+      resources :crisis_events, only: %i[index show] do
+        get 'active', action: 'active', on: :collection
+        put 'close', action: 'close', on: :member, as: :close
+        post 'note', action: 'add_note', on: :member, as: :notes
+      end
+
+      resources :wba_team_members, only: :show
+      resources :journal_entries, only: %i[show index]
     end
   end
 

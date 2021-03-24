@@ -1,7 +1,14 @@
 <main class="container user journal-entry new">
-  <section class="row">
+  <div class="row m-1 mt-3">
     <div class="col">
-      <div class="container">
+      <%= link_to dashboard_journal_entries_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> Journal
+      <% end %>
+    </div>
+  </div>
+  <section class="row mx-auto">
+    <div class="col">
+      <div class="container p-0">
         <div class="row">
           <div class="col-12">
             <h2 class="mb-3">New Journal Entry</h2>
@@ -16,7 +23,7 @@
             <div class="col-12">
               <%= f.hidden_field :feeling %>
               <div class="container p-0" id="emojis">
-                <div class="row g-2">
+                <div class="row mx-0 g-2">
                   <!-- ☺️,😔,😡,💩,😐 -->
                   <% %w[1F60A 1F614 1F620 1F4A9 1F610].each_with_index do |unicode, index| %>
                     <div class="col">

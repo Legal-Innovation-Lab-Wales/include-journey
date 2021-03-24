@@ -1,0 +1,89 @@
+<main class="container team-members users index">
+  <div class="row m-1 mt-3">
+    <div class="col">
+      <%= link_to @query.present? ? users_path : authenticated_team_member_root_path, class: 'btn btn-primary' do %>
+        <i class="fas fa-arrow-circle-left"></i> <%= @query.present? ? 'Back to users' : 'Dashboard' %>
+      <% end %>
+    </div>
+  </div>
+  <section class="row">
+    <div class="col">
+      <h3>Users Info</h3>
+      <div class="container p-0">
+        <div class="row mb-3">
+          <div class="col-12 col-md-4 mb-3 mb-md-0">
+            <div class="input-group">
+              <span class="input-group-text" id="total-users">Total Users</span>
+              <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
+              value="<%= @resources.count + @pinned_users.count %>" disabled>
+              <span class="input-group-text"><i class="fas fa-users"></i></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 mb-3 mb-md-0">
+            <div class="input-group">
+              <span class="input-group-text" id="active-users">Active Users</span>
+              <input type="text" class="form-control" aria-label="Active Users" aria-describedby="active-users"
+              value="<%= @active_users %>" disabled>
+              <span class="input-group-text"><i class="fas fa-users"></i></span>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search Users" aria-label="User Search"
+                     aria-describedby="user-search">
+              <span class="input-group-text" id="user-search"><i class="fas fa-search"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% unless @query.present? %>
+    <section class="row">
+      <div class="col">
+        <h3>Pinned Users</h3>
+        <div class="container p-0">
+          <div class="row">
+            <% @pinned_users.each_with_index do |user, index| %>
+              <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+  <% end %>
+  <section class="row" id="users">
+    <div class="col">
+      <h3><%= @query.present? ? '' : 'All' %> users</h3>
+      <div class="container p-0">
+        <div class="row">
+          <% @resources.each do |user| %>
+            <%= render 'card', user: user, pinned: false %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% unless @query.present? %>
+      <div class="col-12">
+        <div class="container pagination-controls">
+          <div class="row">
+            <div class="col">
+              <% unless @page == 1 %>
+                <%= link_to 'Previous', users_path(page: @page - 1, anchor: "users"), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+              <% unless @last_page %>
+                <%= link_to 'Next', users_path(page: @page + 1, anchor: "users"), class: 'btn btn-primary' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'user_search' %>
+<%= javascript_pack_tag 'polar_area_chart' %>
