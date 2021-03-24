@@ -4,6 +4,10 @@ module Users
     before_action :authenticate_user!, :wba_self_permissions_required, :journal_entry_permissions_required
     before_action :active_crisis_events, :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
+    def terms
+      render 'pages/terms'
+    end
+
     private
 
     def active_crisis_events

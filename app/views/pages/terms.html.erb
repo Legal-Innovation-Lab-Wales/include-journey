@@ -5,11 +5,21 @@
       <p>track and progress on your journey to make the changes you want and need.</p>
       <p>Built for Include UK by the Legal Innovation lab Wales</p>
       <div class="text-center">
-        <%= link_to new_team_member_session_path, class: 'btn btn-secondary' do %>
-          team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
-        <% end %>
-        <%= link_to new_user_session_path, class: 'btn btn-success' do %>
-          user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
+        <% if team_member_signed_in? %>
+          <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary mt-3' do %>
+            <i class="fas fa-arrow-circle-left"></i> Team Member Dashboard
+          <% end %>
+        <% elsif user_signed_in? %>
+          <%= link_to authenticated_user_root_path, class: 'btn btn-primary mt-3' do %>
+            <i class="fas fa-arrow-circle-left"></i> User Dashboard
+          <% end %>
+        <% else %>
+          <%= link_to new_team_member_session_path, class: 'btn btn-secondary' do %>
+            team member sign in <i class="fas fa-users"></i><i class="fas fa-sign-in-alt"></i>
+          <% end %>
+          <%= link_to new_user_session_path, class: 'btn btn-success' do %>
+            user sign in <i class="fas fa-user"></i><i class="fas fa-sign-in-alt"></i>
+          <% end %>
         <% end %>
       </div>
     </div>

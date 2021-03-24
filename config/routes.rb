@@ -29,9 +29,11 @@ Rails.application.routes.draw do
       end
 
       resources :crisis_events, only: %i[create update]
+
+      get 'terms', to: 'users_application#terms'
     end
 
-    get 'terms', to: redirect('/')
+
   end
 
   authenticated :team_member do
@@ -60,9 +62,9 @@ Rails.application.routes.draw do
       resources :journal_entries, only: :show do
         get 'page/:page_number', action: :index, on: :collection
       end
+      get 'terms', to: 'team_members_application#terms'
     end
 
-    get 'terms', to: redirect('/')
   end
 
   unauthenticated do
