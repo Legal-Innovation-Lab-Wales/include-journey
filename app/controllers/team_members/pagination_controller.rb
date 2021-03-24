@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, :redirect, only: :index
+    before_action :query_params, :page, :limit, :offset, :resources,
+                  :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
       render 'index'
@@ -21,6 +22,7 @@ module TeamMembers
 
     def last_page
       @last_page = @offset + @limit >= @count
+      @final_page = (@count.to_f / @limit).ceil
     end
 
     def limit

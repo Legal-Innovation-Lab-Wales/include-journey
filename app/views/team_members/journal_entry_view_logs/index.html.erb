@@ -26,8 +26,10 @@
         </tbody>
       </table>
     </div>
-    <%= render 'shared/pagination_controls', page: @page, last_page: @last_page,
+    <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+               first_page: team_member_journal_entry_view_logs_path(page: 1),
                next_page: team_member_journal_entry_view_logs_path(page: @page + 1),
-               previous_page: team_member_journal_entry_view_logs_path(page: @page - 1) %>
+               previous_page: team_member_journal_entry_view_logs_path(page: @page - 1),
+               final_page_path: team_member_journal_entry_view_logs_path(page: @final_page) %>
   </section>
 </main>

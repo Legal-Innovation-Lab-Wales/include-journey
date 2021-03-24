@@ -22,6 +22,7 @@ module Users
 
     def last_page
       @last_page = @offset + @limit >= @count
+      @final_page = (@count.to_f / @limit).ceil
     end
 
     def limit
