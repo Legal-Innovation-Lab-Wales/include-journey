@@ -64,9 +64,11 @@
       </div>
     </div>
     <% unless @query.present? %>
-      <%= render 'shared/pagination_controls', page: @page, last_page: @last_page,
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: users_path(page: 1, anchor: 'users'),
                  next_page: users_path(page: @page + 1, anchor: 'users'),
-                 previous_page: users_path(page: @page - 1, anchor: 'users') %>
+                 previous_page: users_path(page: @page - 1, anchor: 'users'),
+                 final_page_path: users_path(page: @final_page, anchor: 'users') %>
     <% end %>
   </section>
 </main>
