@@ -40,26 +40,8 @@
         </table>
       </div>
     </div>
-    <div class="col-12">
-      <div class="container pagination-controls">
-        <div class="row">
-          <div class="col">
-            <% unless @page == 1 %>
-              <%= link_to crisis_events_path(page: @page - 1), class: 'btn btn-primary' do %>
-                <i class="fas fa-arrow-circle-left"></i> Previous
-              <% end %>
-            <% end %>
-          </div>
-          <div class="col"></div>
-          <div class="col">
-            <% unless @last_page %>
-              <%= link_to crisis_events_path(page: @page + 1), class: 'btn btn-primary' do %>
-                Next <i class="fas fa-arrow-circle-right"></i>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'shared/pagination_controls', page: @page, last_page: @last_page,
+               next_page: crisis_events_path(page: @page + 1),
+               previous_page: crisis_events_path(page: @page - 1) %>
   </section>
 </main>

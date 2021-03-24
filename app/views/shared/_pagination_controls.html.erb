@@ -1,0 +1,15 @@
+<div class="container pagination-controls">
+  <div class="row">
+    <div class="col">
+      <% unless local_assigns[:page] == 1 %>
+        <%= link_to 'Previous', local_assigns[:previous_page], class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+    <div class="col"></div>
+    <div class="col">
+      <% unless local_assigns[:last_page] %>
+        <%= link_to 'Next', local_assigns[:next_page], class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -64,23 +64,9 @@
       </div>
     </div>
     <% unless @query.present? %>
-      <div class="col-12">
-        <div class="container pagination-controls">
-          <div class="row">
-            <div class="col">
-              <% unless @page == 1 %>
-                <%= link_to 'Previous', users_path(page: @page - 1, anchor: "users"), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-            <div class="col"></div>
-            <div class="col">
-              <% unless @last_page %>
-                <%= link_to 'Next', users_path(page: @page + 1, anchor: "users"), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'shared/pagination_controls', page: @page, last_page: @last_page,
+                 next_page: users_path(page: @page + 1, anchor: 'users'),
+                 previous_page: users_path(page: @page - 1, anchor: 'users') %>
     <% end %>
   </section>
 </main>

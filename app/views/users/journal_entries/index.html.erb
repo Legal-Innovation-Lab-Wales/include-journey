@@ -26,23 +26,9 @@
       <% end %>
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="container pagination-controls">
-          <div class="row">
-            <div class="col">
-              <% unless @page == 1 %>
-                <%= link_to 'Previous', journal_entries_path(page: @page - 1), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-            <div class="col"></div>
-            <div class="col">
-              <% unless @last_page %>
-                <%= link_to 'Next', journal_entries_path(page: @page + 1), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'shared/pagination_controls', page: @page, last_page: @last_page,
+                 next_page: journal_entries_path(page: @page + 1),
+                 previous_page: journal_entries_path(page: @page - 1) %>
     </div>
   </section>
 </main>
