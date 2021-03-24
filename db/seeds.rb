@@ -204,7 +204,7 @@ CrisisType.create!(
 
   if is_closed
     CrisisEvent.create!(
-      additional_info: Faker::Hipster.sentences(number: 1),
+      additional_info: Faker::Hipster.sentences(number: 1)[0],
       closed: true,
       closed_at: Faker::Date.between(from: '2020-03-05', to: '2021-03-05'),
       closed_by: TeamMember.first,
@@ -213,7 +213,7 @@ CrisisType.create!(
     )
   else
     CrisisEvent.create!(
-      additional_info: Faker::Hipster.sentences(number: 1),
+      additional_info: Faker::Hipster.sentences(number: 1)[0],
       user_id: rand(1..10),
       crisis_type_id: rand(1..5)
     )
