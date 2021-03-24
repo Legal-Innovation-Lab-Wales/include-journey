@@ -23,7 +23,7 @@ module Users
     # POST /wellbeing_assessments/create
     def create
       if (@wellbeing_assessment = current_user.wellbeing_assessments.create!)
-        redirect_to wellbeing_assessments_path(@wellbeing_assessment)
+        redirect_to wellbeing_assessment_path(@wellbeing_assessment)
       else
         redirect_to authenticated_user_root_path,
                     error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
@@ -43,7 +43,7 @@ module Users
 
       return unless wellbeing_assessment_today.present?
 
-      redirect_to wellbeing_assessments_path(wellbeing_assessment_today),
+      redirect_to wellbeing_assessment_path(wellbeing_assessment_today),
                   notice: 'You completed the below wellbeing assessment today'
     end
 
@@ -67,7 +67,7 @@ module Users
     def wellbeing_assessment
       @wellbeing_assessment = current_user.wellbeing_assessments.includes(:wba_scores).find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to new_wellbeing_assessments_path, error: 'No such wellbeing assessment could be found'
+      redirect_to new_wellbeing_assessment_path, error: 'No such wellbeing assessment could be found'
     end
 
     def wba_params
