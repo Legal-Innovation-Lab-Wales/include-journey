@@ -187,7 +187,7 @@ if User.count.zero?
     ## Create User Wellbeing Assessments for each user
     wellbeing_assessments_for_each_user.times do
       wba_count += 1
-      # puts("Creating Wellbeing Asessment #{wba_count} for user #{user_count}")
+      # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
         user: user
@@ -215,7 +215,7 @@ if User.count.zero?
       )
       journal_entry.save!
 
-      ## Create pemissions for each journal entry
+      ## Create permissions for each journal entry
       TeamMember.all.each do |team_member|
         JournalEntryPermission.create!(
           team_member: team_member,
