@@ -7,6 +7,10 @@ module TeamMembers
     def terms
       render 'pages/terms'
     end
+    
+    def home
+      render 'pages/main'
+    end
 
     protected
 

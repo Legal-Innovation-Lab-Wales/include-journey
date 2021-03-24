@@ -22,8 +22,7 @@
               <% @crisis_events.each do |crisis_event| %>
                 <tr>
                   <td>
-                    <%= link_to "#{crisis_event.user.first_name} #{crisis_event.user.last_name}",
-                                crisis_event_path(crisis_event) %>
+                    <%= link_to "#{crisis_event.user.full_name}", crisis_event_path(crisis_event) %>
                   </td>
                   <td>
                     <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
@@ -42,7 +41,7 @@
       <% else %>
         <h3>No active crisis events</h3>
       <% end %>
-      <%= link_to 'View Closed', pages_crisis_events_path(1), class: 'btn btn-primary' %>
+      <%= link_to 'View Closed', crisis_events_path, class: 'btn btn-primary' %>
     </div>
   </section>
 </main>

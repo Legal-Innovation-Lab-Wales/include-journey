@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-brand">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><h2>Include Journey</h2></a>
+    <% if current_user %>
+      <% unless devise_controller? %>
+        <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
+           data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+          SOS <i class="fas fa-exclamation-circle"></i>
+        </a>
+      <% end %>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <% if current_user %>
+        <% unless dashboard_controller? %>
+          <div class="navbar-items">
+            <%= link_to dashboard_journal_entries_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-book"></i>
+              <div class="nav-label hide">My journal</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-calendar-alt"></i>
+              <div class="nav-label hide">Appointments</div>
+            <% end %>
+            <%= link_to new_wba_self_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-heart"></i>
+              <div class="nav-label hide">My Needs</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-address-book"></i>
+              <div class="nav-label hide">My Contacts</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-road"></i>
+              <div class="nav-label hide">My Journey</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-info-circle"></i>
+              <div class="nav-label hide">My Support</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-tasks"></i>
+              <div class="nav-label hide">My Goals</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-calendar-check"></i>
+              <div class="nav-label hide">What's on</div>
+            <% end %>
+            <%= link_to '#', class: 'btn btn-nav' do %>
+              <i class="fas fa-comments"></i>
+              <div class="nav-label hide">My Voice</div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <div class="navbar-right-buttons">
+        <div class="navbar-items">
+          <% if current_team_member %>
+            <%= link_to edit_team_member_registration_path, class: "btn btn-success" do %>
+              <div class="nav-label hide">Edit Profile</div>
+              <i class="fas fa-user-edit"></i>
+            <% end %>
+            <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
+              <div class="nav-label hide">Logout</div>
+              <i class="fas fa-sign-out-alt"></i>
+            <% end %>
+          <% end %>
+          <% if current_user %>
+            <% unless devise_controller? %>
+              <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
+                 data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+                <div class="nav-label always-show">SOS</div>
+                <i class="fas fa-exclamation-circle"></i>
+              </a>
+            <% end %>
+            <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
+              <div class="nav-label hide">Edit Profile</div>
+              <i class="fas fa-user-edit"></i>
+            <% end %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
+              <div class="nav-label hide">Logout</div>
+              <i class="fas fa-sign-out-alt"></i>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<%= javascript_pack_tag 'navbar' %>

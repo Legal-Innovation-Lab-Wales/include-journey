@@ -16,13 +16,11 @@ Rails.application.routes.draw do
   authenticated :user do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
+      get 'home', to: 'users_application#home'
 
-      resources :wba_selves, only: %i[show new create] do
-        resources :wba_self_permissions, only: %i[new create], as: :permissions
-      end
+      resources :wba_selves, only: %i[show new create]
 
-      resources :journal_entries, only: %i[new create] do
-        get 'page/:page_number', action: :index, on: :collection, as: :pages
+      resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
@@ -39,19 +37,23 @@ Rails.application.routes.draw do
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
+      get 'home', to: 'team_members_application#home'
 
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
-        get 'wba_self_view_logs/page/:page_number', to: 'wba_self_view_logs#index', on: :member, as: :wba_self_view_logs
-        get 'journal_entry_view_logs/page/:page_number', to: 'journal_entry_view_logs#index', on: :member, as: :journal_entry_view_logs
+        resources :journal_entry_view_logs, only: :index, on: :member
       end
 
-      resources :users, only: %i[index show]
+      resources :users, only: %i[index show] do
+        put 'pin', action: 'pin', on: :member, as: :pin
+        put 'increment', action: 'increment', on: :member, as: :increment
+        put 'decrement', action: 'decrement', on: :member, as: :decrement
+        put 'unpin', action: 'unpin', on: :member, as: :unpin
+      end
 
-      resources :crisis_events, only: :show do
-        get 'page/:page_number', action: :index, on: :collection, as: :pages
+      resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
         post 'note', action: 'add_note', on: :member, as: :notes
@@ -59,16 +61,15 @@ Rails.application.routes.draw do
 
       resources :wba_team_members, only: :show
 
-      resources :journal_entries, only: :show do
-        get 'page/:page_number', action: :index, on: :collection
-      end
+      resources :journal_entries, only: %i[show index]
+    
       get 'terms', to: 'team_members_application#terms'
     end
-
   end
 
   unauthenticated do
     root 'pages#main'
     get 'terms', to: 'pages#terms'
   end
+
 end

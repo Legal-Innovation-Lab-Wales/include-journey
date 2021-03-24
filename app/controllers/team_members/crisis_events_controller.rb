@@ -19,16 +19,17 @@ module TeamMembers
     def close
       closed = @crisis_event.update({ closed: true, closed_by: current_team_member, closed_at: Time.now })
 
-      redirect_to crisis_event_path(@crisis_event), alert: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
+      redirect_to crisis_event_path(@crisis_event),
+                  notice: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
     end
 
     # POST /crisis_events/:id/note
     def add_note
       if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
                                               content: crisis_notes_params[:content] })
-        redirect_to crisis_event_path(@crisis_event), alert: 'Note created'
+        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
       else
-        redirect_to crisis_event_path(@crisis_event), alert: 'Note could not be created'
+        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
       end
     end
 

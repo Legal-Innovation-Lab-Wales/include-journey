@@ -14,9 +14,6 @@ class TeamMember < DeviseRecord
   has_many :wellbeing_metrics, foreign_key: :team_member_id
   has_many :wba_team_members, foreign_key: :team_member_id
 
-  has_many :wba_self_permissions, foreign_key: :team_member_id
-  has_many :wba_self_view_logs, foreign_key: :team_member_id
-
   has_many :crisis_types, foreign_key: :team_member_id
   has_many :crisis_events, foreign_key: 'closed_by'
   has_many :crisis_notes, foreign_key: :team_member_id
@@ -26,7 +23,15 @@ class TeamMember < DeviseRecord
 
   has_many :journal_entry_permissions, foreign_key: :team_member_id
   has_many :journal_entry_view_logs, foreign_key: :team_member_id
+  has_many :viewed_journal_entries, through: :journal_entry_view_logs, source: :journal_entry
   has_many :journal_entries, through: :journal_entry_permissions
+
+  has_many :user_pins, foreign_key: :team_member_id
+  has_many :pinned_users, through: :user_pins, source: :user
+
+  def unread_journal_entries(user)
+    (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count
+  end
 
   # validations
   validates_presence_of :first_name,

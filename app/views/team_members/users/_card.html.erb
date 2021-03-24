@@ -1,0 +1,99 @@
+<div class="col-12 col-md-6 mb-3">
+  <% active_crisis_events = user.crisis_events.active %>
+  <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %>">
+    <div class="card-header">
+      <span>
+        <%= link_to user_path(user) do %>
+          <%= user.full_name %> <i class="fas fa-external-link-alt"></i>
+        <% end %>
+      </span>
+      <span>
+        <% if pinned %>
+          <% unless first %>
+            <%= link_to decrement_user_path(user), method: :put do %>
+              <i class="fas fa-chevron-circle-left"></i>
+            <% end %>
+          <% end %>
+          <% unless last %>
+            <%= link_to increment_user_path(user), method: :put do %>
+            <i class="fas fa-chevron-circle-right"></i>&nbsp;
+            <% end %>
+          <% end %>
+          <%= link_to unpin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack"></i>
+          <% end %>
+        <% else %>
+          <%= link_to pin_user_path(user), method: :put do %>
+            <i class="fas fa-thumbtack unpinned"></i>
+          <% end %>
+        <% end %>
+      </span>
+    </div>
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="container mb-3 mb-md-0">
+              <div class="row">
+                <%= link_to "mailto:#{user.email}" do %>
+                  <i class="fas fa-envelope"></i> <%= user.email %>
+                <% end %>
+              </div>
+              <div class="row">
+                <%= link_to "tel:0#{user.mobile_number}" do %>
+                  <i class="fas fa-phone-alt"></i> <%= "0#{user.mobile_number}" %>
+                <% end %>
+              </div>
+              <% if user.release_date.present? %>
+                <div class="row">
+                  <span><i class="fas fa-calendar"></i> Release: <%= user.release %></span>
+                </div>
+              <% end %>
+              <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
+              <% unless unread_journal_entries.zero? %>
+                <div class="row">
+                  <%= link_to '#' do %>
+                    <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
+                  <% end %>
+                </div>
+                <% unless active_crisis_events.empty? %>
+                  <div class="row">
+                    <%= link_to active_crisis_events_path do %>
+                      <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis events
+                    <% end %>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 chart">
+            <% last_wba_self = user.last_wba_self %>
+            <% if last_wba_self.present? %>
+              <a href='#'>
+                <div class="wellbeing-chart-wrapper">
+                  <canvas class="wellbeing-chart" width="400" height="400"></canvas>
+                  <div class="sliders d-none">
+                    <% last_wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
+                      <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
+                        <%= score.wellbeing_metric.name %>
+                      </label>
+                      <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                             value="<%= score.value %>">
+                    <% end %>
+                  </div>
+                  <div class="mt-3 w-100"><%= last_wba_self.created %></div>
+                </div>
+              </a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>Last Sign In</span>
+      <span>
+        <%= user.last_sign_in_at.present? ? "#{time_ago_in_words(user.last_sign_in_at)} ago" : user.last_sign_in %>
+      </span>
+    </div>
+  </div>
+</div>

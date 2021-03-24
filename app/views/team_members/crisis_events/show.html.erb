@@ -1,7 +1,7 @@
 <main class="container team-members crisis-event">
   <div class="row m-1 mt-3">
     <div class="col">
-      <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
+      <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
         <i class="fas fa-arrow-circle-left"></i> Active crisis events
       <% end %>
     </div>
@@ -10,7 +10,7 @@
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
       <h3 class="mb-3">Crisis Event</h3>
-      <h5 class="mb-3"><%= link_to "#{@crisis_event.user.first_name} #{@crisis_event.user.last_name}", user_path(@crisis_event.user) %>
+      <h5 class="mb-3"><%= link_to "#{@crisis_event.user.full_name}", user_path(@crisis_event.user) %>
         raised an SOS <%= time_ago_in_words(@crisis_event.created_at) %> ago</h5>
       <% unless @crisis_event.closed %>
         <h5 class="mb-3">
@@ -70,7 +70,7 @@
               <div class="col-12 col-md-6 col-lg-4">
                 <div class="card mb-3">
                   <div class="card-header">
-                    <span><%= note.team_member.first_name %> <%= note.team_member.last_name %></span>
+                    <span><%= note.team_member.full_name %></span>
                     <span><%= note.last_update %> </span>
                   </div>
                   <div class="card-body">

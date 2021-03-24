@@ -10,19 +10,20 @@
     <div class="col">
       <h3>Closed Crisis Events</h3>
       <div class="table-container">
-        <table class="table table-dark table-striped link-table">
+        <table class="table table-dark table-striped table-hover link-table">
           <thead>
-          <th scope="col">User</th>
-          <th scope="col">Crisis Type</th>
-          <th scope="col">Additional Info</th>
-          <th scope="col">Closed At</th>
+          <tr>
+            <th scope="col">User</th>
+            <th scope="col">Crisis Type</th>
+            <th scope="col">Additional Info</th>
+            <th scope="col">Closed At</th>
+          </tr>
           </thead>
           <tbody>
           <% @resources.each do |crisis_event| %>
             <tr>
               <td>
-                <%= link_to "#{crisis_event.user.first_name} #{crisis_event.user.last_name}",
-                            crisis_event_path(crisis_event) %>
+                <%= link_to "#{crisis_event.user.full_name}", crisis_event_path(crisis_event) %>
               </td>
               <td>
                 <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
@@ -44,7 +45,7 @@
         <div class="row">
           <div class="col">
             <% unless @page == 1 %>
-              <%= link_to pages_crisis_events_path(@page - 1), class: 'btn btn-primary' do %>
+              <%= link_to crisis_events_path(page: @page - 1), class: 'btn btn-primary' do %>
                 <i class="fas fa-arrow-circle-left"></i> Previous
               <% end %>
             <% end %>
@@ -52,7 +53,7 @@
           <div class="col"></div>
           <div class="col">
             <% unless @last_page %>
-              <%= link_to pages_crisis_events_path(@page + 1), class: 'btn btn-primary' do %>
+              <%= link_to crisis_events_path(page: @page + 1), class: 'btn btn-primary' do %>
                 Next <i class="fas fa-arrow-circle-right"></i>
               <% end %>
             <% end %>

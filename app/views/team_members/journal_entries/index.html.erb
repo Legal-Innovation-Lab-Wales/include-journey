@@ -21,8 +21,7 @@
           <% @resources.each do |journal_entry| %>
             <tr>
               <td>
-                <%= link_to "#{journal_entry.user.first_name} #{journal_entry.user.last_name}",
-                            journal_entry_path(journal_entry) %>
+                <%= link_to "#{journal_entry.user.full_name}", journal_entry_path(journal_entry) %>
               </td>
               <td>
                 <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
@@ -50,7 +49,7 @@
         <div class="row">
           <div class="col">
             <% unless @page == 1 %>
-              <%= link_to pages_journal_entries_path(@page - 1), class: 'btn btn-primary' do %>
+              <%= link_to journal_entries_path(page: @page - 1), class: 'btn btn-primary' do %>
                 <i class="fas fa-arrow-circle-left"></i> Previous
               <% end %>
             <% end %>
@@ -58,7 +57,7 @@
           <div class="col"></div>
           <div class="col">
             <% unless @last_page %>
-              <%= link_to pages_journal_entries_path(@page + 1), class: 'btn btn-primary' do %>
+              <%= link_to journal_entries_path(page: @page + 1), class: 'btn btn-primary' do %>
                 Next <i class="fas fa-arrow-circle-right"></i>
               <% end %>
             <% end %>

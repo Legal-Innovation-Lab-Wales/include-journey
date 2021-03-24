@@ -17,9 +17,9 @@ module Users
     # POST /journal_entries
     def create
       if (@journal_entry = current_user.journal_entries.create!(journal_entry_params))
-        redirect_to new_journal_entry_permission_path(@journal_entry), alert: 'New journal entry added'
+        redirect_to new_journal_entry_permission_path(@journal_entry), success: 'New journal entry added'
       else
-        redirect_to authenticated_user_root_path, alert: "Journal entry could not be created: #{@journal_entry.errors}"
+        redirect_to authenticated_user_root_path, error: "Journal entry could not be created: #{@journal_entry.errors}"
       end
     end
 

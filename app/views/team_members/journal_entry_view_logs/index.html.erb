@@ -2,13 +2,13 @@
   <div class="row m-1 mt-3">
     <div class="col">
       <%= link_to team_member_path(@team_member), class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back to <%= @team_member.first_name %> <%= @team_member.last_name %>
+        <i class="fas fa-arrow-circle-left"></i> Back to <%= @team_member.full_name %>
       <% end %>
     </div>
   </div>
   <section class="row">
     <div class="col">
-      <h3><%= @team_member.first_name %> <%= @team_member.last_name %> journal entry view logs (<%= @count %>)</h3>
+      <h3><%= @team_member.full_name %> journal entry view logs (<%= @count %>)</h3>
       <table class="table table-dark table-striped">
         <thead>
           <th scope="col">User</th>
@@ -18,7 +18,7 @@
         <tbody>
         <% @resources.each do |view_log| %>
           <tr>
-            <td><%= view_log.user.first_name %> <%= view_log.user.last_name %></td>
+            <td><%= view_log.user.full_name %></td>
             <td><%= view_log.journal_entry.created %></td>
             <td><%= view_log.created %>
           </tr>
@@ -31,13 +31,13 @@
         <div class="row">
           <div class="col">
             <% unless @page == 1 %>
-              <%= link_to 'Previous', journal_entry_view_logs_team_member_path(@team_member, @page - 1), class: 'btn btn-primary' %>
+              <%= link_to 'Previous', team_member_journal_entry_view_logs_path(@team_member, page: @page - 1), class: 'btn btn-primary' %>
             <% end %>
           </div>
           <div class="col"></div>
           <div class="col">
             <% unless @last_page %>
-              <%= link_to 'Next', journal_entry_view_logs_team_member_path(@team_member, @page + 1), class: 'btn btn-primary' %>
+              <%= link_to 'Next', team_member_journal_entry_view_logs_path(@team_member, page: @page + 1), class: 'btn btn-primary' %>
             <% end %>
           </div>
         </div>

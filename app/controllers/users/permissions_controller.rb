@@ -1,5 +1,5 @@
 module Users
-  # app/controllers/users/wba_self_permission_controller.rb
+  # app/controllers/users/permissions_controller.rb
   class PermissionsController < UsersApplicationController
     before_action :team_members, :model
     before_action :permissions_set, if: -> { @model.permissions.present? }
@@ -23,7 +23,7 @@ module Users
         @model.permissions.create!({ team_member: team_member })
       end
 
-      redirect_to path, alert: 'Sharing permissions for team members successfully set'
+      redirect_to path, success: 'Sharing permissions for team members successfully set'
     end
 
     protected
