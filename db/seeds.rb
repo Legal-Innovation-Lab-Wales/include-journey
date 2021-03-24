@@ -173,8 +173,8 @@ if User.count.zero?
     puts("Creating User: #{user_count}")
     puts("Elapsed Time: #{Time.now - start_time}")
     user = User.new(
-      first_name: Faker::Name.unique.first_name,
-      last_name: Faker::Name.unique.last_name,
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
       email: "IJ-test-user-#{user_count}@purpleriver.dev",
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
