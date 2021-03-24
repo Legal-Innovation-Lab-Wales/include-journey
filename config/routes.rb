@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   authenticated :user do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
+      get 'home', to: 'users_application#home'
 
       resources :wba_selves, only: %i[show new create]
 
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
+      get 'home', to: 'team_members_application#home'
 
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
@@ -61,4 +63,5 @@ Rails.application.routes.draw do
   unauthenticated do
     root 'pages#main'
   end
+
 end

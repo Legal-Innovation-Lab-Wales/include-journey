@@ -4,6 +4,10 @@ module Users
     before_action :authenticate_user!, :permissions_required
     before_action :active_crisis_events, :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
+    def home
+      render 'pages/main'
+    end
+
     private
 
     def active_crisis_events
