@@ -27,7 +27,11 @@ Rails.application.routes.draw do
       end
 
       resources :crisis_events, only: %i[create update]
+
+      get 'terms', to: 'users_application#terms'
     end
+
+
   end
 
   authenticated :team_member do
@@ -56,12 +60,16 @@ Rails.application.routes.draw do
       end
 
       resources :wba_team_members, only: :show
+
       resources :journal_entries, only: %i[show index]
+    
+      get 'terms', to: 'team_members_application#terms'
     end
   end
 
   unauthenticated do
     root 'pages#main'
+    get 'terms', to: 'pages#terms'
   end
 
 end
