@@ -30,14 +30,6 @@ class User < DeviseRecord
     wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
   end
 
-  def permissions_required?
-    last_journal_entry = journal_entries.includes(:journal_entry_permissions).last
-
-    return unless last_journal_entry.present?
-
-    last_journal_entry.journal_entry_permissions.empty?
-  end
-
   # validations
   validates_presence_of :first_name,
                         :last_name,
