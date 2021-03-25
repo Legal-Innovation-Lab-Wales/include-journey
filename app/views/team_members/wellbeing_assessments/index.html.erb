@@ -1,30 +1,13 @@
 <main class="container team-members wellbeing-assessments index">
-  <section class="row back-btn">
-    <div class="col">
-      <% if @query.present? %>
-        <%= link_to @team_member ? team_member_wellbeing_assessments_path(@team_member) : wellbeing_assessments_path,
-                    class: 'btn btn-primary' do %>
-          <i class="fas fa-arrow-circle-left"></i> Back to wellbeing assessments
-        <% end %>
-      <% elsif @team_member.present? %>
-        <%= link_to @admin ? team_member_path(@team_member) : wellbeing_assessments_path,
-                    class: 'btn btn-primary' do %>
-          <i class="fas fa-arrow-circle-left"></i> Back to <%= @admin ? "#{@team_member.full_name}" : 'all wellbeing assessments' %>
-        <% end %>
-      <% else %>
-        <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
-          <i class="fas fa-arrow-circle-left"></i> Dashboard
-        <% end %>
-      <% end %>
-    </div>
-    <div class="col my-wellbeing-assessments">
-      <% unless @admin || @team_member.present? %>
-        <%= link_to team_member_wellbeing_assessments_path(current_team_member), class: 'btn btn-primary' do %>
-          My wellbeing assessments <i class="fas fa-arrow-circle-right"></i>
-        <% end %>
-      <% end %>
-    </div>
-  </section>
+  <% if @team_member %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments',
+               query_path: team_member_wellbeing_assessments_path(@team_member) %>
+  <% else %>
+    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+               query_path: wellbeing_assessments_path,
+               next_path: team_member_wellbeing_assessments_path(current_team_member),
+               next_text: 'My Wellbeing Assessments'%>
+  <% end %>
   <%= render 'shared/wrapped_search' %>
   <section class="row p-0">
     <div class="col p-0 p-md-3">

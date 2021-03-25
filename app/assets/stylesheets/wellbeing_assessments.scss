@@ -6,10 +6,8 @@
 
 .wellbeing-assessments {
   &.index {
-    section.back-btn .col {
-      &:last-child {
-        text-align: right;
-      }
+    section.back-btn .col.next {
+      text-align: right;
     }
 
     a {

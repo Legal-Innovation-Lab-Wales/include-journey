@@ -1,11 +1,6 @@
 <main class="container user journal-entry index">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to dashboard_journal_entries_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Journal
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: dashboard_journal_entries_path, text: 'Journal',
+             query_path: journal_entries_path %>
   <section class="container">
     <div class="row justify-content-end">
       <%= render 'shared/search' %>

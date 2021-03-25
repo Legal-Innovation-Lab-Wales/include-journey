@@ -1,11 +1,5 @@
 <main class="container user journal-entry new">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to dashboard_journal_entries_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Journal
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: dashboard_journal_entries_path, text: 'Journal' %>
   <section class="row mx-auto">
     <div class="col">
       <div class="container p-0">

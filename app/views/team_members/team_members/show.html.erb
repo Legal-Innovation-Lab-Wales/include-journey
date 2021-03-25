@@ -1,11 +1,5 @@
 <main class="container team-members team_member">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to team_members_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back to team members
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: team_members_path, text: 'Back To Team Members' %>
   <section class="row">
     <div class="col mb-3">
       <h3><%= @team_member.full_name %> </h3>

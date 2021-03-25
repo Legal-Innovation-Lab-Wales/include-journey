@@ -1,11 +1,6 @@
 <main class="container team-members journal-entries">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+             query_path: journal_entries_path %>
   <%= render 'shared/wrapped_search' %>
   <section class="row">
     <div class="col">

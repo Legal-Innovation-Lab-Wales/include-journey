@@ -1,17 +1,6 @@
 <main class="container team-members crisis-events">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <% if @query.present? %>
-        <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
-          <i class="fas fa-arrow-circle-left"></i> Back to all
-        <% end %>
-      <% else %>
-        <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
-          <i class="fas fa-arrow-circle-left"></i> Back to active
-        <% end %>
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+             query_path: crisis_events_path %>
   <%= render 'shared/wrapped_search' %>
   <section class="row">
     <div class="col">

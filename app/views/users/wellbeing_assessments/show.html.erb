@@ -1,11 +1,5 @@
 <main class="container user">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard' %>
   <section class="row pb-4" id="wellbeing">
     <div class="col-md-3 services">
       <h3>Your Services</h3>

@@ -1,11 +1,5 @@
 <main class="container team-members crisis-event">
-  <section class="row back-btn mt-3">
-    <div class="col">
-      <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Active crisis events
-      <% end %>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: active_crisis_events_path, text: 'Active Crisis Events' %>
   <section class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
