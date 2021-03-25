@@ -14,8 +14,7 @@ module TeamMembers
       @resources = if @query.present?
                      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
                                         .joins(:user)
-                                        .where('lower(users.first_name) like lower(?) or lower(users.last_name) like lower(?)',
-                                               "%#{@query}%", "%#{@query}%")
+                                        .where(user_search, wildcard_query)
                                         .order(created_at: :desc)
                    else
                      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)

@@ -39,10 +39,10 @@ module TeamMembers
       @resources = if @query.present?
                      CrisisEvent.closed.includes(:user, :crisis_type)
                                 .joins(:user, :crisis_type)
-                                .where('lower(users.first_name) like lower(?) or lower(users.last_name) like lower(?) or lower(crisis_types.category) like lower(?) or lower(additional_info) like(?)',
-                                       "%#{@query}%", "%#{@query}%", "%#{@query}%", "%#{@query}%")
+                                .where("#{user_search} or #{crisis_search}", wildcard_query)
+                                .order(closed_at: :desc)
                    else
-                     CrisisEvent.closed.includes(:user, :crisis_type)
+                     CrisisEvent.closed.includes(:user, :crisis_type).order(closed_at: :desc)
                    end
     end
 
@@ -54,6 +54,10 @@ module TeamMembers
 
     def crisis_events
       @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+    end
+
+    def crisis_search
+      'lower(crisis_types.category) like lower(:query) or lower(additional_info) like(:query)'
     end
 
     def note

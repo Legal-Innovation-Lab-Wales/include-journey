@@ -8,8 +8,7 @@ module TeamMembers
       @resources = if @query.present?
                      @team_member.journal_entry_view_logs.includes(:user, :journal_entry)
                                  .joins(:user)
-                                 .where('lower(users.first_name) like lower(?) or lower(users.last_name) like lower(?)',
-                                        "%#{@query}%", "%#{@query}%")
+                                 .where(user_search, wildcard_query)
                    else
                      @team_member.journal_entry_view_logs.includes(:user, :journal_entry)
                    end

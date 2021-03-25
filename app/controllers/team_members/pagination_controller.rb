@@ -56,5 +56,13 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'No Results Found')
     end
+
+    def user_search
+      'lower(users.first_name) like lower(:query) or lower(users.last_name) like lower(:query)'
+    end
+
+    def wildcard_query
+      { query: "%#{@query}%" }
+    end
   end
 end

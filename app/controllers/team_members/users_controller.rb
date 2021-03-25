@@ -46,11 +46,11 @@ module TeamMembers
 
     def resources
       @resources = if @query.present?
-                     User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)', "%#{@query}%",
-                                "%#{@query}%")
+                     User.includes(:wellbeing_assessments, :crisis_events).where(user_search, wildcard_query)
+                         .order(created_at: :desc)
                    else
-                     User.includes(:wellbeing_assessments, :crisis_events).where
-                         .not(id: current_team_member.pinned_users)
+                     User.includes(:wellbeing_assessments, :crisis_events)
+                         .where.not(id: current_team_member.pinned_users)
                          .order(created_at: :desc)
                    end
     end
@@ -83,6 +83,10 @@ module TeamMembers
 
     def user_pin
       @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
+    end
+
+    def user_search
+      'lower(first_name) like lower(:query) or lower(last_name) like lower(:query)'
     end
 
     def verify_pin
