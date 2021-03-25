@@ -4,127 +4,33 @@
       <h3>Dashboard</h3>
       <div class="container header-buttons">
         <div class="row">
-          <% if current_team_member.admin? %>
-            <%= link_to team_members_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-users"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Team Members</div>
-                </div>
-              </div>
-            <% end %>
+          <% if @admin %>
+            <%= render 'shared/dashboard_btn', path: team_members_path, icon: 'fa-users', text: 'Team Members' %>
           <% end %>
-          <%= link_to users_path, class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-user"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">Users</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '/', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-chart-line"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">Analytics</div>
-              </div>
-            </div>
-          <% end %>
-          <% unless current_team_member.admin? %>
-            <%= link_to active_crisis_events_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-exclamation-circle"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Crisis Events</div>
-                </div>
-              </div>
-            <% end %>
+
+          <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
+          <%= render 'shared/dashboard_btn', path: '/', icon: 'fa-chart-line', text: 'Analytics' %>
+
+          <% unless @admin %>
+            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
+                       text: 'Crisis Events' %>
           <% end %>
         </div>
-        <% if current_team_member.admin?  %>
-          <div class="row">
-            <%= link_to active_crisis_events_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-exclamation-circle"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Crisis Events</div>
-                </div>
-              </div>
-            <% end %>
-            <%= link_to journal_entries_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-book-open"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Journal Entries</div>
-                </div>
-              </div>
-            <% end %>
-            <%= link_to wellbeing_assessments_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-heart"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Wellbeing Assessments</div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="row">
-            <%= link_to journal_entries_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-book-open"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">Journal Entries</div>
-                </div>
-              </div>
-            <% end %>
-            <%= link_to wellbeing_assessments_path, class: 'col d-flex align-items-center btn' do %>
-              <div class="container">
-                <div class="row">
-                  <div class="col">
-                    <i class="mb-1 fas fa-heart"></i>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">My Wellbeing Assessments</div>
-                </div>
-              </div>
-            <% end %>
+        <div class="row">
+          <% if @admin  %>
+            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
+                       text: 'Crisis Events' %>
+          <% end %>
+
+            <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open',
+                       text: 'Journal Entries' %>
+            <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart',
+                       text: 'Wellbeing Assessments' %>
+
+          <% unless @admin %>
             <a class="col clear d-flex align-items-center"></a>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </section>

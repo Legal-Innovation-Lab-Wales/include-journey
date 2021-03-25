@@ -44,6 +44,10 @@ body#overboot {
         display: none;
       }
 
+      .hide-on-wide {
+        display: inline;
+      }
+
       .container {
         padding: 0;
       }
@@ -62,6 +66,10 @@ body#overboot {
 
         .display-on-wide {
           display: inline;
+        }
+
+        .hide-on-wide {
+          display: none;
         }
 
         &:hover {
