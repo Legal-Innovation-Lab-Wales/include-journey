@@ -57,7 +57,7 @@ module TeamMembers
     end
 
     def crisis_search
-      'lower(crisis_types.category) like lower(:query) or lower(additional_info) like(:query)'
+      'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
     end
 
     def note

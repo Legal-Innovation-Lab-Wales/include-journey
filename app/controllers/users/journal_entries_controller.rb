@@ -34,7 +34,7 @@ module Users
     end
 
     def journal_entry_search
-      'lower(entry) like lower(:query)'
+      'lower(entry) similar to lower(:query)'
     end
 
     def limit

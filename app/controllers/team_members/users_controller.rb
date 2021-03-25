@@ -87,7 +87,7 @@ module TeamMembers
     end
 
     def user_search
-      'lower(first_name) like lower(:query) or lower(last_name) like lower(:query)'
+      'lower(first_name) similar to lower(:query) or lower(last_name) similar to lower(:query)'
     end
 
     def verify_pin
