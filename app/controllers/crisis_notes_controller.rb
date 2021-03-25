@@ -1,2 +1,0 @@
-class CrisisNotesController < ApplicationController
-end

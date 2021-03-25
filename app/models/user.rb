@@ -8,8 +8,7 @@ class User < DeviseRecord
 
   has_many :notes, foreign_key: :user_id
 
-  has_many :wba_selves, foreign_key: :user_id
-  has_many :wba_team_members, foreign_key: :user_id
+  has_many :wellbeing_assessments, foreign_key: :user_id
 
   has_many :crisis_events, foreign_key: :user_id
   has_many :journal_entries, foreign_key: :user_id
@@ -22,12 +21,12 @@ class User < DeviseRecord
     crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
   end
 
-  def last_wba_self
-    wba_selves.includes(:wba_self_scores).last
+  def last_wellbeing_assessment
+    wellbeing_assessments.includes(:wba_scores).last
   end
 
-  def wba_self_today
-    wba_selves.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
+  def wellbeing_assessment_today
+    wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
   end
 
   # validations

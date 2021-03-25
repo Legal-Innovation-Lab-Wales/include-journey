@@ -1,2 +1,0 @@
-class CrisisTypesController < ApplicationController
-end

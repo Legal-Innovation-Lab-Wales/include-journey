@@ -19,7 +19,7 @@
         <% end %>
         <div class="row mt-2">
           <div class="col">
-            <%= link_to "Add New Wellbeing Assessment", new_wba_self_path, class: 'btn btn-outline-secondary' %>
+            <%= link_to "Add New Wellbeing Assessment", new_wellbeing_assessment_path, class: 'btn btn-outline-secondary' %>
           </div>
         </div>
       </div>
@@ -36,9 +36,9 @@
     </div>
     <div class="col-md-5 sliders">
       <h3 class="mb-0">Recorded At</h3>
-      <h5><%= @wba_self.created %></h5>
+      <h5><%= @wellbeing_assessment.created %></h5>
       <div class="container mt-3">
-        <% @wba_self.wba_self_scores.includes(:wellbeing_metric).each do |score| %>
+        <% @wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
           <div class="row">
             <div class="col-9">
               <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>

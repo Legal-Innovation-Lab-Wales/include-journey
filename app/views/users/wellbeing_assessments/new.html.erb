@@ -19,7 +19,8 @@
         <% end %>
         <div class="row mt-2">
           <div class="col">
-            <%= link_to "View Last Wellbeing Assessment", wba_self_url(@last_wba_self), class: 'btn btn-secondary'%>
+            <%= link_to "View Last Wellbeing Assessment", wellbeing_assessments_path(@last_wellbeing_assessment),
+                        class: 'btn btn-secondary'%>
           </div>
         </div>
       </div>
@@ -36,7 +37,7 @@
     </div>
     <div class="col-md-5 sliders">
       <h3>How are you today?</h3>
-      <%= form_with model: @wba_self, url: wba_selves_path, method: :post do |f| %>
+      <%= form_with model: @wellbeing_assessment, url: wellbeing_assessments_path, method: :post do |f| %>
         <div class="container mt-3">
 
           <% @wellbeing_metrics.each do |wellbeing_metric| %>

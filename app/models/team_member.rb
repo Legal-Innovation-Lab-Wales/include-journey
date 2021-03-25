@@ -12,7 +12,7 @@ class TeamMember < DeviseRecord
   has_many :crisis_notes, foreign_key: :team_member_id
 
   has_many :wellbeing_metrics, foreign_key: :team_member_id
-  has_many :wba_team_members, foreign_key: :team_member_id
+  has_many :wellbeing_assessments, foreign_key: :team_member_id
 
   has_many :crisis_types, foreign_key: :team_member_id
   has_many :crisis_events, foreign_key: 'closed_by'
