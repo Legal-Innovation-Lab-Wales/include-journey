@@ -1,12 +1,11 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
-    before_action :user, except: %i[index search]
-    before_action :maximum, :user_pin, except: %i[show index search]
+    before_action :user, except: :index
+    before_action :maximum, :user_pin, except: %i[show index]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
-    before_action :query, :pinned_users, :active_users, :user_count, only: :index
-    before_action :search, :count, :last_page, :limit_resources, :redirect, only: :index
+    before_action :pinned_users, :active_users, :user_count, only: :index
 
     # GET /users/:id
     def show
@@ -46,8 +45,14 @@ module TeamMembers
     end
 
     def resources
-      @resources = User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
-                       .order(created_at: :desc)
+      @resources = if @query.present?
+                     User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)', "%#{@query}%",
+                                "%#{@query}%")
+                   else
+                     User.includes(:wellbeing_assessments, :crisis_events).where
+                         .not(id: current_team_member.pinned_users)
+                         .order(created_at: :desc)
+                   end
     end
 
     private
@@ -64,23 +69,8 @@ module TeamMembers
       "#{@user.full_name} #{message}"
     end
 
-    def query_params
-      params.permit(:query, :page)
-    end
-
     def pinned_users
       @pinned_users = current_team_member.pinned_users.order(:order)
-    end
-
-    def query
-      @query = query_params[:query]
-    end
-
-    def search
-      return unless @query.present?
-
-      @resources = User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)',
-                              "%#{@query}%", "%#{@query}%")
     end
 
     def user

@@ -1,7 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    before_action :query_params, :page, :limit, :offset, :resources,
+    before_action :query_params, :page, :query, :limit, :offset, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
@@ -43,8 +43,12 @@ module TeamMembers
       @resources = @resources.offset(@offset).limit(@limit)
     end
 
+    def query
+      @query = query_params[:query]
+    end
+
     def query_params
-      params.permit(:page)
+      params.permit(:page, :query)
     end
 
     def redirect
