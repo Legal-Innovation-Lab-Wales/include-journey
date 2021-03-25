@@ -6,9 +6,7 @@
       <% end %>
     </div>
   </div>
-  <section class="row justify-content-end">
-    <%= render 'shared/search' %>
-  </section>
+  <%= render 'shared/wrapped_search' %>
   <section class="row">
     <div class="col">
       <h3><%= @team_member.full_name %> journal entry view logs (<%= @count %>)</h3>

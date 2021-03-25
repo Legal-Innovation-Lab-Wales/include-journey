@@ -1,4 +1,4 @@
-<main class="container team-members users index">
+<main class="container team-members">
   <div class="row m-1 mt-3">
     <div class="col">
       <% if @query.present? %>
@@ -14,9 +14,7 @@
       <% end %>
     </div>
   </div>
-  <section class="row justify-content-end">
-    <%= render 'shared/search' %>
-  </section>
+  <%= render 'shared/wrapped_search' %>
   <section class="row">
     <div class="col">
       <h3>wellbeing assessments</h3>
