@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
+    before_action :wellbeing_assessment, only: :show
     before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
@@ -13,9 +14,14 @@ module TeamMembers
 
     def click_notice
       user_name = @wellbeing_assessment.user.full_name
-      team_member_name = @wellbeing_assessment.team_member.full_name
 
-      "WBA for #{user_name} created by #{team_member_name} clicked!"
+      if @wellbeing_assessment.team_member.present?
+        team_member_name = @wellbeing_assessment.team_member.full_name
+
+        "WBA for #{user_name} created by #{team_member_name} clicked!"
+      else
+        "WBA for #{user_name} clicked!"
+      end
     end
 
     def limit
