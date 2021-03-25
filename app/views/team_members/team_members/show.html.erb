@@ -23,7 +23,8 @@
               </div>
             </div>
           <% end %>
-          <%= link_to '#wba-team-members', class: 'col d-flex align-items-center btn' do %>
+          <%= link_to team_member_wellbeing_assessments_path(@team_member),
+                      class: 'col d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -107,43 +108,6 @@
                 <td><%= @team_member.last_sign_in %></td>
                 <td><%= @team_member.last_sign_in_ip %></td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  <% end %>
-  <% if @team_member.wellbeing_assessments.count > 0 %>
-    <section class="row" id="wba-team-members">
-      <div class="col">
-        <h3>wellbeing assessments</h3>
-        <div class="table-container">
-          <table class="table table-dark table-striped">
-            <thead>
-              <th scope="col">User</th>
-              <th scope="col">Created At</th>
-              <th scope="col">Last Update</th>
-            </thead>
-            <tbody>
-              <% @team_member.wellbeing_assessments.order(:created_at).each do |wellbeing_assessment| %>
-                <tr>
-                  <td>
-                    <%= link_to user_path(wellbeing_assessment.user) do %>
-                      <%= wellbeing_assessment.user.full_name %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
-                      <%= wellbeing_assessment.created %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
-                      <%= wellbeing_assessment.last_update %>
-                    <% end %>
-                </td>
-                </tr>
-              <% end %>
             </tbody>
           </table>
         </div>
