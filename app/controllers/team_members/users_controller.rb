@@ -5,9 +5,8 @@ module TeamMembers
     before_action :maximum, :user_pin, except: %i[show index search]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
-    before_action :query, :pinned_users, :active_users, only: :index
-
-    before_action :search, :redirect, only: :index, if: -> { @query.present? }
+    before_action :query, :pinned_users, :active_users, :user_count, only: :index
+    before_action :search, :limit_resources, :redirect, only: :index
 
     # GET /users/:id
     def show
@@ -78,12 +77,18 @@ module TeamMembers
     end
 
     def search
+      return unless @query.present?
+
       @resources = User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)',
                               "%#{@query}%", "%#{@query}%")
     end
 
     def user
       @user = User.find(params[:id])
+    end
+
+    def user_count
+      @user_count = User.count
     end
 
     def user_pin

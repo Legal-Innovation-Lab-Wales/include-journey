@@ -22,6 +22,7 @@ module Users
 
     def last_page
       @last_page = @offset + @limit >= @count
+      @final_page = (@count.to_f / @limit).ceil
     end
 
     def limit
@@ -49,7 +50,7 @@ module Users
     def redirect
       return if @resources.present?
 
-      redirect_back(fallback_location: root_path, alert: 'None found')
+      redirect_back(fallback_location: authenticated_user_root_path, alert: 'None found')
     end
   end
 end
