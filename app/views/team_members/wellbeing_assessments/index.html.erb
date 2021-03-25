@@ -1,5 +1,5 @@
 <main class="container team-members wellbeing-assessments index">
-  <div class="row m-3">
+  <section class="row">
     <div class="col">
       <% if @query.present? %>
         <%= link_to @team_member ? team_member_wellbeing_assessments_path(@team_member) : wellbeing_assessments_path,
@@ -24,7 +24,7 @@
         <% end %>
       <% end %>
     </div>
-  </div>
+  </section>
   <%= render 'shared/wrapped_search' %>
   <section class="row p-0">
     <div class="col p-0 p-md-3">
