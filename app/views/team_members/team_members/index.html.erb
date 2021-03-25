@@ -1,11 +1,11 @@
 <main class="container team-members">
-  <div class="row m-1 mt-3">
+  <section class="row back-btn mt-3">
     <div class="col">
       <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
         <i class="fas fa-arrow-circle-left"></i> Dashboard
       <% end %>
     </div>
-  </div>
+  </section>
   <% if @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
       <div class="col">

@@ -1,5 +1,5 @@
 <main class="container team-members wellbeing-assessments index">
-  <section class="row">
+  <section class="row back-btn">
     <div class="col">
       <% if @query.present? %>
         <%= link_to @team_member ? team_member_wellbeing_assessments_path(@team_member) : wellbeing_assessments_path,

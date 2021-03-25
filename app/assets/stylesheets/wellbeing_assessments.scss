@@ -6,15 +6,9 @@
 
 .wellbeing-assessments {
   &.index {
-    section.row:first-child {
-      .col {
-        &:first-child {
-          text-align: left;
-        }
-
-        &:last-child {
-          text-align: right;
-        }
+    section.back-btn .col {
+      &:last-child {
+        text-align: right;
       }
     }
 
