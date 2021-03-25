@@ -88,7 +88,7 @@ module TeamMembers
     end
 
     def user_count
-      @user_count = User.all.count
+      @user_count = User.count
     end
 
     def user_pin

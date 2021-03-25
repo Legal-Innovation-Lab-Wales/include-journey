@@ -4,6 +4,10 @@ module Users
     before_action :authenticate_user!
     before_action :active_crisis_events, :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
+    def terms
+      render 'pages/terms'
+    end
+    
     def home
       render 'pages/main'
     end
