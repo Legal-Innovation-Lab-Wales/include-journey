@@ -46,7 +46,8 @@ module TeamMembers
 
     def resources
       @resources = if @query.present?
-                     User.includes(:wellbeing_assessments, :crisis_events).where(user_search, wildcard_query)
+                     User.includes(:wellbeing_assessments, :crisis_events)
+                         .where(user_search, wildcard_query)
                          .order(created_at: :desc)
                    else
                      User.includes(:wellbeing_assessments, :crisis_events)
