@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
-    before_action :wellbeing_assessment, only: :show
+    before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
+                  :count, :last_page, :limit_resources, :redirect, only: :index
 
     # GET /wellbeing_assessment/:id
     def show
@@ -24,19 +25,31 @@ module TeamMembers
     def resources
       team_member
 
+      wellbeing_assessments = @team_member.present? ? @team_member.wellbeing_assessments : WellbeingAssessment
+
       @resources = if @query.present?
-                     @team_member.wellbeing_assessments.includes(:user, :wba_scores)
-                                 .joins(:user)
-                                 .where(user_search, wildcard_query)
-                                 .order(:created_at)
+                     wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
+                                          .order(:created_at)
                    else
-                     @team_member.wellbeing_assessments.includes(:user, :wba_scores).order(:created_at)
+                     wellbeing_assessments.includes(:user, :wba_scores).order(:created_at)
                    end
     end
 
     def team_member
-      @admin = params[:team_member_id].present? && current_team_member.admin?
-      @team_member = current_team_member
+      return unless params[:team_member_id].present?
+      return if @team_member.present?
+
+      if current_team_member.id == params[:team_member_id].to_i
+        @team_member = current_team_member
+      else
+        redirect_back(fallback_location: authenticated_team_member_root_path, notice: 'You cannot view that page')
+      end
+    end
+
+    def admin
+      return unless params[:team_member_id].present?
+
+      @admin = current_team_member.admin?
 
       return unless @admin
 

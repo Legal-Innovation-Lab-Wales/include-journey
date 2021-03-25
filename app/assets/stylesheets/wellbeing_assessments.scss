@@ -6,6 +6,10 @@
 
 .wellbeing-assessments {
   &.index {
+    .my-wellbeing-assessments {
+      text-align: right;
+    }
+
     a {
       transition: 0.5s;
 
