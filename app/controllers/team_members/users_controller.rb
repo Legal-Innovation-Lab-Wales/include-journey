@@ -6,7 +6,7 @@ module TeamMembers
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
     before_action :query, :pinned_users, :active_users, :user_count, only: :index
-    before_action :search, :limit_resources, :redirect, only: :index
+    before_action :search, :count, :last_page, :limit_resources, :redirect, only: :index
 
     # GET /users/:id
     def show
