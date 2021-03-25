@@ -1,8 +1,6 @@
 module Users
   # app/controllers/users/journal_entry_permission_controller.rb
   class JournalEntryPermissionsController < PermissionsController
-    skip_before_action :permissions_required
-
     # GET /journal_entries/:journal_entry_id/journal_entry_permissions/new
     def new
       render 'new'
@@ -12,10 +10,6 @@ module Users
 
     def path
       journal_entries_path
-    end
-
-    def new_path
-      new_journal_entry_permission_path(@model)
     end
 
     def model

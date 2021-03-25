@@ -12,6 +12,7 @@ module TeamMembers
 
     def resources
       @resources = current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                                      .order(created_at: :desc)
     end
 
     private
