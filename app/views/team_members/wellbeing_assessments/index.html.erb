@@ -1,12 +1,22 @@
 <main class="container team-members users index">
   <div class="row m-1 mt-3">
     <div class="col">
-      <%= link_to @admin ? team_member_path(@team_member) : authenticated_team_member_root_path,
-                  class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> <%= @admin ? "Back to #{@team_member.full_name}" : 'Dashboard' %>
+      <% if @query.present? %>
+        <%= link_to @admin ? team_member_wellbeing_assessments_path(@team_member) : wellbeing_assessments_path,
+                    class: 'btn btn-primary' do %>
+          <i class="fas fa-arrow-circle-left"></i> <%= "Back to wellbeing assessments" %>
+        <% end %>
+      <% else %>
+        <%= link_to @admin ? team_member_path(@team_member) : authenticated_team_member_root_path,
+                    class: 'btn btn-primary' do %>
+          <i class="fas fa-arrow-circle-left"></i> <%= @admin ? "Back to #{@team_member.full_name}" : 'Dashboard' %>
+        <% end %>
       <% end %>
     </div>
   </div>
+  <section class="row justify-content-end">
+    <%= render 'shared/search' %>
+  </section>
   <section class="row">
     <div class="col">
       <h3>wellbeing assessments</h3>

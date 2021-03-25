@@ -22,7 +22,15 @@ module TeamMembers
 
       team_member
 
-      @resources = @team_member.wellbeing_assessments.includes(:user, :wba_scores).order(:created_at)
+      @resources = if @query.present?
+                     @team_member.wellbeing_assessments.includes(:user, :wba_scores)
+                                 .joins(:user)
+                                 .where('lower(users.first_name) like lower(?) or lower(users.last_name) like lower(?)',
+                                        "%#{@query}%", "%#{@query}%")
+                                 .order(:created_at)
+                   else
+                     @team_member.wellbeing_assessments.includes(:user, :wba_scores).order(:created_at)
+                   end
     end
 
     def team_member
