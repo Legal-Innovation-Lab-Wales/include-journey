@@ -36,7 +36,14 @@ module TeamMembers
     protected
 
     def resources
-      @resources = CrisisEvent.closed.includes(:user, :crisis_type)
+      @resources = if @query.present?
+                     CrisisEvent.closed.includes(:user, :crisis_type)
+                                .joins(:user)
+                                .where('lower(users.first_name) like lower(?) or lower(users.last_name) like lower(?)',
+                                       "%#{@query}%", "%#{@query}%")
+                   else
+                     CrisisEvent.closed.includes(:user, :crisis_type)
+                   end
     end
 
     private
