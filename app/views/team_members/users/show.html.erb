@@ -4,8 +4,9 @@
       <h2 class="my-3">User: <%= @user.full_name %></h2>
     </div>
   </section>
-  <!-- User bio / details section -->
+  <!-- User details / crisis row -->
   <div class="row d-flex justify-content-between">
+    <!-- User info card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
@@ -66,7 +67,9 @@
         </div>
       </div>
     </div>
+    <!-- End user info card -->
 
+    <!-- Crisis card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100 <%= @user.crisis_events.active.empty? ? '' : 'has-crisis' %>">
         <div class="card-header">
@@ -76,12 +79,12 @@
             </h3>
           <% end %>
           <% if @active_crisis.empty? %>
-            <h3>SOS status: <span class="text-success">none <i class="fa fa-check-circle"></i></span></h3>
+            <h3>SOS status: none <i class="fa fa-check-circle text-success"></i></h3>
           <% end %>
         </div>
         <div class="card-body text-start">
           <% unless @active_crisis.empty? %>
-              <p><span class="h5">When? </span><%= @active_crisis.first.created %></p>
+              <p><span class="h5">Whenvar? </span><%= @active_crisis.first.created %></p>
               <p><span class="h5">Type? </span> <%= @active_crisis.first.crisis_type.category %></p>
               <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
           <% end %>
@@ -95,7 +98,10 @@
         </div>
       </div>
     </div>
+    <!-- End user crisis card -->
   </div>
+  <!-- End user details / crisis row -->
+
 
 
   <!-- Wellbeing Metrics section -->
@@ -130,8 +136,9 @@
   </div>
   <!-- End Wellbeing Metrics Section -->
 
-  <!-- Journal section -->
+  <!-- User Journal and Notes section -->
   <div class="row" id="journal">
+  <!-- Journal card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
@@ -159,10 +166,8 @@
         </div>
       </div>
     </div>
+    <!-- End Journal card -->
 
-  <!-- End Journal Section -->
-
-    <!-- Notes section -->
     <!-- Add note modal -->
     <div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modal" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
@@ -194,6 +199,7 @@
     </div>
     <!-- End modal -->
 
+    <!-- User notes card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100" id="users">
         <div class="card-header">
@@ -228,8 +234,10 @@
         </div>
       </div>
     </div>
+  <!-- End Notes card -->
   </div>
-  <!-- End Notes Section -->
+  <!-- End journal and notes row -->
+  
 </main>
 
 <%= javascript_pack_tag 'polar_area_chart' %>
