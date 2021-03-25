@@ -1,4 +1,4 @@
-<main class="container team-members">
+<main class="container team-members wellbeing-assessments index">
   <div class="row m-1 mt-3">
     <div class="col">
       <% if @query.present? %>
@@ -15,38 +15,59 @@
     </div>
   </div>
   <%= render 'shared/wrapped_search' %>
-  <section class="row">
-    <div class="col">
+  <section class="row p-0">
+    <div class="col p-0 p-md-3">
       <h3>wellbeing assessments</h3>
-      <div class="table-container">
-        <table class="table table-dark table-striped">
-          <thead>
-          <th scope="col">User</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Last Update</th>
-          </thead>
-          <tbody>
+      <div class="container p-3">
+        <div class="row">
           <% @resources.each do |wellbeing_assessment| %>
-            <tr>
-              <td>
-                <%= link_to user_path(wellbeing_assessment.user) do %>
-                  <%= wellbeing_assessment.user.full_name %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
-                  <%= wellbeing_assessment.created %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
-                  <%= wellbeing_assessment.last_update %>
-                <% end %>
-              </td>
-            </tr>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="card">
+                <div class="card-header">
+                  <span>
+                    <%= link_to user_path(wellbeing_assessment.user) do %>
+                      <%= wellbeing_assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+                    <% end %>
+                  </span>
+                  <span>
+                    <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+                  </span>
+                </div>
+                <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
+                  <div class="card-body p-2">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                          <div class="sliders container p-0">
+                            <% wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
+                              <div class="row p-0">
+                                <div class="col-8">
+                                  <label for="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>">
+                                    <%= score.wellbeing_metric.name %>
+                                  </label>
+                                </div>
+                                <div class="col-4">
+                                  <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
+                                </div>
+                                <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                                       value="<%= score.value %>">
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                            <div class="wellbeing-chart-wrapper">
+                              <canvas class="wellbeing-chart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
           <% end %>
-          </tbody>
-        </table>
+        </div>
       </div>
     </div>
     <% if @admin %>
@@ -64,3 +85,5 @@
     <% end %>
   </section>
 </main>
+
+<%= javascript_pack_tag "polar_area_chart" %>

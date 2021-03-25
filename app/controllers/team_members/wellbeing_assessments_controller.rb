@@ -17,9 +17,11 @@ module TeamMembers
       "WBA for #{user_name} created by #{team_member_name} clicked!"
     end
 
-    def resources
-      @admin = params[:team_member_id].present? && current_team_member.admin?
+    def limit
+      @limit = 6
+    end
 
+    def resources
       team_member
 
       @resources = if @query.present?
@@ -33,6 +35,7 @@ module TeamMembers
     end
 
     def team_member
+      @admin = params[:team_member_id].present? && current_team_member.admin?
       @team_member = current_team_member
 
       return unless @admin

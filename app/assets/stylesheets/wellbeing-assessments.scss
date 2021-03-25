@@ -4,6 +4,44 @@
 
 @import "variables";
 
+.wellbeing-assessments {
+  &.index {
+    a {
+      transition: 0.5s;
+
+      &:hover {
+        color: $brand-primary;
+        background-color: $brand-secondary;
+      }
+
+      .sliders {
+        font-size: 0.8rem;
+
+        .row {
+          margin-bottom: 0 !important;
+
+          label {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .card-header {
+      a {
+        transition: 0.2s;
+
+        &:hover {
+          color: $brand-secondary;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
 section#wellbeing {
   background-color: $white;
   color: $black;
