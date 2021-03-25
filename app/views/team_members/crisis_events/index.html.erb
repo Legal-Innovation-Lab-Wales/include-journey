@@ -1,8 +1,14 @@
 <main class="container team-members crisis-events">
   <div class="row m-1 mt-3">
     <div class="col">
-      <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back to active
+      <% if @query.present? %>
+        <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
+          <i class="fas fa-arrow-circle-left"></i> Back to all
+        <% end %>
+      <% else %>
+        <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
+          <i class="fas fa-arrow-circle-left"></i> Back to active
+        <% end %>
       <% end %>
     </div>
   </div>
