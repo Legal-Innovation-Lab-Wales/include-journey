@@ -1,12 +1,9 @@
 <main class="container team-members wellbeing-assessments new">
-  <section class="row">
-    <div class="col">
-      <h3><%= @user.full_name %></h3>
-    </div>
-  </section>
+  <%= render 'shared/back_btn', path: users_path, text: 'All Users' %>
   <section class="row" id="wellbeing">
     <div class="col">
-      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', remove_height: true,
+      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '300',
+                 chart_heading: "#{@user.full_name}'s Wellbeing", sliders_heading: 'How are they today?',
                  wellbeing_assessment: @wellbeing_assessment, wellbeing_metrics: @wellbeing_metrics,
                  path: user_wellbeing_assessments_path(@user), last_scores: @last_scores %>
     </div>

@@ -4,6 +4,6 @@
     <h3><%= local_assigns[:chart_heading] %></h3>
   <% end %>
   <canvas class="wellbeing-chart" width="400"
-          height="<%= local_assigns[:remove_height].present? && local_assigns[:remove_height] == true ? '0': '400' %>">
+          height="<%= local_assigns[:height].present? ? local_assigns[:height] : '400' %>">
   </canvas>
 </div>
