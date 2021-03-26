@@ -72,7 +72,7 @@
               <a href='#'>
                 <%= render 'shared/wellbeing_chart/wrapper', hide_sliders: true,
                            last_wellbeing_assessment: last_wellbeing_assessment %>
-                <%= last_wellbeing_assessment.created %>
+                <div class="mt-2"><%= last_wellbeing_assessment.created %></div>
               </a>
             <% end %>
           </div>

@@ -1,9 +1,6 @@
-<% if local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true %>
-  <div class="col-12 chart">
-    <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-  </div>
-<% else %>
-  <div class="col-12 col-xl-6 chart">
-    <canvas class="wellbeing-chart" width="400"></canvas>
-  </div>
-<% end %>
+<div class="col-12 chart
+            <%= local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true ? '' : 'col-xl-6' %>">
+  <canvas class="wellbeing-chart" width="400"
+          height="<%= local_assigns[:remove_height].present? && local_assigns[:remove_height] == true ? '0': '400' %>">
+  </canvas>
+</div>

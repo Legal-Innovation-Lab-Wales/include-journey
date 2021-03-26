@@ -6,9 +6,9 @@
   </section>
   <section class="row" id="wellbeing">
     <div class="col">
-      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left',
+      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', remove_height: true,
                  wellbeing_assessment: @wellbeing_assessment, wellbeing_metrics: @wellbeing_metrics,
-                 path: user_wellbeing_assessments_path(@user), last_scores: @last_scores%>
+                 path: user_wellbeing_assessments_path(@user), last_scores: @last_scores %>
     </div>
   </section>
 </main>

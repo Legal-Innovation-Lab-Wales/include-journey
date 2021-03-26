@@ -31,6 +31,9 @@
     <div class="col-md-5 sliders">
       <h3 class="mb-0">Recorded At</h3>
       <h5><%= @wellbeing_assessment.created %></h5>
+
+
+
       <div class="container mt-3">
         <% @wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
           <div class="row">
@@ -49,4 +52,4 @@
   </section>
 </main>
 
-<%= javascript_pack_tag 'polar_area_chart' %>
+<%= javascript_pack_tag 'wellbeing_' %>
