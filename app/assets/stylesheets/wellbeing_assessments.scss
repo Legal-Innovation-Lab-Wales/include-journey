@@ -47,43 +47,38 @@
 }
 
 section#wellbeing {
-  background-color: $white;
-  color: $black;
-
-  .services, .sliders {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 3rem;
-    }
-  }
-
   .chart {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 0;
-    }
+    background-color: $white;
+    padding-top: 1.5rem;
+    border-radius: 1rem;
   }
 
   .sliders {
-    .col-3, .col-9, .col-md-5 {
-      &:first-child {
-        text-align: left;
-      }
-    }
+    text-align: left;
 
-    .col-3.description-col {
-      text-align: right;
-      padding: 0;
+    .row {
+      margin-top: 0.5rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+
+      label {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input {
+        cursor: pointer;
+      }
+
       .description {
+        width: 100%;
         font-family: $font-link;
         transition: all 0.5s;
       }
-    }
-
-    input {
-      cursor: pointer;
     }
   }
 }

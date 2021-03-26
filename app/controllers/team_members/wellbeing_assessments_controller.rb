@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
     before_action :user, only: %i[new create]
+    before_action :new_wellbeing_assessment, :wellbeing_metrics, :last_wellbeing_assessment, :last_scores, only: :new
     before_action :wellbeing_assessment, only: :show
     before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
@@ -45,8 +46,22 @@ module TeamMembers
       end
     end
 
+    def last_wellbeing_assessment
+      @last_wellbeing_assessment = @user.last_wellbeing_assessment
+    end
+
     def limit
       @limit = 6
+    end
+
+    def last_scores
+      @last_scores = @last_wellbeing_assessment.wba_scores.collect do |wba_score|
+        { id: wba_score.wellbeing_metric_id, value: wba_score.value }
+      end
+    end
+
+    def new_wellbeing_assessment
+      @wellbeing_assessment = WellbeingAssessment.new
     end
 
     def resources
@@ -79,6 +94,10 @@ module TeamMembers
 
     def wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+    end
+
+    def wellbeing_metrics
+      @wellbeing_metrics = WellbeingMetric.all.order(:created_at)
     end
   end
 end

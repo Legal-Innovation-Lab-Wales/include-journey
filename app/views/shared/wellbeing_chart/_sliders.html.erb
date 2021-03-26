@@ -1,0 +1,30 @@
+<!--
+New Params:
+Wellbeing Metrics
+Wellbeing Assessment
+Wellbeing Assessment Paths
+Last Scores
+-->
+<div class="col-12 col-xl-6 sliders">
+  <div class="container p-0 p-md-3">
+    <% if local_assigns[:wellbeing_metrics].present? %>
+      <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
+        <% local_assigns[:wellbeing_metrics].each do |wellbeing_metric| %>
+          <div class="row">
+            <div class="col-12 col-sm-4">
+              <%= form.label "wellbeing_metric_#{wellbeing_metric.id}", wellbeing_metric.name %>
+            </div>
+            <div class="col-9 col-sm-5">
+              <%= form.range_field "wellbeing_metric_#{wellbeing_metric.id}", in: 1..10, class: 'form-range',
+                                   value: last_score(local_assigns[:last_scores], wellbeing_metric.id)  %>
+            </div>
+            <div class="col-3 col-sm-3">
+              <div class="description badge rounded-pill wba-score__<%= last_score(local_assigns[:last_scores],
+                                                                                   wellbeing_metric.id) %>"></div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
