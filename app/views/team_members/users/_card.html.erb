@@ -66,12 +66,13 @@
               <% end %>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 wellbeing-chart-col">
             <% last_wellbeing_assessment = user.last_wellbeing_assessment %>
             <% if last_wellbeing_assessment.present? %>
               <a href='#'>
                 <%= render 'shared/wellbeing_chart/wrapper', hide_sliders: true,
                            last_wellbeing_assessment: last_wellbeing_assessment %>
+                <%= last_wellbeing_assessment.created %>
               </a>
             <% end %>
           </div>
