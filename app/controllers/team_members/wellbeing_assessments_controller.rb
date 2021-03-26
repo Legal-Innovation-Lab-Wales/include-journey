@@ -58,10 +58,6 @@ module TeamMembers
       @last_wellbeing_assessment = @user.last_wellbeing_assessment
     end
 
-    def limit
-      @limit = 6
-    end
-
     def last_scores
       @last_scores = @last_wellbeing_assessment.wba_scores.collect do |wba_score|
         { id: wba_score.wellbeing_metric_id, value: wba_score.value }
