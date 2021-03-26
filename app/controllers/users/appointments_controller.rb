@@ -8,7 +8,7 @@ module Users
     end
 
     def index
-      render *'users/appointments/appointments'
+      render 'users/appointments/appointments'
     end
   end
 end

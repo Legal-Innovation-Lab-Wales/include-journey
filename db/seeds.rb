@@ -11,8 +11,9 @@ require 'faker'
 total_user_count = 10
 wellbeing_assessments_for_each_user = 10
 journal_entries_for_each_user = 10
-crisis_events_count = 100
-notes_count = 1000
+appointments_for_each_user = 10
+crisis_events_count = 0
+notes_count = 0
 start_time = Time.now
 
 # Create Static Team Members
@@ -167,6 +168,7 @@ end
 user_count = 0
 wba_count = 0
 journal_count = 0
+appointment_count = 0
 if User.count.zero?
   total_user_count.times do
     user_count += 1
@@ -232,6 +234,19 @@ if User.count.zero?
           journal_entry: journal_entry
         )
       end
+    end
+
+    ## Create Appointments for each user
+    appointments_for_each_user.times do
+      appointment_count += 1
+      Appointment.create!(
+        user: user,
+        who_with: Faker::Games::Pokemon.name,
+        where: Faker::Games::ElderScrolls.city,
+        what: Faker::Games::DnD.alignment,
+        when_datetime: Faker::Time.between(from: 7.days.ago, to: 1.month.from_now)
+
+      )
     end
   end
 
