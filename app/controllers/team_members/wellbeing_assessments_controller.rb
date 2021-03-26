@@ -1,15 +1,18 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
-    before_action :user, only: %i[new create]
-    before_action :new_wellbeing_assessment, :wellbeing_metrics, :last_wellbeing_assessment, :last_scores, only: :new
+    before_action :user, :wellbeing_metrics, only: %i[new create]
+    before_action :new_wellbeing_assessment, :last_wellbeing_assessment, :last_scores, only: :new
     before_action :wellbeing_assessment, only: :show
     before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
+    before_action :wba_params, only: :create
+    after_action :wba_scores, only: :create
+
     # GET /wellbeing_assessments/:id
     def show
-      redirect_back(fallback_location: authenticated_team_member_root_path, notice: click_notice)
+      redirect_to users_path, notice: click_notice
     end
 
     # GET /users/:user_id/wellbeing_assessments/new
@@ -19,7 +22,12 @@ module TeamMembers
 
     # POST /users/:user_id/wellbeing_assessments
     def create
-      puts('Create Wellbeing Assessment...')
+      if (@wellbeing_assessment = current_team_member.wellbeing_assessments.create!(user: @user))
+        redirect_to wellbeing_assessments_path(@wellbeing_assessment)
+      else
+        redirect_to authenticated_team_member_root_path,
+                    error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
+      end
     end
 
     private
@@ -71,9 +79,9 @@ module TeamMembers
 
       @resources = if @query.present?
                      wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
-                                          .order(:created_at)
+                                          .order(created_at: :desc)
                    else
-                     wellbeing_assessments.includes(:user, :wba_scores).order(:created_at)
+                     wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
                    end
     end
 
@@ -90,6 +98,17 @@ module TeamMembers
 
     def user
       @user = User.find(params[:user_id])
+    end
+
+    def wba_params
+      params.require(:wellbeing_assessment).permit(@wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
+    end
+
+    def wba_scores
+      @wellbeing_metrics.each do |metric|
+        @wellbeing_assessment.wba_scores.create!({ wellbeing_metric: metric,
+                                                   value: wba_params["wellbeing_metric_#{metric.id}"] })
+      end
     end
 
     def wellbeing_assessment
