@@ -18,16 +18,19 @@
         background-color: $brand-secondary;
       }
 
-      .sliders {
-        font-size: 0.8rem;
+      .card-body {
+        .sliders {
+          padding: 0;
+          font-size: 0.8rem;
 
-        .row {
-          margin-bottom: 0 !important;
+          .row {
+            margin-bottom: 0 !important;
 
-          label {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            label {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
         }
       }
