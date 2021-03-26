@@ -12,6 +12,7 @@
   <section class="row p-0">
     <div class="col p-0 p-md-3">
       <h3><%= @team_member.present? ? "#{@team_member.full_name}" : 'All' %> wellbeing assessments</h3>
+      <%= render 'shared/search_results', query: params[:query], count: @count %>
       <div class="container p-3">
         <div class="row">
           <% @resources.each do |wellbeing_assessment| %>

@@ -44,6 +44,7 @@
   <section class="row" id="users">
     <div class="col">
       <h3><%= @query.present? ? '' : 'All' %> users</h3>
+      <%= render 'shared/search_results', query: params[:query], count: @count %>
       <div class="container p-0">
         <div class="row">
           <% @resources.each do |user| %>
