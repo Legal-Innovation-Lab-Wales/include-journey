@@ -1,10 +1,12 @@
 @import "variables";
 
-.team-members.users.index {
-  section.row {
-    background-color: transparent;
-    margin: 0 0 2rem 0;
-    padding: 0;
+.team-members {
+  &.users.index section.row {
+    padding: 0 1rem;
+
+    &.back-btn {
+      padding: 1rem;
+    }
   }
 
   .card {

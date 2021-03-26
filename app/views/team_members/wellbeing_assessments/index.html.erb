@@ -1,0 +1,83 @@
+<main class="container team-members wellbeing-assessments index">
+  <% if @team_member %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments',
+               query_path: team_member_wellbeing_assessments_path(@team_member) %>
+  <% else %>
+    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+               query_path: wellbeing_assessments_path,
+               next_path: team_member_wellbeing_assessments_path(current_team_member),
+               next_text: 'My Wellbeing Assessments'%>
+  <% end %>
+  <%= render 'shared/wrapped_search' %>
+  <section class="row p-0">
+    <div class="col p-0 p-md-3">
+      <h3><%= @team_member.present? ? "#{@team_member.full_name}" : 'All' %> wellbeing assessments</h3>
+      <div class="container p-3">
+        <div class="row">
+          <% @resources.each do |wellbeing_assessment| %>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="card">
+                <div class="card-header">
+                  <span>
+                    <%= link_to user_path(wellbeing_assessment.user) do %>
+                      <%= wellbeing_assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+                    <% end %>
+                  </span>
+                  <span>
+                    <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+                  </span>
+                </div>
+                <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
+                  <div class="card-body p-2">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                          <div class="sliders container p-0">
+                            <% wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
+                              <div class="row p-0">
+                                <div class="col-8">
+                                  <label for="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>">
+                                    <%= score.wellbeing_metric.name %>
+                                  </label>
+                                </div>
+                                <div class="col-4">
+                                  <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
+                                </div>
+                                <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                                       value="<%= score.value %>">
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                            <div class="wellbeing-chart-wrapper">
+                              <canvas class="wellbeing-chart" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% if @admin %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query),
+                 next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query),
+                 previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query),
+                 final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query) %>
+    <% else %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: wellbeing_assessments_path(page: 1, query: @query),
+                 next_page: wellbeing_assessments_path(page: @page + 1, query: @query),
+                 previous_page: wellbeing_assessments_path(page: @page - 1, query: @query),
+                 final_page_path: wellbeing_assessments_path(page: @final_page, query: @query) %>
+    <% end %>
+  </section>
+</main>
+
+<%= javascript_pack_tag "polar_area_chart" %>

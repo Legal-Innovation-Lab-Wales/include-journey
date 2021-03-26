@@ -1,11 +1,5 @@
 <main class="container team-members crisis-event">
-  <div class="row m-1 mt-3">
-    <div class="col">
-      <%= link_to active_crisis_events_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Active crisis events
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/back_btn', path: active_crisis_events_path, text: 'Active Crisis Events' %>
   <section class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
@@ -42,11 +36,11 @@
             <div class="container p-0">
               <div class="row">
                 <div class="col-6">
-                  <a class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#noteModal">New Note <i class="fas fa-plus-circle"></i></a>
+                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#noteModal">New Note <i class="fas fa-plus-circle"></i></a>
                 </div>
                 <div class="col-6">
                   <% unless @crisis_event.closed %>
-                    <%= link_to close_crisis_event_path(@crisis_event), class: 'btn btn-danger m-1',
+                    <%= link_to close_crisis_event_path(@crisis_event), class: 'btn btn-danger p-2',
                                 data: { method: 'put', confirm: 'A crisis event should only be closed if the crisis has been dealt with. Are you sure?' } do %>
                       Close Event <i class="fas fa-times-circle"></i>
                     <% end %>

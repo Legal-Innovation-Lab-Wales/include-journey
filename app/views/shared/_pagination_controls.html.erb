@@ -1,35 +1,37 @@
-<div class="container pagination-controls">
-  <div class="row">
-    <div class="col">
-      <% unless local_assigns[:page] == 1 %>
-        <%= link_to 'Previous', local_assigns[:previous_page], class: 'btn btn-primary' %>
-      <% end %>
-    </div>
-    <div class="col">
-      <% unless local_assigns[:page] == 1 %>
-        <%= link_to '1', local_assigns[:first_page] %>
-      <% end %>
-
-      <% unless (local_assigns[:page] - 1) <= 1 %>
-        <% unless (local_assigns[:page] - 1) == 2 %> ... <% end %>
-        <%= link_to "#{local_assigns[:page] - 1}", local_assigns[:previous_page] %>
-      <% end %>
-
-      <strong><%= local_assigns[:page] %></strong>
-
-      <% unless local_assigns[:last_page?] %>
-        <% unless (local_assigns[:page] + 1) == local_assigns[:final_page] %>
-          <%= link_to "#{local_assigns[:page] + 1}", local_assigns[:next_page] %>
-          <% unless (local_assigns[:page] + 1) == local_assigns[:final_page] - 1 %> ... <% end %>
+<section class="row pagination-controls">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <% unless local_assigns[:page] == 1 %>
+          <%= link_to 'Previous', local_assigns[:previous_page], class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+      <div class="col">
+        <% unless local_assigns[:page] == 1 %>
+          <%= link_to '1', local_assigns[:first_page] %>
         <% end %>
 
-        <%= link_to "#{local_assigns[:final_page]}", local_assigns[:final_page_path] %>
-      <% end %>
-    </div>
-    <div class="col">
-      <% unless local_assigns[:last_page?] %>
-        <%= link_to 'Next', local_assigns[:next_page], class: 'btn btn-primary' %>
-      <% end %>
+        <% unless (local_assigns[:page] - 1) <= 1 %>
+          <% unless (local_assigns[:page] - 1) == 2 %> ... <% end %>
+          <%= link_to "#{local_assigns[:page] - 1}", local_assigns[:previous_page] %>
+        <% end %>
+
+        <strong><%= local_assigns[:page] %></strong>
+
+        <% unless local_assigns[:last_page?] %>
+          <% unless (local_assigns[:page] + 1) == local_assigns[:final_page] %>
+            <%= link_to "#{local_assigns[:page] + 1}", local_assigns[:next_page] %>
+            <% unless (local_assigns[:page] + 1) == local_assigns[:final_page] - 1 %> ... <% end %>
+          <% end %>
+
+          <%= link_to "#{local_assigns[:final_page]}", local_assigns[:final_page_path] %>
+        <% end %>
+      </div>
+      <div class="col">
+        <% unless local_assigns[:last_page?] %>
+          <%= link_to 'Next', local_assigns[:next_page], class: 'btn btn-primary' %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+</section>

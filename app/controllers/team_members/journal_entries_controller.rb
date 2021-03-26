@@ -11,8 +11,15 @@ module TeamMembers
     protected
 
     def resources
-      @resources = current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                                      .order(created_at: :desc)
+      @resources = if @query.present?
+                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                                        .joins(:user)
+                                        .where(user_search, wildcard_query)
+                                        .order(created_at: :desc)
+                   else
+                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                                        .order(created_at: :desc)
+                   end
     end
 
     private

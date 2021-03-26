@@ -1,11 +1,6 @@
 <main class="container team-members users index">
-  <div class="row m-1 mt-3">
-    <div class="col">
-      <%= link_to @query.present? ? users_path : authenticated_team_member_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> <%= @query.present? ? 'Back to users' : 'Dashboard' %>
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+             query_path: users_path %>
   <section class="row">
     <div class="col">
       <h3>Users Info</h3>
