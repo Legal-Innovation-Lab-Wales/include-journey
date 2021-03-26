@@ -1,0 +1,9 @@
+@import "variables";
+
+#search-btn {
+  cursor: pointer;
+
+  &:hover {
+    color: $brand-secondary-light;
+  }
+}

@@ -1,6 +1,10 @@
 .pagination-controls {
   padding: 0 !important;
 
+  a {
+    text-decoration: none;
+  }
+
   .col {
     &:first-child {
       text-align: left;

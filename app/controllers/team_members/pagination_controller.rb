@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    before_action :page, :limit, :offset, :resources, :count, :last_page, :limit_resources, :redirect, only: :index
+    before_action :query_params, :page, :limit, :offset, :resources,
+                  :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
       render 'index'
@@ -21,6 +22,7 @@ module TeamMembers
 
     def last_page
       @last_page = @offset + @limit >= @count
+      @final_page = (@count.to_f / @limit).ceil
     end
 
     def limit
@@ -48,7 +50,7 @@ module TeamMembers
     def redirect
       return if @resources.present?
 
-      redirect_back(fallback_location: root_path, alert: 'No Results Found')
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'No Results Found')
     end
   end
 end

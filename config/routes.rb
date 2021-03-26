@@ -16,12 +16,14 @@ Rails.application.routes.draw do
   authenticated :user do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
+      get 'home', to: 'users_application#home'
+      get 'terms', to: 'users_application#terms'
 
-      resources :wba_selves, only: %i[show new create] do
-        resources :wba_self_permissions, only: %i[new create], as: :permissions
-      end
+      resources :wellbeing_assessments, only: %i[show new create]
 
       resources :journal_entries, only: %i[new create] do
+        get 'dashboard', action: :dashboard, on: :collection
+
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
 
@@ -33,6 +35,7 @@ Rails.application.routes.draw do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
       get 'home', to: 'team_members_application#home'
+      get 'terms', to: 'team_members_application#terms'
 
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve_team_member', on: :member, as: :approve
@@ -58,12 +61,13 @@ Rails.application.routes.draw do
         post 'note', action: 'add_note', on: :member, as: :notes
       end
 
-      resources :wba_team_members, only: :show
+      resources :wellbeing_assessments, only: :show
       resources :journal_entries, only: %i[show index]
     end
   end
 
   unauthenticated do
     root 'pages#main'
+    get 'terms', to: 'pages#terms'
   end
 end

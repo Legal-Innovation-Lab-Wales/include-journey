@@ -1,0 +1,37 @@
+<section class="d-flex min-vh-100 homepage-cover">
+  <div class="mx-auto col-12 col-md-10 col-lg-8">
+    <div class="text-lg-start">
+      <% unless user_signed_in? || team_member_signed_in? %>
+        <%= link_to root_path, class: 'btn btn-primary mt-3' do %>
+          <i class="fas fa-arrow-circle-left"></i> Homepage
+        <% end %>
+      <% end %>
+    </div>
+    <div class="mt-4 text-center homepage-header homepage-section">
+      <h1>Your Include Journey</h1>
+      <p>track and progress on your journey to make the changes you want and need.</p>
+      <p>Built for Include UK by the Legal Innovation lab Wales</p>
+    </div>
+    <div class="homepage-section">
+      <div class="col-xs-12">
+        <h2>Terms and conditions (TBD)</h2>
+        <h2 class="section-title">1. Use of Include Journey</h2>
+        <p>
+          To use Include Journey as a user, you must register an account.
+
+          To use Include Journey as a team member, you must (i) register an account (ii) be authorised and approved
+          to use the application by an Include UK admin.
+
+          Uses by automated methods are not permitted.
+        </p>
+        <p>
+          You are responsible for the security of your passwords and for any use of your account. You may not
+          allow multiple people to use the same account.
+        </p>
+        <p>
+          Version 1.0, March 22nd 2021
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

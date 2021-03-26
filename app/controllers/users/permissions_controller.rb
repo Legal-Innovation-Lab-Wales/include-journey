@@ -5,9 +5,6 @@ module Users
     before_action :permissions_set, if: -> { @model.permissions.present? }
 
     before_action :permissions_params, only: :create
-    before_action :at_least_one, only: :create, unless: lambda {
-      @team_members.map { |team_member| permissions_params["team_member_#{team_member.id}"] }.include? '1'
-    }
 
     before_action :second_to_last, only: :new
     before_action :last_permissions, only: :new, if: -> { @second_to_last.present? }
@@ -27,10 +24,6 @@ module Users
     end
 
     protected
-
-    def new_path
-      raise 'Subclass has not overridden new path function'
-    end
 
     def path
       raise 'Subclass has not overridden path function'
@@ -54,10 +47,6 @@ module Users
 
     def team_members
       @team_members = TeamMember.all.order(:created_at)
-    end
-
-    def at_least_one
-      redirect_to new_path, alert: 'You must select at least one team member'
     end
 
     def permissions_set

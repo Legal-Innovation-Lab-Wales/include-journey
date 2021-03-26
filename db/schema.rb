@@ -158,60 +158,24 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "wba_self_permissions", force: :cascade do |t|
-    t.bigint "wba_self_id", null: false
-    t.bigint "team_member_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_member_id"], name: "index_wba_self_permissions_on_team_member_id"
-    t.index ["wba_self_id"], name: "index_wba_self_permissions_on_wba_self_id"
-  end
-
-  create_table "wba_self_scores", force: :cascade do |t|
+  create_table "wba_scores", force: :cascade do |t|
     t.integer "value"
     t.integer "priority"
-    t.bigint "wba_self_id", null: false
+    t.bigint "wellbeing_assessment_id", null: false
     t.bigint "wellbeing_metric_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["wba_self_id"], name: "index_wba_self_scores_on_wba_self_id"
-    t.index ["wellbeing_metric_id"], name: "index_wba_self_scores_on_wellbeing_metric_id"
+    t.index ["wellbeing_assessment_id"], name: "index_wba_scores_on_wellbeing_assessment_id"
+    t.index ["wellbeing_metric_id"], name: "index_wba_scores_on_wellbeing_metric_id"
   end
 
-  create_table "wba_self_view_logs", force: :cascade do |t|
-    t.bigint "wba_self_id", null: false
-    t.bigint "team_member_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_member_id"], name: "index_wba_self_view_logs_on_team_member_id"
-    t.index ["wba_self_id"], name: "index_wba_self_view_logs_on_wba_self_id"
-  end
-
-  create_table "wba_selves", force: :cascade do |t|
+  create_table "wellbeing_assessments", force: :cascade do |t|
+    t.bigint "team_member_id"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_wba_selves_on_user_id"
-  end
-
-  create_table "wba_team_member_scores", force: :cascade do |t|
-    t.integer "value"
-    t.integer "priority"
-    t.bigint "wba_team_member_id", null: false
-    t.bigint "wellbeing_metric_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["wba_team_member_id"], name: "index_wba_team_member_scores_on_wba_team_member_id"
-    t.index ["wellbeing_metric_id"], name: "index_wba_team_member_scores_on_wellbeing_metric_id"
-  end
-
-  create_table "wba_team_members", force: :cascade do |t|
-    t.bigint "team_member_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_member_id"], name: "index_wba_team_members_on_team_member_id"
-    t.index ["user_id"], name: "index_wba_team_members_on_user_id"
+    t.index ["team_member_id"], name: "index_wellbeing_assessments_on_team_member_id"
+    t.index ["user_id"], name: "index_wellbeing_assessments_on_user_id"
   end
 
   create_table "wellbeing_metrics", force: :cascade do |t|
@@ -238,16 +202,9 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
-  add_foreign_key "wba_self_permissions", "team_members"
-  add_foreign_key "wba_self_permissions", "wba_selves"
-  add_foreign_key "wba_self_scores", "wba_selves"
-  add_foreign_key "wba_self_scores", "wellbeing_metrics"
-  add_foreign_key "wba_self_view_logs", "team_members"
-  add_foreign_key "wba_self_view_logs", "wba_selves"
-  add_foreign_key "wba_selves", "users"
-  add_foreign_key "wba_team_member_scores", "wba_team_members"
-  add_foreign_key "wba_team_member_scores", "wellbeing_metrics"
-  add_foreign_key "wba_team_members", "team_members"
-  add_foreign_key "wba_team_members", "users"
+  add_foreign_key "wba_scores", "wellbeing_assessments"
+  add_foreign_key "wba_scores", "wellbeing_metrics"
+  add_foreign_key "wellbeing_assessments", "team_members"
+  add_foreign_key "wellbeing_assessments", "users"
   add_foreign_key "wellbeing_metrics", "team_members"
 end

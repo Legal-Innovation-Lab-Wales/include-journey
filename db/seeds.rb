@@ -8,8 +8,14 @@
 
 require 'faker'
 
-# Create users
-## Create Static Users
+total_user_count = 10
+wellbeing_assessments_for_each_user = 1
+journal_entries_for_each_user = 5
+crisis_events_count = 100
+notes_count = 100
+start_time = Time.now
+
+# Create Static Team Members
 unless TeamMember.find_by_email('philr@purpleriver.dev').present?
   team_member = TeamMember.new(
     first_name: 'Phil',
@@ -70,31 +76,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
   team_member.save!
 end
 
-if User.count.zero?
-  user_count = 0
-  10.times do
-    user_count += 1
-    user = User.new(
-      first_name: Faker::Name.unique.first_name,
-      last_name: Faker::Name.unique.last_name,
-      email: 'IJ-test-user-'+user_count.to_s+'@purpleriver.dev',
-      mobile_number: Faker::Number.leading_zero_number(digits: 11),
-      release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
-      terms: true,
-      password: 'password'
-    )
-    user.skip_confirmation!
-    user.save!
-  end
-end
-
-Note.create!(
-  team_member_id: 1,
-  visible_to_user: true,
-  user_id: User.first.id,
-  content: Faker::TvShows::TheExpanse.quote
-)
-
+# Create Wellbeing Metrics
 if WellbeingMetric.count.zero?
   WellbeingMetric.create!(
     team_member_id: 1,
@@ -153,90 +135,147 @@ if WellbeingMetric.count.zero?
   )
 end
 
-if WbaSelf.count.zero?
+# Create Crisis Types
+if CrisisType.count.zero?
+  CrisisType.create!(
+    category: 'Self Harm',
+    team_member_id: 1
+  )
 
-  50.times do |wbaselfcount|
-    wbaselfcount += 1
-    puts("Creating WbaSelf #{wbaselfcount}")
+  CrisisType.create!(
+    category: 'Harming Others',
+    team_member_id: 1
+  )
 
-    WbaSelf.create!(
-      user_id: rand(1..10)
+  CrisisType.create!(
+    category: 'Suicide',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Overdose',
+    team_member_id: 1
+  )
+
+  CrisisType.create!(
+    category: 'Domestic Violence',
+    team_member_id: 1
+  )
+end
+
+# Create Service Users & Associated Records
+user_count = 20
+wba_count = 1
+journal_count = 10
+if User.count.zero?
+  total_user_count.times do
+    user_count += 1
+    puts("Creating User: #{user_count}")
+    puts("Elapsed Time: #{Time.now - start_time}")
+    user = User.new(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      email: "IJ-test-user-#{user_count}@purpleriver.dev",
+      mobile_number: Faker::Number.leading_zero_number(digits: 11),
+      release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
+      terms: true,
+      password: 'test1234'
     )
+    user.skip_confirmation!
+    user.save!
 
-    WellbeingMetric.count.times do |wellbeing_metric_id|
-      WbaSelfScore.create!(
-        wba_self_id: wbaselfcount,
-        wellbeing_metric_id: wellbeing_metric_id+1, # housing
-        value: rand(1..10)
+    ## Create User Wellbeing Assessments for each user
+    wellbeing_assessments_for_each_user.times do
+      wba_count += 1
+      # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
+
+      wellbeing_assessment = WellbeingAssessment.create!(
+        user: user
       )
+
+      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
+
+      WellbeingMetric.all.each do |wellbeing_metric|
+        WbaScore.create!(
+          wellbeing_assessment: wellbeing_assessment,
+          wellbeing_metric: wellbeing_metric,
+          value: rand(1..10)
+        )
+      end
+    end
+
+    ## Create Journal Entries for each User
+    journal_entries_for_each_user.times do
+      journal_count += 1
+      # puts("Creating Journal #{journal_count} for user #{user_count}")
+      journal_entry = JournalEntry.new(
+        user: user,
+        entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
+        feeling: %w[😊 😔 😠 💩 😐].sample
+      )
+      journal_entry.save!
+
+      ## Create permissions for each journal entry
+      TeamMember.all.each do |team_member|
+        JournalEntryPermission.create!(
+          team_member: team_member,
+          journal_entry: journal_entry
+        )
+      end
+
+      ## Create View Log for every 5th journal entry
+      next unless (journal_count % 5).zero?
+
+      TeamMember.all.each do |team_member|
+        JournalEntryViewLog.create!(
+          team_member: team_member,
+          journal_entry: journal_entry
+        )
+      end
     end
   end
+
+  user = User.new(
+    first_name: 'John',
+    last_name: 'Smith',
+    email: 'john.smith@me.com',
+    mobile_number: Faker::Number.leading_zero_number(digits: 11),
+    release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
+    terms: true,
+    password: 'password'
+  )
+  user.skip_confirmation!
+  user.save!
 end
 
-CrisisType.create!(
-  category: 'Self Harm',
-  team_member_id: 1
-)
-
-CrisisType.create!(
-  category: 'Harming Others',
-  team_member_id: 1
-)
-
-CrisisType.create!(
-  category: 'Suicide',
-  team_member_id: 1
-)
-
-CrisisType.create!(
-  category: 'Overdose',
-  team_member_id: 1
-)
-
-CrisisType.create!(
-  category: 'Domestic Violence',
-  team_member_id: 1
-)
-
-10.times do
-
-  isClosed = [true, false].sample
-
-  if isClosed
-
-    CrisisEvent.create!(
-      additional_info: Faker::Hipster.sentences(number: 1),
-      closed: true,
-      closed_at: Faker::Date.between(from: '2020-03-05', to: '2021-03-05'),
-      closed_by: TeamMember.first,
-      user_id: rand(1..10),
-      crisis_type_id: rand(1..5)
-    )
-  else
-    CrisisEvent.create!(
-      additional_info: Faker::Hipster.sentences(number: 1),
-      user_id: rand(1..10),
-      crisis_type_id: rand(1..5)
-    )
-  end
+notes_count.times do
+  Note.create!(
+    team_member_id: rand(1..TeamMember.count),
+    visible_to_user: true,
+    user_id: rand(1..User.count),
+    content: Faker::TvShows::TheExpanse.quote
+  )
 end
 
-if WbaTeamMember.count.zero?
-  10.times do |wba_team_member_count|
-    wba_team_member_count += 1
-    puts("Creating WbaTeamMember #{wba_team_member_count}")
+crisis_events_count.times do
+  crisis_event = CrisisEvent.create!(
+    additional_info: Faker::Hipster.sentences(number: 1)[0],
+    user_id: rand(1..User.count),
+    crisis_type_id: rand(1..CrisisType.count)
+  )
 
-    WbaTeamMember.create!(
-      team_member_id: rand(1..4),
-      user_id: rand(1..10),
-    )
+  next unless [true, false].sample
 
-    WellbeingMetric.count.times do |wellbeing_metric_id|
-      WbaTeamMemberScore.create!(
-        wba_team_member_id: wba_team_member_count,
-        wellbeing_metric_id: wellbeing_metric_id + 1,
-        value: rand(1..10)
-      )
-    end
-  end
+  crisis_event.update!(
+    closed: true,
+    closed_at: Faker::Date.between(from: '2020-03-05', to: '2021-03-05'),
+    closed_by: TeamMember.find(rand(1..TeamMember.count))
+  )
 end
+
+puts("Team Members in DatabaseL #{TeamMember.count}")
+puts("Users Created: #{user_count}")
+puts("Users in Database: #{User.count}")
+
+puts("Wellbeing Assessments Created: #{wba_count}")
+puts("Journals Created: #{journal_count}")

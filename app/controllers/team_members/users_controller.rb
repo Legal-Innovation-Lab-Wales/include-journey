@@ -2,13 +2,12 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
     before_action :user, except: %i[index search]
-    before_action :user_location, :note, :user_notes, :wba_self, :wellbeing_metrics, :journal_entries, :active_crisis, only: :show
+    before_action :user_location, :note, :user_notes, :wba, :wellbeing_metrics, :journal_entries, :unread_entries, :active_crisis, only: :show
     before_action :maximum, :user_pin, except: %i[show index search]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
-    before_action :query, :pinned_users, :active_users, only: :index
-
-    before_action :search, :redirect, only: :index, if: -> { @query.present? }
+    before_action :query, :pinned_users, :active_users, :user_count, only: :index
+    before_action :search, :limit_resources, :redirect, only: :index
 
     # GET /users/:id
     def show
@@ -48,7 +47,7 @@ module TeamMembers
     end
 
     def resources
-      @resources = User.includes(:wba_selves, :crisis_events).where.not(id: current_team_member.pinned_users)
+      @resources = User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
                        .order(created_at: :desc)
     end
 
@@ -62,6 +61,10 @@ module TeamMembers
       @user = User.includes(:notes).find(params[:id])
     end
 
+    def user_count
+      @user_count = User.count
+    end
+
     def user_notes
       @user_notes = @user.notes.order(created_at: :desc)
     end
@@ -70,14 +73,16 @@ module TeamMembers
       @user_location = Timeout::timeout(5) { Net::HTTP.get_response(URI.parse('http://api.hostip.info/country.php?ip=' + @user.last_sign_in_ip )).body } rescue "Unknown"
     end
 
-    def wellbeing_metrics
-      @wellbeing_metrics = WellbeingMetric.all
-    end
-
-    def wba_self
-      @wba_self = WbaSelf.includes(:wba_self_scores).find(params[:id])
+    def wba
+      @wba = @user.last_wellbeing_assessment
     rescue ActiveRecord::RecordNotFound
       session notice: 'No wellbeing assessment could be found'
+    end
+
+    def wellbeing_metrics
+      if @wba.present?
+        (@wellbeing_metrics = @wba.wba_scores.includes(:wellbeing_metric))
+      end
     end
 
     def active_crisis
@@ -86,6 +91,10 @@ module TeamMembers
 
     def journal_entries
       @journal_entries = @user.journal_entries
+    end
+
+    def unread_entries
+      @unread_journal_entries = current_team_member.unread_journal_entries(@user)
     end
 
     def active_users
@@ -113,6 +122,8 @@ module TeamMembers
     end
 
     def search
+      return unless @query.present?
+
       @resources = User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)',
                               "%#{@query}%", "%#{@query}%")
     end

@@ -15,7 +15,7 @@
             <div class="input-group">
               <span class="input-group-text" id="total-users">Total Users</span>
               <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
-              value="<%= @resources.count + @pinned_users.count %>" disabled>
+              value="<%= @user_count %>" disabled>
               <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
           </div>
@@ -27,13 +27,7 @@
               <span class="input-group-text"><i class="fas fa-users"></i></span>
             </div>
           </div>
-          <div class="col-12 col-md-4">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Users" aria-label="User Search"
-                     aria-describedby="user-search">
-              <span class="input-group-text" id="user-search"><i class="fas fa-search"></i></span>
-            </div>
-          </div>
+          <%= render 'shared/search' %>
         </div>
       </div>
     </div>
@@ -63,27 +57,12 @@
         </div>
       </div>
     </div>
-    <% unless @query.present? %>
-      <div class="col-12">
-        <div class="container pagination-controls">
-          <div class="row">
-            <div class="col">
-              <% unless @page == 1 %>
-                <%= link_to 'Previous', users_path(page: @page - 1, anchor: "users"), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-            <div class="col"></div>
-            <div class="col">
-              <% unless @last_page %>
-                <%= link_to 'Next', users_path(page: @page + 1, anchor: "users"), class: 'btn btn-primary' %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: users_path(page: 1, anchor: 'users', query: params[:query]),
+                 next_page: users_path(page: @page + 1, anchor: 'users', query: params[:query]),
+                 previous_page: users_path(page: @page - 1, anchor: 'users', query: params[:query]),
+                 final_page_path: users_path(page: @final_page, anchor: 'users', query: params[:query]) %>
   </section>
 </main>
 
-<%= javascript_pack_tag 'user_search' %>
 <%= javascript_pack_tag 'polar_area_chart' %>

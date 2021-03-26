@@ -44,26 +44,10 @@
         </table>
       </div>
     </div>
-    <div class="col-12">
-      <div class="container pagination-controls">
-        <div class="row">
-          <div class="col">
-            <% unless @page == 1 %>
-              <%= link_to journal_entries_path(page: @page - 1), class: 'btn btn-primary' do %>
-                <i class="fas fa-arrow-circle-left"></i> Previous
-              <% end %>
-            <% end %>
-          </div>
-          <div class="col"></div>
-          <div class="col">
-            <% unless @last_page %>
-              <%= link_to journal_entries_path(page: @page + 1), class: 'btn btn-primary' do %>
-                Next <i class="fas fa-arrow-circle-right"></i>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+               first_page: journal_entries_path(page: 1),
+               next_page: journal_entries_path(page: @page + 1),
+               previous_page: journal_entries_path(page: @page - 1),
+               final_page_path: journal_entries_path(page: @final_page) %>
   </section>
 </main>

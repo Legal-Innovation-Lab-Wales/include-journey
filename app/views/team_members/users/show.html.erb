@@ -1,62 +1,61 @@
 <main class="container team-members users">
+  <div class="col mt-3">
+  <%= link_to users_path, class: 'btn btn-primary' do %>
+      <i class="fas fa-arrow-circle-left"></i> <%= 'Back to users' %>
+    <% end %>
+  </div>
   <section class="row">
     <div class="col">
-      <h2 class="my-3">User: <%= @user.full_name %></h2>
+      <h2 class="my-3"><%= @user.full_name %></h2>
     </div>
   </section>
-  <!-- User details / crisis row -->
-  <div class="row d-flex justify-content-between">
-    <!-- User info card -->
+  <div class="row">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
-            <h3>User info
-            </h3>
+          <h3>User info</h3>
         </div>
         <div class="card-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <div class="container mb-md-0">
-                  <div class="row">
-                    <%= link_to "mailto:#{@user.email}" do %>
-                      <%= @user.full_name %>
-                    <% end %>
-                  </div>
-                  <div class="row">
-                    <%= link_to "mailto:#{@user.email}" do %>
-                      <i class="fas fa-envelope"></i> <%= @user.email %>
-                    <% end %>
-                  </div>
-                  <div class="row">
-                    <%= link_to "tel:0#{@user.mobile_number}" do %>
-                      <i class="fas fa-phone-alt"></i> <%= "0#{@user.mobile_number}" %>
-                    <% end %>
-                  </div>
-                  <% if @user.release_date.present? %>
-                    <div class="row">
-                      <span><i class="fas fa-calendar"></i> Release: <%= @user.release %></span>
-                    </div>
-                  <% end %>
-                  <% unread_journal_entries = current_team_member.unread_journal_entries(@user) %>
-                  <% unless unread_journal_entries.zero? %>
-                    <div class="row">
-                      <%= link_to '#' do %>
-                        <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
-                      <% end %>
-                    </div>
-                    <% unless active_crisis_events.empty? %>
-                      <div class="row">
-                        <%= link_to active_crisis_events_path do %>
-                          <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis
-                          events
-                        <% end %>
-                      </div>
-                    <% end %>
+          <!--          <div class="container">-->
+          <div class="row">
+            <div class="col-12">
+              <div class="container mb-md-0">
+                <div class="row">
+                  <%= link_to "mailto:#{@user.email}" do %>
+                    <%= @user.full_name %>
                   <% end %>
                 </div>
+                <div class="row">
+                  <%= link_to "mailto:#{@user.email}" do %>
+                    <i class="fas fa-envelope"></i> <%= @user.email %>
+                  <% end %>
+                </div>
+                <div class="row">
+                  <%= link_to "tel:0#{@user.mobile_number}" do %>
+                    <i class="fas fa-phone-alt"></i> <%= "0#{@user.mobile_number}" %>
+                  <% end %>
+                </div>
+                <div class="row">
+                  <span><i class="fas fa-calendar"></i> Release: <%= @user.release %></span>
+                </div>
+                <% unless @unread_journal_entries.zero? %>
+                  <div class="row">
+                    <%= link_to '#' do %>
+                      <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
+                    <% end %>
+                  </div>
+                <% end %>
+                <% unless @active_crisis.empty? %>
+                  <div class="row">
+                    <%= link_to active_crisis_events_path do %>
+                      <i class="fas fa-exclamation-circle"></i> <%= @active_crisis.count %> active crisis
+                      events
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </div>
+            <!--            </div>-->
           </div>
         </div>
         <div class="card-footer d-flex justify-content-between">
@@ -67,66 +66,64 @@
         </div>
       </div>
     </div>
-    <!-- End user info card -->
-
-    <!-- Crisis card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100 <%= @user.crisis_events.active.empty? ? '' : 'has-crisis' %>">
-        <div class="card-header">
-          <% unless @active_crisis.empty? %>
-            <h3>SOS status:
-              <span class="h2">Crisis </span><i class="fas fa-exclamation-triangle"></i>
-            </h3>
-          <% end %>
-          <% if @active_crisis.empty? %>
-            <h3>SOS status: none <i class="fa fa-check-circle text-success"></i></h3>
-          <% end %>
-        </div>
-        <div class="card-body text-start">
-          <% unless @active_crisis.empty? %>
-              <p><span class="h5">Whenvar? </span><%= @active_crisis.first.created %></p>
-              <p><span class="h5">Type? </span> <%= @active_crisis.first.crisis_type.category %></p>
-              <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
-          <% end %>
-          <% if @active_crisis.empty? %>
+        <% if @active_crisis.empty? %>
+          <div class="card-header bg-success">
+            <h3>SOS status: none <i class="fa fa-check-circle"></i></h3>
+          </div>
+          <div class="card-body text-start">
             <p class="text-start">
               This user has no active Crisis Events. Any active Crisis Events will be displayed here.
             </p>
-          <% end %>
-        </div>
-        <div class="card-footer py-3">
-        </div>
+          </div>
+        <% else %>
+          <div class="card-header bg-danger">
+            <h3>SOS status:
+              <span class="h3 pb-0">Crisis </span><i class="fas fa-exclamation-triangle"></i>
+            </h3>
+          </div>
+          <div class="card-body">
+            <p><span class="h5">When? </span><%= @active_crisis.first.created %></p>
+            <p><span class="h5">Type? </span> <%= @active_crisis.first.crisis_type.category %></p>
+            <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
+          </div>
+        <% end %>
+<!--        <div class="card-footer py-3">-->
+<!--        </div>-->
       </div>
     </div>
-    <!-- End user crisis card -->
   </div>
-  <!-- End user details / crisis row -->
-
-
-
-  <!-- Wellbeing Metrics section -->
   <div class="row mb-4">
     <div class="col">
       <div class="card px-0 d-flex justify-content-center">
         <div class="card-header">
-          <h3 class="">User wellbeing</h3>
+          <h3>User wellbeing</h3>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-12 col-lg-5 text-start">
-              <h4>Current wellbeing</h4>
-              <span><strong>Last updated: </strong><%= @wba_self.created %></span>
-              <canvas class="mt-4 wellbeing-chart" id="wellbeing-chart" width="400" height="400"></canvas>
-              <div class="col-md-4 sliders d-none">
-                <% @wellbeing_metrics.each do |wellbeing_metric| %>
-                  <label class="hidden" for=<%= "wellbeing_metric_#{wellbeing_metric.id}" %>><%= wellbeing_metric.name %></label>
-                  <input class="hidden" type="range" id="<%= "wellbeing_metric_#{wellbeing_metric.id}" %>"
-                         value="<%= @wba_self.wba_self_scores.find_by(wellbeing_metric_id: wellbeing_metric.id).value %>">
-                <% end %>
-              </div>
+              <% if @wba.present? %>
+                <h4>Current wellbeing</h4>
+                <span><strong>Last updated: </strong><%= @wba.created %></span>
+                <canvas class="mt-4 wellbeing-chart" id="wellbeing-chart" width="400" height="400"></canvas>
+                <div class="sliders d-none">
+                  <% @wellbeing_metrics.each do |score| %>
+                    <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
+                      <%= score.wellbeing_metric.name %>
+                    </label>
+                    <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                           value="<%= score.value %>">
+                  <% end %>
+                </div>
+              <% else %>
+                <h4>Current wellbeing</h4>
+                <span>The User hasn't completed a Wellbeing Assessment yet</span>
+              <% end %>
             </div>
             <div class="col-12 col-lg-6 text-start">
               <h4>Wellbeing history</h4>
+              <span>The User's Wellbeing history will be displayed here</span>
               <canvas class="mt-4" id="wellbeing-history" width="400"></canvas>
             </div>
           </div>
@@ -134,11 +131,7 @@
       </div>
     </div>
   </div>
-  <!-- End Wellbeing Metrics Section -->
-
-  <!-- User Journal and Notes section -->
   <div class="row" id="journal">
-  <!-- Journal card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
@@ -146,7 +139,7 @@
         </div>
         <div class="card-body">
           <% if @journal_entries.count > 0 %>
-            <h4>Latest journal entry</h4>
+            <h4>Latest Journal entry</h4>
             <div class="card bg-transparent px-0 my-3">
               <div class="card-header px-0">
                 <span class="mx-3"><strong>Entered on: </strong></span><%= @journal_entries.last.created %>
@@ -166,17 +159,14 @@
         </div>
       </div>
     </div>
-    <!-- End Journal card -->
-
-    <!-- Add note modal -->
     <div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modal" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-dialog modal-lg col-12" role="document">
         <div class="modal-content">
           <%= form_with model: @note,
                         url: user_add_note_index_path(@user),
                         method: :post do |form| %>
             <div class="modal-header border-0">
-              <h5 class="modal-title text-black-50" id="">Add a note for this user</h5>
+              <h5 class="modal-title text-black-50">Add a note for this user</h5>
             </div>
             <div class="modal-body border-0">
               <div class="input-group mb-3">
@@ -184,7 +174,7 @@
               </div>
               <div class="form-check form-switch d-flex justify-content-between px-0">
                 <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
-                  Allow user to see this note?<small> (default = 'no')</small>
+                  Allow user to see this note?
                 <% end %>
                 <%= form.check_box :visible_to_user, class: 'form-check-input' %>
               </div>
@@ -197,9 +187,6 @@
         </div>
       </div>
     </div>
-    <!-- End modal -->
-
-    <!-- User notes card -->
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100" id="users">
         <div class="card-header">
@@ -208,20 +195,20 @@
         <div class="card-body bg-transparent notes-card" style="max-height: 40vh; overflow: scroll;">
           <% if @user_notes.empty? %>
             <span>There are no notes on this user yet.</span>
-          <% end %>
-          <% unless @user_notes.empty? %>
+          <% else %>
             <% @user_notes.each do |note| %>
               <div class="card bg-transparent my-2">
                 <div class="card-header d-flex justify-content-between">
                   <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
                   <span>Visible to user?
-                    <% if note.visible_to_user? %><i class="fa fa-check-circle text-success ms-2"></i>
-                    <% else %> <i class="fa fa-times-circle ms-2 text-danger"></i>
+                    <% if note.visible_to_user? %>
+                      <i class="fa fa-eye text-danger ms-2"></i>
+                    <% else %> <i class="fa fa-eye-slash ms-2"></i>
                     <% end %>
                   </span>
                 </div>
                 <div class="card-body text-start">
-                  <p><%= note.content %></p>
+                  <p><%= simple_format(note.content) %></p>
                 </div>
               </div>
             <% end %>
@@ -229,16 +216,12 @@
         </div>
         <div class="card-footer text-center">
           <button class="btn btn-primary my-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
-            Add note
+            Add Note
           </button>
         </div>
       </div>
     </div>
-  <!-- End Notes card -->
   </div>
-  <!-- End journal and notes row -->
-  
 </main>
 
 <%= javascript_pack_tag 'polar_area_chart' %>
-<%= javascript_pack_tag 'line_chart' %>
