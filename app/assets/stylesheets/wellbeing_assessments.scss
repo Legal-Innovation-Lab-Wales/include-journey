@@ -50,13 +50,15 @@
 }
 
 section#wellbeing {
-  .chart {
-    background-color: $white;
-    padding-top: 1.5rem;
-    border-radius: 1rem;
+  background-color: $white;
+  color: $black;
+
+  h3 {
+    text-align: center !important;
   }
 
   .sliders {
+    margin-top: 2.5rem;
     text-align: left;
 
     .row {

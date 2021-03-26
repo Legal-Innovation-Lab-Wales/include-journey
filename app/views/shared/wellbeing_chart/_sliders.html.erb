@@ -1,5 +1,8 @@
 <div class="col-12 col-xl-6 sliders
             <%= local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true ? 'd-none' : '' %>">
+  <% if local_assigns[:sliders_heading].present? %>
+    <h3><%= local_assigns[:sliders_heading] %></h3>
+  <% end %>
   <div class="container p-0 p-md-3">
     <% if local_assigns[:wellbeing_metrics].present? %>
       <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
