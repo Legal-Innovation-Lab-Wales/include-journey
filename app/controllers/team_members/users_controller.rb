@@ -40,10 +40,6 @@ module TeamMembers
 
     protected
 
-    def limit
-      @limit = 6
-    end
-
     def resources
       @resources = if @query.present?
                      User.includes(:wellbeing_assessments, :crisis_events)

@@ -26,7 +26,17 @@ module TeamMembers
     end
 
     def limit
-      @limit = RESOURCES_PER_PAGE
+      if query_params[:limit].present?
+        limit = query_params[:limit].to_i
+
+        if limit.positive? && limit <= 50
+          @limit = limit
+        else
+          redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'Invalid Limit')
+        end
+      else
+        @limit = RESOURCES_PER_PAGE
+      end
     end
 
     def offset
@@ -48,7 +58,7 @@ module TeamMembers
     end
 
     def query_params
-      params.permit(:page, :query)
+      params.permit(:page, :query, :limit)
     end
 
     def redirect
