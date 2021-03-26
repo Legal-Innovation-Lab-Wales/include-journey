@@ -21,6 +21,11 @@
             </div>
           </div>
         <% end %>
+        <div class="row submit-btn">
+          <div class="col">
+            <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
+          </div>
+        </div>
       <% end %>
     <% elsif local_assigns[:last_wellbeing_assessment].present? %>
       <% local_assigns[:last_wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>

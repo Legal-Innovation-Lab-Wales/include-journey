@@ -1,7 +1,7 @@
 <main class="container user">
   <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard' %>
-  <section class="row pt-3 pb-0" id="wellbeing">
-    <div class="col-12 col-md-3 services mt-5">
+  <section class="row pb-0" id="wellbeing">
+    <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
       <h3>Your Services</h3>
       <div class="container">
         <% [*1..4].each do |i| %>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="col-12 col-md-9">
-      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', remove_height: true,
+      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left',
                  chart_heading: 'Your Wellbeing', sliders_heading: 'How are you today?',
                  wellbeing_assessment: @wellbeing_assessment, wellbeing_metrics: @wellbeing_metrics,
                  path: wellbeing_assessments_path, last_scores: @last_scores %>
