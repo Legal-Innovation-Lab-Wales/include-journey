@@ -3,6 +3,9 @@
   <% if local_assigns[:sliders_heading].present? %>
     <h3><%= local_assigns[:sliders_heading] %></h3>
   <% end %>
+  <% if local_assigns[:sliders_timestamp].present? && local_assigns[:sliders_timestamp] == true %>
+    <h5><%= local_assigns[:last_wellbeing_assessment].created %></h5>
+  <% end %>
   <div class="container p-0 p-md-3">
     <% if local_assigns[:wellbeing_metrics].present? %>
       <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
