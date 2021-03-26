@@ -1,16 +1,37 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
+    before_action :user, only: %i[new create]
     before_action :wellbeing_assessment, only: :show
     before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
-    # GET /wellbeing_assessment/:id
+    # GET /wellbeing_assessments/:id
     def show
       redirect_back(fallback_location: authenticated_team_member_root_path, notice: click_notice)
     end
 
+    # GET /users/:user_id/wellbeing_assessments/new
+    def new
+      render 'new'
+    end
+
+    # POST /users/:user_id/wellbeing_assessments
+    def create
+      puts('Create Wellbeing Assessment...')
+    end
+
     private
+
+    def admin
+      return unless params[:team_member_id].present?
+
+      @admin = current_team_member.admin?
+
+      return unless @admin
+
+      @team_member = TeamMember.includes(:wellbeing_assessments).find(params[:team_member_id])
+    end
 
     def click_notice
       user_name = @wellbeing_assessment.user.full_name
@@ -52,14 +73,8 @@ module TeamMembers
       end
     end
 
-    def admin
-      return unless params[:team_member_id].present?
-
-      @admin = current_team_member.admin?
-
-      return unless @admin
-
-      @team_member = TeamMember.includes(:wellbeing_assessments).find(params[:team_member_id])
+    def user
+      @user = User.find(params[:user_id])
     end
 
     def wellbeing_assessment
