@@ -1,11 +1,5 @@
-<!--
-New Params:
-Wellbeing Metrics
-Wellbeing Assessment
-Wellbeing Assessment Paths
-Last Scores
--->
-<div class="col-12 col-xl-6 sliders">
+<div class="col-12 col-xl-6 sliders
+            <%= local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true ? 'd-none' : '' %>">
   <div class="container p-0 p-md-3">
     <% if local_assigns[:wellbeing_metrics].present? %>
       <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
@@ -24,6 +18,21 @@ Last Scores
             </div>
           </div>
         <% end %>
+      <% end %>
+    <% elsif local_assigns[:last_wellbeing_assessment].present? %>
+      <% local_assigns[:last_wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
+        <div class="row">
+          <div class="col-8">
+            <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
+          </div>
+          <div class="d-none">
+            <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>" value="<%= score.value %>">
+          </div>
+          <div class="col-4">
+            <div class="description badge rounded-pill wba-score__<%= last_score(local_assigns[:last_scores],
+                                                                                 score.wellbeing_metric.id) %>"></div>
+          </div>
+        </div>
       <% end %>
     <% end %>
   </div>

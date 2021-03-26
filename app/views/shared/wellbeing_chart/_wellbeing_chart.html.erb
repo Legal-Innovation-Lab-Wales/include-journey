@@ -1,3 +1,4 @@
-<div class="col-12 col-xl-6 chart">
+<div class="col-12 chart
+            <%= local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true ? '' : 'col-xl-6' %>">
   <canvas class="wellbeing-chart" width="400"></canvas>
 </div>
