@@ -8,6 +8,7 @@
       </div>
       <div class="row">
         <h2 class="mb-3">Archive</h2>
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
       </div>
       <div class="row">
         <% @resources.each do |journal_entry| %>
