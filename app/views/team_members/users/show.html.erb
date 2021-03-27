@@ -1,6 +1,6 @@
 <main class="container team-members users">
   <div class="col mt-3">
-  <%= link_to users_path, class: 'btn btn-primary' do %>
+    <%= link_to users_path, class: 'btn btn-primary' do %>
       <i class="fas fa-arrow-circle-left"></i> <%= 'Back to users' %>
     <% end %>
   </div>
@@ -20,10 +20,8 @@
           <div class="row">
             <div class="col-12">
               <div class="container mb-md-0">
-                <div class="row">
-                  <%= link_to "mailto:#{@user.email}" do %>
-                    <%= @user.full_name %>
-                  <% end %>
+                <div class="row font-weight-link">
+                  <%= @user.full_name %>
                 </div>
                 <div class="row">
                   <%= link_to "mailto:#{@user.email}" do %>
@@ -89,8 +87,8 @@
             <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
           </div>
         <% end %>
-<!--        <div class="card-footer py-3">-->
-<!--        </div>-->
+        <!--        <div class="card-footer py-3">-->
+        <!--        </div>-->
       </div>
     </div>
   </div>
@@ -138,24 +136,55 @@
           <h3>Journal</h3>
         </div>
         <div class="card-body">
-          <% if @journal_entries.count > 0 %>
-            <h4>Latest Journal entry</h4>
-            <div class="card bg-transparent px-0 my-3">
-              <div class="card-header px-0">
-                <span class="mx-3"><strong>Entered on: </strong></span><%= @journal_entries.last.created %>
-              </div>
-              <div class="card-body text-start">
-                <p><%= @journal_entries.last.entry %></p>
-              </div>
+          <% if @journal_entries.present? %>
+            <span>The User has made
+              <%= link_to "/users/#{@user.id}/journal_entries" do %>
+                <%= @journal_entries.count %> entries
+              <% end %>
+              in total, <strong><%= @unread_journal_entries %></strong> of which are
+              <%= link_to "/users/#{@user.id}/journal_entries/unread" do %>
+                unread<% end %>. <!-- Same line for full stop -->
+            </span>
+            <h5 class="pt-3">Latest entries</h5>
+            <% recent_entries = @journal_entries.last(5) %>
+            <div class="col-12">
+              <table class="table">
+                <thead class="">
+                  <th class="border-0" scope="col">Feeling</th>
+                  <th class="border-0" scope="col">Time & date</th>
+                  <th class="border-0" scope="col">Status</th>
+                </thead>
+                <tbody class="">
+                <% recent_entries.each do |entry| %>
+                  <tr>
+                    <td class="h3 border-0">
+                      <%= entry.feeling %>
+                    </td>
+                    <td class="border-0">
+                      <%= entry.created %>
+                    </td>
+                    <td class="border-0">
+                      <%if current_team_member.viewed_journal_entries.includes(entry)%>
+                        Read
+                      <% else %>
+                        Unread
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
             </div>
           <% else %>
             <span>The User hasn't completed any Journal entries yet</span>
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary my-2 py-2 px-5" type="button">
-            View User's Journal
-          </a>
+          <button class="btn btn-primary my-2 py-2 px-5" type="button">
+            <%= link_to "/users/#{@user.id}/journal_entries" do %>
+              View User's Journal
+            <% end %>
+          </button>
         </div>
       </div>
     </div>
@@ -167,6 +196,7 @@
                         method: :post do |form| %>
             <div class="modal-header border-0">
               <h5 class="modal-title text-black-50">Add a note for this user</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body border-0">
               <div class="input-group mb-3">
@@ -188,11 +218,11 @@
       </div>
     </div>
     <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100" id="users">
+      <div class="card h-100">
         <div class="card-header">
           <h3>User Notes</h3>
         </div>
-        <div class="card-body bg-transparent notes-card" style="max-height: 40vh; overflow: scroll;">
+        <div class="card-body bg-transparent" id="notes-card">
           <% if @user_notes.empty? %>
             <span>There are no notes on this user yet.</span>
           <% else %>
@@ -207,7 +237,7 @@
                     <% end %>
                   </span>
                 </div>
-                <div class="card-body text-start">
+                <div class="card-body">
                   <p><%= simple_format(note.content) %></p>
                 </div>
               </div>
@@ -215,7 +245,7 @@
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-primary my-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+          <button class="btn btn-primary my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
             Add Note
           </button>
         </div>

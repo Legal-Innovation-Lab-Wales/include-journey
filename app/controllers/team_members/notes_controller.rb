@@ -10,12 +10,12 @@ module TeamMembers
       @note = current_team_member.notes.create!(content: note_params[:content],
                                                 visible_to_user: note_params[:visible_to_user],
                                                 user: @user)
-      redirect_to user_path(@user), notice: @note ? 'Note added!' : "We couldn't create the note. Please try again."
+      redirect_to user_path(@user), notice: @note ? 'Note added!' : "The note couldn't be added. Please try again."
     end
 
     # PATCH/PUT /notes/1
     def update
-      redirect_to user_path(@user), notice: @note.update!(note_params) ? 'Note updated!' : "We couldn't create the note. Please try again."
+      redirect_to user_path(@user), notice: @note.update!(note_params) ? 'Note updated!' : "The note couldn't 'be added. Please try again."
     end
 
     # DELETE /notes/1
