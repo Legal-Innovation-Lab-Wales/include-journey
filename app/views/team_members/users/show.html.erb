@@ -53,7 +53,6 @@
                 <% end %>
               </div>
             </div>
-            <!--            </div>-->
           </div>
         </div>
         <div class="card-footer d-flex justify-content-between">
@@ -94,35 +93,36 @@
   </div>
   <div class="row mb-4">
     <div class="col">
-      <div class="card px-0 d-flex justify-content-center">
+      <div class="card">
         <div class="card-header">
           <h3>User wellbeing</h3>
         </div>
         <div class="card-body">
-          <div class="row">
+          <div class="row d-flex align-items-center">
             <div class="col-12 col-lg-5 text-start">
               <% if @wba.present? %>
                 <h4>Current wellbeing</h4>
-                <span><strong>Last updated: </strong><%= @wba.created %></span>
-                <canvas class="mt-4 wellbeing-chart" id="wellbeing-chart" width="400" height="400"></canvas>
-                <div class="sliders d-none">
-                  <% @wellbeing_metrics.each do |score| %>
-                    <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
-                      <%= score.wellbeing_metric.name %>
-                    </label>
-                    <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
-                           value="<%= score.value %>">
-                  <% end %>
-                </div>
-              <% else %>
-                <h4>Current wellbeing</h4>
-                <span>The User hasn't completed a Wellbeing Assessment yet</span>
+                <span><strong>Last reported: </strong><%= @wba.created %></span>
+                <canvas class="mt-2 p-xl-5 wellbeing-chart" id="wellbeing-chart" width="400" height="400"></canvas>
               <% end %>
             </div>
-            <div class="col-12 col-lg-6 text-start">
-              <h4>Wellbeing history</h4>
-              <span>The User's Wellbeing history will be displayed here</span>
-              <canvas class="mt-4" id="wellbeing-history" width="400"></canvas>
+            <div class="col-12 col-lg-6 offset-lg-1 sliders d-flex justify-content-center">
+              <% if @wba.present? %>
+                <div class="container mt-3">
+                  <% @wellbeing_metrics.each do |score| %>
+                    <div class="row">
+                      <div class="col-7 col-xl-5">
+                        <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
+                      </div>
+                      <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
+                             value="<%= score.value %>">
+                      <div class="col-3 col-lg-2 description-col">
+                        <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
@@ -150,9 +150,9 @@
             <div class="col-12">
               <table class="table">
                 <thead class="">
-                  <th class="border-0" scope="col">Feeling</th>
-                  <th class="border-0" scope="col">Time & date</th>
-                  <th class="border-0" scope="col">Status</th>
+                <th class="border-0" scope="col">Feeling</th>
+                <th class="border-0" scope="col">Time & date</th>
+                <th class="border-0" scope="col">Status</th>
                 </thead>
                 <tbody class="">
                 <% recent_entries.each do |entry| %>
@@ -164,7 +164,7 @@
                       <%= entry.created %>
                     </td>
                     <td class="border-0">
-                      <%if current_team_member.viewed_journal_entries.includes(entry)%>
+                      <% if current_team_member.viewed_journal_entries.includes(entry) %>
                         Read
                       <% else %>
                         Unread
