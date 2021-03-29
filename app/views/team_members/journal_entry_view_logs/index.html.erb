@@ -6,7 +6,7 @@
     <div class="col">
       <h3><%= @team_member.full_name %> journal entry view logs (<%= @count %>)</h3>
       <%= render 'shared/search_results', query: params[:query], count: @count %>
-      <%= render 'shared/limit', multiple: 5 %>
+      <%= render 'shared/limit', multiple: @multiple %>
       <table class="table table-dark table-striped">
         <thead>
           <th scope="col">User</th>

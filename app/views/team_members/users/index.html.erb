@@ -46,7 +46,7 @@
       <h3><%= @query.present? ? '' : 'All' %> users</h3>
       <%= render 'shared/search_results', query: params[:query], count: @count %>
       <div class="container p-0">
-        <%= render 'shared/limit', multiple: 6 %>
+        <%= render 'shared/limit', multiple: @multiple %>
         <div class="row">
           <% @resources.each do |user| %>
             <%= render 'card', user: user, pinned: false %>

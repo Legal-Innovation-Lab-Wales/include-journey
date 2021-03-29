@@ -38,7 +38,7 @@ module Users
     end
 
     def multiple
-      3
+      @multiple = 3
     end
 
     def resources
