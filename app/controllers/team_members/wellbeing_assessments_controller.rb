@@ -56,6 +56,10 @@ module TeamMembers
       @wellbeing_assessment = WellbeingAssessment.new
     end
 
+    def multiple
+      6
+    end
+
     def resources
       team_member
 

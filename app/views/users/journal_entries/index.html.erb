@@ -10,7 +10,7 @@
         <h2 class="mb-3">Archive</h2>
         <%= render 'shared/search_results', query: params[:query], count: @count %>
       </div>
-      <%= render 'shared/limit' %>
+      <%= render 'shared/limit', multiple: 3 %>
       <div class="row">
         <% @resources.each do |journal_entry| %>
           <div class="col-12 col-md-4">
@@ -29,8 +29,8 @@
     </div>
   </section>
   <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-             first_page: journal_entries_path(page: 1),
-             next_page: journal_entries_path(page: @page + 1),
-             previous_page: journal_entries_path(page: @page - 1),
-             final_page_path: journal_entries_path(page: @final_page) %>
+             first_page: journal_entries_path(page: 1, limit: params[:limit]),
+             next_page: journal_entries_path(page: @page + 1, limit: params[:limit]),
+             previous_page: journal_entries_path(page: @page - 1, limit: params[:limit]),
+             final_page_path: journal_entries_path(page: @final_page, limit: params[:limit]) %>
 </main>

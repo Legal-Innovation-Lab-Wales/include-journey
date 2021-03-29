@@ -29,14 +29,18 @@ module TeamMembers
       if query_params[:limit].present?
         limit = query_params[:limit].to_i
 
-        if limit.positive? && limit <= 50
+        if limit.positive? && limit <= multiple * 10
           @limit = limit
         else
           redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'Invalid Limit')
         end
       else
-        @limit = RESOURCES_PER_PAGE
+        @limit = multiple
       end
+    end
+
+    def multiple
+      RESOURCES_PER_PAGE
     end
 
     def offset
