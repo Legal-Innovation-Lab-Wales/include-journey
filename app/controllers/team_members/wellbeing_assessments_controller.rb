@@ -23,7 +23,7 @@ module TeamMembers
     # POST /users/:user_id/wellbeing_assessments
     def create
       if (@wellbeing_assessment = current_team_member.wellbeing_assessments.create!(user: @user))
-        redirect_to wellbeing_assessments_path(@wellbeing_assessment)
+        redirect_to wellbeing_assessment_path(@wellbeing_assessment)
       else
         redirect_to authenticated_team_member_root_path,
                     error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
