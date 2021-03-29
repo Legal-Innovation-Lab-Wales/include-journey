@@ -55,10 +55,10 @@
       </div>
     </div>
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-                 first_page: users_path(page: 1, anchor: 'users', query: params[:query]),
-                 next_page: users_path(page: @page + 1, anchor: 'users', query: params[:query]),
-                 previous_page: users_path(page: @page - 1, anchor: 'users', query: params[:query]),
-                 final_page_path: users_path(page: @final_page, anchor: 'users', query: params[:query]) %>
+                 first_page: users_path(page: 1, anchor: 'users', query: params[:query], limit: params[:limit]),
+                 next_page: users_path(page: @page + 1, anchor: 'users', query: params[:query], limit: params[:limit]),
+                 previous_page: users_path(page: @page - 1, anchor: 'users', query: params[:query], limit: params[:limit]),
+                 final_page_path: users_path(page: @final_page, anchor: 'users', query: params[:query], limit: params[:limit]) %>
   </section>
 </main>
 

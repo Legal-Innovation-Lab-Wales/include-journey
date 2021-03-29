@@ -25,9 +25,9 @@
       </table>
     </div>
     <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-               first_page: team_member_journal_entry_view_logs_path(page: 1, query: params[:query]),
-               next_page: team_member_journal_entry_view_logs_path(page: @page + 1, query: params[:query]),
-               previous_page: team_member_journal_entry_view_logs_path(page: @page - 1, query: params[:query]),
-               final_page_path: team_member_journal_entry_view_logs_path(page: @final_page, query: params[:query]) %>
+               first_page: team_member_journal_entry_view_logs_path(page: 1, query: params[:query], limit: params[:limit]),
+               next_page: team_member_journal_entry_view_logs_path(page: @page + 1, query: params[:query], limit: params[:limit]),
+               previous_page: team_member_journal_entry_view_logs_path(page: @page - 1, query: params[:query], limit: params[:limit]),
+               final_page_path: team_member_journal_entry_view_logs_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
   </section>
 </main>

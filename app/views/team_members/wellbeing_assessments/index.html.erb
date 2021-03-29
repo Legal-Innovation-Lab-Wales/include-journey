@@ -68,16 +68,16 @@
     </div>
     <% if @admin %>
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-                 first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query),
-                 next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query),
-                 previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query),
-                 final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query) %>
+                 first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query, limit: params[:limit]),
+                 next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query, limit: params[:limit]) %>
     <% else %>
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-                 first_page: wellbeing_assessments_path(page: 1, query: @query),
-                 next_page: wellbeing_assessments_path(page: @page + 1, query: @query),
-                 previous_page: wellbeing_assessments_path(page: @page - 1, query: @query),
-                 final_page_path: wellbeing_assessments_path(page: @final_page, query: @query) %>
+                 first_page: wellbeing_assessments_path(page: 1, query: @query, limit: params[:limit]),
+                 next_page: wellbeing_assessments_path(page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: wellbeing_assessments_path(page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: wellbeing_assessments_path(page: @final_page, query: @query, limit: params[:limit]) %>
     <% end %>
   </section>
 </main>
