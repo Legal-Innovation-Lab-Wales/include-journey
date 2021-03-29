@@ -71,8 +71,10 @@
             <% if last_wellbeing_assessment.present? %>
               <%= link_to new_user_wellbeing_assessment_path(user) do %>
                 <%= render 'shared/wellbeing_chart/wrapper', hide_sliders: true,
-                           last_wellbeing_assessment: last_wellbeing_assessment %>
-                <div class="mt-2"><%= last_wellbeing_assessment.created %></div>
+                           wellbeing_assessment: last_wellbeing_assessment %>
+                <div class="mt-2">
+                  <%= last_wellbeing_assessment.created %>
+                </div>
               <% end %>
             <% end %>
           </div>

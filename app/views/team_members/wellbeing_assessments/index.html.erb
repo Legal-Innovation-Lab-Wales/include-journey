@@ -6,7 +6,7 @@
     <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
                query_path: wellbeing_assessments_path,
                next_path: team_member_wellbeing_assessments_path(current_team_member),
-               next_text: 'My Wellbeing Assessments'%>
+               next_text: 'My Wellbeing Assessments' %>
   <% end %>
   <%= render 'shared/wrapped_search' %>
   <section class="row p-0">
@@ -31,7 +31,7 @@
                 </div>
                 <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
                   <div class="card-body p-2">
-                    <%= render 'shared/wellbeing_chart/wrapper', last_wellbeing_assessment: wellbeing_assessment %>
+                    <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
                   </div>
                 </a>
               </div>

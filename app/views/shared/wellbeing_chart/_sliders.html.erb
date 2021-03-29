@@ -1,10 +1,9 @@
-<div class="col-12 col-xl-6 sliders
-            <%= local_assigns[:hide_sliders].present? && local_assigns[:hide_sliders] == true ? 'd-none' : '' %>">
+<div class="col-12 col-xl-6 sliders <%= local_assigns[:hide_sliders].present? ? 'd-none' : '' %>">
   <% if local_assigns[:sliders_heading].present? %>
     <h3><%= local_assigns[:sliders_heading] %></h3>
   <% end %>
-  <% if local_assigns[:sliders_timestamp].present? && local_assigns[:sliders_timestamp] == true %>
-    <h5><%= local_assigns[:last_wellbeing_assessment].created %></h5>
+  <% if local_assigns[:show_timestamp].present? %>
+    <h5><%= local_assigns[:wellbeing_assessment].created %></h5>
   <% end %>
   <div class="container p-0 p-md-3">
     <% if local_assigns[:wellbeing_metrics].present? %>
@@ -30,8 +29,8 @@
           </div>
         </div>
       <% end %>
-    <% elsif local_assigns[:last_wellbeing_assessment].present? %>
-      <% local_assigns[:last_wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
+    <% elsif local_assigns[:wellbeing_assessment].present? %>
+      <% local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
         <div class="row">
           <div class="col-8">
             <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
