@@ -10,7 +10,7 @@
         <h2 class="mb-3">Archive</h2>
         <%= render 'shared/search_results', query: params[:query], count: @count %>
       </div>
-      <%= render 'shared/limit' %>
+      <%= render 'shared/limit', multiple: 3 %>
       <div class="row">
         <% @resources.each do |journal_entry| %>
           <div class="col-12 col-md-4">

@@ -2,10 +2,10 @@
   <div class="col">
     <div class="input-group limit-select">
       <select class="form-select" aria-label="Index Limit">
-        <option value="5" selected>5</option>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
+        <option value="<%= multiple %>" selected><%= multiple %></option>
+        <option value="<%= multiple * 2 %>"><%= multiple* 2 %></option>
+        <option value="<%= multiple * 5 %>"><%= multiple * 5 %></option>
+        <option value="<%= multiple * 10 %>"><%= multiple * 10 %></option>
       </select>
     </div>
   </div>

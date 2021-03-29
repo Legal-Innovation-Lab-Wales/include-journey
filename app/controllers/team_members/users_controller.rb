@@ -66,6 +66,10 @@ module TeamMembers
       "#{@user.full_name} #{message}"
     end
 
+    def multiple
+      6
+    end
+
     def pinned_users
       @pinned_users = current_team_member.pinned_users.order(:order)
     end

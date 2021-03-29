@@ -24,8 +24,8 @@ module TeamMembers
       end
     end
 
-    def limit
-      @limit = 6
+    def multiple
+      6
     end
 
     def resources
