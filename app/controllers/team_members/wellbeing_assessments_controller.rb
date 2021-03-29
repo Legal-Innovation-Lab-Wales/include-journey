@@ -12,7 +12,7 @@ module TeamMembers
 
     # GET /wellbeing_assessments/:id
     def show
-      redirect_to users_path, notice: click_notice
+      render 'show'
     end
 
     # GET /users/:user_id/wellbeing_assessments/new
@@ -40,18 +40,6 @@ module TeamMembers
       return unless @admin
 
       @team_member = TeamMember.includes(:wellbeing_assessments).find(params[:team_member_id])
-    end
-
-    def click_notice
-      user_name = @wellbeing_assessment.user.full_name
-
-      if @wellbeing_assessment.team_member.present?
-        team_member_name = @wellbeing_assessment.team_member.full_name
-
-        "WBA for #{user_name} created by #{team_member_name} clicked!"
-      else
-        "WBA for #{user_name} clicked!"
-      end
     end
 
     def last_wellbeing_assessment
