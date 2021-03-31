@@ -1,7 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
-    before_action :user, except: %i[index]
+    before_action :user, except: :index
     before_action :user_location, :note, :user_notes, :wba, :wellbeing_metrics, :journal_entries, :unread_entries, :active_crisis, only: :show
     before_action :maximum, :user_pin, except: %i[show index]
     before_action :verify_pin, only: :pin
@@ -72,11 +72,13 @@ module TeamMembers
     end
 
     def user_notes
-      @user_notes = @user.notes.order(created_at: :desc)
+      @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
     end
 
     def user_location
-      @user_location = Timeout::timeout(5) { Net::HTTP.get_response(URI.parse('http://api.hostip.info/country.php?ip=' + @user.last_sign_in_ip )).body } rescue "Unknown"
+      return @location = { 'city' => 'unknown' } unless @user.current_sign_in_ip.present? && ['127.0.0.1', '::1'].exclude?(@user.current_sign_in_ip)
+
+      @location = Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}" )).body) }
     end
 
     def wba
@@ -86,9 +88,9 @@ module TeamMembers
     end
 
     def wellbeing_metrics
-      if @wba.present?
-        (@wellbeing_metrics = @wba.wba_scores.includes(:wellbeing_metric))
-      end
+      return unless wba.present?
+
+      @wellbeing_metrics = @wba.wba_scores.includes(:wellbeing_metric)
     end
 
     def active_crisis

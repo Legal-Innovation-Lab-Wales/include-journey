@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :notes
   devise_for :users, path: 'users',
                      controllers: { registrations: 'users/registrations',
                                     confirmations: 'users/confirmations',
@@ -50,11 +49,12 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
-      end
-
-      resources :users, only: :show, as: :user do
         resources :notes, only: :create, as: :add_note
       end
+
+      # resources :users, only: :show, as: :user do
+      #   resources :notes, only: :create, as: :add_note
+      # end
 
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection

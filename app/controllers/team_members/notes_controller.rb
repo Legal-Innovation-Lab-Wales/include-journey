@@ -1,9 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/notes_controller.rb
   class NotesController < TeamMembersApplicationController
-    before_action :set_note, only: %i[show edit update destroy]
-    before_action :note_params, only: :create
-    before_action :user
+    before_action :note_params, :user, only: :create
 
     # POST /notes
     def create
@@ -13,22 +11,7 @@ module TeamMembers
       redirect_to user_path(@user), notice: @note ? 'Note added!' : "The note couldn't be added. Please try again."
     end
 
-    # PATCH/PUT /notes/1
-    def update
-      redirect_to user_path(@user), notice: @note.update!(note_params) ? 'Note updated!' : "The note couldn't 'be added. Please try again."
-    end
-
-    # DELETE /notes/1
-    def destroy
-      @note.destroy
-      redirect_to notes_url, notice: 'Note was successfully destroyed.'
-    end
-
     private
-
-    def set_note
-      @note = Note.find(params[:id])
-    end
 
     def user
       @user = User.find(params[:user_id])

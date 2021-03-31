@@ -25,7 +25,7 @@ body#overboot {
   .row {
     --bs-gutter-x: 0;
     --bs-gutter-y: 0;
-    @media (min-width: 576px) {
+    @media (min-width: $screen-sm) {
       --bs-gutter-x: 1.5rem;
       --bs-gutter-y: 0;
     }

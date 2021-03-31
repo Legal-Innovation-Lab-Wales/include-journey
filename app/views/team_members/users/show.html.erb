@@ -57,14 +57,14 @@
         <div class="card-footer d-flex justify-content-between">
           <span>Last Sign In</span>
           <span>
-            <%= @user.last_sign_in_at.present? ? "#{time_ago_in_words(@user.last_sign_in_at)} ago from #{@user_location}" : @user.last_sign_in %>
+            <%= @user.last_sign_in_at.present? ? "#{time_ago_in_words(@user.last_sign_in_at)} ago from #{@location["city"]}" : @user.last_sign_in %>
           </span>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100 <%= @user.crisis_events.active.empty? ? '' : 'has-crisis' %>">
-        <% if @active_crisis.empty? %>
+      <% if @active_crisis.empty? %>
+        <div class="card h-100 border-0">
           <div class="card-header bg-success">
             <h3>SOS status: none <i class="fa fa-check-circle"></i></h3>
           </div>
@@ -73,7 +73,9 @@
               This user has no active Crisis Events. Any active Crisis Events will be displayed here.
             </p>
           </div>
-        <% else %>
+        </div>
+      <% else %>
+        <div class="card h-100 has-crisis border-0">
           <div class="card-header bg-danger">
             <h3>SOS status:
               <span class="h3 pb-0">Crisis </span><i class="fas fa-exclamation-triangle"></i>
@@ -84,8 +86,8 @@
             <p><span class="h5">Type? </span> <%= @active_crisis.first.crisis_type.category %></p>
             <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="row mb-4">
@@ -134,13 +136,9 @@
         </div>
         <div class="card-body">
           <% if @journal_entries.present? %>
-            <span>The User has made
-              <%= link_to "/users/#{@user.id}/journal_entries" do %>
-                <%= @journal_entries.count %> entries
-              <% end %>
-              in total, <strong><%= @unread_journal_entries %></strong> of which are
-              <%= link_to "/users/#{@user.id}/journal_entries/unread" do %>
-                unread<% end %>. <!-- Same line for full stop -->
+            <span><%= @user.first_name %> has written
+              <%= link_to "#{@journal_entries.count} entries", journal_entries_path(query: @user.full_name) %>
+              in total of which <%= @unread_journal_entries %> are unread
             </span>
             <h5 class="pt-3">Latest entries</h5>
             <% recent_entries = @journal_entries.last(5) %>
@@ -177,15 +175,11 @@
               </table>
             </div>
           <% else %>
-            <span>The User hasn't completed any Journal entries yet </span>
+            <span>No journal entries have been written yet</span>
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-primary my-2 py-2 px-5" type="button">
-            <%= link_to "/journal_entries?query=#{@user.first_name}+#{@user.last_name}" do %>
-              View User's Journal
-            <% end %>
-          </button>
+          <%= button_to "View User's Journal", journal_entries_path(query: @user.full_name), class: "btn btn-primary my-2 py-2 px-5" %>
         </div>
       </div>
     </div>
