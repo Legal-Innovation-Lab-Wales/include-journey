@@ -185,7 +185,7 @@
         </div>
         <div class="card-footer text-center">
           <button class="btn btn-primary my-2 py-2 px-5" type="button">
-            <%= link_to "/users/#{@user.id}/journal_entries" do %>
+            <%= link_to "journal_entries?query=#{@user.first_name}+#{@user.last_name}" do %>
               View User's Journal
             <% end %>
           </button>
