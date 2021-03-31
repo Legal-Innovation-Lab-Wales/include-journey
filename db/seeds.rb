@@ -244,7 +244,8 @@ if User.count.zero?
         who_with: Faker::Games::Pokemon.name,
         where: Faker::Games::ElderScrolls.city,
         what: Faker::Games::DnD.alignment,
-        when_datetime: Faker::Time.between(from: 7.days.ago, to: 1.month.from_now),
+        start: Faker::Time.between(from: 7.days.ago, to: 7.days.ago),
+        end: Faker::Time.between(from: 7.days.ago, to: 6.days.ago),
         duration: Faker::Number.between(from: 1, to: 30)
       )
     end
@@ -294,3 +295,4 @@ puts("Users in Database: #{User.count}")
 
 puts("Wellbeing Assessments Created: #{wba_count}")
 puts("Journals Created: #{journal_count}")
+puts("Appointments Created: #{appointment_count}")

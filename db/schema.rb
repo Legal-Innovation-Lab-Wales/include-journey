@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 2021_03_26_120339) do
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.datetime "when_datetime"
+    t.datetime "start"
+    t.datetime "end"
     t.string "who_with"
     t.string "where"
     t.string "what"
