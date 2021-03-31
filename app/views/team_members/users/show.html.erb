@@ -148,26 +148,30 @@
             <h5 class="pt-3">Latest entries</h5>
             <% recent_entries = @journal_entries.last(5) %>
             <div class="col-12">
-              <table class="table">
-                <thead class="">
-                <th class="border-0" scope="col">Feeling</th>
-                <th class="border-0" scope="col">Time & date</th>
-                <th class="border-0" scope="col">Status</th>
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th class="border-0" scope="col">Feeling</th>
+                  <th class="border-0" scope="col">Time & date</th>
+                  <th class="border-0" scope="col">Viewed</th>
+                </tr>
                 </thead>
-                <tbody class="">
-                <% recent_entries.each do |entry| %>
+                <tbody>
+                <% recent_entries.each do |journal_entry| %>
                   <tr>
                     <td class="h3 border-0">
-                      <%= entry.feeling %>
+                      <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
                     </td>
                     <td class="border-0">
-                      <%= entry.created %>
+                      <%= link_to "#{journal_entry.created}", journal_entry_path(journal_entry) %>
                     </td>
                     <td class="border-0">
-                      <% if current_team_member.viewed_journal_entries.includes(entry) %>
-                        Read
-                      <% else %>
-                        Unread
+                      <%= link_to journal_entry_path(journal_entry) do %>
+                        <% if journal_entry.journal_entry_view_logs.empty? %>
+                          <i class="fas fa-times-circle"></i>
+                        <% else %>
+                          <i class="fas fa-check-circle"></i>
+                        <% end %>
                       <% end %>
                     </td>
                   </tr>
@@ -176,7 +180,7 @@
               </table>
             </div>
           <% else %>
-            <span>The User hasn't completed any Journal entries yet</span>
+            <span>The User hasn't completed any Journal entries yet </span>
           <% end %>
         </div>
         <div class="card-footer text-center">
