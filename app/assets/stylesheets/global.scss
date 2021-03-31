@@ -9,6 +9,9 @@ html, body {
 }
 
 body#overboot {
+  background-color: $black;
+  font-family: $font;
+
   .alert {
     z-index: 1080;
   }
@@ -19,8 +22,14 @@ body#overboot {
     text-transform: lowercase;
   }
 
-  background-color: $black;
-  font-family: $font;
+  .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    @media (min-width: 576px) {
+      --bs-gutter-x: 1.5rem;
+      --bs-gutter-y: 0;
+    }
+  }
 
   .bg-brand {
     background-color: $brand-primary;
