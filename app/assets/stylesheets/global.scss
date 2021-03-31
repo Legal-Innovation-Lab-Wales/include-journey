@@ -18,6 +18,7 @@ body#overboot {
     font-weight: 800;
     text-transform: lowercase;
   }
+
   background-color: $black;
   font-family: $font;
 
@@ -27,6 +28,11 @@ body#overboot {
 
   a {
     font-family: $font-link;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 0.5rem;
   }
 
   table {
