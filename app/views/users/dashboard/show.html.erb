@@ -4,118 +4,28 @@
       <h2 class="mb-3">Your Journey</h2>
       <div class="container header-buttons">
         <div class="row">
-          <%= link_to dashboard_journal_entries_path, class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-book"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Journal</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-calendar-alt"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> App<span class="display-on-wide">ointmen</span>ts</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to new_wellbeing_assessment_path, class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-heart"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Needs</div>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: dashboard_journal_entries_path, icon: 'fa-book',
+                     large_text: 'My Journal', text: 'Journal' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-calendar-alt',
+                     large_text: 'My Appointments', text: 'Appts' %>
+          <%= render 'shared/dashboard_btn', path: new_wellbeing_assessment_path, icon: 'fa-heart',
+                     large_text: 'My Needs', text: 'Needs' %>
         </div>
         <div class="row">
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-address-book"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Contacts</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-road"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Journey</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-info-circle"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Support</div>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-address-book',
+                     large_text: 'My Contacts', text: 'Contacts' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-road',
+                     large_text: 'My Journey', text: 'Journey' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-info-circle',
+                     large_text: 'My Support', text: 'Support' %>
         </div>
         <div class="row">
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-tasks"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Goals</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-calendar-check"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">Include: </span>What's On</div>
-              </div>
-            </div>
-          <% end %>
-          <%= link_to '#', class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-comments"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col"><span class="display-on-wide">My </span> Voice</div>
-              </div>
-            </div>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-tasks',
+                     large_text: 'My Goals', text: 'Goals' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-calendar-check',
+                     large_text: "Include: What's On", text: "What's On" %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-comments',
+                     large_text: 'My Voice', text: 'Voice' %>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@
                 </div>
                 <% unless @unread_journal_entries.zero? %>
                   <div class="row">
-                    <%= link_to '#' do %>
+                    <%= link_to '#journal' do %>
                       <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
                     <% end %>
                   </div>
@@ -182,7 +182,7 @@
         </div>
         <div class="card-footer text-center">
           <button class="btn btn-primary my-2 py-2 px-5" type="button">
-            <%= link_to "journal_entries?query=#{@user.first_name}+#{@user.last_name}" do %>
+            <%= link_to "/journal_entries?query=#{@user.first_name}+#{@user.last_name}" do %>
               View User's Journal
             <% end %>
           </button>

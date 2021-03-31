@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/pagination_controller.rb
   class PaginationController < UsersApplicationController
-    before_action :query_params, :page, :limit, :offset, :resources,
+    before_action :query_params, :page, :query, :limit, :offset, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
@@ -43,14 +43,26 @@ module Users
       @resources = @resources.offset(@offset).limit(@limit).order(created_at: :desc)
     end
 
+    def query
+      @query = query_params[:query]
+    end
+
     def query_params
-      params.permit(:page)
+      params.permit(:page, :query)
     end
 
     def redirect
       return if @resources.present?
 
       redirect_back(fallback_location: authenticated_user_root_path, alert: 'None found')
+    end
+
+    def user_search
+      'lower(users.first_name) similar to lower(:query) or lower(users.last_name) similar to lower(:query)'
+    end
+
+    def wildcard_query
+      { query: "%#{@query.split.join('%|%')}%" }
     end
   end
 end

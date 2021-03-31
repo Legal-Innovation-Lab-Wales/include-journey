@@ -1,14 +1,11 @@
 <main class="container team-members journal-entries">
-  <div class="row m-1 mt-3">
-    <div class="col">
-      <%= link_to authenticated_team_member_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+             query_path: journal_entries_path %>
+  <%= render 'shared/wrapped_search' %>
   <section class="row">
     <div class="col">
       <h3>Journal Entries</h3>
+      <%= render 'shared/search_results', query: params[:query], count: @count %>
       <div class="table-container">
         <table class="table table-dark table-striped link-table">
           <thead>
@@ -45,9 +42,9 @@
       </div>
     </div>
     <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-               first_page: journal_entries_path(page: 1),
-               next_page: journal_entries_path(page: @page + 1),
-               previous_page: journal_entries_path(page: @page - 1),
-               final_page_path: journal_entries_path(page: @final_page) %>
+               first_page: journal_entries_path(page: 1, query: @query),
+               next_page: journal_entries_path(page: @page + 1, query: @query),
+               previous_page: journal_entries_path(page: @page - 1, query: @query),
+               final_page_path: journal_entries_path(page: @final_page, query: @query) %>
   </section>
 </main>

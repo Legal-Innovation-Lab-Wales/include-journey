@@ -42,6 +42,7 @@ Rails.application.routes.draw do
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
 
         resources :journal_entry_view_logs, only: :index, on: :member
+        resources :wellbeing_assessments, only: :index, on: :member
       end
 
       resources :users, only: %i[index show] do
@@ -61,7 +62,7 @@ Rails.application.routes.draw do
         post 'note', action: 'add_note', on: :member, as: :notes
       end
 
-      resources :wellbeing_assessments, only: :show
+      resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
     end
   end

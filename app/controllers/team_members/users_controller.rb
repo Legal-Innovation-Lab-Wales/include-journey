@@ -1,13 +1,12 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
-    before_action :user, except: %i[index search]
+    before_action :user, except: %i[index]
     before_action :user_location, :note, :user_notes, :wba, :wellbeing_metrics, :journal_entries, :unread_entries, :active_crisis, only: :show
-    before_action :maximum, :user_pin, except: %i[show index search]
+    before_action :maximum, :user_pin, except: %i[show index]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
-    before_action :query, :pinned_users, :active_users, :user_count, only: :index
-    before_action :search, :limit_resources, :redirect, only: :index
+    before_action :pinned_users, :active_users, :user_count, only: :index
 
     # GET /users/:id
     def show
@@ -47,8 +46,15 @@ module TeamMembers
     end
 
     def resources
-      @resources = User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
-                       .order(created_at: :desc)
+      @resources = if @query.present?
+                     User.includes(:wellbeing_assessments, :crisis_events)
+                         .where(user_search, wildcard_query)
+                         .order(created_at: :desc)
+                   else
+                     User.includes(:wellbeing_assessments, :crisis_events)
+                         .where.not(id: current_team_member.pinned_users)
+                         .order(created_at: :desc)
+                   end
     end
 
     private
@@ -109,27 +115,16 @@ module TeamMembers
       "#{@user.full_name} #{message}"
     end
 
-    def query_params
-      params.permit(:query, :page)
-    end
-
     def pinned_users
       @pinned_users = current_team_member.pinned_users.order(:order)
     end
 
-    def query
-      @query = query_params[:query]
-    end
-
-    def search
-      return unless @query.present?
-
-      @resources = User.where('lower(first_name) like lower(?) or lower(last_name) like lower(?)',
-                              "%#{@query}%", "%#{@query}%")
-    end
-
     def user_pin
       @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
+    end
+
+    def user_search
+      'lower(first_name) similar to lower(:query) or lower(last_name) similar to lower(:query)'
     end
 
     def verify_pin

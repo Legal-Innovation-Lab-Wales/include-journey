@@ -16,6 +16,10 @@
     text-align: center;
     margin: 1rem 0;
 
+    &.back-btn {
+      text-align: left;
+    }
+
     @media screen and (min-width: $screen-md) {
       margin: 1rem;
       padding: 1rem;
