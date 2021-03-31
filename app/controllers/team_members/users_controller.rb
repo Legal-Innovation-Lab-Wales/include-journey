@@ -96,7 +96,7 @@ module TeamMembers
     end
 
     def journal_entries
-      @journal_entries = @user.journal_entries
+      @journal_entries = current_team_member.journal_entries.where(user: @user)
     end
 
     def unread_entries
