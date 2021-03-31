@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_03_26_120339) do
     t.string "where"
     t.string "what"
     t.boolean "attended", default: false
+    t.integer "duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_appointments_on_user_id"
