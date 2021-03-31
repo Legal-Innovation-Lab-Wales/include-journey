@@ -8,7 +8,7 @@
   </div>
   <section class="row pb-4" id="upcoming">
     <div class="col-md-3 upcoming">
-      <h3  class="mb-0">past appointments</h3>
+      <h3 class="mb-0">past appointments</h3>
       <div class="container mt-3">
         <% [*1..4].each do |i| %>
           <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
@@ -26,21 +26,30 @@
     </div>
     <div class="col-md-4 appointments">
       <h3 class="mb-0">Your appointments</h3>
-            <div class="container mt-3">
-                <div class="row">
-                  <div class="col-19">
-
-
-
+      <div class="container mt-3 bg-dark">
+        <div class="row">
+          <div class="col-19">
+            <% @appointments.each do |appointments| %>
+              <div class="col-12 col-md-4">
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <span><%= appointments.where %></span>
+                    <span><%= appointments.what %></span>
                   </div>
+                  <div class="journal-text text-dark p-1">
+                  </div>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
+    </div>
     <div class="col-md-5 create">
       <h3 class="mb-0">Create new appointment</h3>
       <p> Enter in the infomation to book a new appointment, a member of the team will get back in touch to confirm
-      your booking </p>
+        your booking </p>
       <%= form_with model: @appointment do |f| %>
         <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
         <%= f.label :where %>
@@ -53,16 +62,16 @@
           <%= f.label :duration_in_minutes %>
         </div>
         <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-        <% end %>
+      <% end %>
       <div class="container mt-3">
-          <div class="row">
-            <div class="col-9">
+        <div class="row">
+          <div class="col-9">
 
-              <!-- %= render "shared/assessment_create" %>-->
-            </div>
-            <div class="col-3 description-col">
-            </div>
+            <!-- %= render "shared/assessment_create" %>-->
           </div>
+          <div class="col-3 description-col">
+          </div>
+        </div>
       </div>
     </div>
   </section>
