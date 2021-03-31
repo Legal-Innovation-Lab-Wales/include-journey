@@ -6,9 +6,9 @@
       <% end %>
     </div>
   </div>
-  <section class="row pb-4" id="wellbeing">
-    <div class="col-md-3 services">
-      <h3>upcoming appointments</h3>
+  <section class="row pb-4" id="upcoming">
+    <div class="col-md-3 upcoming">
+      <h3  class="mb-0">past appointments</h3>
       <div class="container mt-3">
         <% [*1..4].each do |i| %>
           <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
@@ -24,18 +24,36 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 chart">
-      <h3>Your appointments</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            
+    <div class="col-md-4 appointments">
+      <h3 class="mb-0">Your appointments</h3>
+            <div class="container mt-3">
+                <div class="row">
+                  <div class="col-19">
+
+
+
+                  </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-5 sliders">
+    <div class="col-md-5 create">
       <h3 class="mb-0">Create new appointment</h3>
+      <p> Enter in the infomation to book a new appointment, a member of the team will get back in touch to confirm
+      your booking </p>
+      <%= form_with model: @appointment do |f| %>
+        <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
+        <%= f.label :where %>
+        <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
+        <%= f.label :who_with %>
+        <%= f.text_field :what, autofocus: true, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
+        <%= f.label :what %>
+        <div class="form-floating">
+          <%= f.number_field :duration, class: 'form-control', autocomplete: "duration (In minutes)", placeholder: "How long? (Minutes)" %>
+          <%= f.label :duration_in_minutes %>
+        </div>
+        <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+        <% end %>
       <div class="container mt-3">
           <div class="row">
             <div class="col-9">
