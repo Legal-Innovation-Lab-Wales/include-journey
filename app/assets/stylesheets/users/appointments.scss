@@ -4,9 +4,15 @@
 
 @import "variables";
 
+
 section#upcoming {
   background-color: $white;
   color: $black;
+
+  .cards{
+    background: $brand-primary;
+    text: $brand-primary;
+  }
 
   .upcoming, .create .appointments {
     margin-top: 1rem;
@@ -22,6 +28,10 @@ section#upcoming {
     @media screen and (min-width: $screen-md) {
       margin-top: 0;
     }
+  }
+
+  .cards{
+
   }
 
   .create {

@@ -10,13 +10,6 @@
     <div class="col-md-3 upcoming">
       <h3 class="mb-0">past appointments</h3>
       <div class="container mt-3">
-        <% [*1..4].each do |i| %>
-          <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
-            <div class="col">
-              <%= link_to "Appointment #{i}", '#', class: 'btn btn-success' %>
-            </div>
-          </div>
-        <% end %>
         <div class="row mt-2">
           <div class="col">
             <%= link_to "View all my appointments", new_wellbeing_assessment_path, class: 'btn btn-outline-secondary' %>
@@ -27,7 +20,7 @@
     <div class="col-md-4 appointments">
       <h3 class="mb-0">Your appointments</h3>
         <% @appointments.each do |appointments| %>
-        <div class="container mt-3 bg-dark text-white">
+        <div class="cards mt-3 rounded-1">
           <p> You have an appointment at <%= appointments.where %> about <%= appointments.what %>. It starts at
           <%= time_ago_in_words(appointments.start) %> and ends at <%= time_ago_in_words(appointments.end) %> Your
           appointment is with <%= appointments.who_with %></p>
