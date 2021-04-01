@@ -76,9 +76,15 @@ module TeamMembers
     end
 
     def user_location
-      return @location = { 'city' => 'unknown' } unless @user.current_sign_in_ip.present? && ['127.0.0.1', '::1'].exclude?(@user.current_sign_in_ip)
+      return @location = { 'city' => 'unknown' } if invalid_ip
 
-      @location = Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}" )).body) }
+      @location = Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}" )).body) } rescue { 'city' => 'unknown' }
+    end
+
+    def invalid_ip
+      return true  if @user.current_sign_in_ip.blank?
+
+      ['127.0.0.1', '::1'].include?(@user.current_sign_in_ip)
     end
 
     def wba

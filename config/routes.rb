@@ -52,10 +52,6 @@ Rails.application.routes.draw do
         resources :notes, only: :create, as: :add_note
       end
 
-      # resources :users, only: :show, as: :user do
-      #   resources :notes, only: :create, as: :add_note
-      # end
-
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
