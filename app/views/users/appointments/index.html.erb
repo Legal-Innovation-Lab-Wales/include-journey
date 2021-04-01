@@ -21,9 +21,9 @@
       <h3 class="mb-0">Your appointments</h3>
         <% @appointments.each do |appointments| %>
         <div class="cards mt-3 rounded-1">
-          <p> You have an appointment at <%= appointments.where %> about <%= appointments.what %>. It starts at
-          <%= distance_of_time_in_words(Time.now, appointments.start) %> and ends at <%= distance_of_time_in_words(Time.now, appointments.end) %> Your
-          appointment is with <%= appointments.who_with %></p>
+          <p> You have an appointment at <%= appointments.where %>, about <%= appointments.what %> with
+            <%= appointments.who_with %>. It's in <%= distance_of_time_in_words(Time.now, appointments.start)%> at
+            <%= appointments.start.strftime("%I:%M%p")%>.</p>
         </div>
         <% end %>
       </div>

@@ -5,6 +5,7 @@ FactoryBot.define do
     who_with { "MyString" }
     where { "MyString" }
     what { "MyString" }
+    duration { "" }
     attended { false }
   end
 end

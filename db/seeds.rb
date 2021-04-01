@@ -241,9 +241,9 @@ if User.count.zero?
       appointment_count += 1
       Appointment.create!(
         user: user,
-        who_with: Faker::Games::Pokemon.name,
-        where: Faker::Games::ElderScrolls.city,
-        what: Faker::Games::DnD.alignment,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Company.profession,
         start: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now + 10),
         duration: rand(720..10800)
       )

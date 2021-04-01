@@ -9,7 +9,6 @@ class CreateAppointments < ActiveRecord::Migration[6.1]
       t.string :where
       t.string :what
       t.boolean :attended, default: false
-      t.integer :duration
       t.timestamps
     end
   end
