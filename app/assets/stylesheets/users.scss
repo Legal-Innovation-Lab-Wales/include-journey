@@ -103,7 +103,19 @@
   }
 
   #notes-card {
-    max-height: 50vh;
+    max-height: 57vh;
     overflow: auto;
+  }
+
+  &.show {
+    .wellbeing-chart.wrapper {
+      h3, h5 {
+        text-align: center !important;
+      }
+
+      canvas {
+        margin-top: 1.5rem;
+      }
+    }
   }
 }

@@ -1,19 +1,10 @@
-<main class="container team-members users">
-  <div class="col m-1 mt-3">
-    <%= link_to users_path, class: 'btn btn-primary' do %>
-      <i class="fas fa-arrow-circle-left"></i> <%= 'Back to users' %>
-    <% end %>
-  </div>
-  <section class="row">
-    <div class="col">
-      <h2 class="my-3"><%= @user.full_name %></h2>
-    </div>
-  </section>
+<main class="container team-members users show">
+  <%= render 'shared/back_btn', path: users_path, text: 'Back To Users', query_path: users_path %>
   <div class="row">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
-          <h3>User info</h3>
+          <h3><%= @user.full_name %></h3>
         </div>
         <div class="card-body">
           <div class="row">
@@ -93,34 +84,13 @@
   <div class="row mb-4">
     <div class="col">
       <div class="card">
-        <div class="card-header">
-          <h3>User wellbeing</h3>
-        </div>
         <div class="card-body">
-          <div class="row d-flex align-items-center">
-            <div class="col-12 col-lg-5 text-start">
-              <% if @wba.present? %>
-                <h4>Current wellbeing</h4>
-                <span><strong>Last reported: </strong><%= @wba.created %></span>
-                <canvas class="mt-2 p-xl-5 wellbeing-chart" id="wellbeing-chart" width="400" height="400"></canvas>
-              <% end %>
-            </div>
-            <div class="col-12 col-lg-6 offset-lg-1 sliders d-flex justify-content-center">
-              <% if @wba.present? %>
-                <div class="container mt-3">
-                  <% @wellbeing_metrics.each do |score| %>
-                    <div class="row">
-                      <div class="col-9 col-xl-5">
-                        <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
-                      </div>
-                      <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
-                             value="<%= score.value %>">
-                      <div class="col-3 col-md-3 description-col">
-                        <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
+          <div class="row">
+            <div class="col">
+              <% if @wellbeing_assessment.present? %>
+                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
+                           show_timestamp: true, chart_heading: "#{@wellbeing_assessment.user.full_name}'s Wellbeing",
+                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
               <% end %>
             </div>
           </div>
@@ -217,7 +187,7 @@
         <div class="card-header">
           <h3>User Notes</h3>
         </div>
-        <div class="card-body bg-transparent" id="notes-card">
+        <div class="card-body bg-transparent h-100" id="notes-card">
           <% if @user_notes.empty? %>
             <span>There are no notes on this user yet.</span>
           <% else %>
@@ -249,4 +219,4 @@
   </div>
 </main>
 
-<%= javascript_pack_tag 'polar_area_chart' %>
+<%= javascript_pack_tag 'wellbeing_assessment_chart' %>
