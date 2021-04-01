@@ -92,7 +92,7 @@
     <div class="card-footer">
       <span>Last Sign In</span>
       <span>
-        <%= user.last_sign_in_at.present? ? "#{time_ago_in_words(user.last_sign_in_at)} ago" : user.last_sign_in %>
+        <%= user.current_sign_in_at.present? ? "#{time_ago_in_words(user.current_sign_in_at)} ago" : "Never" %>
       </span>
     </div>
   </div>

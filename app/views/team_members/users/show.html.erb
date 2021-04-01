@@ -66,7 +66,8 @@
       <% if @active_crisis.empty? %>
         <div class="card h-100 border-0">
           <div class="card-header bg-success">
-            <h3>SOS status: none <i class="fa fa-check-circle"></i></h3>
+            <h3>SOS status:
+              <span class="h3">none <i class="fa fa-check-circle"></i></h3>
           </div>
           <div class="card-body text-start">
             <p class="text-start">
@@ -76,9 +77,9 @@
         </div>
       <% else %>
         <div class="card h-100 has-crisis border-0">
-          <div class="card-header bg-danger">
+          <div class="card-header">
             <h3>SOS status:
-              <span class="h3 pb-0">Crisis </span><i class="fas fa-exclamation-triangle"></i>
+              <span class="h3">Crisis </span><i class="fas fa-exclamation-triangle"></i>
             </h3>
           </div>
           <div class="card-body">
