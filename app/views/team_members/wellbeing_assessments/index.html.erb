@@ -14,7 +14,7 @@
       <h3><%= @team_member.present? ? "#{@team_member.full_name}" : 'All' %> wellbeing assessments</h3>
       <%= render 'shared/search_results', query: params[:query], count: @count %>
       <div class="container p-3">
-        <%= render 'shared/limit', multiple: 6 %>
+        <%= render 'shared/limit', multiple: @multiple %>
         <div class="row">
           <% @resources.each do |wellbeing_assessment| %>
             <div class="col-12 col-md-6 mb-3">

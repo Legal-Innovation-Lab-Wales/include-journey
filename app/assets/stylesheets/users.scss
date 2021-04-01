@@ -51,18 +51,6 @@
       }
     }
 
-    .card-header, .card-footer {
-      span {
-        &:first-child {
-          float: left;
-        }
-
-        &:last-child {
-          float: right;
-        }
-      }
-    }
-
     .card-body {
       text-align: left;
 
@@ -92,5 +80,30 @@
         }
       }
     }
+  }
+
+  &.index {
+    .card {
+      .card-header, .card-footer {
+        span {
+          &:first-child {
+            float: left;
+          }
+
+          &:last-child {
+            float: right;
+          }
+        }
+      }
+    }
+  }
+
+  .font-weight-link {
+    font-weight: 700 !important;
+  }
+
+  #notes-card {
+    max-height: 50vh;
+    overflow: auto;
   }
 }

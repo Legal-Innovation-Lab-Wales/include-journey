@@ -9,10 +9,10 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 10
-journal_entries_for_each_user = 10
+wellbeing_assessments_for_each_user = 1
+journal_entries_for_each_user = 5
 crisis_events_count = 100
-notes_count = 1000
+notes_count = 100
 start_time = Time.now
 
 # Create Static Team Members
@@ -164,9 +164,9 @@ if CrisisType.count.zero?
 end
 
 # Create Service Users & Associated Records
-user_count = 0
-wba_count = 0
-journal_count = 0
+user_count = 20
+wba_count = 1
+journal_count = 10
 if User.count.zero?
   total_user_count.times do
     user_count += 1

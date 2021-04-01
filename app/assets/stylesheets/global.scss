@@ -9,6 +9,9 @@ html, body {
 }
 
 body#overboot {
+  background-color: $black;
+  font-family: $font;
+
   .alert {
     z-index: 1080;
   }
@@ -18,8 +21,15 @@ body#overboot {
     font-weight: 800;
     text-transform: lowercase;
   }
-  background-color: $black;
-  font-family: $font;
+
+  .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    @media (min-width: $screen-sm) {
+      --bs-gutter-x: 1.5rem;
+      --bs-gutter-y: 0;
+    }
+  }
 
   .bg-brand {
     background-color: $brand-primary;
@@ -27,6 +37,11 @@ body#overboot {
 
   a {
     font-family: $font-link;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin-bottom: 0.5rem;
   }
 
   table {

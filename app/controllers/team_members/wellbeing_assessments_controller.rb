@@ -57,7 +57,7 @@ module TeamMembers
     end
 
     def multiple
-      6
+      @multiple = 6
     end
 
     def resources
