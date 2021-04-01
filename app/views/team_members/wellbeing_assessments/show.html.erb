@@ -1,7 +1,13 @@
 <main class="container team-members wellbeing-assessments show">
-  <%= render 'shared/back_btn', path: users_path, text: 'Back To All Users',
-             next_path: new_user_wellbeing_assessment_path(@wellbeing_assessment.user),
-             next_text: 'New Wellbeing Assessment' %>
+  <% if @wellbeing_assessment_today.present? %>
+    <%= render 'shared/back_btn', path: users_path, text: 'Back To All Users',
+               next_path: user_path(@wellbeing_assessment.user),
+               next_text: 'View Profile' %>
+  <% else %>
+    <%= render 'shared/back_btn', path: users_path, text: 'Back To All Users',
+               next_path: new_user_wellbeing_assessment_path(@wellbeing_assessment.user),
+               next_text: 'New Wellbeing Assessment' %>
+  <% end %>
   <section class="row" id="wellbeing">
     <div class="col">
       <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '300', show_timestamp: true,
@@ -9,13 +15,15 @@
                  wellbeing_assessment: @wellbeing_assessment %>
     </div>
   </section>
-  <section class="row">
-      <div class="col next-btn">
-        <%= link_to user_path(@wellbeing_assessment.user), class: 'btn btn-primary' do %>
-          View Profile <i class="fas fa-arrow-circle-right"></i>
-        <% end %>
-      </div>
-  </section>
+  <% unless @wellbeing_assessment_today.present? %>
+    <section class="row">
+        <div class="col next-btn">
+          <%= link_to user_path(@wellbeing_assessment.user), class: 'btn btn-primary' do %>
+            View Profile <i class="fas fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+    </section>
+  <% end %>
 </main>
 
 <%= javascript_pack_tag 'wellbeing_assessment_chart' %>

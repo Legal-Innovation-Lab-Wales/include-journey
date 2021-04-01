@@ -1,11 +1,14 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
-    before_action :user, :wellbeing_metrics, only: %i[new create]
-    before_action :new_wellbeing_assessment, :last_wellbeing_assessment, :last_scores, only: :new
     before_action :wellbeing_assessment, only: :show
     before_action :query_params, :page, :query, :limit, :offset, :admin, :team_member, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
+
+    before_action :user, :wellbeing_metrics, only: %i[new create]
+    before_action :wellbeing_assessment_today, only: %i[show new]
+    before_action :wellbeing_assessment_today?, :new_wellbeing_assessment, :last_wellbeing_assessment, only: :new
+    before_action :last_scores, only: :new, if: -> { @last_wellbeing_assessment.present? }
 
     before_action :wba_params, only: :create
     after_action :wba_scores, only: :create
@@ -101,6 +104,17 @@ module TeamMembers
 
     def wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+    end
+
+    def wellbeing_assessment_today?
+      return unless @wellbeing_assessment_today.present?
+
+      redirect_to wellbeing_assessment_path(@wellbeing_assessment_today),
+                  notice: 'The below wellbeing assessment was completed today'
+    end
+
+    def wellbeing_assessment_today
+      @wellbeing_assessment_today = @wellbeing_assessment.user.wellbeing_assessment_today
     end
 
     def wellbeing_metrics
