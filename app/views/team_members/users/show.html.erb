@@ -179,7 +179,7 @@
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <%= button_to "View User's Journal", journal_entries_path(query: @user.full_name), class: "btn btn-primary my-2 py-2 px-5" %>
+          <%= link_to "View User's Journal", journal_entries_path(query: @user.full_name), class: "btn btn-primary my-2 py-2 px-5" %>
         </div>
       </div>
     </div>
