@@ -244,8 +244,8 @@ if User.count.zero?
         who_with: Faker::Games::Pokemon.name,
         where: Faker::Games::ElderScrolls.city,
         what: Faker::Games::DnD.alignment,
-        start: Faker::Time.between(from: 7.days.ago, to: 7.days.ago),
-        end: Faker::Time.between(from: 7.days.ago, to: 6.days.ago),
+        start: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now + 10),
+        duration: rand(720..10800)
       )
     end
   end

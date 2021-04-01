@@ -22,25 +22,23 @@
         <% @appointments.each do |appointments| %>
         <div class="cards mt-3 rounded-1">
           <p> You have an appointment at <%= appointments.where %> about <%= appointments.what %>. It starts at
-          <%= time_ago_in_words(appointments.start) %> and ends at <%= time_ago_in_words(appointments.end) %> Your
+          <%= distance_of_time_in_words(Time.now, appointments.start) %> and ends at <%= distance_of_time_in_words(Time.now, appointments.end) %> Your
           appointment is with <%= appointments.who_with %></p>
         </div>
         <% end %>
       </div>
     <div class="col-md-5 create">
           <h3 class="mb-0">Create new appointment</h3>
-          <p> Enter in the infomation to book a new appointment, a member of the team will get back in touch to confirm
-            your booking </p>
+          <p> Enter in the information to add a new event.</p>
           <%= form_with model: @appointment do |f| %>
-            <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
             <%= f.label :where %>
-            <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
+            <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
             <%= f.label :who_with %>
+            <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
+            <%= f.label :what_about %>
             <%= f.text_field :what, autofocus: true, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
-            <%= f.label :what %>
+
             <div class="form-floating">
-              <%= f.number_field :duration, class: 'form-control', autocomplete: "duration (In minutes)", placeholder: "How long? (Minutes)" %>
-              <%= f.label :duration_in_minutes %>
             </div>
             <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
           <% end %>
