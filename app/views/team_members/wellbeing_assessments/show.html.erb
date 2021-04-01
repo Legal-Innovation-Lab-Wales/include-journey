@@ -9,6 +9,13 @@
                  wellbeing_assessment: @wellbeing_assessment %>
     </div>
   </section>
+  <section class="row">
+      <div class="col next-btn">
+        <%= link_to user_path(@wellbeing_assessment.user), class: 'btn btn-primary' do %>
+          View Profile <i class="fas fa-arrow-circle-right"></i>
+        <% end %>
+      </div>
+  </section>
 </main>
 
 <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
