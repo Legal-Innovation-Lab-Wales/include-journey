@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/pagination_controller.rb
   class PaginationController < UsersApplicationController
-    before_action :query_params, :page, :query, :limit, :offset, :resources,
+    before_action :query_params, :page, :query, :multiple, :limit, :offset, :resources,
                   :count, :last_page, :limit_resources, :redirect, only: :index
 
     def index
@@ -9,8 +9,6 @@ module Users
     end
 
     protected
-
-    RESOURCES_PER_PAGE = 5
 
     def count
       @count = @resources.count
@@ -26,7 +24,21 @@ module Users
     end
 
     def limit
-      @limit = RESOURCES_PER_PAGE
+      if query_params[:limit].present?
+        limit = query_params[:limit].to_i
+
+        if limit.positive? && limit <= @multiple * 10
+          @limit = limit
+        else
+          redirect_back(fallback_location: authenticated_user_root_path, alert: 'Invalid Limit')
+        end
+      else
+        @limit = @multiple
+      end
+    end
+
+    def multiple
+      @multiple = 5
     end
 
     def offset
@@ -48,7 +60,7 @@ module Users
     end
 
     def query_params
-      params.permit(:page, :query)
+      params.permit(:page, :query, :limit)
     end
 
     def redirect

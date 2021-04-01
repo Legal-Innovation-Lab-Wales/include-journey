@@ -41,10 +41,6 @@ module TeamMembers
 
     protected
 
-    def limit
-      @limit = 6
-    end
-
     def resources
       @resources = if @query.present?
                      User.includes(:wellbeing_assessments, :crisis_events)
@@ -121,6 +117,10 @@ module TeamMembers
 
     def message(message)
       "#{@user.full_name} #{message}"
+    end
+
+    def multiple
+      @multiple = 6
     end
 
     def pinned_users
