@@ -246,7 +246,6 @@ if User.count.zero?
         what: Faker::Games::DnD.alignment,
         start: Faker::Time.between(from: 7.days.ago, to: 7.days.ago),
         end: Faker::Time.between(from: 7.days.ago, to: 6.days.ago),
-        duration: Faker::Number.between(from: 1, to: 30)
       )
     end
   end
