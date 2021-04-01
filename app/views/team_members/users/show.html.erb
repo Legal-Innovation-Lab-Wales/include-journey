@@ -57,7 +57,7 @@
         <div class="card-footer d-flex justify-content-between">
           <span>Last Sign In</span>
           <span>
-            <%= @user.current_sign_in_at.present? ? "#{time_ago_in_words(@user.current_sign_in_at)} ago from #{@location["city"]}" : @user.current_sign_in %>
+            <%= @user.current_sign_in_at.present? ? "#{time_ago_in_words(@user.current_sign_in_at)} ago from #{@location["city"]}" : "Never" %>
           </span>
         </div>
       </div>
