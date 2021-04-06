@@ -6,10 +6,6 @@
 
 .wellbeing-assessments {
   &.index {
-    section.back-btn .col.next {
-      text-align: right;
-    }
-
     a {
       transition: 0.5s;
 
@@ -18,16 +14,19 @@
         background-color: $brand-secondary;
       }
 
-      .sliders {
-        font-size: 0.8rem;
+      .card-body {
+        .sliders {
+          padding: 0;
+          font-size: 0.8rem;
 
-        .row {
-          margin-bottom: 0 !important;
+          .row {
+            margin-bottom: 0 !important;
 
-          label {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            label {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
         }
       }
@@ -50,40 +49,37 @@ section#wellbeing {
   background-color: $white;
   color: $black;
 
-  .services, .sliders {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 3rem;
-    }
-  }
-
-  .chart {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 0;
-    }
+  h3, h5, .submit-btn {
+    text-align: center !important;
   }
 
   .sliders {
-    .col-3, .col-9, .col-md-5 {
-      &:first-child {
-        text-align: left;
-      }
-    }
+    margin-top: 2.5rem;
+    text-align: left;
 
-    .col-3.description-col {
-      text-align: right;
-      padding: 0;
+    .row {
+      margin-top: 0.5rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+
+      label {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input {
+        cursor: pointer;
+      }
+
       .description {
+        width: 100%;
         font-family: $font-link;
         transition: all 0.5s;
       }
-    }
-
-    input {
-      cursor: pointer;
     }
   }
 }

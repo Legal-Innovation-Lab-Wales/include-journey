@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
     before_action :user, except: :index
-    before_action :user_location, :note, :user_notes, :wba, :wellbeing_metrics, :journal_entries, :unread_entries, :active_crisis, only: :show
+    before_action :user_location, :note, :user_notes, :wellbeing_assessment, :journal_entries, :unread_entries, :active_crisis, only: :show
     before_action :maximum, :user_pin, except: %i[show index]
     before_action :verify_pin, only: :pin
     before_action :verify_unpin, only: :unpin
@@ -83,16 +83,10 @@ module TeamMembers
       ['127.0.0.1', '::1'].include?(@user.current_sign_in_ip)
     end
 
-    def wba
-      @wba = @user.last_wellbeing_assessment
+    def wellbeing_assessment
+      @wellbeing_assessment = @user.last_wellbeing_assessment
     rescue ActiveRecord::RecordNotFound
       session notice: 'No wellbeing assessment could be found'
-    end
-
-    def wellbeing_metrics
-      return unless wba.present?
-
-      @wellbeing_metrics = @wba.wba_scores.includes(:wellbeing_metric)
     end
 
     def active_crisis
