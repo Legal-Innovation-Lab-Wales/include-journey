@@ -65,20 +65,12 @@
             margin-bottom: 0;
           }
 
-          .chart {
+          .wellbeing-chart-col {
+            border-radius: 1rem;
             text-align: center;
 
-            .wellbeing-chart-wrapper {
-              padding: 0.75rem;
-              border-radius: 1rem;
-            }
-
-            a:hover {
-              color: $brand-primary;
-
-              .wellbeing-chart-wrapper {
-                background-color: $brand-secondary-dark;
-              }
+            &:hover {
+              background-color: $brand-secondary-dark;
             }
           }
 
@@ -111,7 +103,19 @@
   }
 
   #notes-card {
-    max-height: 50vh;
+    max-height: 57vh;
     overflow: auto;
+  }
+
+  &.show {
+    .wellbeing-chart.wrapper {
+      h3, h5 {
+        text-align: center !important;
+      }
+
+      canvas {
+        margin-top: 1.5rem;
+      }
+    }
   }
 }

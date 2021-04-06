@@ -11,7 +11,7 @@
     <% end %>
   </div>
   <% if local_assigns[:next_path].present? %>
-    <div class="col next">
+    <div class="col next-btn">
       <%= link_to local_assigns[:next_path], class: 'btn btn-primary' do %>
         <%= local_assigns[:next_text] %> <i class="fas fa-arrow-circle-right"></i>
       <% end %>

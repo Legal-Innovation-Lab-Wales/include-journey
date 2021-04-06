@@ -1,0 +1,8 @@
+<div class="col-12 <%= local_assigns[:hide_sliders].present? ? '' : 'col-xl-6' %> chart">
+  <% if local_assigns[:chart_heading].present? %>
+    <h3><%= local_assigns[:chart_heading] %></h3>
+  <% end %>
+  <canvas class="wellbeing-chart" width="400"
+          height="<%= local_assigns[:height].present? ? local_assigns[:height] : '400' %>">
+  </canvas>
+</div>

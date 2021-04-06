@@ -6,7 +6,7 @@
     <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
                query_path: wellbeing_assessments_path,
                next_path: team_member_wellbeing_assessments_path(current_team_member),
-               next_text: 'My Wellbeing Assessments'%>
+               next_text: 'My Wellbeing Assessments' %>
   <% end %>
   <%= render 'shared/wrapped_search' %>
   <section class="row p-0">
@@ -31,33 +31,7 @@
                 </div>
                 <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
                   <div class="card-body p-2">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-12 col-md-6 mb-3 mb-md-0">
-                          <div class="sliders container p-0">
-                            <% wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
-                              <div class="row p-0">
-                                <div class="col-8">
-                                  <label for="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>">
-                                    <%= score.wellbeing_metric.name %>
-                                  </label>
-                                </div>
-                                <div class="col-4">
-                                  <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
-                                </div>
-                                <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
-                                       value="<%= score.value %>">
-                              </div>
-                            <% end %>
-                          </div>
-                        </div>
-                        <div class="col-12 col-md-6 mb-3 mb-md-0">
-                            <div class="wellbeing-chart-wrapper">
-                              <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
+                    <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
                   </div>
                 </a>
               </div>
@@ -82,4 +56,4 @@
   </section>
 </main>
 
-<%= javascript_pack_tag "polar_area_chart" %>
+<%= javascript_pack_tag "wellbeing_assessment_chart" %>
