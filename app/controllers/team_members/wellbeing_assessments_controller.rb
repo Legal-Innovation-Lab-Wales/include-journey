@@ -2,12 +2,8 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
     before_action :wellbeing_assessment, only: :show
-    before_action :query_params, :page, :query, :limit, :offset, :team_member, :wellbeing_assessments, only: :index
 
-    before_action :resources, only: :index, unless: -> { @query.present? }
-    before_action :search, only: :index, if: -> { @query.present? }
-
-    before_action :count, :last_page, :limit_resources, :redirect, only: :index
+    before_action :last_page, :limit_resources, :redirect, only: :index
 
     before_action :user, :wellbeing_metrics, only: %i[new create]
     before_action :wellbeing_assessment_today, only: %i[show new]
@@ -16,6 +12,14 @@ module TeamMembers
 
     before_action :wba_params, only: :create
     after_action :wba_scores, only: :create
+
+    def index
+      team_member
+      user
+      @wellbeing_assessments = wellbeing_assessments
+      @query.present? ? search : resources
+      super
+    end
 
     # GET /wellbeing_assessments/:id
     def show
@@ -58,7 +62,13 @@ module TeamMembers
     end
 
     def resources
-      @resources = @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+      debugger
+      @resources =
+        if @user.present?
+          @wellbeing_assessments.includes(:user, :wba_scores).where(user: @user).order(created_at: :desc)
+        else
+          @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+        end
     end
 
     def search
@@ -73,6 +83,8 @@ module TeamMembers
     end
 
     def user
+      return unless params[:user_id].present?
+
       @user = User.find(params[:user_id])
     end
 
@@ -92,7 +104,7 @@ module TeamMembers
     end
 
     def wellbeing_assessments
-      @wellbeing_assessments = @team_member.present? ? @team_member.wellbeing_assessments : WellbeingAssessment
+      @team_member.present? ? @team_member.wellbeing_assessments : WellbeingAssessment
     end
 
     def wellbeing_assessment_today?
