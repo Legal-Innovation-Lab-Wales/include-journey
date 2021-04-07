@@ -250,9 +250,16 @@ if User.count.zero?
       end
     end
 
-    # contacts_for_each_user.times do
-      
-    # end
+    contacts_for_each_user.times do
+      name = Faker::Name.name
+      Contact.create!(
+        user: user,
+        name: name,
+        number: Faker::Number.leading_zero_number(digits: 11),
+        email: Faker::Internet.email(name: name, separators: '-'),
+        description: Faker::Job.position
+      )
+    end
   end
 
   user = User.new(
