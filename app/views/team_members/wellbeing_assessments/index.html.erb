@@ -40,7 +40,9 @@
         </div>
       </div>
     </div>
-    <% if @admin %>
+
+    <% if @team_member.present? && (current_team_member.admin? || current_team_member == @team_member)  %>
+
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
                  first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query, limit: params[:limit]),
                  next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query, limit: params[:limit]),

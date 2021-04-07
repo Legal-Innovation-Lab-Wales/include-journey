@@ -3,8 +3,6 @@ module TeamMembers
   class WellbeingAssessmentsController < PaginationController
     before_action :wellbeing_assessment, only: :show
 
-    before_action :last_page, :limit_resources, :redirect, only: :index
-
     before_action :user, :wellbeing_metrics, only: %i[new create]
     before_action :wellbeing_assessment_today, only: %i[show new]
     before_action :wellbeing_assessment_today?, :new_wellbeing_assessment, :last_wellbeing_assessment, only: :new
@@ -16,7 +14,6 @@ module TeamMembers
     def index
       team_member
       user
-      @wellbeing_assessments = wellbeing_assessments
       @query.present? ? search : resources
       super
     end
@@ -62,18 +59,22 @@ module TeamMembers
     end
 
     def resources
-      debugger
+      @wellbeing_assessments = wellbeing_assessments
       @resources =
         if @user.present?
           @wellbeing_assessments.includes(:user, :wba_scores).where(user: @user).order(created_at: :desc)
         else
           @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
         end
+      @count = count
+      limit_resources
+      redirect
     end
 
     def search
       @resources = @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
                                          .order(created_at: :desc)
+      @count = count
     end
 
     def team_member
