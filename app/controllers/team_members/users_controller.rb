@@ -42,15 +42,18 @@ module TeamMembers
     protected
 
     def resources
-      @resources = if @query.present?
-                     User.includes(:wellbeing_assessments, :crisis_events)
-                         .where(user_search, wildcard_query)
-                         .order(created_at: :desc)
-                   else
-                     User.includes(:wellbeing_assessments, :crisis_events)
-                         .where.not(id: current_team_member.pinned_users)
-                         .order(created_at: :desc)
-                   end
+      @resources =
+        if @query.present?
+          User.includes(:wellbeing_assessments, :crisis_events)
+              .where(user_search, wildcard_query)
+              .order(created_at: :desc)
+        else
+          User.includes(:wellbeing_assessments, :crisis_events)
+              .where.not(id: current_team_member.pinned_users)
+              .order(created_at: :desc)
+        end
+      @count = count
+      limit_resources
     end
 
     private

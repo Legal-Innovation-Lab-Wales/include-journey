@@ -6,7 +6,7 @@ module TeamMembers
       @query = query_params[:query]
       multiple unless @multiple
       resources unless @resources
-      render 'index'
+      @resources.present? ? render('index') : redirect
     end
 
     protected
@@ -62,8 +62,6 @@ module TeamMembers
     end
 
     def redirect
-      return if @resources.present?
-
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'No Results Found')
     end
 
@@ -72,7 +70,7 @@ module TeamMembers
     end
 
     def wildcard_query
-      { query: "%#{@query.split.join('%|%')}%" }
+      { query: "%#{query_params[:query].split.join('%|%')}%" }
     end
   end
 end

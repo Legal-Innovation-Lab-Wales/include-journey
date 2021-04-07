@@ -14,7 +14,7 @@ module TeamMembers
     def index
       team_member
       user
-      @query.present? ? search : resources
+      query_params[:query].present? ? search : resources
       super
     end
 
@@ -71,9 +71,11 @@ module TeamMembers
     end
 
     def search
+      @wellbeing_assessments = wellbeing_assessments
       @resources = @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
                                          .order(created_at: :desc)
       @count = count
+      limit_resources
     end
 
     def team_member

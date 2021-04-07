@@ -23,7 +23,6 @@ module TeamMembers
         end
       @count = count
       limit_resources
-      redirect unless @resources.present?
     end
 
     private
