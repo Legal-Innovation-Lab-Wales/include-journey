@@ -29,6 +29,14 @@ class User < DeviseRecord
     wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
   end
 
+  def wellbeing_assessment_history
+    history = { labels: [], datasets: [] }
+
+    wellbeing_assessments.includes(:wba_scores).each { |wba| wba.add_to_history(history) }
+
+    history
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,

@@ -39,6 +39,13 @@ module TeamMembers
                     notice: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
     end
 
+    # GET /users/:user_id/wba_history
+    def wba_history
+      respond_to do |format|
+        format.json { render json: @user.wellbeing_assessment_history.as_json, status: :ok }
+      end
+    end
+
     protected
 
     def resources

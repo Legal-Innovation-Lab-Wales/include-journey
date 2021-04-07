@@ -9,7 +9,7 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 1
+wellbeing_assessments_for_each_user = 30
 journal_entries_for_each_user = 5
 crisis_events_count = 100
 notes_count = 100
@@ -194,7 +194,9 @@ if User.count.zero?
       # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
-        user: user
+        user: user,
+        created_at: Date.today - (wba_count - 1),
+        updated_at: Date.today - (wba_count - 1)
       )
 
       wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
@@ -203,7 +205,9 @@ if User.count.zero?
         WbaScore.create!(
           wellbeing_assessment: wellbeing_assessment,
           wellbeing_metric: wellbeing_metric,
-          value: rand(1..10)
+          value: rand(1..10),
+          created_at: Date.today - (wba_count - 1),
+          updated_at: Date.today - (wba_count - 1)
         )
       end
     end
