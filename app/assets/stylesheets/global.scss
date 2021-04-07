@@ -8,6 +8,10 @@ html, body {
   min-height: 100vh;
 }
 
+.btn {
+  box-shadow: none !important;
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
@@ -73,14 +77,6 @@ body#overboot {
         overflow: hidden;
         text-overflow: ellipsis;
       }
-    }
-
-    .fa-check-circle {
-      color: $success;
-    }
-
-    .fa-times-circle {
-      color: $danger;
     }
   }
 }
