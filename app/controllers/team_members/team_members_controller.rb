@@ -25,12 +25,10 @@ module TeamMembers
     def reject
       return if @team_member.approved
 
-      name = @team_member.full_name
-
       if @team_member.destroy
-        redirect_to team_members_path, flash: { success: "#{name} has been rejected" }
+        redirect_to team_members_path, flash: { success: "#{@team_member.full_name} has been rejected" }
       else
-        redirect_to team_members_path, flash: { error: "#{name} could not be rejected" }
+        redirect_to team_members_path, flash: { error: "#{@team_member.full_name} could not be rejected" }
       end
     end
 
