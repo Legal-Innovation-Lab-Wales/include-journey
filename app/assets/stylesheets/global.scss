@@ -78,5 +78,13 @@ body#overboot {
         text-overflow: ellipsis;
       }
     }
+
+    .fa-check-circle, .fa-play-circle {
+      color: $success;
+    }
+
+    .fa-times-circle, .fa-pause-circle {
+      color: $danger;
+    }
   }
 }
