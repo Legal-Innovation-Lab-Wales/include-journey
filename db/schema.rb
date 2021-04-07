@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_225120) do
+ActiveRecord::Schema.define(version: 2021_04_07_142947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "number"
+    t.string "email"
+    t.text "description"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_contacts_on_user_id"
+  end
 
   create_table "crisis_events", force: :cascade do |t|
     t.text "additional_info"
@@ -187,6 +198,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
   end
 
+  add_foreign_key "contacts", "users"
   add_foreign_key "crisis_events", "crisis_types"
   add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"

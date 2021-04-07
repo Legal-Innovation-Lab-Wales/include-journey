@@ -11,6 +11,7 @@ require 'faker'
 total_user_count = 10
 wellbeing_assessments_for_each_user = 10
 journal_entries_for_each_user = 10
+contacts_for_each_user = 5
 crisis_events_count = 100
 notes_count = 1000
 start_time = Time.now
@@ -67,6 +68,21 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     last_name: 'Harrison',
     email: 'benmharrison@me.com',
     mobile_number: '07555444333',
+    admin: true,
+    approved: true,
+    terms: true,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
+  team_member = TeamMember.new(
+    first_name: 'Gareth',
+    last_name: 'Andrews',
+    email: 'g.d.andrews@swansea.ac.uk',
+    mobile_number: '07890123456',
     admin: true,
     approved: true,
     terms: true,
@@ -233,6 +249,10 @@ if User.count.zero?
         )
       end
     end
+
+    # contacts_for_each_user.times do
+      
+    # end
   end
 
   user = User.new(
