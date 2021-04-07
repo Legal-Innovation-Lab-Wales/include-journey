@@ -7,7 +7,7 @@
     </div>
   </div>
   <section class="row pb-4" id="upcoming">
-    <div class="col-md-3 upcoming">
+    <div class="col upcoming">
       <h3 class="mb-0">past appointments</h3>
       <div class="container mt-3">
         <div class="row mt-2">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 appointments">
+    <div class="col appointments">
       <h3 class="mb-0">Your appointments</h3>
         <% @appointments.each do |appointments| %>
         <div class="cards mt-3 rounded-1">
@@ -27,16 +27,23 @@
         </div>
         <% end %>
       </div>
-    <div class="col-md-5 create">
+    <div class="col create">
           <h3 class="mb-0">Create new appointment</h3>
           <p> Enter in the information to add a new event.</p>
-          <%= form_with model: @appointment do |f| %>
+          <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
             <%= f.label :where %>
             <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
             <%= f.label :who_with %>
             <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
             <%= f.label :what_about %>
             <%= f.text_field :what, autofocus: true, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
+            <%= f.text_field :start_date, "data-provide" => 'datepicker' %>
+            <%= datepicker_input f, :end_date %>
+
+        <script type="text/javascript">
+            $('[data-behaviour~=datepicker]').datepicker();
+        </script>
+
 
             <div class="form-floating">
             </div>

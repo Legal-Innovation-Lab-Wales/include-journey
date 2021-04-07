@@ -30,6 +30,9 @@ gem 'bootstrap', '~> 5.0.0.beta2'
 gem 'font-awesome-sass', '~> 5.15.1'
 gem 'chartkick'
 
+#Datepicker gem
+gem 'bootstrap-datepicker-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
