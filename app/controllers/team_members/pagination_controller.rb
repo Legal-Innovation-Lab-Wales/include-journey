@@ -4,6 +4,8 @@ module TeamMembers
     def index
       @page = page
       @query = query_params[:query]
+      multiple unless @multiple
+      resources unless @resources
       render 'index'
     end
 

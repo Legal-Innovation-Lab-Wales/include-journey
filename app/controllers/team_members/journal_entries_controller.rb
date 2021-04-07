@@ -11,15 +11,19 @@ module TeamMembers
     protected
 
     def resources
-      @resources = if @query.present?
-                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                                        .joins(:user)
-                                        .where(user_search, wildcard_query)
-                                        .order(created_at: :desc)
-                   else
-                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                                        .order(created_at: :desc)
-                   end
+      @resources =
+        if @query.present?
+          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                             .joins(:user)
+                             .where(user_search, wildcard_query)
+                             .order(created_at: :desc)
+        else
+          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                             .order(created_at: :desc)
+        end
+      @count = count
+      limit_resources
+      redirect unless @resources.present?
     end
 
     private

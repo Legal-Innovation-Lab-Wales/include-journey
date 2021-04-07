@@ -68,7 +68,6 @@ module TeamMembers
         end
       @count = count
       limit_resources
-      redirect
     end
 
     def search
