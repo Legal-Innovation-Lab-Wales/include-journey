@@ -2,20 +2,35 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < PaginationController
     before_action :user, except: :index
-    before_action :user_location, :note, :user_notes, :wellbeing_assessment, :journal_entries, :unread_entries, :active_crisis, only: :show
-    before_action :maximum, :user_pin, except: %i[show index]
-    before_action :verify_pin, only: :pin
-    before_action :verify_unpin, only: :unpin
-    before_action :pinned_users, :active_users, :user_count, only: :index
+    before_action :user_pin, except: %i[show index]
+
+    # GET /users
+    def index
+      @resources_per_page = 6
+      @pinned_users = current_team_member.pinned_users.order(:order)
+      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
+      @user_count = User.count
+      super
+    end
 
     # GET /users/:id
     def show
+      user_location
+      wellbeing_assessment
+      @note = Note.new
+      @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
+      @journal_entries = current_team_member.journal_entries.where(user: @user)
+      @unread_journal_entries = current_team_member.unread_journal_entries(@user)
+      @active_crisis = @user.crisis_events.active
+
       render 'show'
     end
 
     # PUT /users/:id/pin
     def pin
-      @user_pin = current_team_member.user_pins.create!({ user: @user, order: @maximum.present? ? @maximum.next : 1 })
+      verify_pin
+      maximum = current_team_member.user_pins.maximum(:order)
+      @user_pin = current_team_member.user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
 
       redirect_back(fallback_location: authenticated_team_member_root_path,
                     notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
@@ -23,6 +38,7 @@ module TeamMembers
 
     # PUT /users/:id/unpin
     def unpin
+      verify_unpin
       redirect_back(fallback_location: authenticated_team_member_root_path,
                     notice: @user_pin.destroy! ? message('has been unpinned') : message('could not be unpinned'))
     end
@@ -56,20 +72,8 @@ module TeamMembers
 
     private
 
-    def note
-      @note = Note.new
-    end
-
     def user
       @user = User.includes(:notes).find(params[:id])
-    end
-
-    def user_count
-      @user_count = User.count
-    end
-
-    def user_notes
-      @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
     end
 
     def user_location
@@ -79,7 +83,7 @@ module TeamMembers
     end
 
     def invalid_ip
-      return true  if @user.current_sign_in_ip.blank?
+      return true if @user.current_sign_in_ip.blank?
 
       ['127.0.0.1', '::1'].include?(@user.current_sign_in_ip)
     end
@@ -90,36 +94,8 @@ module TeamMembers
       session notice: 'No wellbeing assessment could be found'
     end
 
-    def active_crisis
-      @active_crisis = @user.crisis_events.active
-    end
-
-    def journal_entries
-      @journal_entries = current_team_member.journal_entries.where(user: @user)
-    end
-
-    def unread_entries
-      @unread_journal_entries = current_team_member.unread_journal_entries(@user)
-    end
-
-    def active_users
-      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
-    end
-
-    def maximum
-      @maximum = current_team_member.user_pins.maximum(:order)
-    end
-
     def message(message)
       "#{@user.full_name} #{message}"
-    end
-
-    def multiple
-      @multiple = 6
-    end
-
-    def pinned_users
-      @pinned_users = current_team_member.pinned_users.order(:order)
     end
 
     def user_pin

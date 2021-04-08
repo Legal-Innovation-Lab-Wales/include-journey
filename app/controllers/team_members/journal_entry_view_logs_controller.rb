@@ -1,7 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/journal_entry_view_logs_controller.rb
   class JournalEntryViewLogsController < ViewLogsController
-
     protected
 
     def resources

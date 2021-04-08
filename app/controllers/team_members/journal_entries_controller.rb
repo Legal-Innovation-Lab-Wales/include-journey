@@ -1,10 +1,11 @@
 module TeamMembers
   # app/controllers/team_members/journal_entries_controller.rb
   class JournalEntriesController < PaginationController
-    before_action :journal_entry, :view_log, only: :show
-
     # GET /journal_entries/:id
     def show
+      journal_entry
+      view_log
+
       render 'show'
     end
 

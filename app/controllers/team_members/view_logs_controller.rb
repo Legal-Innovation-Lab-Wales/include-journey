@@ -2,13 +2,12 @@ module TeamMembers
   # app/controllers/team_members/view_logs_controller.rb
   class ViewLogsController < PaginationController
     before_action :require_admin
-    before_action :page, :limit, :offset, :team_member, :resources, :count, :last_page, :limit_resources, only: :index
-    before_action :redirect, only: :index, unless: -> { @resources.present? }
+    before_action :team_member, only: :index
 
     protected
 
     def team_member
-      raise 'Subclass has not overridden view_log_path function'
+      raise 'Subclass has not overridden team_member function'
     end
 
     private

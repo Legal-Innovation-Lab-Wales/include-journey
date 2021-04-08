@@ -1,11 +1,13 @@
 module TeamMembers
   # app/controllers/team_members/team_members_controller.rb
   class TeamMembersController < AdminApplicationController
-    before_action :team_member, only: %i[show approve_team_member toggle_admin]
-    before_action :unapproved_team_members, :approved_team_members, only: :index
+    before_action :team_member, except: :index
 
     # GET /team_members
     def index
+      @unapproved_team_members = TeamMember.unapproved.order(created_at: :desc)
+      @approved_team_members = TeamMember.approved.order(created_at: :desc)
+
       render 'index'
     end
 
@@ -15,39 +17,44 @@ module TeamMembers
     end
 
     # PUT /team_members/:id/approve
-    def approve_team_member
-      if @team_member.update(approved: true)
-        redirect_to team_members_path, success: "#{@team_member.first_name} has been approved"
+    def approve
+      @team_member.update(approved: true) ? success(true, 'approved') : failure('approval')
+    end
+
+    # PUT /team_members/:id/reject
+    def reject
+      return if @team_member.approved
+
+      if @team_member.destroy
+        redirect_to team_members_path, flash: { success: "#{@team_member.full_name} has been rejected" }
       else
-        redirect_to team_members_path, error: "#{@team_member.first_name} could not be approved"
+        redirect_to team_members_path, flash: { error: "#{@team_member.full_name} could not be rejected" }
       end
     end
 
     # PUT /team_members/:id/admin
     def toggle_admin
-      if @team_member.update(admin: !@team_member.admin?)
-        redirect_to team_members_path, notice: admin_alert
-      else
-        redirect_to team_members_path, error: "#{@team_member.first_name} admin status could not be changed"
-      end
+      @team_member.update(admin: !@team_member.admin?) ? success(@team_member.admin?, 'an admin') : failure('admin')
+    end
+
+    # PUT /team_members/:id/pause
+    def toggle_pause
+      @team_member.update(paused: !@team_member.paused?) ? success(@team_member.paused?, 'paused') : failure('pause')
     end
 
     private
 
-    def admin_alert
-      @team_member.admin? ? "#{@team_member.first_name} is now an admin" : "#{@team_member.first_name} is no longer an admin"
+    def fail(type)
+      redirect_to team_members_path, flash: { error: "#{@team_member.first_name} #{type} status could not be changed" }
     end
 
-    def approved_team_members
-      @approved_team_members = TeamMember.approved.order(:created_at)
+    def success(status, type)
+      redirect_to team_members_path,
+                  flash: { success: "#{@team_member.first_name} is #{status ? 'now' : 'no longer'} #{type}" }
     end
 
     def team_member
       @team_member = TeamMember.find(params[:id])
-    end
-
-    def unapproved_team_members
-      @unapproved_team_members = TeamMember.unapproved.order(created_at: :desc)
     end
   end
 end

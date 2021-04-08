@@ -1,17 +1,20 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < PaginationController
-    before_action :crisis_events, only: :active
-    before_action :crisis_event, only: %i[show close add_note]
-    before_action :note, :notes, only: :show
+    before_action :crisis_event, except: %i[index active]
 
     # GET /crisis_events/active
     def active
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+
       render 'active'
     end
 
     # GET /crisis_events/:id
     def show
+      @note = CrisisNote.new
+      @notes = @crisis_event.crisis_notes.includes(:team_member).order(updated_at: :desc)
+
       render 'show'
     end
 
@@ -53,20 +56,8 @@ module TeamMembers
       @crisis_event = CrisisEvent.includes(:user, :crisis_type).find(params[:id])
     end
 
-    def crisis_events
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
-    end
-
     def crisis_search
       'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
-    end
-
-    def note
-      @note = CrisisNote.new
-    end
-
-    def notes
-      @notes = @crisis_event.crisis_notes.includes(:team_member).order(updated_at: :desc)
     end
 
     def crisis_notes_params

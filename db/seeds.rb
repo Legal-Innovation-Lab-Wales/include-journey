@@ -25,6 +25,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -40,6 +41,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -55,6 +57,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -70,6 +73,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
