@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < PaginationController
-    before_action :crisis_events, only: :active
+    before_action :crisis_events, only: %i[index active]
+    before_action :closed_events, only: :index
     before_action :crisis_event, only: %i[show close add_note]
     before_action :note, :notes, only: :show
 
@@ -54,6 +55,10 @@ module TeamMembers
 
     def crisis_events
       @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+    end
+
+    def closed_events
+      @closed_events = CrisisEvent.closed.includes(:user, :crisis_type).order(updated_at: :desc)
     end
 
     def crisis_search
