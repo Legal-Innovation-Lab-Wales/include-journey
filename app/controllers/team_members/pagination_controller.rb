@@ -35,7 +35,7 @@ module TeamMembers
           redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'Invalid Limit')
         end
       else
-        @limit = @multiple
+        @multiple
       end
     end
 
