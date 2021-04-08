@@ -1,36 +1,73 @@
+const scale = [
+    { description: "Abysmal", colour: "#E04444" },
+    { description: "Dreadful", colour: "#E64D52" },
+    { description: "Rubbish", colour: "#E86754" },
+    { description: "Bad", colour: "#EC8754" },
+    { description: "Mediocre", colour: "#F0A656" },
+    { description: "Fine", colour: "#DFC54C" },
+    { description: "Good", colour: "#BFCA48" },
+    { description: "Great", colour: "#9ECB46" },
+    { description: "Superb", colour: "#BFCB43" },
+    { description: "Perfect", colour: "#5DAD3A" }
+]
+
 fetch(`${location}/wba_history`, {
     headers: {
         'Content-Type': 'application/json'
     }
 })
-    .then(data => data.json())
-    .then(json => {
-        const schemeCategory10 = [
-            '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-            '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
-        ]
+.then(data => data.json())
+.then(json => {
+    const schemeCategory10 = [
+        '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
+        '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+    ]
 
-        json.datasets.forEach((dataset, index) => {
-            dataset.borderColor = schemeCategory10[index]
-            dataset.backgroundColor = `${schemeCategory10[index]}80`
-            dataset.lineTension = 0
-            dataset.hidden = index > 0
-        })
-
-        const history_chart = document.querySelector('#wellbeing-history-chart')
-        const chart = new Chart(history_chart.getContext('2d'), {
-            type: 'line',
-            data: json,
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 1,
-                            max: 10,
-                            stepSize: 1
-                        }
-                    }]
-                }
-            }
-        })
+    json.datasets.forEach((dataset, index) => {
+        dataset.borderColor = schemeCategory10[index]
+        dataset.lineTension = 0
+        dataset.fill = false
+        dataset.hidden = index > 0
     })
+
+    const history_chart = document.querySelector('#wellbeing-history-chart')
+    const chart = new Chart(history_chart.getContext('2d'), {
+        type: 'line',
+        data: json,
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        tooltipFormat: 'MMMM Do YYYY',
+                        displayFormats: {
+                            day: 'L'
+                        }
+                    },
+                    ticks: {
+                        min: json.labels[0],
+                        max: json.labels[json.labels.length - 1]
+                    },
+                    gridLines: {
+                        zeroLineColor: '#A7B5BB'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 1,
+                        max: 10,
+                        stepSize: 1,
+                        padding: 15,
+                        callback: value => scale[value - 1].description
+                    },
+                    gridLines: {
+                        drawBorder: false,
+                        tickMarkLength: 0,
+                        lineWidth: Array(10).fill(10),
+                        color: scale.map(s => s.colour).reverse()
+                    }
+                }]
+            }
+        }
+    })
+})
