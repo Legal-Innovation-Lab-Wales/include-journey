@@ -6,7 +6,7 @@
     <div class="col">
       <h3>Journal Entries</h3>
       <%= render 'shared/search_results', query: params[:query], count: @count %>
-      <%= render 'shared/limit', multiple: @multiple %>
+      <%= render 'shared/limit', resources_per_page: @resources_per_page %>
       <div class="table-container">
         <table class="table table-dark table-striped link-table">
           <thead>
