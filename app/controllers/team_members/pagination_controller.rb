@@ -1,21 +1,16 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def index
       @page = query_params[:page].to_i < 1 ? 1 : query_params[:page].to_i
       @query = query_params[:query]
       @multiple ||= 5
-      @limit = limit
-      @offset = (@page - 1) * @limit
-
       @resources = resources
-
       @count = @resources.count
-      @last_page = @offset + @limit >= @count
-      @final_page = (@count.to_f / @limit).ceil
-      @resources = @resources.offset(@offset).limit(@limit)
-
+      @last_page = offset + limit >= @count
+      @final_page = (@count.to_f / limit).ceil
+      @resources = @resources.offset(offset).limit(limit)
       @resources.present? ? render('index') : redirect
     end
 
@@ -37,6 +32,10 @@ module TeamMembers
       else
         @multiple
       end
+    end
+
+    def offset
+      (@page - 1) * limit
     end
 
     def query_params
