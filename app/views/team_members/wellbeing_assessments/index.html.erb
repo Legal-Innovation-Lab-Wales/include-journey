@@ -1,18 +1,30 @@
 <main class="container team-members wellbeing-assessments index">
-  <% if @team_member %>
+  <% if @team_member.present? %>
     <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments',
                query_path: team_member_wellbeing_assessments_path(@team_member) %>
+  <% elsif @user.present? %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments' %>
   <% else %>
     <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
                query_path: wellbeing_assessments_path,
                next_path: team_member_wellbeing_assessments_path(current_team_member),
                next_text: 'My Wellbeing Assessments' %>
   <% end %>
-  <%= render 'shared/wrapped_search' %>
+  <% unless @user.present? %>
+    <%= render 'shared/wrapped_search' %>
+  <% end %>
   <section class="row p-0">
     <div class="col p-0 p-md-3">
-      <h3><%= @team_member.present? ? "#{@team_member.full_name}" : 'All' %> wellbeing assessments</h3>
-      <%= render 'shared/search_results', query: params[:query], count: @count %>
+      <% if @team_member.present? %>
+        <h3><%= @team_member.full_name %> wellbeing assessments</h3>
+      <% elsif @user.present? %>
+        <h3><%= @user.full_name %> wellbeing assessments</h3>
+      <% else %>
+        <h3>All wellbeing assessments</h3>
+      <% end %>
+      <% unless @user.present? %>
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
+      <% end %>
       <div class="container p-3">
         <%= render 'shared/limit', multiple: @multiple %>
         <div class="row">

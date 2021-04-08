@@ -2,16 +2,18 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
     before_action :wellbeing_assessment, only: :show
-    before_action :query_params, :page, :query, :limit, :offset, :team_member, :wellbeing_assessments, only: :index
+    before_action :user, only: %i[new create index]
+    before_action :team_member, only: :index
+    before_action :query_params, :page, :query, :multiple, :limit, :offset, :wellbeing_assessments, only: :index
 
     before_action :resources, only: :index, unless: -> { @query.present? }
     before_action :search, only: :index, if: -> { @query.present? }
 
     before_action :count, :last_page, :limit_resources, :redirect, only: :index
 
-    before_action :user, :wellbeing_metrics, only: %i[new create]
-    before_action :wellbeing_assessment_today, only: %i[show new]
-    before_action :wellbeing_assessment_today?, :new_wellbeing_assessment, :last_wellbeing_assessment, only: :new
+    before_action :wellbeing_metrics, only: %i[new create]
+    before_action :wellbeing_assessment_today, :wellbeing_assessment_today?, :new_wellbeing_assessment,
+                  :last_wellbeing_assessment, only: :new
     before_action :last_scores, only: :new, if: -> { @last_wellbeing_assessment.present? }
 
     before_action :wba_params, only: :create
@@ -73,7 +75,9 @@ module TeamMembers
     end
 
     def user
-      @user = User.find(params[:user_id])
+      return unless params[:user_id].present?
+
+      @user = User.includes(:wellbeing_assessments).find(params[:user_id])
     end
 
     def wba_params
@@ -92,7 +96,14 @@ module TeamMembers
     end
 
     def wellbeing_assessments
-      @wellbeing_assessments = @team_member.present? ? @team_member.wellbeing_assessments : WellbeingAssessment
+      @wellbeing_assessments =
+        if @team_member.present?
+          @team_member.wellbeing_assessments
+        elsif @user.present?
+          @user.wellbeing_assessments
+        else
+          WellbeingAssessment
+        end
     end
 
     def wellbeing_assessment_today?
@@ -103,7 +114,7 @@ module TeamMembers
     end
 
     def wellbeing_assessment_today
-      @wellbeing_assessment_today = @wellbeing_assessment.user.wellbeing_assessment_today
+      @wellbeing_assessment_today = @user.wellbeing_assessment_today
     end
 
     def wellbeing_metrics
