@@ -54,8 +54,7 @@ fetch(`${location}/wba_history`, {
                     },
                     gridLines: {
                         zeroLineColor: 'gray',
-                        color: 'gray',
-                        z: 1
+                        color: 'gray'
                     },
                 }],
                 yAxes: [{
