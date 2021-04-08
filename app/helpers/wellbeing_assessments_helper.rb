@@ -1,5 +1,5 @@
-# app/helpers/wba_selves_helper.rb
-module WbaSelvesHelper
+# app/helpers/wellbeing_assessments_helper.rb
+module WellbeingAssessmentsHelper
 
   def last_score(last_scores, wellbeing_metric_id)
     return 6 unless last_scores.present?

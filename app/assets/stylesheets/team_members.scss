@@ -1,0 +1,11 @@
+@import "variables";
+
+.team-members {
+  &.index {
+    table {
+      .btn i {
+        color: $black !important;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<main class="container team-members">
+<main class="container team-members index">
   <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard' %>
   <% if @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
@@ -46,6 +46,7 @@
             <th scope="col">Email</th>
             <th scope="col">Admin</th>
             <th scope="col">Last Sign In</th>
+            <th scope="col">Pause</th>
           </tr>
           </thead>
           <tbody>
@@ -68,7 +69,8 @@
               </td>
               <td>
                 <% if current_team_member.id != team_member.id %>
-                  <%= button_to toggle_admin_team_member_path(team_member.id), class: 'btn w-100', method: :put,
+                  <%= button_to toggle_admin_team_member_path(team_member.id), method: :put,
+                                class: "btn #{team_member.admin ? 'btn-success' : 'btn-danger'}",
                                 data: { confirm: team_member.admin ?
                                                    "Demote #{team_member.full_name} from an admin role?" :
                                                    "Promote #{team_member.full_name} to an admin role?" } do %>
@@ -89,6 +91,27 @@
               <td>
                 <%= link_to team_member_path(team_member) do %>
                   <%= team_member.last_sign_in %>
+                <% end %>
+              </td>
+              <td>
+                <% if current_team_member.id != team_member.id %>
+                  <%= button_to toggle_pause_team_member_path(team_member.id), method: :put,
+                                class: "btn #{team_member.paused ? 'btn-success' : 'btn-danger'}",
+                                data: { confirm: team_member.paused ?
+                                   "Unpause #{team_member.full_name}? This will allow them to resume using the system." :
+                                   "Pause #{team_member.full_name}? This will prevent them from using the system." } do %>
+                    <% if team_member.paused %>
+                      <i class="fas fa-play-circle"></i>
+                    <% else %>
+                      <i class="fas fa-pause-circle"></i>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <% if team_member.paused %>
+                    <i class="fas fa-play-circle"></i>
+                  <% else %>
+                    <i class="fas fa-pause-circle"></i>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
