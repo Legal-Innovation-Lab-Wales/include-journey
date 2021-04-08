@@ -28,10 +28,14 @@ fetch(`${location}/wba_history`, {
         dataset.lineTension = 0
         dataset.fill = false
         dataset.hidden = index > 0
+        dataset.radius = 10
+        dataset.hoverRadius = 11
+        dataset.pointStyle = 'rectRounded'
     })
 
     const history_chart = document.querySelector('#wellbeing-history-chart')
-    const chart = new Chart(history_chart.getContext('2d'), {
+
+    new Chart(history_chart.getContext('2d'), {
         type: 'line',
         data: json,
         options: {
@@ -41,7 +45,7 @@ fetch(`${location}/wba_history`, {
                     time: {
                         tooltipFormat: 'MMMM Do YYYY',
                         displayFormats: {
-                            day: 'L'
+                            day: 'Do MMM YY'
                         }
                     },
                     ticks: {
@@ -50,7 +54,7 @@ fetch(`${location}/wba_history`, {
                     },
                     gridLines: {
                         zeroLineColor: '#A7B5BB'
-                    }
+                    },
                 }],
                 yAxes: [{
                     ticks: {
@@ -67,6 +71,12 @@ fetch(`${location}/wba_history`, {
                         color: scale.map(s => s.colour).reverse()
                     }
                 }]
+            },
+            tooltips: {
+                callbacks: {
+                    label: (tooltipItem, data) =>
+                        `${data.datasets[tooltipItem.datasetIndex].label}: ${scale[tooltipItem.yLabel - 1].description}`
+                }
             }
         }
     })
