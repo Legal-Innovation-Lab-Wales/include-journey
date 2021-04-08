@@ -9,6 +9,12 @@
   <section class="row pb-4" id="upcoming">
     <div class="col upcoming">
       <h3 class="mb-0">past appointments</h3>
+        <% @past_appointments.each do |past_appointments| %>
+          <div class="cards mt-3 rounded-1">
+        <p> You had an appointment at <%= past_appointments.where %>, about <%= past_appointments.what %> with
+          <%= past_appointments.who_with %>. It was <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime)%> ago on <%= past_appointments.end_datetime.strftime("%d/%m/%Y") %></p>
+          </div>
+        <% end %>
       <div class="container mt-3">
         <div class="row mt-2">
           <div class="col">
@@ -22,8 +28,8 @@
         <% @appointments.each do |appointments| %>
         <div class="cards mt-3 rounded-1">
           <p> You have an appointment at <%= appointments.where %>, about <%= appointments.what %> with
-            <%= appointments.who_with %>. It's in <%= distance_of_time_in_words(Time.now, appointments.start)%> at
-            <%= appointments.start.strftime("%I:%M%p")%>.</p>
+            <%= appointments.who_with %>. It's in <%= distance_of_time_in_words(Time.now, appointments.start_datetime)%> at
+            <%= appointments.start_datetime.strftime("%I:%M%p")%>.</p>
         </div>
         <% end %>
       </div>
@@ -37,13 +43,8 @@
             <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
             <%= f.label :what_about %>
             <%= f.text_field :what, autofocus: true, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
-            <%= f.text_field :start_date, "data-provide" => 'datepicker' %>
+            <%= f.label :when %>
             <%= datepicker_input f, :end_date %>
-
-        <script type="text/javascript">
-            $('[data-behaviour~=datepicker]').datepicker();
-        </script>
-
 
             <div class="form-floating">
             </div>

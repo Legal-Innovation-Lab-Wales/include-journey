@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/appointments_controller.rb
   class AppointmentsController < UsersApplicationController
-    before_action :appointments, only: :index
+    before_action :appointments, :past_appointments, only: :index
 
     # GET /appointments/:id
     def show
@@ -29,6 +29,10 @@ module Users
 
     def appointments
       @appointments = current_user.appointments
+    end
+
+    def past_appointments
+      @past_appointments = current_user.appointments.where('end_datetime <= ?', Date.today)
     end
   end
 end
