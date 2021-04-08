@@ -18,18 +18,18 @@ fetch(`${location}/wba_history`, {
 })
 .then(data => data.json())
 .then(json => {
-    const schemeCategory10 = [
-        '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-        '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+    const colours = [
+        '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b',
+        '#e377c2', '#7f7f7f', '#bcbd22', '#17becf', '#7570b3'
     ]
 
     json.datasets.forEach((dataset, index) => {
-        dataset.borderColor = schemeCategory10[index]
+        dataset.borderColor = colours[index]
         dataset.lineTension = 0
         dataset.fill = false
         dataset.hidden = index > 0
-        dataset.radius = 10
-        dataset.hoverRadius = 11
+        dataset.radius = 5
+        dataset.hoverRadius = 6
         dataset.pointStyle = 'rectRounded'
     })
 
@@ -53,7 +53,8 @@ fetch(`${location}/wba_history`, {
                         max: json.labels[json.labels.length - 1]
                     },
                     gridLines: {
-                        zeroLineColor: '#A7B5BB'
+                        zeroLineColor: 'gray',
+                        color: 'gray'
                     },
                 }],
                 yAxes: [{
