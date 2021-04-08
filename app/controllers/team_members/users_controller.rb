@@ -52,8 +52,6 @@ module TeamMembers
               .where.not(id: current_team_member.pinned_users)
               .order(created_at: :desc)
         end
-      @count = count
-      limit_resources
     end
 
     private
