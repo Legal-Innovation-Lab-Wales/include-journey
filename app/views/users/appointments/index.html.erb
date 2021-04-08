@@ -10,26 +10,40 @@
     <div class="col past">
       <h3 class="mb-0">past appointments</h3>
       <% @past_appointments.each do |past_appointments| %>
-        <div class="cards mt-3 rounded-1">
-          <p> You had an appointment at <%= past_appointments.where %>, about <%= past_appointments.what %> with
-            <%= past_appointments.who_with %>. It
-            was <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime) %> ago
-            on <%= past_appointments.end_datetime.strftime("%d/%m/%Y") %></p>
+        <div class="card border-primary mt-3">
+          <div class="card-header bg-primary">
+            at  <%= past_appointments.start_datetime.strftime("%I:%M%p on %a #{past_appointments.start_datetime.day.ordinalize} %B") %> <br />
+          </div>
+          <div class="card-body">
+            <p>
+              <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime) %> ago
+              with <%= past_appointments.who_with %>
+              about <%= past_appointments.what %>
+              at <%= past_appointments.where %>
+              for <%= "%02d:%02d:%02d" % [past_appointments.duration / 3600, past_appointments.duration / 60 % 60, past_appointments.duration % 60] %>
+            </p>
+          </div>
         </div>
       <% end %>
     </div>
     <div class="col appointments">
-      <h3 class="mb-0">Your appointments</h3>
+      <h3 class="mb-0">Upcoming appointments</h3>
       <% @appointments.each do |appointments| %>
-        <div class="cards mt-3 rounded-1">
-          <p> You have an appointment at <%= appointments.where %>, about <%= appointments.what %> with
-            <%= appointments.who_with %>. It's
-            in <%= distance_of_time_in_words(Time.now, appointments.start_datetime) %> at
-            <%= appointments.start_datetime.strftime("%I:%M%p") %>
-            on <%= appointments.start_datetime.strftime("%d/%m/%Y") %></p>
+        <div class="card border-primary mt-3">
+          <div class="card-header bg-primary">
+            at  <%= appointments.start_datetime.strftime("%I:%M%p on %a #{appointments.start_datetime.day.ordinalize} %B") %> <br />
+          </div>
+          <div class="card-body">
+            <p>
+              In <%= distance_of_time_in_words(Time.now, appointments.start_datetime) %>
+              with <%= appointments.who_with %>
+              about <%= appointments.what %>
+              at <%= appointments.where %>
+              for <%= "%02d:%02d:%02d" % [appointments.duration / 3600, appointments.duration / 60 % 60, appointments.duration % 60] %>
+            </p>
+          </div>
         </div>
       <% end %>
-      <%#= link_to "Add New Appointment", new_appointment_path, class: 'btn btn-outline-secondary' %>
     </div>
     <div class="col create">
       <h3 class="mb-0">Create new appointment</h3>
