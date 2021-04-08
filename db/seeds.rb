@@ -244,8 +244,8 @@ if User.count.zero?
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
         what: Faker::Company.profession,
-        start_datetime: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now + 10),
-        end_datetime: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now + 10),
+        start_datetime: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 1),
+        end_datetime: Faker::Time.between(from: DateTime.now, to: DateTime.tomorrow + 10),
         duration: rand(720..10800)
       )
     end

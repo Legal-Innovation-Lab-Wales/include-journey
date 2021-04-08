@@ -7,7 +7,7 @@
     </div>
   </div>
   <section class="row pb-4" id="upcoming">
-    <div class="col upcoming">
+    <div class="col past">
       <h3 class="mb-0">past appointments</h3>
         <% @past_appointments.each do |past_appointments| %>
           <div class="cards mt-3 rounded-1">
@@ -18,7 +18,7 @@
       <div class="container mt-3">
         <div class="row mt-2">
           <div class="col">
-            <%= link_to "View all my appointments", new_wellbeing_assessment_path, class: 'btn btn-outline-secondary' %>
+            <%= link_to "View all my appointments", new_appointment_path, class: 'btn btn-outline-secondary' %>
           </div>
         </div>
       </div>
@@ -29,39 +29,10 @@
         <div class="cards mt-3 rounded-1">
           <p> You have an appointment at <%= appointments.where %>, about <%= appointments.what %> with
             <%= appointments.who_with %>. It's in <%= distance_of_time_in_words(Time.now, appointments.start_datetime)%> at
-            <%= appointments.start_datetime.strftime("%I:%M%p")%>.</p>
+            <%= appointments.start_datetime.strftime("%I:%M%p")%> on <%= appointments.start_datetime.strftime("%d/%m/%Y") %></p>
         </div>
         <% end %>
+      <%= link_to "Add New Appointment", new_appointment_path, class: 'btn btn-outline-secondary' %>
       </div>
-    <div class="col create">
-          <h3 class="mb-0">Create new appointment</h3>
-          <p> Enter in the information to add a new event.</p>
-          <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
-            <%= f.label :where %>
-            <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
-            <%= f.label :who_with %>
-            <%= f.text_field :who_with, autofocus: true, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
-            <%= f.label :what_about %>
-            <%= f.text_field :what, autofocus: true, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
-            <%= f.label :when %>
-            <%= datepicker_input f, :end_date %>
-
-            <div class="form-floating">
-            </div>
-            <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-          <% end %>
-          <div class="container mt-3">
-            <div class="row">
-              <div class="col-9">
-
-                <!-- %= render "shared/assessment_create" %>-->
-              </div>
-              <div class="col-3 description-col">
-              </div>
-            </div>
-          </div>
-        </div>
         </section>
 </main>
-
-<%= javascript_pack_tag 'polar_area_chart' %>
