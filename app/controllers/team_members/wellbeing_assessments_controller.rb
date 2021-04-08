@@ -17,7 +17,7 @@ module TeamMembers
     # GET /team_members/:team_member_id/wellbeing_assessments
     # GET /users/:user_id/wellbeing_assessments
     def index
-      @resources_per_page = 6
+      @resources_per_page = @user.present? ? 20 : 6
       super
     end
 
