@@ -52,12 +52,18 @@
         </div>
       </div>
     </div>
-    <% if @admin %>
+    <% if @team_member.present? %>
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
                  first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query, limit: params[:limit]),
                  next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query, limit: params[:limit]),
                  previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query, limit: params[:limit]),
                  final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query, limit: params[:limit]) %>
+    <% elsif @user.present? %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: user_wellbeing_assessments_path(@user, page: 1, query: @query, limit: params[:limit]),
+                 next_page: user_wellbeing_assessments_path(@user, page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: user_wellbeing_assessments_path(@user, page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: user_wellbeing_assessments_path(@user, page: @final_page, query: @query, limit: params[:limit]) %>
     <% else %>
       <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
                  first_page: wellbeing_assessments_path(page: 1, query: @query, limit: params[:limit]),
