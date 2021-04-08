@@ -4,22 +4,20 @@ module Users
     before_action :appointments, :past_appointments, only: :index
 
     # GET /appointments/:id
-    def show
-      render 'show'
-    end
-
-    # GET /appointments/new
-    def new
-      render 'new'
-    end
+    # def show
+    #   render 'show'
+    # end
 
     def index
+      @appointment = Appointment.new
+
       render 'index'
     end
 
     # POST /appointments
     def create
-      if (@appointment = current_user.appointments.create!)
+      debugger
+      if @appointment = current_user.appointments.create!(appointment_params)
         redirect_to appointments_path
       else
         redirect_to appointments_path,
@@ -29,16 +27,16 @@ module Users
 
     private
 
-    def appointment
-      @appointment = Appointment.new
-    end
-
     def appointments
-      @appointments = current_user.appointments.order('start_datetime').where('start_datetime >= ?', Date.today)
+      @appointments = current_user.appointments.order(start_datetime: :desc)
     end
 
     def past_appointments
       @past_appointments = current_user.appointments.where('start_datetime <= ?', Date.today)
+    end
+
+    def appointment_params
+      params.require(:appointment).permit(:where, :who_with, :what, :start_datetime)
     end
   end
 end
