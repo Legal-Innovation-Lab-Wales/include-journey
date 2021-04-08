@@ -49,8 +49,8 @@ fetch(`${location}/wba_history`, {
                         }
                     },
                     ticks: {
-                        min: json.labels[0],
-                        max: json.labels[json.labels.length - 1]
+                        bounds: 'ticks',
+                        source: 'auto'
                     },
                     gridLines: {
                         zeroLineColor: 'gray',
