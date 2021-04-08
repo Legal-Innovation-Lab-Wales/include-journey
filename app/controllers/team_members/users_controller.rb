@@ -6,11 +6,10 @@ module TeamMembers
 
     # GET /users
     def index
-      @multiple = 6
+      @resources_per_page = 6
       @pinned_users = current_team_member.pinned_users.order(:order)
       @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
       @user_count = User.count
-
       super
     end
 

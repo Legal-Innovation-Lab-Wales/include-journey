@@ -26,7 +26,7 @@
         <%= render 'shared/search_results', query: params[:query], count: @count %>
       <% end %>
       <div class="container p-3">
-        <%= render 'shared/limit', multiple: @multiple %>
+        <%= render 'shared/limit', resources_per_page: @resources_per_page %>
         <div class="row">
           <% @resources.each do |wellbeing_assessment| %>
             <div class="col-12 col-md-6 mb-3">

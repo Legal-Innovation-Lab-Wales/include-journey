@@ -5,7 +5,7 @@ module TeamMembers
     def index
       @page = query_params[:page].to_i < 1 ? 1 : query_params[:page].to_i
       @query = query_params[:query]
-      @multiple ||= 5
+      @resources_per_page ||= 5
       @resources = resources
       @count = @resources.count
       @last_page = offset + limit >= @count
@@ -24,13 +24,13 @@ module TeamMembers
       if query_params[:limit].present?
         limit = query_params[:limit].to_i
 
-        if limit.positive? && limit <= @multiple * 10
+        if limit.positive? && limit <= @resources_per_page * 10
           limit
         else
           redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'Invalid Limit')
         end
       else
-        @multiple
+        @resources_per_page
       end
     end
 
