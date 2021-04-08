@@ -1,21 +1,25 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < PaginationController
+    before_action :user, except: :show
+    before_action :team_member, only: :index
     before_action :wellbeing_assessment, only: :show
-    before_action :query_params, :page, :query, :limit, :offset, :team_member, :wellbeing_assessments, only: :index
 
-    before_action :resources, only: :index, unless: -> { @query.present? }
-    before_action :search, only: :index, if: -> { @query.present? }
+    before_action :wellbeing_assessment_today, only: :new
+    before_action :new_wellbeing_assessment, only: :new
+    before_action :last_scores, only: :new
 
-    before_action :count, :last_page, :limit_resources, :redirect, only: :index
-
-    before_action :user, :wellbeing_metrics, only: %i[new create]
-    before_action :wellbeing_assessment_today, only: %i[show new]
-    before_action :wellbeing_assessment_today?, :new_wellbeing_assessment, :last_wellbeing_assessment, only: :new
-    before_action :last_scores, only: :new, if: -> { @last_wellbeing_assessment.present? }
-
+    before_action :wellbeing_metrics, only: %i[new create]
     before_action :wba_params, only: :create
     after_action :wba_scores, only: :create
+
+    # GET /wellbeing_assessments
+    # GET /team_members/:team_member_id/wellbeing_assessments
+    # GET /users/:user_id/wellbeing_assessments
+    def index
+      @resources_per_page = 6
+      super
+    end
 
     # GET /wellbeing_assessments/:id
     def show
@@ -39,12 +43,12 @@ module TeamMembers
 
     private
 
-    def last_wellbeing_assessment
-      @last_wellbeing_assessment = @user.last_wellbeing_assessment
-    end
-
     def last_scores
-      @last_scores = @last_wellbeing_assessment.wba_scores.collect do |wba_score|
+      last_wellbeing_assessment = @user.last_wellbeing_assessment
+
+      return unless last_wellbeing_assessment.present?
+
+      @last_scores = last_wellbeing_assessment.wba_scores.collect do |wba_score|
         { id: wba_score.wellbeing_metric_id, value: wba_score.value }
       end
     end
@@ -53,17 +57,16 @@ module TeamMembers
       @wellbeing_assessment = WellbeingAssessment.new
     end
 
-    def multiple
-      @multiple = 6
-    end
-
     def resources
-      @resources = @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
-    end
+      wellbeing_assessments
 
-    def search
-      @resources = @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
-                                         .order(created_at: :desc)
+      @resources =
+        if @query.present?
+          @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
+                                .order(created_at: :desc)
+        else
+          @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+        end
     end
 
     def team_member
@@ -73,7 +76,9 @@ module TeamMembers
     end
 
     def user
-      @user = User.find(params[:user_id])
+      return unless params[:user_id].present?
+
+      @user = User.includes(:wellbeing_assessments).find(params[:user_id])
     end
 
     def wba_params
@@ -92,18 +97,23 @@ module TeamMembers
     end
 
     def wellbeing_assessments
-      @wellbeing_assessments = @team_member.present? ? @team_member.wellbeing_assessments : WellbeingAssessment
-    end
-
-    def wellbeing_assessment_today?
-      return unless @wellbeing_assessment_today.present?
-
-      redirect_to wellbeing_assessment_path(@wellbeing_assessment_today),
-                  notice: 'The below wellbeing assessment was completed today'
+      @wellbeing_assessments =
+        if @team_member.present?
+          @team_member.wellbeing_assessments
+        elsif @user.present?
+          @user.wellbeing_assessments
+        else
+          WellbeingAssessment
+        end
     end
 
     def wellbeing_assessment_today
-      @wellbeing_assessment_today = @wellbeing_assessment.user.wellbeing_assessment_today
+      wellbeing_assessment_today = @user.wellbeing_assessment_today
+
+      return unless wellbeing_assessment_today.present?
+
+      redirect_to wellbeing_assessment_path(wellbeing_assessment_today),
+                  notice: 'The below wellbeing assessment was completed today'
     end
 
     def wellbeing_metrics
