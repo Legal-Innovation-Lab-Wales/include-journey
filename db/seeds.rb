@@ -13,7 +13,7 @@ wellbeing_assessments_for_each_user = 10
 journal_entries_for_each_user = 10
 contacts_for_each_user = 5
 crisis_events_count = 100
-notes_count = 1000
+notes_count = 100
 start_time = Time.now
 
 # Create Static Team Members
@@ -26,6 +26,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -41,6 +42,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -56,6 +58,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -71,6 +74,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -86,6 +90,7 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -180,9 +185,9 @@ if CrisisType.count.zero?
 end
 
 # Create Service Users & Associated Records
-user_count = 0
-wba_count = 0
-journal_count = 0
+user_count = 20
+wba_count = 1
+journal_count = 10
 if User.count.zero?
   total_user_count.times do
     user_count += 1

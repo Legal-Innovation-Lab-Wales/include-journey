@@ -37,8 +37,8 @@ module Users
       'lower(entry) similar to lower(:query)'
     end
 
-    def limit
-      @limit = 3
+    def multiple
+      @multiple = 3
     end
 
     def resources

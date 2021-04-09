@@ -20,6 +20,10 @@
       text-align: left;
     }
 
+    .next-btn {
+      text-align: right;
+    }
+
     @media screen and (min-width: $screen-md) {
       margin: 1rem;
       padding: 1rem;
@@ -28,10 +32,6 @@
     &.journey {
       background-color: $black;
     }
-
-    .table-container {
-      overflow-x: auto;
-      margin-bottom: 0.5rem;
-    }
   }
 }
+

@@ -44,7 +44,7 @@ module Users
       return unless wellbeing_assessment_today.present?
 
       redirect_to wellbeing_assessment_path(wellbeing_assessment_today),
-                  notice: 'You completed the below wellbeing assessment today'
+                  notice: 'The below wellbeing assessment was completed today'
     end
 
     def wba_scores
