@@ -9,6 +9,9 @@
     @media (min-width: $screen-sm) {
       max-width: 100vw;
     }
+    @media (min-width: $screen-lg) {
+      max-width: 1320px;
+    }
 
     a {
       transition: 0.5s;
