@@ -1,27 +1,42 @@
 <main class="container user">
   <%= render 'shared/back_btn', path: upcoming_appointments_path, text: 'Upcoming Appointments',
-             next_path: new_appointment_path, next_text: 'New Appointment' %>
-  <section class="row pb-4" id="upcoming">
-    <div class="col-0 col-md-4"></div>
-    <div class="col-12 col-md-4 past">
-      <h3 class="mb-0">past appointments</h3>
-      <% @past_appointments.each do |past_appointments| %>
-        <div class="card border-primary mt-3">
-          <div class="card-header bg-primary">
-            at  <%= past_appointments.start_datetime.strftime("%I:%M%p on %a #{past_appointments.start_datetime.day.ordinalize} %B") %> <br />
-          </div>
-          <div class="card-body">
-            <p>
-              <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime) %> ago
-              with <%= past_appointments.who_with %>
-              about <%= past_appointments.what %>
-              at <%= past_appointments.where %>
-              for <%= "%02d:%02d:%02d" % [past_appointments.duration / 3600, past_appointments.duration / 60 % 60, past_appointments.duration % 60] %>
-            </p>
-          </div>
+             next_path: new_appointment_path, next_text: 'New Appointment',
+             query_path: appointments_path %>
+  <div class="row justify-content-end">
+    <%= render 'shared/search' %>
+  </div>
+  <%= render 'shared/limit', resources_per_page: @multiple %>
+  <section class="row" id="upcoming">
+    <div class="col">
+      <div class="container">
+        <h3 class="mb-3">past appointments</h3>
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
+        <div class="row">
+          <% @resources.each do |past_appointments| %>
+            <div class="col-12 col-md-4 past">
+              <div class="card border-primary mt-3">
+                <div class="card-header bg-primary">
+                  at  <%= past_appointments.start_datetime.strftime("%I:%M%p on %a #{past_appointments.start_datetime.day.ordinalize} %B") %> <br />
+                </div>
+                <div class="card-body">
+                  <p>
+                    <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime) %> ago
+                    with <%= past_appointments.who_with %>
+                    about <%= past_appointments.what %>
+                    at <%= past_appointments.where %>
+                    for <%= "%02d:%02d:%02d" % [past_appointments.duration / 3600, past_appointments.duration / 60 % 60, past_appointments.duration % 60] %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
-    <div class="col-0 col-md-4"></div>
   </section>
+  <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+             first_page: appointments_path(page: 1, query: params[:query], limit: params[:limit]),
+             next_page: appointments_path(page: @page + 1, query: params[:query], limit: params[:limit]),
+             previous_page: appointments_path(page: @page - 1, query: params[:query], limit: params[:limit]),
+             final_page_path: appointments_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
 </main>

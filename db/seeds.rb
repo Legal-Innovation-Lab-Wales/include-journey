@@ -12,6 +12,7 @@ total_user_count = 10
 wellbeing_assessments_for_each_user = 1
 journal_entries_for_each_user = 5
 appointments_for_each_user = 10
+past_appointments_for_each_user = 10
 crisis_events_count = 100
 notes_count = 100
 start_time = Time.now
@@ -250,6 +251,20 @@ if User.count.zero?
         what: Faker::Company.profession,
         start_datetime: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 10),
         end_datetime: Faker::Time.between(from: DateTime.tomorrow + 10, to: DateTime.tomorrow + 15),
+        duration: rand(720..10800)
+      )
+    end
+
+    ## Create Appointments for each user
+    past_appointments_for_each_user.times do
+      appointment_count += 1
+      Appointment.create!(
+        user: user,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Company.profession,
+        start_datetime: Faker::Time.between(from: DateTime.now - 10, to: DateTime.yesterday),
+        end_datetime: Faker::Time.between(from: DateTime.now - 11, to: DateTime.yesterday),
         duration: rand(720..10800)
       )
     end
