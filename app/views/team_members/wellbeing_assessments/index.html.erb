@@ -22,54 +22,85 @@
             Members and the other <%= pluralize(@count_by_user, 'was', 'were') %> completed
             by <%= @user.first_name %></p>
         </div>
-        <small class="pb-2 mobile-hint">Table too big? Try turing your phone sideways or checking out this page on your
-          computer</small>
         <div class="container p-3">
           <%= render 'shared/limit', resources_per_page: @resources_per_page %>
         </div>
-        <div class="row table-container">
-          <table class="user-wba-index">
+        <div id="card-view" class="container p-3">
+          <div class="row">
             <% @resources.each do |wellbeing_assessment| %>
-              <tr>
-                <td class="link"><%= link_to wellbeing_assessment_path(wellbeing_assessment) do %><%= time_ago_in_words(wellbeing_assessment.created) %>
-                    ago
-                  <% end %></td>
-                <% wellbeing_assessment.wba_scores.each do |score| %>
-                  <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="<%= score.wellbeing_metric.name %>: <%= case score.value
-                                                                     when 1
-                                                                       'Abysmal'
-                                                                     when 2
-                                                                       'Dreadful'
-                                                                     when 3
-                                                                       'Rubbish'
-                                                                     when 4
-                                                                       'Bad'
-                                                                     when 5
-                                                                       'Mediocre'
-                                                                     when 6
-                                                                       'Fine'
-                                                                     when 7
-                                                                       'Good'
-                                                                     when 8
-                                                                       'Great'
-                                                                     when 9
-                                                                       'Superb'
-                                                                     when 10
-                                                                       'Perfect'
-                                                                     else
-                                                                       'Unknown'
-                                                                     end %>">
-                  </td>
-                <% end %>
-                <td class="link"><%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>Created
-                    by <%= wellbeing_assessment.team_member_id.present? ? wellbeing_assessment.team_member.full_name : "User" %>
-                  <% end %></td>
-              </tr>
+              <div class="col-12 col-md-6 mb-3">
+                <div class="card">
+                  <div class="card-header">
+                  <span>
+                    <%= link_to user_path(wellbeing_assessment.user) do %>
+                      <%= wellbeing_assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+                    <% end %>
+                  </span>
+                    <span>
+                    <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+                  </span>
+                  </div>
+                  <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
+                    <div class="card-body p-2">
+                      <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
+                    </div>
+                  </a>
+                </div>
+              </div>
             <% end %>
-          </table>
+          </div>
         </div>
-
+        <div id="table-view" class="d-none">
+          <small class="pb-2 mobile-hint">
+            Table too big? Try turing your phone sideways or checking out this page on your computer
+          </small>
+          <div class="row table-container">
+            <table class="user-wba-index">
+              <% @resources.each do |wellbeing_assessment| %>
+                <tr>
+                  <td class="link">
+                    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
+                      <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+                    <% end %>
+                  </td>
+                  <% wellbeing_assessment.wba_scores.each do |score| %>
+                    <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="<%= score.wellbeing_metric.name %>: <%= case score.value
+                                                                       when 1
+                                                                         'Abysmal'
+                                                                       when 2
+                                                                         'Dreadful'
+                                                                       when 3
+                                                                         'Rubbish'
+                                                                       when 4
+                                                                         'Bad'
+                                                                       when 5
+                                                                         'Mediocre'
+                                                                       when 6
+                                                                         'Fine'
+                                                                       when 7
+                                                                         'Good'
+                                                                       when 8
+                                                                         'Great'
+                                                                       when 9
+                                                                         'Superb'
+                                                                       when 10
+                                                                         'Perfect'
+                                                                       else
+                                                                         'Unknown'
+                                                                       end %>">
+                    </td>
+                  <% end %>
+                  <td class="link">
+                    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
+                      Created by <%= wellbeing_assessment.team_member_id.present? ? wellbeing_assessment.team_member.full_name : "User" %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
   <% else %>
@@ -79,8 +110,6 @@
       <div class="col p-0 p-md-3">
         <% if @team_member.present? %>
           <h3><%= @team_member.full_name %> wellbeing assessments</h3>
-        <% elsif @user.present? %>
-          <h3><%= @user.full_name %> wellbeing assessments</h3>
         <% else %>
           <h3>All wellbeing assessments</h3>
         <% end %>
@@ -135,6 +164,21 @@
                final_page_path: wellbeing_assessments_path(page: @final_page, query: @query, limit: params[:limit]) %>
   <% end %>
   </section>
+  <button class="btn btn-sm view-toggle-btn" onclick="toggleViewMode()">Toggle View Mode
+  </button>
 </main>
 
 <%= javascript_pack_tag "wellbeing_assessment_chart" %>
+<script>
+    function toggleViewMode() {
+        if (document.getElementById("table-view").classList.contains('d-none')) {
+            document.getElementById("card-view").classList.add('d-none');
+            document.getElementById("table-view").classList.remove('d-none');
+        } else if (document.getElementById("card-view").classList.contains('d-none')) {
+            document.getElementById("table-view").classList.add('d-none');
+            document.getElementById("card-view").classList.remove('d-none');
+        } else {
+            alert("Somethings gone wrong with the View, Sorry!")
+        }
+    }
+</script>
