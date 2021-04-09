@@ -26,7 +26,9 @@ Rails.application.routes.draw do
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
 
-      resources :appointments
+      resources :appointments do
+        get 'upcoming', action: :upcoming, on: :collection
+      end
 
       resources :crisis_events, only: %i[create update]
     end
