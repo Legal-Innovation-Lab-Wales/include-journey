@@ -33,12 +33,20 @@ module Users
       params.require(:journal_entry).permit(:entry, :feeling)
     end
 
-    def limit
-      @limit = 3
+    def journal_entry_search
+      'lower(entry) similar to lower(:query)'
+    end
+
+    def multiple
+      @multiple = 3
     end
 
     def resources
-      @resources = current_user.journal_entries
+      @resources = if @query.present?
+                     current_user.journal_entries.where(journal_entry_search, wildcard_query).order(created_at: :desc)
+                   else
+                     current_user.journal_entries.order(created_at: :desc)
+                   end
     end
   end
 end

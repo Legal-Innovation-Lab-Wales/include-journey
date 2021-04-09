@@ -1,15 +1,9 @@
 <main class="container user">
-  <div class="row m-1 mt-3">
-    <div class="col">
-      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard' %>
   <section class="row pb-4" id="wellbeing">
-    <div class="col-md-3 services">
+    <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
       <h3>Your Services</h3>
-      <div class="container mt-3">
+      <div class="container">
         <% [*1..4].each do |i| %>
           <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
             <div class="col">
@@ -24,35 +18,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 chart">
-      <h3>Your Wellbeing</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5 sliders">
-      <h3 class="mb-0">Recorded At</h3>
-      <h5><%= @wellbeing_assessment.created %></h5>
-      <div class="container mt-3">
-        <% @wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
-          <div class="row">
-            <div class="col-9">
-              <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
-            </div>
-            <input class="d-none" type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>"
-                   value="<%= score.value %>">
-            <div class="col-3 description-col">
-              <div class="description badge rounded-pill wba-score__<%= score.value %>"></div>
-            </div>
-          </div>
-        <% end %>
-      </div>
+    <div class="col-md-9">
+      <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: @wellbeing_assessment,
+                 chart_alignment: 'left', chart_heading: 'Your Wellbeing',
+                 sliders_heading: 'Recorded At', show_timestamp: true %>
     </div>
   </section>
 </main>
 
-<%= javascript_pack_tag 'polar_area_chart' %>
+<%= javascript_pack_tag 'wellbeing_assessment_chart' %>

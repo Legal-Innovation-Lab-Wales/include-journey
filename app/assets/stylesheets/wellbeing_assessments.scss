@@ -1,0 +1,85 @@
+// Place all the styles related to the WbaSelves controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+.wellbeing-assessments {
+  &.index {
+    a {
+      transition: 0.5s;
+
+      &:hover {
+        color: $brand-primary;
+        background-color: $brand-secondary;
+      }
+
+      .card-body {
+        .sliders {
+          padding: 0;
+          font-size: 0.8rem;
+
+          .row {
+            margin-bottom: 0 !important;
+
+            label {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+    .card-header {
+      a {
+        transition: 0.2s;
+
+        &:hover {
+          color: $brand-secondary;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+section#wellbeing {
+  background-color: $white;
+  color: $black;
+
+  h3, h5, .submit-btn {
+    text-align: center !important;
+  }
+
+  .sliders {
+    margin-top: 2.5rem;
+    text-align: left;
+
+    .row {
+      margin-top: 0.5rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+
+      label {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input {
+        cursor: pointer;
+      }
+
+      .description {
+        width: 100%;
+        font-family: $font-link;
+        transition: all 0.5s;
+      }
+    }
+  }
+}

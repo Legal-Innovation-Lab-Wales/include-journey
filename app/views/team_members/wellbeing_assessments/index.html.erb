@@ -1,0 +1,77 @@
+<main class="container team-members wellbeing-assessments index">
+  <% if @team_member.present? %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments',
+               query_path: team_member_wellbeing_assessments_path(@team_member) %>
+  <% elsif @user.present? %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments' %>
+  <% else %>
+    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
+               query_path: wellbeing_assessments_path,
+               next_path: team_member_wellbeing_assessments_path(current_team_member),
+               next_text: 'My Wellbeing Assessments' %>
+  <% end %>
+  <% unless @user.present? %>
+    <%= render 'shared/wrapped_search' %>
+  <% end %>
+  <section class="row p-0">
+    <div class="col p-0 p-md-3">
+      <% if @team_member.present? %>
+        <h3><%= @team_member.full_name %> wellbeing assessments</h3>
+      <% elsif @user.present? %>
+        <h3><%= @user.full_name %> wellbeing assessments</h3>
+      <% else %>
+        <h3>All wellbeing assessments</h3>
+      <% end %>
+      <% unless @user.present? %>
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
+      <% end %>
+      <div class="container p-3">
+        <%= render 'shared/limit', resources_per_page: @resources_per_page %>
+        <div class="row">
+          <% @resources.each do |wellbeing_assessment| %>
+            <div class="col-12 col-md-6 mb-3">
+              <div class="card">
+                <div class="card-header">
+                  <span>
+                    <%= link_to user_path(wellbeing_assessment.user) do %>
+                      <%= wellbeing_assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+                    <% end %>
+                  </span>
+                  <span>
+                    <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+                  </span>
+                </div>
+                <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
+                  <div class="card-body p-2">
+                    <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
+                  </div>
+                </a>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% if @team_member.present? %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query, limit: params[:limit]),
+                 next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query, limit: params[:limit]) %>
+    <% elsif @user.present? %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: user_wellbeing_assessments_path(@user, page: 1, query: @query, limit: params[:limit]),
+                 next_page: user_wellbeing_assessments_path(@user, page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: user_wellbeing_assessments_path(@user, page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: user_wellbeing_assessments_path(@user, page: @final_page, query: @query, limit: params[:limit]) %>
+    <% else %>
+      <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+                 first_page: wellbeing_assessments_path(page: 1, query: @query, limit: params[:limit]),
+                 next_page: wellbeing_assessments_path(page: @page + 1, query: @query, limit: params[:limit]),
+                 previous_page: wellbeing_assessments_path(page: @page - 1, query: @query, limit: params[:limit]),
+                 final_page_path: wellbeing_assessments_path(page: @final_page, query: @query, limit: params[:limit]) %>
+    <% end %>
+  </section>
+</main>
+
+<%= javascript_pack_tag "wellbeing_assessment_chart" %>

@@ -1,10 +1,12 @@
 @import "variables";
 
-.team-members.users.index {
-  section.row {
-    background-color: transparent;
-    margin: 0 0 2rem 0;
-    padding: 0;
+.team-members {
+  &.users.index section.row {
+    padding: 0 1rem;
+
+    &.back-btn {
+      padding: 1rem;
+    }
   }
 
   .card {
@@ -49,18 +51,6 @@
       }
     }
 
-    .card-header, .card-footer {
-      span {
-        &:first-child {
-          float: left;
-        }
-
-        &:last-child {
-          float: right;
-        }
-      }
-    }
-
     .card-body {
       text-align: left;
 
@@ -75,20 +65,12 @@
             margin-bottom: 0;
           }
 
-          .chart {
+          .wellbeing-chart-col {
+            border-radius: 1rem;
             text-align: center;
 
-            .wellbeing-chart-wrapper {
-              padding: 0.75rem;
-              border-radius: 1rem;
-            }
-
-            a:hover {
-              color: $brand-primary;
-
-              .wellbeing-chart-wrapper {
-                background-color: $brand-secondary-dark;
-              }
+            &:hover {
+              background-color: $brand-secondary-dark;
             }
           }
 
@@ -96,6 +78,43 @@
             padding: 0;
           }
         }
+      }
+    }
+  }
+
+  &.index {
+    .card {
+      .card-header, .card-footer {
+        span {
+          &:first-child {
+            float: left;
+          }
+
+          &:last-child {
+            float: right;
+          }
+        }
+      }
+    }
+  }
+
+  .font-weight-link {
+    font-weight: 700 !important;
+  }
+
+  #notes-card {
+    max-height: 57vh;
+    overflow: auto;
+  }
+
+  &.show {
+    .wellbeing-chart.wrapper {
+      h3, h5 {
+        text-align: center !important;
+      }
+
+      canvas {
+        margin-top: 1.5rem;
       }
     }
   }
