@@ -34,7 +34,7 @@
         <div class="container p-0">
           <div class="row">
             <% @pinned_users.each_with_index do |user, index| %>
-              <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
+              <%= render 'card', user: -, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
             <% end %>
           </div>
         </div>

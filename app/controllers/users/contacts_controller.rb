@@ -10,6 +10,15 @@ module Users
       render 'new'
     end
 
+    # POST /contacts
+    def create
+      if (@contact = current_user.contacts.create!(contact_params))
+        redirect_to contacts_path, flash: { success: 'Contact created' }
+      else
+        redirect_to new_contact_path, flash: { error: 'Error creating contact' }
+      end
+    end
+
     # GET /contacts/:id/edit
     def edit
       puts 'Edit the contact'
@@ -18,21 +27,20 @@ module Users
 
     # PUT /contacts/:id
     def update
-      puts 'Update the contact'
-    end
-
-    # POST /contacts
-    def create
-      if (@contact = current_user.contacts.create!(contact_params))
-        redirect_to contacts_path, flash: { success: 'Contact created' }
+      if (@contact = @contact.update!(contact_params))
+        redirect_to contacts_path, flash: { success: 'Contact updated' }
       else
-        redirect_to new_contact_path, flash: { error: 'That contact could not be created' }
+        redirect_to edit_contact_path, flash: { error: 'Error updating contact' }
       end
     end
 
     # DELETE /contacts/:id
     def destroy
-      puts 'Destroy the contact'
+      if @contact.destroy!
+        redirect_to contacts_path, flash: { success: 'Contact removed' }
+      else
+        redirect_to edit_contact_path, flash: { error: 'Error removing contact' }
+      end
     end
 
     protected
@@ -48,9 +56,9 @@ module Users
     def resources
       @resources =
         if @query.present?
-          current_user.contacts.where(contact_search, wildcard_query).order(created_at: :desc)
+          current_user.contacts.where(contact_search, wildcard_query).order(updated_at: :desc)
         else
-          current_user.contacts.order(created_at: :desc)
+          current_user.contacts.order(updated_at: :desc)
         end
     end
 

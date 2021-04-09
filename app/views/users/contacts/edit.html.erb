@@ -3,8 +3,9 @@
              query_path: contacts_path %>
   <section class="row">
     <div class="col">
-      <h3>New Contact</h3>
+      <h3>Edit Contact</h3>
       <%= render 'new_edit_form' %>
+      <p> <%= button_to "Remove", contact_path(@contact), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %></p>
     </div>
   </section>
 </main>

@@ -1,20 +1,29 @@
-<main class="container user">
+
+<main class="container user contacts index">
   <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
              query_path: contacts_path %>
-  <section class="row" id="users">
+  <section class="row" id="contacts">
     <div class="col">
       <div class="row justify-content-end">
         <%= render 'shared/search' %>
       </div>
       <h3 class="mb-3">Contacts</h3>
       <div class="container p-0">
-        <%= render 'shared/limit', resources_per_page: @multiple %>
         <div class="row">
-          <%= render 'shared/search_results', query: params[:query], count: @count %>
-          <% @resources.each do |contact| %>
-            <%= link_to new_contact_path do %>
-              <%= contact.name %> <i class="fas fa-external-link-alt"></i>
+          <div class="col-auto mr-auto">
+            <%= link_to new_contact_path, class: 'btn btn-success' do %>
+            <i class="fas fa-plus-circle"></i> Add Contact
             <% end %>
+          </div>
+          <div class="col">
+            <%= render 'shared/limit', resources_per_page: @multiple %>
+          </div>
+        </div>
+
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
+        <div class="row row-cols-3 row-cols-md-3 g-4">
+          <% @resources.each do |contact| %>
+            <%= render 'card', contact: contact %>
           <% end %>
         </div>
       </div>
