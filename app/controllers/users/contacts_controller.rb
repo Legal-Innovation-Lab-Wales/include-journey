@@ -45,9 +45,9 @@ module Users
 
     protected
 
-    # def multiple
-    #   @multiple = 10
-    # end
+    def multiple
+      @multiple = 9
+    end
 
     def contact_search
       'lower(name) similar to lower(:query)'
