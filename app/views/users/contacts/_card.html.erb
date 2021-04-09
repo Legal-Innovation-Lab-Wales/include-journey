@@ -2,8 +2,8 @@
   <div class="card">
     <div class="card-header">
       <span>
-        <%= link_to edit_contact_path(contact) do %>
-          <%= contact.name %> <i class=""></i>
+        <%= link_to edit_contact_path(contact), class: "contact-name" do %>
+          <i class="fas fa-edit hide"></i> <%= contact.name %>
         <% end %>
       </span>
     </div>

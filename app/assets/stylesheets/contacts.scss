@@ -18,6 +18,14 @@
         color: $color-primary-0;
       }
     }
+
+    .hide {
+      display: none;
+    }
+
+    .contact-name:hover .hide {
+      display: inline-block;
+    }
   }
 
   .card-body {
