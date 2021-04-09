@@ -1,13 +1,9 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
-  class WellbeingAssessmentsController < PaginationController
+  class WellbeingAssessmentsController < TeamMembersApplicationController
     before_action :user, except: :show
-    before_action :team_member, only: :index
-    before_action :wellbeing_assessment, only: :show
-
-    before_action :wellbeing_assessment_today, only: :new
-    before_action :new_wellbeing_assessment, only: :new
-    before_action :last_scores, only: :new
+    before_action :team_member, :wellbeing_assessments, only: :index
+    include Pagination
 
     before_action :wellbeing_metrics, only: %i[new create]
     before_action :wba_params, only: :create
@@ -16,18 +12,21 @@ module TeamMembers
     # GET /wellbeing_assessments
     # GET /team_members/:team_member_id/wellbeing_assessments
     # GET /users/:user_id/wellbeing_assessments
-    def index
-      @resources_per_page = 6
-      super
-    end
+    def index; end
 
     # GET /wellbeing_assessments/:id
     def show
+      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+
       render 'show'
     end
 
     # GET /users/:user_id/wellbeing_assessments/new
     def new
+      wellbeing_assessment_today
+      last_scores
+      @wellbeing_assessment = WellbeingAssessment.new
+
       render 'new'
     end
 
@@ -39,6 +38,21 @@ module TeamMembers
         redirect_to authenticated_team_member_root_path,
                     error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
       end
+    end
+
+    protected
+
+    def resources
+      @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+    end
+
+    def resources_per_page
+      6
+    end
+
+    def search
+      @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
+                            .order(created_at: :desc)
     end
 
     private
@@ -55,18 +69,6 @@ module TeamMembers
 
     def new_wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.new
-    end
-
-    def resources
-      wellbeing_assessments
-
-      @resources =
-        if @query.present?
-          @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
-                                .order(created_at: :desc)
-        else
-          @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
-        end
     end
 
     def team_member
