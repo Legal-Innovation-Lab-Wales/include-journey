@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
   enable_extension "plpgsql"
 
   create_table "contacts", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "number"
     t.string "email"
-    t.text "description"
+    t.text "description", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
