@@ -171,14 +171,7 @@
 <%= javascript_pack_tag "wellbeing_assessment_chart" %>
 <script>
     function toggleViewMode() {
-        if (document.getElementById("table-view").classList.contains('d-none')) {
-            document.getElementById("card-view").classList.add('d-none');
-            document.getElementById("table-view").classList.remove('d-none');
-        } else if (document.getElementById("card-view").classList.contains('d-none')) {
-            document.getElementById("table-view").classList.add('d-none');
-            document.getElementById("card-view").classList.remove('d-none');
-        } else {
-            alert("Somethings gone wrong with the View, Sorry!")
-        }
+        document.getElementById("table-view").classList.toggle('d-none')
+        document.getElementById("card-view").classList.toggle('d-none')
     }
 </script>
