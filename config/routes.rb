@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
       resources :crisis_events, only: %i[create update]
 
-      resources :contacts, only: %i[index new create]
+      resources :contacts
     end
   end
 

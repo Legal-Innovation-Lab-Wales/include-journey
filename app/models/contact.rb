@@ -1,5 +1,5 @@
 class Contact < ApplicationRecord
   belongs_to :user
 
-  validates_presence_of :user_id, :number, :email, :description
+  validates_presence_of :user_id, :name, :description
 end

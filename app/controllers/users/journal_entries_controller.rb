@@ -42,11 +42,12 @@ module Users
     end
 
     def resources
-      @resources = if @query.present?
-                     current_user.journal_entries.where(journal_entry_search, wildcard_query).order(created_at: :desc)
-                   else
-                     current_user.journal_entries.order(created_at: :desc)
-                   end
+      @resources =
+        if @query.present?
+          current_user.journal_entries.where(journal_entry_search, wildcard_query).order(created_at: :desc)
+        else
+          current_user.journal_entries.order(created_at: :desc)
+        end
     end
   end
 end

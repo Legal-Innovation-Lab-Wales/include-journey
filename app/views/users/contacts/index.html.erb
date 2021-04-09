@@ -1,14 +1,18 @@
 <main class="container user">
-  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard' %>
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
+             query_path: contacts_path %>
   <section class="row" id="users">
     <div class="col">
-      <h2 class="mb-3">Contacts</h2>
-      
+      <div class="row justify-content-end">
+        <%= render 'shared/search' %>
+      </div>
+      <h3 class="mb-3">Contacts</h3>
       <div class="container p-0">
+        <%= render 'shared/limit', resources_per_page: @multiple %>
         <div class="row">
-          <h2><%= @resources.count %></h2>
+          <%= render 'shared/search_results', query: params[:query], count: @count %>
           <% @resources.each do |contact| %>
-            <%= link_to contacts_path(contact) do %>
+            <%= link_to new_contact_path do %>
               <%= contact.name %> <i class="fas fa-external-link-alt"></i>
             <% end %>
           <% end %>
@@ -16,4 +20,9 @@
       </div>
     </div>
   </section>
+  <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+             first_page: contacts_path(page: 1, query: params[:query], limit: params[:limit]),
+             next_page: contacts_path(page: @page + 1, query: params[:query], limit: params[:limit]),
+             previous_page: contacts_path(page: @page - 1, query: params[:query], limit: params[:limit]),
+             final_page_path: contacts_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
 </main>
