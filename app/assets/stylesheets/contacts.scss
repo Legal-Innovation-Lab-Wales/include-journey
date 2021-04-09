@@ -66,4 +66,10 @@
     }
   }
 
+  &.new {
+    .ij-form {
+      min-height: inherit;
+    }
+  }
+
 }
