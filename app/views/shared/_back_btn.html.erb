@@ -1,7 +1,7 @@
 <section class="row back-btn">
   <div class="col">
     <% if params[:query].present? %>
-      <%= link_to send("#{controller.controller_name}_path"), class: 'btn btn-primary' do %>
+      <%= link_to send("#{index}_path"), class: 'btn btn-primary' do %>
         <i class="fas fa-arrow-circle-left"></i> Back To All
       <% end %>
     <% else %>

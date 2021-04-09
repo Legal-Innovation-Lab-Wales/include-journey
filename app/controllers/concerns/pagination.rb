@@ -38,6 +38,10 @@ module Pagination
     (@page - 1) * limit
   end
 
+  def user_search
+    'lower(users.first_name) similar to lower(:query) or lower(users.last_name) similar to lower(:query)'
+  end
+
   def wildcard_query
     { query: "%#{@query.split.join('%|%')}%" }
   end

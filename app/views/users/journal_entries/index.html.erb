@@ -1,5 +1,5 @@
 <main class="container user journal-entry index">
-  <%= render 'shared/back_btn', path: dashboard_journal_entries_path, text: 'Journal' %>
+  <%= render 'shared/back_btn', path: dashboard_journal_entries_path, text: 'Journal', index: 'journal_entries' %>
   <section class="row">
     <div class="container">
       <div class="row justify-content-end">
@@ -27,5 +27,5 @@
       </div>
     </div>
   </section>
-  <%= render 'shared/pagination_controls' %>
+  <%= render 'shared/pagination_controls', index: 'journal_entries' %>
 </main>
