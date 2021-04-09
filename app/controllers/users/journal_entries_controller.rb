@@ -1,12 +1,7 @@
 module Users
   # app/controllers/users/journal_entries_controller.rb
-  class JournalEntriesController < PaginationController
-
-    # GET /journal_entries
-    def index
-      @resources_per_page = 3
-      super
-    end
+  class JournalEntriesController < UsersApplicationController
+    include Pagination
 
     # GET /journal_entries/new
     def new
@@ -35,14 +30,17 @@ module Users
       params.require(:journal_entry).permit(:entry, :feeling)
     end
 
+    def resources_per_page
+      3
+    end
+
     def resources
-      @resources =
-        if @query.present?
-          current_user.journal_entries.where('lower(entry) similar to lower(:query)', wildcard_query)
-                      .order(created_at: :desc)
-        else
-          current_user.journal_entries.order(created_at: :desc)
-        end
+      current_user.journal_entries.order(created_at: :desc)
+    end
+
+    def search
+      current_user.journal_entries.where('lower(entry) similar to lower(:query)', wildcard_query)
+                  .order(created_at: :desc)
     end
   end
 end
