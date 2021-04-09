@@ -14,25 +14,63 @@
     <section class="row p-0">
       <div class="col p-0 p-md-3">
         <h3><%= @user.full_name %> wellbeing assessments</h3>
+        <div class="subheading">
+          <p><%= @user.first_name %> has <%= @count %> wellbeing assessments.</p>
+          <p><%= pluralize(@count_in_last_week, 'has') %> been completed in the last week
+            and <%= @count_in_last_month %> in the last month.</p>
+          <p><%= pluralize(@count_by_team_member, 'of the total has', 'of the total have') %> been completed by Team
+            Members and the other <%= pluralize(@count_by_user, 'was', 'were') %> completed
+            by <%= @user.first_name %></p>
+        </div>
+        <small class="pb-2 mobile-hint">Table too big? Try turing your phone sideways or checking out this page on your
+          computer</small>
         <div class="container p-3">
           <%= render 'shared/limit', resources_per_page: @resources_per_page %>
-          <div class="row">
-            <table>
-              <% @resources.each do |wellbeing_assessment| %>
-                <tr>
-                  <td><%= time_ago_in_words(wellbeing_assessment.created) %> ago</td>
-                  <% wellbeing_assessment.wba_scores.each do |score| %>
-                    <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="<%= score.wellbeing_metric.name %>: <%= case score.value; when 1; 'Abysmal'; when 2; 'Dreadful'; when 3; 'Rubbish'; when 4; 'Bad'; when 5; 'Mediocre'; when 6; 'Fine'; when 7; 'Good'; when 8; 'Great'; when 9; 'Superb' ; when 10; 'Perfect'; else 'Unknown'; end %>">
-                    </td>
-                  <% end %>
-                  <td>Created
-                    by <%= wellbeing_assessment.team_member_id.present? ? wellbeing_assessment.team_member.full_name : "User" %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
         </div>
+        <div class="row table-container">
+          <table class="user-wba-index">
+            <% @resources.each do |wellbeing_assessment| %>
+              <tr>
+                <td class="link"><%= link_to wellbeing_assessment_path(wellbeing_assessment) do %><%= time_ago_in_words(wellbeing_assessment.created) %>
+                    ago
+                  <% end %></td>
+                <% wellbeing_assessment.wba_scores.each do |score| %>
+                  <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
+                      title="<%= score.wellbeing_metric.name %>:
+                                <%= case score.value
+                                    when 1
+                                      'Abysmal'
+                                    when 2
+                                      'Dreadful'
+                                    when 3
+                                      'Rubbish'
+                                    when 4
+                                      'Bad'
+                                    when 5
+                                      'Mediocre'
+                                    when 6
+                                      'Fine'
+                                    when 7
+                                      'Good'
+                                    when 8
+                                      'Great'
+                                    when 9
+                                      'Superb'
+                                    when 10
+                                      'Perfect'
+                                    else
+                                      'Unknown'
+                                    end %>">
+                  </td>
+                <% end %>
+                <td class="link"><%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>Created
+                    by <%= wellbeing_assessment.team_member_id.present? ? wellbeing_assessment.team_member.full_name : "User" %>
+                  <% end %></td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+
       </div>
     </section>
   <% else %>

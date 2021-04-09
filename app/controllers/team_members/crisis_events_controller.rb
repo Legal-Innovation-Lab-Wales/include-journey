@@ -63,5 +63,9 @@ module TeamMembers
     def crisis_notes_params
       params.require(:crisis_note).permit(:content)
     end
+
+    def subheading_stats
+      # TODO: Add stats for closed crisis events index
+    end
   end
 end

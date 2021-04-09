@@ -38,5 +38,11 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
+
+    def subheading_stats
+      # TODO: Add stats for journal index. IJ-123
+
+    end
+
   end
 end

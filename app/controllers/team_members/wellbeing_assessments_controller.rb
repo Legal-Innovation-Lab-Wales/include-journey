@@ -101,7 +101,7 @@ module TeamMembers
         if @team_member.present?
           @team_member.wellbeing_assessments
         elsif @user.present?
-          @user.wellbeing_assessments
+          @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
           WellbeingAssessment
         end
@@ -118,6 +118,15 @@ module TeamMembers
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all.order(:created_at)
+    end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('created_at >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('created_at >= ?', 1.month.ago).size
+      return unless @user
+
+      @count_by_team_member = @resources.count { |tm| tm.team_member_id.present? }
+      @count_by_user = @resources.count { |tm| tm.team_member_id.nil? }
     end
   end
 end

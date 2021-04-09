@@ -17,5 +17,10 @@ module TeamMembers
     def team_member
       @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
     end
+
+    def subheading_stats
+      # TODO: Add stats for team member view logs index
+
+    end
   end
 end
