@@ -1,0 +1,25 @@
+<main class="container user">
+  <%= render 'shared/back_btn', path: appointments_path, text: 'Back' %>
+  <section class="row" id="upcoming">
+    <div class="col-0 col-md-4"></div>
+    <div class="col-12 col-md-4 create">
+      <h3 class="mb-0">Create new appointment</h3>
+      <p> Enter in the information to add a new event.</p>
+      <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
+        <%= f.label :where %>
+        <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
+        <%= f.label :who_with %>
+        <%= f.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
+        <%= f.label :what_about %>
+        <%= f.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
+        <%= f.label :when %>
+        <%= datepicker_input f, :start_datetime %>
+
+        <div class="form-floating">
+        </div>
+        <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+      <% end %>
+    </div>
+    <div class="col-0 col-md-4"></div>
+  </section>
+</main>

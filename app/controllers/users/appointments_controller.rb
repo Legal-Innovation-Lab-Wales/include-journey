@@ -16,13 +16,17 @@ module Users
 
     # POST /appointments
     def create
-      debugger
       if @appointment = current_user.appointments.create!(appointment_params)
         redirect_to appointments_path
       else
         redirect_to appointments_path,
                     error: " Appointment could not be created: #{@appointment.errors}"
       end
+    end
+
+    # GET /appointments/new
+    def new
+      render 'new'
     end
 
     private

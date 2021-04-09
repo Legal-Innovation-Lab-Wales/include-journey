@@ -1,11 +1,6 @@
 <main class="container user">
-  <div class="row m-1 mt-3">
-    <div class="col">
-      <%= link_to authenticated_user_root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Dashboard
-      <% end %>
-    </div>
-  </div>
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
+             next_path: new_appointment_path, next_text: 'New Appointment' %>
   <section class="row pb-4" id="upcoming">
     <div class="col past">
       <h3 class="mb-0">past appointments</h3>
@@ -44,35 +39,6 @@
           </div>
         </div>
       <% end %>
-    </div>
-    <div class="col create">
-      <h3 class="mb-0">Create new appointment</h3>
-      <p> Enter in the information to add a new event.</p>
-      <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
-        <%= f.label :where %>
-        <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
-        <%= f.label :who_with %>
-        <%= f.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
-        <%= f.label :what_about %>
-        <%= f.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
-        <%= f.label :when %>
-        <%= datepicker_input f, :start_datetime %>
-
-        <div class="form-floating">
-        </div>
-        <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-      <% end %>
-
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col-9">
-
-            <!-- %= render "shared/assessment_create" %>-->
-          </div>
-          <div class="col-3 description-col">
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </main>
