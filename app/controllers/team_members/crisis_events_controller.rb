@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < PaginationController
     before_action :crisis_event, except: %i[index active]
-    before_action :crisis_events, :crisis_events_users, :closed_events, only: :index
+    before_action :crisis_events, :crisis_events_users, :closed_events, only: %i[index active]
 
     # GET /crisis_events/active
     def active
@@ -41,7 +41,7 @@ module TeamMembers
 
     def resources
       @resources = if @query.present?
-                     CrisisEvent.closed.includes(:user, :crisis_type)
+                     CrisisEvent.closed.includes(:user, :crisis_type, :crisis_notes)
                                 .joins(:user, :crisis_type)
                                 .where("#{user_search} or #{crisis_search}", wildcard_query)
                                 .order(closed_at: :desc)
@@ -57,7 +57,7 @@ module TeamMembers
     end
 
     def crisis_events
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
     end
 
     def crisis_events_users

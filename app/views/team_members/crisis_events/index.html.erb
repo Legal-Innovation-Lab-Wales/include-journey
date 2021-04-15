@@ -28,6 +28,7 @@
             <th scope="col">Crisis Type</th>
             <th scope="col">Additional Info</th>
             <th scope="col">Closed At</th>
+            <th scope="col">Last Note</th>
           </tr>
           </thead>
           <tbody>
@@ -43,7 +44,10 @@
                 <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
               </td>
               <td>
-                <%= link_to "#{crisis_event.closed_formatted}", crisis_event_path(crisis_event) %>
+                <%= link_to "#{time_ago_in_words(crisis_event.closed_formatted)} ago", crisis_event_path(crisis_event) %>
+              </td>
+              <td>
+                <%= link_to "#{crisis_event.crisis_notes.first.content}", crisis_event_path(crisis_event) %>
               </td>
             </tr>
           <% end %>

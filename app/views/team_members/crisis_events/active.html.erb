@@ -2,6 +2,19 @@
   <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard' %>
   <section class="row">
     <div class="col">
+      <h3>Overview</h3>
+      <p>
+        There are currently <%= @crisis_events.count %> active crisis events from <%= @crisis_events_users %> users.
+        The oldest open event is from <%= "#{time_ago_in_words(@crisis_events.order(:created_at).first.created_at)} ago." %>
+      </p>
+      <p>
+        There are <%= @closed_events.count > 0 ? @closed_events.count : "0" %> closed events. <%= @closed_events_30_days.count %> in the last 30 days from <%= @closed_events_30_days.distinct.count(:user_id) %> users,
+        <%= @closed_events_7_days.count %> in the last 7 days from <%= @closed_events_7_days.distinct.count(:user_id) %> users.
+      </p>
+    </div>
+  </section>
+  <section class="row">
+    <div class="col">
       <h3>Active Crisis Events</h3>
       <% if @crisis_events.count > 0 %>
         <div class="table-container">
@@ -11,6 +24,7 @@
               <th scope="col">Crisis Type</th>
               <th scope="col">Additional Info</th>
               <th scope="col">Last Update</th>
+              <th scope="col">Last Note</th>
             </thead>
             <tbody>
               <% @crisis_events.each do |crisis_event| %>
@@ -25,7 +39,10 @@
                     <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
                   </td>
                   <td>
-                    <%= link_to "#{crisis_event.last_update}", crisis_event_path(crisis_event) %>
+                    <%= link_to "#{time_ago_in_words(crisis_event.last_update)} ago", crisis_event_path(crisis_event) %>
+                  </td>
+                  <td>
+                    <%= link_to "#{crisis_event.crisis_notes.last}", crisis_event_path(crisis_event) %>
                   </td>
                 </tr>
               <% end %>
