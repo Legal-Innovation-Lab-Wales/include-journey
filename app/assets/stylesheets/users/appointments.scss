@@ -16,4 +16,38 @@ section#upcoming {
       margin-top: 0;
     }
   }
+
+  .create {
+    form {
+      .form-floating {
+        margin-bottom: 1rem;
+      }
+
+      .date-time-fields {
+        .form-floating:first-child {
+          padding-right: 0;
+
+          label {
+            margin-left: 15px;
+          }
+
+          input {
+            border-right: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        .form-floating:last-child {
+          padding-left: 0;
+
+          input {
+            border-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+    }
+  }
 }

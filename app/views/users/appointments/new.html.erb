@@ -5,21 +5,44 @@
     <div class="col-12 col-md-4 create">
       <h3 class="mb-0">Create new appointment</h3>
       <p> Enter in the information to add a new event.</p>
-      <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
-        <%= f.label :where %>
-        <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
-        <%= f.label :who_with %>
-        <%= f.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
-        <%= f.label :what_about %>
-        <%= f.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
-        <%= f.label :when %>
-        <%= datepicker_input f, :start_datetime %>
+      <div class="container">
+        <%= form_with model: @appointment, url: appointments_path, method: :post do |f| %>
+          <div class="form-floating">
+            <%= f.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
+            <%= f.label :where %>
+          </div>
 
-        <div class="form-floating">
-        </div>
-        <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-      <% end %>
+          <div class="form-floating">
+            <%= f.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
+            <%= f.label :who_with %>
+          </div>
+
+          <div class="form-floating">
+            <%= f.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
+            <%= f.label :what_about %>
+          </div>
+
+          <%= f.hidden_field :start_datetime %>
+
+          <div class="row date-time-fields">
+            <div class="col-8 form-floating">
+              <%= f.date_field :when, class: 'form-control', autocomplete: "when", placeholder: "when",
+                               value: Date.tomorrow, min: Date.today %>
+              <%= f.label :when %>
+            </div>
+
+            <div class="col-4 form-floating">
+              <%= f.time_field :time, class: 'form-control', autocomplete: "time", placeholder: "time", value: '12:00' %>
+              <%= f.label :time %>
+            </div>
+          </div>
+
+          <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+        <% end %>
+      </div>
     </div>
     <div class="col-0 col-md-4"></div>
   </section>
 </main>
+
+<%= javascript_pack_tag 'datetime_picker' %>
