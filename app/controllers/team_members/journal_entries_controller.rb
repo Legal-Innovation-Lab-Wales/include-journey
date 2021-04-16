@@ -1,6 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/journal_entries_controller.rb
-  class JournalEntriesController < PaginationController
+  class JournalEntriesController < TeamMembersApplicationController
+    include Pagination
+
     # GET /journal_entries/:id
     def show
       journal_entry
@@ -12,16 +14,14 @@ module TeamMembers
     protected
 
     def resources
-      @resources =
-        if @query.present?
-          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                             .joins(:user)
-                             .where(user_search, wildcard_query)
-                             .order(created_at: :desc)
-        else
-          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                             .order(created_at: :desc)
-        end
+      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs).order(created_at: :desc)
+    end
+
+    def search
+      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                         .joins(:user)
+                         .where(user_search, wildcard_query)
+                         .order(created_at: :desc)
     end
 
     private
