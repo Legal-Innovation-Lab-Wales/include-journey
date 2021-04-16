@@ -11,6 +11,11 @@ module TeamMembers
       redirect_to user_path(@user), notice: @note ? 'Note added!' : "The note couldn't be added. Please try again."
     end
 
+    # GET /notes/:id
+    def show
+      # Show all notes in the edit-chain.
+    end
+
     # GET /notes/:id/edit
     def edit
       # render 'edit'
@@ -21,9 +26,8 @@ module TeamMembers
       # Do not change existing record, create new record and set replaced_by to the new record.
     end
 
-    # GET /notes/:id
-    def show
-      # Show all notes in the edit-chain.
+    # DELETE
+    def destroy
     end
 
     private
