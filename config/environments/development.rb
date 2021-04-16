@@ -49,7 +49,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: 'apikey',
     password: ENV['SENDGRID_API_KEY'],
-    domain: 'scenario-platform.legaltech.wales',
+    domain: 'include-journey-demo.legaltech.wales',
     address: 'smtp.sendgrid.net',
     port: 587,
     authentication: :plain,
