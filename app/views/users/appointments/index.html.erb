@@ -24,7 +24,7 @@
                     with <%= past_appointments.who_with %>
                     about <%= past_appointments.what %>
                     at <%= past_appointments.where %>
-                    for <%= "%02d:%02d:%02d" % [past_appointments.duration / 3600, past_appointments.duration / 60 % 60, past_appointments.duration % 60] %>
+                    for <%= past_appointments.duration %>
                   </p>
                 </div>
               </div>

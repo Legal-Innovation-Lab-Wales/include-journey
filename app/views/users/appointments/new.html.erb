@@ -27,14 +27,30 @@
           <div class="row date-time-fields">
             <div class="col-8 form-floating">
               <input class="form-control" autocomplete="when" placeholder="when" value="<%= Date.tomorrow %>"
-                     min="<%= Date.today %>" type="date" id="appointment_when">
-              <label for="appointment_when">When</label>
+                     min="<%= Date.today %>" type="date" id="appointment_start_when">
+              <label for="appointment_start_when">Start</label>
             </div>
 
             <div class="col-4 form-floating">
               <input class="form-control" autocomplete="time" placeholder="time" value="12:00" type="time"
-                     id="appointment_time">
-              <label for="appointment_time">Time</label>
+                     id="appointment_start_time">
+              <label for="appointment_start_time">Time</label>
+            </div>
+          </div>
+
+          <%= f.hidden_field :end %>
+
+          <div class="row date-time-fields">
+            <div class="col-8 form-floating">
+              <input class="form-control" autocomplete="when" placeholder="when" value="<%= Date.tomorrow %>"
+                     min="<%= Date.today %>" type="date" id="appointment_end_when">
+              <label for="appointment_end_when">End</label>
+            </div>
+
+            <div class="col-4 form-floating">
+              <input class="form-control" autocomplete="time" placeholder="time" value="12:00" type="time"
+                     id="appointment_end_time">
+              <label for="appointment_end_time">Time</label>
             </div>
           </div>
 

@@ -54,7 +54,7 @@ module Users
     end
 
     def appointment_params
-      params.require(:appointment).permit(:where, :who_with, :what, :start)
+      params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
     end
   end
 end
