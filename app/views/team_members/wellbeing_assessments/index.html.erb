@@ -1,14 +1,11 @@
 <main class="container team-members wellbeing-assessments index">
   <% if @team_member.present? %>
-    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments',
-               query_path: team_member_wellbeing_assessments_path(@team_member) %>
+    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments', index: 'team_member_wellbeing_assessments' %>
   <% elsif @user.present? %>
     <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments' %>
   <% else %>
-    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard',
-               query_path: wellbeing_assessments_path,
-               next_path: team_member_wellbeing_assessments_path(current_team_member),
-               next_text: 'My Wellbeing Assessments' %>
+    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard', index: 'wellbeing_assessments',
+               next_path: team_member_wellbeing_assessments_path(current_team_member), next_text: 'My Wellbeing Assessments' %>
   <% end %>
   <% if @user.present? %>
     <section class="row p-0">
@@ -23,7 +20,7 @@
             by <%= @user.first_name %></p>
         </div>
         <div class="container p-3">
-          <%= render 'shared/limit', resources_per_page: @resources_per_page %>
+          <%= render 'shared/limit' %>
         </div>
         <div id="card-view" class="container p-3">
           <div class="row">
@@ -82,7 +79,6 @@
     </section>
   <% else %>
     <%= render 'shared/wrapped_search' %>
-
     <section class="row p-0">
       <div class="col p-0 p-md-3">
         <% if @team_member.present? %>
@@ -91,10 +87,10 @@
           <h3>All wellbeing assessments</h3>
         <% end %>
         <% unless @user.present? %>
-          <%= render 'shared/search_results', query: params[:query], count: @count %>
+          <%= render 'shared/search_results' %>
         <% end %>
         <div class="container p-3">
-          <%= render 'shared/limit', resources_per_page: @resources_per_page %>
+          <%= render 'shared/limit' %>
           <div class="row">
             <% @resources.each do |wellbeing_assessment| %>
               <div class="col-12 col-md-6 mb-3">
@@ -122,23 +118,11 @@
       </div>
   <% end %>
   <% if @team_member.present? %>
-    <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-               first_page: team_member_wellbeing_assessments_path(@team_member, page: 1, query: @query, limit: params[:limit]),
-               next_page: team_member_wellbeing_assessments_path(@team_member, page: @page + 1, query: @query, limit: params[:limit]),
-               previous_page: team_member_wellbeing_assessments_path(@team_member, page: @page - 1, query: @query, limit: params[:limit]),
-               final_page_path: team_member_wellbeing_assessments_path(@team_member, page: @final_page, query: @query, limit: params[:limit]) %>
+    <%= render 'shared/pagination_controls', index: 'team_member_wellbeing_assessments_path' %>
   <% elsif @user.present? %>
-    <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-               first_page: user_wellbeing_assessments_path(@user, page: 1, query: @query, limit: params[:limit]),
-               next_page: user_wellbeing_assessments_path(@user, page: @page + 1, query: @query, limit: params[:limit]),
-               previous_page: user_wellbeing_assessments_path(@user, page: @page - 1, query: @query, limit: params[:limit]),
-               final_page_path: user_wellbeing_assessments_path(@user, page: @final_page, query: @query, limit: params[:limit]) %>
+    <%= render 'shared/pagination_controls', index: 'user_wellbeing_assessments' %>
   <% else %>
-    <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-               first_page: wellbeing_assessments_path(page: 1, query: @query, limit: params[:limit]),
-               next_page: wellbeing_assessments_path(page: @page + 1, query: @query, limit: params[:limit]),
-               previous_page: wellbeing_assessments_path(page: @page - 1, query: @query, limit: params[:limit]),
-               final_page_path: wellbeing_assessments_path(page: @final_page, query: @query, limit: params[:limit]) %>
+    <%= render 'shared/pagination_controls', index: 'wellbeing_assessments' %>
   <% end %>
   </section>
   <button class="btn btn-sm view-toggle-btn" onclick="toggleViewMode()">Toggle View Mode
