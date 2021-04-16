@@ -22,6 +22,10 @@
       white-space: nowrap;
       text-overflow: ellipsis;
 
+      &.btn-sm {
+        padding: 0.25rem 0.5rem;
+      }
+
       &:hover {
         color: $white;
       }

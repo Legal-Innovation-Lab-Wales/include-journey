@@ -1,13 +1,13 @@
 module TeamMembers
   # app/controllers/team_members/pagination_controller.rb
   class PaginationController < TeamMembersApplicationController
-    # rubocop:disable Metrics/AbcSize
     def index
       @page = query_params[:page].to_i < 1 ? 1 : query_params[:page].to_i
       @query = query_params[:query]
       @resources_per_page ||= 5
       @resources = resources
-      @count = @resources.count
+      @count = @resources.size
+      subheading_stats
       @last_page = offset + limit >= @count
       @final_page = (@count.to_f / limit).ceil
       @resources = @resources.offset(offset).limit(limit)
@@ -53,5 +53,7 @@ module TeamMembers
     def wildcard_query
       { query: "%#{@query.split.join('%|%')}%" }
     end
+
+
   end
 end

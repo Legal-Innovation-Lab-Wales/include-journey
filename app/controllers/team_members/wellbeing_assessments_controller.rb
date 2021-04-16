@@ -17,7 +17,8 @@ module TeamMembers
     # GET /team_members/:team_member_id/wellbeing_assessments
     # GET /users/:user_id/wellbeing_assessments
     def index
-      @resources_per_page = 6
+      @resources_per_page = @user.present? ? 20 : 6
+      wba_values
       super
     end
 
@@ -92,6 +93,12 @@ module TeamMembers
       end
     end
 
+    def wba_values
+      return unless @user.present?
+
+      @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb', 'Perfect']
+    end
+
     def wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
     end
@@ -101,7 +108,7 @@ module TeamMembers
         if @team_member.present?
           @team_member.wellbeing_assessments
         elsif @user.present?
-          @user.wellbeing_assessments
+          @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
           WellbeingAssessment
         end
@@ -118,6 +125,15 @@ module TeamMembers
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all.order(:created_at)
+    end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('created_at >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('created_at >= ?', 1.month.ago).size
+      return unless @user
+
+      @count_by_team_member = @resources.count { |wba| wba.team_member_id.present? }
+      @count_by_user = @resources.count { |wba| wba.team_member_id.nil? }
     end
   end
 end

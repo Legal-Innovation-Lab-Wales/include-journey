@@ -60,10 +60,12 @@ module TeamMembers
     def resources
       @resources =
         if @query.present?
-          User.includes(:wellbeing_assessments, :crisis_events).where(user_search, wildcard_query)
+          User.includes(:wellbeing_assessments, :crisis_events)
+              .where(user_search, wildcard_query)
               .order(created_at: :desc)
         else
-          User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
+          User.includes(:wellbeing_assessments, :crisis_events)
+              .where.not(id: current_team_member.pinned_users)
               .order(created_at: :desc)
         end
     end
@@ -115,5 +117,7 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
+
+    def subheading_stats; end
   end
 end

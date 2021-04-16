@@ -13,7 +13,7 @@ wellbeing_assessments_for_each_user = 100
 journal_entries_for_each_user = 50
 contacts_for_each_user = 50
 crisis_events_count = 100
-notes_count = 100
+notes_count = 1000
 start_time = Time.now
 
 # Create Static Team Members
@@ -210,19 +210,23 @@ if User.count.zero?
     ## Create User Wellbeing Assessments for each user
     wellbeing_assessments_for_each_user.times do
       wba_counter += 1
+      created_at_value = Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
       # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
-        user: user
+        user: user,
+        created_at: created_at_value
       )
 
+      # Every 5th assessment is created by a TeamMember
       wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_counter % 5).zero?
 
       WellbeingMetric.all.each do |wellbeing_metric|
         WbaScore.create!(
           wellbeing_assessment: wellbeing_assessment,
           wellbeing_metric: wellbeing_metric,
-          value: rand(1..10)
+          value: rand(1..10),
+          created_at: created_at_value
         )
       end
     end
@@ -230,11 +234,13 @@ if User.count.zero?
     ## Create Journal Entries for each User
     journal_entries_for_each_user.times do
       journal_counter += 1
+      created_at_value = Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
       # puts("Creating Journal #{journal_count} for user #{user_count}")
       journal_entry = JournalEntry.new(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[😊 😔 😠 💩 😐].sample
+        feeling: %w[😊 😔 😠 💩 😐].sample,
+        created_at: created_at_value
       )
       journal_entry.save!
 
@@ -242,7 +248,8 @@ if User.count.zero?
       TeamMember.all.each do |team_member|
         JournalEntryPermission.create!(
           team_member: team_member,
-          journal_entry: journal_entry
+          journal_entry: journal_entry,
+          created_at: created_at_value
         )
       end
 
@@ -252,7 +259,8 @@ if User.count.zero?
       TeamMember.all.each do |team_member|
         JournalEntryViewLog.create!(
           team_member: team_member,
-          journal_entry: journal_entry
+          journal_entry: journal_entry,
+          created_at: created_at_value + 1.day
         )
       end
     end
