@@ -7,6 +7,7 @@ class User < DeviseRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
   has_many :notes, foreign_key: :user_id
+  has_many :contacts, foreign_key: :user_id
 
   has_many :wellbeing_assessments, foreign_key: :user_id
 
