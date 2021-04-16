@@ -8,9 +8,9 @@
 
 require 'faker'
 
-total_user_count = 10
-wellbeing_assessments_for_each_user = 1
-journal_entries_for_each_user = 5
+total_user_count = 100
+wellbeing_assessments_for_each_user = 100
+journal_entries_for_each_user = 50
 crisis_events_count = 100
 notes_count = 100
 start_time = Time.now
@@ -168,14 +168,14 @@ if CrisisType.count.zero?
 end
 
 # Create Service Users & Associated Records
-user_count = 20
-wba_count = 1
-journal_count = 10
+user_count = 0
+wba_count = 0
+journal_count = 0
 if User.count.zero?
   total_user_count.times do
     user_count += 1
-    puts("Creating User: #{user_count}")
     puts("Elapsed Time: #{Time.now - start_time}")
+    puts("Creating User: #{user_count}")
     user = User.new(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
