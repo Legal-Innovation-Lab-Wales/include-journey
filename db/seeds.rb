@@ -8,9 +8,9 @@
 
 require 'faker'
 
-total_user_count = 100
+total_user_count = 500
 wellbeing_assessments_for_each_user = 100
-journal_entries_for_each_user = 10
+journal_entries_for_each_user = 50
 contacts_for_each_user = 50
 crisis_events_count = 100
 notes_count = 100
@@ -185,18 +185,20 @@ if CrisisType.count.zero?
 end
 
 # Create Service Users & Associated Records
-user_count = 0
-wba_count = 0
-journal_count = 0
+## Set up counter variables for tracking
+user_counter = 0
+wba_counter = 0
+journal_counter = 0
+
 if User.count.zero?
   total_user_count.times do
-    user_count += 1
-    puts("Creating User: #{user_count}")
+    user_counter += 1
     puts("Elapsed Time: #{Time.now - start_time}")
+    puts("Creating User: #{user_counter}")
     user = User.new(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      email: "IJ-test-user-#{user_count}@purpleriver.dev",
+      email: "IJ-test-user-#{user_counter}@purpleriver.dev",
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
@@ -207,14 +209,14 @@ if User.count.zero?
 
     ## Create User Wellbeing Assessments for each user
     wellbeing_assessments_for_each_user.times do
-      wba_count += 1
+      wba_counter += 1
       # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
         user: user
       )
 
-      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
+      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_counter % 5).zero?
 
       WellbeingMetric.all.each do |wellbeing_metric|
         WbaScore.create!(
@@ -227,7 +229,7 @@ if User.count.zero?
 
     ## Create Journal Entries for each User
     journal_entries_for_each_user.times do
-      journal_count += 1
+      journal_counter += 1
       # puts("Creating Journal #{journal_count} for user #{user_count}")
       journal_entry = JournalEntry.new(
         user: user,
@@ -245,7 +247,7 @@ if User.count.zero?
       end
 
       ## Create View Log for every 5th journal entry
-      next unless (journal_count % 5).zero?
+      next unless (journal_counter % 5).zero?
 
       TeamMember.all.each do |team_member|
         JournalEntryViewLog.create!(
@@ -306,8 +308,8 @@ crisis_events_count.times do
 end
 
 puts("Team Members in DatabaseL #{TeamMember.count}")
-puts("Users Created: #{user_count}")
+puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
-puts("Wellbeing Assessments Created: #{wba_count}")
-puts("Journals Created: #{journal_count}")
+puts("Wellbeing Assessments Created: #{wba_counter}")
+puts("Journals Created: #{journal_counter}")
