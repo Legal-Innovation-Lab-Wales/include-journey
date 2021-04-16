@@ -1,39 +1,41 @@
 <main class="ij-form">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <h2>Log in</h2>
+  <div class="form-container">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <h2>Log in</h2>
 
-    <div class="form-group">
-      <%= render "team_members/shared/error_messages", resource: resource %>
-      <p class="text-danger">
-        <% if flash[:alert] %>
-          <%= flash[:alert] %>
-        <% end %>
-      </p>
-    </div>
+      <div class="form-group">
+        <%= render "team_members/shared/error_messages", resource: resource %>
+        <p class="text-danger">
+          <% if flash[:alert] %>
+            <%= flash[:alert] %>
+          <% end %>
+        </p>
+      </div>
 
-    <div class="form-floating">
-      <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
-      <%= f.label :email %>
-    </div>
+      <div class="form-floating">
+        <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+        <%= f.label :email %>
+      </div>
 
-    <div class="form-floating">
-      <%= f.password_field :password, class: 'form-control', autocomplete: "current-password", placeholder: "Password" %>
-      <%= f.label :password %>
-    </div>
+      <div class="form-floating">
+        <%= f.password_field :password, class: 'form-control', autocomplete: "current-password", placeholder: "Password" %>
+        <%= f.label :password %>
+      </div>
 
-    <% if devise_mapping.rememberable? %>
-      <div class="form-check form-switch">
-        <%= f.check_box :remember_me, class: 'form-check-input' %>
-        <%= f.label :remember_me, class: 'form-check-label' %>
+      <% if devise_mapping.rememberable? %>
+        <div class="form-check form-switch">
+          <%= f.check_box :remember_me, class: 'form-check-input' %>
+          <%= f.label :remember_me, class: 'form-check-label' %>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.submit "Log in", class: 'btn btn-primary' %>
+      </div>
+
+      <div class="other-actions">
+        <%= render "team_members/shared/links" %>
       </div>
     <% end %>
-
-    <div class="form-group">
-      <%= f.submit "Log in", class: 'btn btn-primary' %>
-    </div>
-
-    <div class="other-actions">
-      <%= render "team_members/shared/links" %>
-    </div>
-  <% end %>
+  </div>
 </main>

@@ -1,0 +1,31 @@
+<div class="col-12 col-md-4">
+  <div class="card mb-3">
+      <div class="card-header">
+        <%= link_to edit_contact_path(contact), class: "contact-name" do %>
+          <span>
+            <%= contact.name %>
+          </span>
+          <span>
+            <i class="fas fa-edit"></i>
+          </span>
+        <% end %>
+      </div>
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <%= contact.description %>
+        </div>
+        <div class="row">
+          <%= link_to "tel:0#{contact.number}" do %>
+            <i class="fas fa-phone-alt"></i> <%= "0#{contact.number}" %>
+          <% end %>
+        </div>
+        <div class="row">
+          <%= link_to "mailto:#{contact.email}" do %>
+            <i class="fas fa-envelope"></i> <%= contact.email %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

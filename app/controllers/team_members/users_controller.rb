@@ -56,7 +56,9 @@ module TeamMembers
     protected
 
     def resources
-      User.includes(:wellbeing_assessments, :crisis_events).where.not(id: @pinned_users).order(created_at: :desc)
+      User.includes(:wellbeing_assessments, :crisis_events)
+          .where.not(id: @pinned_users)
+          .order(created_at: :desc)
     end
 
     def resources_per_page
@@ -64,7 +66,9 @@ module TeamMembers
     end
 
     def search
-      User.includes(:wellbeing_assessments, :crisis_events).where(user_search, wildcard_query).order(created_at: :desc)
+      User.includes(:wellbeing_assessments, :crisis_events)
+          .where(user_search, wildcard_query)
+          .order(created_at: :desc)
     end
 
     private
@@ -123,5 +127,7 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
+
+    def subheading_stats; end
   end
 end

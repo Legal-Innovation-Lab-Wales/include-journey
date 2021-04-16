@@ -11,12 +11,18 @@ module TeamMembers
     end
 
     def search
-      @team_member.journal_entry_view_logs.includes(:user, :journal_entry).joins(:user)
+      @team_member.journal_entry_view_logs.includes(:user, :journal_entry)
+                  .joins(:user)
                   .where(user_search, wildcard_query)
     end
 
     def team_member
       @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
+    end
+
+    def subheading_stats
+      # TODO: Add stats for team member view logs index
+
     end
   end
 end

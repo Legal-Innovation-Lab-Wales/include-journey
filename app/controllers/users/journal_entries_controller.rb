@@ -39,7 +39,8 @@ module Users
     end
 
     def search
-      current_user.journal_entries.where('lower(entry) similar to lower(:query)', wildcard_query)
+      current_user.journal_entries
+                  .where('lower(entry) similar to lower(:query)', wildcard_query)
                   .order(created_at: :desc)
     end
   end

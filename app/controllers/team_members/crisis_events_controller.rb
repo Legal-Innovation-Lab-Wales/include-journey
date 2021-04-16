@@ -44,7 +44,8 @@ module TeamMembers
     end
 
     def search
-      CrisisEvent.closed.includes(:user, :crisis_type).joins(:user, :crisis_type)
+      CrisisEvent.closed.includes(:user, :crisis_type)
+                 .joins(:user, :crisis_type)
                  .where("#{user_search} or #{crisis_search}", wildcard_query)
                  .order(closed_at: :desc)
     end
@@ -61,6 +62,10 @@ module TeamMembers
 
     def crisis_notes_params
       params.require(:crisis_note).permit(:content)
+    end
+
+    def subheading_stats
+      # TODO: Add stats for closed crisis events index
     end
   end
 end

@@ -1,0 +1,37 @@
+
+<main class="container user contacts index">
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
+             query_path: contacts_path %>
+  <section class="row" id="contacts">
+    <div class="col">
+      <div class="row justify-content-end">
+        <%= render 'shared/search' %>
+      </div>
+      <h3 class="mb-3">Contacts</h3>
+      <div class="container p-0">
+        <div class="row">
+          <div class="col-auto mr-auto">
+            <%= link_to new_contact_path, class: 'btn btn-success' do %>
+            <i class="fas fa-plus-circle"></i> Add Contact
+            <% end %>
+          </div>
+          <div class="col">
+            <%= render 'shared/limit', resources_per_page: @multiple %>
+          </div>
+        </div>
+
+        <%= render 'shared/search_results', query: params[:query], count: @count %>
+        <div class="row g-4">
+          <% @resources.each do |contact| %>
+            <%= render 'card', contact: contact %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
+             first_page: contacts_path(page: 1, query: params[:query], limit: params[:limit]),
+             next_page: contacts_path(page: @page + 1, query: params[:query], limit: params[:limit]),
+             previous_page: contacts_path(page: @page - 1, query: params[:query], limit: params[:limit]),
+             final_page_path: contacts_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
+</main>
