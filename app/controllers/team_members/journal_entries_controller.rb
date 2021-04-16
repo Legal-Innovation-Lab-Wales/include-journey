@@ -14,11 +14,13 @@ module TeamMembers
     def resources
       @resources =
         if @query.present?
-          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs).joins(:user)
+          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                             .joins(:user)
                              .where(user_search, wildcard_query)
                              .order(created_at: :desc)
         else
-          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs).order(created_at: :desc)
+          current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                             .order(created_at: :desc)
         end
     end
 
@@ -36,5 +38,11 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
+
+    def subheading_stats
+      # TODO: Add stats for journal index. IJ-123
+
+    end
+
   end
 end
