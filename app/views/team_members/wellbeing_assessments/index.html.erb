@@ -65,30 +65,7 @@
                   </td>
                   <% wellbeing_assessment.wba_scores.each do |score| %>
                     <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
-                        title="<%= score.wellbeing_metric.name %>: <%= case score.value
-                                                                       when 1
-                                                                         'Abysmal'
-                                                                       when 2
-                                                                         'Dreadful'
-                                                                       when 3
-                                                                         'Rubbish'
-                                                                       when 4
-                                                                         'Bad'
-                                                                       when 5
-                                                                         'Mediocre'
-                                                                       when 6
-                                                                         'Fine'
-                                                                       when 7
-                                                                         'Good'
-                                                                       when 8
-                                                                         'Great'
-                                                                       when 9
-                                                                         'Superb'
-                                                                       when 10
-                                                                         'Perfect'
-                                                                       else
-                                                                         'Unknown'
-                                                                       end %>">
+                        title="<%= score.wellbeing_metric.name %>: <%= @wba_values[score.value] %>">
                     </td>
                   <% end %>
                   <td class="link">

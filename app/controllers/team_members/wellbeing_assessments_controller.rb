@@ -18,6 +18,7 @@ module TeamMembers
     # GET /users/:user_id/wellbeing_assessments
     def index
       @resources_per_page = @user.present? ? 20 : 6
+      wba_values
       super
     end
 
@@ -90,6 +91,12 @@ module TeamMembers
         @wellbeing_assessment.wba_scores.create!({ wellbeing_metric: metric,
                                                    value: wba_params["wellbeing_metric_#{metric.id}"] })
       end
+    end
+
+    def wba_values
+      return unless @user.present?
+
+      @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb', 'Perfect']
     end
 
     def wellbeing_assessment
