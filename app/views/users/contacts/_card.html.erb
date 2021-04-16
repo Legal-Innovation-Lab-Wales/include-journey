@@ -1,12 +1,15 @@
-<div class="col">
-  <div class="card">
-    <div class="card-header">
-      <span>
+<div class="col-12 col-md-4">
+  <div class="card mb-3">
+      <div class="card-header">
         <%= link_to edit_contact_path(contact), class: "contact-name" do %>
-          <i class="fas fa-edit hide"></i> <%= contact.name %>
+          <span>
+            <%= contact.name %>
+          </span>
+          <span>
+            <i class="fas fa-edit"></i>
+          </span>
         <% end %>
-      </span>
-    </div>
+      </div>
     <div class="card-body">
       <div class="container">
         <div class="row">
@@ -25,5 +28,4 @@
       </div>
     </div>
   </div>
-  <br />
 </div>

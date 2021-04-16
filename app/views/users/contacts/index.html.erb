@@ -21,7 +21,7 @@
         </div>
 
         <%= render 'shared/search_results', query: params[:query], count: @count %>
-        <div class="row row-cols-3 row-cols-md-3 g-4">
+        <div class="row g-4">
           <% @resources.each do |contact| %>
             <%= render 'card', contact: contact %>
           <% end %>

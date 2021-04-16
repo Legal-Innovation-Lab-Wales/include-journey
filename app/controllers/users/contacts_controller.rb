@@ -21,7 +21,6 @@ module Users
 
     # GET /contacts/:id/edit
     def edit
-      puts 'Edit the contact'
       render 'edit'
     end
 
