@@ -1,0 +1,29 @@
+<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg col-12" role="document">
+    <div class="modal-content">
+      <%= form_with model: @note,
+                        url: user_add_note_index_path(@user),
+                        method: :post do |form| %>
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-black-50">Add a note for this user</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body border-0">
+        <div class="input-group mb-3">
+          <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
+        </div>
+        <div class="form-check form-switch d-flex justify-content-between px-0">
+          <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
+          Allow user to see this note?
+          <% end %>
+          <%= form.check_box :visible_to_user, class: 'form-check-input' %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <%= form.submit 'Add note', class: 'btn btn-primary' %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
