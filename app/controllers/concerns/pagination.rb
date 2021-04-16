@@ -14,6 +14,7 @@ module Pagination
     @resources_per_page = resources_per_page
     @resources = @query.present? ? search : resources
     @count = @resources.count
+    subheading_stats
     @last_page = (@count.to_f / limit).ceil
     @resources = @resources.offset(offset).limit(limit)
     @resources.present? ? render('index') : redirect
@@ -61,6 +62,8 @@ module Pagination
   def search
     raise 'Search not overridden'
   end
+
+  def subheading_stats; end
 
   def redirect
     redirect_back(fallback_location: root_path, alert: 'No Results Found')

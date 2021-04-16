@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < TeamMembersApplicationController
     before_action :user, except: :show
-    before_action :team_member, :wellbeing_assessments, only: :index
+    before_action :team_member, :wellbeing_assessments, :wba_values, only: :index
     include Pagination
 
     before_action :wellbeing_metrics, only: %i[new create]
@@ -48,11 +48,12 @@ module TeamMembers
 
     def resources_per_page
       @user.present? ? 20 : 6
-      wba_values
     end
 
     def search
-      @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
+      @wellbeing_assessments.includes(:user, :wba_scores)
+                            .joins(:user)
+                            .where(user_search, wildcard_query)
                             .order(created_at: :desc)
     end
 
