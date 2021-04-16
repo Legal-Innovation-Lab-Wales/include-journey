@@ -125,8 +125,8 @@ module TeamMembers
       @count_in_last_month = @resources.where('created_at >= ?', 1.month.ago).size
       return unless @user
 
-      @count_by_team_member = @resources.count { |tm| tm.team_member_id.present? }
-      @count_by_user = @resources.count { |tm| tm.team_member_id.nil? }
+      @count_by_team_member = @resources.count { |wba| wba.team_member_id.present? }
+      @count_by_user = @resources.count { |wba| wba.team_member_id.nil? }
     end
   end
 end
