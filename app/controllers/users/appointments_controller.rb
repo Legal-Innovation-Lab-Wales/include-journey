@@ -3,7 +3,7 @@ module Users
   class AppointmentsController < PaginationController
     # GET /appointments/upcoming
     def upcoming
-      @appointments = current_user.appointments.where('start_datetime >= ?', Time.now).order(start_datetime: :asc)
+      @appointments = current_user.appointments.where('start >= ?', Time.now).order(start: :asc)
 
       render 'upcoming'
     end
@@ -30,10 +30,10 @@ module Users
     def resources
       @resources =
         if @query.present?
-          current_user.appointments.where("start_datetime <= :start and #{appointment_search}", past_appointment_query)
-                      .order(start_datetime: :desc)
+          current_user.appointments.where("start <= :start and #{appointment_search}", past_appointment_query)
+                      .order(start: :desc)
         else
-          current_user.appointments.where('start_datetime <= ?', Time.now).order(start_datetime: :desc)
+          current_user.appointments.where('start <= ?', Time.now).order(start: :desc)
         end
     end
 
@@ -54,7 +54,7 @@ module Users
     end
 
     def appointment_params
-      params.require(:appointment).permit(:where, :who_with, :what, :start_datetime)
+      params.require(:appointment).permit(:where, :who_with, :what, :start)
     end
   end
 end

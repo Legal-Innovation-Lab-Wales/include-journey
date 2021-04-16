@@ -22,18 +22,19 @@
             <%= f.label :what_about %>
           </div>
 
-          <%= f.hidden_field :start_datetime %>
+          <%= f.hidden_field :start %>
 
           <div class="row date-time-fields">
             <div class="col-8 form-floating">
-              <%= f.date_field :when, class: 'form-control', autocomplete: "when", placeholder: "when",
-                               value: Date.tomorrow, min: Date.today %>
-              <%= f.label :when %>
+              <input class="form-control" autocomplete="when" placeholder="when" value="<%= Date.tomorrow %>"
+                     min="<%= Date.today %>" type="date" id="appointment_when">
+              <label for="appointment_when">When</label>
             </div>
 
             <div class="col-4 form-floating">
-              <%= f.time_field :time, class: 'form-control', autocomplete: "time", placeholder: "time", value: '12:00' %>
-              <%= f.label :time %>
+              <input class="form-control" autocomplete="time" placeholder="time" value="12:00" type="time"
+                     id="appointment_time">
+              <label for="appointment_time">Time</label>
             </div>
           </div>
 

@@ -16,11 +16,11 @@
             <div class="col-12 col-md-4 past">
               <div class="card border-primary mt-3">
                 <div class="card-header bg-primary">
-                  at  <%= past_appointments.start_datetime.strftime("%I:%M%p on %a #{past_appointments.start_datetime.day.ordinalize} %B") %> <br />
+                  at  <%= past_appointments.time_on_date %> <br />
                 </div>
                 <div class="card-body">
                   <p>
-                    <%= distance_of_time_in_words(Time.now, past_appointments.start_datetime) %> ago
+                    <%= distance_of_time_in_words(Time.now, past_appointments.start) %> ago
                     with <%= past_appointments.who_with %>
                     about <%= past_appointments.what %>
                     at <%= past_appointments.where %>

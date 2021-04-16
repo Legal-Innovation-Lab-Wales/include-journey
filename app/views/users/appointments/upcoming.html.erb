@@ -10,15 +10,15 @@
             <div class="col-12 col-md-4">
               <div class="card border-primary mt-3">
                 <div class="card-header bg-primary">
-                  at  <%= appointments.start_datetime.strftime("%I:%M%p on %a #{appointments.start_datetime.day.ordinalize} %B") %> <br />
+                  at  <%= appointments.time_on_date %> <br />
                 </div>
                 <div class="card-body">
                   <p>
-                    In <%= distance_of_time_in_words(Time.now, appointments.start_datetime) %>
+                    In <%= distance_of_time_in_words(Time.now, appointments.start) %>
                     with <%= appointments.who_with %>
                     about <%= appointments.what %>
                     at <%= appointments.where %>
-                    for <%= "%02d:%02d:%02d" % [appointments.duration / 3600, appointments.duration / 60 % 60, appointments.duration % 60] %>
+                    for <%= '...' %>
                   </p>
                 </div>
               </div>

@@ -249,9 +249,8 @@ if User.count.zero?
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
         what: Faker::Company.profession,
-        start_datetime: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 10),
-        end_datetime: Faker::Time.between(from: DateTime.tomorrow + 10, to: DateTime.tomorrow + 15),
-        duration: rand(720..10800)
+        start: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 10),
+        end: Faker::Time.between(from: DateTime.tomorrow + 10, to: DateTime.tomorrow + 15)
       )
     end
 
@@ -263,9 +262,8 @@ if User.count.zero?
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
         what: Faker::Company.profession,
-        start_datetime: Faker::Time.between(from: DateTime.now - 10, to: DateTime.yesterday),
-        end_datetime: Faker::Time.between(from: DateTime.now - 11, to: DateTime.yesterday),
-        duration: rand(720..10800)
+        start: Faker::Time.between(from: DateTime.now - 10, to: DateTime.yesterday),
+        end: Faker::Time.between(from: DateTime.now - 11, to: DateTime.yesterday)
       )
     end
   end
