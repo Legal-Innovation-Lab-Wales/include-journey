@@ -30,6 +30,9 @@ module Users
     end
 
     def email
+      TeamMember.admins.each do |admin|
+        CrisisEventMailer.with(user: current_user, admin: admin, crisis_event: @crisis_event, crisis_type: @crisis_event.crisis_type.category).new_crisis_email.deliver_now
+      end
       puts '=========================================================================================================='
       puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
       puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"

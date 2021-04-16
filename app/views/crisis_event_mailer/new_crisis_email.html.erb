@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+</head>
+<body>
+<p>
+  <%= @user.full_name %> has pushed the SOS butt as they are having a crisis.
+</p>
+<div>
+  <h3> Contact Details: </h3>
+  <ul>
+    <li>Phone: <%= @user.mobile_number %></li>
+    <li>Email: <%= @user.email %></li>
+  </ul>
+</div>
+<div>
+  <h3>Crisis Details: </h3>
+  <p>Crisis Type: <%= @crisis_type %></p>
+  <p>Additional Details: <%= @crisis_event.additional_info %></p>
+</div>
+
+<p>
+  Login in now to <%= link_to 'manage this crisis', crisis_event_url(@crisis_event) %>.
+</p>
+</body>
+</html>
