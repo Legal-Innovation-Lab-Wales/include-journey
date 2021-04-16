@@ -87,4 +87,10 @@ body#overboot {
       color: $danger;
     }
   }
+
+  .form-floating {
+    label {
+      color: $black;
+    }
+  }
 }

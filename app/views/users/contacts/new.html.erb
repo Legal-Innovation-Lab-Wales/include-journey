@@ -1,0 +1,10 @@
+<main class="container user contacts new">
+  <%= render 'shared/back_btn', path: contacts_path, text: 'Contacts',
+             query_path: contacts_path %>
+  <section class="row">
+    <div class="col">
+      <h3>New Contact</h3>
+      <%= render 'new_edit_form', submit_btn_text: 'Create' %>
+    </div>
+  </section>
+</main>
