@@ -9,19 +9,18 @@
 </p>
 <div>
   <h3> Contact Details: </h3>
-  <ul>
-    <li>Phone: <%= @user.mobile_number %></li>
-    <li>Email: <%= @user.email %></li>
-  </ul>
+  <p>Phone: <%= @user.mobile_number %></p>
+  <p>Email: <%= @user.email %></p>
 </div>
 <div>
   <h3>Crisis Details: </h3>
   <p>Crisis Type: <%= @crisis_type %></p>
   <p>Additional Details: <%= @crisis_event.additional_info %></p>
 </div>
-
-<p>
-  Login in now to <%= link_to 'manage this crisis', crisis_event_url(@crisis_event) %>.
-</p>
+<div>
+  <p>
+    Login in now to <%= link_to 'manage this crisis', crisis_event_url(@crisis_event) %>.
+  </p>
+</div>
 </body>
 </html>
