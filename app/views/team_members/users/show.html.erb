@@ -165,35 +165,16 @@
           <% else %>
             <% @user_notes.each do |note| %>
               <% if note.replaced_by.nil? %>
-                <div class="card bg-transparent my-2">
-                  <div class="card-header d-flex justify-content-between">
-                    <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
-                    <div class="note-icons">
-                      <span>
-                        <% if note.visible_to_user? %>
-                          <i class="fa fa-eye text-danger ms-2" data-toggle="tooltip" data-placement="bottom" title="Make Visible to User"></i>
-                        <% else %> 
-                          <i class="fa fa-eye-slash ms-2" data-toggle="tooltip" data-placement="bottom" title="Make Invisible to User"></i>
-                        <% end %>
-                      </span>
-                      <span><i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View Edit History"></i></span>
-                      <span><i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="Edit"></i></span>
-                      <span><%=  %></span>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <p><%= simple_format(note.content) %></p>
-                  </div>
-                </div>
+                <%= render 'note_card', note: note %>
               <% end %>
             <% end %>
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-primary my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
             Add Note
           </button>
-          <%= button_to "Add Note", '#', class: "btn btn-primary my-2 py-2 px-5", data: {toggle: "modal", target: "#note-modal"} %>
+          <%# is there a rails button_to/link_to way to replace this? %>
         </div>
       </div>
     </div>

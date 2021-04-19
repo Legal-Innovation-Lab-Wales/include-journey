@@ -1,0 +1,20 @@
+<div class="card bg-transparent my-2">
+  <div class="card-header d-flex justify-content-between">
+    <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
+    <div class="note-icons">
+      <span>
+        <% if note.visible_to_user? %>
+        <i class="fa fa-eye text-danger ms-2" data-toggle="tooltip" data-placement="bottom" title="Make Visible to User"></i>
+        <% else %>
+        <i class="fa fa-eye-slash ms-2" data-toggle="tooltip" data-placement="bottom" title="Make Invisible to User"></i>
+        <% end %>
+      </span>
+      <span><i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View Edit History"></i></span>
+      <span><i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="Edit"></i></span>
+      <span><%=  %></span>
+    </div>
+  </div>
+  <div class="card-body">
+    <p><%= simple_format(note.content) %></p>
+  </div>
+</div>
