@@ -1,10 +1,43 @@
 @import "variables";
 
 #wellbeing-history-chart-wrapper {
+  min-height: 30vh;
   margin: 0 0 1.5rem 0;
   background-color: $grey;
 
-  h3 {
+  @media screen and (min-width: $screen-md) {
+    min-height: 95vh;
+  }
+
+  h3, h4 {
     color: $black;
+  }
+
+  h4 {
+    font-family: $heading-font;
+  }
+
+  #wellbeing-history-chart-carousel {
+    .carousel-inner {
+      padding: 0 2rem;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      width: 2rem;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    @media screen and (min-width: $screen-md) {
+      .carousel-control-prev {
+        left: -0.75rem;
+      }
+
+      .carousel-control-next {
+        right: -0.75rem;
+      }
+    }
   }
 }

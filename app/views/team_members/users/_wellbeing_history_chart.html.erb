@@ -1,7 +1,17 @@
 <section class="row" id="wellbeing-history-chart-wrapper">
- <div class="col-12">
-   <h3><%= local_assigns[:chart_heading] %></h3>
-   <canvas id="wellbeing-history-chart"></canvas>
+ <div class="col">
+   <h3><%= chart_heading %></h3>
+   <div id="wellbeing-history-chart-carousel" class="carousel slide carousel-dark" data-bs-interval="false">
+     <div class="carousel-inner"></div>
+     <button class="carousel-control-prev hidden" type="button" data-bs-target="#wellbeing-history-chart-carousel" data-bs-slide="prev">
+       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+       <span class="visually-hidden">Previous</span>
+     </button>
+     <button class="carousel-control-next hidden" type="button" data-bs-target="#wellbeing-history-chart-carousel" data-bs-slide="next">
+       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+       <span class="visually-hidden">Next</span>
+     </button>
+   </div>
  </div>
 </section>
 
