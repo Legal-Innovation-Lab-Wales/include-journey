@@ -74,10 +74,27 @@
     }
   }
 
-  &.new {
-    .ij-form {
-      min-height: inherit;
+  &.new, &.edit {
+    .row {
+      margin-top: 0;
+
+      .col-12, .col-md-4:nth-child(2) {
+        background-color: $grey;
+        padding: 1rem;
+        border-radius: 0.5rem;
+      }
+
+      form {
+        .form-floating {
+          margin-bottom: 0.5rem;
+        }
+
+        &:first-of-type {
+          .btn {
+            width: 80%;
+          }
+        }
+      }
     }
   }
-
 }

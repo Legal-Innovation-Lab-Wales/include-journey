@@ -1,7 +1,5 @@
-
 <main class="container user contacts index">
-  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
-             query_path: contacts_path %>
+  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard', index: 'contacts' %>
   <section class="row" id="contacts">
     <div class="col">
       <div class="row justify-content-end">
@@ -16,11 +14,11 @@
             <% end %>
           </div>
           <div class="col">
-            <%= render 'shared/limit', resources_per_page: @multiple %>
+            <%= render 'shared/limit' %>
           </div>
         </div>
 
-        <%= render 'shared/search_results', query: params[:query], count: @count %>
+        <%= render 'shared/search_results' %>
         <div class="row g-4">
           <% @resources.each do |contact| %>
             <%= render 'card', contact: contact %>
@@ -29,9 +27,5 @@
       </div>
     </div>
   </section>
-  <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-             first_page: contacts_path(page: 1, query: params[:query], limit: params[:limit]),
-             next_page: contacts_path(page: @page + 1, query: params[:query], limit: params[:limit]),
-             previous_page: contacts_path(page: @page - 1, query: params[:query], limit: params[:limit]),
-             final_page_path: contacts_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
+  <%= render 'shared/pagination_controls', index: 'contacts'%>
 </main>
