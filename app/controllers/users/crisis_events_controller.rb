@@ -30,8 +30,9 @@ module Users
     end
 
     def email
+      @crisis_type = @crisis_event.crisis_type.category
       TeamMember.admins.each do |admin|
-        CrisisEventMailer.with(user: current_user, admin: admin, crisis_event: @crisis_event, crisis_type: @crisis_event.crisis_type.category).new_crisis_email.deliver_now
+        CrisisEventMailer.new_crisis_email(current_user, admin, @crisis_event, @crisis_type).deliver_now
       end
     end
 
