@@ -75,7 +75,7 @@
   }
 
   &.new, &.edit {
-    .row {
+    .row:last-child {
       margin-top: 0;
 
       .col-12, .col-md-4:nth-child(2) {
