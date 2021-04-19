@@ -19,6 +19,7 @@
                     about <%= appointments.what %>
                     at <%= appointments.where %>
                     for <%= appointments.duration %>
+                  <%= link_to 'Edit', edit_appointment_path(appointments.id) %>
                   </p>
                 </div>
               </div>

@@ -25,6 +25,21 @@ module Users
       render 'new'
     end
 
+    # GET /appointments/:id/edit
+    def edit
+      render 'edit'
+    end
+
+    # PUT /appointments/:id
+    def update
+      @appointment = Appointment.find(params[:id])
+      @appointment.update(who: params[:appointment][:who], what: params[:appointment][:what],
+                          where: :params[:appointment][:where], who_with: params[:appointment][:who_with], start: params[:appointment][:start],
+                          end: params[:appointment][:end])
+      redirect_to appointments_path
+    end
+
+
     protected
 
     def resources
