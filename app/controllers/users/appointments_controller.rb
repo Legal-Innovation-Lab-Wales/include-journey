@@ -1,6 +1,8 @@
 module Users
   # app/controllers/users/appointments_controller.rb
   class AppointmentsController < PaginationController
+    before_action :appointment, only: %i[edit update]
+
     # GET /appointments/upcoming
     def upcoming
       @appointments = current_user.appointments.where('start >= ?', Time.now).order(start: :asc)
@@ -32,13 +34,18 @@ module Users
 
     # PUT /appointments/:id
     def update
-      @appointment = Appointment.find(params[:id])
-      @appointment.update(who: params[:appointment][:who], what: params[:appointment][:what],
-                          where: :params[:appointment][:where], who_with: params[:appointment][:who_with], start: params[:appointment][:start],
-                          end: params[:appointment][:end])
-      redirect_to appointments_path
+      if @appointment.update!(appointment_params)
+        redirect_to upcoming_appointments_path, flash: { success: 'Appointment updated' }
+      else
+        redirect_to edit_appointment_path(@appointment),
+                    flash: { error: 'Appointment could not be updated. Please try again.' }
+      end
     end
 
+    # DELETE /appointments/:id
+    def destroy
+      # Implement deleting the appointment...
+    end
 
     protected
 
@@ -57,6 +64,12 @@ module Users
     end
 
     private
+
+    def appointment
+      @appointment = current_user.appointments.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
+    end
 
     def appointment_search
       'lower(who_with) similar to lower(:query) or lower(what) similar to lower(:query)'

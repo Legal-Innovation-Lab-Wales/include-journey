@@ -5,7 +5,7 @@
     <div class="col-12 col-md-4 create">
       <h3 class="mb-0">Create new appointment</h3>
       <p> Enter in the information to add a new event.</p>
-        <%= render 'form', appointment: @appointment, action: :create %>
+        <%= render 'form', appointment: @appointment, url: appointments_path, action: :create %>
     </div>
     <div class="col-0 col-md-4"></div>
   </section>
