@@ -94,7 +94,7 @@ config/webpack/environment.js
 
 #### Sending Email 
 
-In order to get email working while on localhost you need to run the following commands:
+If emails are not working while on localhost, try running the following commands:
 
 ```zsh
 $ echo "export SENDGRID_API_KEY=SG.apikeyfromsendgrid" > sendgrid.env
@@ -109,15 +109,10 @@ $ source ./sendgrid.env
 
 [Legal Innovation Lab Wales](https://legaltech.wales/)
 
----
-## TODO Sections:
-* How to run the test suite
-* Services - 
-job queues, cache servers, search engines, etc.
 
 ---
-
-## Before Initial Commit
+<details>
+<summary>## Before Initial Commit</summary>
 
 These were the steps taken to spin up the application before the initial commit.
 
@@ -176,3 +171,4 @@ Update routes, generate views, generate controllers, finish multi-user-model gui
  ```
 
 Setup Repo
+</details>
