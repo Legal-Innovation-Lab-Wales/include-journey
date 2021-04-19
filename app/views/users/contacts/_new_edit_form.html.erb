@@ -1,0 +1,22 @@
+<div class="ij-form">
+  <%= form_with model: @contact do |f| %>
+  <div class="form-floating">
+    <%= f.text_field :name, class: 'form-control', required: true %>
+    <%= f.label :name, 'Name' %>
+  </div>
+  <div class="form-floating">
+    <%= f.text_area :description, class: 'form-control',  required: true %>
+    <%= f.label :description, 'Description' %>
+  </div>
+  <div class="form-floating">
+    <%= f.text_field :number, class: 'form-control' %>
+    <%= f.label :number, 'Phone Number' %>
+  </div>
+  <div class="form-floating">
+    <%= f.text_field :email, class: 'form-control' %>
+    <%= f.label :email, 'Email' %>
+  </div>
+
+  <%= f.submit submit_btn_text, class: 'btn btn-primary' %>
+  <% end %>
+</div>

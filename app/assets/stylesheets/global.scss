@@ -87,4 +87,22 @@ body#overboot {
       color: $danger;
     }
   }
+
+  .subheading {
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .mobile-hint {
+    @media (min-width: $screen-sm) {
+      display: none;
+    }
+  }
+
+  .form-floating {
+    label {
+      color: $black;
+    }
+  }
 }

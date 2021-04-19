@@ -92,6 +92,9 @@
                            show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
                            sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
               <% end %>
+              <div class="text-center">
+                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+              </div>
             </div>
           </div>
         </div>
