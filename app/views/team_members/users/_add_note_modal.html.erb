@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body border-0">
         <div class="input-group mb-3">
-          <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
+          <%= form.text_area :content, id: 'user-note-modal-content', class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
         </div>
         <div class="form-check form-switch d-flex justify-content-between px-0">
           <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
