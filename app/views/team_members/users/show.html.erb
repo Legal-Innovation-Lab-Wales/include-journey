@@ -171,7 +171,7 @@
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#add-note-modal">
             Add Note
           </button>
           <%# is there a rails button_to/link_to way to replace this? %>
@@ -180,6 +180,7 @@
     </div>
 
     <%= render 'add_note_modal' %>
+    <%= render 'edit_note_modal' %>
     <%= render 'show_history_modal' %>
 
   </div>
