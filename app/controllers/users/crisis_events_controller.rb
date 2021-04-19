@@ -35,9 +35,9 @@ module Users
       TeamMember.admins.each do |admin|
         case action_name
         when 'create'
-          CrisisEventMailer.new_crisis_email(current_user, admin, @crisis_event, @crisis_type).deliver_now
+          AdminMailer.new_crisis_email(current_user, admin, @crisis_event, @crisis_type).deliver_now
         when 'update'
-          CrisisEventMailer.updated_crisis_email(current_user, admin, @crisis_event, @crisis_type, @crisis_notes).deliver_now
+          AdminMailer.updated_crisis_email(current_user, admin, @crisis_event, @crisis_type, @crisis_notes).deliver_now
         else
           flash[:error] = "Email could not be sent to #{admin.full_name}"
         end
