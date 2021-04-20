@@ -10,17 +10,24 @@ const short_term_add = document.querySelector('.short-term .add'),
           form.classList.toggle('hidden')
       },
       goals = document.querySelectorAll('.list-group-item'),
-      toggle_icon = icon => {
-          icon.classList.toggle('far')
-          icon.classList.toggle('fa-square')
-          icon.classList.toggle('fas')
-          icon.classList.toggle('fa-check-square')
+      toggle_icon = (icon, mouseover) => {
+          if (mouseover) {
+              icon.classList.remove('far')
+              icon.classList.remove('fa-square')
+              icon.classList.add('fas')
+              icon.classList.add('fa-check-square')
+          } else {
+              icon.classList.add('far')
+              icon.classList.add('fa-square')
+              icon.classList.remove('fas')
+              icon.classList.remove('fa-check-square')
+          }
       }
       toggle_check = goal => {
           if (!goal.classList.contains('achieved')) {
               const icon = goal.querySelector('i')
-              goal.addEventListener('mouseover', () => toggle_icon(icon))
-              goal.addEventListener('mouseleave', () => toggle_icon(icon))
+              goal.addEventListener('mouseover', () => toggle_icon(icon, true))
+              goal.addEventListener('mouseleave', () => toggle_icon(icon, false))
           }
       }
 

@@ -2,10 +2,16 @@
   <% goals.each do |goal| %>
 
     <% if goal.achieved_on.present? %>
-      <li class="list-group-item achieved"><%= goal.goal %> <i class="fas fa-check-square"></i></li>
+      <li class="list-group-item achieved">
+        <div><%= simple_format(goal.goal) %></div>
+        <div><i class="fas fa-check-square"></i></div>
+      </li>
     <% else %>
       <%= link_to achieve_goal_path(goal), method: :put do %>
-        <li class="list-group-item"><%= goal.goal %> <i class="far fa-square"></i></li>
+        <li class="list-group-item">
+          <div><%= simple_format(goal.goal) %></div>
+          <div><i class="far fa-square"></i></div>
+        </li>
       <% end %>
     <% end %>
   <% end %>

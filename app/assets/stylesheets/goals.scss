@@ -31,15 +31,30 @@
           }
 
           .list-group-item {
+            display: flex;
             background-color: $white;
 
             &.achieved {
               background-color: $success;
             }
 
-            i {
-              float: right;
-              margin-top: 4px;
+            div {
+              &:first-child {
+                width: calc(100% - 15px);
+                padding: 0 10px;
+              }
+
+              &:last-child {
+                width: 15px;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                flex-direction: column;
+              }
+            }
+
+            p {
+              margin-bottom: 0;
             }
           }
         }
