@@ -57,6 +57,13 @@
             input[type="submit"], .cancel {
               border-radius: 0 !important;
             }
+
+            .cancel {
+              display: flex;
+              justify-content: center;
+              align-content: center;
+              flex-direction: column;
+            }
           }
         }
       }
