@@ -6,7 +6,16 @@
   background-color: $grey;
 
   @media screen and (min-width: $screen-md) {
-    min-height: 95vh;
+    min-height: 410px;
+  }
+  @media screen and (min-width: $screen-lg) {
+    min-height: 530px;
+  }
+  @media screen and (min-width: $screen-xl) {
+    min-height: 620px;
+  }
+  @media screen and (min-width: $screen-xxl) {
+    min-height: 710px;
   }
 
   h3, h4 {
