@@ -1,9 +1,25 @@
 <%= form_with model: goal, url: goals_path, class: 'hidden' do |f| %>
   <%= f.hidden_field :length, value: length %>
-
-  <div class="input-group">
-    <%= f.text_area :goal, class: 'form-control', placeholder: 'Goal', rows: 1 %>
-    <%= f.submit '✓', class: 'btn btn-success' %>
-    <div class="btn btn-danger cancel">✗</div>
+  <div class="container p-0 m-0">
+    <div class="row p-0 m-0">
+      <div class="col-8 p-0">
+        <%= f.text_area :goal, class: 'form-control flex-2', placeholder: 'Goal', rows: 1 %>
+      </div>
+      <div class="col-4 p-0">
+        <select class="form-select" name="goal[aim]">
+          <option value="aspiration">💪 Aspiration</option>
+          <option value="hope">🕊 Hope</option>
+          <option value="meaning">🙏 Meaning</option>
+        </select>
+      </div>
+    </div>
+    <div class="row p-0 m-0 mt-2 justify-content-end">
+      <div class="col-2 p-0">
+        <%= f.submit 'Add️', class: 'btn btn-success' %>
+      </div>
+      <div class="col-2 p-0">
+        <div class="btn btn-danger cancel">Cancel</div>
+      </div>
+    </div>
   </div>
 <% end %>

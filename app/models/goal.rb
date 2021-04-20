@@ -9,4 +9,12 @@ class Goal < ApplicationRecord
   scope :long_term, -> { where(length: :long_term) }
 
   validates_presence_of :user_id, :goal, :length
+
+  def aim_emoji
+    return '💪' if aim == 'aspiration'
+    return '🕊' if aim == 'hope'
+    return '🙏' if aim == 'meaning'
+
+    '🤷‍♂️'
+  end
 end

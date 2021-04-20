@@ -33,23 +33,34 @@
           .list-group-item {
             display: flex;
             background-color: $white;
+            padding-left: 0;
+            padding-right: 0;
 
             &.achieved {
               background-color: $success;
             }
 
             div {
-              &:first-child {
-                width: calc(100% - 15px);
+              &:nth-child(2) {
+                width: calc(100% - 70px);
                 padding: 0 10px;
               }
 
-              &:last-child {
-                width: 15px;
+              &:first-child, &:last-child {
+                width: 30px;
                 display: flex;
                 justify-content: center;
                 align-content: center;
                 flex-direction: column;
+              }
+
+              &:first-child {
+                margin-left: 5px;
+                font-size: 1.5rem;
+              }
+
+              &:last-child {
+                margin-right: 5px;
               }
             }
 
@@ -64,21 +75,21 @@
         }
 
         form {
-          .input-group {
-            textarea {
-              height: 1rem;
-            }
+          textarea {
+            height: 1rem;
+            border-radius: 0.5rem 0 0 0.5rem;
+          }
 
-            input[type="submit"], .cancel {
-              border-radius: 0 !important;
-            }
+          select {
+            border-radius: 0 0.5rem 0.5rem 0;
+          }
 
-            .cancel {
-              display: flex;
-              justify-content: center;
-              align-content: center;
-              flex-direction: column;
-            }
+          input, .cancel {
+            width: 100%;
+          }
+
+          .col-2:first-child {
+            margin-right: 10px;
           }
         }
       }

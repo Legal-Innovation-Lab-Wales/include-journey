@@ -6,7 +6,7 @@ module Users
     # GET /goals
     def index
       @goal = Goal.new
-      @goals = current_user.goals
+      @goals = current_user.goals.order(:created_at)
 
       render 'index'
     end
