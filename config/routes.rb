@@ -19,16 +19,14 @@ Rails.application.routes.draw do
       get 'terms', to: 'users_application#terms'
 
       resources :wellbeing_assessments, only: %i[show new create]
-
       resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
-
       resources :crisis_events, only: %i[create update]
-
       resources :contacts
+      resources :goals, only: %i[index new create]
     end
   end
 

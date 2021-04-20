@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142947) do
+ActiveRecord::Schema.define(version: 2021_04_07_142949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,9 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
   end
+
+# Could not dump table "goals" because of following StandardError
+#   Unknown type 'goal_aim' for column 'aim'
 
   create_table "journal_entries", force: :cascade do |t|
     t.text "entry"
@@ -206,6 +209,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
   add_foreign_key "crisis_notes", "crisis_events"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
+  add_foreign_key "goals", "users"
   add_foreign_key "journal_entries", "users"
   add_foreign_key "journal_entry_permissions", "journal_entries"
   add_foreign_key "journal_entry_permissions", "team_members"

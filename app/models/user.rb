@@ -8,11 +8,10 @@ class User < DeviseRecord
 
   has_many :notes, foreign_key: :user_id
   has_many :contacts, foreign_key: :user_id
-
   has_many :wellbeing_assessments, foreign_key: :user_id
-
   has_many :crisis_events, foreign_key: :user_id
   has_many :journal_entries, foreign_key: :user_id
+  has_many :goals, foreign_key: :user_id
 
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
