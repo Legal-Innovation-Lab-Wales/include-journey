@@ -23,7 +23,7 @@ module Users
     # PUT /goals/:id/achieve
     def achieve
       if @goal.update!(achieved_on: Time.now)
-        redirect_to goals_path, flash: { success: 'Congratulations!' }
+        redirect_to goals_path, flash: { congratulations: 'Well done!' }
       else
         redirect_to goals_path, flash: { error: 'Goal could not be marked as achieved. Please try again.' }
       end
