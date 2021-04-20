@@ -67,6 +67,7 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
+      resources :appointments, only: %i[show index]
     end
   end
 

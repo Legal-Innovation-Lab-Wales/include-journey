@@ -20,6 +20,8 @@ module TeamMembers
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
       @journal_entries = current_team_member.journal_entries.where(user: @user)
+      @appointments_past = @user.appointments
+      @appointments_upcoming = @user.appointments.where('start >= ?', Time.now).order(start: :asc)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
 
