@@ -1,8 +1,38 @@
 <main class="container user goals index">
-  <%= render 'shared/back_btn', next_path: new_goal_path, next_text: 'Add New Goal' %>
+  <%= render 'shared/back_btn' %>
   <section class="row">
+    <h3>My Goals</h3>
     <div class="col">
-      <h3>This is the view of the users index of goals...</h3>
+      <div class="container">
+        <div class="row">
+          <div class="col-6 short-term">
+            <div class="card">
+              <div class="card-header">
+                <h4>Short Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.short_term %>
+                <%= render 'form', goal: @goal, length: 'short_term' %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 long-term">
+            <div class="card">
+              <div class="card-header">
+                <h4>Long Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.long_term %>
+                <%= render 'form', goal: @goal, length: 'long_term' %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
+
+<%= javascript_pack_tag 'goals' %>

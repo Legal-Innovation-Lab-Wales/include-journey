@@ -5,24 +5,28 @@ module Users
 
     # GET /goals
     def index
+      @goal = Goal.new
       @goals = current_user.goals
 
       render 'index'
     end
 
-    # GET /goals/new
-    def new
-      render 'new'
-    end
-
-    # GET /goals/create
+    # POST /goals
     def create
-      puts 'Create goal...'
+      if current_user.goals.create!(goal_params)
+        redirect_to goals_path, flash: { success: 'Goal added' }
+      else
+        redirect_to goals_path, flash: { error: 'Goal could not be added' }
+      end
     end
 
     # PUT /goals/:id/achieve
     def achieve
-      puts 'Mark goal as achieved...'
+      if @goal.update!(achieved_on: Time.now)
+        redirect_to goals_path, flash: { success: 'Congratulations!' }
+      else
+        redirect_to goals_path, flash: { error: 'Goal could not be marked as achieved. Please try again.' }
+      end
     end
 
     private
@@ -31,6 +35,10 @@ module Users
       @goal = current_user.goals.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to goals_path, flash: { error: 'No such goal' }
+    end
+
+    def goal_params
+      params.require(:goal).permit(:goal, :aim, :length)
     end
   end
 end

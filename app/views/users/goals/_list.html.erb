@@ -1,0 +1,12 @@
+<ul class="list-group">
+  <% goals.each do |goal| %>
+
+    <% if goal.achieved_on.present? %>
+      <li class="list-group-item achieved"><i class="fas fa-check-square"></i> <%= goal.goal %></li>
+    <% else %>
+      <%= link_to achieve_goal_path(goal), method: :put do %>
+        <li class="list-group-item"><i class="far fa-square"></i> <%= goal.goal %></li>
+      <% end %>
+    <% end %>
+  <% end %>
+</ul>

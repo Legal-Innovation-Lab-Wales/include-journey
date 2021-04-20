@@ -26,7 +26,9 @@ Rails.application.routes.draw do
       end
       resources :crisis_events, only: %i[create update]
       resources :contacts
-      resources :goals, only: %i[index new create]
+      resources :goals, only: %i[index create show] do
+        put 'achieve', action: :achieve, on: :member
+      end
     end
   end
 

@@ -1,0 +1,57 @@
+@import "variables";
+
+.goals {
+  &.index .col-6 {
+    .card {
+      .card-header {
+        h4 {
+          font-family: $heading-font;
+          text-transform: lowercase;
+          color: black;
+        }
+      }
+
+      .card-body {
+        color: $black;
+
+        .list-group {
+          margin-bottom: 1rem;
+          text-align: left;
+
+          a {
+            color: $black;
+            text-decoration: none;
+
+            &:hover {
+              background-color: $success;
+            }
+          }
+
+          .list-group-item {
+            background-color: inherit;
+
+            &.achieved {
+              background-color: $success;
+            }
+          }
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        form {
+          .input-group {
+            textarea {
+              height: 1rem;
+            }
+
+            input[type="submit"], .cancel {
+              border-radius: 0 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
