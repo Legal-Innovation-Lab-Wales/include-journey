@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/appointments_controller.rb
   class AppointmentsController < PaginationController
-    before_action :appointment, only: %i[edit update]
+    before_action :appointment, only: %i[edit update destroy]
 
     # GET /appointments/upcoming
     def upcoming
@@ -44,7 +44,12 @@ module Users
 
     # DELETE /appointments/:id
     def destroy
-      # Implement deleting the appointment...
+      if @appointment.destroy!
+        redirect_to upcoming_appointments_path, flash: { success: 'Appointment Deleted' }
+      else
+        redirect_to upcoming_appointments_path(@appointment),
+                    flash: { error: 'Appointment could not be deleted. Please try again.' }
+      end
     end
 
     protected
