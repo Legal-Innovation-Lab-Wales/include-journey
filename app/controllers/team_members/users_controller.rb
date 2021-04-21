@@ -6,7 +6,7 @@ module TeamMembers
     include Pagination
 
     before_action :user, except: :index
-    before_action :user_pin, except: %i[show index]
+    before_action :user_pin, except: %i[show index wba_history]
 
     # GET /users
     def index; end
