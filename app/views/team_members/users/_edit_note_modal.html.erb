@@ -2,21 +2,22 @@
   <div class="modal-dialog modal-lg col-12" role="document">
     <div class="modal-content">
       <%= form_with model: @note,
-                        url: update_note_user_path(@user),
-                        method: :post do |form| %>
+                        url: user_note_path(@user),
+                        method: :put do |form| %>
+        <%= form.hidden_field :id %>
       <div class="modal-header border-0">
         <h5 class="modal-title text-black-50">Edit note</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body border-0">
         <div class="input-group mb-3">
-          <%= form.text_area :content, id: 'edit-note-modal-content', class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
+          <%= form.text_area :content, id: 'edit_note_modal_content', class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
         </div>
         <div class="form-check form-switch d-flex justify-content-between px-0">
           <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
           Allow user to see this note?
           <% end %>
-          <%= form.check_box :visible_to_user, id: 'edit-note-modal-checkbox', class: 'form-check-input' %>
+          <%= form.check_box :visible_to_user, id: 'edit_note_modal_checkbox', class: 'form-check-input' %>
         </div>
       </div>
       <div class="modal-footer">
