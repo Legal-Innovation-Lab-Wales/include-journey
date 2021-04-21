@@ -1,0 +1,13 @@
+<main class="container user contacts edit">
+  <%= render 'shared/back_btn', path: contacts_path, text: 'Contacts',
+             query_path: contacts_path %>
+  <section class="row">
+    <div class="col-0 col-md-4"></div>
+    <div class="col-12 col-md-4">
+      <h3>Edit Contact</h3>
+      <%= render 'form', submit_btn_text: 'Update' %>
+      <%= button_to "Remove", contact_path(@contact), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger mt-2" %>
+    </div>
+    <div class="col-0 col-md-4"></div>
+  </section>
+</main>
