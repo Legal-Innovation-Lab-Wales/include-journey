@@ -1,0 +1,23 @@
+<main class="container team-members notes show">
+  <%= render 'shared/back_btn', path: :back, text: 'Back' %>
+  <div class="row">
+    <div class="col-12 col-md-6 mb-4 mx-auto">
+      <div class="card h-100">
+        <div class="card-header">
+          <h3>Note History</h3>
+        </div>
+        <div class="card-body bg-transparent current-note" id="notes-card">
+          <%= render 'team_members/notes/card', note: @user_notes[0], history: false, edit: true %>
+        </div>
+        <div class="card-body bg-transparent" id="notes-card">
+          <% @user_notes[1..-1].each do |note| %>
+            <%= render 'team_members/notes/card', note: note, history: false, edit: false %>
+          <% end %>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%= render 'team_members/notes/edit_modal' %>
