@@ -1,17 +1,15 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
-  class UsersController < PaginationController
+  class UsersController < TeamMembersApplicationController
+    before_action :pinned_users, only: :index
+    before_action :user_counts, only: :index
+    include Pagination
+
     before_action :user, except: :index
     before_action :user_pin, except: %i[show index]
 
     # GET /users
-    def index
-      @resources_per_page = 6
-      @pinned_users = current_team_member.pinned_users.order(:order)
-      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
-      @user_count = User.count
-      super
-    end
+    def index; end
 
     # GET /users/:id
     def show
@@ -58,14 +56,19 @@ module TeamMembers
     protected
 
     def resources
-      @resources =
-        if @query.present?
-          User.includes(:wellbeing_assessments, :crisis_events).where(user_search, wildcard_query)
-              .order(created_at: :desc)
-        else
-          User.includes(:wellbeing_assessments, :crisis_events).where.not(id: current_team_member.pinned_users)
-              .order(created_at: :desc)
-        end
+      User.includes(:wellbeing_assessments, :crisis_events)
+          .where.not(id: @pinned_users)
+          .order(created_at: :desc)
+    end
+
+    def resources_per_page
+      6
+    end
+
+    def search
+      User.includes(:wellbeing_assessments, :crisis_events)
+          .where(user_search, wildcard_query)
+          .order(created_at: :desc)
     end
 
     private
@@ -96,6 +99,15 @@ module TeamMembers
       "#{@user.full_name} #{message}"
     end
 
+    def pinned_users
+      @pinned_users = current_team_member.pinned_users.order(:order)
+    end
+
+    def user_counts
+      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
+      @user_count = User.count
+    end
+
     def user_pin
       @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
     end
@@ -115,5 +127,7 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
+
+    def subheading_stats; end
   end
 end

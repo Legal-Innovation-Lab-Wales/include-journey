@@ -22,7 +22,7 @@
     }
   }
 
-  form {
+  .form-container {
     background-color: $black;
     border-radius: 5px;
     padding: 1rem 2rem;
@@ -106,7 +106,7 @@
 
   @media screen and (min-width: $screen-md) {
     background-color: $black;
-    form {
+    .form-container {
       min-width: 480px;
       background-color: $grey;}
   }
