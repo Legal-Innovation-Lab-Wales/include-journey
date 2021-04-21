@@ -4,11 +4,10 @@
 
 @import "variables";
 
-section#upcoming {
-  background-color: $white;
-  color: $black;
-
-  .appointments, .past {
+section {
+  &.appointments {
+    background-color: $white;
+    color: $black;
     margin-top: 1rem;
 
     @media screen and (min-width: $screen-md) {

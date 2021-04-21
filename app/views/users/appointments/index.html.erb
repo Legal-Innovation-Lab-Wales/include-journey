@@ -5,10 +5,10 @@
     <%= render 'shared/search' %>
   </div>
   <%= render 'shared/limit' %>
-  <section class="row" id="upcoming">
+  <section class="row appointments">
     <div class="col">
+      <h3 class="mb-0">Past appointments</h3>
       <div class="container">
-        <h3 class="mb-3">past appointments</h3>
         <%= render 'shared/search_results' %>
         <div class="row">
           <% @resources.each do |past_appointments| %>
