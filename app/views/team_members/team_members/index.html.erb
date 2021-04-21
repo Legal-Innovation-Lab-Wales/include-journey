@@ -1,5 +1,5 @@
 <main class="container team-members index">
-  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard' %>
+  <%= render 'shared/back_btn' %>
   <% if @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
       <div class="col">

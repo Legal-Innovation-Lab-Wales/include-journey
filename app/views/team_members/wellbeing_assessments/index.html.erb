@@ -1,11 +1,9 @@
 <main class="container team-members wellbeing-assessments index">
-  <% if @team_member.present? %>
-    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments', index: 'team_member_wellbeing_assessments' %>
-  <% elsif @user.present? %>
-    <%= render 'shared/back_btn', path: wellbeing_assessments_path, text: 'All Wellbeing Assessments' %>
+  <% if @team_member.present? || @user.present? %>
+    <%= render 'shared/back_btn' %>
   <% else %>
-    <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard', index: 'wellbeing_assessments',
-               next_path: team_member_wellbeing_assessments_path(current_team_member), next_text: 'My Wellbeing Assessments' %>
+    <%= render 'shared/back_btn', next_path: team_member_wellbeing_assessments_path(current_team_member),
+               next_text: 'My Wellbeing Assessments' %>
   <% end %>
   <% if @user.present? %>
     <section class="row p-0">
@@ -118,7 +116,7 @@
       </div>
   <% end %>
   <% if @team_member.present? %>
-    <%= render 'shared/pagination_controls', index: 'team_member_wellbeing_assessments_path' %>
+    <%= render 'shared/pagination_controls', index: 'team_member_wellbeing_assessments' %>
   <% elsif @user.present? %>
     <%= render 'shared/pagination_controls', index: 'user_wellbeing_assessments' %>
   <% else %>
@@ -129,10 +127,5 @@
   </button>
 </main>
 
-<%= javascript_pack_tag "wellbeing_assessment_chart" %>
-<script>
-    function toggleViewMode() {
-        document.getElementById("table-view").classList.toggle('d-none')
-        document.getElementById("card-view").classList.toggle('d-none')
-    }
-</script>
+<%= javascript_pack_tag 'wellbeing_assessment_chart' %>
+<%= javascript_pack_tag 'view_mode' %>

@@ -1,11 +1,8 @@
 <main class="container team-members wellbeing-assessments show">
   <% if @wellbeing_assessment_today.present? %>
-    <%= render 'shared/back_btn', path: users_path, text: 'Back To All Users',
-               next_path: user_path(@wellbeing_assessment.user),
-               next_text: 'View Profile' %>
+    <%= render 'shared/back_btn', next_path: user_path(@wellbeing_assessment.user), next_text: 'View Profile' %>
   <% else %>
-    <%= render 'shared/back_btn', path: users_path, text: 'Back To All Users',
-               next_path: new_user_wellbeing_assessment_path(@wellbeing_assessment.user),
+    <%= render 'shared/back_btn', next_path: new_user_wellbeing_assessment_path(@wellbeing_assessment.user),
                next_text: 'New Wellbeing Assessment' %>
   <% end %>
   <section class="row" id="wellbeing">
