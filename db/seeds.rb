@@ -294,7 +294,7 @@ notes_counter = 1
 notes_count.times do
   note = Note.create!(
     team_member_id: rand(1..TeamMember.count),
-    visible_to_user: true,
+    visible_to_user: [true, false].sample,
     user_id: rand(1..User.count),
     content: Faker::TvShows::TheExpanse.quote
   )
@@ -302,9 +302,10 @@ notes_count.times do
   if (notes_counter % 5).zero?
     new_note = Note.create!(
       team_member_id: note.team_member.id,
-      visible_to_user: true,
+      visible_to_user: [true, false].sample,
       user_id: note.user.id,
-      content: Faker::TvShows::TheExpanse.quote
+      content: Faker::TvShows::TheExpanse.quote,
+      replacing: note
     )
 
     note.update!(replaced_by: new_note)
