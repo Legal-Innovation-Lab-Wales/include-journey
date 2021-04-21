@@ -10,8 +10,8 @@ require 'faker'
 
 total_user_count = 1000
 wellbeing_assessments_for_each_user = 200
-journal_entries_for_each_user = 5
-contacts_for_each_user = 5
+journal_entries_for_each_user = 50
+contacts_for_each_user = 50
 crisis_events_count = 100
 notes_count = 1000
 start_time = Time.now
