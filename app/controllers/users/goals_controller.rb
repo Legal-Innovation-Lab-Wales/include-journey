@@ -7,6 +7,7 @@ module Users
     def index
       @goal = Goal.new
       @goals = current_user.goals.order(:created_at)
+      @goal_types = GoalType.all
 
       render 'index'
     end
@@ -38,7 +39,7 @@ module Users
     end
 
     def goal_params
-      params.require(:goal).permit(:goal, :aim, :length)
+      params.require(:goal).permit(:goal, :goal_type_id, :short_term)
     end
   end
 end

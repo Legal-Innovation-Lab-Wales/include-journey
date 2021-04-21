@@ -12,6 +12,7 @@ total_user_count = 10
 wellbeing_assessments_for_each_user = 30
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
+goals_for_each_user = 10 # Half short-term, half long-term
 crisis_events_count = 100
 notes_count = 1000
 start_time = Time.now
@@ -158,30 +159,18 @@ end
 
 # Create Crisis Types
 if CrisisType.count.zero?
-  CrisisType.create!(
-    category: 'Self Harm',
-    team_member_id: 1
-  )
+  CrisisType.create!(category: 'Self Harm', team_member_id: 1)
+  CrisisType.create!(category: 'Harming Others', team_member_id: 1)
+  CrisisType.create!(category: 'Suicide', team_member_id: 1)
+  CrisisType.create!(category: 'Overdose', team_member_id: 1)
+  CrisisType.create!(category: 'Domestic Violence', team_member_id: 1)
+end
 
-  CrisisType.create!(
-    category: 'Harming Others',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Suicide',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Overdose',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Domestic Violence',
-    team_member_id: 1
-  )
+# Create Goal Types
+if GoalType.count.zero?
+  GoalType.create!(name: 'Aspiration', emoji: '💪')
+  GoalType.create!(name: 'Hope', emoji: '🕊')
+  GoalType.create!(name: 'Meaning', emoji: '🙏')
 end
 
 # Create Service Users & Associated Records
@@ -189,6 +178,7 @@ end
 user_counter = 0
 wba_counter = 0
 journal_counter = 0
+goals_counter = 0
 
 if User.count.zero?
   total_user_count.times do
@@ -265,6 +255,7 @@ if User.count.zero?
       end
     end
 
+    # Create Contacts for each User
     contacts_for_each_user.times do
       name = Faker::Name.name
       Contact.create!(
@@ -274,6 +265,19 @@ if User.count.zero?
         email: Faker::Internet.email(name: name, separators: '-'),
         description: Faker::Job.position
       )
+    end
+
+    # Create Goals for each user
+    goals_for_each_user.times do |index|
+      Goal.create!(
+        user: user,
+        goal: Faker::Hipster.sentences(number: 1)[0],
+        goal_type: GoalType.find((index % 3) + 1),
+        short_term: index.even?,
+        achieved_on: index < 4 ? Time.now : nil
+      )
+
+      goals_counter += 1
     end
   end
 
@@ -315,9 +319,10 @@ crisis_events_count.times do
   )
 end
 
-puts("Team Members in DatabaseL #{TeamMember.count}")
+puts("Team Members in Database: #{TeamMember.count}")
 puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
 puts("Wellbeing Assessments Created: #{wba_counter}")
 puts("Journals Created: #{journal_counter}")
+puts("Goals Created: #{goals_counter}")

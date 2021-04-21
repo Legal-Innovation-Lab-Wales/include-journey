@@ -3,14 +3,14 @@
 
     <% if goal.achieved_on.present? %>
       <li class="list-group-item achieved">
-        <div><%= goal.aim_emoji %></div>
+        <div><%= goal.goal_type.emoji %></div>
         <div><%= simple_format(goal.goal) %></div>
         <div><i class="fas fa-check-square"></i></div>
       </li>
     <% else %>
       <%= link_to achieve_goal_path(goal), method: :put do %>
         <li class="list-group-item">
-          <div><%= goal.aim_emoji %></div>
+          <div><%= goal.goal_type.emoji %></div>
           <div><%= simple_format(goal.goal) %></div>
           <div><i class="far fa-square"></i></div>
         </li>

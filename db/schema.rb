@@ -58,8 +58,24 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
   end
 
-# Could not dump table "goals" because of following StandardError
-#   Unknown type 'goal_aim' for column 'aim'
+  create_table "goal_types", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "emoji", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "goal_type_id", null: false
+    t.text "goal", null: false
+    t.boolean "short_term", default: true, null: false
+    t.datetime "achieved_on"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
 
   create_table "journal_entries", force: :cascade do |t|
     t.text "entry"
@@ -209,6 +225,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
   add_foreign_key "crisis_notes", "crisis_events"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
+  add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
   add_foreign_key "journal_entries", "users"
   add_foreign_key "journal_entry_permissions", "journal_entries"

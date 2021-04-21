@@ -12,7 +12,7 @@
               </div>
               <div class="card-body">
                 <%= render 'list', goals: @goals.short_term %>
-                <%= render 'form', goal: @goal, length: 'short_term' %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: true %>
                 <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
               </div>
             </div>
@@ -24,7 +24,7 @@
               </div>
               <div class="card-body">
                 <%= render 'list', goals: @goals.long_term %>
-                <%= render 'form', goal: @goal, length: 'long_term' %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: false %>
                 <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
               </div>
             </div>

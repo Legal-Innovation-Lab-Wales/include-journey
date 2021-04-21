@@ -41,6 +41,11 @@
             }
 
             div {
+              display: flex;
+              justify-content: center;
+              align-content: center;
+              flex-direction: column;
+
               &:nth-child(2) {
                 width: calc(100% - 70px);
                 padding: 0 10px;
@@ -48,10 +53,6 @@
 
               &:first-child, &:last-child {
                 width: 30px;
-                display: flex;
-                justify-content: center;
-                align-content: center;
-                flex-direction: column;
               }
 
               &:first-child {
