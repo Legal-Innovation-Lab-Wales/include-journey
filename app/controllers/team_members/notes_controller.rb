@@ -22,7 +22,7 @@ module TeamMembers
     # PUT /notes/:id/update
     def update
       @note = note(note_params[:id])
-      redirect_to user_path(@user), notice: 'Nothing to update!' and return if no_changes_made?
+      redirect_to user_path(@user), notice: 'Nothing to update!' and return unless changes_made?
 
       ActiveRecord::Base.transaction do
         @new_note = create_note(replacing: @note)
@@ -48,8 +48,8 @@ module TeamMembers
       get_previous_note(prev_note)
     end
 
-    def no_changes_made?
-      @note[:content] == note_params[:content] || @note[:visible_to_user] == note_params[:visible_to_user]
+    def changes_made?
+      @note[:content] != note_params[:content] || @note[:visible_to_user] != note_params[:visible_to_user]
     end
 
     def create_note(replacing: nil)
