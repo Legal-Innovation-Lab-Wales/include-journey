@@ -229,7 +229,7 @@ if User.count.zero?
       journal_entry = JournalEntry.new(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[😊 😔 😠 💩 😐].sample,
+        feeling: %w[🥳 😊 😔 😠 💩 😐].sample,
         created_at: created_at_value
       )
       journal_entry.save!
