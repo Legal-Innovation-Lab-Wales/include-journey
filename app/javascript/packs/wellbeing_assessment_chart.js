@@ -1,14 +1,14 @@
 const wellbeing_charts = document.querySelectorAll('.wellbeing-chart.wrapper'),
       scale = [
           { description: "Abysmal", colour: "#E04444" },
-          { description: "Dreadful", colour: "#E64D52" },
-          { description: "Rubbish", colour: "#E86754" },
-          { description: "Bad", colour: "#EC8754" },
+          { description: "Dreadful", colour: "#e66043" },
+          { description: "Rubbish", colour: "#eb7945" },
+          { description: "Bad", colour: "#ee904b" },
           { description: "Mediocre", colour: "#F0A656" },
-          { description: "Fine", colour: "#DFC54C" },
-          { description: "Good", colour: "#BFCA48" },
-          { description: "Great", colour: "#9ECB46" },
-          { description: "Superb", colour: "#BFCB43" },
+          { description: "Fine", colour: "#dfc54c" },
+          { description: "Good", colour: "#c1c041" },
+          { description: "Great", colour: "#a2ba3a" },
+          { description: "Superb", colour: "#82b438" },
           { description: "Perfect", colour: "#5DAD3A" }
       ],
       classes = [...Array(10).keys()].map(i => `wba-score__${i+1}`)
