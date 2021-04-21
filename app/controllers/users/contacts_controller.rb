@@ -1,7 +1,8 @@
 module Users
   # app/controllers/users/contacts_controller.rb
-  class ContactsController < PaginationController
+  class ContactsController < UsersApplicationController
     before_action :contact, only: %i[edit update destroy]
+    include Pagination
 
     # GET /contacts/new
     def new
@@ -44,21 +45,20 @@ module Users
 
     protected
 
-    def multiple
-      @multiple = 9
-    end
-
     def contact_search
       'lower(name) similar to lower(:query)'
     end
 
     def resources
-      @resources =
-        if @query.present?
-          current_user.contacts.where(contact_search, wildcard_query).order(updated_at: :desc)
-        else
-          current_user.contacts.order(updated_at: :desc)
-        end
+      current_user.contacts.order(updated_at: :desc)
+    end
+
+    def resources_per_page
+      9
+    end
+
+    def search
+      current_user.contacts.where(contact_search, wildcard_query).order(updated_at: :desc)
     end
 
     private

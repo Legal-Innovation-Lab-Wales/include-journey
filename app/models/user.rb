@@ -10,6 +10,7 @@ class User < DeviseRecord
   has_many :contacts, foreign_key: :user_id
 
   has_many :wellbeing_assessments, foreign_key: :user_id
+  has_many :wba_scores, through: :wellbeing_assessments
 
   has_many :crisis_events, foreign_key: :user_id
   has_many :journal_entries, foreign_key: :user_id
@@ -33,7 +34,9 @@ class User < DeviseRecord
   def wellbeing_assessment_history
     history = { labels: [], datasets: [] }
 
-    wellbeing_assessments.includes(:wba_scores).order(created_at: :desc).each { |wba| wba.add_to_history(history) }
+    wba_scores.includes(:wellbeing_metric)
+              .joins(:wellbeing_metric)
+              .order(created_at: :desc).each { |score| score.add_to_history(history) }
 
     history
   end

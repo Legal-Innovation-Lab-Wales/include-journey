@@ -8,8 +8,8 @@
 
 require 'faker'
 
-total_user_count = 10
-wellbeing_assessments_for_each_user = 30
+total_user_count = 1000
+wellbeing_assessments_for_each_user = 200
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 crisis_events_count = 100
@@ -208,24 +208,32 @@ if User.count.zero?
     user.save!
 
     ## Create User Wellbeing Assessments for each user
+    user_wba_counter = 0
     wellbeing_assessments_for_each_user.times do
       wba_counter += 1
-      created_at_value = Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
-      # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
+      user_wba_counter += 1
+      created_at_value = DateTime.now - (wellbeing_assessments_for_each_user - user_wba_counter).day
+      #puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
         user: user,
         created_at: created_at_value
       )
 
-      # Every 5th assessment is created by a TeamMember
-      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_counter % 5).zero?
+      # Every 7th assessment is created by a TeamMember
+      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_counter % 7).zero?
 
       WellbeingMetric.all.each do |wellbeing_metric|
+        score_value =
+          if user.wellbeing_assessments.second_to_last.present?
+            (user.wellbeing_assessments.second_to_last.wba_scores.find_by(wellbeing_metric: wellbeing_metric).value + rand(-1..1)).clamp(1, 10)
+          else
+            rand(1..10)
+          end
         WbaScore.create!(
           wellbeing_assessment: wellbeing_assessment,
           wellbeing_metric: wellbeing_metric,
-          value: rand(1..10),
+          value: score_value,
           created_at: created_at_value
         )
       end
@@ -253,8 +261,8 @@ if User.count.zero?
         )
       end
 
-      ## Create View Log for every 5th journal entry
-      next unless (journal_counter % 5).zero?
+      ## Create View Log for every 7th journal entry
+      next unless (journal_counter % 7).zero?
 
       TeamMember.all.each do |team_member|
         JournalEntryViewLog.create!(
