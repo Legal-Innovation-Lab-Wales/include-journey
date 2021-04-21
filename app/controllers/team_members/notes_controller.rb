@@ -15,11 +15,6 @@ module TeamMembers
       # Show all notes in the edit-chain.
     end
 
-    # GET /notes/:id/edit
-    def edit
-      # render 'edit'
-    end
-
     # PUT /notes/:id/update
     def update
       redirect_to user_path(@user), notice: 'Nothing to update!' and return if no_changes_made?

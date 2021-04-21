@@ -168,7 +168,7 @@
           <% else %>
             <% @user_notes.each do |note| %>
               <% if note.replaced_by.nil? %>
-                <%= render 'note_card', note: note %>
+                <%= render 'notes/card', note: note %>
               <% end %>
             <% end %>
           <% end %>
@@ -182,9 +182,8 @@
       </div>
     </div>
 
-    <%= render 'add_note_modal' %>
-    <%= render 'edit_note_modal' %>
-    <%= render 'show_history_modal' %>
+    <%= render 'notes/add_modal' %>
+    <%= render 'notes/edit_modal' %>
 
   </div>
 </main>

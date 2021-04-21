@@ -75,6 +75,8 @@ module TeamMembers
 
     def user
       @user = User.includes(:notes).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end
 
     def user_location
