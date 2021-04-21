@@ -10,6 +10,7 @@ class User < DeviseRecord
   has_many :contacts, foreign_key: :user_id
 
   has_many :wellbeing_assessments, foreign_key: :user_id
+  has_many :wba_scores, through: :wellbeing_assessments
 
   has_many :crisis_events, foreign_key: :user_id
   has_many :journal_entries, foreign_key: :user_id
@@ -28,6 +29,16 @@ class User < DeviseRecord
 
   def wellbeing_assessment_today
     wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
+  end
+
+  def wellbeing_assessment_history
+    history = { labels: [], datasets: [] }
+
+    wba_scores.includes(:wellbeing_metric)
+              .joins(:wellbeing_metric)
+              .order(created_at: :desc).each { |score| score.add_to_history(history) }
+
+    history
   end
 
   # validations

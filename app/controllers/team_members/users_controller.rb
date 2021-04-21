@@ -6,7 +6,7 @@ module TeamMembers
     include Pagination
 
     before_action :user, except: :index
-    before_action :user_pin, except: %i[show index]
+    before_action :user_pin, except: %i[show index wba_history]
 
     # GET /users
     def index; end
@@ -51,6 +51,13 @@ module TeamMembers
     def decrement
       redirect_back(fallback_location: authenticated_team_member_root_path,
                     notice: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
+    end
+
+    # GET /users/:user_id/wba_history
+    def wba_history
+      respond_to do |format|
+        format.json { render json: @user.wellbeing_assessment_history.as_json, status: :ok }
+      end
     end
 
     protected

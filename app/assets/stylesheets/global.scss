@@ -12,6 +12,17 @@ html, body {
   box-shadow: none !important;
 }
 
+.mobile-hint {
+  @media (min-width: $screen-sm) {
+    display: none;
+  }
+}
+.mobile-hide {
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
@@ -91,12 +102,6 @@ body#overboot {
   .subheading {
     p {
       margin-bottom: 0;
-    }
-  }
-
-  .mobile-hint {
-    @media (min-width: $screen-sm) {
-      display: none;
     }
   }
 
