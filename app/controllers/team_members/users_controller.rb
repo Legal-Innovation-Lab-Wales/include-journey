@@ -20,6 +20,8 @@ module TeamMembers
       @journal_entries = current_team_member.journal_entries.where(user: @user)
       @appointments_past = @user.appointments
       @appointments_upcoming = @user.appointments.where('start >= ?', Time.now).order(start: :asc)
+      @appointments_upcoming_count = @appointments_upcoming.count
+      @appointments_past_last_month = @appointments_past.where('start >= ?', Time.now - 1.month).count
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
 

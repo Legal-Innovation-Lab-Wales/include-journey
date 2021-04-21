@@ -227,7 +227,7 @@
           <h3>Appointments</h3>
         </div>
         <div class="card-body">
-          <p><%= @user.first_name %> has <%= @appointments_upcoming.count %> upcoming appointments and <%= @appointments_past.count %> past appointments.</p>
+          <p><%= @user.first_name %> has <%= @appointments_upcoming_count %> upcoming appointments and has had <%= @appointments_past_last_month %> appointments in the last month.</p>
           <h5 class="pt-3">Next 6 Upcoming Appointments</h5>
           <div class="row">
             <% @appointments_upcoming.first(6).each do |appointments| %>
