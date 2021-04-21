@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
+        get 'wba_history', action: 'wba_history', on: :member
         resources :notes, only: :create, as: :add_note
         resources :wellbeing_assessments, only: %i[index new create], on: :member
       end

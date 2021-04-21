@@ -89,7 +89,7 @@
             <div class="col">
               <% if @wellbeing_assessment.present? %>
                 <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
-                           show_timestamp: true, chart_heading: "#{@wellbeing_assessment.user.full_name}'s Wellbeing",
+                           show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
                            sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
               <% end %>
               <div class="text-center">
@@ -101,6 +101,7 @@
       </div>
     </div>
   </div>
+  <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <div class="row" id="journal">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
