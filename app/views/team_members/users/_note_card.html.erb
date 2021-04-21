@@ -11,7 +11,7 @@
       </span>
       <span><i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View Edit History"></i></span>
 
-      <span onclick="document.getElementById('user-note-modal-content').value = document.getElementById('user-note-<%= note.id %>').innerText; document.getElementById('edit-note-modal-checkbox').checked = <%= note.visible_to_user %>;">
+      <span onclick="document.getElementById('edit-note-modal-content').value = document.getElementById('user-note-<%= note.id %>').innerText; document.getElementById('edit-note-modal-checkbox').checked = <%= note.visible_to_user %> ;">
         <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#edit-note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
       </span>
 
@@ -24,4 +24,4 @@
   </div>
 </div>
 
-<%# document.getElementById('user-note-modal-content').value =  %>
+<%# %>
