@@ -1,7 +1,8 @@
 module Users
   # app/controllers/users/appointments_controller.rb
-  class AppointmentsController < PaginationController
+  class AppointmentsController < UsersApplicationController
     before_action :appointment, only: %i[edit update destroy]
+    include Pagination
 
     # GET /appointments/upcoming
     def upcoming
@@ -55,17 +56,15 @@ module Users
     protected
 
     def resources
-      @resources =
-        if @query.present?
-          current_user.appointments.where("start <= :start and #{appointment_search}", past_appointment_query)
-                      .order(start: :desc)
-        else
-          current_user.appointments.where('start <= ?', Time.now).order(start: :desc)
-        end
+      current_user.appointments.where('start <= ?', Time.now).order(start: :desc)
     end
 
-    def multiple
-      @multiple = 6
+    def resources_per_page
+      6
+    end
+
+    def search
+      current_user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
     private

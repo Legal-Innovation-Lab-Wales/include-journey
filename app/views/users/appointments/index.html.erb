@@ -1,16 +1,15 @@
 <main class="container user">
   <%= render 'shared/back_btn', path: upcoming_appointments_path, text: 'Upcoming Appointments',
-             next_path: new_appointment_path, next_text: 'New Appointment',
-             query_path: appointments_path %>
+             next_path: new_appointment_path, next_text: 'New Appointment' %>
   <div class="row justify-content-end">
     <%= render 'shared/search' %>
   </div>
-  <%= render 'shared/limit', resources_per_page: @multiple %>
+  <%= render 'shared/limit' %>
   <section class="row" id="upcoming">
     <div class="col">
       <div class="container">
         <h3 class="mb-3">past appointments</h3>
-        <%= render 'shared/search_results', query: params[:query], count: @count %>
+        <%= render 'shared/search_results' %>
         <div class="row">
           <% @resources.each do |past_appointments| %>
             <div class="col-12 col-md-4 past">
@@ -34,9 +33,5 @@
       </div>
     </div>
   </section>
-  <%= render 'shared/pagination_controls', page: @page, final_page: @final_page, last_page?: @last_page,
-             first_page: appointments_path(page: 1, query: params[:query], limit: params[:limit]),
-             next_page: appointments_path(page: @page + 1, query: params[:query], limit: params[:limit]),
-             previous_page: appointments_path(page: @page - 1, query: params[:query], limit: params[:limit]),
-             final_page_path: appointments_path(page: @final_page, query: params[:query], limit: params[:limit]) %>
+  <%= render 'shared/pagination_controls', index: 'appointments'%>
 </main>
