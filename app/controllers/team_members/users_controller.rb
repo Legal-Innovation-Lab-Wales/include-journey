@@ -18,10 +18,11 @@ module TeamMembers
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
       @journal_entries = current_team_member.journal_entries.where(user: @user)
-      @appointments_past = @user.appointments
+      @appointments = @user.appointments
+      @appointments_past = @user.appointments.where('start <= ?', Time.now).order(start: :asc)
       @appointments_upcoming = @user.appointments.where('start >= ?', Time.now).order(start: :asc)
       @appointments_upcoming_count = @appointments_upcoming.count
-      @appointments_past_last_month = @appointments_past.where('start >= ?', Time.now - 1.month).count
+      @appointments_past_last_month = @appointments.where('start >= ?', Time.now - 1.month).count
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
 

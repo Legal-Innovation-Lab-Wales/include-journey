@@ -19,9 +19,12 @@
                     about <%= appointments.what %>
                     at <%= appointments.where %>
                     for <%= appointments.duration %>
-                    <%= link_to 'Edit', edit_appointment_path(appointments.id) %>
-                    <%= link_to 'Delete', appointment_path(appointments.id), method: :delete, data: { confirm: 'Are you sure?' } %>
                   </p>
+
+                      <p>
+                    <%= link_to 'Edit', edit_appointment_path(appointments.id), class: "btn btn-primary" %>
+                    <%= link_to 'Delete', appointment_path(appointments.id), class: "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?'  } %>
+                      </p>
                 </div>
               </div>
             </div>
