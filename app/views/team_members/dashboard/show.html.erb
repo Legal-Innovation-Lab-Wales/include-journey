@@ -34,10 +34,10 @@
           <% end %>
 
             <%= render 'shared/dashboard_btn', path: wellbeing_metrics_path, icon: 'fa-ruler-horizontal', text: 'Wellbeing Metrics' %>
-            <a class="col clear d-flex align-items-center"></a>
+            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
 
           <% unless @admin %>
-            <a class="col clear d-flex align-items-center"></a>
+            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
           <% end %>
         </div>
       </div>

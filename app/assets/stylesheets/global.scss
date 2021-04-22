@@ -23,6 +23,10 @@ html, body {
   }
 }
 
+.v-hidden {
+  visibility: hidden !important;
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
