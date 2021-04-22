@@ -169,7 +169,7 @@
           <% else %>
             <% @user_notes.each do |note| %>
               <% if note.replaced_by.nil? %>
-                <%= render 'team_members/notes/card', note: note, history: true, edit: true %>
+                <%= render 'team_members/notes/card', note: note, history: true, edit: true, current_note: false %>
               <% end %>
             <% end %>
           <% end %>

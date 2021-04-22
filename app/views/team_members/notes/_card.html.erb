@@ -1,4 +1,4 @@
-<div class="card bg-transparent my-2">
+<div class="card <%= current_note ? "bg-primary" : "bg-transparent" %> my-2">
   <div class="card-header d-flex justify-content-between">
       <span>
         <% if note.visible_to_user? %>
