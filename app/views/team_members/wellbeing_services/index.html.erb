@@ -1,0 +1,16 @@
+<main class="container team-members wellbeing-services index">
+  <%= render 'shared/back_btn', next_path: new_wellbeing_service_path, next_text: 'Add New' %>
+  <section class="row">
+    <div class="col">
+      <h3>Wellbeing Services</h3>
+
+      <div class="container">
+        <div class="row">
+          <% @wellbeing_services.each do |wellbeing_service| %>
+            <%= render 'card', wellbeing_service: wellbeing_service %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

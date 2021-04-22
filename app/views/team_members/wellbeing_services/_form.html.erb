@@ -1,0 +1,40 @@
+<%= form_with model: wellbeing_service, url: path do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-0 col-md-4"></div>
+      <div class="col-12 col-md-4">
+        <h3><%= title %> Wellbeing Service</h3>
+
+        <div class="form-floating">
+          <%= f.text_field :name, class: 'form-control', required: true %>
+          <%= f.label :name %>
+        </div>
+        <div class="form-floating">
+          <%= f.text_area :description, class: 'form-control' %>
+          <%= f.label :description %>
+        </div>
+        <div class="form-floating">
+          <%= f.text_field :link, class: 'form-control', required: true %>
+          <%= f.label :link %>
+        </div>
+
+        <div class="container p-0">
+          <div class="row m-0">
+            <% wellbeing_metrics.each do |metric| %>
+              <div class="col-6 p-0">
+                <div class="form-check form-switch">
+                    <%= f.check_box "wellbeing_metric_id_#{metric.id}", class: 'form-check-input',
+                                    checked: wellbeing_service.wellbeing_metrics.include?(metric) %>
+                  <%= f.label "wellbeing_metric_id_#{metric.id}", metric.name, class: 'form-check-label' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      </div>
+      <div class="col-0 col-md-4"></div>
+    </div>
+  </div>
+<% end %>

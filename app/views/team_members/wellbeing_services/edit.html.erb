@@ -1,0 +1,9 @@
+<main class="container team-members wellbeing-services edit">
+  <%= render 'shared/back_btn' %>
+  <section class="row">
+    <div class="col">
+      <%= render 'form', wellbeing_service: @wellbeing_service, title: 'Edit',
+                 path: wellbeing_service_path(@wellbeing_service), wellbeing_metrics: @wellbeing_metrics %>
+    </div>
+  </section>
+</main>
