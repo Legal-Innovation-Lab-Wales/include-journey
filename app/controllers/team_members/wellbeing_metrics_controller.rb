@@ -1,53 +1,28 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_metrics_controller.rb
   class WellbeingMetricsController < TeamMembersApplicationController
-    before_action :wellbeing_metric, only: %i[edit update destroy]
-
     # GET /wellbeing_metrics
     def index
-      @wellbeing_metrics = WellbeingMetric.includes(:team_member).all
+      @wellbeing_metrics = WellbeingMetric.all
 
       render 'index'
     end
 
-    # GET /wellbeing_metrics/:id
-    def show
-      redirect_to wellbeing_metrics_path, notice: 'That view is not available'
-    end
-
-    # GET /wellbeing_metrics/:id/edit
-    def edit
-      render 'edit'
-    end
-
-    # POST /wellbeing_metrics
-    def create
-      puts 'Create new wellbeing metric...'
-    end
-
-    # GET /wellbeing_metrics/new
-    def new
-      @wellbeing_metric = WellbeingMetric.new
-
-      render 'new'
-    end
-
     # PUT /wellbeing_metrics/:id
     def update
-      puts 'Update wellbeing metric...'
-    end
+      @wellbeing_metric = WellbeingMetric.find(params[:id])
 
-    # DELETE /wellbeing_metrics/:id
-    def destroy
-      puts 'Delete wellbeing metric...'
+      if @wellbeing_metric.update(wellbeing_metric_params)
+        redirect_to wellbeing_metrics_path, flash: { success: 'Wellbeing metric updated' }
+      else
+        redirect_to wellbeing_metrics_path, flash: { error: 'Wellbeing metric could not be updated. Please try again' }
+      end
     end
 
     private
 
-    def wellbeing_metric
-      @wellbeing_metric = WellbeingMetric.includes(:team_member, :wellbeing_services)
-    rescue ActiveRecord::RecordNotFound
-      redirect_to wellbeing_metrics_path, flash: { error: 'Wellbeing Metric Not Found' }
+    def wellbeing_metric_params
+      params.require(:wellbeing_metric).permit(:name, :category)
     end
   end
 end

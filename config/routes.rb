@@ -68,7 +68,7 @@ Rails.application.routes.draw do
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
-      resources :wellbeing_metrics
+      resources :wellbeing_metrics, only: %i[index update]
     end
   end
   # rubocop:enable Metrics/BlockLength

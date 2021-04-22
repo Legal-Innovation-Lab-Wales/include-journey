@@ -17,6 +17,8 @@
                 <td class="hidden">
                   <form id="wellbeing_metric_<%= metric.id %>" name="wellbeing_metric" method="post"
                         action="<%= wellbeing_metric_path(metric) %>">
+                    <input type="hidden" name="_method" value="patch">
+                    <input type="hidden" name="authenticity_token" value="<%= session[:_csrf_token] %>">
                     <input type="hidden" name="id" value="<%= metric.id %>" />
                   </form>
                 </td>
