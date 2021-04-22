@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
@@ -67,8 +68,10 @@ Rails.application.routes.draw do
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
+      resources :wellbeing_metrics
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
     root 'pages#main'

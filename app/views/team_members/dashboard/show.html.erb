@@ -28,13 +28,18 @@
             <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Services' %>
           <% end %>
         </div>
-        <% if @admin %>
-          <div class="row">
+        <div class="row">
+          <% if @admin %>
             <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Services' %>
+          <% end %>
+
+            <%= render 'shared/dashboard_btn', path: wellbeing_metrics_path, icon: 'fa-ruler-horizontal', text: 'Wellbeing Metrics' %>
             <a class="col clear d-flex align-items-center"></a>
+
+          <% unless @admin %>
             <a class="col clear d-flex align-items-center"></a>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </section>

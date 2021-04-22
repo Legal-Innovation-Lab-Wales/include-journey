@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+@import "variables";
+
 //Abysmal 1
 .wba-score__1 {
   width:100%;
@@ -51,4 +53,49 @@
 .wba-score__10 {
   width:100%;
   background-color: #5DAD3A;
+}
+
+.wellbeing-metrics {
+  &.index {
+    .hidden {
+      display: none !important;
+    }
+
+    td {
+      input[type="text"] {
+        background-color: $white;
+        color: $black;
+        text-align: center;
+        border: none;
+        height: 30px;
+        border-radius: 5px;
+
+        &[disabled=""] {
+          background-color: transparent;
+          color: $white;
+        }
+      }
+
+      i:hover {
+        cursor: pointer;
+        color: $brand-secondary-dark;
+      }
+
+      input[type="submit"]:hover {
+        cursor: pointer;
+      }
+
+      &:nth-child(2) input[type="text"] {
+        width: 400px;
+      }
+
+      &:nth-child(3) input[type="text"] {
+        width: 250px;
+      }
+
+      &:last-child {
+        width: 200px !important;
+      }
+    }
+  }
 }
