@@ -64,7 +64,7 @@ module Users
     end
 
     def search
-      @user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
+      current_user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
   end
