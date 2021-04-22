@@ -59,6 +59,7 @@ Rails.application.routes.draw do
         put 'unpin', action: 'unpin', on: :member, as: :unpin
         resources :notes, only: :create, as: :add_note
         resources :wellbeing_assessments, only: %i[index new create], on: :member
+        resources :appointments, only: :index, on: :member
       end
 
       resources :crisis_events, only: %i[index show] do

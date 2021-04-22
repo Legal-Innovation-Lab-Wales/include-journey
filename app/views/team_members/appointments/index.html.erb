@@ -1,0 +1,39 @@
+<main class="container user">
+  <%= render 'shared/back_btn', path: users_path, text: 'Go back to user',
+             next_path: users_path, next_text: 'Upcoming Appointments' %>
+  <div class="row justify-content-end">
+    <%= render 'shared/search' %>
+  </div>
+  <div class="row justify-content-end mt-1">
+    <%= render 'shared/limit' %>
+  </div>
+  <section class="row appointments">
+    <div class="col">
+      <h3 class="mb-0">Past appointments</h3>
+      <div class="container">
+        <%= render 'shared/search_results' %>
+        <div class="row">
+          <% @resources.each do |past_appointments| %>
+            <div class="col-12 col-md-4 past">
+              <div class="card border-primary mt-3">
+                <div class="card-header bg-primary">
+                  at  <%= past_appointments.time_on_date %> <br />
+                </div>
+                <div class="card-body">
+                  <p>
+                    <%= distance_of_time_in_words(Time.now, past_appointments.start) %> ago
+                    with <%= past_appointments.who_with %>
+                    about <%= past_appointments.what %>
+                    at <%= past_appointments.where %>
+                    for <%= past_appointments.duration %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%= render 'shared/pagination_controls', index: 'appointments'%>
+</main>
