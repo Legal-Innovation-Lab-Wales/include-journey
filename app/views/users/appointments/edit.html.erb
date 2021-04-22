@@ -1,9 +1,11 @@
 <main class="container user">
   <%= render 'shared/back_btn', path: upcoming_appointments_path, text: 'Back' %>
-  <section class="row" id="upcoming">
+  <section class="row appointments">
     <div class="col-0 col-md-4"></div>
     <div class="col-12 col-md-4 create">
-      <%= render 'form', appointment: @appointment, url: appointment_path(@appointment), action: :put %>
+      <h3 class="mb-0">Edit appointment</h3>
+      <p> Enter in the information to edit an appointment.</p>
+      <%= render 'shared/appointments/form', appointment: @appointment, url: appointment_path(@appointment), action: :put %>
     </div>
     <div class="col-0 col-md-4"></div>
   </section>
