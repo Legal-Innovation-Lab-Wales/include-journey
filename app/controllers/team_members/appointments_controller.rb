@@ -1,31 +1,28 @@
 module TeamMembers
   # app/controllers/team_members/appointments_controller.rb
   class AppointmentsController < TeamMembersApplicationController
-    before_action :user, except: :show
+    before_action :user
     before_action :appointment, only: %i[edit update destroy]
     include Pagination
 
     def index; end
 
-    def upcoming
-      render 'team_members/appointments/upcoming'
-    end
+    protected
 
-    private
+    def appointments
+      @appointments = @user.appointments
+    end
 
     def resources
       appointments
     end
 
-    def appointment
-      # TODO: Make this make sense
-      @appointment = current_team_member.appointments.includes(:user).find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
+    def resources_per_page
+      6
     end
 
-    def appointments
-      @appointments = @user.appointments
+    def search
+      @user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
     def team_member
@@ -38,6 +35,18 @@ module TeamMembers
       return unless params[:user_id].present?
 
       @user = User.includes(:appointments).find(params[:user_id])
+    end
+
+    private
+
+    def appointment_search
+      'lower(who_with) similar to lower(:query) or lower(what) similar to lower(:query)'
+    end
+
+    def past_appointment_query
+      query = wildcard_query
+      query[:start] = Time.now
+      query
     end
   end
 end

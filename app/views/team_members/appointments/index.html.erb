@@ -1,6 +1,5 @@
 <main class="container user">
-  <%= render 'shared/back_btn', path: users_path, text: 'Go back to user',
-             next_path: users_path, next_text: 'Upcoming Appointments' %>
+  <%= render 'shared/back_btn', path: users_path, text: 'Go back to user' %>
   <div class="row justify-content-end">
     <%= render 'shared/search' %>
   </div>
@@ -9,7 +8,7 @@
   </div>
   <section class="row appointments">
     <div class="col">
-      <h3 class="mb-0">Past appointments</h3>
+      <h3 class="mb-0">All appointments</h3>
       <div class="container">
         <%= render 'shared/search_results' %>
         <div class="row">
@@ -21,7 +20,6 @@
                 </div>
                 <div class="card-body">
                   <p>
-                    <%= distance_of_time_in_words(Time.now, past_appointments.start) %> ago
                     with <%= past_appointments.who_with %>
                     about <%= past_appointments.what %>
                     at <%= past_appointments.where %>
