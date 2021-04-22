@@ -249,11 +249,37 @@
               </div>
             <% end %>
           </div>
+          <h5 class="pt-3">Past 4 Appointments</h5>
+          <div class="row">
+            <% @appointments_past.first(4).each do |appointments| %>
+              <div class="col-12 col-xl-6 mt-3">
+                <div class="card border-primary h-100">
+                  <div class="card-header bg-primary">
+                    at  <%= appointments.time_on_date %> <br/>
+                  </div>
+                  <div class="card-body">
+                    <p>
+                      <%= distance_of_time_in_words(Time.now, appointments.start) %> ago
+                      with <%= appointments.who_with %>
+                      about <%= appointments.what %>
+                      at <%= appointments.where %>
+                      for <%= appointments.duration %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
         <div class="card-footer text-center">
           <button class="btn btn-primary my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
             Add New Appointment
           </button>
+          <button class="btn btn-primary my-2 py-2 px-5" type="button" target="appointments/index">
+            View all appointments
+          </button>
+          <%= link_to 'View Past Appointments', team_member_appointments_path, class: 'btn btn-primary' %>
+          <%= link_to 'View Past Appointments', team_member_wellbeing_assessments_path, class: 'btn btn-primary' %>
         </div>
       </div>
     </div>
