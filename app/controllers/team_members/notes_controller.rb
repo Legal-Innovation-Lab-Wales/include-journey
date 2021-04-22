@@ -12,6 +12,7 @@ module TeamMembers
 
     # GET /notes/:id
     def show
+      debugger
       note = note(params[:id])
       redirect_to user_path(params[:user_id]), notice: 'An error has occurred' and return if note.replacing_id.nil?
 
@@ -22,7 +23,8 @@ module TeamMembers
     # PUT /notes/:id/update
     def update
       @note = note(note_params[:id])
-      redirect_to user_path(@user), notice: 'Nothing to update!' and return unless changes_made?
+      error_redirect and return unless current_team_member_is_author?
+      nothing_to_update_redirect and return unless changes_made?
 
       ActiveRecord::Base.transaction do
         @new_note = create_note(replacing: @note)
@@ -30,7 +32,7 @@ module TeamMembers
       end
       redirect_to user_path(@user), flash: { success: 'Successfully updated note!' }
     rescue ActiveRecord::RecordInvalid
-      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please try again.' }
+      error_redirect
     end
 
     # DELETE
@@ -40,12 +42,24 @@ module TeamMembers
 
     private
 
+    def nothing_to_update_redirect
+      redirect_to user_path(@user), notice: 'Nothing to update!'
+    end
+
+    def error_redirect
+      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please try again.' }
+    end
+
     def get_previous_note(note)
       return if note.replacing_id.nil?
 
       prev_note = note(note.replacing_id)
       @user_notes << prev_note
       get_previous_note(prev_note)
+    end
+
+    def current_team_member_is_author?
+      @note[:team_member_id] == current_team_member[:id]
     end
 
     def changes_made?
