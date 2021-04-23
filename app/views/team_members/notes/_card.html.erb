@@ -14,7 +14,7 @@
         <% if note.team_member == current_team_member %>
           <span>
             <%= link_to user_note_path(@user, note) do %>
-              <i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
+              <i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="Edit / View History"></i>
             <% end %>
           </span>
         <% elsif note.replacing.present? %>
