@@ -168,10 +168,8 @@
             <span>There are no notes on this user yet.</span>
           <% else %>
             <% @user_notes.each do |note| %>
-              <% if note.replaced_by.nil? %>
-                <%=  %>
-                <%= render 'team_members/notes/card', note: note, history: true, current_note: false,
-                                                      edit: note[:team_member_id] == current_team_member[:id]%>
+              <% unless note.replaced_by.present? %>
+                <%= render 'team_members/notes/card', note: note, user_member_page: true, current_note: false, edit: false %>
               <% end %>
             <% end %>
           <% end %>
@@ -186,7 +184,6 @@
     </div>
 
     <%= render 'team_members/notes/add_modal' %>
-    <%= render 'team_members/notes/edit_modal' %>
 
   </div>
 </main>

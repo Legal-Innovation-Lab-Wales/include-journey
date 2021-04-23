@@ -9,22 +9,29 @@
         Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong>
       </span>
     
-    <% if history || edit %>
-      <div class="note-icons">
-        <% if !note.replacing_id.nil? && history %>
+    <div class="note-icons">
+      <% if user_member_page %>
+        <% if note.team_member == current_team_member %>
           <span>
             <%= link_to user_note_path(@user, note) do %>
-                <i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
+              <i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
+            <% end %>
+          </span>
+        <% elsif note.replacing.present? %>
+          <span>
+            <%= link_to user_note_path(@user, note) do %>
+              <i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
             <% end %>
           </span>
         <% end %>
-        <% if edit %>
-          <span onclick="gareth(<%= @user.id %>, <%= note.id %>)">
+      <% else %>
+        <% if current_team_member == note.team_member && edit %>
+          <span class="edit-btn" data-user-id="<%= @user.id %>" data-note-id="<%= note.id %>">
             <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#edit-note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
           </span>
         <% end %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
   <div class="card-body">
     <span>

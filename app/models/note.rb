@@ -6,4 +6,21 @@ class Note < ApplicationRecord
   belongs_to :replacing, class_name: 'Note', optional: true, foreign_key: 'replacing_id'
 
   validates_presence_of :team_member_id, :user_id, :content
+
+  def chain(arr)
+    arr << self
+    return unless replacing.present?
+
+    replacing.chain(arr)
+  end
+
+  def latest
+    return self if replaced_by.nil?
+
+    replaced_by.latest
+  end
+
+  def changes?(note_params)
+    content != note_params[:content] || visible_to_user != note_params[:visible_to_user]
+  end
 end

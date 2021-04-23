@@ -2,6 +2,8 @@ module TeamMembers
   # app/controllers/team_members/notes_controller.rb
   class NotesController < TeamMembersApplicationController
     before_action :user
+    before_action :note, only: :show
+    before_action :team_member_note, only: %i[edit update]
     before_action :note_params, only: %i[create update]
 
     # POST /notes
@@ -15,34 +17,24 @@ module TeamMembers
 
     # GET /notes/:id
     def show
-      note = note(params[:id])
-
-      if note.nil? # || note.replacing_id.nil?
-        redirect_to user_path(params[:user_id]), notice: 'An error has occurred'
+      if @note.replaced_by.present?
+        redirect_to user_note_path(@user, @note.latest)
       else
-        @user_notes = [note]
-        get_previous_note(note)
+        @user_notes = []
+        @note.chain(@user_notes)
       end
-    end
-
-    # GET /notes/:id/edit
-    def edit
-      note(params[:id])
-
-      # render :json => note
     end
 
     # PUT /notes/:id/update
     def update
-      note(note_params[:id])
-      error_redirect and return unless current_team_member_is_author?
-      nothing_to_update_redirect and return unless changes_made?
+      nothing_to_update_redirect and return unless @note.changes?(note_params)
 
       ActiveRecord::Base.transaction do
         @new_note = create_note(replacing: @note)
         @note.update!(replaced_by: @new_note)
       end
-      redirect_to user_path(@user), flash: { success: 'Successfully updated note!' }
+
+      redirect_to user_note_path(@user, @new_note), flash: { success: 'Successfully updated note!' }
     rescue ActiveRecord::RecordInvalid
       error_redirect
     end
@@ -62,22 +54,6 @@ module TeamMembers
       redirect_to user_path(@user), flash: { error: 'Something went wrong. Please try again.' }
     end
 
-    def get_previous_note(note)
-      return if note.replacing_id.nil?
-
-      prev_note = note(note.replacing_id)
-      @user_notes << prev_note
-      get_previous_note(prev_note)
-    end
-
-    def current_team_member_is_author?
-      @note[:team_member_id] == current_team_member[:id]
-    end
-
-    def changes_made?
-      @note[:content] != note_params[:content] || @note[:visible_to_user] != note_params[:visible_to_user]
-    end
-
     def create_note(replacing: nil)
       current_team_member.notes.create!(content: note_params[:content],
                                         visible_to_user: note_params[:visible_to_user],
@@ -91,8 +67,14 @@ module TeamMembers
       redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end
 
-    def note(id)
-      @note = Note.find(id)
+    def team_member_note
+      @note = current_team_member.notes.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: users_path, flash: { error: 'Note not found' })
+    end
+
+    def note
+      @note = Note.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: { error: 'Note not found' })
     end

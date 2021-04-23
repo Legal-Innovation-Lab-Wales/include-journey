@@ -1,9 +1,12 @@
-// called when edit note button is clicked
-window.gareth = function(userId, noteId) {
-  console.log(userId)
-  console.log(noteId);
-  fetchNote(userId, noteId)
-}
+const edit_btns = document.querySelectorAll('.edit-btn')
+
+edit_btns.forEach(edit_btn => {
+    edit_btn.addEventListener('click', () => {
+        console.log(edit_btn.dataset.userId)
+        console.log(edit_btn.dataset.noteId);
+        fetchNote(edit_btn.dataset.userId, edit_btn.dataset.noteId)
+    })
+})
 
 function fetchNote(userId, noteId) {
   url = `localhost:3000/users/${userId}/notes/${noteId}/edit`;
