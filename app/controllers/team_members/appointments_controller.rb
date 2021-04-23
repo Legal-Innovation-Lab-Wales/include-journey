@@ -5,10 +5,21 @@ module TeamMembers
     before_action :appointment, only: %i[edit update destroy]
     include Pagination
 
-    def index; end
+    # GET /users/:user_id/appointments/new
+    def new
+      @appointment = Appointment.new
 
-    def appointments
-      @appointments = @user.appointments
+      render 'new'
+    end
+
+    # POST /users/:user_id/appointments
+    def create
+      if (@appointment = @user.appointments.create!(appointment_params.merge!(team_member: current_team_member)))
+        redirect_to user_path(@user), flash: { success: 'Appointment created' }
+      else
+        redirect_to user_path(@user),
+                    flash: { error: "Appointment could not be created: #{@appointment.errors}" }
+      end
     end
 
     def team_member
@@ -26,7 +37,7 @@ module TeamMembers
     protected
 
     def resources
-      appointments
+      @user.appointments
     end
 
     def resources_per_page
@@ -47,6 +58,10 @@ module TeamMembers
       query = wildcard_query
       query[:start] = Time.now
       query
+    end
+
+    def appointment_params
+      params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
     end
   end
 end

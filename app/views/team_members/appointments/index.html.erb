@@ -1,5 +1,5 @@
 <main class="container user">
-  <%= render 'shared/back_btn', path: users_path, text: 'Go back to user' %>
+  <%= render 'shared/back_btn', path: user_path(@user), text: 'Go back to user', index: 'user_appointments' %>
   <div class="row justify-content-end">
     <%= render 'shared/search' %>
   </div>
@@ -33,5 +33,5 @@
       </div>
     </div>
   </section>
-  <%= render 'shared/pagination_controls', index: 'appointments'%>
+  <%= render 'shared/pagination_controls', index: 'user_appointments' %>
 </main>

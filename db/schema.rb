@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.bigint "team_member_id"
     t.datetime "start"
     t.datetime "end"
     t.string "who_with"
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.boolean "attended", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_appointments_on_team_member_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
@@ -212,6 +214,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
   end
 
+  add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
   add_foreign_key "crisis_events", "crisis_types"

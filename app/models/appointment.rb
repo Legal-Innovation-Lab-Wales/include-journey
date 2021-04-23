@@ -1,6 +1,7 @@
 # app/models/appointment.rb
 class Appointment < ApplicationRecord
   belongs_to :user
+  belongs_to :team_member, optional: true
 
   def time_on_date
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
