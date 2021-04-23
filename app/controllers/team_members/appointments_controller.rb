@@ -7,22 +7,8 @@ module TeamMembers
 
     def index; end
 
-    protected
-
     def appointments
       @appointments = @user.appointments
-    end
-
-    def resources
-      appointments
-    end
-
-    def resources_per_page
-      6
-    end
-
-    def search
-      @user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
     def team_member
@@ -35,6 +21,20 @@ module TeamMembers
       return unless params[:user_id].present?
 
       @user = User.includes(:appointments).find(params[:user_id])
+    end
+
+    protected
+
+    def resources
+      appointments
+    end
+
+    def resources_per_page
+      6
+    end
+
+    def search
+      @user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
     private
