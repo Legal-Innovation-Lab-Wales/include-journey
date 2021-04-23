@@ -16,7 +16,6 @@ module TeamMembers
     # GET /notes/:id
     def show
       note = note(params[:id])
-      debugger
 
       if note.nil? # || note.replacing_id.nil?
         redirect_to user_path(params[:user_id]), notice: 'An error has occurred'
@@ -28,7 +27,6 @@ module TeamMembers
 
     # GET /notes/:id/edit
     def edit
-      debugger
       note(params[:id])
 
       # render :json => note
