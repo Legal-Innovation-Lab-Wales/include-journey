@@ -6,7 +6,7 @@ module Users
     # GET /goals
     def index
       @goal = Goal.new
-      @goals = current_user.goals.includes(:goal_type).order(:created_at)
+      @goals = current_user.goals.includes(:goal_type).unarchived.order(:created_at)
       @goal_types = GoalType.all
 
       render 'index'
@@ -32,7 +32,11 @@ module Users
 
     # PUT /goals/:id/archive
     def archive
-      puts 'Archive goal...'
+      if @goal.update!(archived: !@goal.archived)
+        redirect_to goals_path, flash: { success: "Goal has been #{@goal.archived ? '' : 'un'}archived" }
+      else
+        redirect_to goals_path, flash: { error: 'Goal could not be archived' }
+      end
     end
 
     # DELETE /goals/:id

@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         put 'achieve', action: :achieve, on: :member
         put 'archive', action: :archive, on: :member
       end
+      resources :goals_archive, only: :index
     end
   end
 

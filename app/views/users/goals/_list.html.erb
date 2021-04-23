@@ -3,12 +3,7 @@
     <li class="list-group-item <%= goal.achieved_on.present? ? 'achieved' : '' %>">
       <div><%= goal.goal_type.emoji %></div>
       <div><%= simple_format(goal.goal) %></div>
-      <div>
-        <div>
-          <i class="fas fa-ellipsis-h" data-bs-toggle="modal" data-bs-target="#goalModal"
-             data-bs-goal-id="<%= goal.id %>" data-bs-achieved="<%= goal.achieved? %>"></i>
-        </div>
-      </div>
+      <div><div><%= render 'users/goals/control', goal: goal %></div></div>
     </li>
   <% end %>
 </ul>
