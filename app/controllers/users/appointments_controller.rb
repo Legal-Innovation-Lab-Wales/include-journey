@@ -67,5 +67,27 @@ module Users
       current_user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
     end
 
+    private
+
+    def appointment
+      @appointment = current_user.appointments.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
+    end
+
+    def appointment_search
+      'lower(who_with) similar to lower(:query) or lower(what) similar to lower(:query)'
+    end
+
+    def past_appointment_query
+      query = wildcard_query
+      query[:start] = Time.now
+      query
+    end
+
+    def appointment_params
+      params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
+    end
+
   end
 end
