@@ -7,4 +7,8 @@ class Goal < ApplicationRecord
   scope :long_term, -> { where(short_term: false) }
 
   validates_presence_of :user_id, :goal, :goal_type
+
+  def achieved?
+    achieved_on.present?
+  end
 end

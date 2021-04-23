@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.text "goal", null: false
     t.boolean "short_term", default: true, null: false
     t.datetime "achieved_on"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"

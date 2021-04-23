@@ -7,6 +7,7 @@ class CreateGoals < ActiveRecord::Migration[6.1]
       t.text :goal, null: false
       t.boolean :short_term, null: false, default: true
       t.datetime :achieved_on
+      t.boolean :archived, null: false, default: false
 
       t.timestamps
     end

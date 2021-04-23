@@ -1,12 +1,12 @@
 module Users
   # app/controllers/users/goals_controller.rb
   class GoalsController < UsersApplicationController
-    before_action :goal, only: :achieve
+    before_action :goal, except: %i[index create]
 
     # GET /goals
     def index
       @goal = Goal.new
-      @goals = current_user.goals.order(:created_at)
+      @goals = current_user.goals.includes(:goal_type).order(:created_at)
       @goal_types = GoalType.all
 
       render 'index'
@@ -28,6 +28,18 @@ module Users
       else
         redirect_to goals_path, flash: { error: 'Goal could not be marked as achieved. Please try again.' }
       end
+    end
+
+    # PUT /goals/:id/archive
+    def archive
+      puts 'Archive goal...'
+    end
+
+    # DELETE /goals/:id
+    def destroy
+      @goal.destroy
+
+      redirect_to goals_path, flash: { success: 'Goal has been deleted' }
     end
 
     private
