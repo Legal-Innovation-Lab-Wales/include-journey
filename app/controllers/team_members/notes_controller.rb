@@ -6,23 +6,37 @@ module TeamMembers
 
     # POST /notes
     def create
-      @note = create_note(replacing: nil)
-      redirect_to user_path(@user), notice: @note ? 'Note added!' : "The note couldn't be added. Please try again."
+      if (@note = create_note)
+        redirect_to user_path(@user), notice: { flash: 'Successfully added note!' }
+      else
+        error_redirect
+      end
     end
 
     # GET /notes/:id
     def show
-      debugger
       note = note(params[:id])
-      redirect_to user_path(params[:user_id]), notice: 'An error has occurred' and return if note.replacing_id.nil?
+      debugger
 
-      @user_notes = [note]
-      get_previous_note(note)
+      if note.nil? # || note.replacing_id.nil?
+        redirect_to user_path(params[:user_id]), notice: 'An error has occurred'
+      else
+        @user_notes = [note]
+        get_previous_note(note)
+      end
+    end
+
+    # GET /notes/:id/edit
+    def edit
+      debugger
+      note(params[:id])
+
+      # render :json => note
     end
 
     # PUT /notes/:id/update
     def update
-      @note = note(note_params[:id])
+      note(note_params[:id])
       error_redirect and return unless current_team_member_is_author?
       nothing_to_update_redirect and return unless changes_made?
 
@@ -82,7 +96,7 @@ module TeamMembers
     def note(id)
       @note = Note.find(id)
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: user_path, flash: { error: 'Note not found' })
+      redirect_back(fallback_location: users_path, flash: { error: 'Note not found' })
     end
 
     def note_params

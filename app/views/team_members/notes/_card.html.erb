@@ -19,7 +19,7 @@
           </span>
         <% end %>
         <% if edit %>
-          <span onclick="document.getElementById('note_id').value = <%= note.id %>; document.getElementById('edit_note_modal_content').value = document.getElementById('user_note-<%= note.id %>').innerText; document.getElementById('edit_note_modal_checkbox').checked = <%= note.visible_to_user %> ;">
+          <span onclick="gareth(<%= @user.id %>, <%= note.id %>)">
             <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#edit-note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
           </span>
         <% end %>
@@ -27,10 +27,8 @@
     <% end %>
   </div>
   <div class="card-body">
-    <span id="user_note-<%= note.id %>">
+    <span>
       <%= simple_format(note.content) %>
     </span>
   </div>
 </div>
-
-<%# %>
