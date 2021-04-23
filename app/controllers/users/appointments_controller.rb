@@ -70,7 +70,7 @@ module Users
     private
 
     def appointment
-      @appointment = current_user.appointments.find(params[:id])
+      @appointment = current_user.appointments.where('team_member_id is null').find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
     end
@@ -88,6 +88,5 @@ module Users
     def appointment_params
       params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
     end
-
   end
 end

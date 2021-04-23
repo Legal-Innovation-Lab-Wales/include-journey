@@ -36,4 +36,18 @@ class Appointment < ApplicationRecord
 
     self.end.strftime('%H:%M')
   end
+
+  def past
+    start <= DateTime.now
+  end
+
+  def future
+    start >= DateTime.now
+  end
+
+  def last_month
+    start >= DateTime.now - 1.month
+  end
+
+  validates_presence_of :where, :who_with, :what, :start, :end
 end

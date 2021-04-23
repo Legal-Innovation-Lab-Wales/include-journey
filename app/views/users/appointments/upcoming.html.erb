@@ -18,13 +18,16 @@
                     with <%= appointments.who_with %>
                     about <%= appointments.what %>
                     at <%= appointments.where %>
-                    for <%= appointments.duration %>
                   </p>
 
-                      <p>
-                    <%= link_to 'Edit', edit_appointment_path(appointments.id), class: "btn btn-primary" %>
-                    <%= link_to 'Delete', appointment_path(appointments.id), class: "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?'  } %>
-                      </p>
+                  <% if appointments.team_member.present? %>
+                    <p>Created by <%= appointments.team_member.full_name %></p>
+                  <% else %>
+                    <p>
+                      <%= link_to 'Edit', edit_appointment_path(appointments.id), class: "btn btn-primary" %>
+                      <%= link_to 'Delete', appointment_path(appointments.id), class: "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?'  } %>
+                    </p>
+                  <% end %>
                 </div>
               </div>
             </div>

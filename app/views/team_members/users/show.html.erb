@@ -227,9 +227,9 @@
           <h3>Upcoming 4 Appointments</h3>
         </div>
         <div class="card-body">
-          <p><%= @user.first_name %> has <%= @appointments_upcoming_count %> upcoming appointments.</p>
+          <p><%= @user.first_name %> has <%= @user.future_appointments.count %> upcoming appointments.</p>
           <div class="row">
-            <% @appointments_upcoming.first(4).each do |appointments| %>
+            <% @user.future_appointments.first(4).each do |appointments| %>
               <div class="col-12 col-xl-6 mt-3">
                 <div class="card border-primary h-100">
                   <div class="card-header bg-primary">
@@ -237,11 +237,10 @@
                   </div>
                   <div class="card-body">
                     <p>
-                      In <%= distance_of_time_in_words(Time.now, appointments.start) %>
-                      with <%= appointments.who_with %>
-                      about <%= appointments.what %>
-                      at <%= appointments.where %>
-                      for <%= appointments.duration %>
+                      In <u><%= distance_of_time_in_words(Time.now, appointments.start) %></u>
+                      with <u><%= appointments.who_with %></u>
+                      about <u><%= appointments.what %></u>
+                      at <u><%= appointments.where %></u>
                     </p>
                   </div>
                 </div>
@@ -260,9 +259,9 @@
           <h3>Past 4 Appointments</h3>
         </div>
         <div class="card-body">
-          <p><%= @user.first_name %> has had <%= @appointments_past_last_month %> appointments in the last month.</p>
+          <p><%= @user.first_name %> has had <%= @user.last_month_appointments.count %> appointments in the last month.</p>
           <div class="row">
-            <% @appointments_past.first(4).each do |appointments| %>
+            <% @user.past_appointments.first(4).each do |appointments| %>
               <div class="col-12 col-xl-6 mt-3">
                 <div class="card border-primary h-100">
                   <div class="card-header bg-primary">
@@ -274,7 +273,6 @@
                       with <%= appointments.who_with %>
                       about <%= appointments.what %>
                       at <%= appointments.where %>
-                      for <%= appointments.duration %>
                     </p>
                   </div>
                 </div>

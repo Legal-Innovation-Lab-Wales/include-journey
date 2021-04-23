@@ -31,6 +31,18 @@ class User < DeviseRecord
     wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
   end
 
+  def future_appointments
+    appointments.order(start: :asc).filter(&:future)
+  end
+
+  def past_appointments
+    appointments.order(start: :asc).filter(&:past)
+  end
+
+  def last_month_appointments
+    appointments.order(start: :asc).filter(&:last_month)
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,
