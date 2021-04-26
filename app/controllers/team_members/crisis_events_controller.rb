@@ -44,6 +44,8 @@ module TeamMembers
 
     def crisis_event
       @crisis_event = CrisisEvent.includes(:user, :crisis_type).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: active_crisis_events_path, flash: { error: 'Crisis event not found' })
     end
 
     def crisis_search

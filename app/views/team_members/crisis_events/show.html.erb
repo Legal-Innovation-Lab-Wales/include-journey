@@ -61,7 +61,9 @@
         <div class="container p-0">
           <div class="row">
             <% @notes.each do |note| %>
-              <%= render 'note_card', note: note %>
+              <div class="col-12 col-md-6 col-lg-4">
+                <%= render 'note_card', note: note, current_note: false, crisis_event_page: true %>
+              </div>
             <% end %>
           </div>
         </div>
