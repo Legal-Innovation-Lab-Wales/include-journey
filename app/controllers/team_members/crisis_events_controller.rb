@@ -27,16 +27,6 @@ module TeamMembers
                   notice: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
     end
 
-    # POST /crisis_events/:id/note
-    def add_note
-      if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
-                                              content: crisis_notes_params[:content] })
-        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
-      else
-        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
-      end
-    end
-
     protected
 
     def resources
@@ -58,10 +48,6 @@ module TeamMembers
 
     def crisis_search
       'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
-    end
-
-    def crisis_notes_params
-      params.require(:crisis_note).permit(:content)
     end
 
     def subheading_stats

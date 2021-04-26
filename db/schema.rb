@@ -44,9 +44,13 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.text "content"
     t.bigint "crisis_event_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crisis_event_id"], name: "index_crisis_notes_on_crisis_event_id"
+    t.index ["replaced_by_id"], name: "index_crisis_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_crisis_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_crisis_notes_on_team_member_id"
   end
 
@@ -204,6 +208,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
   add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"
   add_foreign_key "crisis_notes", "crisis_events"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replaced_by_id"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
   add_foreign_key "journal_entries", "users"

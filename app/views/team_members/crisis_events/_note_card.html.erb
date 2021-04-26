@@ -1,0 +1,23 @@
+<div class="col-12 col-md-6 col-lg-4">
+  <div class="card mb-3">
+    <div class="card-header">
+      <span><%= note.team_member.full_name %></span>
+      <span><%= note.last_update %> </span>
+
+      <% if current_team_member == note.team_member %>
+        <span class="edit-btn">
+          <i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+        </span>
+      <% elsif note.replacing.present? %>
+        <span>
+          <%= link_to crisis_event_note_path(@crisis_event, note) do %>
+            <i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= simple_format(note.content) %></p>
+    </div>
+  </div>
+</div>
