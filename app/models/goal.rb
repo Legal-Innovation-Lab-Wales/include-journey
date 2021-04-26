@@ -15,6 +15,8 @@ class Goal < ApplicationRecord
   end
 
   def achieved
+    return '' unless achieved_on.present?
+
     achieved_on.strftime('%d/%m/%Y %I:%M %p')
   end
 end
