@@ -5,8 +5,10 @@
 @import "variables";
 
 section {
+  h3{
+    color: white;
+  }
   &.appointments {
-    background-color: $white;
     color: $black;
     margin-top: 1rem;
 
@@ -19,7 +21,8 @@ section {
 
       .card{
         text-align: left;
-        background: transparent;
+        background: $grey;
+        border: transparent;
       }
     }
   }

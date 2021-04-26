@@ -2,13 +2,12 @@
   <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
              next_path: new_appointment_path, next_text: 'New Appointment' %>
   <section class="row appointments">
-    <div class="col">
       <h3 class="mb-0">Upcoming appointments</h3>
       <div class="container">
         <div class="row">
           <% @appointments.each do |appointments| %>
             <div class="col-12 col-md-4">
-              <div class="card border-primary mt-3 text-al">
+              <div class="card mt-3 text-al">
                 <div class="card-header bg-primary"><%= appointments.what %> - In
                   <%= distance_of_time_in_words(Time.now, appointments.start) %>
                   <% if appointments.team_member.present? %>
@@ -31,7 +30,6 @@
             </div>
           <% end %>
         </div>
-      </div>
     </div>
   </section>
   <section class="row">
