@@ -14,17 +14,14 @@
         <div class="row">
           <% @resources.each do |past_appointments| %>
             <div class="col-12 col-md-4 past">
-              <div class="card border-primary mt-3">
-                <div class="card-header bg-primary">
-                  at  <%= past_appointments.time_on_date %> <br />
-                </div>
-                <div class="card-body">
-                  <p>
-                    with <%= past_appointments.who_with %>
-                    about <%= past_appointments.what %>
-                    at <%= past_appointments.where %>
-                    for <%= past_appointments.duration %>
-                  </p>
+
+              <div class="card border-primary mt-3 text-al">
+                <div class="card-header bg-primary"><%= past_appointments.what %> </div>
+                <div class="card-body bg-transparent">
+                  <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointments.who_with %> </p>
+                  <p> <i class="fas fa-location-arrow"></i> <%= past_appointments.where %></p>
+                  <p> <i class="fas fa-clock"></i> <%= past_appointments.time_on_date %></p>
+                  <p> <i class="fas fa-hourglass-start"></i> <%= past_appointments.duration %></p>
                 </div>
               </div>
             </div>

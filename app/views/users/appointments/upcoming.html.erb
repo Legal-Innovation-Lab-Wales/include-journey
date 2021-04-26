@@ -8,26 +8,24 @@
         <div class="row">
           <% @appointments.each do |appointments| %>
             <div class="col-12 col-md-4">
-              <div class="card border-primary mt-3">
-                <div class="card-header bg-primary">
-                  at  <%= appointments.time_on_date %> <br />
-                </div>
-                <div class="card-body">
-                  <p>
-                    In <%= distance_of_time_in_words(Time.now, appointments.start) %>
-                    with <%= appointments.who_with %>
-                    about <%= appointments.what %>
-                    at <%= appointments.where %>
-                  </p>
-
+              <div class="card border-primary mt-3 text-al">
+                <div class="card-header bg-primary"><%= appointments.what %> - In
+                  <%= distance_of_time_in_words(Time.now, appointments.start) %>
                   <% if appointments.team_member.present? %>
                     <p>Created by <%= appointments.team_member.full_name %></p>
                   <% else %>
-                    <p>
-                      <%= link_to 'Edit', edit_appointment_path(appointments.id), class: "btn btn-primary" %>
-                      <%= link_to 'Delete', appointment_path(appointments.id), class: "btn btn-primary", method: :delete, data: { confirm: 'Are you sure?'  } %>
-                    </p>
+                  <%= link_to edit_appointment_path(appointments.id) do %>
+                    <i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
                   <% end %>
+                  <%= link_to appointment_path(appointments.id), method: :delete, data: { confirm: 'Are you sure?'  }  do %>
+                    <i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Delete"></i>
+                  <% end %>
+                    <% end %></div>
+                <div class="card-body">
+                  <p class="card-text"> <i class="fas fa-user"></i> <%= appointments.who_with %> </p>
+                  <p> <i class="fas fa-location-arrow"></i> <%= appointments.where %></p>
+                  <p> <i class="fas fa-clock"></i> <%= appointments.time_on_date %></p>
+                  <p> <i class="fas fa-hourglass-start"></i> <%= appointments.duration %></p>
                 </div>
               </div>
             </div>

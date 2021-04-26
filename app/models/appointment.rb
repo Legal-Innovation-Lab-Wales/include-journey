@@ -10,7 +10,7 @@ class Appointment < ApplicationRecord
   def duration
     duration = self.end - start
 
-    "%02d:%02d:%02d" % [duration / 3600, duration / 60 % 60, duration % 60]
+    "%02d hours and %02d minutes" % [duration / 3600, duration / 60 % 60, duration % 60]
   end
 
   def start_date

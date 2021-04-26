@@ -231,17 +231,13 @@
           <div class="row">
             <% @user.future_appointments.first(4).each do |appointments| %>
               <div class="col-12 col-xl-6 mt-3">
-                <div class="card border-primary h-100">
-                  <div class="card-header bg-primary">
-                    at  <%= appointments.time_on_date %> <br/>
-                  </div>
+                <div class="card border-primary mt-3 text-al">
+                  <div class="card-header bg-primary"><%= appointments.what %></div>
                   <div class="card-body">
-                    <p>
-                      In <u><%= distance_of_time_in_words(Time.now, appointments.start) %></u>
-                      with <u><%= appointments.who_with %></u>
-                      about <u><%= appointments.what %></u>
-                      at <u><%= appointments.where %></u>
-                    </p>
+                    <p class="card-text"> <i class="fas fa-user"></i> <%= appointments.who_with %> </p>
+                    <p> <i class="fas fa-location-arrow"></i> <%= appointments.where %></p>
+                    <p> <i class="fas fa-clock"></i> <%= appointments.time_on_date %></p>
+                    <p> <i class="fas fa-hourglass-start"></i> <%= appointments.duration %></p>
                   </div>
                 </div>
               </div>
@@ -263,17 +259,13 @@
           <div class="row">
             <% @user.past_appointments.first(4).each do |appointments| %>
               <div class="col-12 col-xl-6 mt-3">
-                <div class="card border-primary h-100">
-                  <div class="card-header bg-primary">
-                    at  <%= appointments.time_on_date %> <br/>
-                  </div>
+                <div class="card border-primary mt-3 text-al">
+                  <div class="card-header bg-primary"><%= appointments.what %></div>
                   <div class="card-body">
-                    <p>
-                      <%= distance_of_time_in_words(Time.now, appointments.start) %> ago
-                      with <%= appointments.who_with %>
-                      about <%= appointments.what %>
-                      at <%= appointments.where %>
-                    </p>
+                    <p class="card-text"> <i class="fas fa-user"></i> <%= appointments.who_with %> </p>
+                    <p> <i class="fas fa-location-arrow"></i> <%= appointments.where %></p>
+                    <p> <i class="fas fa-clock"></i> <%= appointments.time_on_date %></p>
+                    <p> <i class="fas fa-hourglass-start"></i> <%= appointments.duration %></p>
                   </div>
                 </div>
               </div>
