@@ -19,4 +19,8 @@ class CrisisNote < ApplicationRecord
 
     replaced_by.latest
   end
+
+  def changes?(crisis_note_params)
+    content != crisis_note_params[:content]
+  end
 end

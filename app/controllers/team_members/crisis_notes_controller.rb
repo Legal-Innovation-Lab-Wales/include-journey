@@ -3,14 +3,15 @@ module TeamMembers
   class CrisisNotesController < TeamMembersApplicationController
     before_action :crisis_event
     before_action :crisis_note, only: :show
+    before_action :team_member_crisis_note, only: :update
+    before_action :crisis_note_params, only: %i[create update]
 
     # POST /crisis_events/:crisis_event_id/notes
     def create
-      if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
-                                              content: crisis_notes_params[:content] })
-        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
+      if create_note
+        redirect_to crisis_event_path(@crisis_event), notice: { flash: 'Successfully added note!' }
       else
-        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
+        error_redirect
       end
     end
 
@@ -26,10 +27,33 @@ module TeamMembers
 
     # PUT /crisis_events/:crisis_event_id/notes/:id
     def update
+      nothing_to_update_redirect and return unless @crisis_note.changes?(crisis_note_params)
+      
+      ActiveRecord::Base.transaction do
+        @new_crisis_note = create_note(replacing: @crisis_note)
+        @crisis_note.update!(replaced_by: @new_crisis_note)
+      end
 
+      redirect_to crisis_event_note_path(@crisis_event, @new_crisis_note), flash: { success: 'Successfully updated note!' }
+    rescue ActiveRecord::RecordInvalid
+      error_redirect
     end
 
     private
+
+    def create_note(replacing: nil)
+      @crisis_event.crisis_notes.create!(team_member: current_team_member,
+                                         content: crisis_note_params[:content],
+                                         replacing: replacing)
+    end
+
+    def error_redirect
+      redirect_to crisis_event_path(@crisis_event), flash: { error: 'Something went wrong. Please try again.' }
+    end
+
+    def nothing_to_update_redirect
+      redirect_back(fallback_location: crisis_event_path(@crisis_event), flash: { error: 'Nothing to update!' })
+    end
 
     def crisis_event
       @crisis_event = CrisisEvent.includes(:user, :crisis_type).find(params[:crisis_event_id])
@@ -43,7 +67,13 @@ module TeamMembers
       redirect_back(fallback_location: crisis_event_path(@crisis_event), flash: { error: 'Note not found' })
     end
 
-    def crisis_notes_params
+    def team_member_crisis_note
+      @crisis_note = current_team_member.crisis_notes.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: crisis_event_path(@crisis_event), flash: { error: 'Note not found' })
+    end
+
+    def crisis_note_params
       params.require(:crisis_note).permit(:content)
     end
   end
