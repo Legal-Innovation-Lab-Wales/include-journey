@@ -1,6 +1,6 @@
 <div class="card <%= current_note ? "bg-primary" : "" %> mb-3">
   <div class="card-header d-flex justify-content-between">
-    <span><%= note.team_member.full_name %> <%= note.last_update %> </span>
+    <span><%= note.team_member.full_name %> <%= note.created %> </span>
 
     <div class="note-icons">
       <% if crisis_event_page %>
@@ -20,7 +20,7 @@
       <% else %>
         <% if current_team_member == note.team_member && edit %>
           <span class="edit-btn">
-            <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#noteModal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+            <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#editModal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
           </span>
         <% end %>
       <% end %>

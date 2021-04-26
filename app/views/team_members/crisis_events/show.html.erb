@@ -36,7 +36,7 @@
             <div class="container p-0">
               <div class="row">
                 <div class="col-6">
-                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#noteModal">New Note <i class="fas fa-plus-circle"></i></a>
+                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#addModal">New Note <i class="fas fa-plus-circle"></i></a>
                 </div>
                 <div class="col-6">
                   <% unless @crisis_event.closed %>
@@ -62,7 +62,7 @@
           <div class="row">
             <% @notes.each do |note| %>
               <div class="col-12 col-md-6 col-lg-4">
-                <%= render 'note_card', note: note, current_note: false, crisis_event_page: true %>
+                <%= render 'team_members/crisis_notes/note_card', note: note, current_note: false, crisis_event_page: true %>
               </div>
             <% end %>
           </div>
@@ -72,4 +72,4 @@
   <% end %>
 </main>
 
-<%= render 'note_modal' %> 
+<%= render 'team_members/crisis_notes/add_modal' %> 
