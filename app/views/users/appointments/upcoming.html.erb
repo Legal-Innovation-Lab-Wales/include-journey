@@ -2,34 +2,37 @@
   <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard',
              next_path: new_appointment_path, next_text: 'New Appointment' %>
   <section class="row appointments">
-      <h3 class="mb-0">Upcoming appointments</h3>
-      <div class="container">
-        <div class="row">
-          <% @appointments.each do |appointments| %>
-            <div class="col-12 col-md-4">
-              <div class="card mt-3 text-al">
-                <div class="card-header bg-primary"><%= appointments.what %> - In
-                  <%= distance_of_time_in_words(Time.now, appointments.start) %>
+    <h3 class="mb-0">Upcoming appointments</h3>
+    <div class="container">
+      <div class="row">
+        <% @appointments.each do |appointments| %>
+          <div class="col-12 col-md-4">
+            <div class="card mt-3 text-al">
+              <div class="card-header bg-primary"><%= appointments.what %> - In
+                <%= distance_of_time_in_words(Time.now, appointments.start) %>
+                <span>
                   <% if appointments.team_member.present? %>
                     <p>Created by <%= appointments.team_member.full_name %></p>
                   <% else %>
                   <%= link_to edit_appointment_path(appointments.id) do %>
                     <i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
                   <% end %>
-                  <%= link_to appointment_path(appointments.id), method: :delete, data: { confirm: 'Are you sure?'  }  do %>
+                    <%= link_to appointment_path(appointments.id), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Delete"></i>
                   <% end %>
-                    <% end %></div>
-                <div class="card-body">
-                  <p class="card-text"> <i class="fas fa-user"></i> <%= appointments.who_with %> </p>
-                  <p> <i class="fas fa-location-arrow"></i> <%= appointments.where %></p>
-                  <p> <i class="fas fa-clock"></i> <%= appointments.time_on_date %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= appointments.duration %></p>
-                </div>
+                    <% end %>
+                  </span>
+              </div>
+              <div class="card-body">
+                <p class="card-text"><i class="fas fa-user"></i> <%= appointments.who_with %> </p>
+                <p><i class="fas fa-location-arrow"></i> <%= appointments.where %></p>
+                <p><i class="fas fa-clock"></i> <%= appointments.time_on_date %></p>
+                <p><i class="fas fa-hourglass-start"></i> <%= appointments.duration %></p>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </section>
   <section class="row">

@@ -23,6 +23,12 @@ section {
         text-align: left;
         background: $grey;
         border: transparent;
+
+        .card-header{
+          span:last-child{
+            float: right;
+          }
+        }
       }
     }
   }
