@@ -345,5 +345,8 @@ puts("Team Members in DatabaseL #{TeamMember.count}")
 puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
+puts("Contact per User: #{contacts_for_each_user}")
 puts("Wellbeing Assessments Created: #{wba_counter}")
 puts("Journals Created: #{journal_counter}")
+puts("Crisis Events Created: #{crisis_events_count}")
+puts("Notes per Crisis Event: #{crisis_notes_count}")
