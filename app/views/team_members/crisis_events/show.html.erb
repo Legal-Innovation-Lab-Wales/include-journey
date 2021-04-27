@@ -61,9 +61,11 @@
         <div class="container p-0">
           <div class="row">
             <% @notes.each do |note| %>
-              <div class="col-12 col-md-6 col-lg-4">
-                <%= render 'team_members/crisis_notes/note_card', note: note, current_note: false, crisis_event_page: true %>
-              </div>
+              <% unless note.replaced_by.present? %>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <%= render 'team_members/crisis_notes/note_card', note: note, current_note: false, crisis_event_page: true %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>
