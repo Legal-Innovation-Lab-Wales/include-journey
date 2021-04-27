@@ -2,7 +2,6 @@
   <div class="modal-dialog modal-lg col-12" role="document">
     <div class="modal-content">
       <%= form_with model: @note, url: user_note_path(@user, @note), method: :put do |form| %>
-        <%= form.hidden_field :id %>
         <div class="modal-header border-0">
           <h5 class="modal-title text-black-50">Edit note</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

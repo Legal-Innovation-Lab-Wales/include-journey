@@ -8,11 +8,11 @@
 
 require 'faker'
 
-total_user_count = 100
-wellbeing_assessments_for_each_user = 200
+total_user_count = 10
+wellbeing_assessments_for_each_user = 20
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
-crisis_events_count = 100
+crisis_events_count = 10
 notes_count = 1000
 start_time = Time.now
 
@@ -307,6 +307,7 @@ notes_count.times do
     content: Faker::TvShows::TheExpanse.quote
   )
 
+  # Every fifth note is replaced by a new note to demonstrate the edit history functionality 
   if (notes_counter % 5).zero?
     new_note = Note.create!(
       team_member_id: note.team_member.id,
