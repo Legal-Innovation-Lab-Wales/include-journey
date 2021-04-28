@@ -5,7 +5,7 @@
 @import "variables";
 
 section {
-  h3{
+  h3 {
     color: white;
   }
   &.appointments {
@@ -14,19 +14,49 @@ section {
 
     @media screen and (min-width: $screen-md) {
       margin-top: 0;
+    }
 
-      a {
-        color: $black;
+    a {
+      color: $black;
+    }
+
+    .card {
+      background: $color-secondary-2-1;
+      text-align: left;
+      border: transparent;
+
+      .card-header {
+        font-weight: bold;
+
+        span:last-child{
+          float: right;
+
+          span {
+            a:hover {
+              color: $white;
+            }
+
+            &:last-child {
+              margin-left: 0.5rem;
+            }
+          }
+        }
       }
 
-      .card{
-        text-align: left;
-        background: $grey;
-        border: transparent;
+      .card-body {
+        .container {
+          padding: 0;
 
-        .card-header{
-          span:last-child{
-            float: right;
+          .row {
+            margin-bottom: 0.5rem;
+
+            .col:first-child {
+              max-width: 30px;
+
+              .fa-hourglass-start {
+                margin-left: 2px;
+              }
+            }
           }
         }
       }
@@ -34,6 +64,10 @@ section {
   }
 
   .create {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: $color-secondary-2-1;
+
     form {
       .form-floating {
         margin-bottom: 1rem;

@@ -16,8 +16,8 @@
           <% @resources.each do |past_appointments| %>
             <div class="col-12 col-md-4 past">
               <div class="card border-primary mt-3 text-al">
-                <div class="card-header bg-primary"><%= past_appointments.what %> </div>
-                <div class="card-body bg-transparent">
+                <div class="card-header"><%= past_appointments.what %> </div>
+                <div class="card-body">
                   <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointments.who_with %> </p>
                   <p> <i class="fas fa-location-arrow"></i> <%= past_appointments.where %></p>
                   <p> <i class="fas fa-clock"></i> <%= past_appointments.time_on_date %></p>
