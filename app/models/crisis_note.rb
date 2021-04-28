@@ -7,11 +7,11 @@ class CrisisNote < ApplicationRecord
 
   validates_presence_of :crisis_event_id, :team_member_id, :content
 
-  def chain(arr)
-    arr << self
+  def chain(array)
+    array << self
     return unless replacing.present?
 
-    replacing.chain(arr)
+    replacing.chain(array)
   end
 
   def latest
