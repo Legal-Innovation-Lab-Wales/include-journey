@@ -90,8 +90,12 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.boolean "visible_to_user", default: false, null: false
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["replaced_by_id"], name: "index_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
@@ -211,6 +215,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
   add_foreign_key "journal_entry_permissions", "team_members"
   add_foreign_key "journal_entry_view_logs", "journal_entries"
   add_foreign_key "journal_entry_view_logs", "team_members"
+  add_foreign_key "notes", "notes", column: "replaced_by_id"
+  add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
