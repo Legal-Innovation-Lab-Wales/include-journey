@@ -61,9 +61,7 @@ Rails.application.routes.draw do
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
-        resources :notes, only: %i[create show update], :controller => 'crisis_notes'
-        # post 'note', action: 'add_note', on: :member, as: :notes
-        # get 'show', action: 'show_note', on :member
+        resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
       resources :wellbeing_assessments, only: %i[show index]

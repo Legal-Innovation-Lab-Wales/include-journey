@@ -321,15 +321,15 @@ crisis_events_count.times do
       content: Faker::Movies::HarryPotter.quote
     )
 
-    if (i % 2).zero?
-      new_crisis_note = crisis_event.crisis_notes.create!(
-        team_member_id: crisis_note.team_member_id,
-        content: Faker::Movies::HarryPotter.quote,
-        replacing: crisis_note
-      )
+    next unless i.even?
 
-      crisis_note.update!(replaced_by: new_crisis_note)
-    end
+    new_crisis_note = crisis_event.crisis_notes.create!(
+      team_member_id: crisis_note.team_member_id,
+      content: Faker::Movies::HarryPotter.quote,
+      replacing: crisis_note
+    )
+
+    crisis_note.update!(replaced_by: new_crisis_note)
   end
 
   next unless [true, false].sample

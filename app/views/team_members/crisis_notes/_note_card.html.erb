@@ -1,5 +1,5 @@
-<div class="card <%= current_note ? "bg-primary" : "" %> mb-3">
-  <div class="card-header d-flex justify-content-between">
+<div class="card <%= current_note ? "border-primary border-3" : "" %> mb-3">
+  <div class="card-header <%= current_note ? "border-primary" : "" %> d-flex justify-content-between">
     <span><%= note.team_member.full_name %> <%= note.created %> </span>
 
     <div class="note-icons">
