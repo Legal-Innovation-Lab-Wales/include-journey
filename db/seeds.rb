@@ -9,7 +9,7 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 20
+wellbeing_assessments_for_each_user = 200
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 crisis_events_count = 10
