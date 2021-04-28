@@ -1,5 +1,5 @@
-<div class="card <%= current_note ? "bg-primary" : "bg-transparent" %> my-2">
-  <div class="card-header d-flex justify-content-between">
+<div class="card <%= current_note ? "border-primary border-3" : "" %> my-2">
+  <div class="card-header <%= current_note ? "border-primary" : "" %> d-flex justify-content-between">
       <span>
         <% if note.visible_to_user? %>
           <i class="fa fa-eye text-danger" data-toggle="tooltip" data-placement="bottom" title="Visible to User"></i>

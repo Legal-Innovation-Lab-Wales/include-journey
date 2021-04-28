@@ -13,6 +13,7 @@ wellbeing_assessments_for_each_user = 200
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 crisis_events_count = 10
+crisis_notes_count = 5
 notes_count = 1000
 start_time = Time.now
 
@@ -331,6 +332,23 @@ crisis_events_count.times do
     crisis_type_id: rand(1..CrisisType.count)
   )
 
+  crisis_notes_count.times do |i|
+    crisis_note = crisis_event.crisis_notes.create!(
+      team_member_id: rand(1..TeamMember.count),
+      content: Faker::Movies::HarryPotter.quote
+    )
+
+    next unless i.even?
+
+    new_crisis_note = crisis_event.crisis_notes.create!(
+      team_member_id: crisis_note.team_member_id,
+      content: Faker::Movies::HarryPotter.quote,
+      replacing: crisis_note
+    )
+
+    crisis_note.update!(replaced_by: new_crisis_note)
+  end
+
   next unless [true, false].sample
 
   crisis_event.update!(
@@ -344,5 +362,8 @@ puts("Team Members in DatabaseL #{TeamMember.count}")
 puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
+puts("Contact per User: #{contacts_for_each_user}")
 puts("Wellbeing Assessments Created: #{wba_counter}")
 puts("Journals Created: #{journal_counter}")
+puts("Crisis Events Created: #{crisis_events_count}")
+puts("Notes per Crisis Event: #{crisis_notes_count}")
