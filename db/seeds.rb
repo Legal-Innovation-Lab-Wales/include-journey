@@ -299,13 +299,30 @@ if User.count.zero?
   user.save!
 end
 
+notes_counter = 1
 notes_count.times do
-  Note.create!(
+  note = Note.create!(
     team_member_id: rand(1..TeamMember.count),
-    visible_to_user: true,
+    visible_to_user: [true, false].sample,
     user_id: rand(1..User.count),
     content: Faker::TvShows::TheExpanse.quote
   )
+
+  # Every fifth note is replaced by a new note to demonstrate the edit history functionality 
+  if (notes_counter % 5).zero?
+    new_note = Note.create!(
+      team_member_id: note.team_member.id,
+      visible_to_user: [true, false].sample,
+      user_id: note.user.id,
+      content: Faker::TvShows::TheExpanse.quote,
+      replacing: note
+    )
+
+    note.update!(replaced_by: new_note)
+    notes_counter += 1
+  end
+
+  notes_counter += 1
 end
 
 crisis_events_count.times do
