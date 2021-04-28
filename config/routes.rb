@@ -53,9 +53,9 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
-        resources :notes, except: %i[index new], on: :member
-        get 'wba_history', action: 'wba_history', on: :member
-        resources :wellbeing_assessments, only: %i[index new create], on: :member
+        resources :notes, only: %i[create update show]
+        # post 'update', controller: :notes, action: 'update', as: :update_note, on: :member
+        resources :wellbeing_assessments, only: %i[new create index], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do

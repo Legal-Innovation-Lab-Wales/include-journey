@@ -24,4 +24,4 @@
   </div>
 </main>
 
-<%= render 'team_members/notes/edit_modal' %>
+<%= render 'modal', note: @note, action: "update", controller: "notes", user_id: params[:user_id] %>

@@ -7,11 +7,11 @@ class Note < ApplicationRecord
 
   validates_presence_of :team_member_id, :user_id, :content
 
-  def chain(arr)
-    arr << self
+  def chain(array)
+    array << self
     return unless replacing.present?
 
-    replacing.chain(arr)
+    replacing.chain(array)
   end
 
   def latest

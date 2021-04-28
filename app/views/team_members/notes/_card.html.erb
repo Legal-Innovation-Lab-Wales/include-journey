@@ -27,7 +27,7 @@
       <% else %>
         <% if current_team_member == note.team_member && edit %>
           <span class="edit-btn" data-user-id="<%= @user.id %>" data-note-id="<%= note.id %>">
-            <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#edit-note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+            <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
           </span>
         <% end %>
       <% end %>

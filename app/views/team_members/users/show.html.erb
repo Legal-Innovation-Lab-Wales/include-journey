@@ -175,14 +175,14 @@
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#add-note-modal">
+          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
             Add Note
           </button>
         </div>
       </div>
     </div>
 
-    <%= render 'team_members/notes/add_modal' %>
+    <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
 
   </div>
 </main>

@@ -9,7 +9,7 @@ module TeamMembers
     # POST /notes
     def create
       if (@note = create_note)
-        redirect_to user_path(@user), notice: { flash: 'Successfully added note!' }
+        redirect_to user_path(@user), flash: { notice: 'Successfully added note!' }
       else
         error_redirect
       end
@@ -29,7 +29,7 @@ module TeamMembers
     def update
       nothing_to_update_redirect and return unless @note.changes?(note_params)
 
-      ActiveRecord::Base.transaction do
+      Note.transaction do
         @new_note = create_note(replacing: @note)
         @note.update!(replaced_by: @new_note)
       end
