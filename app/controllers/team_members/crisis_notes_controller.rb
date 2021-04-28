@@ -29,7 +29,7 @@ module TeamMembers
     def update
       nothing_to_update_redirect and return unless @crisis_note.changes?(crisis_note_params)
       
-      ActiveRecord::Base.transaction do
+      CrisisNote.transaction do
         @new_crisis_note = create_note(replacing: @crisis_note)
         @crisis_note.update!(replaced_by: @new_crisis_note)
       end
