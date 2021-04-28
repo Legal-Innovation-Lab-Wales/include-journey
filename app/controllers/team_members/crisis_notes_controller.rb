@@ -9,7 +9,7 @@ module TeamMembers
     # POST /crisis_events/:crisis_event_id/notes
     def create
       if create_note
-        redirect_to crisis_event_path(@crisis_event), notice: { flash: 'Successfully added note!' }
+        redirect_to crisis_event_path(@crisis_event), flash: { success: 'Successfully added note!' }
       else
         error_redirect
       end

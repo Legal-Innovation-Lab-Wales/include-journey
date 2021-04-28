@@ -36,7 +36,7 @@
             <div class="container p-0">
               <div class="row">
                 <div class="col-6">
-                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#addModal">New Note <i class="fas fa-plus-circle"></i></a>
+                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#note-modal">New Note <i class="fas fa-plus-circle"></i></a>
                 </div>
                 <div class="col-6">
                   <% unless @crisis_event.closed %>
@@ -74,4 +74,4 @@
   <% end %>
 </main>
 
-<%= render 'team_members/crisis_notes/add_modal' %> 
+<%= render 'team_members/crisis_notes/modal', crisis_note: @note, action: "create", controller: "crisis_notes", crisis_event_id: params[:id] %> 

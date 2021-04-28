@@ -24,4 +24,4 @@
   </div>
 </main>
 
-<%= render 'edit_modal' %> 
+<%= render 'modal', crisis_note: @crisis_note, action: "update", controller: "crisis_notes", crisis_event_id: params[:crisis_event_id] %> 
