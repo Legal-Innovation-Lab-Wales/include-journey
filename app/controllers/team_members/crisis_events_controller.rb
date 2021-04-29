@@ -1,13 +1,13 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < TeamMembersApplicationController
-    include Pagination
     before_action :crisis_event, except: %i[index active]
-    before_action :crisis_events, :crisis_events_users, :closed_events, only: %i[index active]
+    before_action :crisis_events, :set_variables, only: %i[index active]
+    include Pagination
 
     # GET /crisis_events/active
     def active
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
+      crisis_events
 
       render 'active'
     end
@@ -51,11 +51,8 @@ module TeamMembers
       @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
     end
 
-    def crisis_events_users
+    def set_variables
       @crisis_events_users = @crisis_events.distinct.count(:user_id)
-    end
-
-    def closed_events
       @closed_events = @crisis_events.closed
       @closed_events_30_days = @closed_events.where("closed_at >= ?", 30.days.ago)
       @closed_events_7_days = @closed_events.where("closed_at >= ?", 7.days.ago)

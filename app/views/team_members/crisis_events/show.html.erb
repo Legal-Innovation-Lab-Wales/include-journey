@@ -35,7 +35,7 @@
           <div class="card-footer">
             <div class="container p-0">
               <div class="row">
-                <% if @crisis_event.closed && @crisis_events.closed_at > 7.days.ago %>
+                <% if @crisis_event.closed && @crisis_event.closed_at < 7.days.ago %>
                   <span>Notes can't be added to Crisis Events closed over 7 days ago.</span>
                 <%  else  %>
                   <div class="col-6">
@@ -78,5 +78,6 @@
     </section>
   <% end %>
 </main>
-
-<%= render 'team_members/crisis_notes/modal', crisis_note: @note, action: "create", controller: "crisis_notes", crisis_event_id: params[:id] %>
+<% unless @crisis_event.closed && @crisis_event.closed_at < 7.days.ago %>
+  <%= render 'team_members/crisis_notes/modal', crisis_note: @note, action: "create", controller: "crisis_notes", crisis_event_id: params[:id] %>
+<% end %>

@@ -22,9 +22,8 @@
             <thead>
               <th scope="col">User</th>
               <th scope="col">Crisis Type</th>
-              <th scope="col">Additional Info</th>
-              <th scope="col">Last Update</th>
-              <th scope="col">Last Note</th>
+              <th scope="col">Latest Update</th>
+              <th scope="col">Updated</th>
             </thead>
             <tbody>
               <% @crisis_events.each do |crisis_event| %>
@@ -36,14 +35,17 @@
                     <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
                   </td>
                   <td>
-                    <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
-                  </td>
-                  <td>
-                    <%= link_to "#{time_ago_in_words(crisis_event.last_update)} ago", crisis_event_path(crisis_event) %>
-                  </td>
-                  <td class="">
                     <% if crisis_event.crisis_notes.present? %>
                       <%= link_to "#{crisis_event.crisis_notes.last.content}", crisis_event_path(crisis_event) %>
+                    <% else %>
+                      <<%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if crisis_event.crisis_notes.present? %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.crisis_notes.last.updated_at)}", crisis_event_path(crisis_event) %>
+                    <% else %>
+                      <<%= link_to "#{time_ago_in_words(crisis_event.additional_info)}", crisis_event_path(crisis_event) %>
                     <% end %>
                   </td>
                 </tr>
