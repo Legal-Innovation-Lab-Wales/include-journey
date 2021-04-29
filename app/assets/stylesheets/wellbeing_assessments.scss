@@ -18,7 +18,7 @@
 
       &:hover {
         color: $brand-primary;
-        background-color: $brand-secondary;
+        background: $blue-grad;
       }
 
       .card-body {
@@ -44,8 +44,7 @@
         transition: 0.2s;
 
         &:hover {
-          color: $brand-secondary;
-          background-color: transparent;
+          background: transparent;
         }
       }
     }
