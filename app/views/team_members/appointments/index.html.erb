@@ -12,16 +12,25 @@
       <div class="container">
         <%= render 'shared/search_results' %>
         <div class="row">
-          <% @resources.each do |past_appointments| %>
+          <% @resources.each do |appointment| %>
             <div class="col-12 col-md-4 past">
 
               <div class="card border-primary mt-3 text-al">
-                <div class="card-header bg-primary"><%= past_appointments.what %> </div>
+                <div class="card-header bg-primary"><%= appointment.what %> </div>
                 <div class="card-body bg-transparent">
-                  <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointments.who_with %> </p>
-                  <p> <i class="fas fa-location-arrow"></i> <%= past_appointments.where %></p>
-                  <p> <i class="fas fa-clock"></i> <%= past_appointments.time_on_date %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= past_appointments.duration %></p>
+                  <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
+                  <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
+                  <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
+                  <p> <i class="fas fa-hourglass-start"></i> <%= appointment.duration %></p>
+                </div>
+                <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
+                  <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
+                    <% if appointment.attended ? 'btn-success' : 'btn-danger'%>
+                      <i class="fas fa-calendar-check"></i>
+                    <% else %>
+                      <i class="fas fa-calendar-times"></i>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             </div>
