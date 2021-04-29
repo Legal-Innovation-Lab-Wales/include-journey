@@ -6,7 +6,7 @@ module TeamMembers
 
     # GET /crisis_events/active
     def active
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
 
       render 'active'
     end
