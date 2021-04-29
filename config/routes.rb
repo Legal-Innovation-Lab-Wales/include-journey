@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       resources :goals, only: %i[index create show] do
         put 'achieve', action: :achieve, on: :member
       end
+      resources :wellbeing_services, only: :index
     end
   end
 
