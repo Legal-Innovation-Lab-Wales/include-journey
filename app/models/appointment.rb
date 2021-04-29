@@ -8,7 +8,7 @@ class Appointment < ApplicationRecord
   end
 
   def date
-    start.strftime(" on %a #{start.day.ordinalize} %B")
+    start.strftime("%a #{start.day.ordinalize} %B")
   end
 
   def duration

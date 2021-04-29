@@ -5,12 +5,12 @@
     <h3 class="mb-0">Upcoming appointments</h3>
     <div class="container">
       <div class="row">
-        <% @appointments.group_by { |t| t.start.day }.each do |appointments| %>
+        <% @appointments.group_by { |t| t.start_date }.each do |appointments| %>
           <div class="col-12 ">
             <div class="card mt-3 text-al">
               <div class="card-header">
                 <span>
-                  In <%= distance_of_time_in_words(Time.now, appointments[1].first.start) %> <%= appointments[1].first.date %>
+                  In <%= distance_of_time_in_words(Time.now, appointments[1].first.start) %> on <%= appointments[1].first.date %> you have <%= appointments[1].count %> appointments
                 </span>
               </div>
               <% appointments[1].each do |appointment| %>
@@ -37,7 +37,7 @@
 
                   <div class="row">
                     <div class="col-md-3 col-sm-6 col-12">
-                      <i class="fas fa-clock"></i> at <%= appointment.time_on_date %>
+                      <i class="fas fa-clock"></i> at <%= appointment.start_time %>
                     </div>
                     <div class="col-md-3 col-sm-6 col-12">
                       <i class="fas fa-user"></i> with <%= appointment.who_with %>
