@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_user_root
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
+      get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
