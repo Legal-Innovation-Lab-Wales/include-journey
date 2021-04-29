@@ -20,6 +20,7 @@
     <% if current_user && !devise_controller? %>
       <%= render partial: '/modals/crisis_events/new' %>
       <%= render partial: '/modals/crisis_events/existing' %>
+      <%= render partial: '/modals/contact_times/index' %>
     <% end %>
   <% end %>
 
@@ -48,6 +49,10 @@
             data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
           <a class="btn btn-link btn-floating btn-lg m-1" href="https://include-uk.com" role="button"
             data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
+          <a class="btn btn-link btn-floating btn-lg m-1" role="button" data-bs-toggle="modal" data-bs-target="#contactModal"
+             data-mdb-ripple-color="dark">
+            <i class="fas fa-clock"></i>
+          </a>
         </section>
       </div>
       <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
