@@ -1,0 +1,32 @@
+<main class="container user">
+  <%= render 'shared/back_btn' %>
+  <div class="row justify-content-end mt-1">
+  </div>
+  <section class="row appointments">
+    <div class="col">
+      <h3 class="mb-0">Current SOS events</h3>
+      <div class="container">
+        <%= render 'shared/search_results' %>
+        <div class="row">
+          <% @crisis_events.each do |crisis_event| %>
+            <div class="col-12 col-md-4 past">
+              <div class="card border-primary mt-3 text-al">
+                <div class="card-header bg-primary"><%= crisis_event.created_at %> </div>
+                <div class="card-body bg-transparent">
+                  <p class="card-text"> <i class="fas fa-user"></i> <%= crisis_event.additional_info %> </p>
+                  <p> <i class="fas fa-location-arrow"></i> <%= crisis_event.closed %></p>
+                  <p> <i class="fas fa-clock"></i> <%= crisis_event.crisis_type %></p>
+                  <p> <i class="fas fa-hourglass-start"></i> <%= crisis_event.closed_by %></p>
+                </div>
+                <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
+                  <%= render 'shared/back_btn' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%#= render 'shared/pagination_controls', index: 'appointments'%>
+</main>

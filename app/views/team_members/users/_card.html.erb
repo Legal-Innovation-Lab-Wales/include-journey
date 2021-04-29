@@ -1,5 +1,5 @@
 <div class="col-12 col-md-6 mb-3">
-  <% active_crisis_events = user.crisis_events.active %>
+  <% active_crisis_events = user.crisis_events.index %>
   <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %>">
     <div class="card-header">
       <span>

@@ -4,7 +4,7 @@ module TeamMembers
     include Pagination
     before_action :crisis_event, except: %i[index active]
 
-    # GET /crisis_events/active
+    # GET /crisis_events/index
     def active
       @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
 

@@ -19,7 +19,7 @@ module TeamMembers
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order(created_at: :desc)
       @journal_entries = current_team_member.journal_entries.where(user: @user)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
-      @active_crisis = @user.crisis_events.active
+      @active_crisis = @user.crisis_events.index
 
       render 'show'
     end
