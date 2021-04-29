@@ -3,20 +3,14 @@
   <section class="row pb-0" id="wellbeing">
     <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
       <h3>Your Services</h3>
-      <div class="container">
-        <% [*1..4].each do |i| %>
-          <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
+      <div class="container wellbeing-services-list">
+        <% @wellbeing_services.each_with_index do |service| %>
+          <div class="row wellbeing-service" data-metrics="<%= service.metrics %>">
             <div class="col">
-              <%= link_to "Service #{i}", '#', class: 'btn btn-success' %>
+              <%= link_to service.name, service.link, class: 'btn btn-success' %>
             </div>
           </div>
         <% end %>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to "View Last Wellbeing Assessment", wellbeing_assessments_path(@last_wellbeing_assessment),
-                        class: 'btn btn-secondary'%>
-          </div>
-        </div>
       </div>
     </div>
     <div class="col-12 col-md-9">
@@ -27,6 +21,7 @@
                  path: wellbeing_assessments_path, last_scores: @last_scores %>
     </div>
   </section>
-
-  <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
 </main>
+
+<%= javascript_pack_tag 'wellbeing_assessment_chart' %>
+<%= javascript_pack_tag 'wellbeing_service' %>

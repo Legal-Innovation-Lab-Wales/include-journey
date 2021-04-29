@@ -22,4 +22,8 @@ class WellbeingService < ApplicationRecord
 
     metrics_services.create!(wellbeing_metric_id: wellbeing_metric_id)
   end
+
+  def metrics
+    wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" }
+  end
 end
