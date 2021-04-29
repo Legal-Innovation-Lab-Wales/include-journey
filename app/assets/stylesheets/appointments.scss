@@ -8,6 +8,7 @@ section {
   h3 {
     color: white;
   }
+
   &.appointments {
     color: $black;
     margin-top: 1rem;
@@ -25,20 +26,22 @@ section {
       text-align: left;
       border: transparent;
 
-      span.actions{
-          i.fa-trash-alt {
-            color: $danger;
-          }
-          i.fa-edit {
-            color: $info;
-          }
-          a:hover i {
-            color: $primary;
-          }
+      span.actions {
+        i.fa-trash-alt {
+          color: $danger;
+        }
+
+        i.fa-edit {
+          color: $info;
+        }
+
+        a:hover i {
+          color: $primary;
+        }
       }
 
       .card-header {
-        background: linear-gradient(to right, $brand-secondary-alt-dark, $brand-secondary-alt,  $brand-secondary-alt-lightest);
+        background: linear-gradient(to right, $brand-secondary-alt-dark, $brand-secondary-alt, $brand-secondary-alt-lightest);
         font-weight: 700;
         font-family: $font-link;
         color: $white;
