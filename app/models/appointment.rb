@@ -7,6 +7,10 @@ class Appointment < ApplicationRecord
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
   end
 
+  def date
+    start.strftime(" on %a #{start.day.ordinalize} %B")
+  end
+
   def duration
     duration = self.end - start
 
