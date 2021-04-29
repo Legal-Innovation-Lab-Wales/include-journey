@@ -41,7 +41,7 @@ section {
       }
 
       .card-header {
-        background: linear-gradient(to right, $brand-secondary-alt-dark, $brand-secondary-alt, $brand-secondary-alt-lightest);
+        background: $blue-grad;
         font-weight: 700;
         font-family: $font-link;
         color: $white;
