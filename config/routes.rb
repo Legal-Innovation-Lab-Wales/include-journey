@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
+        put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
 
       resources :crisis_events, only: %i[create update]

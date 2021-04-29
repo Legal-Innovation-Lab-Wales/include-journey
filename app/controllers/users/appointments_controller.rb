@@ -1,7 +1,7 @@
 module Users
   # app/controllers/users/appointments_controller.rb
   class AppointmentsController < UsersApplicationController
-    before_action :appointment, only: %i[edit update destroy]
+    before_action :appointment, only: %i[edit update destroy toggle_attended]
     include Pagination
 
     # GET /appointments/upcoming
@@ -53,6 +53,11 @@ module Users
       end
     end
 
+    # PUT /appointment/:id
+    def toggle_attended
+      @appointment.update(attended: !@appointment.attended?) ? success(@appointment.attended?, 'attended') : failure('not attended')
+    end
+
     protected
 
     def resources
@@ -87,6 +92,15 @@ module Users
 
     def appointment_params
       params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
+    end
+
+    def fail(type)
+      redirect_to appointments_path, flash: { error: "#{@appointment.id} #{type} status could not be changed" }
+    end
+
+    def success(status, type)
+      redirect_to appointments_path,
+                  flash: { success: "Appointment is #{status ? 'now' : 'no longer'} #{type}" }
     end
   end
 end
