@@ -21,23 +21,31 @@ section {
     }
 
     .card {
-      background: $color-secondary-2-1;
+      background: $grey-grad;
       text-align: left;
       border: transparent;
 
       .card-header {
-        font-weight: bold;
+        background: linear-gradient(to right, $brand-complementary, $brand-secondary-alt-darkest, $brand-secondary-alt);
+        font-weight: 700;
+        font-family: $font-link;
+        color: $brand-primary;
 
         span:last-child{
           float: right;
 
           span {
-            a:hover {
-              color: $white;
-            }
-
             &:last-child {
               margin-left: 0.5rem;
+            }
+            i.fa-trash-alt {
+              color: $danger;
+            }
+            i.fa-edit {
+              color: $info;
+            }
+            a:hover i {
+              color: $primary;
             }
           }
         }

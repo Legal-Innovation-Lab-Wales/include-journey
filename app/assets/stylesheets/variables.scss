@@ -87,6 +87,13 @@ $brand-secondary-alt-lightest: $color-secondary-2-1;
 
 // Utility Colours
 $grey: #b0bec5;
+// 1
+// $grey-grad: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
+// 2
+// $grey-grad: linear-gradient(35deg, #757f9a, #d7dde8);
+// 5
+$grey-grad: linear-gradient(50deg, $brand-primary-lightest, $brand-complementary-lightest);
+
 $dark-grey: #8C949A;
 $black: #252331;
 $white: #F6F8F7;
