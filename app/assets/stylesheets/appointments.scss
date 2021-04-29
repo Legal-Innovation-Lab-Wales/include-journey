@@ -70,7 +70,9 @@ section {
   .create {
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: $color-secondary-2-1;
+    color: $white;
+    background-color: $brand-secondary-alt-lightest;
+    background: $blue-grad;
 
     form {
       .form-floating {
