@@ -1,5 +1,5 @@
 <main class="container team-members users show">
-  <%= render 'shared/back_btn', path: :back, text: 'Back' %>
+  <%= render 'shared/back_btn' %>
   <div class="row">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
@@ -89,15 +89,19 @@
             <div class="col">
               <% if @wellbeing_assessment.present? %>
                 <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
-                           show_timestamp: true, chart_heading: "#{@wellbeing_assessment.user.full_name}'s Wellbeing",
+                           show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
                            sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
               <% end %>
+              <div class="text-center">
+                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <div class="row" id="journal">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
@@ -153,35 +157,7 @@
         </div>
       </div>
     </div>
-    <div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modal" aria-hidden="true">
-      <div class="modal-dialog modal-lg col-12" role="document">
-        <div class="modal-content">
-          <%= form_with model: @note,
-                        url: user_add_note_index_path(@user),
-                        method: :post do |form| %>
-            <div class="modal-header border-0">
-              <h5 class="modal-title text-black-50">Add a note for this user</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body border-0">
-              <div class="input-group mb-3">
-                <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
-              </div>
-              <div class="form-check form-switch d-flex justify-content-between px-0">
-                <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
-                  Allow user to see this note?
-                <% end %>
-                <%= form.check_box :visible_to_user, class: 'form-check-input' %>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <%= form.submit 'Add note', class: 'btn btn-primary' %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
         <div class="card-header">
@@ -192,31 +168,24 @@
             <span>There are no notes on this user yet.</span>
           <% else %>
             <% @user_notes.each do |note| %>
-              <div class="card bg-transparent my-2">
-                <div class="card-header d-flex justify-content-between">
-                  <span class="me-4">Added by <strong><%= note.team_member.first_name %></strong> on <strong><%= note.created %></strong></span>
-                  <span>Visible to user?
-                    <% if note.visible_to_user? %>
-                      <i class="fa fa-eye text-danger ms-2"></i>
-                    <% else %> <i class="fa fa-eye-slash ms-2"></i>
-                    <% end %>
-                  </span>
-                </div>
-                <div class="card-body">
-                  <p><%= simple_format(note.content) %></p>
-                </div>
-              </div>
+              <% unless note.replaced_by.present? %>
+                <%= render 'team_members/notes/card', note: note, user_member_page: true, current_note: false, edit: false %>
+              <% end %>
             <% end %>
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-primary my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
             Add Note
           </button>
         </div>
       </div>
     </div>
+
+    <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
+
   </div>
 </main>
 
 <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
+

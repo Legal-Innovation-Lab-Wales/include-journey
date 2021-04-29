@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
-  class CrisisEventsController < PaginationController
+  class CrisisEventsController < TeamMembersApplicationController
+    include Pagination
     before_action :crisis_event, except: %i[index active]
     before_action :crisis_events, :crisis_events_users, :closed_events, only: %i[index active]
 
@@ -27,27 +28,17 @@ module TeamMembers
                   notice: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
     end
 
-    # POST /crisis_events/:id/note
-    def add_note
-      if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
-                                              content: crisis_notes_params[:content] })
-        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
-      else
-        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
-      end
-    end
-
     protected
 
     def resources
-      @resources = if @query.present?
-                     CrisisEvent.closed.includes(:user, :crisis_type, :crisis_notes)
-                                .joins(:user, :crisis_type)
-                                .where("#{user_search} or #{crisis_search}", wildcard_query)
-                                .order(closed_at: :desc)
-                   else
-                     CrisisEvent.closed.includes(:user, :crisis_type).order(closed_at: :desc)
-                   end
+      CrisisEvent.closed.includes(:user, :crisis_type).order(closed_at: :desc)
+    end
+
+    def search
+      CrisisEvent.closed.includes(:user, :crisis_type)
+                 .joins(:user, :crisis_type)
+                 .where("#{user_search} or #{crisis_search}", wildcard_query)
+                 .order(closed_at: :desc)
     end
 
     private

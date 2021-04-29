@@ -1,13 +1,9 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
-  class WellbeingAssessmentsController < PaginationController
+  class WellbeingAssessmentsController < TeamMembersApplicationController
     before_action :user, except: :show
-    before_action :team_member, only: :index
-    before_action :wellbeing_assessment, only: :show
-
-    before_action :wellbeing_assessment_today, only: :new
-    before_action :new_wellbeing_assessment, only: :new
-    before_action :last_scores, only: :new
+    before_action :team_member, :wellbeing_assessments, :wba_values, only: :index
+    include Pagination
 
     before_action :wellbeing_metrics, only: %i[new create]
     before_action :wba_params, only: :create
@@ -16,18 +12,21 @@ module TeamMembers
     # GET /wellbeing_assessments
     # GET /team_members/:team_member_id/wellbeing_assessments
     # GET /users/:user_id/wellbeing_assessments
-    def index
-      @resources_per_page = 6
-      super
-    end
+    def index; end
 
     # GET /wellbeing_assessments/:id
     def show
+      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+
       render 'show'
     end
 
     # GET /users/:user_id/wellbeing_assessments/new
     def new
+      wellbeing_assessment_today
+      last_scores
+      @wellbeing_assessment = WellbeingAssessment.new
+
       render 'new'
     end
 
@@ -39,6 +38,23 @@ module TeamMembers
         redirect_to authenticated_team_member_root_path,
                     error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
       end
+    end
+
+    protected
+
+    def resources
+      @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+    end
+
+    def resources_per_page
+      @user.present? ? 20 : 6
+    end
+
+    def search
+      @wellbeing_assessments.includes(:user, :wba_scores)
+                            .joins(:user)
+                            .where(user_search, wildcard_query)
+                            .order(created_at: :desc)
     end
 
     private
@@ -55,18 +71,6 @@ module TeamMembers
 
     def new_wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.new
-    end
-
-    def resources
-      wellbeing_assessments
-
-      @resources =
-        if @query.present?
-          @wellbeing_assessments.includes(:user, :wba_scores).joins(:user).where(user_search, wildcard_query)
-                                .order(created_at: :desc)
-        else
-          @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
-        end
     end
 
     def team_member
@@ -92,6 +96,12 @@ module TeamMembers
       end
     end
 
+    def wba_values
+      return unless @user.present?
+
+      @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb', 'Perfect']
+    end
+
     def wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
     end
@@ -101,7 +111,7 @@ module TeamMembers
         if @team_member.present?
           @team_member.wellbeing_assessments
         elsif @user.present?
-          @user.wellbeing_assessments
+          @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
           WellbeingAssessment
         end
@@ -118,6 +128,15 @@ module TeamMembers
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all.order(:created_at)
+    end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('wellbeing_assessments.created_at >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('wellbeing_assessments.created_at >= ?', 1.month.ago).size
+      return unless @user
+
+      @count_by_team_member = @resources.count { |wba| wba.team_member_id.present? }
+      @count_by_user = @resources.count { |wba| wba.team_member_id.nil? }
     end
   end
 end

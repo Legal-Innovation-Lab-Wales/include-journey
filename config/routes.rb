@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       end
 
       resources :crisis_events, only: %i[create update]
+
+      resources :contacts
     end
   end
 
@@ -51,14 +53,15 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
-        resources :notes, only: :create, as: :add_note
+        resources :notes, only: %i[create update show]
+        get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
-        post 'note', action: 'add_note', on: :member, as: :notes
+        resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
       resources :wellbeing_assessments, only: %i[show index]

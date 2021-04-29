@@ -12,6 +12,17 @@ html, body {
   box-shadow: none !important;
 }
 
+.mobile-hint {
+  @media (min-width: $screen-sm) {
+    display: none;
+  }
+}
+.mobile-hide {
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
@@ -85,6 +96,18 @@ body#overboot {
 
     .fa-times-circle, .fa-pause-circle {
       color: $danger;
+    }
+  }
+
+  .subheading {
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-floating {
+    label {
+      color: $black;
     }
   }
 }

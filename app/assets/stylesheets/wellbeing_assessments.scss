@@ -6,6 +6,13 @@
 
 .wellbeing-assessments {
   &.index {
+    @media (min-width: $screen-sm) {
+      max-width: 100vw;
+    }
+    @media (min-width: $screen-lg) {
+      max-width: 1320px;
+    }
+
     a {
       transition: 0.5s;
 
@@ -40,6 +47,36 @@
           color: $brand-secondary;
           background-color: transparent;
         }
+      }
+    }
+
+    table.user-wba-index {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+
+      tr:hover {
+        background-color: $brand-secondary;
+        color: $brand-primary;
+      }
+
+      .metric-score {
+        width: 50px;
+
+        &.value-1 {background-color: #E04444E6;}
+        &.value-2 {background-color: #E64D52E6;}
+        &.value-3 {background-color: #E86754E6;}
+        &.value-4 {background-color: #EC8754E6;}
+        &.value-5 {background-color: #F0A656E6;}
+        &.value-6 {background-color: #DFC54CE6;}
+        &.value-7 {background-color: #BFCA48E6;}
+        &.value-8 {background-color: #9ECB46E6;}
+        &.value-9 {background-color: #BFCB43E6;}
+        &.value-10 {background-color: #5DAD3AE6;}
+      }
+
+      td.link {
+        padding: 0 !important;
       }
     }
   }
