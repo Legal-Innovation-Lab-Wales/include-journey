@@ -15,7 +15,14 @@
     #emojis {
       width: 550px;
       max-width: 100vw;
-      margin-left: -12px;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      #emojis {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     @media screen and (min-width: $screen-md) {
@@ -30,13 +37,23 @@
         }
 
         #emojis {
-          max-width: 100%;
-          margin-left: auto;
-          margin-right: auto;
+          .row {
+            --bs-gutter-x: 0;
+          }
         }
 
         textarea {
           min-height: 20vh;
+        }
+      }
+    }
+
+    @media screen and (min-width: $screen-lg) {
+      section {
+        #emojis {
+          .row {
+            --bs-gutter-x: 1.5rem;
+          }
         }
       }
     }

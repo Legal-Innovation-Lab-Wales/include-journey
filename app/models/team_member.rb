@@ -20,6 +20,7 @@ class TeamMember < DeviseRecord
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
+  scope :admins, -> { where(admin: true) }
 
   has_many :journal_entry_permissions, foreign_key: :team_member_id
   has_many :journal_entry_view_logs, foreign_key: :team_member_id

@@ -9,7 +9,7 @@
           <% end %>
 
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
-          <%= render 'shared/dashboard_btn', path: '/', icon: 'fa-chart-line', text: 'Analytics' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
 
           <% unless @admin %>
             <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',

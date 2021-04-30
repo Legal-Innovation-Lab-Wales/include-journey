@@ -30,11 +30,18 @@ module Users
     end
 
     def email
-      puts '=========================================================================================================='
-      puts "CrisisEvent Type: #{@crisis_event.crisis_type.category}"
-      puts "CrisisEvent Additional Info: #{@crisis_event.additional_info}"
-      puts "User: #{current_user.full_name} #{current_user.email}"
-      puts '=========================================================================================================='
+      @crisis_type = @crisis_event.crisis_type.category
+      @crisis_notes = @crisis_event.crisis_notes.includes(:team_member)
+      TeamMember.admins.each do |admin|
+        case action_name
+        when 'create'
+          AdminMailer.new_crisis_email(current_user, admin, @crisis_event, @crisis_type).deliver_now
+        when 'update'
+          AdminMailer.updated_crisis_email(current_user, admin, @crisis_event, @crisis_type, @crisis_notes).deliver_now
+        else
+          flash[:error] = "Email could not be sent to #{admin.full_name}"
+        end
+      end
     end
 
     private

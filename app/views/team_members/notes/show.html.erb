@@ -1,0 +1,27 @@
+<main class="container team-members notes show">
+  <%= render 'shared/back_btn', path: :back, text: 'Back' %>
+  <div class="row">
+    <div class="col-12 col-md-6 mb-4 mx-auto">
+      <div class="card h-100">
+        <div class="card-header">
+          <h3>Note History</h3>
+        </div>
+        <div class="card-body bg-transparent" id="notes-card">
+          <h6 class="text-muted text-center"><strong>current</strong></h6>
+          <%= render 'team_members/notes/card', note: @user_notes[0], user_member_page: false, history: false, edit: true, current_note: true %>
+        </div>
+        <div class="card-body bg-transparent" id="notes-card">
+          <% if @user_notes[1].present? %>
+            <h6 class="text-muted text-center">previous</h6>
+          <% end %>
+          <% @user_notes[1..-1].each do |note| %>
+            <%= render 'team_members/notes/card', note: note, user_member_page: false, edit: false, current_note: false %>
+          <% end %>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%= render 'modal', note: @note, action: "update", controller: "notes", user_id: params[:user_id] %>

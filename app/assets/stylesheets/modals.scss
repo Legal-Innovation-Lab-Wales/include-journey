@@ -6,10 +6,6 @@
     border-style: solid;
     border-image: linear-gradient(to bottom, $danger, $warning) 1 100%;
     text-align: center;
-
-    .modal-title {
-
-    }
   }
 
   .modal-body {
@@ -37,5 +33,19 @@
         float: right;
       }
     }
+  }
+}
+
+#contactModal{
+  a{
+    color: $color-secondary-2-0;
+  }
+
+  .modal-header{
+    border-image: linear-gradient(to bottom, $brand-primary, $grey) 1 100%;
+  }
+
+  .modal-body {
+    border-image: linear-gradient(to top, $brand-primary, $grey) 1 100%;
   }
 }
