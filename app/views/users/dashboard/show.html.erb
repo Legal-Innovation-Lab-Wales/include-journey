@@ -12,7 +12,7 @@
                      large_text: 'My Needs', text: 'Needs' %>
         </div>
         <div class="row">
-          <%= render 'shared/dashboard_btn', path: current_user.contacts.count.zero? new_contact_path : contacts_path, icon: 'fa-address-book',
+          <%= render 'shared/dashboard_btn', path: current_user.contacts.count.zero? ? new_contact_path : contacts_path, icon: 'fa-address-book',
                      large_text: 'My Contacts', text: 'Contacts' %>
           <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-road',
                      large_text: 'My Journey', text: 'Journey' %>
