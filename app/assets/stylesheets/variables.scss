@@ -87,11 +87,13 @@ $brand-secondary-alt-lightest: $color-secondary-2-1;
 
 // Utility Colours
 $grey: #b0bec5;
-$dark-grey: #8C949A;
+$dark-grey: #757f9a;
 $black: #252331;
 $white: #F6F8F7;
-
+$grey-grad: linear-gradient(35deg,  $grey, #d7dde8, $white);
+//$grey-grad: linear-gradient(35deg, $dark-grey, $grey, #d7dde8);
 $bg-main: $white;
+$blue-grad:  linear-gradient(50deg, $brand-secondary-alt-dark, $brand-secondary-alt, $brand-secondary-alt-lightest);
 
 // Bootstrap Colours
 $primary: $brand-primary;
