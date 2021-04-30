@@ -6,7 +6,7 @@ module TeamMembers
     include Pagination
 
     before_action :user, except: :index
-    before_action :user_pin, except: %i[show index]
+    before_action :user_pin, except: %i[show index wba_history]
 
     # GET /users
     def index; end
@@ -16,7 +16,7 @@ module TeamMembers
       user_location
       wellbeing_assessment
       @note = Note.new
-      @user_notes = @user.notes.includes(:team_member).order(created_at: :desc)
+      @user_notes = @user.notes.includes(:team_member, :replaced_by).order(created_at: :desc)
       @journal_entries = current_team_member.journal_entries.where(user: @user)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
@@ -53,6 +53,13 @@ module TeamMembers
                     notice: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
     end
 
+    # GET /users/:user_id/wba_history
+    def wba_history
+      respond_to do |format|
+        format.json { render json: @user.wellbeing_assessment_history.as_json, status: :ok }
+      end
+    end
+
     protected
 
     def resources
@@ -75,6 +82,8 @@ module TeamMembers
 
     def user
       @user = User.includes(:notes).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end
 
     def user_location

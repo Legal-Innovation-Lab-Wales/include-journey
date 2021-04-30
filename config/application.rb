@@ -20,5 +20,17 @@ module IncludeJourney
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Version of assets, change this if you want to expire all assets
+    config.assets.version = '1.0'
+
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      if File.exist?(env_file)
+        YAML.safe_load(File.open(env_file)).each do |key, value|
+          ENV[key.to_s] = value
+        end
+      end
+    end
   end
 end
