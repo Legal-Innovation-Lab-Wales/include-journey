@@ -20,11 +20,13 @@
 
     @media screen and (min-width: $screen-md) {
       section {
-        background-color: $grey;
         max-width: 60vw !important;
 
         &.back-btn {
           background-color: transparent;
+        }
+        &.new-journal-section {
+          background: $blue-grad;
         }
 
         #emojis {
