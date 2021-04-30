@@ -8,11 +8,13 @@
 
 require 'faker'
 
-total_user_count = 1000
+total_user_count = 10
 wellbeing_assessments_for_each_user = 200
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 goals_for_each_user = 10 # Half short-term, half long-term
+appointments_for_each_user = 20
+past_appointments_for_each_user = 20
 crisis_events_count = 10
 crisis_notes_count = 5
 notes_count = 1000
@@ -180,6 +182,7 @@ user_counter = 0
 wba_counter = 0
 journal_counter = 0
 goals_counter = 0
+appointment_counter = 0
 
 if User.count.zero?
   total_user_count.times do
@@ -288,6 +291,34 @@ if User.count.zero?
 
       goals_counter += 1
     end
+
+    ## Create Appointments for each user
+    appointments_for_each_user.times do
+      appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 20)
+      Appointment.create!(
+        user: user,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Educator.course_name,
+        start: app_time,
+        end: (app_time + rand(10..120).minutes)
+      )
+    end
+
+    ## Create Appointments for each user
+    past_appointments_for_each_user.times do
+      appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.now - 20.days, to: DateTime.yesterday)
+      Appointment.create!(
+        user: user,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Educator.course_name,
+        start: app_time,
+        end: (app_time + rand(10..120).minutes)
+      )
+    end
   end
 
   user = User.new(
@@ -372,3 +403,4 @@ puts("Journals Created: #{journal_counter}")
 puts("Goals Created: #{goals_counter}")
 puts("Crisis Events Created: #{crisis_events_count}")
 puts("Notes per Crisis Event: #{crisis_notes_count}")
+puts("Appointments Created: #{appointment_counter}")

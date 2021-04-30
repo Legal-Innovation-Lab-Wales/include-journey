@@ -24,6 +24,10 @@ Rails.application.routes.draw do
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
+      resources :appointments do
+        get 'upcoming', action: :upcoming, on: :collection
+        put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
+      end
       resources :crisis_events, only: %i[create update]
       resources :contacts
       resources :goals, only: %i[index create show destroy] do
@@ -58,6 +62,7 @@ Rails.application.routes.draw do
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member
+        resources :appointments, only: %i[index new create edit update], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do
@@ -68,6 +73,7 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
+      resources :appointments, only: %i[show index]
     end
   end
 
