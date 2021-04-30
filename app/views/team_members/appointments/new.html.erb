@@ -1,0 +1,12 @@
+<main class="container team-members appointments new">
+  <%= render 'shared/back_btn', path: user_path(@user), text: "Back to #{@user.full_name}" %>
+  <section class="row appointments mt-0 pt-0">
+    <div class="col-0 col-md-4"></div>
+    <div class="col-12 col-md-4 create">
+      <h3 class="mb-0">Create new appointment</h3>
+      <p> Enter in the information to add a new appointment.</p>
+      <%= render 'shared/appointments/form', appointment: @appointment, url: user_appointments_path %>
+    </div>
+    <div class="col-0 col-md-4"></div>
+  </section>
+</main>

@@ -2,7 +2,7 @@
 
 .contacts {
   .card {
-    background-color: $grey;
+    background: $grey-grad;
     color: $black;
 
     a {
@@ -79,7 +79,7 @@
       margin-top: 0;
 
       .col-12, .col-md-4:nth-child(2) {
-        background-color: $grey;
+        background: $blue-grad;
         padding: 1rem;
         border-radius: 0.5rem;
       }
