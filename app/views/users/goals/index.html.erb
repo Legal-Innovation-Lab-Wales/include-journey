@@ -1,5 +1,5 @@
 <main class="container user goals index">
-  <%= render 'shared/back_btn' %>
+  <%= render 'shared/back_btn', next_path: goals_archive_index_path, next_text: 'Archive' %>
   <section class="row mt-0 pt-0">
     <h3>My Goals</h3>
     <div class="col">
@@ -35,4 +35,7 @@
   </section>
 </main>
 
+<%= render 'goal_modal' %>
+
 <%= javascript_pack_tag 'goals' %>
+<%= javascript_pack_tag 'goals_modal' %>

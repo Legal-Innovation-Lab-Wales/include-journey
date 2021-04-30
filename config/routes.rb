@@ -25,11 +25,17 @@ Rails.application.routes.draw do
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
+      resources :appointments do
+        get 'upcoming', action: :upcoming, on: :collection
+        put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
+      end
       resources :crisis_events, only: %i[create update]
       resources :contacts
-      resources :goals, only: %i[index create show] do
+      resources :goals, only: %i[index create show destroy] do
         put 'achieve', action: :achieve, on: :member
+        put 'archive', action: :archive, on: :member
       end
+      resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
     end
   end
@@ -56,19 +62,21 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
+        resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
-        resources :notes, only: :create, as: :add_note
-        resources :wellbeing_assessments, only: %i[index new create], on: :member
+        resources :wellbeing_assessments, only: %i[new create index], on: :member
+        resources :appointments, only: %i[index new create edit update], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
-        post 'note', action: 'add_note', on: :member, as: :notes
+        resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
+      resources :appointments, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
     end
