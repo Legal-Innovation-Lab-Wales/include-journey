@@ -38,14 +38,14 @@
                     <% if crisis_event.crisis_notes.present? %>
                       <%= link_to "#{crisis_event.crisis_notes.last.content}", crisis_event_path(crisis_event) %>
                     <% else %>
-                      <<%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                      <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
                     <% end %>
                   </td>
                   <td>
                     <% if crisis_event.crisis_notes.present? %>
                       <%= link_to "#{time_ago_in_words(crisis_event.crisis_notes.last.updated_at)}", crisis_event_path(crisis_event) %>
                     <% else %>
-                      <<%= link_to "#{time_ago_in_words(crisis_event.additional_info)}", crisis_event_path(crisis_event) %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.updated_at)}", crisis_event_path(crisis_event) %>
                     <% end %>
                   </td>
                 </tr>
