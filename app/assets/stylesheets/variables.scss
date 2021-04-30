@@ -90,7 +90,7 @@ $grey: #b0bec5;
 $dark-grey: #757f9a;
 $black: #252331;
 $white: #F6F8F7;
-$grey-grad: linear-gradient(35deg, $dark-grey, #d7dde8);
+$grey-grad: linear-gradient(35deg, $dark-grey, $grey, #d7dde8);
 $bg-main: $white;
 $blue-grad:  linear-gradient(50deg, $brand-secondary-alt-dark, $brand-secondary-alt, $brand-secondary-alt-lightest);
 
