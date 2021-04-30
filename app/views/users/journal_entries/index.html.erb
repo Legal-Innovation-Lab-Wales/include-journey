@@ -6,10 +6,19 @@
         <%= render 'shared/search' %>
       </div>
       <div class="row">
-        <h2 class="mb-3">Archive</h2>
+        <h2 class="mb-3">Journal Entries</h2>
         <%= render 'shared/search_results' %>
       </div>
-      <%= render 'shared/limit' %>
+      <div class="row">
+        <div class="col-auto mr-auto">
+          <%= link_to new_journal_entry_path, class: 'btn btn-success' do %>
+            <i class="fas fa-plus-circle"></i> New Entry 
+          <% end %>
+        </div>
+        <div class="col">
+          <%= render 'shared/limit' %>
+        </div>
+      </div>
       <div class="row">
         <% @resources.each do |journal_entry| %>
           <div class="col-12 col-md-4">

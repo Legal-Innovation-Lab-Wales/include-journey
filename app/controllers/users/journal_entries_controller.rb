@@ -10,11 +10,6 @@ module Users
       render 'new'
     end
 
-    # GET /journal_entries/dashboard
-    def dashboard
-      render 'dashboard'
-    end
-
     # POST /journal_entries
     def create
       if (@journal_entry = current_user.journal_entries.create!(journal_entry_params))
