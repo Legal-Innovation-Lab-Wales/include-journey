@@ -5,7 +5,7 @@ class WellbeingService < ApplicationRecord
   has_many :metrics_services
   has_many :wellbeing_metrics, through: :metrics_services
 
-  validates_presence_of :name, :link
+  validates_presence_of :name, :website
 
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }

@@ -7,7 +7,7 @@
         <% @wellbeing_services.each_with_index do |service| %>
           <div class="row wellbeing-service" data-metrics="<%= service.metrics %>">
             <div class="col-12">
-              <%= link_to service.name, service.link, class: 'btn btn-success' %>
+              <%= link_to service.name, service.website, class: 'btn btn-success' %>
             </div>
           </div>
         <% end %>

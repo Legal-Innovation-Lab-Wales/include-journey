@@ -5,7 +5,7 @@ class CreateWellbeingServices < ActiveRecord::Migration[6.1]
       t.belongs_to :team_member, null: false, foreign_key: true
       t.string :name, null: false
       t.text :description
-      t.string :link, null: false
+      t.string :website, null: false
 
       t.timestamps
     end

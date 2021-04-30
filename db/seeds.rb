@@ -166,37 +166,37 @@ if WellbeingService.count.zero?
     team_member_id: 1,
     name: 'Include UK',
     description: 'Help for ex-offenders',
-    link: 'https://include-uk.com'
+    website: 'https://include-uk.com'
   )
   WellbeingService.create!(
     team_member_id: 1,
     name: 'Samaritans',
     description: 'Support phone line',
-    link: 'https://www.samaritans.org'
+    website: 'https://www.samaritans.org'
   )
   WellbeingService.create!(
     team_member_id: 1,
     name: 'Mind',
     description: 'Mental health charity',
-    link: 'https://www.mind.org.uk'
+    website: 'https://www.mind.org.uk'
   )
   WellbeingService.create!(
     team_member_id: 1,
     name: 'Shelter',
     description: 'Housing support',
-    link: 'https://www.shelter.org.uk'
+    website: 'https://www.shelter.org.uk'
   )
   WellbeingService.create!(
     team_member_id: 1,
     name: 'Citizens Advice',
     description: 'Government Services',
-    link: 'https://citizensadvicesnpt.org.uk'
+    website: 'https://citizensadvicesnpt.org.uk'
   )
   WellbeingService.create!(
     team_member_id: 1,
     name: 'Food Banks',
     description: 'Trussell Trust Food Bank Search',
-    link: 'https://www.trusselltrust.org/get-help/find-a-foodbank'
+    website: 'https://www.trusselltrust.org/get-help/find-a-foodbank'
   )
 end
 

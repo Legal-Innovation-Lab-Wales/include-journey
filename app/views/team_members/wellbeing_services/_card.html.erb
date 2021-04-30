@@ -1,20 +1,17 @@
 <div class="col-12 col-md-4">
   <div class="card">
     <div class="card-header">
-      <% if user %>
-        <span><strong><%= wellbeing_service.name %></strong></span>
-        <span></span>
-      <% else %>
-        <%= link_to edit_wellbeing_service_path(wellbeing_service) do %>
-          <span><%= wellbeing_service.name %></span>
-          <span><i class="fas fa-edit"></i></span>
+      <span><strong><%= wellbeing_service.name %></strong></span>
+      <span>
+        <% unless user %>
+          <%= link_to edit_wellbeing_service_path(wellbeing_service) do %><i class="fas fa-edit"></i><% end %>
         <% end %>
-      <% end %>
+      </span>
     </div>
     <div class="card-body">
       <div class="container">
         <div class="row"><%= wellbeing_service.description %></div>
-        <div class="row link"><%= link_to wellbeing_service.link %></div>
+        <div class="row link"><%= link_to wellbeing_service.website, wellbeing_service.website %></div>
         <% unless user %>
           <% if wellbeing_service.wellbeing_metrics.count.positive? %>
             <div class="row">

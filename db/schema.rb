@@ -15,6 +15,21 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id"
+    t.datetime "start"
+    t.datetime "end"
+    t.string "who_with"
+    t.string "where"
+    t.string "what"
+    t.boolean "attended", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_appointments_on_team_member_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.string "name", null: false
     t.string "number"
@@ -44,9 +59,13 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
     t.text "content"
     t.bigint "crisis_event_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crisis_event_id"], name: "index_crisis_notes_on_crisis_event_id"
+    t.index ["replaced_by_id"], name: "index_crisis_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_crisis_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_crisis_notes_on_team_member_id"
   end
 
@@ -71,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
     t.text "goal", null: false
     t.boolean "short_term", default: true, null: false
     t.datetime "achieved_on"
+    t.boolean "archived", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
@@ -118,8 +138,12 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
     t.boolean "visible_to_user", default: false, null: false
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["replaced_by_id"], name: "index_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
@@ -231,17 +255,21 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
     t.bigint "team_member_id", null: false
     t.string "name", null: false
     t.text "description"
-    t.string "link", null: false
+    t.string "website", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 
+  add_foreign_key "appointments", "team_members"
+  add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
   add_foreign_key "crisis_events", "crisis_types"
   add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"
   add_foreign_key "crisis_notes", "crisis_events"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replaced_by_id"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
   add_foreign_key "goals", "goal_types"
@@ -253,6 +281,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142951) do
   add_foreign_key "journal_entry_view_logs", "team_members"
   add_foreign_key "metrics_services", "wellbeing_metrics"
   add_foreign_key "metrics_services", "wellbeing_services"
+  add_foreign_key "notes", "notes", column: "replaced_by_id"
+  add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
