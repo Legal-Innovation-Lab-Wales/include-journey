@@ -1,5 +1,8 @@
-const chart_wrapper = document.querySelector('#wellbeing-history-chart-carousel .carousel-inner'),
-    slide_buttons = document.querySelectorAll('#wellbeing-history-chart-carousel button'),
+const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
+    chart_wrapper = carousel.querySelector('.carousel-inner'),
+    slide_buttons = carousel.querySelectorAll('button'),
+    metric_select = carousel.querySelector('select'),
+    indicators = carousel.querySelector('.carousel-indicators'),
     scale = [
       { description: "Abysmal", colour: "#E04444" },
       { description: "Dreadful", colour: "#e66043" },
@@ -63,6 +66,10 @@ const chart_wrapper = document.querySelector('#wellbeing-history-chart-carousel 
                 }
             }
         })
+    },
+    toggle_active = (parent, event, css_selector) => {
+        parent.querySelector('.active').classList.remove('active')
+        parent.querySelectorAll(css_selector)[event.target.value].classList.add('active')
     }
 
 fetch(`${location}/wba_history`, {
@@ -80,10 +87,23 @@ fetch(`${location}/wba_history`, {
         const canvas = document.createElement('canvas')
         canvas.classList.add(`wellbeing-history-chart-${index}`)
 
-        const heading = document.createElement('h4')
-        heading.innerHTML = dataset.label
+        const option = document.createElement('option')
+        option.setAttribute('value', index)
+        option.innerHTML = dataset.label
 
-        carousel_item.append(heading)
+        const indicator = document.createElement('button')
+        indicator.setAttribute('type', 'button')
+        indicator.setAttribute('type', 'button')
+        indicator.dataset.bsTarget = '#wellbeing-history-chart-carousel'
+        indicator.dataset.bsSlideTo = index
+        indicator.dataset.toggle = 'tooltip'
+        indicator.setAttribute('title', dataset.label)
+        if (index === 0) indicator.classList.add('active')
+        if (index === 0) indicator.setAttribute('aria-current', 'true')
+        indicator.setAttribute('aria-label', dataset.label)
+
+        indicators.append(indicator)
+        metric_select.append(option)
         carousel_item.append(canvas)
         chart_wrapper.append(carousel_item)
 
@@ -102,3 +122,10 @@ fetch(`${location}/wba_history`, {
 
     slide_buttons.forEach(button => button.classList.remove('hidden'))
 })
+
+metric_select.addEventListener('change', e => {
+    toggle_active(chart_wrapper, e, '.carousel-item')
+    toggle_active(indicators, e, 'button')
+})
+
+carousel.addEventListener('slid.bs.carousel', e => metric_select.value = e.to)

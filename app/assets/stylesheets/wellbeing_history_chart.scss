@@ -27,6 +27,12 @@
   }
 
   #wellbeing-history-chart-carousel {
+    padding-bottom: 2rem;
+
+    .carousel-indicators {
+      bottom: -1rem;
+    }
+
     .carousel-inner {
       padding: 0 2rem;
     }
