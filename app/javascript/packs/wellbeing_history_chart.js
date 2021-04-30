@@ -30,8 +30,9 @@ const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
                             }
                         },
                         ticks: {
-                            bounds: 'ticks',
-                            source: 'auto'
+                            autoSkip: true,
+                            maxTicksLimit: 11
+
                         },
                         gridLines: {
                             zeroLineColor: 'gray',
