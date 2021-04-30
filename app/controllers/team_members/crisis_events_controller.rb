@@ -7,6 +7,7 @@ module TeamMembers
 
     # GET /crisis_events/active
     def active
+
       render 'active'
     end
 
@@ -48,11 +49,12 @@ module TeamMembers
     end
 
     def crisis_events
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
+      @crisis_events = CrisisEvent.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
+      @active_events = @crisis_events.active
     end
 
     def set_overview_stats
-      @crisis_events_users = @crisis_events.distinct.count(:user_id)
+      @crisis_events_users = @active_events.distinct.count(:user_id)
       @closed_events = @crisis_events.closed
       @closed_events_30_days = @closed_events.where("closed_at >= ?", 30.days.ago)
       @closed_events_7_days = @closed_events.where("closed_at >= ?", 7.days.ago)
@@ -60,10 +62,6 @@ module TeamMembers
 
     def crisis_search
       'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
-    end
-
-    def crisis_notes_params
-      params.require(:crisis_note).permit(:content)
     end
   end
 end
