@@ -8,6 +8,21 @@ html, body {
   min-height: 100vh;
 }
 
+.btn {
+  box-shadow: none !important;
+}
+
+.mobile-hint {
+  @media (min-width: $screen-sm) {
+    display: none;
+  }
+}
+.mobile-hide {
+  @media (max-width: $screen-sm) {
+    display: none;
+  }
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
@@ -75,12 +90,24 @@ body#overboot {
       }
     }
 
-    .fa-check-circle {
+    .fa-check-circle, .fa-play-circle {
       color: $success;
     }
 
-    .fa-times-circle {
+    .fa-times-circle, .fa-pause-circle {
       color: $danger;
+    }
+  }
+
+  .subheading {
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .form-floating {
+    label {
+      color: $black;
     }
   }
 }

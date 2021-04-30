@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+</head>
+<body>
+<p>
+  <%= @user.full_name %>'s crisis has been updated.
+</p>
+<div>
+  <h3> Contact Details: </h3>
+  <p>Phone: <%= @user.mobile_number %></p>
+  <p>Email: <%= @user.email %></p>
+</div>
+<div>
+  <h3>Crisis Details: </h3>
+  <p>Crisis Type: <%= @crisis_type %></p>
+  <p>Additional Details: <%= @crisis_event.additional_info %></p>
+</div>
+<% if @crisis_notes.present? %>
+  <div>
+    <h3>Crisis Notes</h3>
+    <% @crisis_notes.each do |crisis_note| %>
+      <p><strong><%= crisis_note.team_member.full_name %></strong> left a note at <%= crisis_note.last_update %><p></p>
+      <p><%= simple_format(crisis_note.content) %></p>
+    <% end %>
+  </div>
+<% end %>
+<div>
+  <p>
+    Login in now to <%= link_to 'manage this crisis', crisis_event_url(@crisis_event) %>.
+  </p>
+</div>
+</body>
+</html>

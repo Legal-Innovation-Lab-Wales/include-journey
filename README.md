@@ -92,6 +92,15 @@ You might be asked to override your local webpacker environment to work
 config/webpack/environment.js
 ```
 
+#### Sending Email 
+
+If emails are not working while on localhost, try running the following commands:
+
+```zsh
+$ echo "export SENDGRID_API_KEY=SG.apikeyfromsendgrid" > sendgrid.env
+$ source ./sendgrid.env
+```
+
 ---
 
 
@@ -100,15 +109,12 @@ config/webpack/environment.js
 
 [Legal Innovation Lab Wales](https://legaltech.wales/)
 
----
-## TODO Sections:
-* How to run the test suite
-* Services - 
-job queues, cache servers, search engines, etc.
 
 ---
+<details>
+<summary>## Before Initial Commit</summary>
 
-## Before Initial Commit
+These were the steps taken to spin up the application before the initial commit.
 
 ```zsh
 rbenv local 2.7.2
@@ -165,3 +171,4 @@ Update routes, generate views, generate controllers, finish multi-user-model gui
  ```
 
 Setup Repo
+</details>

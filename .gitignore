@@ -64,3 +64,6 @@ pickle-email-*.html
 
 ## Ignore Rubocop config
 .rubocop.yml
+
+## Ignore Local Env Variables
+local_env.yml

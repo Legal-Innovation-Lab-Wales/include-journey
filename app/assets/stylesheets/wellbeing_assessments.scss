@@ -6,8 +6,11 @@
 
 .wellbeing-assessments {
   &.index {
-    section.back-btn .col.next {
-      text-align: right;
+    @media (min-width: $screen-sm) {
+      max-width: 100vw;
+    }
+    @media (min-width: $screen-lg) {
+      max-width: 1320px;
     }
 
     a {
@@ -18,16 +21,19 @@
         background-color: $brand-secondary;
       }
 
-      .sliders {
-        font-size: 0.8rem;
+      .card-body {
+        .sliders {
+          padding: 0;
+          font-size: 0.8rem;
 
-        .row {
-          margin-bottom: 0 !important;
+          .row {
+            margin-bottom: 0 !important;
 
-          label {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            label {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
         }
       }
@@ -43,6 +49,36 @@
         }
       }
     }
+
+    table.user-wba-index {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+
+      tr:hover {
+        background-color: $brand-secondary;
+        color: $brand-primary;
+      }
+
+      .metric-score {
+        width: 50px;
+
+        &.value-1 {background-color: #E04444E6;}
+        &.value-2 {background-color: #E64D52E6;}
+        &.value-3 {background-color: #E86754E6;}
+        &.value-4 {background-color: #EC8754E6;}
+        &.value-5 {background-color: #F0A656E6;}
+        &.value-6 {background-color: #DFC54CE6;}
+        &.value-7 {background-color: #BFCA48E6;}
+        &.value-8 {background-color: #9ECB46E6;}
+        &.value-9 {background-color: #BFCB43E6;}
+        &.value-10 {background-color: #5DAD3AE6;}
+      }
+
+      td.link {
+        padding: 0 !important;
+      }
+    }
   }
 }
 
@@ -50,40 +86,37 @@ section#wellbeing {
   background-color: $white;
   color: $black;
 
-  .services, .sliders {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 3rem;
-    }
-  }
-
-  .chart {
-    margin-top: 1rem;
-
-    @media screen and (min-width: $screen-md) {
-      margin-top: 0;
-    }
+  h3, h5, .submit-btn {
+    text-align: center !important;
   }
 
   .sliders {
-    .col-3, .col-9, .col-md-5 {
-      &:first-child {
-        text-align: left;
-      }
-    }
+    margin-top: 2.5rem;
+    text-align: left;
 
-    .col-3.description-col {
-      text-align: right;
-      padding: 0;
+    .row {
+      margin-top: 0.5rem;
+
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+
+      label {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input {
+        cursor: pointer;
+      }
+
       .description {
+        width: 100%;
         font-family: $font-link;
         transition: all 0.5s;
       }
-    }
-
-    input {
-      cursor: pointer;
     }
   }
 }

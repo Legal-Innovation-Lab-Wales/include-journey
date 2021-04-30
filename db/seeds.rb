@@ -9,10 +9,12 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 1
+wellbeing_assessments_for_each_user = 200
 journal_entries_for_each_user = 5
-crisis_events_count = 100
-notes_count = 100
+contacts_for_each_user = 5
+crisis_events_count = 10
+crisis_notes_count = 5
+notes_count = 1000
 start_time = Time.now
 
 # Create Static Team Members
@@ -25,6 +27,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -40,6 +43,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -55,6 +59,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -70,6 +75,23 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     admin: true,
     approved: true,
     terms: true,
+    paused: false,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
+unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
+  team_member = TeamMember.new(
+    first_name: 'Gareth',
+    last_name: 'Andrews',
+    email: 'g.d.andrews@swansea.ac.uk',
+    mobile_number: '07890123456',
+    admin: true,
+    approved: true,
+    terms: true,
+    paused: false,
     password: 'password'
   )
   team_member.skip_confirmation!
@@ -164,18 +186,20 @@ if CrisisType.count.zero?
 end
 
 # Create Service Users & Associated Records
-user_count = 20
-wba_count = 1
-journal_count = 10
+## Set up counter variables for tracking
+user_counter = 0
+wba_counter = 0
+journal_counter = 0
+
 if User.count.zero?
   total_user_count.times do
-    user_count += 1
-    puts("Creating User: #{user_count}")
+    user_counter += 1
     puts("Elapsed Time: #{Time.now - start_time}")
+    puts("Creating User: #{user_counter}")
     user = User.new(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      email: "IJ-test-user-#{user_count}@purpleriver.dev",
+      email: "IJ-test-user-#{user_counter}@purpleriver.dev",
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
@@ -185,33 +209,47 @@ if User.count.zero?
     user.save!
 
     ## Create User Wellbeing Assessments for each user
+    user_wba_counter = 0
     wellbeing_assessments_for_each_user.times do
-      wba_count += 1
-      # puts("Creating Wellbeing Assessment #{wba_count} for user #{user_count}")
+      wba_counter += 1
+      user_wba_counter += 1
+      created_at_value = DateTime.now - (wellbeing_assessments_for_each_user - user_wba_counter).day
+      #puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
-        user: user
+        user: user,
+        created_at: created_at_value
       )
 
-      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_count % 5).zero?
+      # Every 7th assessment is created by a TeamMember
+      wellbeing_assessment.update!(team_member_id: rand(1..TeamMember.count)) if (wba_counter % 7).zero?
 
       WellbeingMetric.all.each do |wellbeing_metric|
+        score_value =
+          if user.wellbeing_assessments.second_to_last.present?
+            (user.wellbeing_assessments.second_to_last.wba_scores.find_by(wellbeing_metric: wellbeing_metric).value + rand(-1..1)).clamp(1, 10)
+          else
+            rand(1..10)
+          end
         WbaScore.create!(
           wellbeing_assessment: wellbeing_assessment,
           wellbeing_metric: wellbeing_metric,
-          value: rand(1..10)
+          value: score_value,
+          created_at: created_at_value
         )
       end
     end
 
     ## Create Journal Entries for each User
     journal_entries_for_each_user.times do
-      journal_count += 1
+      journal_counter += 1
+      created_at_value = Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
       # puts("Creating Journal #{journal_count} for user #{user_count}")
       journal_entry = JournalEntry.new(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[😊 😔 😠 💩 😐].sample
+        feeling: %w[😊 😔 😠 💩 😐].sample,
+        created_at: created_at_value
       )
       journal_entry.save!
 
@@ -219,19 +257,32 @@ if User.count.zero?
       TeamMember.all.each do |team_member|
         JournalEntryPermission.create!(
           team_member: team_member,
-          journal_entry: journal_entry
+          journal_entry: journal_entry,
+          created_at: created_at_value
         )
       end
 
-      ## Create View Log for every 5th journal entry
-      next unless (journal_count % 5).zero?
+      ## Create View Log for every 7th journal entry
+      next unless (journal_counter % 7).zero?
 
       TeamMember.all.each do |team_member|
         JournalEntryViewLog.create!(
           team_member: team_member,
-          journal_entry: journal_entry
+          journal_entry: journal_entry,
+          created_at: created_at_value + 1.day
         )
       end
+    end
+
+    contacts_for_each_user.times do
+      name = Faker::Name.name
+      Contact.create!(
+        user: user,
+        name: name,
+        number: Faker::Number.leading_zero_number(digits: 11),
+        email: Faker::Internet.email(name: name, separators: '-'),
+        description: Faker::Job.position
+      )
     end
   end
 
@@ -248,13 +299,30 @@ if User.count.zero?
   user.save!
 end
 
+notes_counter = 1
 notes_count.times do
-  Note.create!(
+  note = Note.create!(
     team_member_id: rand(1..TeamMember.count),
-    visible_to_user: true,
+    visible_to_user: [true, false].sample,
     user_id: rand(1..User.count),
     content: Faker::TvShows::TheExpanse.quote
   )
+
+  # Every fifth note is replaced by a new note to demonstrate the edit history functionality 
+  if (notes_counter % 5).zero?
+    new_note = Note.create!(
+      team_member_id: note.team_member.id,
+      visible_to_user: [true, false].sample,
+      user_id: note.user.id,
+      content: Faker::TvShows::TheExpanse.quote,
+      replacing: note
+    )
+
+    note.update!(replaced_by: new_note)
+    notes_counter += 1
+  end
+
+  notes_counter += 1
 end
 
 crisis_events_count.times do
@@ -263,6 +331,23 @@ crisis_events_count.times do
     user_id: rand(1..User.count),
     crisis_type_id: rand(1..CrisisType.count)
   )
+
+  crisis_notes_count.times do |i|
+    crisis_note = crisis_event.crisis_notes.create!(
+      team_member_id: rand(1..TeamMember.count),
+      content: Faker::Movies::HarryPotter.quote
+    )
+
+    next unless i.even?
+
+    new_crisis_note = crisis_event.crisis_notes.create!(
+      team_member_id: crisis_note.team_member_id,
+      content: Faker::Movies::HarryPotter.quote,
+      replacing: crisis_note
+    )
+
+    crisis_note.update!(replaced_by: new_crisis_note)
+  end
 
   next unless [true, false].sample
 
@@ -274,8 +359,11 @@ crisis_events_count.times do
 end
 
 puts("Team Members in DatabaseL #{TeamMember.count}")
-puts("Users Created: #{user_count}")
+puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
-puts("Wellbeing Assessments Created: #{wba_count}")
-puts("Journals Created: #{journal_count}")
+puts("Contact per User: #{contacts_for_each_user}")
+puts("Wellbeing Assessments Created: #{wba_counter}")
+puts("Journals Created: #{journal_counter}")
+puts("Crisis Events Created: #{crisis_events_count}")
+puts("Notes per Crisis Event: #{crisis_notes_count}")

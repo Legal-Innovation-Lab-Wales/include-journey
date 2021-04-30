@@ -1,25 +1,27 @@
 module TeamMembers
   # app/controllers/team_members/journal_entries_controller.rb
-  class JournalEntriesController < PaginationController
-    before_action :journal_entry, :view_log, only: :show
+  class JournalEntriesController < TeamMembersApplicationController
+    include Pagination
 
     # GET /journal_entries/:id
     def show
+      journal_entry
+      view_log
+
       render 'show'
     end
 
     protected
 
     def resources
-      @resources = if @query.present?
-                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                                        .joins(:user)
-                                        .where(user_search, wildcard_query)
-                                        .order(created_at: :desc)
-                   else
-                     current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
-                                        .order(created_at: :desc)
-                   end
+      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs).order(created_at: :desc)
+    end
+
+    def search
+      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                         .joins(:user)
+                         .where(user_search, wildcard_query)
+                         .order(created_at: :desc)
     end
 
     private
@@ -36,5 +38,11 @@ module TeamMembers
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
+
+    def subheading_stats
+      # TODO: Add stats for journal index. IJ-123
+
+    end
+
   end
 end

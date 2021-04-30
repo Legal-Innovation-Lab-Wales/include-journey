@@ -1,20 +1,16 @@
 <section class="row back-btn">
   <div class="col">
-    <% if params[:query].present? %>
-      <%= link_to query_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back To All
-      <% end %>
-    <% else %>
-      <%= link_to path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> <%= text %>
-      <% end %>
-    <% end %>
+    <a id="back-btn" class="btn btn-primary">
+      <i class="fas fa-arrow-circle-left"></i> Back
+    </a>
   </div>
   <% if local_assigns[:next_path].present? %>
-    <div class="col next">
+    <div class="col next-btn">
       <%= link_to local_assigns[:next_path], class: 'btn btn-primary' do %>
         <%= local_assigns[:next_text] %> <i class="fas fa-arrow-circle-right"></i>
       <% end %>
     </div>
   <% end %>
 </section>
+
+<%= javascript_pack_tag 'back' %>

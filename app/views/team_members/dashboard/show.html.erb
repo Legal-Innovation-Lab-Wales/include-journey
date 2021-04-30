@@ -9,7 +9,7 @@
           <% end %>
 
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
-          <%= render 'shared/dashboard_btn', path: '/', icon: 'fa-chart-line', text: 'Analytics' %>
+          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
 
           <% unless @admin %>
             <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
@@ -25,7 +25,7 @@
             <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open',
                        text: 'Journal Entries' %>
             <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart',
-                       text: 'Wellbeing Assessments' %>
+                       large_text: 'Wellbeing Assessments', text: 'WBA' %>
 
           <% unless @admin %>
             <a class="col clear d-flex align-items-center"></a>

@@ -1,18 +1,19 @@
-<main class="container team-members">
-  <%= render 'shared/back_btn', path: authenticated_team_member_root_path, text: 'Dashboard' %>
+<main class="container team-members index">
+  <%= render 'shared/back_btn' %>
   <% if @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
       <div class="col">
         <h3>Team Members Awaiting Approval</h3>
         <div class="table-container">
-          <table class="table table-dark table-striped table-hover align-middle">
+          <table class="table table-dark table-striped align-middle">
             <thead>
             <tr>
               <th scope="col">First Name</th>
               <th scope="col">Last Name</th>
               <th scope="col">Email</th>
               <th scope="col">Last Sign In Attempt</th>
-              <th scope="col"></th>
+              <th scope="col">Approve</th>
+              <th scope="col">Reject</th>
             </tr>
             </thead>
             <tbody>
@@ -23,9 +24,13 @@
                 <td><%= team_member.email %></td>
                 <td><%= team_member.last_sign_in %></td>
                 <td>
-                  <%= form_with url: approve_team_member_path(team_member.id), method: :put do |form| %>
-                    <%= form.hidden_field :team_member_id, value: team_member.id %>
-                    <%= form.submit 'Approve', class: 'btn btn-primary' %>
+                  <%= button_to approve_team_member_path(team_member.id), class: 'btn btn-success', method: :put do %>
+                    <i class="fas fa-thumbs-up"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <%= button_to reject_team_member_path(team_member.id), class: 'btn btn-danger', method: :put do %>
+                    <i class="fas fa-thumbs-down"></i>
                   <% end %>
                 </td>
               </tr>
@@ -48,6 +53,7 @@
             <th scope="col">Email</th>
             <th scope="col">Admin</th>
             <th scope="col">Last Sign In</th>
+            <th scope="col">Pause</th>
           </tr>
           </thead>
           <tbody>
@@ -70,17 +76,15 @@
               </td>
               <td>
                 <% if current_team_member.id != team_member.id %>
-                  <%= form_with url: toggle_admin_team_member_path(team_member.id), method: :put do |form| %>
-                    <%= form.hidden_field :team_member_id, value: team_member.id %>
-                    <%= button_to '', { action: 'submit', class: 'btn w-100', data: {
-                      confirm: team_member.admin ?
-                                 "Demote #{team_member.full_name} from an admin role?" :
-                                 "Promote #{team_member.full_name} to an admin role?" } } do %>
-                      <% if team_member.admin %>
-                        <i class="fas fa-check-circle"></i>
-                      <% else %>
-                        <i class="fas fa-times-circle"></i>
-                      <% end %>
+                  <%= button_to toggle_admin_team_member_path(team_member.id), method: :put,
+                                class: "btn #{team_member.admin ? 'btn-success' : 'btn-danger'}",
+                                data: { confirm: team_member.admin ?
+                                                   "Demote #{team_member.full_name} from an admin role?" :
+                                                   "Promote #{team_member.full_name} to an admin role?" } do %>
+                    <% if team_member.admin %>
+                      <i class="fas fa-check-circle"></i>
+                    <% else %>
+                      <i class="fas fa-times-circle"></i>
                     <% end %>
                   <% end %>
                 <% else %>
@@ -94,6 +98,27 @@
               <td>
                 <%= link_to team_member_path(team_member) do %>
                   <%= team_member.last_sign_in %>
+                <% end %>
+              </td>
+              <td>
+                <% if current_team_member.id != team_member.id %>
+                  <%= button_to toggle_pause_team_member_path(team_member.id), method: :put,
+                                class: "btn #{team_member.paused ? 'btn-success' : 'btn-danger'}",
+                                data: { confirm: team_member.paused ?
+                                   "Unpause #{team_member.full_name}? This will allow them to resume using the system." :
+                                   "Pause #{team_member.full_name}? This will prevent them from using the system." } do %>
+                    <% if team_member.paused %>
+                      <i class="fas fa-play-circle"></i>
+                    <% else %>
+                      <i class="fas fa-pause-circle"></i>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <% if team_member.paused %>
+                    <i class="fas fa-play-circle"></i>
+                  <% else %>
+                    <i class="fas fa-pause-circle"></i>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

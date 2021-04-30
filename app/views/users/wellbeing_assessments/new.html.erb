@@ -1,9 +1,9 @@
-<main class="container user">
-  <%= render 'shared/back_btn', path: authenticated_user_root_path, text: 'Dashboard' %>
-  <section class="row pb-4" id="wellbeing">
-    <div class="col-md-3 services">
+<main class="container team-members wellbeing-assessments new">
+  <%= render 'shared/back_btn' %>
+  <section class="row pb-0" id="wellbeing">
+    <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
       <h3>Your Services</h3>
-      <div class="container mt-3">
+      <div class="container">
         <% [*1..4].each do |i| %>
           <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
             <div class="col">
@@ -19,45 +19,13 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 chart">
-      <h3>Your Wellbeing</h3>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
-            <canvas class="wellbeing-chart" width="400" height="400"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-5 sliders">
-      <h3>How are you today?</h3>
-      <%= form_with model: @wellbeing_assessment, url: wellbeing_assessments_path, method: :post do |f| %>
-        <div class="container mt-3">
-
-          <% @wellbeing_metrics.each do |wellbeing_metric| %>
-            <div class="row">
-              <div class="col-12 col-md-5">
-                <%= f.label "wellbeing_metric_#{wellbeing_metric.id}".to_sym, wellbeing_metric.name %>
-              </div>
-              <div class="col-9 col-md-5">
-                <%= f.range_field "wellbeing_metric_#{wellbeing_metric.id}".to_sym, in: 1..10, class: 'form-range',
-                                  value: last_score(@last_scores, wellbeing_metric.id) %>
-              </div>
-              <div class="col-3 col-md-2 description-col">
-                <div class="description badge rounded-pill wba-score__<%= last_score(@last_scores, wellbeing_metric.id) %>"></div>
-              </div>
-            </div>
-          <% end %>
-
-          <div class="row">
-            <div class="col">
-              <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
-            </div>
-          </div>
-        </div>
-      <% end %>
+    <div class="col-12 col-md-9">
+      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left',
+                 chart_heading: 'Your Wellbeing', sliders_heading: 'How are you today?',
+                 wellbeing_assessment: @wellbeing_assessment, wellbeing_metrics: @wellbeing_metrics,
+                 path: wellbeing_assessments_path, last_scores: @last_scores %>
     </div>
   </section>
 
-  <%= javascript_pack_tag 'polar_area_chart' %>
+  <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
 </main>

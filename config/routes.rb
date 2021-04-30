@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       end
 
       resources :crisis_events, only: %i[create update]
+
+      resources :contacts
     end
   end
 
@@ -37,8 +39,10 @@ Rails.application.routes.draw do
       get 'terms', to: 'team_members_application#terms'
 
       resources :team_members, only: %i[index show] do
-        put 'approve', action: 'approve_team_member', on: :member, as: :approve
+        put 'approve', action: 'approve', on: :member, as: :approve
+        put 'reject', action: 'reject', on: :member, as: :reject
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
+        put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
 
         resources :journal_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member
@@ -49,13 +53,15 @@ Rails.application.routes.draw do
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
-        resources :notes, only: :create, as: :add_note
+        resources :notes, only: %i[create update show]
+        get 'wba_history', action: 'wba_history', on: :member
+        resources :wellbeing_assessments, only: %i[new create index], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do
         get 'active', action: 'active', on: :collection
         put 'close', action: 'close', on: :member, as: :close
-        post 'note', action: 'add_note', on: :member, as: :notes
+        resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
       resources :wellbeing_assessments, only: %i[show index]

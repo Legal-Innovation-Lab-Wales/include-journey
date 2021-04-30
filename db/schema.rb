@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_225120) do
+ActiveRecord::Schema.define(version: 2021_04_07_142947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "number"
+    t.string "email"
+    t.text "description", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_contacts_on_user_id"
+  end
 
   create_table "crisis_events", force: :cascade do |t|
     t.text "additional_info"
@@ -33,9 +44,13 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.text "content"
     t.bigint "crisis_event_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crisis_event_id"], name: "index_crisis_notes_on_crisis_event_id"
+    t.index ["replaced_by_id"], name: "index_crisis_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_crisis_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_crisis_notes_on_team_member_id"
   end
 
@@ -79,8 +94,12 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.boolean "visible_to_user", default: false, null: false
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["replaced_by_id"], name: "index_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
@@ -109,6 +128,7 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.boolean "approved", default: false
     t.boolean "admin", default: false
     t.boolean "terms", default: false
+    t.boolean "paused", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
@@ -187,10 +207,13 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
   end
 
+  add_foreign_key "contacts", "users"
   add_foreign_key "crisis_events", "crisis_types"
   add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"
   add_foreign_key "crisis_notes", "crisis_events"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replaced_by_id"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
   add_foreign_key "journal_entries", "users"
@@ -198,6 +221,8 @@ ActiveRecord::Schema.define(version: 2021_02_25_225120) do
   add_foreign_key "journal_entry_permissions", "team_members"
   add_foreign_key "journal_entry_view_logs", "journal_entries"
   add_foreign_key "journal_entry_view_logs", "team_members"
+  add_foreign_key "notes", "notes", column: "replaced_by_id"
+  add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
