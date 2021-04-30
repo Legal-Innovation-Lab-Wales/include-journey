@@ -46,7 +46,7 @@
                       <i class="fas fa-location-arrow"></i> at <%= appointment.where %>
                     </div>
                     <div class="col-md-3 col-sm-6 col-12">
-                      <i class="fas fa-hourglass-start"></i> for <%= appointment.duration %>
+                      <i class="fas fa-hourglass-start"></i> for <%= distance_of_time_in_words(appointment.start, appointment.end) %>
                     </div>
                   </div>
 

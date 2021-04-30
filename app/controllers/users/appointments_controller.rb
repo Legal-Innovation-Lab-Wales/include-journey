@@ -3,6 +3,7 @@ module Users
   class AppointmentsController < UsersApplicationController
     before_action :appointment, only: %i[edit update destroy toggle_attended]
     include Pagination
+    before_action :validate_dates, only: :create
 
     # GET /appointments/upcoming
     def upcoming
@@ -14,6 +15,8 @@ module Users
     # POST /appointments
     def create
       if (@appointment = current_user.appointments.create!(appointment_params))
+        session.delete(:appointment_params)
+
         redirect_to upcoming_appointments_path, flash: { success: 'Appointment created' }
       else
         redirect_to upcoming_appointments_path,
@@ -23,7 +26,7 @@ module Users
 
     # GET /appointments/new
     def new
-      @appointment = Appointment.new
+      @appointment = Appointment.new(session[:appointment_params])
 
       render 'new'
     end
@@ -46,7 +49,7 @@ module Users
     # DELETE /appointments/:id
     def destroy
       if @appointment.destroy!
-        redirect_to upcoming_appointments_path, flash: { success: 'Appointment Deleted' }
+        redirect_to upcoming_appointments_path, flash: { success: 'Appointment deleted' }
       else
         redirect_to upcoming_appointments_path(@appointment),
                     flash: { error: 'Appointment could not be deleted. Please try again.' }
@@ -55,7 +58,7 @@ module Users
 
     # PUT /appointment/:id
     def toggle_attended
-      @appointment.update(attended: !@appointment.attended?) ? success(@appointment.attended?, 'attended') : failure('not attended')
+      @appointment.update(attended: !@appointment.attended?) ? success(@appointment.attended?) : failure
     end
 
     protected
@@ -94,13 +97,21 @@ module Users
       params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
     end
 
-    def fail(type)
-      redirect_to appointments_path, flash: { error: "#{@appointment.id} #{type} status could not be changed" }
+    def failure
+      redirect_to appointments_path, flash: { error: "#{@appointment.id} attended status could not be changed" }
     end
 
-    def success(status, type)
-      redirect_to appointments_path,
-                  flash: { success: "Appointment is #{status ? 'now' : 'no longer'} #{type}" }
+    def success(status)
+      redirect_back(fallback_location: appointments_path,
+                    flash: { success: "#{status ? 'Congrats! ' : ''}Appointment has been marked as #{status ? 'now' : 'no longer'} attended" })
+    end
+
+    def validate_dates
+      return if appointment_params[:start] <= appointment_params[:end]
+
+      session[:appointment_params] = appointment_params
+
+      redirect_back(fallback_location: new_appointment_path, flash: { error: 'End date cannot be before start date' })
     end
   end
 end

@@ -21,7 +21,7 @@
                   <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
                   <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
                   <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= appointment.duration %></p>
+                  <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
                 </div>
                 <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
                   <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">

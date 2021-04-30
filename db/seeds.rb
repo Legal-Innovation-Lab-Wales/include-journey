@@ -298,7 +298,7 @@ if User.count.zero?
         where: Faker::Nation.capital_city,
         what: Faker::Educator.course_name,
         start: app_time,
-        end: (app_time + ([rand(30..600), rand(10..60), rand(10..120)].sample.minutes))
+        end: (app_time + rand(10..120).minutes)
       )
     end
 
@@ -312,7 +312,7 @@ if User.count.zero?
         where: Faker::Nation.capital_city,
         what: Faker::Educator.course_name,
         start: app_time,
-        end: (app_time + ([rand(30..600), rand(10..60), rand(10..120)].sample.minutes))
+        end: (app_time + rand(10..120).minutes)
       )
     end
   end
