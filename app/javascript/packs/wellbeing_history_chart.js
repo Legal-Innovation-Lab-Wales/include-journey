@@ -111,8 +111,8 @@ fetch(`${location}/wba_history`, {
         dataset.borderColor = '#1F77B4'
         dataset.lineTension = 0
         dataset.fill = false
-        dataset.radius = 5
-        dataset.hoverRadius = 6
+        dataset.radius = 2
+        dataset.hoverRadius = 10
         dataset.pointStyle = 'rectRounded'
 
         create_chart(canvas, {
