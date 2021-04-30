@@ -5,28 +5,62 @@
 @import "variables";
 
 section {
-  h3{
+  h3 {
     color: white;
   }
+
   &.appointments {
     color: $black;
     margin-top: 1rem;
 
     @media screen and (min-width: $screen-md) {
       margin-top: 0;
+    }
 
-      a {
-        color: $black;
+    a {
+      color: $black;
+    }
+
+    .card {
+      background: $grey-grad;
+      text-align: left;
+      border: transparent;
+
+      span.actions {
+        i.fa-trash-alt {
+          color: $danger;
+        }
+
+        i.fa-edit {
+          color: $info;
+        }
+
+        a:hover i {
+          color: $primary;
+        }
       }
 
-      .card{
-        text-align: left;
-        background: $grey;
-        border: transparent;
+      .card-header {
+        background: $blue-grad;
+        font-weight: 700;
+        font-family: $font-link;
+        color: $white;
+      }
 
-        .card-header{
-          span:last-child{
-            float: right;
+      .card-body {
+        .container {
+          padding: 0;
+
+          .row {
+            margin-bottom: 0.5rem;
+
+            .col:first-child {
+              max-width: 30px;
+
+              .fa-hourglass-start {
+                margin-left: 2px;
+              }
+            }
           }
         }
       }
@@ -34,6 +68,12 @@ section {
   }
 
   .create {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: $white;
+    background-color: $brand-secondary-alt-lightest;
+    background: $blue-grad;
+
     form {
       .form-floating {
         margin-bottom: 1rem;

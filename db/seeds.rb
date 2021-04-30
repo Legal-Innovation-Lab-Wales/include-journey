@@ -286,7 +286,7 @@ if User.count.zero?
         user: user,
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
-        what: Faker::Company.profession,
+        what: Faker::Educator.course_name,
         start: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 10),
         end: Faker::Time.between(from: DateTime.tomorrow + 10, to: DateTime.tomorrow + 15)
       )
@@ -299,7 +299,7 @@ if User.count.zero?
         user: user,
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
-        what: Faker::Company.profession,
+        what: Faker::Educator.course_name,
         start: Faker::Time.between(from: DateTime.now - 10, to: DateTime.yesterday),
         end: Faker::Time.between(from: DateTime.now - 11, to: DateTime.yesterday)
       )
