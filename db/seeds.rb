@@ -291,26 +291,28 @@ if User.count.zero?
     ## Create Appointments for each user
     appointments_for_each_user.times do
       appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 20)
       Appointment.create!(
         user: user,
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
         what: Faker::Educator.course_name,
-        start: Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 10),
-        end: Faker::Time.between(from: DateTime.tomorrow + 10, to: DateTime.tomorrow + 15)
+        start: app_time,
+        end: (app_time + ([rand(30..600), rand(10..60), rand(10..120)].sample.minutes))
       )
     end
 
     ## Create Appointments for each user
     past_appointments_for_each_user.times do
       appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.now - 20.days, to: DateTime.yesterday)
       Appointment.create!(
         user: user,
         who_with: Faker::FunnyName.name,
         where: Faker::Nation.capital_city,
         what: Faker::Educator.course_name,
-        start: Faker::Time.between(from: DateTime.now - 10, to: DateTime.yesterday),
-        end: Faker::Time.between(from: DateTime.now - 11, to: DateTime.yesterday)
+        start: app_time,
+        end: (app_time + ([rand(30..600), rand(10..60), rand(10..120)].sample.minutes))
       )
     end
   end
