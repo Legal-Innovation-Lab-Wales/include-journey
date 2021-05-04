@@ -11,6 +11,7 @@
       <h3 class="mb-0">All appointments</h3>
       <div class="subheading">
         <p><%= @user.first_name %> has <%= @count %> appointments.</p>
+        <p><%= @count_in_next_weeks %> appointments are scheduled in the next fortnight </p>
         <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week
           and <%= @count_in_last_month %> in the last month.</p>
         <p><%= pluralize(@count_by_team_member, 'of the total has', 'of the total have') %> been created by Team

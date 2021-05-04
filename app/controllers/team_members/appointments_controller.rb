@@ -67,6 +67,7 @@ module TeamMembers
     def subheading_stats
       @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
       @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
+      @count_in_next_weeks = @resources.where('appointments.start <= ?', 2.week.ago).size
       return unless @user
 
       @count_by_team_member = @resources.count { |appointment| appointment.team_member_id.present? }
