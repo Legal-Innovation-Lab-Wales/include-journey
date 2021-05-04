@@ -18,7 +18,6 @@
 
       &:hover {
         color: $brand-primary;
-        background-color: $brand-secondary;
       }
 
       .card-body {
@@ -36,6 +35,10 @@
             }
           }
         }
+
+        &:hover {
+          background: $blue-grad;
+        }
       }
     }
 
@@ -44,8 +47,7 @@
         transition: 0.2s;
 
         &:hover {
-          color: $brand-secondary;
-          background-color: transparent;
+          background: transparent;
         }
       }
     }
@@ -87,6 +89,7 @@ section#wellbeing {
   color: $black;
 
   h3, h5, .submit-btn {
+    color: $black;
     text-align: center !important;
   }
 
