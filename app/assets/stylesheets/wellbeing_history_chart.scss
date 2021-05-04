@@ -27,6 +27,20 @@
   }
 
   #wellbeing-history-chart-carousel {
+    padding-bottom: 2rem;
+
+    .form-select {
+      background-color: $grey;
+      font-size: large;
+      font-weight: bold;
+      text-align-last: center;
+      width: 40%;
+    }
+
+    .carousel-indicators {
+      bottom: -1rem;
+    }
+
     .carousel-inner {
       padding: 0 2rem;
     }
