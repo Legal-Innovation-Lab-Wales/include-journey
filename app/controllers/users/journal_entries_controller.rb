@@ -19,19 +19,14 @@ module Users
       end
     end
 
-    private
-
-    def journal_entry_params
-      params.require(:journal_entry).permit(:entry, :feeling)
-    end
+    protected
 
     def resources_per_page
       3
     end
 
     def resources
-      @resources = current_user.journal_entries.order(created_at: :desc)
-      set_overview_stats
+      current_user.journal_entries.order(created_at: :desc)
     end
 
     def search
@@ -40,8 +35,15 @@ module Users
                   .order(created_at: :desc)
     end
 
-    def set_overview_stats
+    def subheading_stats
       @entries_in_last_30_days = @resources.where('created_at >= ?', 30.days.ago).count
+      @days_since_last_entry = (Time.now.to_date - @resources.first.created_at.to_date).to_i
+    end
+
+    private
+
+    def journal_entry_params
+      params.require(:journal_entry).permit(:entry, :feeling)
     end
   end
 end
