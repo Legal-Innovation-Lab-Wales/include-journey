@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
                   <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
-                    <% if appointment.attended ? 'btn-success' : 'btn-danger'%>
+                    <% if appointment.attended %>
                       <i class="fas fa-calendar-check"></i>
                     <% else %>
                       <i class="fas fa-calendar-times"></i>
