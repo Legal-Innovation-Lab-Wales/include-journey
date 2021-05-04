@@ -9,14 +9,14 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 200
+wellbeing_assessments_for_each_user = 20
 journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 appointments_for_each_user = 20
 past_appointments_for_each_user = 20
 crisis_events_count = 10
 crisis_notes_count = 5
-notes_count = 1000
+notes_count = 10
 start_time = Time.now
 
 # Create Static Team Members

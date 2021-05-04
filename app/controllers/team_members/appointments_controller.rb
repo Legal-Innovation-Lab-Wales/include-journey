@@ -63,5 +63,14 @@ module TeamMembers
     def appointment_params
       params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
     end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
+      return unless @user
+
+      @count_by_team_member = @resources.count { |appointment| appointment.team_member_id.present? }
+      @count_by_user = @resources.count { |appointment| appointment.team_member_id.nil? }
+    end
   end
 end
