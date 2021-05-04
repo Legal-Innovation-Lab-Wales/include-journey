@@ -3,6 +3,10 @@
              next_path: new_appointment_path, next_text: 'New Appointment' %>
   <section class="row appointments">
     <h3 class="mb-0">Upcoming appointments</h3>
+    <div class="subheading">
+      <p> there is a total of <%= @count %> appointments.</p>
+      <p><%= @count_in_next_week %> appointments are scheduled in the next fortnight </p>
+    </div>
     <div class="container">
       <div class="row">
         <% @appointments.group_by { |t| t.start_date }.each do |appointments| %>

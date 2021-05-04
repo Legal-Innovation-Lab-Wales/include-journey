@@ -113,5 +113,12 @@ module Users
 
       redirect_back(fallback_location: new_appointment_path, flash: { error: 'End date cannot be before start date' })
     end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
+      # TODO: This doesnt seem to work for some reason on upcoming.html.erb
+      @count_in_next_week = @resources.where('appointments.start <= ?', 1.week.ago).size
+  end
   end
 end

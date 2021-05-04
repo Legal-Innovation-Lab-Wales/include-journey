@@ -10,6 +10,11 @@
   <section class="row appointments">
     <div class="col">
       <h3 class="mb-0">Past appointments</h3>
+      <div class="subheading">
+        <p> there is a total of <%= @count %> appointments.</p>
+        <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week
+          and <%= @count_in_last_month %> in the last month.</p>
+      </div>
       <div class="container">
         <%= render 'shared/search_results' %>
         <div class="row">
