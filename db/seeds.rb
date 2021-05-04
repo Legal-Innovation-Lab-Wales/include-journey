@@ -9,8 +9,8 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 2
-journal_entries_for_each_user = 0
+wellbeing_assessments_for_each_user = 200
+journal_entries_for_each_user = 5
 contacts_for_each_user = 5
 appointments_for_each_user = 20
 past_appointments_for_each_user = 20
