@@ -1,5 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'user appointments', header: 'Past Appointments', index: 'appointments' do %>
   <div class="container p-0">
+    <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
     <div class="row">
       <% @resources.each do |past_appointment| %>
         <div class="col-12 col-md-4 past">

@@ -2,9 +2,10 @@
   <section class="row appointments">
     <h3 class="mb-0">Upcoming appointments</h3>
     <div class="container">
+      <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
       <div class="row">
         <% @appointments.group_by { |t| t.start_date }.each do |appointments| %>
-          <div class="col-12 ">
+          <div class="col-12">
             <div class="card mt-3 text-al">
               <div class="card-header">
                 <span>

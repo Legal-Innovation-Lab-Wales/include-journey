@@ -1,13 +1,7 @@
 <%= render 'layouts/searchable', class_list: 'user contacts', header: 'Contacts', index: 'contacts' do %>
   <div class="container p-0">
-    <div class="row mb-3">
-      <div class="col-auto mr-auto">
-        <%= link_to new_contact_path, class: 'btn btn-success' do %>
-          <i class="fas fa-plus-circle"></i> Add Contact
-        <% end %>
-      </div>
-    </div>
-    <div class="row g-4">
+    <%= render 'shared/new_btn', path: new_contact_path, text: 'Add Contact' %>
+    <div class="row g-4 mt-3">
       <% @resources.each do |contact| %>
         <%= render 'card', contact: contact %>
       <% end %>
