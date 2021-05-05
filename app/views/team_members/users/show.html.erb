@@ -17,13 +17,20 @@
       <p>
         <i class="fas fa-calendar"></i> Release: <%= @user.release %>
       </p>
-      <p>
-        <% unless @unread_journal_entries.zero? %>
+      <% unless @unread_journal_entries.zero? %>
+        <p>
           <%= link_to '#journal' do %>
             <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
           <% end %>
-        <% end %>
-      </p>
+        </p>
+      <% end %>
+      <% unless @wellbeing_assessment.present?  %>
+        <p>
+          <%= link_to new_user_wellbeing_assessment_path(@user) do %>
+            <i class="fas fa-chart-pie"></i> <%= @user.first_name %> has no wellbeing assessments
+          <% end %>
+        </p>
+      <% end %>
       <p>
         <%= link_to active_crisis_events_path do %>
           <i class="fas fa-exclamation-circle"></i> <%= @active_crisis.count %> active crisis
@@ -39,40 +46,52 @@
   <% unless @active_crisis.empty? %>
     <div id="crisis-info" class="row">
       <div class="alert alert-danger">
-        <h3 class="text-center"><%= @user.first_name %> has an active crisis <i class="fas fa-exclamation-triangle"></i></h3>
-        <div class="text-center"><%= link_to "View Crisis", active_crisis_events_path , class: "btn btn-danger" %></div>
+        <h3 class="text-center"><%= @user.first_name %> has an active crisis <i class="fas fa-exclamation-triangle"></i>
+        </h3>
+        <div class="text-center"><%= link_to "View Crisis", active_crisis_events_path, class: "btn btn-danger" %></div>
         <div class="pt-3 table-container">
           <table class="mx-auto">
-            <tr><td>When: </td><td class="text-start"><%= @active_crisis.first.created %></td></tr>
-            <tr><td>Type: </td><td class="text-start"><%= @active_crisis.first.crisis_type.category %></td></tr>
-            <tr><td>Info: </td><td class="text-start text-wrap"><%= @active_crisis.first.additional_info %></td></tr>
+            <tr>
+              <td>When:</td>
+              <td class="text-start"><%= @active_crisis.first.created %></td>
+            </tr>
+            <tr>
+              <td>Type:</td>
+              <td class="text-start"><%= @active_crisis.first.crisis_type.category %></td>
+            </tr>
+            <tr>
+              <td>Info:</td>
+              <td class="text-start text-wrap"><%= @active_crisis.first.additional_info %></td>
+            </tr>
           </table>
         </div>
       </div>
     </div>
   <% end %>
 
-  <div class="row mb-4">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <% if @wellbeing_assessment.present? %>
-                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
-                           show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
-                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
-              <% end %>
-              <div class="text-center">
-                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+  <% if @wellbeing_assessment.present? %>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <% if @wellbeing_assessment.present? %>
+                  <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
+                             show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
+                             sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
+                <% end %>
+                <div class="text-center">
+                  <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+    <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+  <% end %>
   <div class="row" id="journal">
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
