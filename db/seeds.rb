@@ -286,7 +286,7 @@ if User.count.zero?
       end
     end
 
-    # Create contacts for each user
+    ## Create contacts for each user
     contacts_for_each_user.times do
       name = Faker::Name.name
       Contact.create!(
