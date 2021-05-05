@@ -1,0 +1,34 @@
+<main class="container team-members user-profile-view-logs">
+  <%= render 'shared/back_btn' %>
+  <%= render 'shared/wrapped_search' %>
+  <section class="row">
+    <div class="col">
+      <h3><%= @team_member.full_name %> user profile view logs (<%= @count %>)</h3>
+      <%= render 'shared/search_results', query: params[:query], count: @count %>
+      <%= render 'shared/limit', resources_per_page: @resources_per_page %>
+      <div class="input-group date-sort-select mb-3">
+        <select class="form-select">
+          <option value="viewed_at_desc">Viewed At (Descending)</option>
+          <option value="viewed_at_asc">Viewed At (Ascending)</option>
+        </select>
+      </div>
+      <table class="table table-dark table-striped">
+        <thead>
+          <th scope="col">User</th>
+          <th scope="col">Viewed At</th>
+        </thead>
+        <tbody>
+        <% @resources.each do |view_log| %>
+          <tr>
+            <td><%= view_log.user.full_name %></td>
+            <td><%= view_log.created %>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= render 'shared/pagination_controls', index: 'team_member_journal_entry_view_logs' %>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'date_sort' %>
