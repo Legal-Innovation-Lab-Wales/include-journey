@@ -211,14 +211,13 @@ if User.count.zero?
     user.skip_confirmation!
     user.save!
 
-    ## Create a view log for every other user
-    if user_counter.even?
-      TeamMember.all.each do |team_member|
-        UserProfileViewLog.create!(
-          team_member: team_member,
-          user: user
-        )
-      end
+    ## Create a view log for every user
+    TeamMember.all.each do |team_member|
+      UserProfileViewLog.create!(
+        team_member: team_member,
+        user: user,
+        created_at: DateTime.now - rand(30...480).minutes
+      )
     end
 
     ## Create User Wellbeing Assessments for each user
