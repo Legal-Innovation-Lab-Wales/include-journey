@@ -35,17 +35,24 @@
                     <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
                   </td>
                   <td>
-                    <% if crisis_event.crisis_notes.present? %>
-                      <%= link_to "#{crisis_event.crisis_notes.last.content}", crisis_event_path(crisis_event) %>
+                    <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                      <span class="text-start">
+                        <%= link_to crisis_event_path(crisis_event) do %>
+                          <span class="text-start badge bg-primary">Note</span>
+                          <span class="text-start"><%= crisis_event.crisis_notes.last.content %></span>
+                        <% end %>
+                      </span>
                     <% else %>
-                      <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                      <span class="text-start">
+                        <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                      </span>
                     <% end %>
                   </td>
                   <td>
-                    <% if crisis_event.crisis_notes.present? %>
-                      <%= link_to "#{time_ago_in_words(crisis_event.crisis_notes.last.updated_at)}", crisis_event_path(crisis_event) %>
+                    <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.crisis_notes.last.updated_at)} ago", crisis_event_path(crisis_event) %>
                     <% else %>
-                      <%= link_to "#{time_ago_in_words(crisis_event.updated_at)}", crisis_event_path(crisis_event) %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.updated_at)} ago", crisis_event_path(crisis_event) %>
                     <% end %>
                   </td>
                 </tr>

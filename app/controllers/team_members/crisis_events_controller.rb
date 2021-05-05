@@ -56,8 +56,8 @@ module TeamMembers
     def set_overview_stats
       @crisis_events_users = @active_events.distinct.count(:user_id)
       @closed_events = @crisis_events.closed
-      @closed_events_30_days = @closed_events.where("closed_at >= ?", 30.days.ago)
-      @closed_events_7_days = @closed_events.where("closed_at >= ?", 7.days.ago)
+      @closed_events_30_days = @closed_events.where('closed_at >= ?', 30.days.ago)
+      @closed_events_7_days = @closed_events.where('closed_at >= ?', 7.days.ago)
     end
 
     def crisis_search
