@@ -5,7 +5,11 @@ const search_input_group = document.querySelector('.search.input-group'),
       search_btn = search_input_group.querySelector('#search-btn'),
       url = new URL(location.href),
       search = () => {
-          if (search_input.value) url.searchParams.set('query', search_input.value)
+          if (search_input.value) {
+              url.searchParams.set('query', search_input.value)
+          } else if (url.searchParams.has('query')) {
+              url.searchParams.delete('query')
+          }
 
           if (viewed_input.value === 'all') {
               if (url.searchParams.has('viewed')) url.searchParams.delete('viewed')
@@ -27,3 +31,7 @@ const search_input_group = document.querySelector('.search.input-group'),
 
 search_btn.addEventListener('click', search)
 search_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
+
+if (url.searchParams.has('query')) search_input.value = url.searchParams.get('query')
+if (url.searchParams.has('feeling')) feeling_input.value = url.searchParams.get('feeling')
+if (url.searchParams.has('viewed')) viewed_input.value = url.searchParams.get('viewed')
