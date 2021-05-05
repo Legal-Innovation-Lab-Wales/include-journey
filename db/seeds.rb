@@ -211,6 +211,16 @@ if User.count.zero?
     user.skip_confirmation!
     user.save!
 
+    ## Create a view log for every other user
+    if user_counter.even?
+      TeamMember.all.each do |team_member|
+        UserProfileViewLog.create!(
+          team_member: team_member,
+          user: user
+        )
+      end
+    end
+
     ## Create User Wellbeing Assessments for each user
     user_wba_counter = 0
     wellbeing_assessments_for_each_user.times do
@@ -277,6 +287,7 @@ if User.count.zero?
       end
     end
 
+    # Create contacts for each user
     contacts_for_each_user.times do
       name = Faker::Name.name
       Contact.create!(
