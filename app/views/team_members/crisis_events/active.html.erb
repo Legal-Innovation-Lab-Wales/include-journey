@@ -38,8 +38,8 @@
                     <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
                       <span class="text-start">
                         <%= link_to crisis_event_path(crisis_event) do %>
-                          <span class="text-start badge bg-primary">Note</span>
-                          <span class="text-start"><%= crisis_event.crisis_notes.last.content %></span>
+                          <span class="badge bg-primary me-2">Note</span>
+                          <span><%= crisis_event.crisis_notes.last.content %></span>
                         <% end %>
                       </span>
                     <% else %>
