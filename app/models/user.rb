@@ -16,6 +16,8 @@ class User < DeviseRecord
   has_many :journal_entries, foreign_key: :user_id
   has_many :appointments, foreign_key: :user_id
 
+  has_many :user_profile_view_logs, foreign_key: :user_id
+
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
   end
