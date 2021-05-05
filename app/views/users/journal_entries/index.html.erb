@@ -3,47 +3,33 @@
   <section class="row">
     <div class="col">
         <h2>Journal Entries</h2>
-        <p>
-          You have penned <%= @resources.count %> journals.
+        <p class="mb-0">
+          You have penned <%= "#{pluralize(@resources.count, 'journal')}" %>.
           <%= @entries_in_last_30_days %> in the last month.
-          Your most recent was <%= @days_since_last_entry %> days ago.
+          Your most recent was <%= "#{pluralize(@days_since_last_entry, 'day')}" %> ago.
         </p>
-        <p>
+        <p class="mb-0">
           If you're ready to add another entry, click the 'new entry' button or you can view your previous entries.
         </p>
       </div>
   </section>
-  <div class="container header-buttons one">
-        <div class="row">
-          <%= link_to new_journal_entry_path, class: 'col d-flex align-items-center btn' do %>
-            <div class="container">
-              <div class="row">
-                <div class="col">
-                  <i class="mb-1 fas fa-book-medical"></i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">New Entry</div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
+  <div class="row justify-content-md-center">
+    <div class="col-auto">
+      <%= link_to new_journal_entry_path, class: 'btn btn-primary btn-lg' do %>
+        <i class="fas fa-plus-circle"></i> New Entry 
+      <% end %>
+    </div>
+  </div>
   <section class="row">
     <div class="container">
-      <div class="row justify-content-end">
-        <%= render 'shared/search' %>
-      </div>
       <div class="row">
         <h3 class="mb-3">Archive</h3>
         <%= render 'shared/search_results' %>
       </div>
+      <div class="row justify-content-end mb-2">
+        <%= render 'shared/search' %>
+      </div>
       <div class="row">
-        <div class="col-auto mr-auto">
-          <%= link_to new_journal_entry_path, class: 'btn btn-success' do %>
-            <i class="fas fa-plus-circle"></i> New Entry 
-          <% end %>
-        </div>
         <div class="col">
           <%= render 'shared/limit' %>
         </div>
