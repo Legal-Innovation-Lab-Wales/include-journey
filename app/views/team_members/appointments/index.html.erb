@@ -1,43 +1,28 @@
-<main class="container user">
-  <%= render 'shared/back_btn', path: user_path(@user), text: 'Go back to user', index: 'user_appointments' %>
-  <div class="row justify-content-end">
-    <%= render 'shared/search' %>
-  </div>
-  <div class="row justify-content-end mt-1">
-    <%= render 'shared/limit' %>
-  </div>
-  <section class="row appointments">
-    <div class="col">
-      <h3 class="mb-0">All appointments</h3>
-      <div class="container">
-        <%= render 'shared/search_results' %>
-        <div class="row">
-          <% @resources.each do |appointment| %>
-            <div class="col-12 col-md-4 past">
-
-              <div class="card border-primary mt-3 text-al">
-                <div class="card-header bg-primary"><%= appointment.what %> </div>
-                <div class="card-body bg-transparent">
-                  <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
-                  <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
-                  <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
-                </div>
-                <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
-                  <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
-                    <% if appointment.attended ? 'btn-success' : 'btn-danger'%>
-                      <i class="fas fa-calendar-check"></i>
-                    <% else %>
-                      <i class="fas fa-calendar-times"></i>
-                    <% end %>
-                  </div>
-                </div>
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'All Appointments', index: 'user_appointments' do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |appointment| %>
+        <div class="col-12 col-md-4 past">
+          <div class="card border-primary mt-3 text-al">
+            <div class="card-header bg-primary"><%= appointment.what %> </div>
+            <div class="card-body bg-transparent">
+              <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
+              <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
+              <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
+              <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
+            </div>
+            <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
+              <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
+                <% if appointment.attended ? 'btn-success' : 'btn-danger'%>
+                  <i class="fas fa-calendar-check"></i>
+                <% else %>
+                  <i class="fas fa-calendar-times"></i>
+                <% end %>
               </div>
             </div>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  </section>
-  <%= render 'shared/pagination_controls', index: 'user_appointments' %>
-</main>
+  </div>
+<% end %>

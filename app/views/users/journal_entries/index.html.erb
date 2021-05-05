@@ -1,31 +1,19 @@
-<main class="container user journal-entry index">
-  <%= render 'shared/back_btn' %>
-  <section class="row">
-    <div class="container">
-      <div class="row justify-content-end">
-        <%= render 'shared/search' %>
-      </div>
-      <div class="row">
-        <h2 class="mb-3">Archive</h2>
-        <%= render 'shared/search_results' %>
-      </div>
-      <%= render 'shared/limit' %>
-      <div class="row">
-        <% @resources.each do |journal_entry| %>
-          <div class="col-12 col-md-4">
-            <div class="card mb-3">
-              <div class="card-header">
-                <span><%= journal_entry.feeling %></span>
-                <span><%= journal_entry.created %></span>
-              </div>
-              <div class="journal-text text-dark p-1">
-                <%= simple_format(journal_entry.entry) %>
-              </div>
+<%= render 'layouts/searchable', class_list: 'user journal-entry', header: 'Archive', index: 'journal_entries' do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |journal_entry| %>
+        <div class="col-12 col-md-4">
+          <div class="card mb-3">
+            <div class="card-header">
+              <span><%= journal_entry.feeling %></span>
+              <span><%= journal_entry.created %></span>
+            </div>
+            <div class="journal-text text-dark p-1">
+              <%= simple_format(journal_entry.entry) %>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
-  </section>
-  <%= render 'shared/pagination_controls', index: 'journal_entries' %>
-</main>
+  </div>
+<% end %>

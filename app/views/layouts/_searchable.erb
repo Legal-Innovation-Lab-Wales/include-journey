@@ -1,0 +1,12 @@
+<main class="container index <%= class_list %>">
+  <%= render 'shared/wrapped_search' %>
+  <section class="row">
+    <div class="col">
+      <h3><%= header %></h3>
+      <%= render 'shared/search_results' %>
+      <%= render 'shared/limit' %>
+      <%= yield %>
+    </div>
+    <%= render 'shared/pagination_controls', index: index %>
+  </section>
+</main>

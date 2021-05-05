@@ -63,14 +63,6 @@
     }
   }
 
-  &.new, &.index {
-    padding: 0;
-
-    .container {
-      padding: 0;
-    }
-  }
-
   .card {
     max-height: 50vh;
     @media screen and (min-width: $screen-md) {

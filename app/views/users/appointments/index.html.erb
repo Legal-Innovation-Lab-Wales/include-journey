@@ -1,46 +1,32 @@
-<main class="container user">
-  <%= render 'shared/back_btn', path: upcoming_appointments_path, text: 'Upcoming Appointments',
-             next_path: new_appointment_path, next_text: 'New Appointment' %>
-  <div class="row justify-content-end">
-    <%= render 'shared/search' %>
-  </div>
-  <div class="row justify-content-end mt-1">
-    <%= render 'shared/limit' %>
-  </div>
-  <section class="row appointments">
-    <div class="col">
-      <h3 class="mb-0">Past appointments</h3>
-      <div class="container">
-        <%= render 'shared/search_results' %>
-        <div class="row">
-          <% @resources.each do |past_appointment| %>
-            <div class="col-12 col-md-4 past">
-              <div class="card border-primary mt-3 text-al">
-                <div class="card-header"><%= past_appointment.what %> </div>
-                <div class="card-body">
-                  <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointment.who_with %> </p>
-                  <p> <i class="fas fa-location-arrow"></i> <%= past_appointment.where %></p>
-                  <p> <i class="fas fa-clock"></i> <%= past_appointment.time_on_date %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(past_appointment.start, past_appointment.end) %></p>
-                </div>
-                <div class="card-footer d-flex"><span class="me-auto">Attended: </span> <%= button_to toggle_attended_appointment_path(past_appointment), method: :put,
-                                                                                                      class: "btn #{past_appointment.attended ? 'btn-success' : 'btn-danger'}",
-                                                                                                      data: { confirm: past_appointment.attended ?
-                                                                                                                         "Set this appointment as unattended?" :
-                                                                                                                         "Set this appointment as attended" } do %>
-                    <% if past_appointment.attended %>
-                      <i class="fas fa-calendar-check"></i>
-                    <% else %>
-                      <i class="fas fa-calendar-times"></i>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'Past Appointments', index: 'appointments' do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |past_appointment| %>
+        <div class="col-12 col-md-4 past">
+          <div class="card border-primary mt-3 text-al">
+            <div class="card-header"><%= past_appointment.what %> </div>
+            <div class="card-body">
+              <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointment.who_with %> </p>
+              <p> <i class="fas fa-location-arrow"></i> <%= past_appointment.where %></p>
+              <p> <i class="fas fa-clock"></i> <%= past_appointment.time_on_date %></p>
+              <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(past_appointment.start, past_appointment.end) %></p>
             </div>
-          <% end %>
+            <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
+              <%= button_to toggle_attended_appointment_path(past_appointment), method: :put,
+                            class: "btn #{past_appointment.attended ? 'btn-success' : 'btn-danger'}",
+                            data: { confirm: past_appointment.attended ?
+                                               "Set this appointment as unattended?" :
+                                               "Set this appointment as attended" } do %>
+                <% if past_appointment.attended %>
+                  <i class="fas fa-calendar-check"></i>
+                <% else %>
+                  <i class="fas fa-calendar-times"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  </section>
-  <%= render 'shared/pagination_controls', index: 'appointments'%>
-</main>
+  </div>
+<% end %>
