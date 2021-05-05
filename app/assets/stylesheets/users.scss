@@ -145,7 +145,7 @@
             line-height: unset;
 
             &:first-child {
-              padding-left: 0;
+              padding-left: 0.1rem;
               padding-right: 0.2rem;
             }
 
@@ -173,8 +173,13 @@
           text-align: center;
           white-space: nowrap;
 
-          td:first-child {
-            font-weight: 600;
+          td {
+            height:unset;
+            line-height: unset;
+            &:first-child {
+
+              font-weight: 600;
+            }
           }
         }
       }
