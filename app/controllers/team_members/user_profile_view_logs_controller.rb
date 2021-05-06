@@ -7,21 +7,20 @@ module TeamMembers
     protected
 
     def resources
-      @team_member.user_profile_view_logs.includes(:user)
-                         .order(sort)
+      @team_member.user_profile_view_logs
+                  .includes(:user)
+                  .order(sort)
     end
 
     def search
-      @team_member.user_profile_view_logs.includes(:user)
-                         .where(user_search, wildcard_query)
-                         .order(sort)
+      @team_member.user_profile_view_logs
+                  .includes(:user)
+                  .where(user_search, wildcard_query)
+                  .order(sort)
     end
-
-    protected
 
     def subheading_stats
       # TODO: Add stats for team member view logs index
-
     end
 
     def sort
