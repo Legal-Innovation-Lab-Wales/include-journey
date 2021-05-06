@@ -1,19 +1,17 @@
 <main class="container team-members crisis-events">
   <%= render 'shared/back_btn' %>
   <%= render 'shared/wrapped_search' %>
-  <section class="row">
-    <div class="col">
-      <h3>Overview</h3>
-      <p>
-        There are currently <%= @active_events.count %> active crisis events from <%= @crisis_events_users %> users.
-        The oldest open event is from <%= "#{time_ago_in_words(@crisis_events.order(:created_at).first.created_at)} ago." %>
-      </p>
-      <p>
-        There are <%= @closed_events.count %> closed events. <%= @closed_events_30_days.count %> were closed within the last 30 days from <%= @closed_events_30_days.distinct.count(:user_id) %> users,
-        <%= @closed_events_7_days.count %> were closed within the last 7 days from <%= @closed_events_7_days.distinct.count(:user_id) %> users.
-      </p>
-    </div>
-  </section>
+  <% unless @query.present? %>
+    <section class="row">
+      <div class="col">
+        <h3>Overview</h3>
+        <p>
+          There are <%= @count %> closed events. <%= @closed_events_30_days.count %> were closed within the last 30 days from <%= @closed_events_30_days.distinct.count(:user_id) %> users,
+          <%= @closed_events_7_days.count %> were closed within the last 7 days from <%= @closed_events_7_days.distinct.count(:user_id) %> users.
+        </p>
+      </div>
+    </section>
+  <% end %>
   <section class="row">
     <div class="col">
       <h3>Closed Crisis Events</h3>
