@@ -12,11 +12,13 @@
       <% if local_assigns[:stats].present? %>
         <%= local_assigns[:stats] %>
       <% end %>
-      <% if local_assigns[:new_btn].present? %>
-        <%= local_assigns[:new_btn] %>
-      <% end %>
       <%= render 'shared/search/search_results' %>
-      <%= render 'shared/search/limit' %>
+      <div class="row mb-3">
+        <% if local_assigns[:new_btn].present? %>
+          <%= local_assigns[:new_btn] %>
+        <% end %>
+        <%= render 'shared/search/limit' %>
+      </div>
       <%= yield %>
     </div>
     <%= render 'shared/search/pagination_controls', index: index %>

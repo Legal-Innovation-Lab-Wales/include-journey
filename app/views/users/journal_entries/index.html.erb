@@ -1,9 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'user journal-entry', header: 'Journal Entries', index: 'journal_entries',
-           stats: render(partial: 'stats'), new_btn: render(partial: 'shared/new_btn_large',
-                                                            locals: { path: new_journal_entry_path,
-                                                                      icon: 'fa-plus-circle',
-                                                                      text: 'New Entry'
-                                                            }) do %>
+           stats: render(partial: 'stats'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_journal_entry_path, text: 'New Entry' }) do %>
   <div class="container p-0">
     <div class="row">
       <% @resources.each do |journal_entry| %>

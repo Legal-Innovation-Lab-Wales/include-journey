@@ -44,7 +44,9 @@
       <h3><%= @query.present? ? '' : 'All' %> users</h3>
       <%= render 'shared/search/search_results' %>
       <div class="container p-0">
-        <%= render 'shared/search/limit' %>
+        <div class="row justify-content-end mb-3">
+          <%= render 'shared/search/limit' %>
+        </div>
         <div class="row">
           <% @resources.each do |user| %>
             <%= render 'card', user: user, pinned: false %>
