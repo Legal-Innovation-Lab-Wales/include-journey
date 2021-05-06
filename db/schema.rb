@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   create_table "user_profile_view_logs", force: :cascade do |t|
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
+    t.string "view_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_user_profile_view_logs_on_team_member_id"

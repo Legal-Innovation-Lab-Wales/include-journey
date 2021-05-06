@@ -216,7 +216,9 @@ if User.count.zero?
       UserProfileViewLog.create!(
         team_member: team_member,
         user: user,
-        created_at: DateTime.now - rand(30...480).minutes
+        created_at: DateTime.now - rand(60...480).minutes,
+        updated_at: DateTime.now - rand(1...60).minutes,
+        view_count: rand(0..10)
       )
     end
 
@@ -226,7 +228,7 @@ if User.count.zero?
       wba_counter += 1
       user_wba_counter += 1
       created_at_value = DateTime.now - (wellbeing_assessments_for_each_user - user_wba_counter).day
-      #puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
+      # puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
         user: user,
