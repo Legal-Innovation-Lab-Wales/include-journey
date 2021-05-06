@@ -20,8 +20,6 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
-        get 'dashboard', action: :dashboard, on: :collection
-
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
       resources :appointments do
