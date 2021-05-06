@@ -1,0 +1,25 @@
+<%= form_with model: goal, url: goals_path, class: 'hidden' do |f| %>
+  <%= f.hidden_field :short_term, value: short_term %>
+  <div class="container p-0 m-0">
+    <div class="row p-0 m-0">
+      <div class="col-8 p-0">
+        <%= f.text_area :goal, class: 'form-control flex-2', placeholder: 'Goal', rows: 1, required: true %>
+      </div>
+      <div class="col-4 p-0">
+        <select class="form-select" name="goal[goal_type_id]">
+          <% goal_types.each do |goal_type| %>
+            <option value="<%= goal_type.id %>"><%= goal_type.emoji %> <%= goal_type.name %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="row p-0 m-0 mt-2 justify-content-end">
+      <div class="col-2 p-0">
+        <%= f.submit 'Add️', class: 'btn btn-success' %>
+      </div>
+      <div class="col-2 p-0">
+        <div class="btn btn-danger cancel">Cancel</div>
+      </div>
+    </div>
+  </div>
+<% end %>
