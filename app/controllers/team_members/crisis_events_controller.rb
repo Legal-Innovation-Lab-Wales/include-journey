@@ -2,7 +2,6 @@ module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < TeamMembersApplicationController
     before_action :crisis_event, except: %i[index active]
-    before_action :crisis_events, only: :active
     include Pagination
 
     # GET /crisis_events/active
