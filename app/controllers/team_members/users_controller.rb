@@ -13,7 +13,7 @@ module TeamMembers
 
     # GET /users/:id
     def show
-      view_log
+      log_view
       user_location
       wellbeing_assessment
       @note = Note.new
@@ -81,9 +81,12 @@ module TeamMembers
 
     private
 
-    def view_log
-      return if current_team_member.user_profile_view_logs.create!(user: @user)
-
+    def log_view
+      UserProfileViewLog.transaction do
+        view_log = current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
+        view_log.save!
+      end
+    rescue ActiveRecord::RecordInvalid
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
 
