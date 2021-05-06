@@ -1,10 +1,10 @@
-<%= render 'layouts/searchable', class_list: 'user appointments', header: 'Past Appointments', index: 'appointments' do %>
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'Past Appointments', index: 'appointments',
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_appointment_path, text: 'Add Appointment' } ) do %>
   <div class="container p-0">
-    <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
     <div class="row">
       <% @resources.each do |past_appointment| %>
         <div class="col-12 col-md-4 past">
-          <div class="card border-primary mt-3 text-al">
+          <div class="card border-primary mb-3 text-al">
             <div class="card-header"><%= past_appointment.what %> </div>
             <div class="card-body">
               <p class="card-text"> <i class="fas fa-user"></i> <%= past_appointment.who_with %> </p>
