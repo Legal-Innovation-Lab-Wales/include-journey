@@ -16,7 +16,7 @@
             <div class="row">
               <%  @team_members.each do |team_member| %>
                 <div class="col-6 p-1">
-                  <% permitted = last_permission(@last_permissions, team_member.id) %>
+                  <% permitted = has_permission(true, @last_permissions, team_member.id) %>
                   <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check', checked: permitted %>
                   <%= f.label "team_member_#{team_member.id}", class: "btn w-100 #{ permitted ? 'selected' : '' }" do %>
                     <%= team_member.full_name %>

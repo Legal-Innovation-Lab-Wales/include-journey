@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions do
           get 'edit', action: :edit, on: :collection
+          put '', action: :update, on: :collection
         end
       end
       resources :appointments do
