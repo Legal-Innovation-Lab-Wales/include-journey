@@ -10,12 +10,12 @@ require 'faker'
 
 total_user_count = 10
 wellbeing_assessments_for_each_user = 20
-journal_entries_for_each_user = 5
+journal_entries_for_each_user = 10
 contacts_for_each_user = 5
 goals_for_each_user = 10 # Half short-term, half long-term
-appointments_for_each_user = 20
-past_appointments_for_each_user = 20
-crisis_events_count = 50
+appointments_for_each_user = 10
+past_appointments_for_each_user = 10
+crisis_events_count = 10
 crisis_notes_count = 5
 notes_count = 100
 start_time = Time.now
