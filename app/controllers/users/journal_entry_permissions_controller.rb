@@ -6,6 +6,11 @@ module Users
       render 'new'
     end
 
+    # GET /journal_entries/:journal_entry_id/journal_entry_permissions/edit
+    def edit
+      render 'edit'
+    end
+
     protected
 
     def path

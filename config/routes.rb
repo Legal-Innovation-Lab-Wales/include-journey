@@ -22,7 +22,9 @@ Rails.application.routes.draw do
       resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
 
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+          get 'edit', action: :edit, on: :collection
+        end
       end
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection

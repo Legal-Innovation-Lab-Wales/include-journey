@@ -1,0 +1,42 @@
+<main class="container user permissions mb-3">
+  <section class="row">
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <p>Please let us know which Include UK team members you are happy sharing the below information with.</p>
+          </div>
+        </div>
+        <div class="row mb-3 model-info">
+          <div class="col"><strong>Journal Entry</strong></div>
+          <div class="col"><strong><%= @model.created %></strong></div>
+        </div>
+        <div class="btn btn-primary"><i class="fas fa-plus-circle"></i> Select All </div>
+        <div class="btn btn-primary"><i class="fas fa-times-circle"></i> Select none</div>
+        <%= form_with model: @model, url: journal_entry_permissions_path(@model), method: :put do |f| %>
+          <div class="container p-0 mb-2">
+            <div class="row">
+              <%  @team_members.each do |team_member| %>
+                <div class="col-6 p-1">
+                  <% permitted = last_permission(@last_permissions, team_member.id) %>
+                  <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check', checked: permitted %>
+                  <%= f.label "team_member_#{team_member.id}", class: "btn w-100 #{ permitted ? 'selected' : '' }" do %>
+                    <%= team_member.full_name %>
+                    <i class="fas <%= permitted ? 'fa-check-circle' : 'fa-times-circle'%>"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <div class="row mt-3">
+              <div class="col text-center">
+                <%= f.submit 'Share', class: 'btn btn-primary mt-2' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'permissions' %>
