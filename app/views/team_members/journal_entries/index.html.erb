@@ -1,67 +1,37 @@
-<main class="container team-members journal-entry index">
-  <%= render 'shared/back_btn' %>
-  <section class="row pb-0 pt-0 mb-0 mt-3 mt-md-0 justify-content-end">
-    <div class="col-12 col-md-6">
-      <div class="search input-group">
-        <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="Search">
-        <select class="form-select" id="viewed-input">
-          <option value="all" selected>All</option>
-          <option value="1">Viewed</option>
-          <option value="0">Not Viewed</option>
-        </select>
-        <select class="form-select" id="feeling-input">
-          <option value="all">All</option>
-          <!-- 🥳,☺️,😔,😡,💩,😐 -->
-          <% %w[1F973 1F60A 1F614 1F620 1F4A9 1F610].each do |unicode| %>
-            <option value="&#x<%= unicode %>">&#x<%= unicode %></option>
-          <% end %>
-        </select>
-        <span class="input-group-text" id="search-btn"><i class="fas fa-search"></i></span>
-      </div>
-    </div>
-  </section>
-  <section class="row">
-    <div class="col">
-      <h3>Journal Entries</h3>
-      <%= render 'shared/search_results' %>
-      <%= render 'shared/limit' %>
-      <div class="table-container">
-        <table class="table table-dark table-striped link-table">
-          <thead>
-            <th scope="col">User</th>
-            <th scope="col">Feeling</th>
-            <th scope="col">Viewed</th>
-            <th scope="col">Created At</th>
-          </thead>
-          <tbody>
-            <% @resources.each do |journal_entry| %>
-              <tr>
-                <td>
-                  <%= link_to "#{journal_entry.user.full_name}", journal_entry_path(journal_entry) %>
-                </td>
-                <td>
-                  <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
-                </td>
-                <td>
-                  <%= link_to journal_entry_path(journal_entry) do %>
-                    <% if journal_entry.journal_entry_view_logs.empty? %>
-                      <i class="fas fa-times-circle"></i>
-                    <% else %>
-                      <i class="fas fa-check-circle"></i>
-                    <% end %>
-                  <% end %>
-                </td>
-                <td>
-                  <%= link_to "#{journal_entry.created}", journal_entry_path(journal_entry) %>
-                </td>
-              </tr>
+<%= render 'layouts/searchable', class_list: 'team-members journal-entry', header: 'Journal Entries',
+           index: 'journal_entries', search: render(partial: 'shared/journal_entries/search') do %>
+  <div class="table-container">
+    <table class="table table-dark table-striped link-table">
+      <thead>
+      <th scope="col">User</th>
+      <th scope="col">Feeling</th>
+      <th scope="col">Viewed</th>
+      <th scope="col">Created At</th>
+      </thead>
+      <tbody>
+      <% @resources.each do |journal_entry| %>
+        <tr>
+          <td>
+            <%= link_to "#{journal_entry.user.full_name}", journal_entry_path(journal_entry) %>
+          </td>
+          <td>
+            <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
+          </td>
+          <td>
+            <%= link_to journal_entry_path(journal_entry) do %>
+              <% if journal_entry.journal_entry_view_logs.empty? %>
+                <i class="fas fa-times-circle"></i>
+              <% else %>
+                <i class="fas fa-check-circle"></i>
+              <% end %>
             <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <%= render 'shared/pagination_controls', index: 'journal_entries' %>
-  </section>
-</main>
-
-<%= javascript_pack_tag 'journal_entry_search' %>
+          </td>
+          <td>
+            <%= link_to "#{journal_entry.created}", journal_entry_path(journal_entry) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

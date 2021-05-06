@@ -1,12 +1,24 @@
 <main class="container index <%= class_list %>">
-  <%= render 'shared/wrapped_search' %>
+  <% if local_assigns[:search].present? %>
+    <%= local_assigns[:search] %>
+  <% else %>
+    <section class="row pb-0 mb-0 justify-content-end">
+      <%= render 'shared/search/search' %>
+    </section>
+  <% end %>
   <section class="row">
     <div class="col">
       <h3><%= header %></h3>
-      <%= render 'shared/search_results' %>
-      <%= render 'shared/limit' %>
+      <% if local_assigns[:stats].present? %>
+        <%= local_assigns[:stats] %>
+      <% end %>
+      <% if local_assigns[:new_btn].present? %>
+        <%= local_assigns[:new_btn] %>
+      <% end %>
+      <%= render 'shared/search/search_results' %>
+      <%= render 'shared/search/limit' %>
       <%= yield %>
     </div>
-    <%= render 'shared/pagination_controls', index: index %>
+    <%= render 'shared/search/pagination_controls', index: index %>
   </section>
 </main>

@@ -1,44 +1,28 @@
 <% if @user.present? %>
-  <main class="container team-members wellbeing-assessments index">
-    <section class="row">
-      <div class="col p-0 p-md-3">
-        <h3><%= @user.full_name %> wellbeing assessments</h3>
-        <div class="subheading">
-          <p><%= @user.first_name %> has <%= @count %> wellbeing assessments.</p>
-          <p><%= pluralize(@count_in_last_week, 'has', 'have') %> been completed in the last week
-            and <%= @count_in_last_month %> in the last month.</p>
-          <p><%= pluralize(@count_by_team_member, 'of the total has', 'of the total have') %> been completed by Team
-            Members and the other <%= pluralize(@count_by_user, 'was', 'were') %> completed
-            by <%= @user.first_name %></p>
-        </div>
-        <div class="container p-3">
-          <%= render 'shared/limit' %>
-        </div>
-        <div id="card-view" class="container p-3">
-          <div class="row">
-            <% @resources.each do |wellbeing_assessment| %>
-              <%= render 'card', wellbeing_assessment: wellbeing_assessment %>
-            <% end %>
-          </div>
-        </div>
-        <div id="table-view" class="d-none">
-          <small class="pb-2 mobile-hint">
-            Table too big? Try turing your phone sideways or checking out this page on your computer
-          </small>
-          <div class="row table-container">
-            <table class="user-wba-index">
-              <% @resources.each do |wellbeing_assessment| %>
-                <%= render 'row', wellbeing_assessment: wellbeing_assessment %>
-              <% end %>
-            </table>
-          </div>
-        </div>
+  <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments', header: "#{@user.full_name} wellbeing assessments",
+             index: 'user_wellbeing_assessments', search: render('search'), stats: render('stats')  do %>
+    <div id="card-view" class="container p-0">
+      <div class="row">
+        <% @resources.each do |wellbeing_assessment| %>
+          <%= render 'card', wellbeing_assessment: wellbeing_assessment %>
+        <% end %>
       </div>
-    </section>
-    <%= render 'shared/pagination_controls', index: 'user_wellbeing_assessments' %>
-    <button class="btn btn-sm view-toggle-btn" onclick="toggleViewMode()">Toggle View Mode</button>
-  </main>
+    </div>
+    <div id="table-view" class="d-none p-0">
+      <small class="pb-2 mobile-hint">
+        Table too big? Try turing your phone sideways or checking out this page on your computer
+      </small>
+      <div class="row table-container">
+        <table class="user-wba-index">
+          <% @resources.each do |wellbeing_assessment| %>
+            <%= render 'row', wellbeing_assessment: wellbeing_assessment %>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  <% end %>
 
+  <button class="btn btn-sm view-toggle-btn" onclick="toggleViewMode()">Toggle View Mode</button>
   <%= javascript_pack_tag 'view_mode' %>
 <% else %>
   <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments',
