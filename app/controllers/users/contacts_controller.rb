@@ -37,7 +37,7 @@ module Users
     # DELETE /contacts/:id
     def destroy
       if @contact.destroy!
-        redirect_to contacts_path, flash: { success: 'Contact removed' }
+        redirect_to current_user.contacts.count.zero? ? authenticated_user_root_path : contacts_path, flash: { success: 'Contact removed' }
       else
         redirect_to edit_contact_path, flash: { error: 'Error removing contact' }
       end

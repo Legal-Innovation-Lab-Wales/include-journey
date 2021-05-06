@@ -14,13 +14,21 @@ module TeamMembers
     protected
 
     def resources
-      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs).order(created_at: :desc)
+      if journal_entry_params[:feeling].present? || journal_entry_params[:viewed].present?
+        current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                           .joins(:user)
+                           .where(journal_entry_search(''), query_terms({}))
+                           .order(created_at: :desc)
+      else
+        current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+                           .order(created_at: :desc)
+      end
     end
 
     def search
       current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
                          .joins(:user)
-                         .where(user_search, wildcard_query)
+                         .where(journal_entry_search("(#{user_search})"), query_terms(wildcard_query))
                          .order(created_at: :desc)
     end
 
@@ -41,8 +49,29 @@ module TeamMembers
 
     def subheading_stats
       # TODO: Add stats for journal index. IJ-123
-
     end
 
+    def journal_entry_params
+      params.permit(:page, :query, :limit, :viewed, :feeling)
+    end
+
+    def query_terms(query)
+      query = query.merge({ feeling: journal_entry_params[:feeling] }) if journal_entry_params[:feeling].present?
+      query
+    end
+
+    def journal_entry_search(search)
+      if journal_entry_params[:feeling].present?
+        search += ' and ' if search.present?
+        search += 'feeling=:feeling'
+      end
+
+      if journal_entry_params[:viewed].present?
+        search += ' and ' if search.present?
+        search += "journal_entry_view_logs.id is #{journal_entry_params[:viewed].to_i.zero? ? '' : 'not '}null"
+      end
+
+      search
+    end
   end
 end

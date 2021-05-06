@@ -1,0 +1,41 @@
+<main class="container user goals index">
+  <%= render 'shared/back_btn', next_path: goals_archive_index_path, next_text: 'Archive' %>
+  <section class="row mt-0 pt-0">
+    <h3>My Goals</h3>
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6 short-term mb-3 mb-md-0">
+            <div class="card">
+              <div class="card-header">
+                <h4>Short Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.short_term %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: true %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 long-term">
+            <div class="card">
+              <div class="card-header">
+                <h4>Long Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.long_term %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: false %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= render 'goal_modal' %>
+
+<%= javascript_pack_tag 'goals' %>
+<%= javascript_pack_tag 'goals_modal' %>

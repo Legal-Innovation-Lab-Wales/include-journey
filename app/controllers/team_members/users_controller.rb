@@ -113,7 +113,7 @@ module TeamMembers
     end
 
     def user_counts
-      @active_users = User.where(last_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
+      @active_users = User.where(current_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
       @user_count = User.count
     end
 

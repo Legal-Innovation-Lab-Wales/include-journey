@@ -18,7 +18,6 @@
 
       &:hover {
         color: $brand-primary;
-        background-color: $brand-secondary;
       }
 
       .card-body {
@@ -36,6 +35,10 @@
             }
           }
         }
+
+        &:hover {
+          background: $blue-grad;
+        }
       }
     }
 
@@ -44,8 +47,7 @@
         transition: 0.2s;
 
         &:hover {
-          color: $brand-secondary;
-          background-color: transparent;
+          background: transparent;
         }
       }
     }
@@ -64,14 +66,14 @@
         width: 50px;
 
         &.value-1 {background-color: #E04444E6;}
-        &.value-2 {background-color: #E64D52E6;}
-        &.value-3 {background-color: #E86754E6;}
-        &.value-4 {background-color: #EC8754E6;}
+        &.value-2 {background-color: #e66043E6;}
+        &.value-3 {background-color: #eb7945E6;}
+        &.value-4 {background-color: #ee904bE6;}
         &.value-5 {background-color: #F0A656E6;}
         &.value-6 {background-color: #DFC54CE6;}
-        &.value-7 {background-color: #BFCA48E6;}
-        &.value-8 {background-color: #9ECB46E6;}
-        &.value-9 {background-color: #BFCB43E6;}
+        &.value-7 {background-color: #c1c041E6;}
+        &.value-8 {background-color: #a2ba3aE6;}
+        &.value-9 {background-color: #82b438E6;}
         &.value-10 {background-color: #5DAD3AE6;}
       }
 
@@ -87,6 +89,7 @@ section#wellbeing {
   color: $black;
 
   h3, h5, .submit-btn {
+    color: $black;
     text-align: center !important;
   }
 

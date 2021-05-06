@@ -1,15 +1,39 @@
 <main class="container user journal-entry index">
   <%= render 'shared/back_btn' %>
   <section class="row">
+    <div class="col">
+        <h2>Journal Entries</h2>
+        <p class="mb-0">
+          You have penned <%= "#{pluralize(@resources.count, 'journal')}" %>.
+          <%= @entries_in_last_30_days %> in the last month.
+          Your most recent was <%= "#{pluralize(@days_since_last_entry, 'day')}" %> ago.
+        </p>
+        <p class="mb-0">
+          If you're ready to add another entry, click the 'new entry' button or you can view your previous entries.
+        </p>
+      </div>
+  </section>
+  <div class="row justify-content-md-center">
+    <div class="col-auto">
+      <%= link_to new_journal_entry_path, class: 'btn btn-primary btn-lg' do %>
+        <i class="fas fa-plus-circle"></i> New Entry 
+      <% end %>
+    </div>
+  </div>
+  <section class="row">
     <div class="container">
-      <div class="row justify-content-end">
+      <div class="row">
+        <h3 class="mb-3">Archive</h3>
+        <%= render 'shared/search_results' %>
+      </div>
+      <div class="row justify-content-end mb-2">
         <%= render 'shared/search' %>
       </div>
       <div class="row">
-        <h2 class="mb-3">Archive</h2>
-        <%= render 'shared/search_results' %>
+        <div class="col">
+          <%= render 'shared/limit' %>
+        </div>
       </div>
-      <%= render 'shared/limit' %>
       <div class="row">
         <% @resources.each do |journal_entry| %>
           <div class="col-12 col-md-4">

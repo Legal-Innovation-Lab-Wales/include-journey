@@ -1,16 +1,19 @@
-const chart_wrapper = document.querySelector('#wellbeing-history-chart-carousel .carousel-inner'),
-    slide_buttons = document.querySelectorAll('#wellbeing-history-chart-carousel button'),
+const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
+    chart_wrapper = carousel.querySelector('.carousel-inner'),
+    slide_buttons = carousel.querySelectorAll('button'),
+    metric_select = carousel.querySelector('select'),
+    indicators = carousel.querySelector('.carousel-indicators'),
     scale = [
-        { description: "Abysmal", colour: "#E04444" },
-        { description: "Dreadful", colour: "#E64D52" },
-        { description: "Rubbish", colour: "#E86754" },
-        { description: "Bad", colour: "#EC8754" },
-        { description: "Mediocre", colour: "#F0A656" },
-        { description: "Fine", colour: "#DFC54C" },
-        { description: "Good", colour: "#BFCA48" },
-        { description: "Great", colour: "#9ECB46" },
-        { description: "Superb", colour: "#BFCB43" },
-        { description: "Perfect", colour: "#5DAD3A" }
+      { description: "Abysmal", colour: "#E04444" },
+      { description: "Dreadful", colour: "#e66043" },
+      { description: "Rubbish", colour: "#eb7945" },
+      { description: "Bad", colour: "#ee904b" },
+      { description: "Mediocre", colour: "#F0A656" },
+      { description: "Fine", colour: "#DFC54C" },
+      { description: "Good", colour: "#c1c041" },
+      { description: "Great", colour: "#a2ba3a" },
+      { description: "Superb", colour: "#82b438" },
+      { description: "Perfect", colour: "#5DAD3A" }
     ],
     create_chart = (history_chart, data) => {
         new Chart(history_chart.getContext('2d'), {
@@ -27,8 +30,9 @@ const chart_wrapper = document.querySelector('#wellbeing-history-chart-carousel 
                             }
                         },
                         ticks: {
-                            bounds: 'ticks',
-                            source: 'auto'
+                            autoSkip: true,
+                            maxTicksLimit: 11
+
                         },
                         gridLines: {
                             zeroLineColor: 'gray',
@@ -63,6 +67,10 @@ const chart_wrapper = document.querySelector('#wellbeing-history-chart-carousel 
                 }
             }
         })
+    },
+    toggle_active = (parent, event, css_selector) => {
+        parent.querySelector('.active').classList.remove('active')
+        parent.querySelectorAll(css_selector)[event.target.value].classList.add('active')
     }
 
 fetch(`${location}/wba_history`, {
@@ -80,18 +88,31 @@ fetch(`${location}/wba_history`, {
         const canvas = document.createElement('canvas')
         canvas.classList.add(`wellbeing-history-chart-${index}`)
 
-        const heading = document.createElement('h4')
-        heading.innerHTML = dataset.label
+        const option = document.createElement('option')
+        option.setAttribute('value', index)
+        option.innerHTML = dataset.label
 
-        carousel_item.append(heading)
+        const indicator = document.createElement('button')
+        indicator.setAttribute('type', 'button')
+        indicator.setAttribute('type', 'button')
+        indicator.dataset.bsTarget = '#wellbeing-history-chart-carousel'
+        indicator.dataset.bsSlideTo = index
+        indicator.dataset.toggle = 'tooltip'
+        indicator.setAttribute('title', dataset.label)
+        if (index === 0) indicator.classList.add('active')
+        if (index === 0) indicator.setAttribute('aria-current', 'true')
+        indicator.setAttribute('aria-label', dataset.label)
+
+        indicators.append(indicator)
+        metric_select.append(option)
         carousel_item.append(canvas)
         chart_wrapper.append(carousel_item)
 
         dataset.borderColor = '#1F77B4'
         dataset.lineTension = 0
         dataset.fill = false
-        dataset.radius = 5
-        dataset.hoverRadius = 6
+        dataset.radius = 2
+        dataset.hoverRadius = 10
         dataset.pointStyle = 'rectRounded'
 
         create_chart(canvas, {
@@ -102,3 +123,10 @@ fetch(`${location}/wba_history`, {
 
     slide_buttons.forEach(button => button.classList.remove('hidden'))
 })
+
+metric_select.addEventListener('change', e => {
+    toggle_active(chart_wrapper, e, '.carousel-item')
+    toggle_active(indicators, e, 'button')
+})
+
+carousel.addEventListener('slid.bs.carousel', e => metric_select.value = e.to)

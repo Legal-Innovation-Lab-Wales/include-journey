@@ -27,11 +27,13 @@
 
     @media screen and (min-width: $screen-md) {
       section {
-        background-color: $grey;
         max-width: 60vw !important;
 
         &.back-btn {
           background-color: transparent;
+        }
+        &.new-journal-section {
+          background: $blue-grad;
         }
 
         #emojis {
@@ -91,6 +93,25 @@
     .journal-text {
       text-align: start;
       overflow: auto;
+    }
+  }
+
+  &.team-members.index {
+    section {
+      .search {
+        input:first-child {
+          flex: 1;
+        }
+
+        .form-select {
+          &:nth-child(2) {
+            flex: 0.6;
+          }
+          &:nth-child(3) {
+            flex: 0.15;
+          }
+        }
+      }
     }
   }
 }

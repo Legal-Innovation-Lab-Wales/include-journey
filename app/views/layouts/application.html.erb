@@ -7,6 +7,7 @@
     <%= csp_meta_tag %>
 
     <style>@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@800&display=swap');</style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -24,13 +25,15 @@
     <% end %>
   <% end %>
 
-
   <% flash.each do |type, msg| %>
     <% if type != 'timedout' %>
       <div class="alert <%= alert_class_for(type) %> alert-dismissible fade show position-absolute top-0 start-50 translate-middle-x px-5" role="alert">
         <%= msg %>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
+      <% if type == 'congratulations' %>
+        <%= javascript_pack_tag 'confetti' %>
+      <% end %>
     <% end %>
   <% end %>
 
