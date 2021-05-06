@@ -41,14 +41,17 @@
               <td>
                 <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
                   <span class="text-start">
-                        <%= link_to crisis_event_path(crisis_event) do %>
-                          <span class="badge bg-primary me-2">Note</span>
-                          <span><%= crisis_event.crisis_notes.last.content %></span>
-                        <% end %>
-                      </span>
+                    <%= link_to crisis_event_path(crisis_event) do %>
+                      <span class="badge bg-primary text-dark me-2">Note</span>
+                      <span><%= crisis_event.crisis_notes.last.content %></span>
+                    <% end %>
+                  </span>
                 <% else %>
                   <span class="text-start">
-                    <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                    <%= link_to crisis_event_path(crisis_event) do %>
+                      <span class="badge bg-secondary me-2">Info</span>
+                      <span><%= crisis_event.additional_info %></span>
+                    <% end %>
                   </span>
                 <% end %>
               </td>
