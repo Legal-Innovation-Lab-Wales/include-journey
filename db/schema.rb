@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142947) do
+ActiveRecord::Schema.define(version: 2021_04_07_142949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,26 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
+  end
+
+  create_table "goal_types", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "emoji", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "goal_type_id", null: false
+    t.text "goal", null: false
+    t.boolean "short_term", default: true, null: false
+    t.datetime "achieved_on"
+    t.boolean "archived", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
+    t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "journal_entries", force: :cascade do |t|
@@ -233,6 +253,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
   add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
+  add_foreign_key "goals", "goal_types"
+  add_foreign_key "goals", "users"
   add_foreign_key "journal_entries", "users"
   add_foreign_key "journal_entry_permissions", "journal_entries"
   add_foreign_key "journal_entry_permissions", "team_members"
