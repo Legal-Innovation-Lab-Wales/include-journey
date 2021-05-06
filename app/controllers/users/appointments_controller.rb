@@ -8,7 +8,7 @@ module Users
     # GET /appointments/upcoming
     def upcoming
       @appointments = current_user.appointments.where('start >= ?', Time.now).order(start: :asc)
-
+      @count_in_next_week = @appointments.where('start <= ?', 1.week.from_now).size
       render 'upcoming'
     end
 
@@ -117,8 +117,6 @@ module Users
     def subheading_stats
       @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
       @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
-      # TODO: This doesnt seem to work for some reason on upcoming.html.erb
-      @count_in_next_week = @resources.where('appointments.start <= ?', 1.week.ago).size
   end
   end
 end
