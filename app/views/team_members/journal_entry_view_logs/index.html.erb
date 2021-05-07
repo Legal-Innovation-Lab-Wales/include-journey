@@ -1,7 +1,5 @@
-<%= render 'layouts/searchable', class_list: 'team-members journal-entry-view-logs',
-           header: "#{@team_member.full_name} journal entry view logs (#{@count})",
-           index: 'team_member_journal_entry_view_logs' do %>
-  <div class="input-group date-sort-select mb-3">
+<div class="row justify-content-end mt-5">
+  <div class="input-group date-sort-select">
     <select class="form-select">
       <option value="viewed_at_desc">Viewed At (Descending)</option>
       <option value="viewed_at_asc">Viewed At (Ascending)</option>
@@ -9,6 +7,13 @@
       <option value="created_at_asc">Created At (Ascending)</option>
     </select>
   </div>
+</div>
+
+<%= render 'layouts/searchable', class_list: 'team-members journal-entry-view-logs',
+           header: "#{@team_member.full_name}",
+           subheader: "journal entry view logs (#{@count})",
+           index: 'team_member_journal_entry_view_logs' do %>
+  
   <table class="table table-dark table-striped">
     <thead>
     <th scope="col">User</th>

@@ -1,25 +1,57 @@
 <main class="container index <%= class_list %>">
-  <% if local_assigns[:search].present? %>
-    <%= local_assigns[:search] %>
-  <% else %>
-    <section class="row pb-0 mb-0 justify-content-end">
-      <%= render 'shared/search/search' %>
-    </section>
-  <% end %>
   <section class="row">
     <div class="col">
-      <h3><%= header %></h3>
+      <h1 class="mb-0"><%= header %></h1>
+      <% if local_assigns[:subheader].present? %>
+        <h4 class="mb-4"><%= local_assigns[:subheader] %></h4>
+      <% end %>
+
       <% if local_assigns[:stats].present? %>
         <%= local_assigns[:stats] %>
       <% end %>
       <%= render 'shared/search/search_results' %>
-      <div class="row mb-3">
-        <% if local_assigns[:new_btn].present? %>
-          <%= local_assigns[:new_btn] %>
+
+      <div class="row pb-2">
+        <div class="col-md-7">
+          <% if local_assigns[:new_btn].present? %>
+            <%= local_assigns[:new_btn] %>
+          <% end %>
+        </div>
+        
+        <% if local_assigns[:search].present? %>
+          <div class="row justify-content-end">
+            <%= local_assigns[:search] %>
+            <div class="col" style="flex: 0 0 90px; padding-left: 0px;">
+              <%= render 'shared/search/limit' %>
+            </div>
+          </div>
+        <% else %>
+          <div class="col-md-5">
+            <div class="row">
+              
+                <div class="col" style="padding-right: 0px;">
+                  <%= render 'shared/search/search' %>
+                </div>
+              
+              <div class="col" style="flex: 0 0 90px; padding-left: 0px;">
+                <%= render 'shared/search/limit' %>
+              </div>
+            </div>
+          </div>
         <% end %>
-        <%= render 'shared/search/limit' %>
       </div>
+
+      
+
+      
       <%= yield %>
+
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <small class="text-muted">Showing 1-5 of 5 results</small>
+        </div>
+      </div>
+
     </div>
     <%= render 'shared/search/pagination_controls', index: index %>
   </section>
