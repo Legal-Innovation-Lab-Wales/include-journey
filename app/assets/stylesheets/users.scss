@@ -116,12 +116,17 @@
     table tbody td a {
       color: $black;
     }
-
   }
 
   #notes-card {
-    max-height: 57vh;
+    max-height: 50vh;
     overflow: auto;
+    .note-card {
+      background: $white;
+      .card-header {
+        background-color: rgba($brand-secondary-alt, 0.01);
+      }
+    }
   }
 
   &.show {
@@ -164,6 +169,7 @@
           }
         }
       }
+
       .alert {
         border: 5px solid $danger-dark;
       }
