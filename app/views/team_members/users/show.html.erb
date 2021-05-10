@@ -75,7 +75,7 @@
               <% end %>
 
               <div class="text-center">
-                <% if @wellbeing_assessment.today? %>
+                <% unless @wellbeing_assessment.today? %>
                   <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
                 <% end %>
                 <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
