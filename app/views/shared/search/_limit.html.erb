@@ -1,4 +1,4 @@
-
+<div class="col">
   <div class="input-group limit-select">
     <select class="form-select" aria-label="Index Limit">
       <option value="<%= @resources_per_page %>" selected><%= @resources_per_page %></option>
@@ -7,6 +7,6 @@
       <option value="<%= @resources_per_page * 10 %>"><%= @resources_per_page * 10 %></option>
     </select>
   </div>
-
+</div>
 
 <%= javascript_pack_tag 'limit' %>
