@@ -112,6 +112,13 @@
     font-weight: 700 !important;
   }
 
+  #journal-card {
+    table tbody td a {
+      color: $black;
+    }
+
+  }
+
   #notes-card {
     max-height: 57vh;
     overflow: auto;
