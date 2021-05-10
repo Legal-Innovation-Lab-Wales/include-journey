@@ -10,11 +10,6 @@ module Users
       render 'new'
     end
 
-    # GET /journal_entries/dashboard
-    def dashboard
-      render 'dashboard'
-    end
-
     # POST /journal_entries
     def create
       if (@journal_entry = current_user.journal_entries.create!(journal_entry_params))
@@ -24,11 +19,7 @@ module Users
       end
     end
 
-    private
-
-    def journal_entry_params
-      params.require(:journal_entry).permit(:entry, :feeling)
-    end
+    protected
 
     def resources_per_page
       3
@@ -42,6 +33,19 @@ module Users
       current_user.journal_entries
                   .where('lower(entry) similar to lower(:query)', wildcard_query)
                   .order(created_at: :desc)
+    end
+
+    def subheading_stats
+      return unless @resources.present?
+
+      @entries_in_last_30_days = @resources.where('created_at >= ?', 30.days.ago).count
+      @days_since_last_entry = (Time.now.to_date - @resources.first.created_at.to_date).to_i
+    end
+
+    private
+
+    def journal_entry_params
+      params.require(:journal_entry).permit(:entry, :feeling)
     end
   end
 end
