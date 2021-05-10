@@ -8,12 +8,12 @@ class User < DeviseRecord
 
   has_many :notes, foreign_key: :user_id
   has_many :contacts, foreign_key: :user_id
-
   has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
-
   has_many :crisis_events, foreign_key: :user_id
   has_many :journal_entries, foreign_key: :user_id
+  has_many :appointments, foreign_key: :user_id
+  has_many :goals, foreign_key: :user_id
 
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
@@ -39,6 +39,18 @@ class User < DeviseRecord
               .order(created_at: :desc).each { |score| score.add_to_history(history) }
 
     history
+  end
+
+  def future_appointments
+    appointments.order(start: :asc).filter(&:future)
+  end
+
+  def past_appointments
+    appointments.order(start: :asc).filter(&:past)
+  end
+
+  def last_month_appointments
+    appointments.order(start: :asc).filter(&:last_month)
   end
 
   # validations

@@ -9,12 +9,15 @@
 require 'faker'
 
 total_user_count = 10
-wellbeing_assessments_for_each_user = 5
-journal_entries_for_each_user = 5
+wellbeing_assessments_for_each_user = 20
+journal_entries_for_each_user = 10
 contacts_for_each_user = 5
+goals_for_each_user = 10 # Half short-term, half long-term
+appointments_for_each_user = 10
+past_appointments_for_each_user = 10
 crisis_events_count = 10
 crisis_notes_count = 5
-notes_count = 1000
+notes_count = 100
 start_time = Time.now
 
 # Create Static Team Members
@@ -159,30 +162,18 @@ end
 
 # Create Crisis Types
 if CrisisType.count.zero?
-  CrisisType.create!(
-    category: 'Self Harm',
-    team_member_id: 1
-  )
+  CrisisType.create!(category: 'Self Harm', team_member_id: 1)
+  CrisisType.create!(category: 'Harming Others', team_member_id: 1)
+  CrisisType.create!(category: 'Suicide', team_member_id: 1)
+  CrisisType.create!(category: 'Overdose', team_member_id: 1)
+  CrisisType.create!(category: 'Domestic Violence', team_member_id: 1)
+end
 
-  CrisisType.create!(
-    category: 'Harming Others',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Suicide',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Overdose',
-    team_member_id: 1
-  )
-
-  CrisisType.create!(
-    category: 'Domestic Violence',
-    team_member_id: 1
-  )
+# Create Goal Types
+if GoalType.count.zero?
+  GoalType.create!(name: 'Aspiration', emoji: '💪')
+  GoalType.create!(name: 'Hope', emoji: '🕊')
+  GoalType.create!(name: 'Meaning', emoji: '🙏')
 end
 
 # Create Service Users & Associated Records
@@ -190,6 +181,8 @@ end
 user_counter = 0
 wba_counter = 0
 journal_counter = 0
+goals_counter = 0
+appointment_counter = 0
 
 if User.count.zero?
   total_user_count.times do
@@ -248,7 +241,7 @@ if User.count.zero?
       journal_entry = JournalEntry.new(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[😊 😔 😠 💩 😐].sample,
+        feeling: %w[🥳 😊 😔 😠 💩 😐].sample,
         created_at: created_at_value
       )
       journal_entry.save!
@@ -274,6 +267,7 @@ if User.count.zero?
       end
     end
 
+    # Create Contacts for each User
     contacts_for_each_user.times do
       name = Faker::Name.name
       Contact.create!(
@@ -282,6 +276,47 @@ if User.count.zero?
         number: Faker::Number.leading_zero_number(digits: 11),
         email: Faker::Internet.email(name: name, separators: '-'),
         description: Faker::Job.position
+      )
+    end
+
+    # Create Goals for each user
+    goals_for_each_user.times do |index|
+      Goal.create!(
+        user: user,
+        goal: Faker::Hipster.sentences(number: 1)[0],
+        goal_type: GoalType.find((index % 3) + 1),
+        short_term: index.even?,
+        achieved_on: index < 4 ? Time.now : nil
+      )
+
+      goals_counter += 1
+    end
+
+    ## Create Appointments for each user
+    appointments_for_each_user.times do
+      appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 20)
+      Appointment.create!(
+        user: user,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Educator.course_name,
+        start: app_time,
+        end: (app_time + rand(10..120).minutes)
+      )
+    end
+
+    ## Create Appointments for each user
+    past_appointments_for_each_user.times do
+      appointment_counter += 1
+      app_time = Faker::Time.between(from: DateTime.now - 20.days, to: DateTime.yesterday)
+      Appointment.create!(
+        user: user,
+        who_with: Faker::FunnyName.name,
+        where: Faker::Nation.capital_city,
+        what: Faker::Educator.course_name,
+        start: app_time,
+        end: (app_time + rand(10..120).minutes)
       )
     end
   end
@@ -308,7 +343,7 @@ notes_count.times do
     content: Faker::TvShows::TheExpanse.quote
   )
 
-  # Every fifth note is replaced by a new note to demonstrate the edit history functionality 
+  # Every fifth note is replaced by a new note to demonstrate the edit history functionality
   if (notes_counter % 5).zero?
     new_note = Note.create!(
       team_member_id: note.team_member.id,
@@ -358,12 +393,14 @@ crisis_events_count.times do
   )
 end
 
-puts("Team Members in DatabaseL #{TeamMember.count}")
+puts("Team Members in Database: #{TeamMember.count}")
 puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
 puts("Contact per User: #{contacts_for_each_user}")
 puts("Wellbeing Assessments Created: #{wba_counter}")
 puts("Journals Created: #{journal_counter}")
+puts("Goals Created: #{goals_counter}")
 puts("Crisis Events Created: #{crisis_events_count}")
 puts("Notes per Crisis Event: #{crisis_notes_count}")
+puts("Appointments Created: #{appointment_counter}")
