@@ -8,14 +8,14 @@
 
 require 'faker'
 
-total_user_count = 10
+total_user_count = 50
 wellbeing_assessments_for_each_user = 200
-journal_entries_for_each_user = 5
-contacts_for_each_user = 5
+journal_entries_for_each_user = 30
+contacts_for_each_user = 20
 appointments_for_each_user = 20
 past_appointments_for_each_user = 20
-crisis_events_count = 10
-crisis_notes_count = 5
+crisis_events_count = 20
+crisis_notes_count = 20
 notes_count = 1000
 start_time = Time.now
 

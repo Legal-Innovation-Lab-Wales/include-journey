@@ -96,7 +96,7 @@
               in total of which <%= @unread_journal_entries %> are unread
             </span>
             <h5 class="pt-3">Latest entries</h5>
-            <% recent_entries = @journal_entries.last(5) %>
+            <% recent_entries = @journal_entries.last(10) %>
             <div class="col-12 table-container">
               <table class="table table-hover">
                 <thead>
