@@ -8,14 +8,16 @@
       <%= render 'shared/limit', resources_per_page: @resources_per_page %>
       <div class="input-group date-sort-select mb-3">
         <select class="form-select">
-          <option value="viewed_at_desc">Viewed At (Descending)</option>
-          <option value="viewed_at_asc">Viewed At (Ascending)</option>
+          <option value="created_at_asc">First Viewed At (Ascending)</option>
+          <option value="created_at_desc">First Viewed At (Descending)</option>
+          <option value="viewed_at_asc">Last Viewed At (Ascending)</option>
+          <option value="viewed_at_desc">Last Viewed At (Descending)</option>
         </select>
       </div>
       <table class="table table-dark table-striped">
         <thead>
           <th scope="col">User</th>
-          <th scope="col">Created At</th>
+          <th scope="col">First Viewed At</th>
           <th scope="col">Last Viewed At</th>
           <th scope="col">View Count</th>
         </thead>

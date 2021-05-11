@@ -10,11 +10,7 @@ require 'faker'
 
 total_user_count = 10
 wellbeing_assessments_for_each_user = 20
-<<<<<<< HEAD
 journal_entries_for_each_user = 5
-=======
-journal_entries_for_each_user = 10
->>>>>>> main
 contacts_for_each_user = 5
 goals_for_each_user = 10 # Half short-term, half long-term
 appointments_for_each_user = 10
