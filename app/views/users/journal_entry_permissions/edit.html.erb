@@ -11,9 +11,11 @@
           <div class="col"><strong>Journal Entry</strong></div>
           <div class="col"><strong><%= @model.created %></strong></div>
         </div>
-        <div class="container p-0 mb-2">
-        <button id="select-all" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Select All</button>
-        <button id="select-none" class="btn btn-primary"><i class="fas fa-times-circle"></i> Select None</button>
+        <div class="row mb-3">
+          <div class="col"><button id="select-all" class="btn btn-primary ms-auto"><i class="fas fa-plus-circle"></i>
+            Select All</button></div>
+          <div class="col"><button id="select-none" class="btn btn-primary me-auto">
+            <i class="fas fa-times-circle"></i> Select None</button></div>
         </div>
         <%= form_with model: @model, url: journal_entry_permissions_path(@model), method: :put do |f| %>
           <div class="container p-0 mb-2">
