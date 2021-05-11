@@ -1,4 +1,8 @@
 <main class="container index <%= class_list %>">
+  <% if local_assigns[:header_section].present? %>
+    <%= local_assigns[:header_section] %>
+  <% end %>
+
   <section class="row mb-0">
     <div class="col">
       <div class="container p-0">
