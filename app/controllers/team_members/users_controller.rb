@@ -82,10 +82,7 @@ module TeamMembers
     private
 
     def log_view
-      UserProfileViewLog.transaction do
-        view_log = current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
-        view_log.save!
-      end
+      current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
     rescue ActiveRecord::RecordInvalid
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
