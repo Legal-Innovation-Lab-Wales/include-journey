@@ -1,6 +1,6 @@
 <% if @user.present? %>
-  <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments', header: "#{@user.full_name} wellbeing assessments",
-             index: 'user_wellbeing_assessments', search: render('search'), stats: render('stats')  do %>
+  <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments', header: "#{@user.full_name}",
+             subheader: "wellbeing assessments", index: 'user_wellbeing_assessments', search: render('search'), stats: render('stats')  do %>
     <div id="card-view" class="container p-0">
       <div class="row">
         <% @resources.each do |wellbeing_assessment| %>

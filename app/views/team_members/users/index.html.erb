@@ -1,7 +1,7 @@
 <main class="container team-members users index">
   <section class="row">
     <div class="col">
-      <h3>Users Info</h3>
+      <h2>Users</h2>
       <div class="container p-0">
         <div class="row mb-3">
           <div class="col-12 col-md-4 mb-3 mb-md-0">
@@ -28,7 +28,7 @@
   <% unless @query.present? %>
     <section class="row">
       <div class="col">
-        <h3>Pinned Users</h3>
+        <h4>Pinned</h4>
         <div class="container p-0">
           <div class="row">
             <% @pinned_users.each_with_index do |user, index| %>
@@ -41,7 +41,7 @@
   <% end %>
   <section class="row" id="users">
     <div class="col">
-      <h3><%= @query.present? ? '' : 'All' %> users</h3>
+      <h4><%= @query.present? ? 'Results' : 'All' %></h4>
       <%= render 'shared/search/search_results' %>
       <div class="container p-0">
         <div class="row justify-content-end mb-3">

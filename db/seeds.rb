@@ -8,10 +8,10 @@
 
 require 'faker'
 
-total_user_count = 50
-wellbeing_assessments_for_each_user = 200
-journal_entries_for_each_user = 30
-contacts_for_each_user = 20
+total_user_count = 10
+wellbeing_assessments_for_each_user = 20
+journal_entries_for_each_user = 5
+contacts_for_each_user = 5
 appointments_for_each_user = 20
 past_appointments_for_each_user = 20
 goals_for_each_user = 10 # Half short-term, half long-term
@@ -201,13 +201,24 @@ if User.count.zero?
     user.skip_confirmation!
     user.save!
 
+    ## Create a view log for every user
+    TeamMember.all.each do |team_member|
+      UserProfileViewLog.create!(
+        team_member: team_member,
+        user: user,
+        created_at: DateTime.now - rand(60...480).minutes,
+        updated_at: DateTime.now - rand(1...60).minutes,
+        view_count: rand(0..10)
+      )
+    end
+
     ## Create User Wellbeing Assessments for each user
     user_wba_counter = 0
     wellbeing_assessments_for_each_user.times do
       wba_counter += 1
       user_wba_counter += 1
       created_at_value = DateTime.now - (wellbeing_assessments_for_each_user - user_wba_counter).day
-      #puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
+      # puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
         user: user,
@@ -267,7 +278,7 @@ if User.count.zero?
       end
     end
 
-    # Create Contacts for each User
+    ## Create contacts for each user
     contacts_for_each_user.times do
       name = Faker::Name.name
       Contact.create!(
