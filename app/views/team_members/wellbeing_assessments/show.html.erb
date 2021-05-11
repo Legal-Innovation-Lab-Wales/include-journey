@@ -6,7 +6,7 @@
                  wellbeing_assessment: @wellbeing_assessment %>
     </div>
   </section>
-  <% unless @wellbeing_assessment_today.present? %>
+  <% unless @wellbeing_assessment.today? %>
     <section class="row">
         <div class="col next-btn">
           <%= link_to user_path(@wellbeing_assessment.user), class: 'btn btn-primary' do %>

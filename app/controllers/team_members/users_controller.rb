@@ -17,9 +17,10 @@ module TeamMembers
       wellbeing_assessment
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order(created_at: :desc)
-      @journal_entries = current_team_member.journal_entries.where(user: @user)
+      @journal_entries = current_team_member.journal_entries.where(user: @user).includes(:journal_entry_view_logs)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
+      @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
 
       render 'show'
     end

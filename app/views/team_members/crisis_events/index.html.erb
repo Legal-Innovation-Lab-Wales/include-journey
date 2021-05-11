@@ -6,7 +6,8 @@
       <tr>
         <th scope="col">User</th>
         <th scope="col">Crisis Type</th>
-        <th scope="col">Additional Info</th>
+        <th scope="col">Latest Update</th>
+        <th scope="col">Update Type</th>
         <th scope="col">Closed At</th>
       </tr>
       </thead>
@@ -20,14 +21,30 @@
             <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
           </td>
           <td>
-            <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+            <%= link_to crisis_event_path(crisis_event) do %>
+              <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                <%= crisis_event.crisis_notes.last.content %>
+              <% else %>
+                <%= crisis_event.additional_info %>
+              <% end %>
+            <% end %>
           </td>
           <td>
-            <%= link_to "#{crisis_event.closed_formatted}", crisis_event_path(crisis_event) %>
+            <%= link_to crisis_event_path(crisis_event) do %>
+              <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                <span class="badge bg-primary text-dark me-2">Note</span>
+              <% else %>
+                <span class="badge bg-secondary me-2">Info</span>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "#{time_ago_in_words(crisis_event.closed_formatted)} ago", crisis_event_path(crisis_event) %>
           </td>
         </tr>
       <% end %>
       </tbody>
     </table>
   </div>
+  <%= link_to 'View Active', active_crisis_events_path, class: 'btn btn-primary' %>
 <% end %>

@@ -1,12 +1,12 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < TeamMembersApplicationController
-    include Pagination
     before_action :crisis_event, except: %i[index active]
+    include Pagination
 
     # GET /crisis_events/active
     def active
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
 
       render 'active'
     end
@@ -40,6 +40,11 @@ module TeamMembers
                  .order(closed_at: :desc)
     end
 
+    def subheading_stats
+      @closed_events_30_days = @resources.where('closed_at >= ?', 30.days.ago)
+      @closed_events_7_days = @resources.where('closed_at >= ?', 7.days.ago)
+    end
+
     private
 
     def crisis_event
@@ -50,10 +55,6 @@ module TeamMembers
 
     def crisis_search
       'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
-    end
-
-    def subheading_stats
-      # TODO: Add stats for closed crisis events index
     end
   end
 end
