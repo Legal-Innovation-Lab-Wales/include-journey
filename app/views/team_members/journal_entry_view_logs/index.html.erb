@@ -4,7 +4,7 @@
   <section class="row">
     <div class="col">
       <h3><%= @team_member.full_name %> journal entry view logs (<%= @count %>)</h3>
-      <%= render 'shared/search_results', query: params[:query], count: @count %>
+      <%= render 'shared/search_results' %>
       <%= render 'shared/limit', resources_per_page: @resources_per_page %>
       <div class="input-group date-sort-select mb-3">
         <select class="form-select">

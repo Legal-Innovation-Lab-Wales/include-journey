@@ -4,13 +4,14 @@
     <div class="col">
       <h3>Active Crisis Events</h3>
       <% if @crisis_events.count > 0 %>
-        <div class="table-container">
-          <table class="table table-dark table-striped link-table">
+        <div class="table-container mt-5">
+          <table class="table table-dark table-striped link-table table-hover">
             <thead>
               <th scope="col">User</th>
               <th scope="col">Crisis Type</th>
-              <th scope="col">Additional Info</th>
-              <th scope="col">Last Update</th>
+              <th scope="col">Latest Update</th>
+              <th scope="col">Update Type</th>
+              <th scope="col">Updated</th>
             </thead>
             <tbody>
               <% @crisis_events.each do |crisis_event| %>
@@ -22,10 +23,29 @@
                     <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
                   </td>
                   <td>
-                    <%= link_to "#{crisis_event.additional_info}", crisis_event_path(crisis_event) %>
+                    <%= link_to crisis_event_path(crisis_event) do %>
+                      <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                        <%= crisis_event.crisis_notes.last.content %>
+                      <% else %>
+                        <%= crisis_event.additional_info %>
+                      <% end %>
+                    <% end %>
                   </td>
                   <td>
-                    <%= link_to "#{crisis_event.last_update}", crisis_event_path(crisis_event) %>
+                    <%= link_to crisis_event_path(crisis_event) do %>
+                      <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                        <span class="badge bg-primary text-dark me-2">Note</span>
+                      <% else %>
+                        <span class="badge bg-secondary me-2">Info</span>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.crisis_notes.last.updated_at)} ago", crisis_event_path(crisis_event) %>
+                    <% else %>
+                      <%= link_to "#{time_ago_in_words(crisis_event.updated_at)} ago", crisis_event_path(crisis_event) %>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>

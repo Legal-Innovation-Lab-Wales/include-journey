@@ -35,9 +35,14 @@
           <div class="card-footer">
             <div class="container p-0">
               <div class="row">
-                <div class="col-6">
-                  <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#note-modal">New Note <i class="fas fa-plus-circle"></i></a>
-                </div>
+                <% if @crisis_event.closed && @crisis_event.closed_at < 7.days.ago %>
+                  <span>Notes can't be added to Crisis Events closed over 7 days ago.</span>
+                <%  else  %>
+                  <div class="col-6">
+                    <a class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#note-modal">New Note
+                      <i class="fas fa-plus-circle"></i></a>
+                  </div>
+                <%  end %>
                 <div class="col-6">
                   <% unless @crisis_event.closed %>
                     <%= link_to close_crisis_event_path(@crisis_event), class: 'btn btn-danger p-2',
@@ -73,5 +78,6 @@
     </section>
   <% end %>
 </main>
-
-<%= render 'team_members/crisis_notes/modal', crisis_note: @note, action: "create", controller: "crisis_notes", crisis_event_id: params[:id] %> 
+<% unless @crisis_event.closed && @crisis_event.closed_at < 7.days.ago %>
+  <%= render 'team_members/crisis_notes/modal', crisis_note: @note, action: "create", controller: "crisis_notes", crisis_event_id: params[:id] %>
+<% end %>

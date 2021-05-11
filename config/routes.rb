@@ -19,21 +19,22 @@ Rails.application.routes.draw do
       get 'terms', to: 'users_application#terms'
 
       resources :wellbeing_assessments, only: %i[show new create]
-
       resources :journal_entries, only: %i[index new create] do
         get 'dashboard', action: :dashboard, on: :collection
 
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
-
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
         put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
-
       resources :crisis_events, only: %i[create update]
-
       resources :contacts
+      resources :goals, only: %i[index create show destroy] do
+        put 'achieve', action: :achieve, on: :member
+        put 'archive', action: :archive, on: :member
+      end
+      resources :goals_archive, only: :index
     end
   end
 
