@@ -20,6 +20,7 @@ module TeamMembers
       @journal_entries = current_team_member.journal_entries.where(user: @user).includes(:journal_entry_view_logs)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
+      @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
 
       render 'show'
     end
