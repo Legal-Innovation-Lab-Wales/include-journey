@@ -1,88 +1,67 @@
 <main class="container team-members users show">
   <%= render 'shared/back_btn' %>
-  <div class="row">
-    <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <h3><%= @user.full_name %></h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="container mb-md-0">
-                <div class="row font-weight-link">
-                  <%= @user.full_name %>
-                </div>
-                <div class="row">
-                  <%= link_to "mailto:#{@user.email}" do %>
-                    <i class="fas fa-envelope"></i> <%= @user.email %>
-                  <% end %>
-                </div>
-                <div class="row">
-                  <%= link_to "tel:0#{@user.mobile_number}" do %>
-                    <i class="fas fa-phone-alt"></i> <%= "0#{@user.mobile_number}" %>
-                  <% end %>
-                </div>
-                <div class="row">
-                  <span><i class="fas fa-calendar"></i> Release: <%= @user.release %></span>
-                </div>
-                <% unless @unread_journal_entries.zero? %>
-                  <div class="row">
-                    <%= link_to '#journal' do %>
-                      <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
-                    <% end %>
-                  </div>
-                <% end %>
-                <% unless @active_crisis.empty? %>
-                  <div class="row">
-                    <%= link_to active_crisis_events_path do %>
-                      <i class="fas fa-exclamation-circle"></i> <%= @active_crisis.count %> active crisis
-                      events
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <span>Last Sign In</span>
-          <span>
-            <%= @user.current_sign_in_at.present? ? "#{time_ago_in_words(@user.current_sign_in_at)} ago from #{@location["city"]}" : "Never" %>
-          </span>
+
+  <div id="user-info" class="row mb-3">
+    <div class="col-12 col-md-6 col-lg-4 mx-auto">
+      <h1 class="text-center"><%= @user.full_name %></h1>
+      <p>
+        <%= link_to "mailto:#{@user.email}" do %>
+          <i class="fas fa-envelope"></i> <%= @user.email %>
+        <% end %>
+      </p>
+      <p>
+        <%= link_to "tel:0#{@user.mobile_number}" do %>
+          <i class="fas fa-phone-alt"></i> <%= "0#{@user.mobile_number}" %>
+        <% end %>
+      </p>
+      <p>
+        <i class="fas fa-calendar"></i> Release: <%= @user.release %>
+      </p>
+      <p>
+        <% unless @unread_journal_entries.zero? %>
+          <%= link_to '#journal' do %>
+            <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
+          <% end %>
+        <% end %>
+      </p>
+      <p>
+        <%= link_to active_crisis_events_path do %>
+          <i class="fas fa-exclamation-circle"></i> <%= @active_crisis.count %> active crisis
+          events
+        <% end %>
+      </p>
+      <p>
+        Last Sign
+        In: <%= @user.current_sign_in_at.present? ? "#{time_ago_in_words(@user.current_sign_in_at)} ago from #{@location["city"]}" : "Never" %>
+      </p>
+    </div>
+  </div>
+  <% unless @active_crisis.empty? %>
+    <div id="crisis-info" class="row">
+      <div class="alert alert-danger">
+        <h3 class="text-center"><%= @user.first_name %> has an active crisis <i class="fas fa-exclamation-triangle"></i>
+        </h3>
+        <div class="text-center"><%= link_to "View Crisis", active_crisis_events_path, class: "btn btn-danger" %></div>
+        <div class="table-container">
+          <table class="mx-auto">
+            <tr>
+              <td>When:</td>
+              <td class="text-start"><%= @active_crisis.first.created %></td>
+            </tr>
+            <tr>
+              <td>Type:</td>
+              <td class="text-start"><%= @active_crisis.first.crisis_type.category %></td>
+            </tr>
+            <tr>
+              <td>Info:</td>
+              <td class="text-start text-wrap"><%= @active_crisis.first.additional_info %></td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 mb-4">
-      <% if @active_crisis.empty? %>
-        <div class="card h-100 border-0">
-          <div class="card-header bg-success">
-            <h3>SOS status:
-              <span class="h3">none <i class="fa fa-check-circle"></i></span>
-            </h3>
-          </div>
-          <div class="card-body text-start">
-            <p class="text-start">
-              This user has no active Crisis Events. Any active Crisis Events will be displayed here.
-            </p>
-          </div>
-        </div>
-      <% else %>
-        <div class="card h-100 has-crisis border-0">
-          <div class="card-header">
-            <h3>SOS status:
-              <span class="h3">Crisis </span><i class="fas fa-exclamation-triangle"></i>
-            </h3>
-          </div>
-          <div class="card-body">
-            <p><span class="h5">When? </span><%= @active_crisis.first.created %></p>
-            <p><span class="h5">Type? </span> <%= @active_crisis.first.crisis_type.category %></p>
-            <p><span class="h5">Info: </span> <%= @active_crisis.first.additional_info %></p>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
+
   <div class="row mb-4">
     <div class="col">
       <div class="card">
@@ -94,7 +73,11 @@
                            show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
                            sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
               <% end %>
+
               <div class="text-center">
+                <% unless @wellbeing_assessment.today? %>
+                  <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
+                <% end %>
                 <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
               </div>
             </div>
@@ -104,9 +87,9 @@
     </div>
   </div>
   <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
-  <div class="row" id="journal">
+  <div class="row" id="journal-appointments">
     <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100">
+      <div id="journal-card" class="card h-100">
         <div class="card-header">
           <h3>Journal</h3>
         </div>
@@ -117,15 +100,15 @@
               in total of which <%= @unread_journal_entries %> are unread
             </span>
             <h5 class="pt-3">Latest entries</h5>
-            <% recent_entries = @journal_entries.last(5) %>
+            <% recent_entries = @journal_entries.last(10) %>
             <div class="col-12 table-container">
               <table class="table table-hover">
                 <thead>
-                  <tr>
-                    <th class="border-0" scope="col">Feeling</th>
-                    <th class="border-0" scope="col">Time & date</th>
-                    <th class="border-0" scope="col">Viewed</th>
-                  </tr>
+                <tr>
+                  <th class="border-0" scope="col">Feeling</th>
+                  <th class="border-0" scope="col">Time & date</th>
+                  <th class="border-0" scope="col">Viewed</th>
+                </tr>
                 </thead>
                 <tbody>
                 <% recent_entries.each do |journal_entry| %>
@@ -162,6 +145,85 @@
 
     <div class="col-12 col-md-6 mb-4">
       <div class="card h-100">
+        <div class="card-header d-flex">
+          <h3 class="me-auto align-self-center">Appointments</h3>
+          <%= link_to 'Add Appointment', new_user_appointment_path(@user), class: 'btn  btn-primary py-2 px-3' %>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <p><%= @user.first_name %> has <%= @user.future_appointments.size %> upcoming appointments.</p>
+            <div class="accordion" id="future-appointments-accordion">
+              <% @appointments.first(5).each_with_index do |appointment, index| %>
+                <div class="accordion-item">
+                  <h3 class="accordion-header" id="heading-future-<%= index %>">
+                    <button class="accordion-button collapsed bg-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse-future-<%= index %>" aria-expanded="true" aria-controls="collapse-future-<%= index %>">
+                      <%= appointment.time_on_date %>
+                    </button>
+                  </h3>
+                  <div id="collapse-future-<%= index %>" class="accordion-collapse collapse" aria-labelledby="heading-future-<%= index %>" data-bs-parent="#future-appointments-accordion">
+                    <div class="accordion-body">
+                      <p><i class="fas fa-calendar-day"></i> <%= appointment.what %></p>
+                      <p><i class="fas fa-user"></i> <%= appointment.who_with %> </p>
+                      <p><i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
+                      <p><i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
+                      <p>
+                        <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="row pt-2">
+            <p class="pt-1"><%= @user.first_name %> has had <%= @user.last_month_appointments.size %> appointments in
+              the last month.</p>
+            <div class="accordion" id="past-appointments-accordion">
+              <% @appointments.last(5).each_with_index do |appointment, index| %>
+                <div class="accordion-item">
+                  <h3 class="accordion-header" id="heading-past-<%= index %>">
+                    <button class="accordion-button collapsed bg-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse-past-<%= index %>" aria-expanded="true" aria-controls="collapse-past-<%= index %>">
+                      <span class="me-auto"><%= appointment.time_on_date %></span>
+
+                      <span class="ms-auto btn disabled <%= appointment.attended ? 'btn-success btn-sm' : 'btn-danger btn-sm' %>">
+                        <% if appointment.attended %>
+                          <i class="fas fa-calendar-check"></i>
+                        <% else %>
+                          <i class="fas fa-calendar-times"></i>
+                        <% end %>
+                      </span>
+                    </button>
+                  </h3>
+                  <div id="collapse-past-<%= index %>" class="accordion-collapse collapse" aria-labelledby="heading-past-<%= index %>" data-bs-parent="#past-appointments-accordion">
+                    <div class="accordion-body">
+                      <p><i class="fas fa-calendar-day"></i> <%= appointment.what %></p>
+                      <p><i class="fas fa-user"></i> <%= appointment.who_with %> </p>
+                      <p><i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
+                      <p><i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
+                      <p>
+                        <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-footer text-center">
+          <%= link_to 'View All Appointments', user_appointments_path(@user), class: 'btn btn-primary my-2 py-2 px-5' %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row" id="notes">
+    <div class="col-12 mb-4">
+      <div class="card h-100">
         <div class="card-header">
           <h3>User Notes</h3>
         </div>
@@ -186,78 +248,7 @@
 
     <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
 
-  </div>
-  <div class="row" id="appointments">
-    <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <h3>Upcoming 4 Appointments</h3>
-        </div>
-        <div class="card-body">
-          <p><%= @user.first_name %> has <%= @user.future_appointments.count %> upcoming appointments.</p>
-          <div class="row">
-            <% @user.future_appointments.first(4).each do |appointment| %>
-              <div class="col-12 col-xl-6 mt-3">
-                <div class="card border-primary mt-3 text-al">
-                  <div class="card-header bg-primary"><%= appointment.what %></div>
-                  <div class="card-body">
-                    <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
-                    <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
-                    <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
-                    <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
-                  </div>
-                  <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
-                    <div class="btn disabled btn-dark">
-                        <i class="fas fa-calendar-times"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="card-footer text-center">
-          <%= link_to 'Add New Appointment', new_user_appointment_path(@user), class: 'btn btn-primary my-2 py-2 px-5' %>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 mb-4">
-      <div class="card h-100">
-        <div class="card-header">
-          <h3>Past 4 Appointments</h3>
-        </div>
-        <div class="card-body">
-          <p><%= @user.first_name %> has had <%= @user.last_month_appointments.count %> appointments in the last month.</p>
-          <div class="row">
-            <% @user.past_appointments.first(4).each do |appointment| %>
-              <div class="col-12 col-xl-6 mt-3">
-                <div class="card border-primary mt-3 text-al">
-                  <div class="card-header bg-primary"><%= appointment.what %></div>
-                  <div class="card-body">
-                    <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
-                    <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
-                    <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
-                    <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
-                  </div>
-                  <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
-                    <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
-                      <% if appointment.attended ? 'btn-success' : 'btn-danger'%>
-                        <i class="fas fa-calendar-check"></i>
-                      <% else %>
-                        <i class="fas fa-calendar-times"></i>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="card-footer text-center">
-          <%= link_to 'View All Appointments', user_appointments_path(@user), class: 'btn btn-primary my-2 py-2 px-5' %>
-        </div>
-      </div>
-    </div>
+
   </div>
 </main>
 
