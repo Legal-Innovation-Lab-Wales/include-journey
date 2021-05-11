@@ -30,8 +30,8 @@
                                    value: last_score(local_assigns[:last_scores], wellbeing_metric.id)  %>
             </div>
             <div class="col-3 col-sm-3">
-              <div class="description badge rounded-pill wba-score__<%= last_score(local_assigns[:last_scores],
-                                                                                   wellbeing_metric.id) %>"></div>
+              <%= render 'shared/wellbeing_chart/description',
+                         value: last_score(local_assigns[:last_scores], wellbeing_metric.id) %>
             </div>
           </div>
         <% end %>
@@ -51,8 +51,7 @@
             <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>" value="<%= score.value %>">
           </div>
           <div class="col-4">
-            <div class="description badge rounded-pill wba-score__<%= last_score(local_assigns[:last_scores],
-                                                                                 score.wellbeing_metric.id) %>"></div>
+            <%= render 'shared/wellbeing_chart/description', value: score.value %>
           </div>
         </div>
       <% end %>
