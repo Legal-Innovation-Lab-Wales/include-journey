@@ -13,6 +13,7 @@ module TeamMembers
 
     # GET /users/:id
     def show
+      log_view
       user_location
       wellbeing_assessment
       @note = Note.new
@@ -80,6 +81,12 @@ module TeamMembers
     end
 
     private
+
+    def log_view
+      current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
+    rescue ActiveRecord::RecordInvalid
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
+    end
 
     def user
       @user = User.includes(:notes).find(params[:id])

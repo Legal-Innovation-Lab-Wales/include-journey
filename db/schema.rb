@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142949) do
+ActiveRecord::Schema.define(version: 2021_05_05_111437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,16 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.index ["user_id"], name: "index_user_pins_on_user_id"
   end
 
+  create_table "user_profile_view_logs", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "view_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_user_profile_view_logs_on_team_member_id"
+    t.index ["user_id"], name: "index_user_profile_view_logs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -266,6 +276,8 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
+  add_foreign_key "user_profile_view_logs", "team_members"
+  add_foreign_key "user_profile_view_logs", "users"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"
