@@ -1,26 +1,53 @@
 <main class="container index <%= class_list %>">
-  <% if local_assigns[:search].present? %>
-    <%= local_assigns[:search] %>
-  <% else %>
-    <section class="row pb-0 mb-0 justify-content-end">
-      <%= render 'shared/search/search' %>
-    </section>
-  <% end %>
   <section class="row">
     <div class="col">
-      <h3><%= header %></h3>
-      <% if local_assigns[:stats].present? %>
-        <%= local_assigns[:stats] %>
-      <% end %>
-      <%= render 'shared/search/search_results' %>
-      <div class="row mb-3">
-        <% if local_assigns[:new_btn].present? %>
+
+      <div class="row mt-5 mb-5">
+        <h1 class="mb-<%= local_assigns[:subheader].present? ? "0" : "2" %>"><%= header %></h1>
+
+        <% if local_assigns[:subheader].present? %>
+          <h4><%= local_assigns[:subheader] %></h4>
+        <% end %>
+
+        <% if local_assigns[:stats].present? %>
+          <%= local_assigns[:stats] %>
+        <% end %>
+      </div>
+
+      <div class="row">
+        <%= render 'shared/search/search_results' %>
+      </div>
+
+      <% if local_assigns[:new_btn].present? %>
+        <div class="row">
           <%= local_assigns[:new_btn] %>
+        </div>
+      <% end %>
+
+      <hr />
+
+      <div class="row mb-3">
+        <% if local_assigns[:search].present? %>
+          <%= local_assigns[:search] %>
+        <% else %>
+          <%= render 'shared/search/search' %>
         <% end %>
         <%= render 'shared/search/limit' %>
       </div>
+
       <%= yield %>
+
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <small class="text-muted">Showing 
+            <%= ((@page*@limit) - @limit) + 1 %> -
+            <%= @page*@limit >= @count ? @count : @page*@limit %> of 
+            <%= @count %> results
+          </small>
+        </div>
+      </div>
     </div>
+
     <%= render 'shared/search/pagination_controls', index: index %>
   </section>
 </main>

@@ -14,9 +14,10 @@ module Pagination
     @resources_per_page = resources_per_page
     @resources = @query.present? ? search : resources
     @count = @resources.count
+    @limit = limit
     subheading_stats
-    @last_page = (@count.to_f / limit).ceil
-    @resources = @resources.offset(offset).limit(limit)
+    @last_page = (@count.to_f / @limit).ceil
+    @resources = @resources.offset(offset).limit(@limit)
     @resources.present? ? render('index') : redirect
   end
   # rubocop:enable Metrics/AbcSize
