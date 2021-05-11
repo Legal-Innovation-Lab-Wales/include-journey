@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :team_member do
+  factory :user_profile_view_log do
     
   end
 end
