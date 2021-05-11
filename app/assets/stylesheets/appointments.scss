@@ -4,62 +4,52 @@
 
 @import "variables";
 
-section {
-  h3 {
-    color: white;
+.appointments {
+  margin-top: 1rem;
+
+  @media screen and (min-width: $screen-md) {
+    margin-top: 0;
   }
 
-  &.appointments {
+  .card {
     color: $black;
-    margin-top: 1rem;
+    background: $grey-grad;
+    text-align: left;
+    border: transparent;
 
-    @media screen and (min-width: $screen-md) {
-      margin-top: 0;
-    }
-
-    a {
-      color: $black;
-    }
-
-    .card {
-      background: $grey-grad;
-      text-align: left;
-      border: transparent;
-
-      span.actions {
-        i.fa-trash-alt {
-          color: $danger;
-        }
-
-        i.fa-edit {
-          color: $info;
-        }
-
-        a:hover i {
-          color: $primary;
-        }
+    span.actions {
+      i.fa-trash-alt {
+        color: $danger;
       }
 
-      .card-header {
-        background: $blue-grad;
-        font-weight: 700;
-        font-family: $font-link;
-        color: $white;
+      i.fa-edit {
+        color: $info;
       }
 
-      .card-body {
-        .container {
-          padding: 0;
+      a:hover i {
+        color: $primary;
+      }
+    }
 
-          .row {
-            margin-bottom: 0.5rem;
+    .card-header {
+      background: $blue-grad;
+      font-weight: 700;
+      font-family: $font-link;
+      color: $white;
+    }
 
-            .col:first-child {
-              max-width: 30px;
+    .card-body {
+      .container {
+        padding: 0;
 
-              .fa-hourglass-start {
-                margin-left: 2px;
-              }
+        .row {
+          margin-bottom: 0.5rem;
+
+          .col:first-child {
+            max-width: 30px;
+
+            .fa-hourglass-start {
+              margin-left: 2px;
             }
           }
         }
@@ -71,8 +61,7 @@ section {
     padding: 1rem;
     border-radius: 0.5rem;
     color: $white;
-    background-color: $brand-secondary-alt-lightest;
-    background: $blue-grad;
+    background: $brand-secondary-alt-lightest;
 
     form {
       .form-floating {

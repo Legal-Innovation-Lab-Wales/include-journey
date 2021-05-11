@@ -21,8 +21,6 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
-        get 'dashboard', action: :dashboard, on: :collection
-
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
       resources :appointments do
@@ -53,6 +51,7 @@ Rails.application.routes.draw do
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
         put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
 
+        resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member
       end

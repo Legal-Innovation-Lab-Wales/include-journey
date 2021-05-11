@@ -4,4 +4,8 @@ class WellbeingAssessment < ApplicationRecord
   belongs_to :team_member, optional: true
 
   has_many :wba_scores, foreign_key: :wellbeing_assessment_id
+
+  def today?
+    created_at.today?
+  end
 end

@@ -13,13 +13,15 @@ module TeamMembers
 
     # GET /users/:id
     def show
+      log_view
       user_location
       wellbeing_assessment
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order(created_at: :desc)
-      @journal_entries = current_team_member.journal_entries.where(user: @user)
+      @journal_entries = current_team_member.journal_entries.where(user: @user).includes(:journal_entry_view_logs)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
+      @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
 
       render 'show'
     end
@@ -79,6 +81,12 @@ module TeamMembers
     end
 
     private
+
+    def log_view
+      current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
+    rescue ActiveRecord::RecordInvalid
+      redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
+    end
 
     def user
       @user = User.includes(:notes).find(params[:id])
