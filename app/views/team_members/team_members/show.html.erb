@@ -1,8 +1,7 @@
 <main class="container team-members team_member">
-  <%= render 'shared/back_btn' %>
-  <section class="row">
+    <section class="row">
     <div class="col mb-3">
-      <h3><%= @team_member.full_name %> </h3>
+      <h2><%= @team_member.full_name %> </h2>
       <div class="container header-buttons">
         <div class="row">
           <%= link_to team_member_user_profile_view_logs_path(@team_member), class: 'col d-flex align-items-center btn' do %>

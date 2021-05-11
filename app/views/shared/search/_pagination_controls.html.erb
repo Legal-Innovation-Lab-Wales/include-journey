@@ -1,10 +1,12 @@
-<section class="row pagination-controls">
+<section class="row pagination-controls <%= local_assigns[:remove_margins].present? ? 'pt-0 mt-0 mb-0' : '' %>">
   <div class="container">
     <div class="row">
       <div class="col">
         <% unless @page == 1 %>
-          <%= link_to 'Previous', send("#{index}_path", page: @page - 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
-                      class: 'btn btn-primary' %>
+          <%= link_to send("#{index}_path", page: @page - 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
+                      class: 'btn btn-primary' do %>
+            <i class="fas fa-arrow-circle-left"></i> Previous
+          <% end %>
         <% end %>
       </div>
       <div class="col">
@@ -30,8 +32,10 @@
       </div>
       <div class="col">
         <% unless @page == @last_page %>
-          <%= link_to 'Next', send("#{index}_path", page: @page + 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
-                      class: 'btn btn-primary' %>
+          <%= link_to send("#{index}_path", page: @page + 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
+                      class: 'btn btn-primary' do %>
+            Next <i class="fas fa-arrow-circle-right"></i>
+          <% end %>
         <% end %>
       </div>
     </div>

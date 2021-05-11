@@ -1,30 +1,10 @@
-<main class="container user contacts index">
-  <%= render 'shared/back_btn' %>
-  <section class="row" id="contacts">
-    <div class="col">
-      <div class="row justify-content-end">
-        <%= render 'shared/search' %>
-      </div>
-      <h3 class="mb-3">Contacts</h3>
-      <div class="container p-0">
-        <div class="row">
-          <div class="col-auto mr-auto">
-            <%= link_to new_contact_path, class: 'btn btn-success' do %>
-            <i class="fas fa-plus-circle"></i> Add Contact
-            <% end %>
-          </div>
-          <div class="col">
-            <%= render 'shared/limit' %>
-          </div>
-        </div>
-        <%= render 'shared/search_results' %>
-        <div class="row g-4">
-          <% @resources.each do |contact| %>
-            <%= render 'card', contact: contact %>
-          <% end %>
-        </div>
-      </div>
+<%= render 'layouts/searchable', class_list: 'user contacts', header: 'Contacts', index: 'contacts',
+           new_btn: render(partial: 'shared/new_btn', locals: {path: new_contact_path, text: 'Add Contact'} ) do %>
+  <div class="container p-0">
+    <div class="row g-4 mt-3">
+      <% @resources.each do |contact| %>
+        <%= render 'card', contact: contact %>
+      <% end %>
     </div>
-  </section>
-  <%= render 'shared/pagination_controls', index: 'contacts'%>
-</main>
+  </div>
+<% end %>

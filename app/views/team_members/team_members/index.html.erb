@@ -1,9 +1,8 @@
 <main class="container team-members index">
-  <%= render 'shared/back_btn' %>
-  <% if @unapproved_team_members.count > 0 %>
+    <% if @unapproved_team_members.count > 0 %>
     <section class="row" id="awaiting_approval">
       <div class="col">
-        <h3>Team Members Awaiting Approval</h3>
+        <h2>Team Members Awaiting Approval</h2>
         <div class="table-container">
           <table class="table table-dark table-striped align-middle">
             <thead>
@@ -43,7 +42,7 @@
   <% end %>
   <section class="row">
     <div class="col">
-      <h3>Team Members</h3>
+      <h2>Team Members</h2>
       <div class="table-container">
         <table class="table table-dark table-striped align-middle table-hover link-table">
           <thead>

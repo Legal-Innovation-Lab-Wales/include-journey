@@ -1,72 +1,49 @@
-<main class="container team-members crisis-events">
-  <%= render 'shared/back_btn' %>
-  <%= render 'shared/wrapped_search' %>
-  <% unless @query.present? %>
-    <section class="row">
-      <div class="col">
-        <h3>Overview</h3>
-        <p>
-          There are <%= @count %> closed events. <%= @closed_events_30_days.count %> were closed within the last 30 days from <%= @closed_events_30_days.distinct.count(:user_id) %> users,
-          <%= @closed_events_7_days.count %> were closed within the last 7 days from <%= @closed_events_7_days.distinct.count(:user_id) %> users.
-        </p>
-      </div>
-    </section>
-  <% end %>
-  <section class="row">
-    <div class="col">
-      <h3>Closed Crisis Events</h3>
-      <%= render 'shared/search_results' %>
-      <%= render 'shared/limit' %>
-      <div class="table-container">
-        <table class="table table-dark table-striped table-hover link-table table-hover">
-          <thead>
-          <tr>
-            <th scope="col">User</th>
-            <th scope="col">Crisis Type</th>
-            <th scope="col">Latest Update</th>
-            <th scope="col">Update Type</th>
-            <th scope="col">Closed At</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @resources.each do |crisis_event| %>
-            <tr>
-              <td>
-                <%= link_to "#{crisis_event.user.full_name}", crisis_event_path(crisis_event) %>
-              </td>
-              <td>
-                <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
-              </td>
-              <td>
-                <%= link_to crisis_event_path(crisis_event) do %>
-                  <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
-                    <%= crisis_event.crisis_notes.last.content %>
-                  <% else %>
-                    <%= crisis_event.additional_info %>
-                  <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to crisis_event_path(crisis_event) do %>
-                  <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
-                    <span class="badge bg-primary text-dark me-2">Note</span>
-                  <% else %>
-                    <span class="badge bg-secondary me-2">Info</span>
-                  <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to "#{time_ago_in_words(crisis_event.closed_formatted)} ago", crisis_event_path(crisis_event) %>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <%= render 'shared/pagination_controls', index: 'crisis_events' %>
-    <div class="col">
-      <%= link_to 'View Active', active_crisis_events_path, class: 'btn btn-primary' %>
-    </div>
-  </section>
-</main>
+<%= render 'layouts/searchable', class_list: 'team-members crisis-events', header: 'Closed Crisis Events',
+           index: 'crisis_events', stats: render('stats'), footer_section: render('footer_section') do %>
+  <div class="table-container">
+    <table class="table table-dark table-striped table-hover link-table">
+      <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Crisis Type</th>
+        <th scope="col">Latest Update</th>
+        <th scope="col">Update Type</th>
+        <th scope="col">Closed At</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @resources.each do |crisis_event| %>
+        <tr>
+          <td>
+            <%= link_to "#{crisis_event.user.full_name}", crisis_event_path(crisis_event) %>
+          </td>
+          <td>
+            <%= link_to "#{crisis_event.crisis_type.category}", crisis_event_path(crisis_event) %>
+          </td>
+          <td>
+            <%= link_to crisis_event_path(crisis_event) do %>
+              <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                <%= crisis_event.crisis_notes.last.content %>
+              <% else %>
+                <%= crisis_event.additional_info %>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to crisis_event_path(crisis_event) do %>
+              <% if crisis_event.crisis_notes.present? && crisis_event.crisis_notes.last.updated_at > crisis_event.updated_at %>
+                <span class="badge bg-primary text-dark me-2">Note</span>
+              <% else %>
+                <span class="badge bg-secondary me-2">Info</span>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "#{time_ago_in_words(crisis_event.closed_formatted)} ago", crisis_event_path(crisis_event) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
