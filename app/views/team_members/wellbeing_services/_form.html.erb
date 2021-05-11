@@ -1,8 +1,8 @@
 <%= form_with model: wellbeing_service, url: path do |f| %>
   <div class="container">
     <div class="row">
-      <div class="col-0 col-md-4"></div>
-      <div class="col-12 col-md-4">
+      <div class="col-0 col-lg-3"></div>
+      <div class="col-12 col-lg-6 form">
         <h3><%= title %> Wellbeing Service</h3>
         <div class="form-floating">
           <%= f.text_field :name, class: 'form-control', required: true %>
@@ -19,7 +19,7 @@
         <div class="container p-0">
           <div class="row m-0">
             <% wellbeing_metrics.each do |metric| %>
-              <div class="col-6 p-0">
+              <div class="col-12 col-lg-6 p-0">
                 <div class="form-check form-switch">
                     <%= f.check_box "wellbeing_metric_#{metric.id}", class: 'form-check-input',
                                     checked: wellbeing_service.wellbeing_metrics.include?(metric) %>
@@ -30,7 +30,7 @@
           </div>
         </div>
           <div class="container">
-            <div class="row mb-2">
+            <div class="row mt-3">
               <div class="col-2"></div>
               <div class="col-8"><%= f.submit @wellbeing_service.id.present? ? 'Update' : 'Create',
                                               class: 'btn btn-primary' %></div>
@@ -49,7 +49,7 @@
             <% end %>
           </div>
       </div>
-      <div class="col-0 col-md-4"></div>
+      <div class="col-0 col-lg-3"></div>
     </div>
   </div>
 <% end %>

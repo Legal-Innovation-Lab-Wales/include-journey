@@ -1,10 +1,15 @@
 <main class="container team-members wellbeing-services index">
-  <%= render 'shared/back_btn', next_path: new_wellbeing_service_path, next_text: 'Add New Wellbeing Service' %>
   <section class="row">
     <div class="col">
-      <h3>Wellbeing Services</h3>
-
+      <h2>Wellbeing Services</h2>
       <div class="container">
+        <div class="row mt-3 mb-3">
+          <div class="col d-flex justify-content-start">
+            <%= link_to new_wellbeing_service_path, class: 'btn btn-success' do %>
+              <i class="fas fa-plus-circle"></i> Add New Wellbeing Service
+            <% end %>
+          </div>
+        </div>
         <div class="row">
           <% @wellbeing_services.each do |wellbeing_service| %>
             <%= render 'card', wellbeing_service: wellbeing_service, user: false %>

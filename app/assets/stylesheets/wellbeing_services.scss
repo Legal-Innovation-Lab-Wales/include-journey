@@ -21,7 +21,7 @@
 
   &.new, &.edit {
     form {
-      .col-12, .col-md-4:nth-child(2) {
+      .form {
         padding: 1.5rem;
         background: $blue-grad;
         border-radius: 0.5rem;
