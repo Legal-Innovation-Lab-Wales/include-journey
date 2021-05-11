@@ -54,7 +54,9 @@
       <% else %>
         <h3>No active crisis events</h3>
       <% end %>
-      <%= link_to 'View Closed', crisis_events_path, class: 'btn btn-primary' %>
+      <%= link_to crisis_events_path, class: 'btn btn-primary' do %>
+        View Closed <i class="fas fa-arrow-circle-right"></i>
+      <% end %>
     </div>
   </section>
 </main>
