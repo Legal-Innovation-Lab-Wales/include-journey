@@ -6,16 +6,15 @@ class User < DeviseRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
-  has_many :notes, foreign_key: :user_id
-  has_many :contacts, foreign_key: :user_id
-  has_many :wellbeing_assessments, foreign_key: :user_id
+  has_many :notes, foreign_key: :user_id, dependent: :delete_all
+  has_many :contacts, foreign_key: :user_id, dependent: :delete_all
+  has_many :wellbeing_assessments, foreign_key: :user_id, dependent: :destroy
   has_many :wba_scores, through: :wellbeing_assessments
-  has_many :crisis_events, foreign_key: :user_id
-  has_many :journal_entries, foreign_key: :user_id
-  has_many :appointments, foreign_key: :user_id
-  has_many :goals, foreign_key: :user_id
-
-  has_many :user_profile_view_logs, foreign_key: :user_id
+  has_many :crisis_events, foreign_key: :user_id, dependent: :destroy
+  has_many :journal_entries, foreign_key: :user_id, dependent: :destroy
+  has_many :appointments, foreign_key: :user_id, dependent: :delete_all
+  has_many :goals, foreign_key: :user_id, dependent: :delete_all
+  has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
 
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
@@ -43,6 +42,7 @@ class User < DeviseRecord
     history
   end
 
+  # Appointments filters
   def future_appointments
     appointments.order(start: :asc).filter(&:future)
   end
