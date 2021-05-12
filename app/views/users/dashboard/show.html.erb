@@ -14,17 +14,17 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: current_user.contacts.count.zero? ? new_contact_path : contacts_path, icon: 'fa-address-book',
                      large_text: 'My Contacts', text: 'Contacts' %>
-          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-road',
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-road',
                      large_text: 'My Journey', text: 'Journey' %>
-          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-info-circle',
+          <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-info-circle',
                      large_text: 'My Support', text: 'Support' %>
         </div>
         <div class="row">
           <%= render 'shared/dashboard_btn', path: goals_path, icon: 'fa-tasks',
                      large_text: 'My Goals', text: 'Goals' %>
-          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-calendar-check',
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-calendar-check',
                      large_text: "Include: What's On", text: "What's On" %>
-          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-comments',
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-comments',
                      large_text: 'My Voice', text: 'Voice' %>
         </div>
       </div>

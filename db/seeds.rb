@@ -160,6 +160,64 @@ if WellbeingMetric.count.zero?
   )
 end
 
+# Create Wellbeing Services
+if WellbeingService.count.zero?
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Include UK',
+    description: 'Help for ex-offenders',
+    website: 'https://include-uk.com'
+  )
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Samaritans',
+    description: 'Support phone line',
+    website: 'https://www.samaritans.org'
+  )
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Mind',
+    description: 'Mental health charity',
+    website: 'https://www.mind.org.uk'
+  )
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Shelter',
+    description: 'Housing support',
+    website: 'https://www.shelter.org.uk'
+  )
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Citizens Advice',
+    description: 'Government Services',
+    website: 'https://citizensadvicesnpt.org.uk'
+  )
+  WellbeingService.create!(
+    team_member_id: 1,
+    name: 'Food Banks',
+    description: 'Trussell Trust Food Bank Search',
+    website: 'https://www.trusselltrust.org/get-help/find-a-foodbank'
+  )
+end
+
+# Create Links Between Wellbeing Services and Wellbeing Metrics
+if MetricsService.count.zero?
+  MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 7) # Include --> Behaviour
+  MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 8) # Include --> Addiction
+  MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 9) # Include --> Relationships
+  MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 10) # Include --> Sense of Community
+  MetricsService.create!(wellbeing_service_id: 2, wellbeing_metric_id: 4) # Samaritans --> Physical Health
+  MetricsService.create!(wellbeing_service_id: 2, wellbeing_metric_id: 5) # Samaritans --> Mental Health
+  MetricsService.create!(wellbeing_service_id: 2, wellbeing_metric_id: 6) # Samaritans --> Emotional Health
+  MetricsService.create!(wellbeing_service_id: 3, wellbeing_metric_id: 4) # Mind --> Physical Health
+  MetricsService.create!(wellbeing_service_id: 3, wellbeing_metric_id: 5) # Mind --> Mental Health
+  MetricsService.create!(wellbeing_service_id: 3, wellbeing_metric_id: 6) # Mind --> Emotional Health
+  MetricsService.create!(wellbeing_service_id: 4, wellbeing_metric_id: 1) # Shelter --> Housing
+  MetricsService.create!(wellbeing_service_id: 5, wellbeing_metric_id: 2) # Citizens Advice --> Benefits/Money
+  MetricsService.create!(wellbeing_service_id: 5, wellbeing_metric_id: 11) # Citizens Advice --> Employment/Education/Training
+  MetricsService.create!(wellbeing_service_id: 6, wellbeing_metric_id: 3) # Food Banks --> Food
+end
+
 # Create Crisis Types
 if CrisisType.count.zero?
   CrisisType.create!(category: 'Self Harm', team_member_id: 1)
