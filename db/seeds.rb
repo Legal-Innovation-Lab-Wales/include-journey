@@ -6,7 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-require_relative 'config' # config file not in load path - require_relative searches current file location for config
+begin
+  require_relative 'config' # config file not in load path - require_relative searches current file location for config
+rescue LoadError
+  puts 'Config file "db/config.rb" not found'
+  puts 'Check README.md for details on creating the config file'
+  exit
+end
+
 require 'faker'
 
 start_time = Time.now
