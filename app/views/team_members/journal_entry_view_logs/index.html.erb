@@ -20,22 +20,26 @@
         <table class="table table-dark table-striped">
           <thead>
           <th scope="col">User</th>
-          <th scope="col">Journal Entry</th>
           <th scope="col">Published at</th>
           <th scope="col">First Viewed At</th>
           <th scope="col">Last Viewed At</th>
           <th scope="col">View Count</th>
+          <th scope="col">Journal Entry</th>
 
           </thead>
           <tbody>
           <% @resources.each do |view_log| %>
             <tr>
               <td><%= view_log.user.full_name %></td>
-              <td><%= journal_entry_path(view_log.journal_entry) %></td>
               <td><%= view_log.journal_entry.created %></td>
               <td><%= view_log.created %></td>
-              <td><%= view_log.created %>
+              <td><%= view_log.last_update %>
               <td><%= view_log.view_count %></td>
+              <td>
+                <%= link_to journal_entry_path(view_log.journal_entry) do %>
+                  <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
+                <% end %>
+              </td>
             </tr>
           <% end %>
           </tbody>
