@@ -1,0 +1,18 @@
+@import "variables";
+
+.goals-archive {
+  td {
+    i {
+      padding: 0.75rem;
+      border-radius: 50%;
+
+      &:hover {
+        opacity: 0.8;
+        color: $black;
+        background-color: $white;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<div class="modal fade" id="goalModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container header-buttons">
+          <div class="row">
+            <%= render 'shared/dashboard_btn', path: '', icon: 'fa-flag-checkered', text: 'Complete' %>
+            <%= render 'shared/dashboard_btn', path: '', icon: 'fa-archive', text: 'Archive' %>
+            <%= render 'shared/dashboard_btn', path: '', icon: 'fa-trash-alt', text: 'Delete' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'goals_modal' %>

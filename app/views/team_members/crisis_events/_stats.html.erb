@@ -1,0 +1,7 @@
+<p>
+  There are <%= @count %> closed events.
+  <%= @closed_events_30_days.count %> were closed within the last 30 days from
+  <%= @closed_events_30_days.distinct.count(:user_id) %> users,
+  <%= @closed_events_7_days.count %> were closed within the last 7 days from
+  <%= @closed_events_7_days.distinct.count(:user_id) %> users.
+</p>

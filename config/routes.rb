@@ -17,26 +17,28 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_user_root
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
+      get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
 
       resources :wellbeing_assessments, only: %i[show new create]
-
       resources :journal_entries, only: %i[index new create] do
-        get 'dashboard', action: :dashboard, on: :collection
-
         resources :journal_entry_permissions, only: %i[new create], as: :permissions
       end
-
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
         put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
-
       resources :crisis_events, only: %i[create update]
-
       resources :contacts
+      resources :goals, only: %i[index create show destroy] do
+        put 'achieve', action: :achieve, on: :member
+        put 'archive', action: :archive, on: :member
+      end
+      resources :goals_archive, only: :index
+      resources :wellbeing_services, only: :index
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
@@ -49,6 +51,7 @@ Rails.application.routes.draw do
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
         put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
 
+        resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member
       end
@@ -73,8 +76,11 @@ Rails.application.routes.draw do
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
       resources :appointments, only: %i[show index]
+      resources :wellbeing_services
+      resources :wellbeing_metrics, only: %i[index update]
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
     root 'pages#main'
