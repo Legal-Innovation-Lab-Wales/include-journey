@@ -21,7 +21,6 @@ module TeamMembers
 
     def subheading_stats
       # TODO: Add stats for team member view logs index
-
     end
 
     def sort
@@ -29,9 +28,9 @@ module TeamMembers
 
       if %w[created_at_asc created_at_desc viewed_at_asc viewed_at_desc].include?(sort_param)
         sort_param = sort_param.split('_')
-        { "#{sort_param[0..1].join('_') == 'viewed_at' ? 'created_at' : 'journal_entries.created_at'}": sort_param[2] }
+        { "#{sort_param[0..1].join('_') == 'viewed_at' ? 'updated_at' : 'created_at'}": sort_param[2] }
       else
-        { 'created_at': :desc }
+        { 'updated_at': :desc }
       end
     end
 
