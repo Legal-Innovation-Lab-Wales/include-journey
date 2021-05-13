@@ -74,7 +74,7 @@ rails db:create
 rails db:migrate
 ```
 
-### Seeding the database:
+### Seeding the database
 
 In the `db` directory, create a new file called `config.rb`. This file should contain a module called `Config` declaring several constant variables used by `seed.rb` to control the size of the database.
 
