@@ -7,8 +7,8 @@ module Users
 
     # GET /appointments/upcoming
     def upcoming
-      @appointments = current_user.appointments.where('start >= ?', Time.now).order(start: :asc)
-      @count_in_next_week = @appointments.where('start <= ?', 1.week.from_now).size
+      @appointments = current_user.appointments.future.order(start: :asc)
+      @count_in_next_week = @appointments.next_week.size
       render 'upcoming'
     end
 
@@ -64,7 +64,7 @@ module Users
     protected
 
     def resources
-      current_user.appointments.where('start <= ?', Time.now).order(start: :desc)
+      current_user.appointments.past.order(start: :desc)
     end
 
     def resources_per_page
@@ -115,8 +115,8 @@ module Users
     end
 
     def subheading_stats
-      @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
-      @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
-  end
+      @count_in_last_week = @resources.last_week.size
+      @count_in_last_month = @resources.last_month.size
+    end
   end
 end
