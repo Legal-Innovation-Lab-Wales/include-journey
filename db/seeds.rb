@@ -6,18 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+begin
+  require_relative 'config' # config file not in load path - require_relative searches current file location for config
+rescue LoadError
+  puts 'Config file "db/config.rb" not found'
+  puts 'Check README.md for details on creating the config file'
+  exit
+end
+
 require 'faker'
 
-total_user_count = 10
-wellbeing_assessments_for_each_user = 20
-journal_entries_for_each_user = 5
-contacts_for_each_user = 5
-appointments_for_each_user = 20
-past_appointments_for_each_user = 20
-goals_for_each_user = 10 # Half short-term, half long-term
-crisis_events_count = 20
-crisis_notes_count = 20
-notes_count = 100
 start_time = Time.now
 
 # Create Static Team Members
@@ -243,7 +241,7 @@ goals_counter = 0
 appointment_counter = 0
 
 if User.count.zero?
-  total_user_count.times do
+  Config::TOTAL_USER_COUNT.times do
     user_counter += 1
     puts("Elapsed Time: #{Time.now - start_time}")
     puts("Creating User: #{user_counter}")
@@ -272,10 +270,10 @@ if User.count.zero?
 
     ## Create User Wellbeing Assessments for each user
     user_wba_counter = 0
-    wellbeing_assessments_for_each_user.times do
+    Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER.times do
       wba_counter += 1
       user_wba_counter += 1
-      created_at_value = DateTime.now - (wellbeing_assessments_for_each_user - user_wba_counter).day
+      created_at_value = DateTime.now - (Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER - user_wba_counter).day
       # puts("Creating Wellbeing Assessment #{user_wba_counter} for user #{user_counter} for date #{created_at_value}")
 
       wellbeing_assessment = WellbeingAssessment.create!(
@@ -303,7 +301,7 @@ if User.count.zero?
     end
 
     ## Create Journal Entries for each User
-    journal_entries_for_each_user.times do
+    Config::JOURNAL_ENTRIES_FOR_EACH_USER.times do
       journal_counter += 1
       created_at_value = Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
       # puts("Creating Journal #{journal_count} for user #{user_count}")
@@ -336,8 +334,9 @@ if User.count.zero?
       end
     end
 
+
     ## Create contacts for each user
-    contacts_for_each_user.times do
+    Config::CONTACTS_FOR_EACH_USER.times do
       name = Faker::Name.name
       Contact.create!(
         user: user,
@@ -348,8 +347,9 @@ if User.count.zero?
       )
     end
 
-    # Create Goals for each user
-    goals_for_each_user.times do |index|
+
+    ## Create Goals for each user
+    Config::GOALS_FOR_EACH_USER.times do |index|
       Goal.create!(
         user: user,
         goal: Faker::Hipster.sentences(number: 1)[0],
@@ -361,8 +361,9 @@ if User.count.zero?
       goals_counter += 1
     end
 
+
     ## Create Appointments for each user
-    appointments_for_each_user.times do
+    Config::APPOINTMENTS_FOR_EACH_USER.times do
       appointment_counter += 1
       app_time = Faker::Time.between(from: DateTime.yesterday, to: DateTime.tomorrow + 20)
       Appointment.create!(
@@ -376,7 +377,7 @@ if User.count.zero?
     end
 
     ## Create Appointments for each user
-    past_appointments_for_each_user.times do
+    Config::PAST_APPOINTMENTS_FOR_EACH_USER.times do
       appointment_counter += 1
       app_time = Faker::Time.between(from: DateTime.now - 20.days, to: DateTime.yesterday)
       Appointment.create!(
@@ -388,6 +389,7 @@ if User.count.zero?
         end: (app_time + rand(10..120).minutes)
       )
     end
+
   end
 
   user = User.new(
@@ -404,7 +406,7 @@ if User.count.zero?
 end
 
 notes_counter = 1
-notes_count.times do
+Config::NOTES_COUNT.times do
   note = Note.create!(
     team_member_id: rand(1..TeamMember.count),
     visible_to_user: [true, false].sample,
@@ -429,14 +431,14 @@ notes_count.times do
   notes_counter += 1
 end
 
-crisis_events_count.times do
+Config::CRISIS_EVENTS_COUNT.times do
   crisis_event = CrisisEvent.create!(
     additional_info: Faker::Hipster.sentences(number: 1)[0],
     user_id: rand(1..User.count),
     crisis_type_id: rand(1..CrisisType.count)
   )
 
-  crisis_notes_count.times do |i|
+  Config::CRISIS_NOTES_COUNT.times do |i|
     crisis_note = crisis_event.crisis_notes.create!(
       team_member_id: rand(1..TeamMember.count),
       content: Faker::Movies::HarryPotter.quote
@@ -466,10 +468,12 @@ puts("Team Members in Database: #{TeamMember.count}")
 puts("Users Created: #{user_counter}")
 puts("Users in Database: #{User.count}")
 
-puts("Contact per User: #{contacts_for_each_user}")
 puts("Wellbeing Assessments Created: #{wba_counter}")
 puts("Journals Created: #{journal_counter}")
+puts("Contacts Created: #{Config::CONTACTS_FOR_EACH_USER * user_counter}")
 puts("Goals Created: #{goals_counter}")
-puts("Crisis Events Created: #{crisis_events_count}")
-puts("Notes per Crisis Event: #{crisis_notes_count}")
 puts("Appointments Created: #{appointment_counter}")
+
+puts("Notes Created: #{notes_counter}")
+puts("Crisis Events Created: #{Config::CRISIS_EVENTS_COUNT}")
+puts("Notes per Crisis Event: #{Config::CRISIS_NOTES_COUNT}")
