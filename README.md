@@ -72,6 +72,36 @@ Create the database and run migrations:
 ```zsh
 rails db:create
 rails db:migrate
+```
+
+### Seeding the database:
+
+In the `db` directory, create a new file called `config.rb`. This file should contain a module called `Config` declaring several constant variables used by `seed.rb` to control the size of the database.
+
+<details>
+<summary>An example `config.rb` file:</summary>
+
+```zsh
+# db/config.rb
+module Config
+  TOTAL_USER_COUNT = 10
+  WELLBEING_ASSESSMENTS_FOR_EACH_USER = 20
+  JOURNAL_ENTRIES_FOR_EACH_USER = 5
+  CONTACTS_FOR_EACH_USER = 5
+  APPOINTMENTS_FOR_EACH_USER = 20
+  PAST_APPOINTMENTS_FOR_EACH_USER = 20
+  NOTES_COUNT = 100
+  GOALS_FOR_EACH_USER = 10 # Half short-term, half long-term
+  CRISIS_EVENTS_COUNT = 20
+  CRISIS_NOTES_COUNT = 20
+end
+```
+
+</details>
+
+Then finally, seed the database.
+
+```zsh
 rails db:seed
 ```
 
