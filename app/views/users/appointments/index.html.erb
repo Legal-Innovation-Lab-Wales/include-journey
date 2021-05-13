@@ -1,5 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'user appointments', header: 'Past Appointments', index: 'appointments',
-           new_btn: render(partial: 'shared/new_btn', locals: { path: new_appointment_path, text: 'Add Appointment' } ) do %>
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_appointment_path, text: 'Add Appointment' } ),
+           stats: render('stats') do %>
   <div class="container p-0">
     <div class="row">
       <% @resources.each do |past_appointment| %>

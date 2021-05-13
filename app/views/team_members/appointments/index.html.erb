@@ -1,4 +1,5 @@
-<%= render 'layouts/searchable', class_list: 'user appointments', header: 'All Appointments', index: 'user_appointments' do %>
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'All Appointments', index: 'user_appointments',
+           stats: render('stats') do %>
   <div class="container p-0">
     <div class="row">
       <% @resources.each do |appointment| %>
