@@ -329,7 +329,9 @@ if User.count.zero?
         JournalEntryViewLog.create!(
           team_member: team_member,
           journal_entry: journal_entry,
-          created_at: created_at_value + 1.day
+          created_at: DateTime.now - rand(60...480).minutes,
+          updated_at: DateTime.now - rand(1...60).minutes,
+          view_count: rand(0..10)
         )
       end
     end
