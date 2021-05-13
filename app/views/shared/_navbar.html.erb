@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-brand">
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><h2>Include Journey</h2></a>
-    <% if user_signed_in? %>
+    <% if current_user %>
       <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
          data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
         SOS <i class="fas fa-exclamation-circle"></i>
@@ -99,13 +99,11 @@
             <% end %>
           <% end %>
           <% if current_user %>
-            <% if user_signed_in? %>
-              <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
-                 data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-                <div class="nav-label always-show">SOS</div>
-                <i class="fas fa-exclamation-circle"></i>
-              </a>
-            <% end %>
+            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
+               data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+              <div class="nav-label always-show">SOS</div>
+              <i class="fas fa-exclamation-circle"></i>
+            </a>
             <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
