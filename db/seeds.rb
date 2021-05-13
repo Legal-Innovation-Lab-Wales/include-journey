@@ -258,15 +258,15 @@ if User.count.zero?
     user.save!
 
     ## Create a view log for every user
-    TeamMember.all.each do |team_member|
-      UserProfileViewLog.create!(
-        team_member: team_member,
-        user: user,
-        created_at: DateTime.now - rand(60...480).minutes,
-        updated_at: DateTime.now - rand(1...60).minutes,
-        view_count: rand(0..10)
-      )
-    end
+    # TeamMember.all.each do |team_member|
+    #   UserProfileViewLog.create!(
+    #     team_member: team_member,
+    #     user: user,
+    #     created_at: DateTime.now - rand(60...480).minutes,
+    #     updated_at: DateTime.now - rand(1...60).minutes,
+    #     view_count: rand(0..10)
+    #   )
+    # end
 
     ## Create User Wellbeing Assessments for each user
     user_wba_counter = 0
