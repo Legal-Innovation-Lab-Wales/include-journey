@@ -2,7 +2,6 @@ module TeamMembers
   # app/controllers/team_members/appointments_controller.rb
   class AppointmentsController < TeamMembersApplicationController
     before_action :user
-    before_action :appointment, only: %i[edit update destroy]
     include Pagination
 
     # GET /users/:user_id/appointments/new
@@ -22,15 +21,7 @@ module TeamMembers
       end
     end
 
-    def team_member
-      return unless params[:team_member_id].present?
-
-      @team_member = TeamMember.includes(:appointments).find(params[:team_member_id])
-    end
-
     def user
-      return unless params[:user_id].present?
-
       @user = User.includes(:appointments).find(params[:user_id])
     end
 
@@ -65,13 +56,9 @@ module TeamMembers
     end
 
     def subheading_stats
-      @count_in_last_week = @resources.where('appointments.start >= ?', 1.week.ago).size
-      @count_in_last_month = @resources.where('appointments.start >= ?', 1.month.ago).size
-      @count_in_next_weeks = @resources.where('appointments.start <= ?', 2.week.ago).size
-      return unless @user
-
-      @count_by_team_member = @resources.count { |appointment| appointment.team_member_id.present? }
-      @count_by_user = @resources.count { |appointment| appointment.team_member_id.nil? }
+      @count_in_last_week = @resources.last_week.size
+      @count_in_last_month = @resources.last_month.size
+      @count_in_next_weeks = @resources.next_fortnight.size
     end
   end
 end

@@ -12,14 +12,16 @@
           <% if local_assigns[:subheader].present? %>
             <h4><%= local_assigns[:subheader] %></h4>
           <% end %>
-
-          <% if local_assigns[:stats].present? %>
-            <%= local_assigns[:stats] %>
-          <% end %>
         </div>
 
         <div class="row">
           <%= render 'shared/search/search_results' %>
+        </div>
+
+        <div class="row">
+          <% if local_assigns[:stats].present? %>
+            <%= local_assigns[:stats] %>
+          <% end %>
         </div>
 
         <% if local_assigns[:new_btn].present? %>

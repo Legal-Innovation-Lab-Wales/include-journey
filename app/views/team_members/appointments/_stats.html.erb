@@ -1,5 +1,7 @@
 <div class="subheading">
-  <p><%= @user.first_name %> has <%= pluralize(@count, 'appointment', 'appointments') %>.</p>
+  <% unless params[:query].present? %>
+    <p><%= @user.first_name %> has <%= pluralize(@count, 'appointment', 'appointments') %>.</p>
+  <% end %>
   <p><%= pluralize(@count_in_next_weeks, 'is', 'are') %> scheduled in the next fortnight.</p>
   <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week
     and <%= @count_in_last_month %> in the last month.</p>
