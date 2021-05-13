@@ -1,6 +1,6 @@
 namespace :users do
-  desc 'This task is used to cleanup users who have decided to delete their account'
-  task cleanup: :environment do
-    User.where('id = ?', 1).destroy_all
+  desc 'This task is used to delete user accounts'
+  task delete: :environment do
+    User.can_be_deleted.destroy_all
   end
 end

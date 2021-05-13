@@ -16,6 +16,8 @@ class User < DeviseRecord
   has_many :goals, foreign_key: :user_id, dependent: :delete_all
   has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
 
+  scope :can_be_deleted, -> { where('deletion_date is not null and deletion_date <= ?', Time.now) }
+
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
   end

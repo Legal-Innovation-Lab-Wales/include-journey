@@ -17,7 +17,7 @@ past_appointments_for_each_user = 20
 goals_for_each_user = 10 # Half short-term, half long-term
 crisis_events_count = 20
 crisis_notes_count = 20
-notes_count = 500
+notes_count = 100
 start_time = Time.now
 
 # Create Static Team Members

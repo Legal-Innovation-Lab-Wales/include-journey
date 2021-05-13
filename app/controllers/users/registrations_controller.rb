@@ -3,6 +3,14 @@ module Users
   class RegistrationsController < Devise::RegistrationsController
     include Accessible
     skip_before_action :check_user, except: %i[new create]
+
+    # DELETE /users
+    def destroy
+      current_user.update!(deletion_date: Time.now + 30.days)
+
+      redirect_back(fallback_location: authenticated_user_root_path)
+    end
+
     # before_action :configure_sign_up_params, only: [:create]
     # before_action :configure_account_update_params, only: [:update]
 
@@ -23,11 +31,6 @@ module Users
 
     # PUT /resource
     # def update
-    #   super
-    # end
-
-    # DELETE /resource
-    # def destroy
     #   super
     # end
 

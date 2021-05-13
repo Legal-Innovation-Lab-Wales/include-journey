@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.bigint "mobile_number"
     t.datetime "release_date"
     t.boolean "terms", default: false
+    t.datetime "deletion_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

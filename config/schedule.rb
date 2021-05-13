@@ -25,5 +25,5 @@ set :env_path, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 job_type :rbenv_rails, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rails :task --silent :output }
 
 every 1.minute do
-  rbenv_rails 'users:cleanup'
+  rbenv_rails 'users:delete'
 end
