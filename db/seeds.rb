@@ -323,18 +323,18 @@ if User.count.zero?
       end
 
       ## Create View Log for every 7th journal entry
-      next unless (journal_counter % 7).zero?
+      # next unless (journal_counter % 7).zero?
 
-      TeamMember.all.each do |team_member|
-        view_log_created_at = Faker::Time.between(from: created_at_value, to: DateTime.now)
-        JournalEntryViewLog.create!(
-          team_member: team_member,
-          journal_entry: journal_entry,
-          created_at: view_log_created_at,
-          updated_at: Faker::Time.between(from: view_log_created_at, to: DateTime.now),
-          view_count: rand(0..10)
-        )
-      end
+      # TeamMember.all.each do |team_member|
+      #   view_log_created_at = Faker::Time.between(from: created_at_value, to: DateTime.now)
+      #   JournalEntryViewLog.create!(
+      #     team_member: team_member,
+      #     journal_entry: journal_entry,
+      #     created_at: view_log_created_at,
+      #     updated_at: Faker::Time.between(from: view_log_created_at, to: DateTime.now),
+      #     view_count: rand(0..10)
+      #   )
+      # end
     end
 
 

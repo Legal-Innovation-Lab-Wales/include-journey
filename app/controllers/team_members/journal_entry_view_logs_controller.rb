@@ -19,10 +19,6 @@ module TeamMembers
                   .order(sort)
     end
 
-    def team_member
-      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
-    end
-
     def subheading_stats
       # TODO: Add stats for team member view logs index
 
@@ -37,6 +33,12 @@ module TeamMembers
       else
         { 'created_at': :desc }
       end
+    end
+
+    private
+
+    def team_member
+      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
     end
 
     def journal_entry_view_logs_params

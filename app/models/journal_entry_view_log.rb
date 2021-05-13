@@ -1,7 +1,5 @@
 # app/models/journal_entry_view_log.rb
 class JournalEntryViewLog < ApplicationRecord
-  after_initialize :increment_view_count
-
   belongs_to :team_member
   belongs_to :journal_entry
 
