@@ -50,7 +50,7 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
+        put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
