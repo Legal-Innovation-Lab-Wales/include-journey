@@ -2,8 +2,8 @@
   <section class="row appointments">
     <h2 class="mb-0">Upcoming appointments</h2>
     <div class="subheading">
-      <p> There are a total of <%= @appointments.size %> appointments.</p>
-      <p><%= @count_in_next_week %> appointments are scheduled in the next week </p>
+      <p>There are a total of <%= @appointments.size %> appointments.</p>
+      <p><%= @count_in_next_week %> appointments are scheduled in the next week.</p>
     </div>
     <div class="container">
       <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
