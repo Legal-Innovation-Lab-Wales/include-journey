@@ -10,13 +10,20 @@
 
   .homepage-section {
     border-radius: 0.6rem;
-    padding: 2rem 4rem;
-    margin-bottom: max(2rem);
+    padding: 1rem 2rem;
     background-color: $white;
     color: $black;
 
     h1 {
-      font-size: 4rem;
+      font-size: 2rem;
+    }
+
+    @media screen and (min-width: $screen-md) {
+      padding: 2rem 4rem;
+
+      h1 {
+        font-size: 3.5rem;
+      }
     }
 
     a.col {
@@ -27,6 +34,25 @@
   .homepage-header {
     background-color: $brand-primary;
     color: $black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    h4 {
+      font-size: 1rem;
+
+      @media screen and (min-width: $screen-md) {
+        font-size: 1.5rem;
+      }
+    }
+
+    small {
+      font-size: 0.75rem;
+
+      @media screen and (min-width: $screen-md) {
+        font-size: 0.875rem;
+      }
+    }
   }
 }
 

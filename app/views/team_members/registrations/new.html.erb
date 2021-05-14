@@ -1,7 +1,7 @@
 <main class="ij-form">
   <div class="form-container">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <h2>Sign up</h2>
+      <h2><i class="fas fa-users"></i> Sign up</h2>
 
       <div class="form-group">
         <%= render "team_members/shared/error_messages", resource: resource %>
@@ -60,7 +60,7 @@
       </div>
 
       <div class="other-actions">
-        <%= render "team_members/shared/links" %>
+        <%= render "team_members/shared/links", locals: { text: 'Trouble signing up?' } %>
       </div>
     <% end %>
   </div>

@@ -49,3 +49,20 @@
     border-image: linear-gradient(to top, $brand-primary, $grey) 1 100%;
   }
 }
+
+#deviseModal {
+  .modal-content {
+    background: $black;
+
+    .modal-body {
+      .row {
+        margin-bottom: 1rem;
+        justify-content: center;
+
+        a {
+          color: $black;
+        }
+      }
+    }
+  }
+}
