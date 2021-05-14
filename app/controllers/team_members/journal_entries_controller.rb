@@ -48,7 +48,8 @@ module TeamMembers
     end
 
     def subheading_stats
-      # TODO: Add stats for journal index. IJ-123
+      @created_in_last_week = @resources.created_in_last_week.size
+      @created_in_last_month = @resources.created_in_last_month.size
     end
 
     def journal_entry_params

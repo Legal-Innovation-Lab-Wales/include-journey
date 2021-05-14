@@ -262,8 +262,8 @@ if User.count.zero?
       UserProfileViewLog.create!(
         team_member: team_member,
         user: user,
-        created_at: DateTime.now - rand(60...480).minutes,
-        updated_at: DateTime.now - rand(1...60).minutes,
+        created_at: rand(1...100).days.ago,
+        updated_at: rand(1...100).days.ago,
         view_count: rand(0..10)
       )
     end
