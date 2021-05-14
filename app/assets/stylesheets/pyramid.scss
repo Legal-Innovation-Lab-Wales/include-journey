@@ -1,0 +1,138 @@
+@import "variables";
+
+$row-size: 60px;
+$font-size: 24px;
+
+.pyramid {
+  .row {
+    height: $row-size;
+    min-width: $row-size*8;
+    justify-content: center;
+
+    .heading {
+      position: absolute;
+      height: ($row-size - 6px);
+      width: 220px;
+      text-align: right;
+      margin-left: ((-$row-size * 2) * 6);
+      border-right: 1px solid $white;
+
+      h4 {
+        margin-top: 13px;
+        margin-bottom: 0;
+      }
+    }
+
+    i {
+      z-index: 3;
+      font-size: $font-size;
+    }
+
+    .metric:hover {
+      cursor: pointer;
+    }
+
+    &.top-tier, &.middle-tier {
+      .triangle {
+        display: flex;
+        justify-content: center;
+        margin: 0 -1px;
+        padding: 0;
+        width: 0;
+        height: 0;
+        border-left: $row-size solid transparent;
+        border-right: $row-size solid transparent;
+
+        &.up {
+          border-bottom: $row-size solid $brand-primary;
+
+          i {
+            margin-top: $font-size;
+          }
+        }
+
+        &.down {
+          border-top: $row-size solid $brand-primary;
+          margin: 0 (-$row-size);
+
+          i {
+            margin-top: (-$font-size * 2);
+          }
+        }
+      }
+    }
+
+    &.middle-tier {
+      .heading {
+        height: ($row-size - 5px) * 2;
+
+        h4 {
+          margin-top: 39px;
+        }
+      }
+
+      .polygon {
+        height: $row-size;
+        width: $row-size * 2;
+        border-bottom: $row-size solid crimson;
+
+        &.left {
+          border-left: $row-size solid transparent;
+
+          i {
+            transform: translateY(($row-size - $font-size) / 2) translateX(-$font-size / 2);
+          }
+
+        }
+
+        &.right {
+          border-right: $row-size solid transparent;
+          border-bottom-color: darkgoldenrod;
+
+          i {
+            transform: translateY(($row-size - $font-size) / 2) translateX($font-size / 2);
+          }
+
+        }
+      }
+    }
+
+    &.bottom-tier {
+      .parallelogram {
+        height: $row-size;
+        width: $row-size * 2;
+
+        &.left {
+          transform: skew(-45deg);
+          background: cornflowerblue;
+
+          i {
+            transform: translateY(($row-size - $font-size) / 2) skew(45deg);
+          }
+        }
+
+        &.right {
+          transform: skew(45deg);
+          background: hotpink;
+
+          i {
+            transform: translateY(($row-size - $font-size) / 2) skew(-45deg);
+          }
+        }
+      }
+
+      .trapezoid.center {
+        height: 0;
+        width: $row-size * 4;
+        margin: 0 (-$row-size / 2);
+        border-left: $row-size solid transparent;
+        border-right: $row-size solid transparent;
+        border-bottom: $row-size solid $success;
+
+        i {
+          transform: translateY(($row-size - $font-size) / 2);
+        }
+      }
+    }
+  }
+}

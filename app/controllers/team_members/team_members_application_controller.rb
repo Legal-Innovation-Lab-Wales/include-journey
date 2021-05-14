@@ -13,6 +13,10 @@ module TeamMembers
       render 'pages/main'
     end
 
+    def pyramid
+      render 'pages/pyramid'
+    end
+
     protected
 
     def require_approval
