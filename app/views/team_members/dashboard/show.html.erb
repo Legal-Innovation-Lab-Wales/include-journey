@@ -1,7 +1,7 @@
 <main class="container team-members">
   <section class="row">
     <div class="col mb-3">
-      <h3>Dashboard</h3>
+      <h2>Dashboard</h2>
       <div class="container header-buttons">
         <div class="row">
           <% if @admin %>
@@ -12,8 +12,7 @@
           <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
 
           <% unless @admin %>
-            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
-                       text: 'Crisis Events' %>
+            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle', text: 'Crisis Events' %>
           <% end %>
         </div>
         <div class="row">
@@ -22,13 +21,23 @@
                        text: 'Crisis Events' %>
           <% end %>
 
-            <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open',
-                       text: 'Journal Entries' %>
-            <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart',
-                       large_text: 'Wellbeing Assessments', text: 'WBA' %>
+            <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open', text: 'Journal Entries' %>
+            <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart', text: 'Wellbeing Assessments' %>
 
           <% unless @admin %>
-            <a class="col clear d-flex align-items-center"></a>
+            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Services' %>
+          <% end %>
+        </div>
+        <div class="row">
+          <% if @admin %>
+            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Services' %>
+          <% end %>
+
+            <%= render 'shared/dashboard_btn', path: wellbeing_metrics_path, icon: 'fa-ruler-horizontal', text: 'Wellbeing Metrics' %>
+            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
+
+          <% unless @admin %>
+            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
           <% end %>
         </div>
       </div>

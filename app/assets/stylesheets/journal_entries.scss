@@ -63,14 +63,6 @@
     }
   }
 
-  &.new, &.index {
-    padding: 0;
-
-    .container {
-      padding: 0;
-    }
-  }
-
   .card {
     max-height: 50vh;
     @media screen and (min-width: $screen-md) {
@@ -93,6 +85,25 @@
     .journal-text {
       text-align: start;
       overflow: auto;
+    }
+  }
+
+  &.team-members.index {
+    section {
+      .search {
+        input:first-child {
+          flex: 1;
+        }
+
+        .form-select {
+          &:nth-child(2) {
+            flex: 0.6;
+          }
+          &:nth-child(3) {
+            flex: 0.15;
+          }
+        }
+      }
     }
   }
 }

@@ -1,60 +1,26 @@
-<main class="container user journal-entry index">
-  <%= render 'shared/back_btn' %>
-  <section class="row">
-    <div class="col">
-        <h2>Journal Entries</h2>
-        <p class="mb-0">
-          You have penned <%= "#{pluralize(@resources.count, 'journal')}" %>.
-          <%= @entries_in_last_30_days %> in the last month.
-          Your most recent was <%= "#{pluralize(@days_since_last_entry, 'day')}" %> ago.
-        </p>
-        <p class="mb-0">
-          If you're ready to add another entry, click the 'new entry' button or you can view your previous entries.
-        </p>
-      </div>
-  </section>
-  <div class="row justify-content-md-center">
-    <div class="col-auto">
-      <%= link_to new_journal_entry_path, class: 'btn btn-primary btn-lg' do %>
-        <i class="fas fa-plus-circle"></i> New Entry 
+<%= render 'layouts/searchable', class_list: 'user journal-entry', header: 'Journal Entries', index: 'journal_entries',
+           stats: render(partial: 'stats'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_journal_entry_path, text: 'New Entry' }) do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |journal_entry| %>
+        <div class="col-12 col-md-4">
+          <div class="card mb-3">
+            <div class="card-header">
+              <span><%= journal_entry.feeling %></span>
+              <span><%= journal_entry.created %></span>
+            </div>
+            <div class="card-body journal-text text-dark p-1">
+              <%= simple_format(journal_entry.entry) %>
+            </div>
+            <div class="card-footer">
+              <%= link_to edit_journal_entry_permissions_path(journal_entry), class: 'btn btn-primary btn-lg' do %>
+                <i class="fas fa-plus-circle"></i> Edit Permissions
+              <% end %>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
-  <section class="row">
-    <div class="container">
-      <div class="row">
-        <h3 class="mb-3">Archive</h3>
-        <%= render 'shared/search_results' %>
-      </div>
-      <div class="row justify-content-end mb-2">
-        <%= render 'shared/search' %>
-      </div>
-      <div class="row">
-        <div class="col">
-          <%= render 'shared/limit' %>
-        </div>
-      </div>
-      <div class="row">
-        <% @resources.each do |journal_entry| %>
-          <div class="col-12 col-md-4">
-            <div class="card mb-3">
-              <div class="card-header">
-                <span><%= journal_entry.feeling %></span>
-                <span><%= journal_entry.created %></span>
-              </div>
-              <div class="card-body journal-text text-dark p-1">
-                <%= simple_format(journal_entry.entry) %>
-              </div>
-              <div class="card-footer">
-                <%= link_to edit_journal_entry_permissions_path(journal_entry), class: 'btn btn-primary btn-lg' do %>
-                  <i class="fas fa-plus-circle"></i> Edit Permissions
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
-  <%= render 'shared/pagination_controls', index: 'journal_entries' %>
-</main>
+<% end %>

@@ -1,0 +1,19 @@
+<div class="col-12 col-md-6 mb-3">
+  <div class="card">
+    <div class="card-header">
+      <span>
+        <%= link_to user_path(wellbeing_assessment.user) do %>
+          <%= wellbeing_assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+        <% end %>
+      </span>
+      <span>
+        <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+      </span>
+    </div>
+    <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
+      <div class="card-body p-2">
+        <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
+      </div>
+    </a>
+  </div>
+</div>

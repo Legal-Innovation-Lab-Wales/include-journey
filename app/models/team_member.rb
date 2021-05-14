@@ -27,8 +27,11 @@ class TeamMember < DeviseRecord
   has_many :viewed_journal_entries, through: :journal_entry_view_logs, source: :journal_entry
   has_many :journal_entries, through: :journal_entry_permissions
 
+  has_many :user_profile_view_logs, foreign_key: :team_member_id
   has_many :user_pins, foreign_key: :team_member_id
   has_many :pinned_users, through: :user_pins, source: :user
+
+  has_many :wellbeing_services
 
   def unread_journal_entries(user)
     (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count

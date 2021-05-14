@@ -1,0 +1,15 @@
+<% if params[:query].present? || params[:feeling].present? || params[:viewed].present? %>
+  <p>Search
+    <% if params[:query].present? %>
+      "<%= params[:query] %>"
+    <% end %>
+    <% if params[:viewed].present? %>
+      <% if params[:query].present? %>+<% end %>
+      "<%= "#{params[:viewed].to_i.zero? ? 'Not ' : ''}Viewed" %>"
+    <% end %>
+    <% if params[:feeling].present? %>
+      <% if params[:query].present? || params[:viewed].present? %>+<% end %>
+      "<%= params[:feeling] %>"
+    <% end %>
+    returned <%= @count %> results</p>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142949) do
+ActiveRecord::Schema.define(version: 2021_05_05_111437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,15 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.index ["team_member_id"], name: "index_journal_entry_view_logs_on_team_member_id"
   end
 
+  create_table "metrics_services", force: :cascade do |t|
+    t.bigint "wellbeing_service_id", null: false
+    t.bigint "wellbeing_metric_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wellbeing_metric_id"], name: "index_metrics_services_on_wellbeing_metric_id"
+    t.index ["wellbeing_service_id"], name: "index_metrics_services_on_wellbeing_service_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.text "content"
     t.boolean "visible_to_user", default: false, null: false
@@ -180,6 +189,16 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_user_pins_on_team_member_id"
     t.index ["user_id"], name: "index_user_pins_on_user_id"
+  end
+
+  create_table "user_profile_view_logs", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "view_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_user_profile_view_logs_on_team_member_id"
+    t.index ["user_id"], name: "index_user_profile_view_logs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -242,6 +261,16 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
   end
 
+  create_table "wellbeing_services", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.string "website", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
+  end
+
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
@@ -260,15 +289,20 @@ ActiveRecord::Schema.define(version: 2021_04_07_142949) do
   add_foreign_key "journal_entry_permissions", "team_members"
   add_foreign_key "journal_entry_view_logs", "journal_entries"
   add_foreign_key "journal_entry_view_logs", "team_members"
+  add_foreign_key "metrics_services", "wellbeing_metrics"
+  add_foreign_key "metrics_services", "wellbeing_services"
   add_foreign_key "notes", "notes", column: "replaced_by_id"
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
+  add_foreign_key "user_profile_view_logs", "team_members"
+  add_foreign_key "user_profile_view_logs", "users"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"
   add_foreign_key "wellbeing_assessments", "users"
   add_foreign_key "wellbeing_metrics", "team_members"
+  add_foreign_key "wellbeing_services", "team_members"
 end
