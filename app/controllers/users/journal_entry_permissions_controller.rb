@@ -3,12 +3,18 @@ module Users
   class JournalEntryPermissionsController < PermissionsController
     # GET /journal_entries/:journal_entry_id/journal_entry_permissions/new
     def new
-      render 'new'
+      @permissions = @last_permissions
+      @default_permission = true
+
+      render 'form'
     end
 
     # GET /journal_entries/:journal_entry_id/journal_entry_permissions/edit
     def edit
-      render 'edit'
+      @permissions = @current_permissions
+      @default_permission = false
+
+      render 'form'
     end
 
     protected

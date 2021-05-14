@@ -1,12 +1,11 @@
 @import "variables";
 
 .permissions {
-
   @media screen and (min-width: $screen-md) {
     section {
       max-width: 60vw !important;
 
-      &.new-journal-permissions {
+      &.row {
         background: $blue-grad;
       }
     }
@@ -17,10 +16,6 @@
 
     .model-info {
       .col {
-
-        .select-all{
-
-        }
         &:first-child {
           text-align: left;
         }
@@ -50,5 +45,4 @@
       }
     }
   }
-
-  }
+}

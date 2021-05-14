@@ -19,6 +19,8 @@ module Users
     end
 
     def create
+      @model.permissions.destroy_all
+
       @team_members.each do |team_member|
         next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
 
@@ -26,14 +28,6 @@ module Users
       end
 
       redirect_to path, success: 'Sharing permissions for team members successfully set'
-    end
-
-    def update
-      @model.permissions.destroy_all
-
-      # rubocop:disable Style/RedundantSelf
-      self.create
-      # rubocop:enable Style/RedundantSelf
     end
 
     protected
