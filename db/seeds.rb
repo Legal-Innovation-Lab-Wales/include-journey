@@ -252,7 +252,8 @@ if User.count.zero?
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
-      password: 'test1234'
+      password: 'test1234',
+      current_sign_in_at: rand(1...100).days.ago
     )
     user.skip_confirmation!
     user.save!

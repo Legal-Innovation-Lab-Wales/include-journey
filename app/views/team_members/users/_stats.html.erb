@@ -1,0 +1,7 @@
+<div class="subheading">
+  <% unless @query.present? %>
+    <p>There <%= @total_users == 1 ? 'is' : 'are' %> currently <%= pluralize(@total_users, 'user', 'users') %>.</p>
+  <% end %>
+  <p><%= pluralize(@active_last_week, 'user was', 'users were') %> active in the last week and
+    <%= pluralize(@active_last_month, 'user was', 'users were') %> active in the last month.
+</div>

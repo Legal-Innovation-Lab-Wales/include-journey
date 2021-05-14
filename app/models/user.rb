@@ -14,8 +14,10 @@ class User < DeviseRecord
   has_many :journal_entries, foreign_key: :user_id
   has_many :appointments, foreign_key: :user_id
   has_many :goals, foreign_key: :user_id
-
   has_many :user_profile_view_logs, foreign_key: :user_id
+
+  scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
+  scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
 
   def release
     release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'

@@ -1,61 +1,27 @@
-<main class="container team-members users index">
-  <section class="row">
-    <div class="col">
-      <h2>Users</h2>
-      <div class="container p-0">
-        <div class="row mb-3">
-          <div class="col-12 col-md-4 mb-3 mb-md-0">
-            <div class="input-group">
-              <span class="input-group-text" id="total-users">Total Users</span>
-              <input type="text" class="form-control" aria-label="Total Users" aria-describedby="total-users"
-              value="<%= @user_count %>" disabled>
-              <span class="input-group-text"><i class="fas fa-users"></i></span>
+<%= render 'layouts/searchable', class_list: 'team-members users', header: 'Users', index: 'users',
+           stats: render(partial: 'stats') do %>
+  <div class="container p-0">
+    <% unless @query.present? || @pinned_users.count.zero? %>
+      <div class="row">
+        <div class="col">
+          <h4>Pinned</h4>
+          <div class="container p-0">
+            <div class="row">
+              <% @pinned_users.each_with_index do |user, index| %>
+                <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
+              <% end %>
             </div>
           </div>
-          <div class="col-12 col-md-4 mb-3 mb-md-0">
-            <div class="input-group">
-              <span class="input-group-text" id="active-users">Active Users</span>
-              <input type="text" class="form-control" aria-label="Active Users" aria-describedby="active-users"
-              value="<%= @active_users %>" disabled>
-              <span class="input-group-text"><i class="fas fa-users"></i></span>
-            </div>
-          </div>
-          <%= render 'shared/search/search' %>
         </div>
       </div>
+      <hr>
+    <% end %>
+    <div class="row" id="users">
+      <% @resources.each do |user| %>
+        <%= render 'card', user: user, pinned: false %>
+      <% end %>
     </div>
-  </section>
-  <% unless @query.present? %>
-    <section class="row">
-      <div class="col">
-        <h4>Pinned</h4>
-        <div class="container p-0">
-          <div class="row">
-            <% @pinned_users.each_with_index do |user, index| %>
-              <%= render 'card', user: user, pinned: true, first: index == 0, last: index == @pinned_users.count - 1 %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
-  <% end %>
-  <section class="row" id="users">
-    <div class="col">
-      <h4><%= @query.present? ? 'Results' : 'All' %></h4>
-      <%= render 'shared/search/search_results' %>
-      <div class="container p-0">
-        <div class="row justify-content-end mb-3">
-          <%= render 'shared/search/limit' %>
-        </div>
-        <div class="row">
-          <% @resources.each do |user| %>
-            <%= render 'card', user: user, pinned: false %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-      <%= render 'shared/search/pagination_controls', index: 'users' %>
-  </section>
-</main>
+  </div>
+<% end %>
 
 <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
