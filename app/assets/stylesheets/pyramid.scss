@@ -1,24 +1,25 @@
 @import "variables";
 
-$row-size: 60px;
+$row-height: 60px;
 $font-size: 24px;
+$heading-height: $row-height - 6px;
 
 .pyramid {
   .row {
-    height: $row-size;
-    min-width: $row-size*8;
+    height: $row-height;
+    min-width: $row-height*8;
     justify-content: center;
 
     .heading {
       position: absolute;
-      height: ($row-size - 6px);
-      width: 220px;
+      height: $heading-height;
+      width: $row-height * 3;
       text-align: right;
-      margin-left: ((-$row-size * 2) * 6);
+      margin-left: ((-$row-height * 2) * 6);
       border-right: 1px solid $white;
 
       h4 {
-        margin-top: 13px;
+        transform: translateY(($heading-height - $font-size) / 2);
         margin-bottom: 0;
       }
     }
@@ -39,23 +40,23 @@ $font-size: 24px;
         padding: 0;
         width: 0;
         height: 0;
-        border-left: $row-size solid transparent;
-        border-right: $row-size solid transparent;
+        border-left: $row-height solid transparent;
+        border-right: $row-height solid transparent;
 
         &.up {
-          border-bottom: $row-size solid $brand-primary;
+          border-bottom: $row-height solid $brand-primary;
 
           i {
-            margin-top: $font-size;
+            transform: translateY($font-size);
           }
         }
 
         &.down {
-          border-top: $row-size solid $brand-primary;
-          margin: 0 (-$row-size);
+          border-top: $row-height solid $brand-primary;
+          margin: 0 (-$row-height);
 
           i {
-            margin-top: (-$font-size * 2);
+            transform: translateY(-$font-size * 2);
           }
         }
       }
@@ -63,33 +64,33 @@ $font-size: 24px;
 
     &.middle-tier {
       .heading {
-        height: ($row-size - 5px) * 2;
+        height: $heading-height * 2;
 
         h4 {
-          margin-top: 39px;
+          transform: translateY((($heading-height * 2) - $font-size) / 2);
         }
       }
 
       .polygon {
-        height: $row-size;
-        width: $row-size * 2;
-        border-bottom: $row-size solid crimson;
+        height: $row-height;
+        width: $row-height * 2;
+        border-bottom: $row-height solid crimson;
 
         &.left {
-          border-left: $row-size solid transparent;
+          border-left: $row-height solid transparent;
 
           i {
-            transform: translateY(($row-size - $font-size) / 2) translateX(-$font-size / 2);
+            transform: translateY(($row-height - $font-size) / 2) translateX(-$font-size / 2);
           }
 
         }
 
         &.right {
-          border-right: $row-size solid transparent;
+          border-right: $row-height solid transparent;
           border-bottom-color: darkgoldenrod;
 
           i {
-            transform: translateY(($row-size - $font-size) / 2) translateX($font-size / 2);
+            transform: translateY(($row-height - $font-size) / 2) translateX($font-size / 2);
           }
 
         }
@@ -98,15 +99,15 @@ $font-size: 24px;
 
     &.bottom-tier {
       .parallelogram {
-        height: $row-size;
-        width: $row-size * 2;
+        height: $row-height;
+        width: $row-height * 2;
 
         &.left {
           transform: skew(-45deg);
           background: cornflowerblue;
 
           i {
-            transform: translateY(($row-size - $font-size) / 2) skew(45deg);
+            transform: translateY(($row-height - $font-size) / 2) skew(45deg);
           }
         }
 
@@ -115,21 +116,21 @@ $font-size: 24px;
           background: hotpink;
 
           i {
-            transform: translateY(($row-size - $font-size) / 2) skew(-45deg);
+            transform: translateY(($row-height - $font-size) / 2) skew(-45deg);
           }
         }
       }
 
       .trapezoid.center {
         height: 0;
-        width: $row-size * 4;
-        margin: 0 (-$row-size / 2);
-        border-left: $row-size solid transparent;
-        border-right: $row-size solid transparent;
-        border-bottom: $row-size solid $success;
+        width: $row-height * 4;
+        margin: 0 (-$row-height / 2);
+        border-left: $row-height solid transparent;
+        border-right: $row-height solid transparent;
+        border-bottom: $row-height solid $success;
 
         i {
-          transform: translateY(($row-size - $font-size) / 2);
+          transform: translateY(($row-height - $font-size) / 2);
         }
       }
     }
