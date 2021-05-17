@@ -1,12 +1,10 @@
 <div class="pyramid container">
   <div class="row top-tier">
-    <div class="heading"><h4>Top Tier</h4></div>
     <div class="metric triangle up wba-score__<%= @wba_scores.find_by(wellbeing_metric_id: 11).value %>">
       <i class="fas fa-user-tie"></i>
     </div>
   </div>
   <div class="row middle-tier">
-    <div class="heading middle-tier "><h4>Middle Tier</h4></div>
     <div class="metric polygon left wba-score__<%= @wba_scores.find_by(wellbeing_metric_id: 5).value %>">
       <i class="fas fa-brain"></i>
     </div>
@@ -32,7 +30,6 @@
     </div>
   </div>
   <div class="row bottom-tier">
-    <div class="heading"><h4>Bottom Tier</h4></div>
     <div class="metric parallelogram left wba-score__<%= @wba_scores.find_by(wellbeing_metric_id: 1).value %>">
       <i class="fas fa-home"></i>
     </div>

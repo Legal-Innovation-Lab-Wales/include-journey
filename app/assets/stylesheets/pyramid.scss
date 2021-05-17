@@ -2,27 +2,12 @@
 
 $row-height: 60px;
 $font-size: 24px;
-$heading-height: $row-height - 6px;
 
 .pyramid {
   .row {
     height: $row-height;
     min-width: $row-height*8;
     justify-content: center;
-
-    .heading {
-      position: absolute;
-      height: $heading-height;
-      width: $row-height * 3;
-      text-align: right;
-      margin-left: ((-$row-height * 2) * 6);
-      border-right: 1px solid $white;
-
-      h4 {
-        transform: translateY(($heading-height - $font-size) / 2);
-        margin-bottom: 0;
-      }
-    }
 
     i {
       font-size: $font-size;
@@ -70,14 +55,6 @@ $heading-height: $row-height - 6px;
     }
 
     &.middle-tier {
-      .heading {
-        height: $heading-height * 2;
-
-        h4 {
-          transform: translateY((($heading-height * 2) - $font-size) / 2);
-        }
-      }
-
       .polygon {
         height: $row-height;
         width: $row-height * 2;
