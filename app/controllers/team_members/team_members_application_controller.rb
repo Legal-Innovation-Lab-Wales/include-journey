@@ -14,6 +14,8 @@ module TeamMembers
     end
 
     def pyramid
+      @wba_scores = WellbeingAssessment.find(1).wba_scores.includes(:wellbeing_metric)
+
       render 'pages/pyramid'
     end
 

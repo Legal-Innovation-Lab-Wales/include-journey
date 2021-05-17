@@ -30,6 +30,10 @@ $heading-height: $row-height - 6px;
 
     .metric:hover {
       cursor: pointer;
+
+      &.trapezoid, &.triangle.up, &.polygon { border-bottom-color: $color-complement-2 !important; }
+      &.triangle.down { border-top-color: $color-complement-2 !important; }
+      &.parallelogram { background-color: $color-complement-2 !important; }
     }
 
     &.top-tier, &.middle-tier {
@@ -42,9 +46,11 @@ $heading-height: $row-height - 6px;
         height: 0;
         border-left: $row-height solid transparent;
         border-right: $row-height solid transparent;
+        background: none;
 
         &.up {
-          border-bottom: $row-height solid $brand-primary;
+          border-bottom-width: $row-height;
+          border-bottom-style: solid;
 
           i {
             transform: translateY($font-size);
@@ -52,7 +58,8 @@ $heading-height: $row-height - 6px;
         }
 
         &.down {
-          border-top: $row-height solid $brand-primary;
+          border-top-width: $row-height;
+          border-top-style: solid;
           margin: 0 (-$row-height);
 
           i {
@@ -74,7 +81,9 @@ $heading-height: $row-height - 6px;
       .polygon {
         height: $row-height;
         width: $row-height * 2;
-        border-bottom: $row-height solid crimson;
+        background: none;
+        border-bottom-width: $row-height;
+        border-bottom-style: solid;
 
         &.left {
           border-left: $row-height solid transparent;
@@ -87,7 +96,6 @@ $heading-height: $row-height - 6px;
 
         &.right {
           border-right: $row-height solid transparent;
-          border-bottom-color: darkgoldenrod;
 
           i {
             transform: translateY(($row-height - $font-size) / 2) translateX($font-size / 2);
@@ -97,41 +105,45 @@ $heading-height: $row-height - 6px;
       }
     }
 
+    .parallelogram {
+      &.left {
+        transform: skew(-45deg);
+
+        i {
+          transform: translateY(($row-height - $font-size) / 2) skew(45deg);
+        }
+      }
+
+      &.right {
+        transform: skew(45deg);
+
+        i {
+          transform: translateY(($row-height - $font-size) / 2) skew(-45deg);
+        }
+      }
+    }
+
+    .trapezoid {
+      border-left: $row-height solid transparent;
+      border-right: $row-height solid transparent;
+      border-bottom-width: $row-height;
+      border-bottom-style: solid;
+
+      i {
+        transform: translateY(($row-height - $font-size) / 2);
+      }
+    }
+
     &.bottom-tier {
       .parallelogram {
         height: $row-height;
         width: $row-height * 2;
-
-        &.left {
-          transform: skew(-45deg);
-          background: cornflowerblue;
-
-          i {
-            transform: translateY(($row-height - $font-size) / 2) skew(45deg);
-          }
-        }
-
-        &.right {
-          transform: skew(45deg);
-          background: hotpink;
-
-          i {
-            transform: translateY(($row-height - $font-size) / 2) skew(-45deg);
-          }
-        }
       }
 
-      .trapezoid.center {
+      .trapezoid {
         height: 0;
         width: $row-height * 4;
         margin: 0 (-$row-height / 2);
-        border-left: $row-height solid transparent;
-        border-right: $row-height solid transparent;
-        border-bottom: $row-height solid $success;
-
-        i {
-          transform: translateY(($row-height - $font-size) / 2);
-        }
       }
     }
   }
