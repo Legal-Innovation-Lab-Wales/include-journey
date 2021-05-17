@@ -1,0 +1,69 @@
+<main class="container user">
+  <section class="row appointments">
+    <h2 class="mb-0">Upcoming appointments</h2>
+    <div class="container">
+      <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
+      <div class="row">
+        <% @appointments.group_by { |t| t.start_date }.each do |appointments| %>
+          <div class="col-12">
+            <div class="card mt-3 text-al">
+              <div class="card-header">
+                <span>
+                  In <%= distance_of_time_in_words(Time.now, appointments[1].first.start) %> on <%= appointments[1].first.date %> you have <%= appointments[1].count %> appointments
+                </span>
+              </div>
+              <% appointments[1].each do |appointment| %>
+
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col d-flex">
+                      <h4 class="me-auto"><%= appointment.what %></h4>
+                      <span class="actions">
+                        <% if appointment.team_member.present? %>
+                          <p>Created by <%= appointments.team_member.full_name %></p>
+                        <% else %>
+                          <span>
+                            <%= link_to edit_appointment_path(appointment.id) do %><i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i><% end %>
+                          </span>
+                          <span>
+                            <%= link_to appointment_path(appointment.id), method: :delete, data: { confirm: 'Are you sure?' } do %><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Delete"></i><% end %>
+                          </span>
+                        <% end %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <i class="fas fa-clock"></i> at <%= appointment.start_time %>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <i class="fas fa-user"></i> with <%= appointment.who_with %>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <i class="fas fa-location-arrow"></i> at <%= appointment.where %>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12">
+                      <i class="fas fa-hourglass-start"></i> for <%= distance_of_time_in_words(appointment.start, appointment.end) %>
+                    </div>
+                  </div>
+
+                </div>
+                <hr>
+
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+  <section class="row">
+    <div class="col-2 col-md-4"></div>
+    <div class="col-8 col-md-4">
+      <%= link_to 'View Past Appointments', appointments_path, class: 'btn btn-primary' %>
+    </div>
+    <div class="col-2 col-md-4"></div>
+  </section>
+</main>

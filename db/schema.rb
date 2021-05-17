@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_142947) do
+ActiveRecord::Schema.define(version: 2021_05_05_111437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id"
+    t.datetime "start"
+    t.datetime "end"
+    t.string "who_with"
+    t.string "where"
+    t.string "what"
+    t.boolean "attended", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_appointments_on_team_member_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
 
   create_table "contacts", force: :cascade do |t|
     t.string "name", null: false
@@ -44,9 +59,13 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.text "content"
     t.bigint "crisis_event_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["crisis_event_id"], name: "index_crisis_notes_on_crisis_event_id"
+    t.index ["replaced_by_id"], name: "index_crisis_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_crisis_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_crisis_notes_on_team_member_id"
   end
 
@@ -56,6 +75,26 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
+  end
+
+  create_table "goal_types", force: :cascade do |t|
+    t.text "name", null: false
+    t.text "emoji", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "goal_type_id", null: false
+    t.text "goal", null: false
+    t.boolean "short_term", default: true, null: false
+    t.datetime "achieved_on"
+    t.boolean "archived", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
+    t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "journal_entries", force: :cascade do |t|
@@ -85,13 +124,26 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.index ["team_member_id"], name: "index_journal_entry_view_logs_on_team_member_id"
   end
 
+  create_table "metrics_services", force: :cascade do |t|
+    t.bigint "wellbeing_service_id", null: false
+    t.bigint "wellbeing_metric_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wellbeing_metric_id"], name: "index_metrics_services_on_wellbeing_metric_id"
+    t.index ["wellbeing_service_id"], name: "index_metrics_services_on_wellbeing_service_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.text "content"
     t.boolean "visible_to_user", default: false, null: false
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "replaced_by_id"
+    t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["replaced_by_id"], name: "index_notes_on_replaced_by_id"
+    t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
@@ -137,6 +189,16 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_user_pins_on_team_member_id"
     t.index ["user_id"], name: "index_user_pins_on_user_id"
+  end
+
+  create_table "user_profile_view_logs", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "view_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_user_profile_view_logs_on_team_member_id"
+    t.index ["user_id"], name: "index_user_profile_view_logs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -199,25 +261,48 @@ ActiveRecord::Schema.define(version: 2021_04_07_142947) do
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
   end
 
+  create_table "wellbeing_services", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.string "website", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
+  end
+
+  add_foreign_key "appointments", "team_members"
+  add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
   add_foreign_key "crisis_events", "crisis_types"
   add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
   add_foreign_key "crisis_events", "users"
   add_foreign_key "crisis_notes", "crisis_events"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replaced_by_id"
+  add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
   add_foreign_key "crisis_notes", "team_members"
   add_foreign_key "crisis_types", "team_members"
+  add_foreign_key "goals", "goal_types"
+  add_foreign_key "goals", "users"
   add_foreign_key "journal_entries", "users"
   add_foreign_key "journal_entry_permissions", "journal_entries"
   add_foreign_key "journal_entry_permissions", "team_members"
   add_foreign_key "journal_entry_view_logs", "journal_entries"
   add_foreign_key "journal_entry_view_logs", "team_members"
+  add_foreign_key "metrics_services", "wellbeing_metrics"
+  add_foreign_key "metrics_services", "wellbeing_services"
+  add_foreign_key "notes", "notes", column: "replaced_by_id"
+  add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
+  add_foreign_key "user_profile_view_logs", "team_members"
+  add_foreign_key "user_profile_view_logs", "users"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"
   add_foreign_key "wellbeing_assessments", "users"
   add_foreign_key "wellbeing_metrics", "team_members"
+  add_foreign_key "wellbeing_services", "team_members"
 end

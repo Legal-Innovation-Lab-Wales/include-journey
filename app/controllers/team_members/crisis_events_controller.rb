@@ -1,12 +1,12 @@
 module TeamMembers
   # app/controllers/team_members/crisis_events_controller.rb
   class CrisisEventsController < TeamMembersApplicationController
-    include Pagination
     before_action :crisis_event, except: %i[index active]
+    include Pagination
 
     # GET /crisis_events/active
     def active
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type, :crisis_notes).order(updated_at: :desc)
 
       render 'active'
     end
@@ -27,16 +27,6 @@ module TeamMembers
                   notice: closed ? 'Crisis event has been closed' : 'Crisis event could not be closed'
     end
 
-    # POST /crisis_events/:id/note
-    def add_note
-      if @crisis_event.crisis_notes.create!({ team_member: current_team_member,
-                                              content: crisis_notes_params[:content] })
-        redirect_to crisis_event_path(@crisis_event), notice: 'Note created'
-      else
-        redirect_to crisis_event_path(@crisis_event), error: 'Note could not be created'
-      end
-    end
-
     protected
 
     def resources
@@ -50,22 +40,21 @@ module TeamMembers
                  .order(closed_at: :desc)
     end
 
+    def subheading_stats
+      @closed_events_30_days = @resources.where('closed_at >= ?', 30.days.ago)
+      @closed_events_7_days = @resources.where('closed_at >= ?', 7.days.ago)
+    end
+
     private
 
     def crisis_event
       @crisis_event = CrisisEvent.includes(:user, :crisis_type).find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: active_crisis_events_path, flash: { error: 'Crisis event not found' })
     end
 
     def crisis_search
       'lower(crisis_types.category) similar to lower(:query) or lower(additional_info) similar to lower(:query)'
-    end
-
-    def crisis_notes_params
-      params.require(:crisis_note).permit(:content)
-    end
-
-    def subheading_stats
-      # TODO: Add stats for closed crisis events index
     end
   end
 end

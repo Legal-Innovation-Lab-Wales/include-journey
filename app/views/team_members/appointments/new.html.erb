@@ -1,0 +1,11 @@
+<main class="container team-members appointments new">
+  <section class="row appointments">
+    <div class="col-0 col-md-4"></div>
+    <div class="col-12 col-md-4 create">
+      <h3 class="mb-0">Create new appointment</h3>
+      <p> Enter in the information to add a new appointment.</p>
+      <%= render 'shared/appointments/form', appointment: @appointment, url: user_appointments_path %>
+    </div>
+    <div class="col-0 col-md-4"></div>
+  </section>
+</main>

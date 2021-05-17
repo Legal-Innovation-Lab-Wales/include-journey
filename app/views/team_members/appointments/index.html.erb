@@ -1,0 +1,28 @@
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'All Appointments', index: 'user_appointments' do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |appointment| %>
+        <div class="col-12 col-md-4 past">
+          <div class="card border-primary mt-3 text-al">
+            <div class="card-header bg-primary"><%= appointment.what %> </div>
+            <div class="card-body bg-transparent">
+              <p class="card-text"> <i class="fas fa-user"></i> <%= appointment.who_with %> </p>
+              <p> <i class="fas fa-location-arrow"></i> <%= appointment.where %></p>
+              <p> <i class="fas fa-clock"></i> <%= appointment.time_on_date %></p>
+              <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(appointment.start, appointment.end) %></p>
+            </div>
+            <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
+              <div class="btn disabled <%= appointment.attended ? 'btn-success' : 'btn-danger' %>">
+                <% if appointment.attended ? 'btn-success' : 'btn-danger' %>
+                  <i class="fas fa-calendar-check"></i>
+                <% else %>
+                  <i class="fas fa-calendar-times"></i>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<main class="container user goals index">
+  <section class="row">
+    <h2>My Goals</h2>
+  </section>
+  <section class="row">
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6 short-term mb-3 mb-md-0">
+            <div class="card">
+              <div class="card-header">
+                <h4>Short Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.short_term %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: true %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 long-term">
+            <div class="card">
+              <div class="card-header">
+                <h4>Long Term</h4>
+              </div>
+              <div class="card-body">
+                <%= render 'list', goals: @goals.long_term %>
+                <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: false %>
+                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% if @has_archived_goals %>
+    <section class="row justify-content-md-center">
+      <div class="col-auto">
+        <%= link_to goals_archive_index_path, class: 'btn btn-primary' do %>
+          <i class="fas fa-archive"></i> View Archive
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</main>
+
+<%= render 'goal_modal' %>
+
+<%= javascript_pack_tag 'goals' %>
