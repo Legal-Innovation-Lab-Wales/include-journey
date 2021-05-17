@@ -30,7 +30,7 @@ module TeamMembers
         sort_param = sort_param.split('_')
         { "#{sort_param[0..1].join('_') == 'viewed_at' ? 'updated_at' : 'created_at'}": sort_param[2] }
       else
-        { 'created_at': :desc }
+        { 'updated_at': :desc }
       end
     end
 

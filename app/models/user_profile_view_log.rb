@@ -1,7 +1,5 @@
 # app/models/user_profile_view_log.rb
 class UserProfileViewLog < ApplicationRecord
-  after_initialize :increment_view_count
-
   belongs_to :team_member
   belongs_to :user
 

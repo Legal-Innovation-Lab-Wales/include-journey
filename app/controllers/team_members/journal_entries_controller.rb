@@ -6,7 +6,7 @@ module TeamMembers
     # GET /journal_entries/:id
     def show
       journal_entry
-      view_log
+      log_view
 
       render 'show'
     end
@@ -15,7 +15,7 @@ module TeamMembers
 
     def resources
       if journal_entry_params[:feeling].present? || journal_entry_params[:viewed].present?
-        current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+        current_team_member.journal_entries.includes(:user)
                            .joins(:user)
                            .where(journal_entry_search(''), query_terms({}))
                            .order(created_at: :desc)
@@ -26,7 +26,7 @@ module TeamMembers
     end
 
     def search
-      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
+      current_team_member.journal_entries.includes(:user)
                          .joins(:user)
                          .where(journal_entry_search("(#{user_search})"), query_terms(wildcard_query))
                          .order(created_at: :desc)
@@ -41,9 +41,11 @@ module TeamMembers
                     alert: "That journal entry doesn't exist or you do not have permission to view it")
     end
 
-    def view_log
-      return if current_team_member.journal_entry_view_logs.create!({ journal_entry: @journal_entry })
-
+    def log_view
+      view_log = current_team_member.journal_entry_view_logs.find_or_create_by!(journal_entry: @journal_entry)
+      view_log.increment_view_count
+      view_log.save!
+    rescue ActiveRecord::RecordInvalid
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
 

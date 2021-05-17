@@ -116,8 +116,9 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   end
 
   create_table "journal_entry_view_logs", force: :cascade do |t|
-    t.bigint "journal_entry_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "journal_entry_id", null: false
+    t.integer "view_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["journal_entry_id"], name: "index_journal_entry_view_logs_on_journal_entry_id"
