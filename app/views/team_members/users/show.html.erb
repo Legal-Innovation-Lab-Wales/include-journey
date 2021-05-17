@@ -72,7 +72,7 @@
                            pyramid_view: true %>
               <% end %>
 
-              <div class="text-center">
+              <div class="text-center mt-2">
                 <% unless @wellbeing_assessment.today? %>
                   <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
                 <% end %>

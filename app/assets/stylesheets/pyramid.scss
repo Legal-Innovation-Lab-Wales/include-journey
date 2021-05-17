@@ -249,13 +249,11 @@ $mobile-font-size: 20px;
     width: 100%;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-    -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
 
     .front, .back {
       width: 100%;
       height: 100%;
-      -webkit-backface-visibility: hidden; /* Safari */
       backface-visibility: hidden;
     }
 
@@ -266,20 +264,25 @@ $mobile-font-size: 20px;
   }
 }
 
-#flip-switch {
-  &.form-switch {
-    width: 100%;
-    padding-top: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#pyramid-view-switch {
+  width: 100%;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    .form-check-input:hover {
-      cursor: pointer;
-    }
+  i {
+    margin-right: 0.5rem;
+    transition: transform 0.8s;
+  }
 
-    .form-check-label {
-      padding-left: 0.5rem;
+  &:hover {
+    cursor: pointer;
+    color: $color-complement-0;
+    font-weight: bold;
+
+    i {
+      transform: rotate(180deg);
     }
   }
 }

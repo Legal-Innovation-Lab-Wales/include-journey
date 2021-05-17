@@ -1,11 +1,10 @@
-<div class="col-12 <%= local_assigns[:hide_sliders].present? ? '' : 'col-xl-6' %> chart">
+<div class="col-12 <%= local_assigns[:hide_sliders].present? ? '' : 'col-xl-6' %> chart ">
   <% if local_assigns[:chart_heading].present? %>
     <h3><%= local_assigns[:chart_heading] %></h3>
   <% end %>
   <% if local_assigns[:pyramid_view].present? && local_assigns[:pyramid_view] == true %>
-    <div id="flip-switch" class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="pyramid-view-switch">
-      <label class="form-check-label" for="pyramid-view-switch">View Pyramid</label>
+    <div id="pyramid-view-switch">
+      <i class="fas fa-sync-alt"></i> <span>View Pyramid</span>
     </div>
     <div id="pyramid-view">
       <div class="inner">
