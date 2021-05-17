@@ -207,12 +207,16 @@
 
 
     .wellbeing-chart.wrapper {
+      .row {
+        padding-left: 0 !important;
+      }
+
       h3, h5 {
         text-align: center !important;
       }
 
-      canvas {
-        margin-top: 1.5rem;
+      canvas, .pyramid {
+        margin: 1.5rem 0;
       }
     }
   }

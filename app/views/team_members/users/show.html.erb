@@ -59,7 +59,6 @@
       </div>
     </div>
   <% end %>
-
   <div class="row mb-4">
     <div class="col">
       <div class="card">
@@ -67,9 +66,10 @@
           <div class="row">
             <div class="col">
               <% if @wellbeing_assessment.present? %>
-                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
+                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '200',
                            show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
-                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
+                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment,
+                           pyramid_view: true %>
               <% end %>
 
               <div class="text-center">

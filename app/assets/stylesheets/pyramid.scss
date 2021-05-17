@@ -3,19 +3,34 @@
 $row-height: 60px;
 $font-size: 24px;
 
+$mobile-row-height: 50px;
+$mobile-font-size: 20px;
+
 .pyramid {
+  text-align: center;
+
   .row {
-    height: $row-height;
-    min-width: $row-height*8;
+    height: $mobile-row-height;
+    min-width: $mobile-row-height*8;
     justify-content: center;
+    margin-bottom: 1px !important;
+    padding-left: 0 !important;
+
+    @media screen and (min-width: $screen-md) {
+      height: $row-height;
+      min-width: $row-height*8;
+    }
 
     i {
-      font-size: $font-size;
+      font-size: $mobile-font-size;
+
+      @media screen and (min-width: $screen-md) {
+        font-size: $font-size;
+      }
     }
 
     .metric:hover {
       cursor: pointer;
-
       &.trapezoid, &.triangle.up, &.polygon { border-bottom-color: $color-complement-2 !important; }
       &.triangle.down { border-top-color: $color-complement-2 !important; }
       &.parallelogram { background-color: $color-complement-2 !important; }
@@ -25,30 +40,56 @@ $font-size: 24px;
       .triangle {
         display: flex;
         justify-content: center;
-        margin: 0;
+        margin: 0 1px;
         padding: 0;
         width: 0;
         height: 0;
-        border-left: $row-height solid transparent;
-        border-right: $row-height solid transparent;
+        border-left-width: $mobile-row-height;
+        border-left-style: solid;
+        border-left-color: transparent;
+        border-right-width: $mobile-row-height;
+        border-right-style: solid;
+        border-right-color: transparent;
         background: none;
 
+        @media screen and (min-width: $screen-md) {
+          border-left-width: $row-height;
+          border-right-width: $row-height;
+        }
+
         &.up {
-          border-bottom-width: $row-height;
           border-bottom-style: solid;
+          border-bottom-width: $mobile-row-height;
+
+          @media screen and (min-width: $screen-md) {
+            border-bottom-width: $row-height;
+          }
 
           i {
-            transform: translateY($font-size);
+            transform: translateY($mobile-font-size);
+
+            @media screen and (min-width: $screen-md) {
+              transform: translateY($font-size);
+            }
           }
         }
 
         &.down {
-          border-top-width: $row-height;
           border-top-style: solid;
-          margin: 0 (-$row-height);
+          margin: 0 (-$mobile-row-height);
+          border-top-width: $mobile-row-height;
+
+          @media screen and (min-width: $screen-md) {
+            margin: 0 (-$row-height);
+            border-top-width: $row-height;
+          }
 
           i {
-            transform: translateY(-$font-size * 2);
+            transform: translateY(-$mobile-font-size * 2);
+
+            @media screen and (min-width: $screen-md) {
+              transform: translateY(-$font-size * 2);
+            }
           }
         }
       }
@@ -56,28 +97,54 @@ $font-size: 24px;
 
     &.middle-tier {
       .polygon {
-        height: $row-height;
-        width: $row-height * 2;
         background: none;
-        border-bottom-width: $row-height;
         border-bottom-style: solid;
+        height: $mobile-row-height;
+        width: $mobile-row-height * 2;
+        border-bottom-width: $mobile-row-height;
+
+        @media screen and (min-width: $screen-md) {
+          height: $row-height;
+          width: $row-height * 2;
+          border-bottom-width: $row-height;
+        }
 
         &.left {
-          border-left: $row-height solid transparent;
+          margin-right: 0.5px;
+          border-left-style: solid;
+          border-left-color: transparent;
+          border-left-width: $mobile-row-height;
 
-          i {
-            transform: translateY(($row-height - $font-size) / 2) translateX(-$font-size / 2);
+          @media screen and (min-width: $screen-md) {
+            border-left-width: $row-height;
           }
 
+          i {
+            transform: translateY(($mobile-row-height - $mobile-font-size) / 2) translateX(-$mobile-font-size / 2);
+
+            @media screen and (min-width: $screen-md) {
+              transform: translateY(($row-height - $font-size) / 2) translateX(-$font-size / 2);
+            }
+          }
         }
 
         &.right {
-          border-right: $row-height solid transparent;
+          margin-left: 0.5px;
+          border-right-style: solid;
+          border-right-color: transparent;
+          border-right-width: $mobile-row-height;
 
-          i {
-            transform: translateY(($row-height - $font-size) / 2) translateX($font-size / 2);
+          @media screen and (min-width: $screen-md) {
+            border-right-width: $row-height;
           }
 
+          i {
+            transform: translateY(($mobile-row-height - $mobile-font-size) / 2) translateX($font-size / 2);
+
+            @media screen and (min-width: $screen-md) {
+              transform: translateY(($row-height - $font-size) / 2) translateX($font-size / 2);
+            }
+          }
         }
       }
     }
@@ -87,7 +154,11 @@ $font-size: 24px;
         transform: skew(-45deg);
 
         i {
-          transform: translateY(($row-height - $font-size) / 2) skew(45deg);
+          transform: translateY(($mobile-row-height - $mobile-font-size) / 2) skew(45deg);
+
+          @media screen and (min-width: $screen-md) {
+            transform: translateY(($row-height - $font-size) / 2) skew(45deg);
+          }
         }
       }
 
@@ -95,33 +166,120 @@ $font-size: 24px;
         transform: skew(45deg);
 
         i {
-          transform: translateY(($row-height - $font-size) / 2) skew(-45deg);
+          transform: translateY(($mobile-row-height - $mobile-font-size) / 2) skew(-45deg);
+
+          @media screen and (min-width: $screen-md) {
+            transform: translateY(($row-height - $font-size) / 2) skew(-45deg);
+          }
         }
       }
     }
 
     .trapezoid {
-      border-left: $row-height solid transparent;
-      border-right: $row-height solid transparent;
-      border-bottom-width: $row-height;
+      background: none;
+      border-left-style: solid;
+      border-left-color: transparent;
+      border-right-style: solid;
+      border-right-color: transparent;
       border-bottom-style: solid;
+      border-left-width: $mobile-row-height;
+      border-right-width: $mobile-row-height;
+      border-bottom-width: $mobile-row-height;
+
+      @media screen and (min-width: $screen-md) {
+        border-left-width: $row-height;
+        border-right-width: $row-height;
+        border-bottom-width: $row-height;
+      }
 
       i {
-        transform: translateY(($row-height - $font-size) / 2);
+        transform: translateY(($mobile-row-height - $mobile-font-size) / 2);
+
+        @media screen and (min-width: $screen-md) {
+          transform: translateY(($row-height - $font-size) / 2);
+        }
       }
     }
 
     &.bottom-tier {
       .parallelogram {
-        height: $row-height;
-        width: $row-height * 2;
+        height: $mobile-row-height;
+        width: $mobile-row-height * 2;
+
+        @media screen and (min-width: $screen-md) {
+          height: $row-height;
+          width: $row-height * 2;
+        }
       }
 
       .trapezoid {
         height: 0;
-        width: $row-height * 4;
-        margin: 0 (-$row-height / 2);
+        width: $mobile-row-height * 4;
+        margin: 0 ((-$mobile-row-height / 2) + 1);
+
+        @media screen and (min-width: $screen-md) {
+          width: $row-height * 4;
+          margin: 0 ((-$row-height / 2) + 1);
+        }
       }
+    }
+  }
+}
+
+#pyramid-view {
+  background-color: transparent;
+  perspective: 1000px;
+
+  &.flip .inner {
+    transform: rotateY(180deg);
+
+    .front {
+      display: none;
+    }
+
+    .back {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .inner {
+    position: relative;
+    width: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+
+    .front, .back {
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+    }
+
+    .back {
+      display: none;
+      transform: rotateY(180deg);
+    }
+  }
+}
+
+#flip-switch {
+  &.form-switch {
+    width: 100%;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .form-check-input:hover {
+      cursor: pointer;
+    }
+
+    .form-check-label {
+      padding-left: 0.5rem;
     }
   }
 }
