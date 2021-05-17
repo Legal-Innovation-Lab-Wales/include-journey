@@ -42,82 +42,89 @@
     background-color: $black;
     border-radius: 5px;
     padding: 2rem 2rem;
-    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 
-    h2 {
-      color: $white;
-    }
+    form {
+      width: 100%;
 
-    a {
-      text-decoration: none;
-      font-weight: 600;
-      color: $black;
-      &:hover {
-        text-decoration: underline;
+      h2 {
+        color: $white;
       }
-    }
 
-    .btn-primary {
-      width: 80%;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .form-link {
-      color: $brand-primary;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .col-md {
-      margin-top: 0;
-
-      @media screen and (min-width: $screen-md) {
-        margin-top: var(--bs-gutter-y);
-      }
-    }
-
-    .form-group, .form-floating, .form-check {
-      margin-bottom: 0.5rem;
-      color: $white;
-    }
-
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
-    .form-check {
-      .form-check-input {
-        float: none;
-
+      a {
+        text-decoration: none;
+        font-weight: 600;
+        color: $black;
         &:hover {
-          cursor: pointer;
+          text-decoration: underline;
         }
       }
 
-      .form-check-label {
+      .btn-primary {
+        width: 80%;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .form-link {
+        color: $brand-primary;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .col-md {
+        margin-top: 0;
+
+        @media screen and (min-width: $screen-md) {
+          margin-top: var(--bs-gutter-y);
+        }
+      }
+
+      .form-group, .form-floating, .form-check {
+        margin-bottom: 0.5rem;
         color: $white;
       }
-    }
 
-    .other-actions {
-      margin-top: 1rem;
-      color: $brand-primary;
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
 
-      a:hover {
-        cursor: pointer;
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+      .form-check {
+        .form-check-input {
+          float: none;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .form-check-label {
+          color: $white;
+        }
+      }
+
+      .other-actions {
+        margin-top: 1rem;
+        color: $brand-primary;
+
+        a:hover {
+          cursor: pointer;
+        }
       }
     }
   }
@@ -125,7 +132,6 @@
   @media screen and (min-width: $screen-md) {
     background-color: $black;
     .form-container {
-      min-width: 480px;
       background-color: $grey;
       background: $blue-grad;
     }

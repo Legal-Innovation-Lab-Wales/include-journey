@@ -34,9 +34,13 @@
   .homepage-header {
     background-color: $brand-primary;
     color: $black;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    display: none;
+
+    @media screen and (min-width: $screen-md) {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
 
     h4 {
       font-size: 1rem;

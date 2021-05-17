@@ -2,7 +2,12 @@
   <%= link_to "Log in", new_session_path(resource_name) %><br />
 <% end %>
 
-<a class="form-link" data-bs-toggle="modal" data-bs-target="#deviseModal"><small><%= text %></small></a>
+<a class="form-link" data-bs-toggle="modal" data-bs-target="#deviseModal">
+  <small>
+    <%= text %>
+    <i class="fas fa-external-link-alt"></i>
+  </small>
+</a>
 
 <%= render('modals/devise/modal') %>
 

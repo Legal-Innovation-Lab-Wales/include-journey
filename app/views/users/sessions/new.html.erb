@@ -2,7 +2,7 @@
   <%= link_to 'For Team Members, Click Here', new_team_member_session_path, class: 'login-link' %>
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-7 homepage-cover">
+      <div class="col-0 col-md-7 homepage-cover">
         <div class="container homepage-header homepage-section">
           <div class="row mt-auto">
             <h1>Your Include Journey</h1>
@@ -14,7 +14,12 @@
             <p class="lead"><small>Built for Include UK by the Legal Innovation Lab Wales</small></p>
           </div>
           <div class="row mt-auto">
-            <p class="lead"><small><%= link_to "Learn More", about_path %></small></p>
+            <p class="lead">
+              <small>
+                <%= link_to "Learn More", about_path %>
+                <i class="fas fa-external-link-alt"></i>
+              </small>
+            </p>
           </div>
         </div>
       </div>
