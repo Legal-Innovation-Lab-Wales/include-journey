@@ -8,7 +8,7 @@
       <div class="modal-body">
         <p>You currently have the following open SOS requests raised in the past hour.</p>
 
-        <% @active_crisis_events.last(3).each do |crisis_event| %>
+        <% @active_crisis_events.last do |crisis_event| %>
           <%= form_with model: crisis_event, url: crisis_event_path(crisis_event), method: :put do |f| %>
             <div class="card mb-3">
                 <div class="card-header">
@@ -32,7 +32,7 @@
         <div class="container">
           <div class="row mb-2">
             <div class="col text-center">
-              <%= link_to 'See all SOSs', crisis_events_path, class: 'btn btn-primary' %>
+              <%= link_to 'Existing Crisis Events', crisis_events_path, class: 'btn btn-primary' %>
             </div>
           </div>
           <div class="row">

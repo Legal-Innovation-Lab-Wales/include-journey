@@ -29,9 +29,12 @@ Rails.application.routes.draw do
         get 'upcoming', action: :upcoming, on: :collection
         put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
-
       resources :crisis_events, only: %i[create update index]
-
+      resources :contacts
+      resources :goals, only: %i[index create show destroy] do
+        put 'achieve', action: :achieve, on: :member
+        put 'archive', action: :archive, on: :member
+      end
       resources :contacts
     end
   end

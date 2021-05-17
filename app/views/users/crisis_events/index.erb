@@ -11,19 +11,30 @@
           <% @crisis_events.each do |crisis_event| %>
             <div class="col-12 col-md-4 past">
               <div class="card border-primary mt-3 text-al">
-                <div class="card-header bg-primary"><%= crisis_event.created_at %> </div>
-                <div class="card-body bg-transparent">
-                  <p class="card-text"> <i class="fas fa-user"></i> <%= crisis_event.additional_info %> </p>
-                  <p> <i class="fas fa-location-arrow"></i> <%= crisis_event.closed %></p>
-                  <p> <i class="fas fa-clock"></i> <%= crisis_event.crisis_type %></p>
-                  <p> <i class="fas fa-hourglass-start"></i> <%= crisis_event.closed_by %></p>
-                </div>
-                <div class="card-footer d-flex"><span class="me-auto">Attended: </span>
-                  <%= render 'shared/back_btn' %>
+                <%= form_with model: crisis_event, method: :put do |f| %>
+                  <div class="card-header bg-primary">
+                    <p class="mb-0">Opened: <%= time_ago_in_words(crisis_event.created_at) %> ago</p>
+                    <% if crisis_event.updated_at > crisis_event.created_at %>
+                      <p class="mb-0">Updated: <%= time_ago_in_words(crisis_event.updated_at) %> ago</p>
+                    <% end %>
+                  </div>
+                  <div class="card-body bg-transparent">
+                    <%= f.hidden_field :crisis_type_id, value: crisis_event.crisis_type.id %>
+                    <p class="card-text"><strong>Type:</strong> <%= crisis_event.crisis_type.category %> </p>
+                    <p class="card-text"><strong>Info:</strong> <%= crisis_event.additional_info.html_safe %> </p>
+                    <div class="row">
+                      <%= f.text_area :new_info, class: 'form-control border-none' do %>
+                        <%= f.label :new_info, 'Additional Information' %>
+                      <% end %>
+                    </div>
+                    <div class="card-footer d-flex">
+                      <%= f.submit 'Update', class: 'btn btn-primary m-2' %>
+                    </div>
+                <% end %>
                 </div>
               </div>
-            </div>
           <% end %>
+          </div>
         </div>
       </div>
     </div>

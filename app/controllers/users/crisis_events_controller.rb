@@ -3,7 +3,7 @@ module Users
   class CrisisEventsController < UsersApplicationController
     before_action :crisis_event_params, only: %i[create update]
     before_action :crisis_event, only: :update
-    after_action :sms, :email, only: %i[create update]
+    # after_action :sms, :email, only: %i[create update]
     before_action :crisis_events, only: :index
 
     # POST /crisis_events
@@ -16,8 +16,14 @@ module Users
 
     # PUT /crisis_events/:id
     def update
-      redirect_to authenticated_user_root_path,
-                  alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
+
+      new_info = "<b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}<br><br>"
+      old_info = @crisis_event.additional_info
+      all_info = old_info + new_info
+      @crisis_event.update(additional_info: all_info)
+
+      redirect_to crisis_events_url
+                  # alert: @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
     end
 
     protected
@@ -60,11 +66,11 @@ module Users
     end
 
     def crisis_event_params
-      params.require(:crisis_event).permit(:crisis_type_id, :additional_info)
+      params.require(:crisis_event).permit(:crisis_type_id, :new_info)
     end
 
     def crisis_events
-      @crisis_events = CrisisEvent.active.includes(:user, :crisis_type).order(updated_at: :desc)
+      @crisis_events = current_user.crisis_events.active.includes(:user, :crisis_type).order(updated_at: :desc)
     end
 
   end
