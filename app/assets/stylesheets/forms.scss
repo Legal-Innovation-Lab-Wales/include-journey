@@ -7,6 +7,7 @@
   justify-content: center;
   text-align: center;
   background-color: $black;
+  color: $white;
 
   &.edit {
     margin: 0;
@@ -56,6 +57,22 @@
       }
     }
 
+    .btn-primary {
+      width: 80%;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .form-link {
+      color: $brand-primary;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .col-md {
       margin-top: 0;
 
@@ -66,6 +83,7 @@
 
     .form-group, .form-floating, .form-check {
       margin-bottom: 0.5rem;
+      color: $white;
     }
 
     /* Chrome, Safari, Edge, Opera */
@@ -92,10 +110,6 @@
       .form-check-label {
         color: $white;
       }
-    }
-
-    .btn-primary {
-      width: 80%;
     }
 
     .other-actions {

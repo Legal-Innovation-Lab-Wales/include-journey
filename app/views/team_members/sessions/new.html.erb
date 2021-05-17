@@ -1,15 +1,7 @@
 <main class="ij-form">
+  <%= link_to 'For Users, Click Here', new_user_session_path, class: 'login-link' %>
   <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-7">
-        <div class="container">
-          <div class="row">
-            Include UK
-          </div>
-          <div class="row">
-          </div>
-        </div>
-      </div>
+    <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-5">
         <div class="form-container">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -39,7 +31,7 @@
             </div>
 
             <div class="other-actions">
-              <%= render "team_members/shared/links" %>
+              <%= render(partial: "team_members/shared/links", locals: { text: 'Trouble signing in?' }) %>
             </div>
           <% end %>
         </div>

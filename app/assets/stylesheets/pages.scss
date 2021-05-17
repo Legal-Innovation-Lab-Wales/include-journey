@@ -56,6 +56,11 @@
 
     a {
       color: $black;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
@@ -82,4 +87,11 @@
       color: $brand-secondary;
     }
   }
+}
+
+.login-link {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
 }
