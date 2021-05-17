@@ -1,5 +1,7 @@
 <main class="ij-form">
-  <%= link_to 'For Users, Click Here', new_user_session_path, class: 'login-link' %>
+  <%= link_to new_user_session_path, class: 'login-link' do %>
+    Users <i class="fas fa-sign-in-alt"></i>
+  <% end %>
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-12 col-md-5">
