@@ -6,7 +6,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>You currently have the following open SOS requests raised in the past hour.</p>
+        <p class="text-danger text-center">If you or someone else is in immediate danger, call 999.</p>
+        <p>You currently have <%= @active_crisis_events.count %> open SOS requests. The most recent is below.</p>
 
         <% @active_crisis_events.last do |crisis_event| %>
           <%= form_with model: crisis_event, url: crisis_event_path(crisis_event), method: :put do |f| %>
