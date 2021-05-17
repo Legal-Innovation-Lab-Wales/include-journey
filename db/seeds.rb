@@ -103,27 +103,9 @@ end
 if WellbeingMetric.count.zero?
   WellbeingMetric.create!(
     team_member_id: 1,
-    name: 'Housing',
-    category: 'Environment',
-    icon: 'home'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Benefits / Money',
-    category: 'Environment',
-    icon: 'wallet'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Food',
-    category: 'Environment',
-    icon: 'pizza-slice'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Physical Health',
-    category: 'Health',
-    icon: 'running'
+    name: 'Employment/Education/Training',
+    category: 'Personal',
+    icon: 'user-tie'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
@@ -136,6 +118,12 @@ if WellbeingMetric.count.zero?
     name: 'Emotional Health',
     category: 'Health',
     icon: 'heartbeat'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Physical Health',
+    category: 'Health',
+    icon: 'running'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
@@ -163,9 +151,21 @@ if WellbeingMetric.count.zero?
   )
   WellbeingMetric.create!(
     team_member_id: 1,
-    name: 'Employment/Education/Training',
-    category: 'Personal',
-    icon: 'user-tie'
+    name: 'Housing',
+    category: 'Environment',
+    icon: 'home'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Benefits / Money',
+    category: 'Environment',
+    icon: 'wallet'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Food',
+    category: 'Environment',
+    icon: 'pizza-slice'
   )
 end
 
