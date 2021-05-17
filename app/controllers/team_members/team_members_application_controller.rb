@@ -13,12 +13,6 @@ module TeamMembers
       render 'pages/main'
     end
 
-    def pyramid
-      @wellbeing_assessment = WellbeingAssessment.includes(:wba_scores).find(1)
-
-      render 'pages/pyramid'
-    end
-
     protected
 
     def require_approval

@@ -44,7 +44,6 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_team_member_root
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
-      get 'pyramid', to: 'team_members_application#pyramid'
 
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve', on: :member, as: :approve
