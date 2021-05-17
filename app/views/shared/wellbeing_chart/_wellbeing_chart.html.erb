@@ -3,10 +3,10 @@
     <h3><%= local_assigns[:chart_heading] %></h3>
   <% end %>
   <% if local_assigns[:pyramid_view].present? && local_assigns[:pyramid_view] == true %>
-    <div id="pyramid-view-switch">
-      <i class="fas fa-sync-alt"></i> <span>View Pyramid</span>
-    </div>
-    <div id="pyramid-view">
+    <div class="pyramid-view">
+      <div class="pyramid-view-switch">
+        <i class="fas fa-sync-alt"></i> <span>View Pyramid</span>
+      </div>
       <div class="inner">
         <div class="front">
           <canvas class="wellbeing-chart" width="400"
@@ -14,7 +14,7 @@
           </canvas>
         </div>
         <div class="back">
-          <%= render 'shared/pyramid', wba_scores: local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric) %>
+          <%= render 'shared/pyramid/pyramid', wba_scores: local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric) %>
         </div>
       </div>
     </div>

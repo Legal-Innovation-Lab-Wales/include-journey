@@ -7,5 +7,5 @@ class WellbeingMetric < ApplicationRecord
   has_many :metrics_services
   has_many :wellbeing_services, through: :metrics_services
 
-  validates_presence_of :name, :category
+  validates_presence_of :name, :category, :icon
 end

@@ -43,8 +43,16 @@
               <i class="fas fa-heart"></i>
               <div class="nav-label hide">Wellbeing Assessments</div>
             <% end %>
+            <%= link_to wellbeing_services_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-map-signs"></i>
+              <div class="nav-label hide">Wellbeing Services</div>
+            <% end %>
+            <%= link_to wellbeing_metrics_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-ruler-horizontal"></i>
+              <div class="nav-label hide">Wellbeing Metrics</div>
+            <% end %>
           </div>
-          <% end %>
+        <% end %>
 
         <% if current_user %>
           <div class="navbar-items">

@@ -1,0 +1,21 @@
+<div class="pyramid container">
+  <div class="row top-tier">
+    <%= render 'shared/pyramid/metric', shape: 'triangle up', score: wba_scores.find_by(wellbeing_metric_id: 11) %>
+  </div>
+  <div class="row middle-tier">
+    <%= render 'shared/pyramid/metric', shape: 'polygon left', score: wba_scores.find_by(wellbeing_metric_id: 5) %>
+    <%= render 'shared/pyramid/metric', shape: 'polygon right', score: wba_scores.find_by(wellbeing_metric_id: 6) %>
+  </div>
+  <div class="row middle-tier">
+    <%= render 'shared/pyramid/metric', shape: 'triangle up', score: wba_scores.find_by(wellbeing_metric_id: 4) %>
+    <%= render 'shared/pyramid/metric', shape: 'triangle down', score: wba_scores.find_by(wellbeing_metric_id: 7) %>
+    <%= render 'shared/pyramid/metric', shape: 'triangle up', score: wba_scores.find_by(wellbeing_metric_id: 8) %>
+    <%= render 'shared/pyramid/metric', shape: 'triangle down', score: wba_scores.find_by(wellbeing_metric_id: 9) %>
+    <%= render 'shared/pyramid/metric', shape: 'triangle up', score: wba_scores.find_by(wellbeing_metric_id: 10) %>
+  </div>
+  <div class="row bottom-tier">
+    <%= render 'shared/pyramid/metric', shape: 'parallelogram left', score: wba_scores.find_by(wellbeing_metric_id: 1) %>
+    <%= render 'shared/pyramid/metric', shape: 'trapezoid center', score: wba_scores.find_by(wellbeing_metric_id: 2) %>
+    <%= render 'shared/pyramid/metric', shape: 'parallelogram right', score: wba_scores.find_by(wellbeing_metric_id: 3) %>
+  </div>
+</div>
