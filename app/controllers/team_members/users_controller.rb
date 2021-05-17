@@ -2,14 +2,10 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
     before_action :pinned_users, only: :index
-    before_action :user_counts, only: :index
     include Pagination
 
     before_action :user, except: :index
     before_action :user_pin, except: %i[show index wba_history]
-
-    # GET /users
-    def index; end
 
     # GET /users/:id
     def show
@@ -122,11 +118,6 @@ module TeamMembers
       @pinned_users = current_team_member.pinned_users.order(:order)
     end
 
-    def user_counts
-      @active_users = User.where(current_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
-      @user_count = User.count
-    end
-
     def user_pin
       @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
     end
@@ -147,6 +138,10 @@ module TeamMembers
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
 
-    def subheading_stats; end
+    def subheading_stats
+      @total_users = User.all.count
+      @active_last_week = @resources.active_last_week.size
+      @active_last_month = @resources.active_last_month.size
+    end
   end
 end

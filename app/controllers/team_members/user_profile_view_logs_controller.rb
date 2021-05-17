@@ -15,12 +15,14 @@ module TeamMembers
     def search
       @team_member.user_profile_view_logs
                   .includes(:user)
+                  .joins(:user)
                   .where(user_search, wildcard_query)
                   .order(sort)
     end
 
     def subheading_stats
-      # TODO: Add stats for team member view logs index
+      @viewed_in_last_week = @resources.viewed_in_last_week.size
+      @viewed_in_last_month = @resources.viewed_in_last_month.size
     end
 
     def sort

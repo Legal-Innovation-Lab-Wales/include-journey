@@ -1,5 +1,5 @@
 <% if params[:query].present? || params[:feeling].present? || params[:viewed].present? %>
-  <p>Search
+  <p class="mb-0">Search
     <% if params[:query].present? %>
       "<%= params[:query] %>"
     <% end %>
@@ -11,5 +11,5 @@
       <% if params[:query].present? || params[:viewed].present? %>+<% end %>
       "<%= params[:feeling] %>"
     <% end %>
-    returned <%= @count %> results</p>
+    returned <%= @count %> results.</p>
 <% end %>

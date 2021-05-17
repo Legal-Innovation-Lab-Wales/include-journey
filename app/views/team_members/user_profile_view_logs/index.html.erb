@@ -1,6 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'team-members user-profile-view-logs',
            header: "#{@team_member.full_name} user profile view logs (#{@count})",
-           index: 'team_member_journal_entry_view_logs' do %>
+           index: 'team_member_user_profile_view_logs', stats: render(partial: 'stats') do %>
   <div class="container p-0">
     <div class="row mb-3">
       <div class="col">
