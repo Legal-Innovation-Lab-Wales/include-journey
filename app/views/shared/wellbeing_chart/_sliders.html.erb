@@ -1,5 +1,6 @@
-<div class="col-12 col-xl-6 sliders <%= local_assigns[:hide_sliders].present? ? 'd-none' : '' %>">
+<div class="col-12 col-xl-7 sliders p-0 <%= local_assigns[:hide_sliders].present? ? 'd-none' : '' %>">
   <div class="container p-0 p-md-3">
+    <!-- Sliders Heading Present => New/Show View -->
     <% if local_assigns[:sliders_heading].present? %>
       <div class="row">
         <div class="col">
@@ -18,18 +19,20 @@
         <% end %>
       </div>
     <% end %>
+
+    <!-- New Wellbeing Assessment Form -->
     <% if local_assigns[:wellbeing_metrics].present? %>
       <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
         <% local_assigns[:wellbeing_metrics].each do |wellbeing_metric| %>
           <div class="row">
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-5">
               <%= form.label "wellbeing_metric_#{wellbeing_metric.id}", wellbeing_metric.name %>
             </div>
             <div class="col-9 col-sm-5">
               <%= form.range_field "wellbeing_metric_#{wellbeing_metric.id}", in: 1..10, class: 'form-range',
                                    value: last_score(local_assigns[:last_scores], wellbeing_metric.id)  %>
             </div>
-            <div class="col-3 col-sm-3">
+            <div class="col-3 col-sm-2">
               <%= render 'shared/wellbeing_chart/description',
                          value: last_score(local_assigns[:last_scores], wellbeing_metric.id) %>
             </div>
@@ -41,6 +44,7 @@
           </div>
         </div>
       <% end %>
+    <!-- Wellbeing Assessment Present => Show/Index View -->
     <% elsif local_assigns[:wellbeing_assessment].present? %>
       <% local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
         <div class="row">
@@ -56,5 +60,6 @@
         </div>
       <% end %>
     <% end %>
+
   </div>
 </div>
