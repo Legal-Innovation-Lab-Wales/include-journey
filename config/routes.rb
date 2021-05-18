@@ -22,7 +22,9 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+          get 'edit', action: :edit, on: :collection
+        end
       end
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
@@ -83,7 +85,8 @@ Rails.application.routes.draw do
   # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
-    root 'pages#main'
+    root to: redirect('/users/sign_in')
+    get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
 end

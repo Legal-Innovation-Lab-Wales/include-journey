@@ -68,11 +68,11 @@
       <div class="form-group">
         <%= f.submit "Update", class: 'btn btn-primary' %>
       </div>
-    <% end %>
 
-    <% unless @deletion_date.present? %>
-      <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" },
+      <% unless @deletion_date.present? %>
+        <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" },
                     method: :delete, class: "btn btn-danger" %>
+      <% end %>
     <% end %>
   </div>
 </main>
