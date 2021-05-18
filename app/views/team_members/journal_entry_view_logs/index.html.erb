@@ -1,16 +1,18 @@
 <%= render 'layouts/searchable', class_list: 'team-members journal-entry-view-logs',
            header: "#{@team_member.full_name}",
            subheader: "journal entry view logs (#{@count})",
-           index: 'team_member_journal_entry_view_logs' do %>
+           index: 'team_member_journal_entry_view_logs', stats: render(partial: 'stats') do %>
   <div class="container p-0">
     <div class="row mb-3">
       <div class="col">
         <div class="input-group date-sort-select">
           <select class="form-select">
-            <option value="viewed_at_desc">Viewed At (Descending)</option>
-            <option value="viewed_at_asc">Viewed At (Ascending)</option>
-            <option value="created_at_desc">Created At (Descending)</option>
-            <option value="created_at_asc">Created At (Ascending)</option>
+            <option value="updated_at_desc">Last Viewed At (Descending)</option>
+            <option value="updated_at_asc">Last Viewed At (Ascending)</option>
+            <option value="created_at_desc">First Viewed At (Descending)</option>
+            <option value="created_at_asc">First Viewed At (Ascending)</option>
+            <option value="published_at_desc">Published At (Descending)</option>
+            <option value="published_at_asc">Published At (Ascending)</option>
           </select>
         </div>
       </div>
@@ -19,16 +21,27 @@
       <div class="col">
         <table class="table table-dark table-striped">
           <thead>
-          <th scope="col">User</th>
-          <th scope="col">Created At</th>
-          <th scope="col">Viewed At</th>
+            <th scope="col">User</th>
+            <th scope="col">Published at</th>
+            <th scope="col">First Viewed At</th>
+            <th scope="col">Last Viewed At</th>
+            <th scope="col">View Count</th>
+            <th scope="col">Journal Entry</th>
           </thead>
           <tbody>
           <% @resources.each do |view_log| %>
             <tr>
               <td><%= view_log.user.full_name %></td>
               <td><%= view_log.journal_entry.created %></td>
-              <td><%= view_log.created %>
+              <td><%= view_log.created %></td>
+              <td><%= view_log.last_update %>
+              <td><%= view_log.view_count %></td>
+              <td>
+                <%= link_to journal_entry_path(view_log.journal_entry) do %>
+                  <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
+                     title="View Journal Entry"></i>
+                <% end %>
+              </td>
             </tr>
           <% end %>
           </tbody>

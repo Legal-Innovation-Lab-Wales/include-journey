@@ -1,6 +1,6 @@
 <p class="mb-0">
-  You have penned <%= "#{pluralize(@resources.count, 'journal')}" %>.
-  <%= @entries_in_last_30_days %> in the last month.
+  You have penned <%= "#{pluralize(@count, 'journal')}" %>.
+  <%= @entries_in_last_30_days %> in the last 30 days.
   Your most recent was <%= "#{pluralize(@days_since_last_entry, 'day')}" %> ago.
 </p>
 <p>

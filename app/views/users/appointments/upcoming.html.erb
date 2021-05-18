@@ -1,6 +1,10 @@
 <main class="container user">
   <section class="row appointments">
     <h2 class="mb-0">Upcoming appointments</h2>
+    <div class="subheading">
+      <p>There are a total of <%= @appointments.size %> appointments.</p>
+      <p><%= @count_in_next_week %> appointments are scheduled in the next week.</p>
+    </div>
     <div class="container">
       <%= render 'shared/new_btn', path: new_appointment_path, text: 'Add Appointment' %>
       <div class="row">
@@ -62,7 +66,9 @@
   <section class="row">
     <div class="col-2 col-md-4"></div>
     <div class="col-8 col-md-4">
-      <%= link_to 'View Past Appointments', appointments_path, class: 'btn btn-primary' %>
+      <%= link_to appointments_path, class: 'btn btn-primary' do %>
+        View Past Appointments <i class="fas fa-arrow-circle-right"></i>
+      <% end %>
     </div>
     <div class="col-2 col-md-4"></div>
   </section>

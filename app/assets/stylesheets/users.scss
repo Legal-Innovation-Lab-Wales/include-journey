@@ -1,14 +1,6 @@
 @import "variables";
 
 .team-members {
-  &.users.index section.row {
-    padding: 0 1rem;
-
-    &.back-btn {
-      padding: 1rem;
-    }
-  }
-
   .card {
     background-color: $grey;
     background: $grey-grad;

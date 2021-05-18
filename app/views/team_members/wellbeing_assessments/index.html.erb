@@ -27,7 +27,8 @@
 <% else %>
   <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments',
              header: "#{@team_member.present? ? @team_member.full_name : 'All'} Wellbeing Assessments",
-             index: @team_member.present? ? 'team_member_wellbeing_assessments' : 'wellbeing_assessments' do %>
+             index: @team_member.present? ? 'team_member_wellbeing_assessments' : 'wellbeing_assessments',
+             stats: render('stats_non_user') do %>
     <div class="container p-0">
       <div class="row">
         <% @resources.each do |wellbeing_assessment| %>

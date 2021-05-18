@@ -252,7 +252,8 @@ if User.count.zero?
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
-      password: 'test1234'
+      password: 'test1234',
+      current_sign_in_at: rand(1...100).days.ago
     )
     user.skip_confirmation!
     user.save!
@@ -262,8 +263,8 @@ if User.count.zero?
       UserProfileViewLog.create!(
         team_member: team_member,
         user: user,
-        created_at: DateTime.now - rand(60...480).minutes,
-        updated_at: DateTime.now - rand(1...60).minutes,
+        created_at: rand(1...100).days.ago,
+        updated_at: rand(1...100).days.ago,
         view_count: rand(0..10)
       )
     end
@@ -326,10 +327,13 @@ if User.count.zero?
       next unless (journal_counter % 7).zero?
 
       TeamMember.all.each do |team_member|
+        view_log_created_at = Faker::Time.between(from: created_at_value, to: DateTime.now)
         JournalEntryViewLog.create!(
           team_member: team_member,
           journal_entry: journal_entry,
-          created_at: created_at_value + 1.day
+          created_at: view_log_created_at,
+          updated_at: Faker::Time.between(from: view_log_created_at, to: DateTime.now),
+          view_count: rand(0..10)
         )
       end
     end
