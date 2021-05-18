@@ -15,10 +15,14 @@
 
   <body id="overboot">
 
+  <% if user_signed_in? && @deletion_date.present? %>
+    <%= render 'shared/deletion_date', deletion_date: @deletion_date %>
+  <% end %>
+
   <% if user_signed_in? || team_member_signed_in? %>
     <%= render "shared/navbar" %>
 
-    <% if current_user && !devise_controller? %>
+    <% if user_signed_in? %>
       <%= render partial: '/modals/crisis_events/new' %>
       <%= render partial: '/modals/crisis_events/existing' %>
       <%= render partial: '/modals/contact_times/index' %>

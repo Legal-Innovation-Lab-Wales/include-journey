@@ -2,7 +2,26 @@
   <% if local_assigns[:chart_heading].present? %>
     <h3><%= local_assigns[:chart_heading] %></h3>
   <% end %>
-  <canvas class="wellbeing-chart" width="400"
-          height="<%= local_assigns[:height].present? ? local_assigns[:height] : '400' %>">
-  </canvas>
+  <% if local_assigns[:pyramid_view].present? && local_assigns[:pyramid_view] == true %>
+    <div class="pyramid-view">
+      <div class="pyramid-view-switch">
+        <i class="fas fa-sync-alt"></i> <span>View Pyramid</span>
+      </div>
+      <div class="inner">
+        <div class="front">
+          <canvas class="wellbeing-chart" width="400"
+                  height="<%= local_assigns[:height].present? ? local_assigns[:height] : '400' %>">
+          </canvas>
+        </div>
+        <div class="back">
+          <%= render 'shared/pyramid/pyramid', wba_scores: local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric) %>
+        </div>
+      </div>
+    </div>
+    <%= javascript_pack_tag 'pyramid_view' %>
+  <% else %>
+    <canvas class="wellbeing-chart" width="400"
+            height="<%= local_assigns[:height].present? ? local_assigns[:height] : '400' %>">
+    </canvas>
+  <% end %>
 </div>

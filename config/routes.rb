@@ -18,10 +18,13 @@ Rails.application.routes.draw do
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
       get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
+      put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+          get 'edit', action: :edit, on: :collection
+        end
       end
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
@@ -49,7 +52,7 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
+        put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
@@ -82,7 +85,8 @@ Rails.application.routes.draw do
   # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
-    root 'pages#main'
+    root to: redirect('/users/sign_in')
+    get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
 end

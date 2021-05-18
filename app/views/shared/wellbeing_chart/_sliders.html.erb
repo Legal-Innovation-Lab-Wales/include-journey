@@ -26,7 +26,12 @@
         <% local_assigns[:wellbeing_metrics].each do |wellbeing_metric| %>
           <div class="row">
             <div class="col-12 col-sm-5">
-              <%= form.label "wellbeing_metric_#{wellbeing_metric.id}", wellbeing_metric.name %>
+              <%= form.label "wellbeing_metric_#{wellbeing_metric.id}"  do %>
+                <% if team_member_signed_in? %>
+                  <i class="fas fa-<%= wellbeing_metric.icon %>"></i>
+                <% end %>
+                <%= wellbeing_metric.name %>
+              <% end %>
             </div>
             <div class="col-9 col-sm-5">
               <%= form.range_field "wellbeing_metric_#{wellbeing_metric.id}", in: 1..10, class: 'form-range',
@@ -49,7 +54,12 @@
       <% local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
         <div class="row">
           <div class="col-8">
-            <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>><%= score.wellbeing_metric.name %></label>
+            <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
+              <% if team_member_signed_in? %>
+                <i class="fas fa-<%= score.wellbeing_metric.icon %>"></i>
+              <% end %>
+              <%= score.wellbeing_metric.name %>
+            </label>
           </div>
           <div class="d-none">
             <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>" value="<%= score.value %>">

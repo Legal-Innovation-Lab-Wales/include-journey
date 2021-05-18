@@ -1,41 +1,43 @@
 <main class="ij-form">
-  <div class="form-container">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <h2>Log in</h2>
+  <%= link_to new_user_session_path, class: 'login-link' do %>
+    Users <i class="fas fa-sign-in-alt"></i>
+  <% end %>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-5">
+        <div class="form-container">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <h2><i class="fas fa-users"></i> Log in</h2>
 
-      <div class="form-group">
-        <%= render "team_members/shared/error_messages", resource: resource %>
-        <p class="text-danger">
-          <% if flash[:alert] %>
-            <%= flash[:alert] %>
+            <div class="form-group">
+              <%= render "team_members/shared/error_messages", resource: resource %>
+              <p class="text-danger">
+                <% if flash[:alert] %>
+                  <%= flash[:alert] %>
+                <% end %>
+              </p>
+            </div>
+
+            <div class="form-floating">
+              <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+              <%= f.label :email %>
+            </div>
+
+            <div class="form-floating">
+              <%= f.password_field :password, class: 'form-control', autocomplete: "current-password", placeholder: "Password" %>
+              <%= f.label :password %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit "Log in", class: 'btn btn-primary' %>
+            </div>
+
+            <div class="other-actions">
+              <%= render(partial: "team_members/shared/links", locals: { text: 'Trouble signing in?' }) %>
+            </div>
           <% end %>
-        </p>
-      </div>
-
-      <div class="form-floating">
-        <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
-        <%= f.label :email %>
-      </div>
-
-      <div class="form-floating">
-        <%= f.password_field :password, class: 'form-control', autocomplete: "current-password", placeholder: "Password" %>
-        <%= f.label :password %>
-      </div>
-
-      <% if devise_mapping.rememberable? %>
-        <div class="form-check form-switch">
-          <%= f.check_box :remember_me, class: 'form-check-input' %>
-          <%= f.label :remember_me, class: 'form-check-label' %>
         </div>
-      <% end %>
-
-      <div class="form-group">
-        <%= f.submit "Log in", class: 'btn btn-primary' %>
       </div>
-
-      <div class="other-actions">
-        <%= render "team_members/shared/links" %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </main>

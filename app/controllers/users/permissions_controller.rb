@@ -2,18 +2,25 @@ module Users
   # app/controllers/users/permissions_controller.rb
   class PermissionsController < UsersApplicationController
     before_action :team_members, :model
-    before_action :permissions_set, if: -> { @model.permissions.present? }
 
-    before_action :permissions_params, only: :create
+    before_action :permissions_params, only: %i[create update]
 
     before_action :second_to_last, only: :new
     before_action :last_permissions, only: :new, if: -> { @second_to_last.present? }
+
+    before_action :current_permissions, only: :edit
 
     def new
       raise 'Subclass has not overridden permissions new function'
     end
 
+    def edit
+      raise 'Subclass has not overridden permissions edit function'
+    end
+
     def create
+      @model.permissions.destroy_all
+
       @team_members.each do |team_member|
         next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
 
@@ -33,6 +40,10 @@ module Users
       @last_permissions = @second_to_last.permissions.collect { |permission| { id: permission.team_member_id } }
     end
 
+    def current_permissions
+      @current_permissions = @model.permissions.collect { |permission| { id: permission.team_member_id } }
+    end
+
     def model
       raise 'Subclass has not overridden model instance variable'
     end
@@ -47,10 +58,6 @@ module Users
 
     def team_members
       @team_members = TeamMember.all.order(:created_at)
-    end
-
-    def permissions_set
-      redirect_to authenticated_user_root_path, alert: 'Permissions have already been set for that record'
     end
   end
 end
