@@ -3,7 +3,7 @@ module TeamMembers
   class TeamMembersApplicationController < ApplicationController
     before_action :authenticate_team_member!
     before_action :require_approval
-    before_action :require_unpaused
+    before_action :require_not_suspended
 
     def terms
       render 'pages/terms'
@@ -22,12 +22,12 @@ module TeamMembers
       session[:sign_out_notice] = 'An admin needs to approve you before you can access the system.'
     end
 
-    def require_unpaused
-      return unless current_team_member.paused?
+    def require_not_suspended
+      return unless current_team_member.suspended?
 
       sign_out_and_redirect(current_team_member)
       session[:sign_out_notice] =
-        'Your account has been paused. An admin will need to unpause your account before you can access the system.'
+        'Your account has been suspended. An admin will need to remove this suspension before you can access the system.'
     end
   end
 end

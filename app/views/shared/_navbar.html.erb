@@ -2,12 +2,10 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><h2>Include Journey</h2></a>
     <% if current_user %>
-      <% unless devise_controller? %>
-        <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
-           data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-          SOS <i class="fas fa-exclamation-circle"></i>
-        </a>
-      <% end %>
+      <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
+         data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+        SOS <i class="fas fa-exclamation-circle"></i>
+      </a>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,13 +99,11 @@
             <% end %>
           <% end %>
           <% if current_user %>
-            <% unless devise_controller? %>
-              <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
-                 data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-                <div class="nav-label always-show">SOS</div>
-                <i class="fas fa-exclamation-circle"></i>
-              </a>
-            <% end %>
+            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
+               data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+              <div class="nav-label always-show">SOS</div>
+              <i class="fas fa-exclamation-circle"></i>
+            </a>
             <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>

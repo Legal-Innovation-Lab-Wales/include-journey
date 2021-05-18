@@ -131,6 +131,32 @@ $ echo "export SENDGRID_API_KEY=SG.apikeyfromsendgrid" > sendgrid.env
 $ source ./sendgrid.env
 ```
 
+#### Deleting User Accounts
+
+User account deletion has a grace period of 30 days which is configured in the `app/controllers/users/registrations_controller.rb`
+&gt; `destroy` action, if you want to lower this grace period for local testing you can do so here i.e. `+ 1.minute`
+will create a grace period of only 1 minute.
+
+The account deletion is handled either via the system should a user interact with it after their deletion date 
+(such as if they're still logged in when the countdown expires) **or** via a scheduled job should the user set their account
+to be deleted and not interact with the system again. 
+
+This scheduled job is handled by the [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler) in the deployed
+application which is configured via the `scheduler.rake` config file but it can also be emulated locally using a cronjob
+with the [whenever](https://github.com/javan/whenever) gem. 
+
+If you are not using `rbenv` to manage your ruby version you'll need to amend the `schedule.rb` config file to use `rails`
+rather than `rbenv_rails` to run the task. If you want to setup this cronjob locally run 
+
+`whenever --update-crontab --set environment='development'`
+
+to create the new crontab which can be viewed with `crontab -l`, edited with `crontab -e` and cleared with 
+`whenever --clear-crontab`.
+
+If you want to run the task without setting it up as a cronjob locally this is also possible by running `rails users:delete`,
+this is the recommended method as this is the command that the Heroku Scheduler runs on the deployed application and 
+invoking this yourself means you don't have to wait for a cronjob execution to occur.
+
 ---
 
 

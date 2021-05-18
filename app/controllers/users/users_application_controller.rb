@@ -2,28 +2,21 @@ module Users
   # app/controllers/users/users_application_controller.rb
   class UsersApplicationController < ApplicationController
     before_action :authenticate_user!
-    before_action :active_crisis_events, :crisis_event, :crisis_types, unless: -> { devise_controller? }
 
     def terms
       render 'pages/terms'
     end
-    
+
     def home
       render 'pages/main'
     end
 
-    private
+    # PUT /cancel_deletion
+    def cancel_deletion
+      current_user.update!(deletion_date: nil)
 
-    def active_crisis_events
-      @active_crisis_events = current_user.active_crisis_events
-    end
-
-    def crisis_event
-      @crisis_event = CrisisEvent.new
-    end
-
-    def crisis_types
-      @crisis_types = CrisisType.all
+      redirect_back(fallback_location: authenticated_user_root_path,
+                    flash: { success: 'Your account will no longer be deleted.' })
     end
   end
 end

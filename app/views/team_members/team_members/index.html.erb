@@ -52,7 +52,7 @@
             <th scope="col">Email</th>
             <th scope="col">Admin</th>
             <th scope="col">Last Sign In</th>
-            <th scope="col">Pause</th>
+            <th scope="col">Suspend</th>
           </tr>
           </thead>
           <tbody>
@@ -101,19 +101,19 @@
               </td>
               <td>
                 <% if current_team_member.id != team_member.id %>
-                  <%= button_to toggle_pause_team_member_path(team_member.id), method: :put,
-                                class: "btn #{team_member.paused ? 'btn-success' : 'btn-danger'}",
-                                data: { confirm: team_member.paused ?
-                                   "Unpause #{team_member.full_name}? This will allow them to resume using the system." :
-                                   "Pause #{team_member.full_name}? This will prevent them from using the system." } do %>
-                    <% if team_member.paused %>
+                  <%= button_to toggle_suspend_team_member_path(team_member.id), method: :put,
+                                class: "btn #{team_member.suspended ? 'btn-success' : 'btn-danger'}",
+                                data: { confirm: team_member.suspended ?
+                                   "Remove Suspension #{team_member.full_name}? This will allow them to resume using the system." :
+                                   "Suspended #{team_member.full_name}? This will prevent them from using the system." } do %>
+                    <% if team_member.suspended %>
                       <i class="fas fa-play-circle"></i>
                     <% else %>
                       <i class="fas fa-pause-circle"></i>
                     <% end %>
                   <% end %>
                 <% else %>
-                  <% if team_member.paused %>
+                  <% if team_member.suspended %>
                     <i class="fas fa-play-circle"></i>
                   <% else %>
                     <i class="fas fa-pause-circle"></i>
