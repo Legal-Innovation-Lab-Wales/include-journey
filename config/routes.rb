@@ -84,7 +84,8 @@ Rails.application.routes.draw do
   # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
-    root 'pages#main'
+    root to: redirect('/users/sign_in')
+    get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
 end

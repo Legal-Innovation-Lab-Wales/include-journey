@@ -63,9 +63,8 @@
       <div class="form-group">
         <%= f.submit "Update", class: 'btn btn-primary' %>
       </div>
+
+      <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
     <% end %>
-
-    <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
-
   </div>
 </main>
