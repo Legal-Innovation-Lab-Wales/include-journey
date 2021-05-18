@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   create_table "wellbeing_metrics", force: :cascade do |t|
     t.string "name"
     t.string "category"
+    t.string "icon"
     t.bigint "team_member_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

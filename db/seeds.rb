@@ -103,58 +103,69 @@ end
 if WellbeingMetric.count.zero?
   WellbeingMetric.create!(
     team_member_id: 1,
-    name: 'Housing',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Benefits / Money',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Food',
-    category: 'Environment'
-  )
-  WellbeingMetric.create!(
-    team_member_id: 1,
-    name: 'Physical Health',
-    category: 'Health'
+    name: 'Employment/Education/Training',
+    category: 'Personal',
+    icon: 'user-tie'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Mental Health',
-    category: 'Health'
+    category: 'Health',
+    icon: 'brain'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Emotional Health',
-    category: 'Health'
+    category: 'Health',
+    icon: 'heartbeat'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Physical Health',
+    category: 'Health',
+    icon: 'running'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Behaviour',
-    category: 'Personal'
+    category: 'Personal',
+    icon: 'people-carry'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Addiction',
-    category: 'Health'
+    category: 'Health',
+    icon: 'capsules'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Relationships',
-    category: 'Personal'
+    category: 'Personal',
+    icon: 'people-arrows'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
     name: 'Sense of Community',
-    category: 'Personal'
+    category: 'Personal',
+    icon: 'users'
   )
   WellbeingMetric.create!(
     team_member_id: 1,
-    name: 'Employment/Education/Training',
-    category: 'Personal'
+    name: 'Housing',
+    category: 'Environment',
+    icon: 'home'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Benefits / Money',
+    category: 'Environment',
+    icon: 'wallet'
+  )
+  WellbeingMetric.create!(
+    team_member_id: 1,
+    name: 'Food',
+    category: 'Environment',
+    icon: 'pizza-slice'
   )
 end
 
