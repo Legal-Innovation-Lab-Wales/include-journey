@@ -1,8 +1,8 @@
 # app/helpers/permissions_helper.rb
 module PermissionsHelper
-  def last_permission(last_permissions, team_member_id)
-    return true unless last_permissions.present?
+  def has_permission(default, permissions, team_member_id)
+    return default unless permissions.present?
 
-    last_permissions.select { |team_member| team_member[:id] == team_member_id }.present?
+    permissions.select { |team_member| team_member[:id] == team_member_id }.present?
   end
 end
