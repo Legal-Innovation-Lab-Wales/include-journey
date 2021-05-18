@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
   end
 
   def deletion_date
-    return unless user_signed_in?
-
     return unless current_user.deletion_date.present?
 
     if current_user.deletion_date <= DateTime.now
