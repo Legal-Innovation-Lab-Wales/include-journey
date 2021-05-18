@@ -2,12 +2,14 @@
   <section class="row">
     <div class="col">
       <h2>Wellbeing Metrics</h2>
+      <p>Icons are currently only visible to Team Members.</p>
       <div class="table-container">
         <table class="table table-dark table-striped link-table">
           <thead>
             <th scope="col" class="hidden"></th>
             <th scope="col">Name</th>
             <th scope="col">Category</th>
+            <th scope="col">Icon</th>
             <th scope="col"></th>
           </thead>
           <tbody>
@@ -28,6 +30,9 @@
                 <td>
                   <input form="wellbeing_metric_<%= metric.id %>" type="text" name="wellbeing_metric[category]"
                          placeholder="Category" value="<%= metric.category %>" disabled required />
+                </td>
+                <td>
+                  <i class="fas fa-<%= metric.icon %>"></i>
                 </td>
                 <td>
                   <i class="fas fa-edit"></i>

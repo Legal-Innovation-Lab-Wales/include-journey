@@ -16,7 +16,5 @@ module TeamMembers
         AdminMailer.new_team_member_email(@team_member, admin, unapproved_count).deliver_later
       end
     end
-
-
   end
 end
