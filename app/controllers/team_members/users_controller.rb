@@ -18,6 +18,7 @@ module TeamMembers
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
+      @user_tags = @user.user_tags
 
       render 'show'
     end

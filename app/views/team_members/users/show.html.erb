@@ -216,11 +216,52 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <div class="row" id="notes">
-    <div class="col-12 mb-4">
+  <div class="row mb-4" id="tags-notes">
+    <div class="col-12 col-md-6 mb-3 mb-md-0">
+      <div class="card tags">
+        <div class="card-header">
+          <h3>User Tags</h3>
+        </div>
+        <div class="card-body bg-transparent h-100" id="tags">
+          <% if @user_tags.empty? %>
+            <span>There are no tags on this user yet.</span>
+          <% else %>
+            <div class="container">
+              <div class="row">
+                <% @user_tags.each do |user_tag| %>
+                  <div class="col-12 mb-3">
+                    <div class="tag">
+                      <div class="outer-triangle"><div class="inner-triangle"></div></div>
+                      <div class="tag-body">
+                        <div>
+                          <i class="fas fa-tag"></i> <%= user_tag.tag.tag %>
+                        </div>
+                        <div title="Added By <%= user_tag.team_member.full_name %> On <%= user_tag.created %>"
+                             data-toggle="tooltip" data-placement="bottom">
+                          <small>
+                            <i class="fas fa-user-plus"></i> <%= user_tag.team_member.full_name %>
+                            <i class="fas fa-clock"></i> <%= user_tag.created %>
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#tags-modal">
+            Add Tags
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
       <div class="card h-100">
         <div class="card-header">
           <h3>User Notes</h3>
@@ -245,7 +286,6 @@
     </div>
 
     <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
-
 
   </div>
 </main>

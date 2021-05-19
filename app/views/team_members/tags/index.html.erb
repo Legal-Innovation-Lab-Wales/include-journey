@@ -1,0 +1,26 @@
+<%= render 'layouts/searchable', class_list: 'team-members tags', header: 'Tags', index: 'tags' do %>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col">
+        <div class="table-container">
+          <table class="table table-dark table-striped">
+            <thead>
+            <th scope="col">Tag</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Users Tagged</th>
+            </thead>
+            <tbody>
+            <% @resources.each do |tag| %>
+              <tr>
+                <td><%= tag.tag %></td>
+                <td><%= tag.team_member.full_name %></td>
+                <td><%= tag.user_tags.count %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

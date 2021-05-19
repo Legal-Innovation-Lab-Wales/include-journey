@@ -80,6 +80,7 @@ Rails.application.routes.draw do
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
+      resources :tags, only: %i[show index]
     end
   end
   # rubocop:enable Metrics/BlockLength
