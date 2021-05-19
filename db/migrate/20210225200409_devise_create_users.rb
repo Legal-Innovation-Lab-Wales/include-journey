@@ -39,6 +39,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.boolean   :terms, default: false
       t.datetime  :deletion_date
 
+      t.datetime  :date_of_birth
+      t.string    :disability
+      t.string    :ethnic_group
+      t.string    :religion
+      t.string    :sex_and_gender_identity
+      t.string    :sexual_orientation
+      t.string    :pronouns
+
       t.timestamps null: false
     end
 
