@@ -264,7 +264,8 @@ if User.count.zero?
       release_date: rand(1..2).even? ? Faker::Date.between(from: '2021-03-05', to: '2025-03-05') : '',
       terms: true,
       password: 'test1234',
-      current_sign_in_at: rand(1...100).days.ago
+      current_sign_in_at: rand(1...100).days.ago,
+      date_of_birth: rand(1..2).even? ? Faker::Date.between(from: '1970-01-01', to: '2000-01-01') : ''
     )
     user.skip_confirmation!
     user.save!
