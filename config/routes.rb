@@ -68,6 +68,7 @@ Rails.application.routes.draw do
         get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member
         resources :appointments, only: %i[index new create edit update], on: :member
+        resources :tags, only: %i[create destroy], on: :member
       end
 
       resources :crisis_events, only: %i[index show] do

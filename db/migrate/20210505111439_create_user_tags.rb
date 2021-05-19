@@ -8,5 +8,8 @@ class CreateUserTags < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    # ensure that a user can't be assigned the same tag multiple times
+    add_index :user_tags, %i[tag_id user_id], unique: true
   end
 end

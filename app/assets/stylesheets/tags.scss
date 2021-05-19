@@ -10,7 +10,7 @@ $tag-border-color: $brand-primary-dark;
 .tags {
   .card-body {
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .tag {
       display: flex;
@@ -39,18 +39,39 @@ $tag-border-color: $brand-primary-dark;
       }
 
       .tag-body {
+        position: relative;
         width: 100%;
         max-height: $row-height;
         background: $tag-color;
         border: $border solid $tag-border-color;
         border-left: none;
         border-radius: 0 $border $border 0;
-        padding: 0.5rem;
+        padding: 0.5rem 0;
         font-size: 1.25rem;
         text-align: center;
 
         small {
           font-size: 0.75rem;
+        }
+
+        .remove-tag {
+          position: absolute;
+          font-size: 20px;
+          top: (($row-height / 2) - 20px);
+          right: 1rem;
+
+          i {
+            transition: transform 0.8s;
+          }
+
+          &:hover {
+            cursor: pointer;
+
+            i {
+              color: $brand-secondary;
+              transform: rotate(180deg);
+            }
+          }
         }
       }
     }
