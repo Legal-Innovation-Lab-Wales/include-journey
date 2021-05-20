@@ -14,9 +14,6 @@
       </small>
       <div class="row table-container">
         <table class="user-wba-index">
-<!--          <tr>-->
-
-<!--          </tr>-->
           <% @resources.each do |wellbeing_assessment| %>
             <%= render 'row', wellbeing_assessment: wellbeing_assessment %>
           <% end %>
