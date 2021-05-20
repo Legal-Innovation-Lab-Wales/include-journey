@@ -1,78 +1,169 @@
 <main class="ij-form edit">
-  <div class="form-container">
+  <div class="col-12 col-md-7">
+    <div class="form-container">
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-      <h2>Edit <%= resource_name.to_s.humanize %></h2>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-      <div class="form-group">
-        <%= render "users/shared/error_messages", resource: resource %>
-        <p class="text-danger">
-          <% if flash[:alert] %>
-            <%= flash[:alert] %>
+        <div class="form-group">
+          <%= render "users/shared/error_messages", resource: resource %>
+          <p class="text-danger">
+            <% if flash[:alert] %>
+              <%= flash[:alert] %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <h4>General</h4>
+          <div class="row gx-5">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_field :first_name, autofocus: true, class: 'form-control', autocomplete: "first-name", placeholder: "First Name" %>
+                <%= f.label :first_name %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_field :last_name, class: 'form-control', autocomplete: "last-name", placeholder: "Last Name" %>
+                <%= f.label :last_name %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+               <div class="form-floating">
+                <%= f.number_field :mobile_number, class: 'form-control', autocomplete: "mobile-number", placeholder: "Mobile No." %>
+                <%= f.label :mobile_number %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.date_field :release_date, class: 'form-control', autocomplete: "release-date", placeholder: "Release Date" %>
+                <%= f.label :release_date %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h4>Account</h4>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+                <%= f.label :email %>
+              </div>
+            </div>
+          </div>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
           <% end %>
-        </p>
-      </div>
-
-      <div class="row g-2">
-        <div class="col-md">
-          <div class="form-floating">
-            <%= f.text_field :first_name, autofocus: true, class: 'form-control', autocomplete: "first-name", placeholder: "First Name" %>
-            <%= f.label :first_name %>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating change-password">
+                <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "Password - 6 characters minimum" %>
+                <%= f.label :password do %>
+                  Password <span class="small-text">(leave blank if you don't want to change it)</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-md confirm-password">
+              <div class="form-floating">
+                <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "password", placeholder: "Password Again" %>
+                <%= f.label :password_confirmation %>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col-md">
-          <div class="form-floating">
-            <%= f.text_field :last_name, class: 'form-control', autocomplete: "last-name", placeholder: "Last Name" %>
-            <%= f.label :last_name %>
+        <div class="form-group">
+          <h4>Additional</h4>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.date_field :date_of_birth, class: 'form-control', autocomplete: "date-of-birth", placeholder: "Date of Birth." %>
+                <%= f.label :date_of_birth %>
+              </div>
+            </div>
+
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_field :sex, class: 'form-control', autocomplete: "sex", placeholder: "Sex" %>
+                <%= f.label :sex %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.select :sex, ['Female', 'Male', 'Prefer not to say'], {selected: ''}, {class: 'form-select'}  %>
+                <%= f.label :sex %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.select :gender_identity, ['Yes', 'No', 'Prefer not to say'], {selected: ''}, {class: 'form-select'}  %>
+                <%= f.label :gender_identity, 'Gender identity same as sex?' %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_field :pronouns, class: 'form-control', autocomplete: "pronouns", placeholder: "Pronouns" %>
+                <%= f.label :pronouns %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.select :sexual_orientation, ['Hetrosexual or straight', 'Gay or lesbian', 'Bisexual', 'Other', 'Prefer not to say'], {selected: ''}, {class: "form-select"}  %>
+                <%= f.label :sexual_orientation %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.select :ethnic_group, ['White', 'Mixed or multiple ethnic groups', 'Asian or Asian British', 'Black, African, Carribean or Black British', 'Other ethnic group', 'Prefer not to say'], {selected: ''}, {class: "form-select"}  %>
+                <%= f.label :ethnic_group %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.select :religion, ['No religion', 'Christian', 'Buddhist', 'Hindu', 'Jewish', 'Muslim', 'Sikh', 'Any other religion', 'Prefer not to say'], {selected: ''}, {class: "form-select"}  %>
+                <%= f.label :religion %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_area :disabilities, class: 'form-control', placeholder: 'Disabilities' %>
+                <%= f.label :disabilities %>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-floating">
-        <%= f.number_field :mobile_number, class: 'form-control', autocomplete: "mobile-number", placeholder: "Mobile No." %>
-        <%= f.label :mobile_number %>
-      </div>
+        <div class="form-floating">
+          <%= f.password_field :current_password, class: 'form-control', autocomplete: "password", placeholder: "Password (we need your current password to confirm your changes)" %>
+          <%= f.label :current_password, "Current password to confirm your changes" %>
+        </div>
 
-      <div class="form-floating">
-        <%= f.date_field :release_date, class: 'form-control', autocomplete: "release-date", placeholder: "Release Date" %>
-        <%= f.label :release_date %>
-      </div>
+        <div class="form-group">
+          <%= f.submit "Update", class: 'btn btn-primary' %>
+        </div>
 
-      <div class="form-floating">
-        <%= f.email_field :email, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
-        <%= f.label :email %>
-      </div>
-
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
-
-      <div class="form-floating">
-        <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "Password - 6 characters minimum" %>
-        <%= f.label :password do %>
-          Password <span class="small-text">(leave blank if you don't want to change it)</span>
+        <% unless @deletion_date.present? %>
+          <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" },
+                      method: :delete, class: "btn btn-danger" %>
         <% end %>
-      </div>
-
-      <div class="form-floating">
-        <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "password", placeholder: "Password Again" %>
-        <%= f.label :password_confirmation %>
-      </div>
-
-      <div class="form-floating">
-        <%= f.password_field :current_password, class: 'form-control', autocomplete: "password", placeholder: "Password (we need your current password to confirm your changes)" %>
-        <%= f.label :current_password, "Current password to confirm your changes" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.submit "Update", class: 'btn btn-primary' %>
-      </div>
-
-      <% unless @deletion_date.present? %>
-        <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" },
-                    method: :delete, class: "btn btn-danger" %>
       <% end %>
-    <% end %>
+    </div>
   </div>
 </main>
+
+<%= javascript_pack_tag 'edit_form' %>

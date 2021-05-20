@@ -40,7 +40,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.datetime  :deletion_date
 
       t.datetime  :date_of_birth
-      t.string    :disability
+      t.text      :disabilities
       t.string    :ethnic_group
       t.string    :religion
       t.string    :sex

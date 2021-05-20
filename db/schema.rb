@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.boolean "terms", default: false
     t.datetime "deletion_date"
     t.datetime "date_of_birth"
-    t.string "disability"
+    t.text "disabilities"
     t.string "ethnic_group"
     t.string "religion"
     t.string "sex"
