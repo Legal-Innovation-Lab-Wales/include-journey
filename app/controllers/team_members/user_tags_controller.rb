@@ -10,19 +10,23 @@ module TeamMembers
 
     def resources
       @resources = @tag.user_tags.includes(:team_member, :user)
-                       .order(created_at: :desc)
+                       .order(sort)
     end
 
     def search
       @resources = @tag.user_tags.includes(:team_member, :user)
                        .joins(:team_member)
                        .where("#{team_member_search} or #{user_search}", wildcard_query)
-                       .order(created_at: :desc)
+                       .order(sort)
     end
 
     def subheading_stats
       @count_in_last_week = @resources.created_in_last_week.size
       @count_in_last_month = @resources.created_in_last_month.size
+    end
+
+    def sort
+      { 'created_at': %w[asc desc].include?(params[:sort]) ? params[:sort] : :desc }
     end
 
     private

@@ -1,6 +1,16 @@
 <%= render 'layouts/searchable', class_list: 'team-members user-tags', header: "Tag", index: 'user_tags',
            stats: render('stats') do %>
   <div class="container p-0">
+    <div class="row mb-3">
+      <div class="col">
+        <div class="input-group date-sort-select">
+          <select class="form-select">
+            <option value="desc">Tagged On (Descending)</option>
+            <option value="asc">Tagged On (Ascending)</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         <div class="table-container">
@@ -31,3 +41,5 @@
     </div>
   </div>
 <% end %>
+
+<%= javascript_pack_tag 'date_sort' %>
