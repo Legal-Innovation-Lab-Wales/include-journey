@@ -7,11 +7,11 @@
       </div>
       <div class="modal-body">
         <p class="text-danger text-center">If you or someone else is in immediate danger, call 999.</p>
-        <% if current_user.crisis_events.active.present? %>
-          <div class="col-12 text-center mb-3">
-            <%= link_to 'See Current Crisis Events', crisis_events_path, class: 'btn btn-primary' %>
-          </div>
-        <% end %>
+        <%# if current_user.crisis_events.active.present? %>
+<!--          <div class="col-12 text-center mb-3">-->
+            <%#= link_to 'See Current Crisis Events', crisis_events_path, class: 'btn btn-primary' %>
+<!--          </div>-->
+        <%# end %>
         <p class="text-center">If you are in need of help, please click or tap on the situation you are currently experiencing and add any
           additional information you can share at this time.</p>
 
