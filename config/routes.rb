@@ -89,4 +89,6 @@ Rails.application.routes.draw do
     get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
+
+  get 'guide', to: 'guides#index'
 end
