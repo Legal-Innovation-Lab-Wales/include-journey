@@ -54,7 +54,7 @@ $tag-border-color: $brand-primary-dark;
           font-size: 0.75rem;
         }
 
-        .remove-tag {
+        .tag-control {
           position: absolute;
           font-size: 20px;
           top: (($row-height / 2) - 20px);
@@ -69,9 +69,67 @@ $tag-border-color: $brand-primary-dark;
 
             i {
               color: $brand-secondary;
-              transform: rotate(180deg);
+
+              &.fa-times-circle {
+                transform: rotate(-180deg);
+              }
             }
           }
+        }
+
+        form#new-user-tag-form button.btn {
+          padding: 0;
+          font-size: 20px;
+        }
+
+        input[form="new-user-tag-form"], select[form="new-user-tag-form"] {
+          text-align: center;
+          display: inline-block;
+          width: 200px;
+          font-size: 1.25rem;
+          background-color: transparent;
+          border: none;
+        }
+
+        select[form="new-user-tag-form"] {
+          height: 32px;
+          padding-top: 0;
+          padding-bottom: 0;
+          padding-left: 0;
+
+          option {
+            max-width: calc(200px - 2.25rem);
+          }
+        }
+
+        .input-switch:hover {
+          cursor: pointer;
+          color: $brand-secondary;
+        }
+      }
+
+      &.new {
+        color: $white;
+
+        .outer-triangle {
+          border-right-color: $brand-complementary-light;
+
+          .inner-triangle {
+            border-right-color: $brand-complementary-lightest;
+          }
+        }
+
+        .tag-body {
+          border-color: $brand-complementary-light;
+          background-color: $brand-complementary-lightest;
+        }
+
+        input, select, i {
+          color: $white;
+        }
+
+        option {
+          color: $black;
         }
       }
     }

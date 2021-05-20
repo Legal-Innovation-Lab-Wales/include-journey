@@ -76,7 +76,7 @@
                 <% unless @wellbeing_assessment.today? %>
                   <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
                 <% end %>
-                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm mt-2 mt-md-0" %>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@
   </div>
   <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <div class="row" id="journal-appointments">
-    <div class="col-12 col-md-6 mb-4">
+    <div class="col-12 col-lg-6 mb-4">
       <div id="journal-card" class="card h-100">
         <div class="card-header">
           <h3>Journal</h3>
@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
+    <div class="col-12 col-lg-6 mb-4">
       <div class="card h-100">
         <div class="card-header d-flex">
           <h3 class="me-auto align-self-center">Appointments</h3>
@@ -219,7 +219,7 @@
   </div>
 
   <div class="row mb-4" id="tags-notes">
-    <div class="col-12 col-md-6 mb-3 mb-md-0">
+    <div class="col-12 col-lg-6 mb-3 mb-lg-0">
       <div class="card tags h-100">
         <div class="card-header">
           <h3>User Tags</h3>
@@ -231,44 +231,24 @@
             <div class="container">
               <div class="row">
                 <% @user_tags.each do |user_tag| %>
-                  <div class="col-12 mb-3">
-                    <div class="tag">
-                      <div class="outer-triangle"><div class="inner-triangle"></div></div>
-                      <div class="tag-body">
-                        <div>
-                          <i class="fas fa-tag"></i> <%= user_tag.tag.tag %>
-                        </div>
-                        <div title="Added By <%= user_tag.team_member.full_name %> On <%= user_tag.created_date %> At <%= user_tag.created_time %>"
-                             data-toggle="tooltip" data-placement="bottom">
-                          <small>
-                            <i class="fas fa-user-plus"></i> <%= user_tag.team_member.full_name %>
-                            <i class="fas fa-calendar-alt"></i> <%= user_tag.created_date %>
-                            <i class="fas fa-clock"></i> <%= user_tag.created_time %>
-                          </small>
-                        </div>
-                        <div class="remove-tag" title="Remove Tag">
-                          <%= link_to user_tag_path(@user, user_tag), method: :delete,
-                                      data: { confirm: "This will remove the tag (#{user_tag.tag.tag}) from #{@user.full_name}. Are you sure?" } do %>
-                            <i class="fas fa-times-circle"></i>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <%= render 'tag', user_tag: user_tag %>
                 <% end %>
+                <%= render 'tag', user_tag: @new_user_tag %>
               </div>
             </div>
           <% end %>
         </div>
         <div class="card-footer text-center">
-          <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#tags-modal">
-            Add Tags
+          <button class="btn btn-success my-2 py-2 px-5" type="button">
+            Add Tag
           </button>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-md-6">
+    <%= javascript_pack_tag 'tags' %>
+
+    <div class="col-12 col-lg-6">
       <div class="card h-100">
         <div class="card-header">
           <h3>User Notes</h3>

@@ -1,0 +1,46 @@
+<div class="col-12 mb-3">
+  <div class="tag <%= user_tag.tag.present? ? '' : 'new d-none' %>">
+    <div class="outer-triangle"><div class="inner-triangle"></div></div>
+    <div class="tag-body">
+      <div>
+        <i class="fas fa-tag"></i>
+        <% if user_tag.tag.present? %>
+          <%= user_tag.tag.tag %>
+        <% else %>
+          <select name="user_tag[tag]" form="new-user-tag-form" class="form-select" required>
+            <option value="" selected>Choose Tag</option>
+            <% @tags.each do |tag| %>
+              <option value="<%= tag.id %>"><%= tag.tag %></option>
+            <% end %>
+          </select>
+          <input class="d-none" type="text" name="user_tag[new_tag]" form="new-user-tag-form" placeholder="Enter Tag Here">
+          <i class="fas fa-pencil-alt input-switch"></i>
+        <% end %>
+      </div>
+      <div title="Added By <%= user_tag.team_member.full_name %> On <%= user_tag.created_date %> At <%= user_tag.created_time %>"
+           data-toggle="tooltip" data-placement="bottom">
+        <small>
+          <i class="fas fa-user-plus"></i> <%= user_tag.team_member.full_name %>
+          <i class="fas fa-calendar-alt"></i> <%= user_tag.created_date %>
+          <i class="fas fa-clock"></i> <%= user_tag.created_time %>
+        </small>
+      </div>
+        <div class="tag-control">
+        <% if user_tag.tag.present? %>
+          <%= link_to user_tag_path(@user, user_tag), method: :delete,
+                      data: { confirm: "This will remove the tag (#{user_tag.tag.tag}) from #{@user.full_name}. Are you sure?" } do %>
+            <i class="fas fa-times-circle" title="Remove Tag"></i>
+          <% end %>
+        <% else %>
+            <%= form_with id: 'new-user-tag-form', model: user_tag, url: user_tags_path(@user), method: :post do |form| %>
+              <button type="submit" class="btn">
+                <i class="fas fa-save" title="Save Tag"></i>
+              </button>
+            <% end %>
+        <% end %>
+        </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'tag_form' %>
