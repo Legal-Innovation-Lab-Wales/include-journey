@@ -23,11 +23,16 @@ module TeamMembers
     protected
 
     def resources
-      @resources = Tag.includes(:team_member, :user_tags).all
+      @resources = Tag.includes(:team_member, :user_tags)
+                      .all
+                      .order(created_at: :desc)
     end
 
     def search
-      self.resources
+      @resources = Tag.includes(:team_member, :user_tags)
+                      .joins(:team_member)
+                      .where("#{team_member_search} or #{tags_search}", wildcard_query)
+                      .order(created_at: :desc)
     end
 
     private
@@ -39,6 +44,10 @@ module TeamMembers
         else
           Tag.find(user_tag_params[:tag].to_i)
         end
+    end
+
+    def tags_search
+      'lower(tags.tag) similar to lower(:query)'
     end
 
     def user
