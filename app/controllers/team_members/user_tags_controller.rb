@@ -20,6 +20,11 @@ module TeamMembers
                        .order(created_at: :desc)
     end
 
+    def subheading_stats
+      @count_in_last_week = @resources.created_in_last_week.size
+      @count_in_last_month = @resources.created_in_last_month.size
+    end
+
     private
 
     def tag

@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/tags_controller.rb
   class TagsController < TeamMembersApplicationController
+    before_action :tagged_count, only: :index
     include Pagination
     before_action :user, only: %i[create destroy]
     before_action :user_tag, only: :destroy
@@ -35,6 +36,13 @@ module TeamMembers
                       .order(created_at: :desc)
     end
 
+    def subheading_stats
+      @count_in_last_week = @resources.created_in_last_week.size
+      @count_in_last_month = @resources.created_in_last_month.size
+      @tagged_count_in_last_week = @resources.tagged_in_last_week.size
+      @tagged_count_in_last_month = @resources.tagged_in_last_month.size
+    end
+
     private
 
     def tag
@@ -44,6 +52,10 @@ module TeamMembers
         else
           Tag.find(user_tag_params[:tag].to_i)
         end
+    end
+
+    def tagged_count
+      @tagged_count = Tag.all.tagged.size
     end
 
     def tags_search
