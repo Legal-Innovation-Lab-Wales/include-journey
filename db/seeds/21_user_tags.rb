@@ -1,8 +1,9 @@
 if UserTag.count.zero?
   User.all.each do |user|
     if user.id.even?
-      first_tag = Tag.find(rand(1..(Tag.count / 2).floor))
-      second_tag = Tag.find(rand((Tag.count / 2).floor..Tag.count))
+      half = (Tag.count / 2).floor
+      first_tag = Tag.find(rand(1...half))
+      second_tag = Tag.find(rand(half..Tag.count))
 
       UserTag.create!(
         tag: first_tag,
