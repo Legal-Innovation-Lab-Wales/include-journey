@@ -2,10 +2,16 @@
     <section class="row journey">
         <div class="col mb-3">
             <h2 class="mb-3">User Guide</h2>
+          <p>This is the guide for the platform. Click through the icons to get more detailed information as to
+            what each feature does.</p>
+          <%= link_to root_path, class: 'btn btn-primary' do %>
+            <i class="fas fa-arrow-circle-left"></i> Back to app
+          <% end %>
             <div class="container header-buttons guide">
+
                 <div class="row">
-                    <%= render 'shared/dashboard_btn', path: current_user.journal_entries.count.zero? ? new_journal_entry_path : journal_entries_path,
-                    icon: 'fa-book', large_text: 'My Journal', text: 'Journal' %>
+                    <%= render 'shared/dashboard_btn', path: guide_journal_path,
+                    icon: 'fa-book', large_text: 'Journal Guide', text: 'Journal' %>
                     <%= render 'shared/dashboard_btn', path: upcoming_appointments_path, icon: 'fa-calendar-alt',
                     large_text: 'My Appointments', text: 'Appts' %>
                     <%= render 'shared/dashboard_btn', path: new_wellbeing_assessment_path, icon: 'fa-heart',
