@@ -32,18 +32,10 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth' %>
-                <%= f.label :date_of_birth %>
-              </div>
-            </div>
-            <div class="col-md">
-              <div class="form-floating">
                 <%= f.date_field :release_date, class: 'form-control', autocomplete: 'release-date', placeholder: 'Release Date' %>
                 <%= f.label :release_date %>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-md">
               <div class="form-floating">
                 <%= f.number_field :mobile_number, class: 'form-control', autocomplete: 'mobile-number', placeholder: 'Mobile No.' %>
@@ -89,6 +81,20 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
+                <%= f.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth' %>
+                <%= f.label :date_of_birth %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= f.text_field :pronouns, class: 'form-control', autocomplete: "pronouns", placeholder: "Pronouns" %>
+                <%= f.label :pronouns %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
                 <%= f.select :sex, [nil, 'Female', 'Male', 'Prefer not to say'], { selected: current_user.sex }, { class: 'form-select' }  %>
                 <%= f.label :sex %>
               </div>
@@ -97,20 +103,6 @@
               <div class="form-floating">
                 <%= f.select :gender_identity, [nil, 'Yes', 'No', 'Prefer not to say'], { selected: current_user.gender_identity }, { class: 'form-select' }  %>
                 <%= f.label :gender_identity, 'Gender identity same as sex?' %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <div class="form-floating">
-                <%= f.text_field :pronouns, class: 'form-control', autocomplete: "pronouns", placeholder: "Pronouns" %>
-                <%= f.label :pronouns %>
-              </div>
-            </div>
-            <div class="col-md">
-              <div class="form-floating">
-                <%= f.select :sexual_orientation, [nil, 'Hetrosexual or straight', 'Gay or lesbian', 'Bisexual', 'Other', 'Prefer not to say'], { selected: current_user.sexual_orientation }, { class: 'form-select' }  %>
-                <%= f.label :sexual_orientation %>
               </div>
             </div>
           </div>

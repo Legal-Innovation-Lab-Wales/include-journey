@@ -45,7 +45,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string    :religion
       t.string    :sex
       t.string    :gender_identity
-      t.string    :sexual_orientation
       t.string    :pronouns
 
       t.timestamps null: false

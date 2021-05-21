@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     added_attrs = %i[
       first_name last_name mobile_number release_date email password password_confirmation remember_me 
-      terms date_of_birth sex gender_identity pronouns sexual_orientation ethnic_group religion disabilities
+      terms date_of_birth sex gender_identity pronouns ethnic_group religion disabilities
     ]
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
