@@ -87,7 +87,7 @@
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= f.text_field :pronouns, class: 'form-control', autocomplete: "pronouns", placeholder: "Pronouns" %>
+                <%= f.select :pronouns, [nil, 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'], { selected: current_user.pronouns }, { class: 'form-select' } %>
                 <%= f.label :pronouns %>
               </div>
             </div>

@@ -232,7 +232,6 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.string "religion"
     t.string "sex"
     t.string "gender_identity"
-    t.string "sexual_orientation"
     t.string "pronouns"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
