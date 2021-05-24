@@ -19,4 +19,12 @@ class GuidesController < ApplicationController
   def contacts
     render template: 'guide/contacts'
   end
+
+  def support
+    render template: 'guide/support'
+  end
+
+  def goals
+    render template: 'guide/goals'
+  end
 end
