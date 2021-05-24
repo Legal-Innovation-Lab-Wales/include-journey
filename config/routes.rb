@@ -93,4 +93,5 @@ Rails.application.routes.draw do
   get 'guide', to: 'guides#index'
   get 'guide_journal', to: 'guides#journal'
   get 'guide_appointments', to: 'guides#appointments'
+  get 'guide_myNeeds', to: 'guides#myNeeds'
 end

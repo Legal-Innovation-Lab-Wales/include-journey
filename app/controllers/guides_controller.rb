@@ -11,4 +11,8 @@ class GuidesController < ApplicationController
   def appointments
     render template: 'guide/appointments'
   end
+
+  def myNeeds
+    render template: 'guide/myNeeds'
+  end
 end
