@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111439) do
     t.bigint "team_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id", "user_id"], name: "index_user_tags_on_tag_id_and_user_id", unique: true
     t.index ["tag_id"], name: "index_user_tags_on_tag_id"
     t.index ["team_member_id"], name: "index_user_tags_on_team_member_id"
     t.index ["user_id"], name: "index_user_tags_on_user_id"

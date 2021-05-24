@@ -230,10 +230,10 @@
           <% else %>
             <div class="container">
               <div class="row">
+                <%= render 'tag', user_tag: @new_user_tag %>
                 <% @user_tags.each do |user_tag| %>
                   <%= render 'tag', user_tag: user_tag %>
                 <% end %>
-                <%= render 'tag', user_tag: @new_user_tag %>
               </div>
             </div>
           <% end %>
