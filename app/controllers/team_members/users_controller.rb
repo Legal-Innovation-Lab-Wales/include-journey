@@ -18,7 +18,7 @@ module TeamMembers
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
-      @user_tags = @user.user_tags
+      @user_tags = @user.user_tags.order({ 'created_at': :desc })
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
 
