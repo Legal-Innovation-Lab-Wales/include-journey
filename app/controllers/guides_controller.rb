@@ -7,4 +7,8 @@ class GuidesController < ApplicationController
   def journal
     render template: 'guide/journal'
   end
+
+  def appointments
+    render template: 'guide/appointments'
+  end
 end
