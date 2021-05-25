@@ -7,7 +7,6 @@ module TeamMembers
 
     def create
       existing_tag = Tag.where(tag: tag_params[:tag].titleize).present?
-      debugger
       redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
 
       Tag.create!(tag: tag_params[:tag].titleize, team_member: current_team_member)
