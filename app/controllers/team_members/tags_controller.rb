@@ -10,6 +10,7 @@ module TeamMembers
       redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
 
       Tag.create!(tag: tag_params[:tag].titleize, team_member: current_team_member)
+      redirect_back(fallback_location: tags_path, flash: { success: 'Tag created' })
     end
 
     protected
