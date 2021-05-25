@@ -6,10 +6,11 @@ module TeamMembers
     include Pagination
 
     def create
-      existing_tag = Tag.where(tag: tag_params[:tag].titleize).present?
+      tag_input = tag_params[:tag].downcase.titleize
+      existing_tag = Tag.where(tag: tag_input).present?
       redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
 
-      Tag.create!(tag: tag_params[:tag].titleize, team_member: current_team_member)
+      Tag.create!(tag: tag_input, team_member: current_team_member)
       redirect_back(fallback_location: tags_path, flash: { success: 'Tag created' })
     end
 
