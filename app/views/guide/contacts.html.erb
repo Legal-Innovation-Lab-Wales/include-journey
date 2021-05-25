@@ -1,18 +1,22 @@
 <main class="container user guide">
-    <section class="row journey">
-        <div class="col mb-3">
-            <h2 class="mb-3">Contacts Guide</h2>
-            <%= link_to root_path, class: 'btn btn-primary' do %>
+  <section class="row journey">
+    <div class="col mb-3">
+      <div class="row">
+        <div class="col text-start">
+          <%= link_to root_path, class: 'btn btn-primary' do %>
             <i class="fas fa-arrow-circle-left"></i> Back to app
-            <% end %>
-            <p>Contacts is a section of the platform to hold the contact details of people. You can add in, edit and delete contacts here.</p>
-            <hr>
+          <% end %>
         </div>
-        <%= image_tag ("guide/contacts.png")  %>
-        <hr>
-        <%= image_tag ("guide/contactsNew.png")  %>
-        <hr>
-        <%= image_tag ("guide/contactsEdit.png")  %>
-        </div>
-    </section>
+      </div>
+      <h2 class="mb-0">Contacts Guide</h2>
+      <p>Contacts is a section of the platform to hold the contact details of people. You can add in, edit and delete contacts here.</p>
+    </div>
+    <hr>
+    <%= image_tag ("guide/contacts.png")  %>
+    <hr>
+    <%= image_tag ("guide/contactsNew.png")  %>
+    <hr>
+    <%= image_tag ("guide/contactsEdit.png")  %>
+    </div>
+  </section>
 </main>

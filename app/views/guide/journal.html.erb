@@ -1,23 +1,26 @@
 <main class="container user guide">
   <section class="row journey">
     <div class="col mb-3">
-      <h2 class="mb-3">Journal Guide</h2>
-      <%= link_to root_path, class: 'btn btn-primary' do %>
-        <i class="fas fa-arrow-circle-left"></i> Back to app
-      <% end %>
+      <div class="row">
+        <div class="col text-start">
+          <%= link_to root_path, class: 'btn btn-primary' do %>
+            <i class="fas fa-arrow-circle-left"></i> Back to app
+          <% end %>
+        </div>
+      </div>
+      <h2 class="mb-0">Journal Guide</h2>
       <p>Journals allow you to write down thoughts, feelings and events you want to
         remember. Simular to a diary, it can be used to write whatever you like. You also have the option to share your journals with team member's.</p>
-      <hr>
     </div>
-    <%= image_tag ("guide/journalEntry2.png")  %>
     <hr>
-    <%= image_tag ("guide/journalEntry4.png")  %>
+    <%= image_tag ("guide/journalEntry2.png") %>
     <hr>
-    <%= image_tag ("guide/journalEntry3.png")  %>
+    <%= image_tag ("guide/journalEntry4.png") %>
+    <hr>
+    <%= image_tag ("guide/journalEntry3.png") %>
     <p> Here is some explaination text about the image. Also below is a gif:</p>
-
+    <hr>
     <%= image_tag ("guide/journalDemo.gif"), class:"image" %>
-
     </div>
   </section>
 </main>

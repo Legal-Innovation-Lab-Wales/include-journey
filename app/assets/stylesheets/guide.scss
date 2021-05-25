@@ -1,12 +1,11 @@
 @import "variables";
 
-.guide{
-  image{
-    border: $info 2px solid;
+.guide {
+  img {
     max-width: 100%;
-
+    margin-bottom: 1rem;
   }
-  p{
+  p {
     padding-top: 1rem;
   }
 }

@@ -13,7 +13,7 @@ class GuidesController < ApplicationController
   end
 
   def myNeeds
-    render template: 'guide/myNeeds'
+    render template: 'guide/my_needs'
   end
 
   def contacts
