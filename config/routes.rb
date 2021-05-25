@@ -68,7 +68,7 @@ Rails.application.routes.draw do
         get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member
         resources :appointments, only: %i[index new create edit update], on: :member
-        resources :tags, only: %i[create destroy], on: :member
+        resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
       end
 
       resources :crisis_events, only: %i[index show] do
@@ -81,7 +81,7 @@ Rails.application.routes.draw do
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
-      resources :tags, only: %i[show index] do
+      resources :tags, only: %i[show index create] do
         resources :user_tags, only: :index, on: :member, as: :tagged_users
       end
     end
