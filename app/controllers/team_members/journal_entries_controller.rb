@@ -15,7 +15,7 @@ module TeamMembers
 
     def resources
       if journal_entry_params[:feeling].present? || journal_entry_params[:viewed].present?
-        current_team_member.journal_entries.includes(:user)
+        current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
                            .joins(:user)
                            .where(journal_entry_search(''), query_terms({}))
                            .order(created_at: :desc)
@@ -26,7 +26,7 @@ module TeamMembers
     end
 
     def search
-      current_team_member.journal_entries.includes(:user)
+      current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
                          .joins(:user)
                          .where(journal_entry_search("(#{user_search})"), query_terms(wildcard_query))
                          .order(created_at: :desc)

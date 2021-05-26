@@ -22,6 +22,8 @@ class TeamMember < DeviseRecord
   has_many :user_pins, foreign_key: :team_member_id
   has_many :pinned_users, through: :user_pins, source: :user
   has_many :wellbeing_services
+  has_many :created_tags, foreign_key: :team_member_id, class_name: 'Tag'
+  has_many :assigned_tags, through: :user_tags, source: :tag
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
