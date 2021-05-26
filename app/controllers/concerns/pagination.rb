@@ -44,6 +44,10 @@ module Pagination
     'lower(users.first_name) similar to lower(:query) or lower(users.last_name) similar to lower(:query)'
   end
 
+  def team_member_search
+    'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query)'
+  end
+
   def wildcard_query
     { query: "%#{@query.split.join('%|%')}%" }
   end

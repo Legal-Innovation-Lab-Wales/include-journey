@@ -34,10 +34,10 @@
           <% end %>
 
             <%= render 'shared/dashboard_btn', path: wellbeing_metrics_path, icon: 'fa-ruler-horizontal', text: 'Wellbeing Metrics' %>
-            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
+            <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
 
           <% unless @admin %>
-            <%= render 'shared/dashboard_btn', path: '#', icon: '', text: '', hidden: true %>
+            <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>
           <% end %>
         </div>
       </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_111437) do
+ActiveRecord::Schema.define(version: 2021_05_05_111439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,14 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "tag"
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_tags_on_team_member_id"
+  end
+
   create_table "team_members", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -200,6 +208,18 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_user_profile_view_logs_on_team_member_id"
     t.index ["user_id"], name: "index_user_profile_view_logs_on_user_id"
+  end
+
+  create_table "user_tags", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "user_id"
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id", "user_id"], name: "index_user_tags_on_tag_id_and_user_id", unique: true
+    t.index ["tag_id"], name: "index_user_tags_on_tag_id"
+    t.index ["team_member_id"], name: "index_user_tags_on_team_member_id"
+    t.index ["user_id"], name: "index_user_tags_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
