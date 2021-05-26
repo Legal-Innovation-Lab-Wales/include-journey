@@ -67,8 +67,8 @@
             <div class="col">
               <% if @wellbeing_assessment.present? %>
                 <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '200',
-                           show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
-                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment,
+                           show_timestamp: true, chart_heading: "Latest Wellbeing Assessment",
+                           show_author: true, wellbeing_assessment: @wellbeing_assessment,
                            pyramid_view: true %>
               <% end %>
 

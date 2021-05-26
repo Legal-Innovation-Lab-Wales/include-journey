@@ -12,14 +12,7 @@
     </div>
 
     <a href='<%= wellbeing_assessment_path(wellbeing_assessment) %>'>
-      <div class="card-body p-2">
-        <div class="row">
-          <div class="col">
-            <div class="average badge rounded-pill wba-score__<%= wellbeing_assessment.average.round %>">
-              <%= score_description(wellbeing_assessment.average.round) %>
-            </div>
-          </div>
-        </div>
+      <div class="card-body">
         <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: wellbeing_assessment %>
       </div>
     </a>

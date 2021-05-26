@@ -1,25 +1,5 @@
 <div class="col-12 col-xl-7 sliders p-0 <%= local_assigns[:hide_sliders].present? ? 'd-none' : '' %>">
   <div class="container p-0 p-md-3">
-    <!-- Sliders Heading Present => New/Show View -->
-    <% if local_assigns[:sliders_heading].present? %>
-      <div class="row">
-        <div class="col">
-          <h3><%= local_assigns[:sliders_heading] %></h3>
-
-          <% if local_assigns[:show_timestamp].present? %>
-            <h5><%= local_assigns[:wellbeing_assessment].created %></h5>
-          <% end %>
-        </div>
-
-        <% if local_assigns[:wellbeing_assessment].team_member.present? %>
-          <div class="col">
-            <h3>Recorded By</h3>
-            <h5><%= local_assigns[:wellbeing_assessment].team_member.full_name %></h5>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
     <!-- New Wellbeing Assessment Form -->
     <% if local_assigns[:wellbeing_metrics].present? %>
       <%= form_with model: local_assigns[:wellbeing_assessment], url: local_assigns[:path], method: :post do |form| %>
