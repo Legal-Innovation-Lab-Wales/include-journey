@@ -1,4 +1,5 @@
 if Contact.count.zero?
+  print "Contacts\t\tStart: #{Time.now - @start_time}"
   User.all.each do |user|
     Config::CONTACTS_FOR_EACH_USER.times do
       name = Faker::Name.name
@@ -12,6 +13,6 @@ if Contact.count.zero?
     end
   end
 
-  puts "Contacts\t\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end

@@ -1,3 +1,4 @@
+print "Team Members\t\tStart: #{Time.now - @start_time}"
 unless TeamMember.find_by_email('philr@purpleriver.dev').present?
   team_member = TeamMember.new(
     first_name: 'Phil',
@@ -78,5 +79,5 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
   team_member.save!
 end
 
-puts "Team Members\t\tTime: #{Time.now - @start_time}\tElapsed: #{Time.now - @start_time}"
+puts "\tDuration: #{Time.now - @start_time}\tElapsed: #{Time.now - @start_time}"
 @last_time = Time.now

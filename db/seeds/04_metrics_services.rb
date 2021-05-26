@@ -1,4 +1,5 @@
 if MetricsService.count.zero?
+  print "Metrics Services\tStart: #{Time.now - @start_time}"
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 7) # Include --> Behaviour
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 8) # Include --> Addiction
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 9) # Include --> Relationships
@@ -14,6 +15,6 @@ if MetricsService.count.zero?
   MetricsService.create!(wellbeing_service_id: 5, wellbeing_metric_id: 11) # Citizens Advice --> Employment/Education/Training
   MetricsService.create!(wellbeing_service_id: 6, wellbeing_metric_id: 3) # Food Banks --> Food
 
-  puts "Metrics Services\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end
