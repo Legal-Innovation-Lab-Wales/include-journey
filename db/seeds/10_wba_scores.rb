@@ -2,6 +2,7 @@ if WbaScore.count.zero?
   User.all.each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)
     wellbeing_assessments.each_with_index do |wellbeing_assessment, index|
+      total = 0
       WellbeingMetric.all.each do |wellbeing_metric|
         score_value =
           if index.positive?
@@ -17,7 +18,10 @@ if WbaScore.count.zero?
           value: score_value,
           created_at: wellbeing_assessment.created_at
         )
+
+        total += score_value
       end
+      wellbeing_assessment.update!(average: total.to_f / WellbeingMetric.count)
     end
   end
 
