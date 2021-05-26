@@ -19,8 +19,15 @@
         padding: 0.25rem 0.5rem;
       }
 
+      small {
+        color: $dark-grey;
+      }
+
       &:hover {
         color: $white;
+        small {
+          color: $white;
+        }
       }
     }
 
@@ -134,8 +141,10 @@
   }
 
   &.show {
-
     #user-info {
+      h4 {
+        color: $dark-grey;
+      }
       padding: 0 1rem;
 
       p {
