@@ -12,7 +12,7 @@
       <div class="container">
         <div class="row"><%= wellbeing_service.description %></div>
         <div class="row link"><%= link_to wellbeing_service.website, wellbeing_service.website %></div>
-        <div class="row link"><%= link_to wellbeing_service.contact_number, "tel:#{wellbeing_service.contact_number}" %></div>
+        <div class="row link"><%= link_to wellbeing_service.contact_number, "tel:0#{wellbeing_service.contact_number}" %></div>
         <% unless user %>
           <% if wellbeing_service.wellbeing_metrics.count.positive? %>
             <div class="row">
