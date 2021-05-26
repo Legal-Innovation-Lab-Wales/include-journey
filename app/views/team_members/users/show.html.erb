@@ -71,12 +71,13 @@
                            show_author: true, wellbeing_assessment: @wellbeing_assessment,
                            pyramid_view: true %>
               <% end %>
-
-              <div class="text-center mt-2">
-                <% unless @wellbeing_assessment.today? %>
-                  <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
+              <div class="text-center">
+                <% unless @wellbeing_assessment.present? && @wellbeing_assessment.today? %>
+                  <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@user), class: "btn btn-success my-2 py-2 px-5" %>
                 <% end %>
-                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm mt-2 mt-md-0" %>
+                <% if @user.wellbeing_assessments.any? %>
+                    <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm mt-2 mt-md-0" %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -84,7 +85,9 @@
       </div>
     </div>
   </div>
-  <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+  <% if @user.wellbeing_assessments.count > 1 %>
+    <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+  <% end %>
   <div class="row" id="journal-appointments">
     <div class="col-12 col-lg-6 mb-4">
       <div id="journal-card" class="card h-100">

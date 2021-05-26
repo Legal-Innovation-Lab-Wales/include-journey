@@ -18,10 +18,11 @@
       </div>
     <% end %>
 
-
-    <div class="average badge rounded-pill mb-2 wba-score__<%= local_assigns[:wellbeing_assessment].average.round %>">
-      <%= score_description(local_assigns[:wellbeing_assessment].average.round) %>
-    </div>
+    <% if local_assigns[:wellbeing_assessment].average.present? %>
+      <div class="average badge rounded-pill mb-2 wba-score__<%= local_assigns[:wellbeing_assessment].average.round %>">
+        <%= score_description(local_assigns[:wellbeing_assessment].average.round) %>
+      </div>
+    <% end %>
 
     <% if local_assigns[:chart_alignment].present? && local_assigns[:chart_alignment] == 'left' %>
       <%= render 'shared/wellbeing_chart/wellbeing_chart', local_assigns: local_assigns %>
