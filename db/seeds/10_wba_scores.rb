@@ -1,4 +1,5 @@
 if WbaScore.count.zero?
+
   User.all.each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)
     wellbeing_assessments.each_with_index do |wellbeing_assessment, index|

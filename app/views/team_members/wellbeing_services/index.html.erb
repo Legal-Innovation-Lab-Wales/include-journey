@@ -12,7 +12,7 @@
         </div>
         <div class="row">
           <% @wellbeing_services.each do |wellbeing_service| %>
-            <%= render 'card', wellbeing_service: wellbeing_service, user: false %>
+            <%= render 'shared/wellbeing_services/card', wellbeing_service: wellbeing_service, user: false %>
           <% end %>
         </div>
       </div>
