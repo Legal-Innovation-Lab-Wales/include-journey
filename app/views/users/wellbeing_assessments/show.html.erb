@@ -10,12 +10,16 @@
             </div>
           </div>
         <% end %>
+        <div class="row pt-2">
+          <div class="col-12">
+            <p>To see a list of all available services <%= link_to 'click here', wellbeing_services_path %></p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-md-9">
       <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: @wellbeing_assessment,
-                 chart_alignment: 'left', chart_heading: 'Your Wellbeing',
-                 sliders_heading: 'Recorded At', show_timestamp: true %>
+                 chart_alignment: 'left', chart_heading: 'Your Wellbeing', show_timestamp: true %>
     </div>
   </section>
 </main>

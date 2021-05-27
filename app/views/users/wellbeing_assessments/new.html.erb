@@ -10,13 +10,17 @@
             </div>
           </div>
         <% end %>
+        <div class="row pt-2">
+          <div class="col-12">
+            <p>To see a list of all available services <%= link_to 'click here', wellbeing_services_path %></p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-12 col-xl-10">
       <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: @wellbeing_assessment,
                  chart_alignment: 'left',
-                 chart_heading: 'Your Wellbeing',
-                 sliders_heading: 'How are you today?',
+                 chart_heading: 'How are you today?',
                  wellbeing_metrics: @wellbeing_metrics,
                  path: wellbeing_assessments_path,
                  last_scores: @last_scores,
