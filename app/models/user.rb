@@ -40,6 +40,8 @@ class User < DeviseRecord
   def wellbeing_assessment_history
     history = { labels: [], datasets: [] }
 
+    wellbeing_assessments.order(created_at: :desc).each { |score| score.add_to_history(history) }
+
     wba_scores.includes(:wellbeing_metric)
               .joins(:wellbeing_metric)
               .order(created_at: :desc).each { |score| score.add_to_history(history) }
