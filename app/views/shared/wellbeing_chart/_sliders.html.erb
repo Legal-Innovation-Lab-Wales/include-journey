@@ -34,7 +34,8 @@
       <% local_assigns[:wellbeing_assessment].wba_scores.includes(:wellbeing_metric).each do |score| %>
         <div class="row">
           <div class="col-8">
-            <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>>
+            <label for=<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %> data-bs-toggle="tooltip" data-bs-placement="top" 
+                   title="<%= score.wellbeing_metric.name %>">
               <% if team_member_signed_in? %>
                 <i class="fas fa-<%= score.wellbeing_metric.icon %>"></i>
               <% end %>
