@@ -71,12 +71,12 @@
                            show_author: true, wellbeing_assessment: @wellbeing_assessment,
                            pyramid_view: true %>
               <% end %>
-              <div class="mt-2">
+              <div class="text-center mt-2">
                 <% unless @wellbeing_assessment.present? && @wellbeing_assessment.today? %>
                   <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@user), class: "btn btn-success py-2 px-5" %>
                 <% end %>
                 <% if @user.wellbeing_assessments.any? %>
-                    <%= link_to "View All Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary py-2 px-5 float-end" %>
+                    <%= link_to "View All Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary py-2 px-5" %>
                 <% end %>
               </div>
             </div>
