@@ -2,7 +2,12 @@
   <section class="row">
     <div class="col">
       <h2>Wellbeing Metrics</h2>
-      <p>Icons are currently only visible to Team Members.</p>
+      <p>This section allows you to edit the metrics in a wellbeing assessment (Icons are currently only visible to Team Members).</p>
+      <div class="iconbar">
+        <%= link_to "Wellbeing Services", wellbeing_services_path, class: "btn btn-primary" %>
+        <%= link_to "Wellbeing Metrics", wellbeing_metrics_path, class: "btn disabled btn-primary" %>
+        <%= link_to "Wellbeing Scores", wellbeing_scores_path, class: "btn btn-primary" %>
+      </div>
       <div class="table-container">
         <table class="table table-dark table-striped link-table">
           <thead>

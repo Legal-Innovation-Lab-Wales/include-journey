@@ -76,6 +76,19 @@
 }
 
 .wellbeing-metrics {
+
+  .iconbar{
+    .btn {
+      display: inline-block;
+      margin: 1rem;
+
+      &.disabled {
+        background-color: $brand-secondary;
+        border-color: $brand-secondary;
+        color: $brand-primary;
+      }
+    }
+  }
   &.index {
     .hidden {
       display: none !important;

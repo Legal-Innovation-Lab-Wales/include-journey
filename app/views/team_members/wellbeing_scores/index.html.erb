@@ -1,0 +1,56 @@
+<main class="container team-members wellbeing-metrics index">
+  <section class="row">
+    <div class="col">
+      <h2>Wellbeing Scores</h2>
+      <p>This section allows you to edit the score names displayed next to values which users rank from 1-10.</p>
+      <div class="iconbar">
+        <%= link_to "Wellbeing Services", wellbeing_services_path, class: "btn btn-primary" %>
+        <%= link_to "Wellbeing Metrics", wellbeing_metrics_path, class: "btn btn-primary" %>
+        <%= link_to "Wellbeing Scores", wellbeing_scores_path, class: "btn disabled btn-primary" %>
+      </div>
+      <div class="table-container">
+        <table class="table table-dark table-striped link-table">
+          <thead>
+          <th scope="col" class="hidden"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Value</th>
+          <th scope="col"></th>
+          </thead>
+          <tbody>
+          <%# @wellbeing_metrics.each do |metric| %>
+            <tr>
+<!--              <td class="hidden">-->
+<!--                <form id="wellbeing_metric_<%#= metric.id %>" name="wellbeing_metric" method="post"-->
+<!--                      action="<%#= wellbeing_metric_path(metric) %>">-->
+<!--                  <input type="hidden" name="_method" value="patch">-->
+<!--                  <input type="hidden" name="authenticity_token" value="<%#= session[:_csrf_token] %>">-->
+<!--                  <input type="hidden" name="id" value="<%#= metric.id %>" />-->
+<!--                </form>-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <input form="wellbeing_metric_<%#= metric.id %>" type="text" name="wellbeing_metric[name]"-->
+<!--                       placeholder="Name" value="<%#= metric.name %>" disabled required />-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <input form="wellbeing_metric_<%#= metric.id %>" type="text" name="wellbeing_metric[category]"-->
+<!--                       placeholder="Category" value="<%#= metric.category %>" disabled required />-->
+<!--              </td>-->
+<!--              <td>-->
+<!--                <i class="fas fa-<%#= metric.icon %>"></i>-->
+<!--              </td>-->
+<!--              <td>-->
+                <i class="fas fa-edit"></i>
+<!--                <input form="wellbeing_metric_<%#= metric.id %>" type="submit" class="btn btn-success hidden"-->
+<!--                       value="Save" />-->
+                <div class="btn btn-danger cancel hidden">Cancel</div>
+              </td>
+            </tr>
+          <%# end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'table_edit' %>
