@@ -1,7 +1,7 @@
 <main class="container team-members wellbeing-metrics index">
   <section class="row">
     <div class="col">
-      <h2>Wellbeing Scores</h2>
+      <h2>Wellbeing Score Values</h2>
       <p>This section allows you to edit the score names displayed next to values which users rank from 1-10.</p>
       <div class="iconbar">
         <%= link_to "Wellbeing Services", wellbeing_services_path, class: "btn btn-primary" %>
@@ -9,34 +9,31 @@
         <%= link_to "Score Values", wellbeing_score_values_path, class: "btn disabled btn-primary" %>
       </div>
       <div class="table-container">
-        <table class="table table-dark table-striped link-table">
+        <table class="table table-dark link-table">
           <thead>
           <th scope="col" class="hidden"></th>
-          <th scope="col">Name</th>
           <th scope="col">Value</th>
+          <th scope="col">Name</th>
           <th scope="col"></th>
           </thead>
           <tbody>
-          <% @wellbeing_scores.each do |metric| %>
-            <tr>
+          <% @score_values.each do |score_value| %>
+            <tr class="metric-score value-<%= score_value.value %>">
               <td class="hidden">
-                <form id="wellbeing_metric_<%= metric.id %>" name="wellbeing_metric" method="post"
-                      action="<%= wellbeing_metric_path(metric) %>">
+                <form id="wellbeing_metric_<%= score_value.id %>" name="wellbeing_metric" method="post"
+                      action="<%= wellbeing_metric_path(score_value) %>">
                   <input type="hidden" name="_method" value="patch">
                   <input type="hidden" name="authenticity_token" value="<%= session[:_csrf_token] %>">
-                  <input type="hidden" name="id" value="<%= metric.id %>" />
+                  <input type="hidden" name="id" value="<%= score_value.id %>" />
                 </form>
               </td>
-              <td>
-                <input form="wellbeing_metric_<%= metric.id %>" type="text" name="wellbeing_metric[name]"
-                       placeholder="Name" value="<%= metric.label %>" disabled required />
+              <td >
+                <input form="wellbeing_metric_<%= score_value.id %>" type="text" name="wellbeing_metric[category]"
+                       placeholder="Category" value="<%= score_value.value %>" disabled required />
               </td>
               <td>
-                <input form="wellbeing_metric_<%= metric.id %>" type="text" name="wellbeing_metric[category]"
-                       placeholder="Category" value="<%= metric %>" disabled required />
-              </td>
-              <td>
-                <i class="fas fa-<%= metric%>"></i>
+                <input form="wellbeing_metric_<%= score_value.id %>" type="text" name="wellbeing_metric[name]"
+                       placeholder="Name" value="<%= score_value.name %>" disabled required />
               </td>
               <td>
                 <i class="fas fa-edit"></i>
