@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_111439) do
+ActiveRecord::Schema.define(version: 2021_05_28_104754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,6 +289,14 @@ ActiveRecord::Schema.define(version: 2021_05_05_111439) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
+  end
+
+  create_table "wellbeing_score_values", force: :cascade do |t|
+    t.integer "value"
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "wellbeing_services", force: :cascade do |t|
