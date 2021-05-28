@@ -18,14 +18,14 @@
       &.btn-sm {
         padding: 0.25rem 0.5rem;
       }
+      
+      &:hover {
+        color: $white;
+      }
 
       small {
         color: $dark-grey;
-      }
-
-      &:hover {
-        color: $white;
-        small {
+        &:hover {
           color: $white;
         }
       }

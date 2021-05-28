@@ -2,7 +2,7 @@
   <div class="col-12 col-md-7">
     <div class="form-container">
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |form| %>
         <h2>Edit <%= resource_name.to_s.humanize %></h2>
         
         <div class="form-group">
@@ -19,28 +19,28 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.text_field :first_name, autofocus: true, class: 'form-control', autocomplete: 'first-name', placeholder: 'First Name' %>
-                <%= f.label :first_name %>
+                <%= form.text_field :first_name, autofocus: true, class: 'form-control', autocomplete: 'first-name', placeholder: 'First Name' %>
+                <%= form.label :first_name %>
               </div>
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= f.text_field :last_name, class: 'form-control', autocomplete: 'last-name', placeholder: 'Last Name' %>
-                <%= f.label :last_name %>
+                <%= form.text_field :last_name, class: 'form-control', autocomplete: 'last-name', placeholder: 'Last Name' %>
+                <%= form.label :last_name %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.date_field :release_date, class: 'form-control', autocomplete: 'release-date', placeholder: 'Release Date' %>
-                <%= f.label :release_date %>
+                <%= form.date_field :release_date, class: 'form-control', autocomplete: 'release-date', placeholder: 'Release Date' %>
+                <%= form.label :release_date %>
               </div>
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= f.number_field :mobile_number, class: 'form-control', autocomplete: 'mobile-number', placeholder: 'Mobile No.' %>
-                <%= f.label :mobile_number %>
+                <%= form.number_field :mobile_number, class: 'form-control', autocomplete: 'mobile-number', placeholder: 'Mobile No.' %>
+                <%= form.label :mobile_number %>
               </div>
             </div>
           </div>
@@ -51,8 +51,8 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.email_field :email, class: 'form-control', autocomplete: 'email', placeholder: 'Email Address' %>
-                <%= f.label :email %>
+                <%= form.email_field :email, class: 'form-control', autocomplete: 'email', placeholder: 'Email Address' %>
+                <%= form.label :email %>
               </div>
             </div>
           </div>
@@ -62,16 +62,16 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating change-password">
-                <%= f.password_field :password, class: 'form-control', autocomplete: 'password', placeholder: 'Password - 6 characters minimum' %>
-                <%= f.label :password do %>
+                <%= form.password_field :password, class: 'form-control', autocomplete: 'password', placeholder: 'Password - 6 characters minimum' %>
+                <%= form.label :password do %>
                   Password <span class="small-text">(leave blank if you don't want to change it)</span>
                 <% end %>
               </div>
             </div>
             <div class="col-md confirm-password">
               <div class="form-floating">
-                <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'password', placeholder: 'Password Again' %>
-                <%= f.label :password_confirmation %>
+                <%= form.password_field :password_confirmation, class: 'form-control', autocomplete: 'password', placeholder: 'Password Again' %>
+                <%= form.label :password_confirmation %>
               </div>
             </div>
           </div>
@@ -82,52 +82,52 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth' %>
-                <%= f.label :date_of_birth %>
+                <%= form.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth' %>
+                <%= form.label :date_of_birth %>
               </div>
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= f.select :pronouns, [nil, 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'], { selected: current_user.pronouns }, { class: 'form-select' } %>
-                <%= f.label :pronouns %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md">
-              <div class="form-floating">
-                <%= f.select :sex, [nil, 'Female', 'Male', 'Prefer not to say'], { selected: current_user.sex }, { class: 'form-select' }  %>
-                <%= f.label :sex %>
-              </div>
-            </div>
-            <div class="col-md">
-              <div class="form-floating">
-                <%= f.select :gender_identity, [nil, 'Yes', 'No', 'Prefer not to say'], { selected: current_user.gender_identity }, { class: 'form-select' }  %>
-                <%= f.label :gender_identity, 'Gender identity same as sex?' %>
+                <%= form.select :pronouns, [nil, 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'], { selected: current_user.pronouns }, { class: 'form-select' } %>
+                <%= form.label :pronouns %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.select :ethnic_group, [nil, 'White', 'Mixed or multiple ethnic groups', 'Asian or Asian British', 'Black, African, Carribean or Black British', 'Other ethnic group', 'Prefer not to say'], { selected: current_user.ethnic_group }, { class: 'form-select' }  %>
-                <%= f.label :ethnic_group %>
+                <%= form.select :sex, [nil, 'Female', 'Male', 'Prefer not to say'], { selected: current_user.sex }, { class: 'form-select' }  %>
+                <%= form.label :sex %>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="form-floating">
+                <%= form.select :gender_identity, [nil, 'Yes', 'No', 'Prefer not to say'], { selected: current_user.gender_identity }, { class: 'form-select' }  %>
+                <%= form.label :gender_identity, 'Gender identity same as sex?' %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.select :religion, [nil, 'No religion', 'Christian', 'Buddhist', 'Hindu', 'Jewish', 'Muslim', 'Sikh', 'Any other religion', 'Prefer not to say'], { selected: current_user.religion }, { class: 'form-select' }  %>
-                <%= f.label :religion %>
+                <%= form.select :ethnic_group, [nil, 'White', 'Mixed or multiple ethnic groups', 'Asian or Asian British', 'Black, African, Carribean or Black British', 'Other ethnic group', 'Prefer not to say'], { selected: current_user.ethnic_group }, { class: 'form-select' }  %>
+                <%= form.label :ethnic_group %>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= f.text_area :disabilities, class: 'form-control', placeholder: 'Disabilities' %>
-                <%= f.label :disabilities %>
+                <%= form.select :religion, [nil, 'No religion', 'Christian', 'Buddhist', 'Hindu', 'Jewish', 'Muslim', 'Sikh', 'Any other religion', 'Prefer not to say'], { selected: current_user.religion }, { class: 'form-select' }  %>
+                <%= form.label :religion %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= form.text_area :disabilities, class: 'form-control', placeholder: 'Disabilities' %>
+                <%= form.label :disabilities %>
               </div>
             </div>
           </div>
@@ -144,7 +144,7 @@
                       method: :delete, class: "btn btn-danger" %>
         <% end %>
 
-        <%= render 'modals/confirm_edit', f: f %>
+        <%= render 'modals/confirm_edit', form: form %>
 
       <% end %>
     </div>
