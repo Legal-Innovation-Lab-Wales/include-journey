@@ -87,6 +87,8 @@ GEM
     chronic (0.10.2)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
+    css_parser (1.9.0)
+      addressable
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
@@ -112,6 +114,7 @@ GEM
       sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    htmlentities (4.3.4)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -137,6 +140,13 @@ GEM
     orm_adapter (0.5.0)
     pg (1.2.3)
     popper_js (2.9.2)
+    premailer (1.15.0)
+      addressable
+      css_parser (>= 1.6.0)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.11.1)
+      actionmailer (>= 3)
+      premailer (~> 1.7, >= 1.7.9)
     public_suffix (4.0.6)
     puma (5.3.1)
       nio4r (~> 2.0)
@@ -276,6 +286,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (~> 3.3)
   pg (~> 1.1)
+  premailer-rails
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.3.2)

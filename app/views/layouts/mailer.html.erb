@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Include Journey Email</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag 'mailer' %>
   </head>
 
   <body>
+    <center class="wrapper">
+      <div class="webkit">
+        <table class="outer" align="center">
+            <h1>Testing</h1>
+        </table>
+      </div>
+    </center>
     <%= yield %>
   </body>
 </html>
