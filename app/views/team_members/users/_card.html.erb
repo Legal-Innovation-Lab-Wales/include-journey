@@ -52,7 +52,7 @@
               <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
               <% unless unread_journal_entries.zero? %>
                 <div class="row">
-                  <%= link_to '#' do %>
+                  <%= link_to journal_entries_path(query: user.full_name) do %>
                     <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
                   <% end %>
                 </div>

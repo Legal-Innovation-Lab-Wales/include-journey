@@ -6,6 +6,7 @@ class CreateWellbeingServices < ActiveRecord::Migration[6.1]
       t.string :name, null: false
       t.text :description
       t.string :website, null: false
+      t.bigint :contact_number
 
       t.timestamps
     end

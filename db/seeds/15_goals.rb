@@ -1,4 +1,5 @@
 if Goal.count.zero?
+  print "Goals\t\t\tStart: #{Time.now - @start_time}"
   User.all.each do |user|
     Config::GOALS_FOR_EACH_USER.times do |index|
       Goal.create!(
@@ -11,6 +12,6 @@ if Goal.count.zero?
     end
   end
 
-  puts "Goals\t\t\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end

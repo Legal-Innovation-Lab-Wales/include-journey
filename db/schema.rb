@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111439) do
     t.string "name", null: false
     t.text "description"
     t.string "website", null: false
+    t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"

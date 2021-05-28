@@ -8,7 +8,7 @@
           <div class="container">
             <div class="row">
               <% @wellbeing_services.each do |wellbeing_service| %>
-                <%= render 'team_members/wellbeing_services/card', wellbeing_service: wellbeing_service, user: true %>
+                <%= render 'shared/wellbeing_services/card', wellbeing_service: wellbeing_service, user: true %>
               <% end %>
             </div>
           </div>

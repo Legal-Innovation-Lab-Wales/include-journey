@@ -1,4 +1,5 @@
 if CrisisNote.count.zero?
+  print "Crisis Notes\t\tStart: #{Time.now - @start_time}"
   CrisisEvent.all.each do |crisis_event|
     Config::CRISIS_NOTES_COUNT.times do |index|
       crisis_note = crisis_event.crisis_notes.create!(
@@ -18,6 +19,6 @@ if CrisisNote.count.zero?
     end
   end
 
-  puts "Crisis Notes\t\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end
