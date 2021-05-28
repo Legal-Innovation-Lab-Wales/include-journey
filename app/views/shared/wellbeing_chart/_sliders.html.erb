@@ -65,7 +65,7 @@
             <input type="range" id="<%= "wellbeing_metric_#{score.wellbeing_metric.id}" %>" value="<%= score.value %>">
           </div>
           <div class="col-4">
-            <%= render 'shared/wellbeing_chart/description', value: score.value %>
+            <%= render 'shared/wellbeing_chart/description', score: score %>
           </div>
         </div>
       <% end %>
