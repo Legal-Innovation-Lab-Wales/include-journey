@@ -17,12 +17,10 @@ td {
 .wrapper {
   width: 100%;
   table-layout: fixed;
-  background-color: $black;
 }
 
 .webkit {
   max-width: 600px;
-  background-color: $brand-primary;
 }
 
 .outer {
@@ -30,6 +28,12 @@ td {
   width: 100;
   max-width: 600px;
   border-spacing: 0;
+  font-family: $font;
+  color: $black;
+}
+
+img {
+  max-width: 100%;
 }
 
 @media screen and (max-width: 600px) {
