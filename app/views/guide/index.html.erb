@@ -2,11 +2,6 @@
   <section class="row journey">
     <div class="col mb-3">
       <div class="row">
-        <div class="col text-start">
-          <%= link_to root_path, class: 'btn btn-primary' do %>
-            <i class="fas fa-arrow-circle-left"></i> Back to app
-          <% end %>
-        </div>
       </div>
       <h2 class="mb-0">User Guide</h2>
       <p class="mb-0">This is the guide for the platform. </p>
@@ -34,8 +29,8 @@
                     large_text: 'My Goals', text: 'Goals' %>
           <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-calendar-check',
                     large_text: "Include: What's On", text: "What's On" %>
-          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-comments',
-                    large_text: 'My Voice', text: 'Voice' %>
+          <%= render 'shared/dashboard_btn', path: root_path, icon: "fa-arrow-circle-left",
+                    large_text: 'Back to app', text: 'Back' %>
         </div>
       </div>
     </div>
