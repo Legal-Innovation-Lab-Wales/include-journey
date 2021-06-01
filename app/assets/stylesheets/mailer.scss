@@ -1,45 +1,39 @@
 @import "variables";
 
 body {
-  margin: 0;
-  padding: 0;
   background-color: $white;
+
+  .wrapper {
+    display: inline-block;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+
+    .center {
+      background-color: $black;
+
+      .banner {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .content {
+        color: $white;
+        display: block;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+  }
+  
 }
 
-table {
-  border-spacing: 0;
-}
 
-td {
-  padding: 0;
-}
-
-.wrapper {
-  width: 100%;
-  table-layout: fixed;
-}
-
-.webkit {
-  max-width: 600px;
-}
-
-.outer {
-  margin: 0 auto;
-  width: 100;
-  max-width: 600px;
-  border-spacing: 0;
-  font-family: $font;
-  color: $black;
-}
-
-img {
-  max-width: 100%;
-}
-
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
 
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 300px) {
 
 }
