@@ -56,7 +56,9 @@ Rails.application.routes.draw do
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
-        resources :wellbeing_assessments, only: :index, on: :member
+        resources :wellbeing_assessments, only: :index, on: :member do
+          get 'export', on: :collection
+        end
       end
 
       resources :users, only: %i[index show] do
@@ -66,7 +68,9 @@ Rails.application.routes.draw do
         put 'unpin', action: 'unpin', on: :member, as: :unpin
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
-        resources :wellbeing_assessments, only: %i[new create index], on: :member
+        resources :wellbeing_assessments, only: %i[new create index], on: :member do
+          get 'export', on: :collection
+        end
         resources :appointments, only: %i[index new create edit update], on: :member
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
       end
@@ -77,7 +81,9 @@ Rails.application.routes.draw do
         resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
-      resources :wellbeing_assessments, only: %i[show index]
+      resources :wellbeing_assessments, only: %i[show index] do
+        get 'export', on: :collection
+      end
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
