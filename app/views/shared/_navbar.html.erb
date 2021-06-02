@@ -120,6 +120,10 @@
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
             <% end %>
+            <%= link_to guide_path, class: "btn btn-info" do %>
+              <div class="nav-label hide">Guide</div>
+              <i class="fas fa-question-circle"></i>
+            <% end %>
             <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
