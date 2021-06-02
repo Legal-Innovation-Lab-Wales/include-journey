@@ -2,6 +2,7 @@
 module Exportable
   extend ActiveSupport::Concern
   require 'csv'
+  require 'json'
   included do
     before_action :exportable, only: :export
   end
@@ -13,6 +14,7 @@ module Exportable
     @resources = @query.present? ? search : resources
 
     respond_to do |format|
+      format.json { send_data @resources.map(&:json).to_json, filename: filename('json') }
       format.csv { send_data to_csv, filename: filename('csv') }
     end
   end

@@ -4,10 +4,8 @@
     <div id="card-view" class="container p-0">
       <div class="row mb-3">
         <div class="col">
-          <%= link_to export_user_wellbeing_assessments_path(user: @user, format: 'csv', query: params[:query]),
-                      class: 'btn btn-primary' do %>
-            Export Wellbeing Assessments <i class="fas fa-file-export"></i>
-          <% end %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json' }) %>
         </div>
       </div>
       <div class="row">
@@ -46,13 +44,10 @@
              index: @team_member.present? ? 'team_member_wellbeing_assessments' : 'wellbeing_assessments',
              stats: render('stats_non_user') do %>
     <div class="container p-0">
-      <div class="row mb-3">
-        <div class="col">
-          <%= link_to @team_member.present? ?
-            export_team_member_wellbeing_assessments_path(team_member: @team_member, format: 'csv', query: params[:query]) :
-            export_wellbeing_assessments_path(format: 'csv', query: params[:query]), class: 'btn btn-primary' do %>
-          Export Wellbeing Assessments <i class="fas fa-file-export"></i>
-          <% end %>
+      <div class="row mb-3 ">
+        <div class="col text-end">
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json' }) %>
         </div>
       </div>
       <div class="row">

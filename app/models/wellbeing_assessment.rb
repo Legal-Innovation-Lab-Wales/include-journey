@@ -20,5 +20,17 @@ class WellbeingAssessment < ApplicationRecord
       team_member.present? ? team_member.full_name : nil
     ] + wba_scores.order(:wellbeing_metric_id).map(&:value)
   end
+
+  def json
+    {
+      'ID': id,
+      'Date': created,
+      'User ID': user.id,
+      'User Name': user.full_name,
+      'Team Member ID': team_member.present? ? team_member.id : nil,
+      'Team Member Name': team_member.present? ? team_member.full_name : nil,
+      'Scores': wba_scores.order(:wellbeing_metric_id).map { |score| { "#{score.wellbeing_metric.name}": score.value } }
+    }
+  end
   # rubocop:enable Metrics/AbcSize
 end
