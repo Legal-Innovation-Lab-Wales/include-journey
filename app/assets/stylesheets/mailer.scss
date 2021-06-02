@@ -28,9 +28,7 @@ body {
           width: 100%;
 
           .banner {
-            padding-top: 1.5rem;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
+            padding: 1.5rem;
 
             img {
               width: 100%;
@@ -40,6 +38,14 @@ body {
           .content {
             padding-left: 3rem;
             padding-right: 3rem;
+          }
+
+          .footer {
+            padding: 1.5rem;
+
+            img {
+              width: 100%;
+            }
           }
         }
       }
