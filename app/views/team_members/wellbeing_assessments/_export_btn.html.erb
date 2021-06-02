@@ -1,6 +1,5 @@
 <% if @user.present? %>
-  <%= link_to export_user_wellbeing_assessments_path(user: @user, format: file_format, query: params[:query]),
-              class: 'btn btn-primary' do %>
+  <%= link_to export_user_wellbeing_assessments_path(user: @user, format: file_format), class: 'btn btn-primary' do %>
     Export As <%= file_format.upcase %> <i class="fas <%= file_format_icon %>"></i>
   <% end %>
 <% elsif @team_member.present? %>
