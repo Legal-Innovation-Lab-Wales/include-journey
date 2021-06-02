@@ -3,7 +3,7 @@
              subheader: "wellbeing assessments", index: 'user_wellbeing_assessments', search: render('search'), stats: render('stats')  do %>
     <div id="card-view" class="container p-0">
       <div class="row mb-3">
-        <div class="col">
+        <div class="col text-end">
           <%= render(partial: 'export_btn', locals: { file_format: 'csv' }) %>
           <%= render(partial: 'export_btn', locals: { file_format: 'json' }) %>
         </div>
