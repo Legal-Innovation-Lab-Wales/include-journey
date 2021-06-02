@@ -23,7 +23,14 @@
                 </tr>
                 <tr>
                   <td class="content">
-                    <h2>Hello <%= @resource.first_name %>!</h2>
+                    <% if @resource.present? %>
+                      <h2>Hello <%= @resource.first_name %>!</h2>
+                    <% end %>
+
+                    <% if @admin.present? %>
+                      <h2>Hello <%= @admin.first_name %>!</h2>
+                    <% end %>
+
                     <%= yield %>
                     <div class="signature">
                       <p>Best Regards,</p>
