@@ -1,34 +1,56 @@
 @import "variables";
 
 body {
+  margin: 1.5rem;
+  padding: 0;
   background-color: $white;
 
   .wrapper {
-    display: inline-block;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    text-align: center;
+    width: 100%;
+    table-layout: fixed;
+    background-color: $white;
+    padding-bottom: 2rem;
 
-    .center {
+    .webkit {
+      Margin: 0 auto;
+      max-width: 500px;
       background-color: $black;
 
-      .banner {
-        max-width: 100%;
-        height: auto;
-      }
-
-      .content {
+      .outer {
+        width: 100%;
+        max-width: 500px;
+        border-spacing: 0;
+        font-family: $font;
         color: $white;
-        display: block;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+
+        .inner {
+          width: 100%;
+
+          .banner {
+            padding-top: 1.5rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          .content {
+            padding-left: 3rem;
+            padding-right: 3rem;
+          }
+        }
       }
     }
   }
   
 }
 
+table {
+  border-spacing: 0;
+}
 
 @media screen and (max-width: 500px) {
 

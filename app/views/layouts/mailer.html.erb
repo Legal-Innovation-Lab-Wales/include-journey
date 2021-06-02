@@ -9,13 +9,27 @@
 
   <body>
     <div class="wrapper">
-      <div class="center">
-        <div class="banner">
-          <%= email_image_tag('banner.png') %>
-        </div>
-        <div class="content">
-          <%= yield %>
-        </div>
+      <div class="webkit">
+        <table class="outer">
+          <tr>
+            <td>
+              <table class="inner">
+                <tr>
+                  <td class="banner">
+                    <a href="http://localhost:3000">
+                      <%= email_image_tag('banner.png') %>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="content">
+                    <%= yield %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>        
       </div>
     </div>    
   </body>
