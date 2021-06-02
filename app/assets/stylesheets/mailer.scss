@@ -13,12 +13,12 @@ body {
 
     .webkit {
       Margin: 0 auto;
-      max-width: 500px;
+      max-width: 600px;
       background-color: $black;
 
       .outer {
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         border-spacing: 0;
         font-family: $font;
         font-size: medium;
@@ -101,10 +101,10 @@ table {
   border-spacing: 0;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
 
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 400px) {
 
 }
