@@ -22,6 +22,7 @@ body {
         max-width: 500px;
         border-spacing: 0;
         font-family: $font;
+        font-size: medium;
         color: $white;
 
         .inner {
@@ -38,6 +39,41 @@ body {
           .content {
             padding-left: 3rem;
             padding-right: 3rem;
+
+            h2 {
+              margin-top:1rem;
+              margin-bottom: 2rem;
+            }
+
+            .btn-container {
+              margin: 2.5rem;
+
+              .btn {
+                background-color: $success;
+                color: $black;
+                font-size: 1rem;
+                text-decoration: none;
+                border: none;
+                cursor: pointer;
+                border-radius: 0.6rem;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 3rem;
+                padding-right: 3rem;
+              }
+            }
+
+            .signature {
+              margin-top: 2.5rem;
+              margin-bottom: 1rem;
+              font-size: large;
+              font-style: italic;
+              color: $grey;
+
+              p {
+                margin: 0.5rem;
+              }
+            }
           }
 
           .footer {
