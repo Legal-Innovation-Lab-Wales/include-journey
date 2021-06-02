@@ -4,8 +4,8 @@
     <div id="card-view" class="container p-0">
       <div class="row mb-3">
         <div class="col text-end">
-          <%= render(partial: 'export_btn', locals: { file_format: 'csv' }) %>
-          <%= render(partial: 'export_btn', locals: { file_format: 'json' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv', file_format_icon: 'fa-table' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json', file_format_icon: 'fa-code' }) %>
         </div>
       </div>
       <div class="row">
@@ -46,8 +46,8 @@
     <div class="container p-0">
       <div class="row mb-3 ">
         <div class="col text-end">
-          <%= render(partial: 'export_btn', locals: { file_format: 'csv' }) %>
-          <%= render(partial: 'export_btn', locals: { file_format: 'json' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv', file_format_icon: 'fa-table' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json', file_format_icon: 'fa-code' }) %>
         </div>
       </div>
       <div class="row">
