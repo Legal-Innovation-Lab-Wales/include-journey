@@ -5,10 +5,11 @@ module TeamMembers
     before_action :crisis_note, only: :show
     before_action :team_member_crisis_note, only: :update
     before_action :crisis_note_params, only: %i[create update]
+    after_action :email, only: %i[create update], unless: -> { @new_crisis_note.nil? }
 
     # POST /crisis_events/:crisis_event_id/notes
     def create
-      if create_note
+      if @new_crisis_note = create_note
         redirect_to crisis_event_path(@crisis_event), flash: { success: 'Successfully added note!' }
       else
         error_redirect
@@ -28,7 +29,7 @@ module TeamMembers
     # PUT /crisis_events/:crisis_event_id/notes/:id
     def update
       nothing_to_update_redirect and return unless @crisis_note.changes?(crisis_note_params)
-      
+
       CrisisNote.transaction do
         @new_crisis_note = create_note(replacing: @crisis_note)
         @crisis_note.update!(replaced_by: @new_crisis_note)
@@ -37,6 +38,19 @@ module TeamMembers
       redirect_to crisis_event_note_path(@crisis_event, @new_crisis_note), flash: { success: 'Successfully updated note!' }
     rescue ActiveRecord::RecordInvalid
       error_redirect
+    end
+
+    protected
+
+    def email
+      crisis_type = @crisis_event.crisis_type.category
+      crisis_notes = @crisis_event.crisis_notes
+                                  .includes(:team_member)
+                                  .order(created_at: :asc)
+      user = User.find(@crisis_event.user_id)
+      TeamMember.admins.each do |admin|
+        AdminMailer.updated_crisis_email(user, admin, @crisis_event, crisis_type, crisis_notes).deliver_now
+      end
     end
 
     private
