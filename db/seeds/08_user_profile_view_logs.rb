@@ -1,5 +1,5 @@
 if UserProfileViewLog.count.zero?
-  print "User Profile View Logs\tStart: #{Time.now - @start_time}"
+  print "User Profile View Logs\tStart: #{pretty_print(Time.now - @start_time)}"
   # Create a view log of every user for every team member
   User.all.each do |user|
     TeamMember.all.each do |team_member|
@@ -17,6 +17,6 @@ if UserProfileViewLog.count.zero?
     end
   end
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

@@ -1,5 +1,5 @@
 if User.count.zero?
-  print "Users\t\t\tStart: #{Time.now - @start_time}"
+  print "Users\t\t\tStart: #{pretty_print(Time.now - @start_time)}"
   user_counter = 0
 
   Config::TOTAL_USER_COUNT.times do
@@ -19,6 +19,6 @@ if User.count.zero?
     user.save!
   end
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

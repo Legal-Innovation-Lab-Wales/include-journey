@@ -1,46 +1,46 @@
 if WellbeingScoreValue.count.zero?
-  print "Score Values\t\tStart: #{Time.now - @start_time}"
+  print "Score Values\t\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingScoreValue.create!(
-    name: 'absymal',
-    color: '#E04444'
-    )
-  WellbeingScoreValue.create!(
-    name: 'dreadful',
+    name: 'Absymal',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'rubbish',
+    name: 'Dreadful',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'bad',
+    name: 'Rubbish',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'mediocre',
+    name: 'Bad',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'fine',
+    name: 'Mediocre',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'good',
+    name: 'Fine',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'great',
+    name: 'Good',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'superb',
+    name: 'Great',
     color: '#E04444'
   )
   WellbeingScoreValue.create!(
-    name: 'perfect',
+    name: 'Superb',
+    color: '#E04444'
+  )
+  WellbeingScoreValue.create!(
+    name: 'Perfect',
     color: '#E04444'
   )
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

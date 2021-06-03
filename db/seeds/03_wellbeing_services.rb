@@ -1,5 +1,5 @@
 if WellbeingService.count.zero?
-  print "Wellbeing Services\tStart: #{Time.now - @start_time}"
+  print "Wellbeing Services\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
     name: 'Include UK',
@@ -43,6 +43,6 @@ if WellbeingService.count.zero?
     contact_number: '01792814792'
   )
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

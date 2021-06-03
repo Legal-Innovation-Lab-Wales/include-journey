@@ -30,9 +30,12 @@
         </div>
         <div class="row">
           <% if @admin %>
-            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Management' %>
+            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-tools',
+                       text: 'Wellbeing Management' %>
           <% end %>
+
             <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
+            <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>
 
           <% unless @admin %>
             <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>

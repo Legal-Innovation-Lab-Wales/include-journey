@@ -10,6 +10,15 @@ require 'faker'
 
 @start_time = Time.now
 
+def pretty_print(value)
+  str = value.to_f.to_s
+  if str.length < 6
+    str + ('0' * (6 - str.length))
+  else
+    str[0..5]
+  end
+end
+
 puts ('-' * 50).to_s
 puts 'Running Seeds'
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }

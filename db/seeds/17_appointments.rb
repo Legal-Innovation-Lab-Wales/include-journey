@@ -1,5 +1,5 @@
 if Appointment.count.zero?
-  print "Appointments\t\tStart: #{Time.now - @start_time}"
+  print "Appointments\t\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::APPOINTMENTS_FOR_EACH_USER.times do
       app_time = Faker::Time.between(from: DateTime.now, to: DateTime.tomorrow + 20.days)
@@ -28,6 +28,6 @@ if Appointment.count.zero?
     end
   end
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end
