@@ -43,7 +43,8 @@ module TeamMembers
     end
 
     def sort
-      { 'created_at': %w[asc desc].include?(params[:sort]) ? params[:sort] : :desc }
+      @sort = 'tagged_on'
+      { 'created_at': @direction }
     end
 
     private

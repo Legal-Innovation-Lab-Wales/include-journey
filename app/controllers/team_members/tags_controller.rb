@@ -37,7 +37,8 @@ module TeamMembers
     end
 
     def sort
-      { 'created_at': %w[asc desc].include?(params[:sort]) ? params[:sort] : :desc }
+      @sort = 'created_at'
+      { "#{@sort}": @direction }
     end
 
     private
