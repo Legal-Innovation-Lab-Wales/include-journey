@@ -3,7 +3,7 @@ module TeamMembers
   class WellbeingScoreValuesController < TeamMembersApplicationController
     # GET /wellbeing_score_values
     def index
-      @score_values = WellbeingScoreValue.all.order(:value)
+      @score_values = WellbeingScoreValue.all.order(:id)
       render 'index'
     end
 

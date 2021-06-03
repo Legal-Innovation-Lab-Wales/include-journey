@@ -18,7 +18,7 @@
           </thead>
           <tbody>
           <% @score_values.each do |score_value| %>
-            <tr class="metric-score value-<%= score_value.value %>">
+            <tr class="metric-score value-<%= score_value.id %>">
               <td class="hidden">
                 <form id="wellbeing_score_value_<%= score_value.id %>" name="wellbeing_score_value" method="post"
                       action="<%= wellbeing_score_value_path(score_value) %>">
@@ -28,7 +28,7 @@
                 </form>
               </td>
               <td>
-                <%= score_value.value %>
+                <%= score_value.id %>
               </td>
               <td>
                 <input form="wellbeing_score_value_<%= score_value.id %>" type="text" name="wellbeing_score_value[name]"
