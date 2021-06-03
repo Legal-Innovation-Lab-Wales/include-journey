@@ -9,28 +9,27 @@
         <p class="text-danger text-center">If you or someone else is in immediate danger, call 999.</p>
         <p>You currently have <%= @active_crisis_events.count %> open SOS requests. The most recent is below.</p>
 
-          <%= form_with model: @active_crisis_events.last, url: crisis_event_path(@active_crisis_events.last), method: :put do |f| %>
-            <div class="card mb-3">
-              <div class="card-header">
-                <%= f.hidden_field :crisis_type_id, value: crisis_event.crisis_type.id %>
-                <span><%= crisis_event.crisis_type.category %></span>
-                <span style="float: right"><%= crisis_event.created %></span>
-              </div>
-              <div class="card-body">
-                <div>
-                  <%= raw crisis_event.additional_info %>
-                </div>
-              </div>
-              <div class="form-floating border-top">
-                <%= f.text_area :new_info, class: 'form-control' do %>
-                <% end %>
-                <%= f.label :new_info, 'Update information'%>
-              </div>
-              <div class="card-footer">
-                <%= f.submit 'Update', class: 'btn btn-primary m-2' %>
+        <%= form_with model: @active_crisis_events.last, url: crisis_event_path(@active_crisis_events.last), method: :put do |f| %>
+          <div class="card mb-3">
+            <div class="card-header">
+              <%= f.hidden_field :crisis_type_id, value: @active_crisis_events.last.crisis_type.id %>
+              <span><%= @active_crisis_events.last.crisis_type.category %></span>
+              <span style="float: right"><%= @active_crisis_events.last.created %></span>
+            </div>
+            <div class="card-body">
+              <div>
+                <%= @active_crisis_events.last.additional_info %>
               </div>
             </div>
-          <% end %>
+            <div class="form-floating border-top">
+              <%= f.text_area :new_info, class: 'form-control' do %>
+              <% end %>
+              <%= f.label :new_info, 'Update information' %>
+            </div>
+            <div class="card-footer">
+              <%= f.submit 'Update', class: 'btn btn-primary m-2' %>
+            </div>
+          </div>
         <% end %>
 
         <div class="container">

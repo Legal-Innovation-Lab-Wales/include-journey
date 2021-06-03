@@ -23,7 +23,7 @@ module Users
       @crisis_event.update(additional_info: all_info)
 
       redirect_to authenticated_user_root_path
-      alert @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
+      # alert @crisis_event.update(crisis_event_params) ? update_alert : 'SOS request could not be updated'
     end
 
     protected
