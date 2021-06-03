@@ -1,5 +1,5 @@
 if GoalType.count.zero?
-  print "Goal Types\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Goal Types')}\tStart: #{pretty_print(Time.now - @start_time)}"
   GoalType.create!(name: 'Aspiration', emoji: '💪')
   GoalType.create!(name: 'Hope', emoji: '🕊')
   GoalType.create!(name: 'Meaning', emoji: '🙏')

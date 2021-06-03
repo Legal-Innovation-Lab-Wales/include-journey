@@ -1,5 +1,5 @@
 if Goal.count.zero?
-  print "Goals\t\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Goals')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::GOALS_FOR_EACH_USER.times do |index|
       Goal.create!(

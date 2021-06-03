@@ -1,4 +1,4 @@
-print "Team Members\t\tStart: #{pretty_print(Time.now - @start_time)}"
+print "#{pretty_print_name('Team Members')}\tStart: #{pretty_print(Time.now - @start_time)}"
 unless TeamMember.find_by_email('philr@purpleriver.dev').present?
   team_member = TeamMember.new(
     first_name: 'Phil',

@@ -1,5 +1,5 @@
 if User.count.zero?
-  print "Users\t\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Users')}\tStart: #{pretty_print(Time.now - @start_time)}"
   user_counter = 0
 
   Config::TOTAL_USER_COUNT.times do

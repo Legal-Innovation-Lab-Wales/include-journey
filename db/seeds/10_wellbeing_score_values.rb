@@ -1,5 +1,5 @@
 if WellbeingScoreValue.count.zero?
-  print "Score Values\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Score Values')}\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingScoreValue.create!(
     name: 'Absymal',
     color: '#E04444'

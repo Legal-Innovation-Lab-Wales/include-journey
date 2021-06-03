@@ -1,5 +1,5 @@
 if UserProfileViewLog.count.zero?
-  print "User Profile View Logs\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('User Profile View Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
   # Create a view log of every user for every team member
   User.all.each do |user|
     TeamMember.all.each do |team_member|

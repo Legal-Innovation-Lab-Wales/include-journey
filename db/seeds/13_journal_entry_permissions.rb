@@ -1,5 +1,5 @@
 if JournalEntryPermission.count.zero?
-  print "Journal Permissions\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Journal Permissions')}\tStart: #{pretty_print(Time.now - @start_time)}"
   JournalEntry.all.each do |journal_entry|
     TeamMember.all.each do |team_member|
       JournalEntryPermission.create!(

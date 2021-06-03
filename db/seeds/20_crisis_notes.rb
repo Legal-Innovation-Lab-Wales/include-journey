@@ -1,5 +1,5 @@
 if CrisisNote.count.zero?
-  print "Crisis Notes\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Crisis Notes')}\tStart: #{pretty_print(Time.now - @start_time)}"
   CrisisEvent.all.each do |crisis_event|
     Config::CRISIS_NOTES_COUNT.times do |index|
       crisis_note = crisis_event.crisis_notes.create!(

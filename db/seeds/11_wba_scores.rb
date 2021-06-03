@@ -1,5 +1,5 @@
 if WbaScore.count.zero?
-  print "WBA Scores\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('WBA Scores')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)
     wellbeing_assessments.each_with_index do |wellbeing_assessment, index|

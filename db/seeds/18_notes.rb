@@ -1,5 +1,5 @@
 if Note.count.zero?
-  print "Notes\t\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Notes')}\tStart: #{pretty_print(Time.now - @start_time)}"
   Config::NOTES_COUNT.times do |index|
     note = Note.create!(
       team_member_id: rand(1..TeamMember.count),

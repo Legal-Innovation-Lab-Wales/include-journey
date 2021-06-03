@@ -1,5 +1,5 @@
 if WellbeingAssessment.count.zero?
-  print "Wellbeing Assessments\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Wellbeing Assessments')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER.times do |index|
       created_at_value = DateTime.now - (Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER - (index + 1))

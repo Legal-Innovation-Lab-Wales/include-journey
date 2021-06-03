@@ -1,5 +1,5 @@
 if JournalEntry.count.zero?
-  print "Journal Entries\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Journal Entries')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::JOURNAL_ENTRIES_FOR_EACH_USER.times do
       JournalEntry.create!(

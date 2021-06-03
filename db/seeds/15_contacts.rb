@@ -1,5 +1,5 @@
 if Contact.count.zero?
-  print "Contacts\t\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Contacts')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::CONTACTS_FOR_EACH_USER.times do
       name = Faker::Name.name

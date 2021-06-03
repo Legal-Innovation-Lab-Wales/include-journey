@@ -1,5 +1,5 @@
 if MetricsService.count.zero?
-  print "Metrics Services\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Metrics Services')}\tStart: #{pretty_print(Time.now - @start_time)}"
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 7) # Include --> Behaviour
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 8) # Include --> Addiction
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 9) # Include --> Relationships
