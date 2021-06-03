@@ -18,8 +18,12 @@ module Users
     def update
 
       new_info = "<br><b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}<br><br>"
-      old_info = @crisis_event.additional_info
-      all_info = old_info + new_info
+      if @crisis_event.additional_info.present?
+        old_info = @crisis_event.additional_info
+        all_info = old_info + new_info
+      else
+        all_info = new_info
+      end
       @crisis_event.update(additional_info: all_info)
 
       redirect_to authenticated_user_root_path
