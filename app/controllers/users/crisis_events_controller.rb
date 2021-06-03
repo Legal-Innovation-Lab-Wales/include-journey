@@ -4,7 +4,6 @@ module Users
     before_action :crisis_event_params, only: %i[create update]
     before_action :crisis_event, only: :update
     # after_action :sms, :email, only: %i[create update]
-    before_action :crisis_events, only: :index
 
     # POST /crisis_events
     def create
@@ -17,7 +16,7 @@ module Users
     # PUT /crisis_events/:id
     def update
 
-      new_info = "<br><b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}<br><br>"
+      new_info = "\n\n<b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}"
       if @crisis_event.additional_info.present?
         old_info = @crisis_event.additional_info
         all_info = old_info + new_info
@@ -70,7 +69,7 @@ module Users
     end
 
     def crisis_event_params
-      params.require(:crisis_event).permit(:crisis_type_id, :new_info)
+      params.require(:crisis_event).permit(:crisis_type_id, :additional_info)
     end
 
     def crisis_events
