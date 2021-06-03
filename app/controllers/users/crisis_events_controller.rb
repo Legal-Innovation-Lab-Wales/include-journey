@@ -17,7 +17,7 @@ module Users
     # PUT /crisis_events/:id
     def update
 
-      new_info = "<b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}<br><br>"
+      new_info = "<br><b>#{DateTime.now}:</b> #{params[:crisis_event][:new_info]}<br><br>"
       old_info = @crisis_event.additional_info
       all_info = old_info + new_info
       @crisis_event.update(additional_info: all_info)
