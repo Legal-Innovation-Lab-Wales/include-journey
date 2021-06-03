@@ -10,6 +10,8 @@ module Users
     before_action :wba_params, only: :create
     after_action :wba_scores, only: :create
 
+    before_action :wellbeing_services, only: %i[new show]
+
     # GET /wellbeing_assessments/:id
     def show
       render 'show'
@@ -76,6 +78,10 @@ module Users
 
     def wellbeing_metrics
       @wellbeing_metrics = WellbeingMetric.all
+    end
+
+    def wellbeing_services
+      @wellbeing_services = WellbeingService.includes(:wellbeing_metrics).all
     end
   end
 end

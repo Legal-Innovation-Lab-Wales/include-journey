@@ -1,21 +1,23 @@
 @import "variables";
 
-.modal-dialog {
-  .modal-header {
-    border-width: 0 15px;
-    border-style: solid;
-    border-image: linear-gradient(to bottom, $danger, $warning) 1 100%;
-    text-align: center;
-  }
+.crisis-modal {
+  .modal-dialog {
+    .modal-header {
+      border-width: 0 15px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom, $danger, $warning) 1 100%;
+      text-align: center;
+    }
 
-  .modal-body {
-    border-width: 0 15px;
-    border-style: solid;
-    border-image: linear-gradient(to top, $danger, $warning) 1 100%;
-  }
+    .modal-body {
+      border-width: 0 15px;
+      border-style: solid;
+      border-image: linear-gradient(to top, $danger, $warning) 1 100%;
+    }
 
-  label.btn {
-    color: $black !important;
+    label.btn {
+      color: $black !important;
+    }
   }
 }
 
@@ -36,16 +38,38 @@
   }
 }
 
-#contactModal{
-  a{
+#contactModal {
+  a {
     color: $color-secondary-2-0;
   }
 
-  .modal-header{
+  .modal-header {
+    border-width: 0 15px;
+    border-style: solid;
     border-image: linear-gradient(to bottom, $brand-primary, $grey) 1 100%;
   }
 
   .modal-body {
+    border-width: 0 15px;
+    border-style: solid;
     border-image: linear-gradient(to top, $brand-primary, $grey) 1 100%;
+  }
+}
+
+#deviseModal {
+  .modal-content {
+    background: $blue-grad;
+    border: none;
+
+    .modal-body {
+      .row {
+        margin-bottom: 1rem;
+        justify-content: center;
+
+        a:hover {
+          text-decoration: none;
+        }
+      }
+    }
   }
 }

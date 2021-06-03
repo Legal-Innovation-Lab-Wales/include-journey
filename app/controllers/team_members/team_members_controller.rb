@@ -37,9 +37,11 @@ module TeamMembers
       @team_member.update(admin: !@team_member.admin?) ? success(@team_member.admin?, 'an admin') : failure('admin')
     end
 
-    # PUT /team_members/:id/pause
-    def toggle_pause
-      @team_member.update(paused: !@team_member.paused?) ? success(@team_member.paused?, 'paused') : failure('pause')
+    # PUT /team_members/:id/suspend
+    def toggle_suspend
+      @team_member.update!(suspended: !@team_member.suspended?)
+
+      success(@team_member.suspended?, 'suspended')
     end
 
     private

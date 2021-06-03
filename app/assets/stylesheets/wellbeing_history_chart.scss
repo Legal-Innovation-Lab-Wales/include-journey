@@ -4,6 +4,7 @@
   min-height: 30vh;
   margin: 0 0 1.5rem 0;
   background-color: $grey;
+  background: $grey-grad;
 
   @media screen and (min-width: $screen-md) {
     min-height: 410px;
@@ -30,7 +31,7 @@
     padding-bottom: 2rem;
 
     .form-select {
-      background-color: $grey;
+      background-color: $white;
       font-size: large;
       font-weight: bold;
       text-align-last: center;

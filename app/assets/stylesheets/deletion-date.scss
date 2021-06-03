@@ -1,0 +1,16 @@
+@import "variables";
+
+.deletion-date {
+  font-weight: bold;
+  padding: 1rem;
+  background: $danger-light;
+  text-align: center;
+
+  p {
+    margin: 0;
+
+    span.line {
+      display: inline-block;
+    }
+  }
+}

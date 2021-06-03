@@ -1,7 +1,8 @@
 <main class="container user goals index">
-  <%= render 'shared/back_btn', next_path: goals_archive_index_path, next_text: 'Archive' %>
-  <section class="row mt-0 pt-0">
-    <h3>My Goals</h3>
+  <section class="row">
+    <h2>My Goals</h2>
+  </section>
+  <section class="row">
     <div class="col">
       <div class="container">
         <div class="row">
@@ -33,9 +34,17 @@
       </div>
     </div>
   </section>
+  <% if @has_archived_goals %>
+    <section class="row justify-content-md-center">
+      <div class="col-auto">
+        <%= link_to goals_archive_index_path, class: 'btn btn-primary' do %>
+          <i class="fas fa-archive"></i> View Archive
+        <% end %>
+      </div>
+    </section>
+  <% end %>
 </main>
 
 <%= render 'goal_modal' %>
 
 <%= javascript_pack_tag 'goals' %>
-<%= javascript_pack_tag 'goals_modal' %>

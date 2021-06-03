@@ -38,7 +38,7 @@ class DeviseCreateTeamMembers < ActiveRecord::Migration[6.1]
       t.boolean   :approved, default: false
       t.boolean   :admin, default: false
       t.boolean   :terms, default: false
-      t.boolean   :paused, default: false
+      t.boolean   :suspended, default: false
 
       t.timestamps null: false
     end

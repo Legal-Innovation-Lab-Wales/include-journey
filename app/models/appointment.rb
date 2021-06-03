@@ -3,6 +3,16 @@ class Appointment < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
 
+  scope :future, -> { where('start >= ?', Time.now) }
+  scope :past, -> { where('start <= ?', Time.now) }
+  scope :last_week, -> { where('start >= ?', 1.week.ago) }
+  scope :last_month, -> { where('start >= ?', 1.month.ago) }
+  scope :next_week, -> { where('start <= ?', 1.week.from_now) }
+  scope :next_fortnight, -> { where('start <= ?', 2.week.from_now) }
+  scope :user_created, -> { where('team_member_id is null') }
+  scope :team_member_created, -> { where('team_member_id is not null') }
+
+
   def time_on_date
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
   end

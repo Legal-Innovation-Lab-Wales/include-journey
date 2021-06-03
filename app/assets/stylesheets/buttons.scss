@@ -22,9 +22,23 @@ body#overboot {
     }
   }
 
+
   .header-buttons {
     max-width: $header-buttons--max-width;
     padding: 0;
+
+    &.guide {
+      a {
+        color: $black;
+        background: $info;
+        border-color: $info;
+        &:hover {
+          color: $white;
+          background: $info-dark;
+          border-color: $info-dark;
+        }
+      }
+    }
 
     a {
       color: $brand-primary;

@@ -2,7 +2,6 @@ module TeamMembers
   # app/controllers/team_members/appointments_controller.rb
   class AppointmentsController < TeamMembersApplicationController
     before_action :user
-    before_action :appointment, only: %i[edit update destroy]
     include Pagination
 
     # GET /users/:user_id/appointments/new
@@ -22,15 +21,7 @@ module TeamMembers
       end
     end
 
-    def team_member
-      return unless params[:team_member_id].present?
-
-      @team_member = TeamMember.includes(:appointments).find(params[:team_member_id])
-    end
-
     def user
-      return unless params[:user_id].present?
-
       @user = User.includes(:appointments).find(params[:user_id])
     end
 
@@ -62,6 +53,12 @@ module TeamMembers
 
     def appointment_params
       params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
+    end
+
+    def subheading_stats
+      @count_in_last_week = @resources.last_week.size
+      @count_in_last_month = @resources.last_month.size
+      @count_in_next_weeks = @resources.next_fortnight.size
     end
   end
 end

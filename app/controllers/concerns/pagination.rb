@@ -14,9 +14,10 @@ module Pagination
     @resources_per_page = resources_per_page
     @resources = @query.present? ? search : resources
     @count = @resources.count
+    @limit = limit
     subheading_stats
-    @last_page = (@count.to_f / limit).ceil
-    @resources = @resources.offset(offset).limit(limit)
+    @last_page = (@count.to_f / @limit).ceil
+    @resources = @resources.offset(offset).limit(@limit)
     @resources.present? ? render('index') : redirect
   end
   # rubocop:enable Metrics/AbcSize
@@ -41,6 +42,10 @@ module Pagination
 
   def user_search
     'lower(users.first_name) similar to lower(:query) or lower(users.last_name) similar to lower(:query)'
+  end
+
+  def team_member_search
+    'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query)'
   end
 
   def wildcard_query

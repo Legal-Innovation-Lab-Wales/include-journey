@@ -93,6 +93,10 @@ section#wellbeing {
     text-align: center !important;
   }
 
+  canvas.wellbeing-chart {
+    margin-top: 2rem;
+  }
+
   .sliders {
     margin-top: 2.5rem;
     text-align: left;
@@ -106,9 +110,6 @@ section#wellbeing {
 
       label {
         width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
 
       input {

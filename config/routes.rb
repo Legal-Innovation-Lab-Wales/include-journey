@@ -17,25 +17,27 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_user_root
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
+      get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
+      put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
 
       resources :wellbeing_assessments, only: %i[show new create]
-
       resources :journal_entries, only: %i[index new create] do
-        get 'dashboard', action: :dashboard, on: :collection
-
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+          get 'edit', action: :edit, on: :collection
+        end
       end
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
         put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
-      resources :crisis_events, only: %i[create update index]
+      resources :crisis_events, only: %i[create update]
       resources :contacts
       resources :goals, only: %i[index create show destroy] do
         put 'achieve', action: :achieve, on: :member
         put 'archive', action: :archive, on: :member
       end
-      resources :contacts
+      resources :goals_archive, only: :index
+      resources :wellbeing_services, only: :index
     end
   end
 
@@ -63,6 +65,8 @@ Rails.application.routes.draw do
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member
+        resources :appointments, only: %i[index new create edit update], on: :member
+        resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
       end
 
       resources :crisis_events, only: %i[index show] do
@@ -73,11 +77,18 @@ Rails.application.routes.draw do
 
       resources :wellbeing_assessments, only: %i[show index]
       resources :journal_entries, only: %i[show index]
+      resources :wellbeing_services
+      resources :wellbeing_metrics, only: %i[index update]
+      resources :tags, only: %i[show index create] do
+        resources :user_tags, only: :index, on: :member, as: :tagged_users
+      end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
-    root 'pages#main'
+    root to: redirect('/users/sign_in')
+    get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
 end

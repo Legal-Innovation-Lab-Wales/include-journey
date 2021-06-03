@@ -1,0 +1,25 @@
+<div class="modal fade" id="newModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h4 class="modal-title text-black-50"><%= "add tag" %></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= form_for @tag, url: { controller: 'tags', action: 'create' } do |f| %>
+          <div class="container-fluid">
+            <div class="form-group mb-2">
+              <div class="form-floating">
+                <%= f.text_field :tag, class: 'form-control', autocomplete: 'tag', placeholder: 'Name' %>
+                <%= f.label :tag, 'Name' %>
+              </div>
+            </div>
+            <div class="form-group">
+             <%= f.submit 'Add Tag', class: 'btn btn-success' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

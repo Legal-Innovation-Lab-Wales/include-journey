@@ -6,7 +6,7 @@ module TeamMembers
     # GET /journal_entries/:id
     def show
       journal_entry
-      view_log
+      log_view
 
       render 'show'
     end
@@ -41,14 +41,17 @@ module TeamMembers
                     alert: "That journal entry doesn't exist or you do not have permission to view it")
     end
 
-    def view_log
-      return if current_team_member.journal_entry_view_logs.create!({ journal_entry: @journal_entry })
-
+    def log_view
+      view_log = current_team_member.journal_entry_view_logs.find_or_create_by!(journal_entry: @journal_entry)
+      view_log.increment_view_count
+      view_log.save!
+    rescue ActiveRecord::RecordInvalid
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
 
     def subheading_stats
-      # TODO: Add stats for journal index. IJ-123
+      @created_in_last_week = @resources.created_in_last_week.size
+      @created_in_last_month = @resources.created_in_last_month.size
     end
 
     def journal_entry_params

@@ -6,6 +6,7 @@
 
 html, body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .btn {
@@ -23,6 +24,10 @@ html, body {
   }
 }
 
+.v-hidden {
+  visibility: hidden !important;
+}
+
 body#overboot {
   background-color: $black;
   font-family: $font;
@@ -31,7 +36,7 @@ body#overboot {
     z-index: 1080;
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: $heading-font;
     font-weight: 800;
     text-transform: lowercase;
@@ -100,6 +105,7 @@ body#overboot {
   }
 
   .subheading {
+    color: $white;
     p {
       margin-bottom: 0;
     }

@@ -78,51 +78,55 @@ fetch(`${location}/wba_history`, {
         'Content-Type': 'application/json'
     }
 })
-.then(data => data.json())
-.then(json => {
-    json.datasets.forEach((dataset, index) => {
-        const carousel_item = document.createElement('div')
-        carousel_item.classList.add('carousel-item')
-        if (index === 0) carousel_item.classList.add('active')
+    .then(data => data.json())
+    .then(json => {
+        [...chart_wrapper.children].forEach(child => child.remove());
+        [...metric_select.children].forEach(child => child.remove());
+        [...indicators.children].forEach(child => child.remove());
 
-        const canvas = document.createElement('canvas')
-        canvas.classList.add(`wellbeing-history-chart-${index}`)
+        json.datasets.forEach((dataset, index) => {
+            const carousel_item = document.createElement('div')
+            carousel_item.classList.add('carousel-item')
+            if (index === 0) carousel_item.classList.add('active')
 
-        const option = document.createElement('option')
-        option.setAttribute('value', index)
-        option.innerHTML = dataset.label
+            const canvas = document.createElement('canvas')
+            canvas.classList.add(`wellbeing-history-chart-${index}`)
 
-        const indicator = document.createElement('button')
-        indicator.setAttribute('type', 'button')
-        indicator.setAttribute('type', 'button')
-        indicator.dataset.bsTarget = '#wellbeing-history-chart-carousel'
-        indicator.dataset.bsSlideTo = index
-        indicator.dataset.toggle = 'tooltip'
-        indicator.setAttribute('title', dataset.label)
-        if (index === 0) indicator.classList.add('active')
-        if (index === 0) indicator.setAttribute('aria-current', 'true')
-        indicator.setAttribute('aria-label', dataset.label)
+            const option = document.createElement('option')
+            option.setAttribute('value', index)
+            option.innerHTML = dataset.label
 
-        indicators.append(indicator)
-        metric_select.append(option)
-        carousel_item.append(canvas)
-        chart_wrapper.append(carousel_item)
+            const indicator = document.createElement('button')
+            indicator.setAttribute('type', 'button')
+            indicator.setAttribute('type', 'button')
+            indicator.dataset.bsTarget = '#wellbeing-history-chart-carousel'
+            indicator.dataset.bsSlideTo = index
+            indicator.dataset.toggle = 'tooltip'
+            indicator.setAttribute('title', dataset.label)
+            if (index === 0) indicator.classList.add('active')
+            if (index === 0) indicator.setAttribute('aria-current', 'true')
+            indicator.setAttribute('aria-label', dataset.label)
 
-        dataset.borderColor = '#1F77B4'
-        dataset.lineTension = 0
-        dataset.fill = false
-        dataset.radius = 2
-        dataset.hoverRadius = 10
-        dataset.pointStyle = 'rectRounded'
+            indicators.append(indicator)
+            metric_select.append(option)
+            carousel_item.append(canvas)
+            chart_wrapper.append(carousel_item)
 
-        create_chart(canvas, {
-            labels: json.labels,
-            datasets: [dataset]
+            dataset.borderColor = '#1F77B4'
+            dataset.lineTension = 0
+            dataset.fill = false
+            dataset.radius = 2
+            dataset.hoverRadius = 10
+            dataset.pointStyle = 'rectRounded'
+
+            create_chart(canvas, {
+                labels: json.labels,
+                datasets: [dataset]
+            })
         })
-    })
 
-    slide_buttons.forEach(button => button.classList.remove('hidden'))
-})
+        slide_buttons.forEach(button => button.classList.remove('hidden'))
+    })
 
 metric_select.addEventListener('change', e => {
     toggle_active(chart_wrapper, e, '.carousel-item')

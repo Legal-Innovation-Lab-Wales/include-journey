@@ -1,0 +1,18 @@
+<tr>
+  <td class="link">
+    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
+      <%= time_ago_in_words(wellbeing_assessment.created) %> ago
+    <% end %>
+  </td>
+  <% wellbeing_assessment.wba_scores.includes(:wellbeing_metric).each do |score| %>
+    <td class="metric-score value-<%= score.value %>" data-bs-toggle="tooltip" data-bs-placement="top"
+        title="<%= score.wellbeing_metric.name %>: <%= @wba_values[score.value] %>">
+      <i class="fas fa-<%= score.wellbeing_metric.icon %>"></i>
+    </td>
+  <% end %>
+  <td class="link">
+    <%= link_to wellbeing_assessment_path(wellbeing_assessment) do %>
+      Created by <%= wellbeing_assessment.team_member_id.present? ? wellbeing_assessment.team_member.full_name : "User" %>
+    <% end %>
+  </td>
+</tr>

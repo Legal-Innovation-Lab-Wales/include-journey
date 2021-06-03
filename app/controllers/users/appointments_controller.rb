@@ -7,8 +7,8 @@ module Users
 
     # GET /appointments/upcoming
     def upcoming
-      @appointments = current_user.appointments.where('start >= ?', Time.now).order(start: :asc)
-
+      @appointments = current_user.appointments.future.order(start: :asc)
+      @count_in_next_week = @appointments.next_week.size
       render 'upcoming'
     end
 
@@ -64,7 +64,7 @@ module Users
     protected
 
     def resources
-      current_user.appointments.where('start <= ?', Time.now).order(start: :desc)
+      current_user.appointments.past.order(start: :desc)
     end
 
     def resources_per_page
@@ -112,6 +112,11 @@ module Users
       session[:appointment_params] = appointment_params
 
       redirect_back(fallback_location: new_appointment_path, flash: { error: 'End date cannot be before start date' })
+    end
+
+    def subheading_stats
+      @count_in_last_week = @resources.last_week.size
+      @count_in_last_month = @resources.last_month.size
     end
   end
 end

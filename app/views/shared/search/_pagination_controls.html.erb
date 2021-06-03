@@ -1,0 +1,43 @@
+<section class="row pagination-controls <%= local_assigns[:remove_margins].present? ? 'pt-0 mt-0 mb-0' : '' %>">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <% unless @page == 1 %>
+          <%= link_to send("#{index}_path", page: @page - 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
+                      class: 'btn btn-primary' do %>
+            <i class="fas fa-arrow-circle-left"></i> Previous
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col">
+        <% unless @page == 1 %>
+          <%= link_to '1', send("#{index}_path", page: 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)) %>
+        <% end %>
+
+        <% unless @page - 1 <= 1 %>
+          <% unless @page - 1 == 2 %> ... <% end %>
+          <%= link_to @page - 1, send("#{index}_path", page: @page - 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)) %>
+        <% end %>
+
+        <strong><%= @page %></strong>
+
+        <% unless  @page == @last_page %>
+          <% unless (@page + 1) == @last_page %>
+            <%= link_to @page + 1, send("#{index}_path", page: @page + 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)) %>
+            <% unless @page + 1 == @last_page - 1 %> ... <% end %>
+          <% end %>
+
+          <%= link_to @last_page, send("#{index}_path", page: @last_page, params: params.permit(:limit, :query, :viewed, :feeling, :sort)) %>
+        <% end %>
+      </div>
+      <div class="col">
+        <% unless @page == @last_page %>
+          <%= link_to send("#{index}_path", page: @page + 1, params: params.permit(:limit, :query, :viewed, :feeling, :sort)),
+                      class: 'btn btn-primary' do %>
+            Next <i class="fas fa-arrow-circle-right"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,25 @@
+<div class="modal fade" id="deviseModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col">
+              <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'btn btn-primary' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name), class: 'btn btn-primary'  %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: 'btn btn-primary'  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,21 +1,15 @@
-<main class="container user">
-  <%= render 'shared/back_btn' %>
-  <section class="row pb-4" id="wellbeing">
+<main class="container user wellbeing-assessments show">
+    <section class="row pb-4" id="wellbeing">
     <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
       <h3>Your Services</h3>
-      <div class="container">
-        <% [*1..4].each do |i| %>
-          <div class="row <%= (i > 1 ? 'mt-2' : '') %>">
-            <div class="col">
-              <%= link_to "Service #{i}", '#', class: 'btn btn-success' %>
+      <div class="container wellbeing-services-list">
+        <% @wellbeing_services.each_with_index do |service| %>
+          <div class="row wellbeing-service" data-metrics="<%= service.metrics %>">
+            <div class="col-12">
+              <%= link_to service.name, service.website, class: 'btn btn-success' %>
             </div>
           </div>
         <% end %>
-        <div class="row mt-2">
-          <div class="col">
-            <%= link_to "Add New Wellbeing Assessment", new_wellbeing_assessment_path, class: 'btn btn-outline-secondary' %>
-          </div>
-        </div>
       </div>
     </div>
     <div class="col-md-9">
@@ -27,3 +21,4 @@
 </main>
 
 <%= javascript_pack_tag 'wellbeing_assessment_chart' %>
+<%= javascript_pack_tag 'wellbeing_service' %>

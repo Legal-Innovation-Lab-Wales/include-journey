@@ -7,6 +7,7 @@ module Users
     def index
       @goal = Goal.new
       @goals = current_user.goals.includes(:goal_type).unarchived.order(:created_at)
+      @has_archived_goals = current_user.goals.archived.present?
       @goal_types = GoalType.all
 
       render 'index'

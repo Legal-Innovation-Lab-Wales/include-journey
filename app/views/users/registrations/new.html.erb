@@ -1,7 +1,7 @@
 <main class="ij-form">
   <div class="form-container">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'form') do |f| %>
-      <h2>Sign up</h2>
+      <h2><i class="fas fa-user"></i> Sign up</h2>
 
       <div class="form-group">
         <%= render "users/shared/error_messages", resource: resource %>
@@ -56,16 +56,12 @@
       <div class="form-check form-switch">
         <%= f.check_box :terms, class: 'form-check-input' %>
         <%= f.label :terms, class: 'form-check-label' do %>
-          I have read and agree to the sites <%= link_to 'Terms and Conditions', '/terms' %>
+          I have read and agree to the sites <%= link_to 'Terms and Conditions', '/terms', class: 'form-link' %>
         <% end %>
       </div>
 
       <div class="form-group">
         <%= f.submit "Sign up", class: 'btn btn-primary' %>
-      </div>
-
-      <div class="other-actions">
-        <%= render "users/shared/links" %>
       </div>
     <% end %>
   </div>

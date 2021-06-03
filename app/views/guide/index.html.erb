@@ -1,0 +1,39 @@
+<main class="container user">
+  <section class="row journey">
+    <div class="col mb-3">
+      <div class="row">
+      </div>
+      <h2 class="mb-0">User Guide</h2>
+      <p class="mb-0">This is the guide for the platform. </p>
+      <p>Click through the icons to get more detailed information as to
+        what each feature does.</p>
+      <div class="container header-buttons guide">
+        <div class="row">
+          <%= render 'shared/dashboard_btn', path: guide_journal_path,
+                    icon: 'fa-book', large_text: 'Journal Guide', text: 'Journal' %>
+          <%= render 'shared/dashboard_btn', path: guide_appointments_path, icon: 'fa-calendar-alt',
+                    large_text: 'My Appointments', text: 'Appts' %>
+          <%= render 'shared/dashboard_btn', path: guide_myNeeds_path, icon: 'fa-heart',
+                    large_text: 'My Needs', text: 'Needs' %>
+        </div>
+        <div class="row">
+          <%= render 'shared/dashboard_btn', path: guide_contacts_path, icon: 'fa-address-book',
+                    large_text: 'My Contacts', text: 'Contacts' %>
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-road',
+                    large_text: 'My Journey', text: 'Journey' %>
+          <%= render 'shared/dashboard_btn', path: guide_support_path, icon: 'fa-info-circle',
+                    large_text: 'My Support', text: 'Support' %>
+        </div>
+        <div class="row">
+          <%= render 'shared/dashboard_btn', path: guide_goals_path, icon: 'fa-tasks',
+                    large_text: 'My Goals', text: 'Goals' %>
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-calendar-check',
+                    large_text: "Include: What's On", text: "What's On" %>
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-comments',
+                     large_text: 'My Voice', text: 'Voice' %>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
