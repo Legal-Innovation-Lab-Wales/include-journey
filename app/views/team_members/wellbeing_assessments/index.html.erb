@@ -2,6 +2,12 @@
   <%= render 'layouts/searchable', class_list: 'team-members wellbeing-assessments', header: "#{@user.full_name}",
              subheader: "wellbeing assessments", index: 'user_wellbeing_assessments', search: render('search'), stats: render('stats')  do %>
     <div id="card-view" class="container p-0">
+      <div class="row mb-3">
+        <div class="col text-end">
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv', file_format_icon: 'fa-table' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json', file_format_icon: 'fa-code' }) %>
+        </div>
+      </div>
       <div class="row">
         <% @resources.each do |wellbeing_assessment| %>
           <%= render 'card', wellbeing_assessment: wellbeing_assessment %>
@@ -9,6 +15,14 @@
       </div>
     </div>
     <div id="table-view" class="d-none p-0">
+      <div class="row mb-3">
+        <div class="col">
+          <%= link_to export_user_wellbeing_assessments_path(user: @user, format: 'csv', query: params[:query]),
+                      class: 'btn btn-primary' do %>
+            Export Wellbeing Assessments <i class="fas fa-file-export"></i>
+          <% end %>
+        </div>
+      </div>
       <small class="pb-2 mobile-hint">
         Table too big? Try turing your phone sideways or checking out this page on your computer
       </small>
@@ -30,6 +44,12 @@
              index: @team_member.present? ? 'team_member_wellbeing_assessments' : 'wellbeing_assessments',
              stats: render('stats_non_user') do %>
     <div class="container p-0">
+      <div class="row mb-3 ">
+        <div class="col text-end">
+          <%= render(partial: 'export_btn', locals: { file_format: 'csv', file_format_icon: 'fa-table' }) %>
+          <%= render(partial: 'export_btn', locals: { file_format: 'json', file_format_icon: 'fa-code' }) %>
+        </div>
+      </div>
       <div class="row">
         <% @resources.each do |wellbeing_assessment| %>
           <%= render 'card', wellbeing_assessment: wellbeing_assessment %>
