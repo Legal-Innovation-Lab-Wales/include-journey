@@ -60,6 +60,30 @@ class User < DeviseRecord
     appointments.order(start: :asc).filter(&:last_month)
   end
 
+  def to_csv
+    [
+      id,
+      full_name,
+      sex,
+      gender_identity,
+      ethnic_group,
+      disabilities,
+      user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
+    ]
+  end
+
+  def json
+    {
+      'ID': id,
+      'Name': full_name,
+      'Sex': sex,
+      'Gender Identity': gender_identity,
+      'Ethnic Group': ethnic_group,
+      'Disabilities': disabilities,
+      'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
+    }
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,
