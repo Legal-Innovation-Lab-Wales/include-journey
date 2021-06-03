@@ -292,7 +292,6 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
   end
 
   create_table "wellbeing_score_values", force: :cascade do |t|
-    t.integer "value"
     t.string "name"
     t.string "color"
     t.datetime "created_at", precision: 6, null: false
