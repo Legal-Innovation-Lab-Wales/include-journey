@@ -22,7 +22,11 @@ class User < DeviseRecord
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
 
   def release
-    release_date.present? ? release_date.strftime('%d/%m/%Y') : 'Unknown Release Date'
+    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+  end
+
+  def dob
+    date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''
   end
 
   def active_crisis_events
@@ -60,10 +64,13 @@ class User < DeviseRecord
     appointments.order(start: :asc).filter(&:last_month)
   end
 
+  # rubocop:disable Metrics/MethodLength
   def to_csv
     [
       id,
       full_name,
+      dob,
+      release,
       sex,
       gender_identity,
       ethnic_group,
@@ -76,6 +83,8 @@ class User < DeviseRecord
     {
       'ID': id,
       'Name': full_name,
+      'Date Of Birth': dob,
+      'Release Date': release,
       'Sex': sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,
@@ -83,6 +92,7 @@ class User < DeviseRecord
       'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     }
   end
+  # rubocop:enable Metrics/MethodLength
 
   # validations
   validates_presence_of :first_name,

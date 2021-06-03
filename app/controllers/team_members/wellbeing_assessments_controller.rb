@@ -64,8 +64,9 @@ module TeamMembers
     end
 
     def csv_headers
-      ['ID', 'Date', 'User ID', 'User Name', 'User Sex', 'User Gender Identity', 'User Ethnic Group',
-       'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+      ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
+       'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
+       'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
     end
 
     def base_path
