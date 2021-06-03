@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users, path: 'users',
-                     controllers: { registrations: 'users/registrations',
-                                    confirmations: 'users/confirmations',
-                                    sessions: 'users/sessions',
-                                    passwords: 'users/passwords',
-                                    unlocks: 'users/unlocks' }
+             controllers: { registrations: 'users/registrations',
+                            confirmations: 'users/confirmations',
+                            sessions: 'users/sessions',
+                            passwords: 'users/passwords',
+                            unlocks: 'users/unlocks' }
   devise_for :team_members, path: 'team_members',
-                            controllers: { registrations: 'team_members/registrations',
-                                           confirmations: 'team_members/confirmations',
-                                           sessions: 'team_members/sessions',
-                                           passwords: 'team_members/passwords',
-                                           unlocks: 'team_members/unlocks' }
+             controllers: { registrations: 'team_members/registrations',
+                            confirmations: 'team_members/confirmations',
+                            sessions: 'team_members/sessions',
+                            passwords: 'team_members/passwords',
+                            unlocks: 'team_members/unlocks' }
 
   authenticated :user do
     scope module: 'users' do
@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # rubocop:disable Metrics/BlockLength
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
@@ -51,8 +52,9 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
+        put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
+        resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member
       end
@@ -91,4 +93,13 @@ Rails.application.routes.draw do
     get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
+
+  get 'guide', to: 'guides#index'
+  get 'guide_journal', to: 'guides#journal'
+  get 'guide_appointments', to: 'guides#appointments'
+  get 'guide_myNeeds', to: 'guides#myNeeds'
+  get 'guide_contacts', to: 'guides#contacts'
+  get 'guide_support', to: 'guides#support'
+  get 'guide_goals', to: 'guides#goals'
+
 end
