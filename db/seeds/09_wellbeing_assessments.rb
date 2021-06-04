@@ -1,4 +1,5 @@
 if WellbeingAssessment.count.zero?
+  print "Wellbeing Assessments\tStart: #{Time.now - @start_time}"
   User.all.each do |user|
     Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER.times do |index|
       created_at_value = DateTime.now - (Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER - (index + 1))
@@ -9,6 +10,6 @@ if WellbeingAssessment.count.zero?
     end
   end
 
-  puts "Wellbeing Assessments\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end

@@ -1,7 +1,10 @@
 <main class="container team-members users show">
   <div id="user-info" class="row mt-3 mb-3">
     <div class="col-12 col-md-6 col-lg-4 mx-auto">
-      <h1 class="text-center"><%= @user.full_name %></h1>
+      <h1 class="text-center <%= @user.pronouns.present? ? "mb-0" : "mb-0" %>"><%= @user.full_name %></h1>
+      <% if @user.pronouns.present? %>
+        <h4 class="text-center"><%= @user.pronouns %></h4>
+      <% end %>
       <p>
         <%= link_to "mailto:#{@user.email}" do %>
           <i class="fas fa-envelope"></i> <%= @user.email %>

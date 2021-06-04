@@ -25,28 +25,25 @@ module TeamMembers
     end
 
     def sort
-      sort_param = journal_entry_view_logs_params[:sort]
-
-      if %w[created_at_asc created_at_desc viewed_at_asc viewed_at_desc published_at_asc published_at_desc].include?(sort_param)
-        sort_param = sort_param.split('_')
-        sort_order = sort_param[2]
-        sort_param = sort_param[0..1].join('_')
-        sort_param = sort_param == 'published_at' ? 'journal_entries.created_at' : "journal_entry_view_logs.#{sort_param}"
-
-        { "#{sort_param}": sort_order }
-      else
-        { 'updated_at': :desc }
-      end
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
+      { "#{sort_param}": @direction }
     end
 
     private
 
-    def team_member
-      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
+    def sort_param
+      case @sort
+      when 'published_at'
+        'journal_entries.created_at'
+      when 'first_viewed_at'
+        'journal_entry_view_logs.created_at'
+      else
+        'journal_entry_view_logs.updated_at'
+      end
     end
 
-    def journal_entry_view_logs_params
-      params.permit(:page, :query, :limit, :sort)
+    def team_member
+      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
     end
   end
 end

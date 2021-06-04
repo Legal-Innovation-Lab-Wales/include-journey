@@ -1,4 +1,5 @@
 if Note.count.zero?
+  print "Notes\t\t\tStart: #{Time.now - @start_time}"
   Config::NOTES_COUNT.times do |index|
     note = Note.create!(
       team_member_id: rand(1..TeamMember.count),
@@ -21,6 +22,6 @@ if Note.count.zero?
     note.update!(replaced_by: new_note)
   end
 
-  puts "Notes\t\t\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
   @last_time = Time.now
 end

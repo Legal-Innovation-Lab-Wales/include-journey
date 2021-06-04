@@ -2,8 +2,10 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < TeamMembersApplicationController
     before_action :user, except: :show
-    before_action :team_member, :wellbeing_assessments, :wba_values, only: :index
+    before_action :wba_values, only: :index
+    before_action :team_member, :wellbeing_assessments, only: %i[index export]
     include Pagination
+    include Exportable
 
     before_action :wellbeing_metrics, only: %i[new create]
     before_action :wba_params, only: :create
@@ -13,6 +15,11 @@ module TeamMembers
     # GET /team_members/:team_member_id/wellbeing_assessments
     # GET /users/:user_id/wellbeing_assessments
     def index; end
+
+    # GET /wellbeing_assessments/export
+    # GET /team_members/:team_member_id/wellbeing_assessments/export
+    # GET /users/:user_id/wellbeing_assessments/export
+    def export; end
 
     # GET /wellbeing_assessments/:id
     def show
@@ -43,7 +50,7 @@ module TeamMembers
     protected
 
     def resources
-      @wellbeing_assessments.includes(:user, :wba_scores).order(created_at: :desc)
+      @wellbeing_assessments.order(created_at: :desc)
     end
 
     def resources_per_page
@@ -51,10 +58,19 @@ module TeamMembers
     end
 
     def search
-      @wellbeing_assessments.includes(:user, :wba_scores)
-                            .joins(:user)
+      @wellbeing_assessments.joins(:user)
                             .where(user_search, wildcard_query)
                             .order(created_at: :desc)
+    end
+
+    def csv_headers
+      ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
+       'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
+       'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+    end
+
+    def base_path
+      'wellbeing-assessments'
     end
 
     private
@@ -113,11 +129,11 @@ module TeamMembers
     def wellbeing_assessments
       @wellbeing_assessments =
         if @team_member.present?
-          @team_member.wellbeing_assessments
+          @team_member.wellbeing_assessments.includes(:user, wba_scores: :wellbeing_metric)
         elsif @user.present?
           @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
-          WellbeingAssessment
+          WellbeingAssessment.includes(:user, :team_member, wba_scores: :wellbeing_metric)
         end
     end
 
