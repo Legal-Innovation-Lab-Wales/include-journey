@@ -28,7 +28,11 @@
                     <% end %>
 
                     <% if @admin.present? %>
-                      <h2>Hello <%= @admin.first_name %>!</h2>
+                      <% if @crisis_event.present? %>
+                        <h2>Attention <%= @admin.first_name %>!</h2>
+                      <% else %>
+                        <h2>Hello <%= @admin.first_name %>!</h2>
+                      <% end %>
                     <% end %>
 
                     <%= yield %>
