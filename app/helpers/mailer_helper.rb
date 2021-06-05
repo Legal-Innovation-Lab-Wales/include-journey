@@ -1,4 +1,4 @@
-# app/helpers/mailer_help.rb
+# app/helpers/mailer_helper.rb
 module MailerHelper
   def email_image_tag(image, **options)
     attachments.inline[image] = File.read(Rails.root.join("app/assets/images/mailer/#{image}"))
