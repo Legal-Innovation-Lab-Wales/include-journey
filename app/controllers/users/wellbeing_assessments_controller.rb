@@ -50,10 +50,14 @@ module Users
     end
 
     def wba_scores
+      total = 0.0
       @wellbeing_metrics.each do |metric|
+        value = wba_params["wellbeing_metric_#{metric.id}"]
         @wellbeing_assessment.wba_scores.create!({ wellbeing_metric: metric,
-                                            value: wba_params["wellbeing_metric_#{metric.id}"] })
+                                                   value: value })
+        total += value.to_f
       end
+      @wellbeing_assessment.update!(average: total / @wellbeing_metrics.count)
     end
 
     def last_scores

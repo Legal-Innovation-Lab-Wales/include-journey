@@ -98,15 +98,10 @@ section#wellbeing {
   }
 
   .sliders {
-    margin-top: 2.5rem;
     text-align: left;
 
     .row {
       margin-top: 0.5rem;
-
-      @media screen and (min-width: $screen-md) {
-        margin-top: 0;
-      }
 
       label {
         width: 100%;
@@ -122,5 +117,13 @@ section#wellbeing {
         transition: all 0.5s;
       }
     }
+  }
+}
+
+.wellbeing-chart.wrapper {
+  .average {
+    width: 70%;
+    line-height: 2;
+    margin: auto;
   }
 }

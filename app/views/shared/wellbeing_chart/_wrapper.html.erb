@@ -1,11 +1,35 @@
 <div class="container wellbeing-chart wrapper p-0">
-  <div class="row">
+  <div class="row align-items-center" style="padding-left: 0 !important;" >
+    <% if local_assigns[:chart_heading].present? %>
+      <h3><%= local_assigns[:chart_heading] %></h3>
+    <% end %>
+
+    <% if local_assigns[:show_timestamp].present? || local_assigns[:show_author].present? %>
+      <div class="metadata mb-3">
+        <small>
+          <% if local_assigns[:wellbeing_assessment].team_member.present? %>
+            <i class="fas fa-user-plus"></i> <%= local_assigns[:wellbeing_assessment].team_member.full_name %>
+          <% end %>
+          <% if local_assigns[:show_timestamp].present? %>
+            <i class="fas fa-calendar-alt"></i> <%= local_assigns[:wellbeing_assessment].created_date %>
+            <i class="fas fa-clock"></i> <%= local_assigns[:wellbeing_assessment].created_time %>
+          <% end %>
+        </small>
+      </div>
+    <% end %>
+
     <% if local_assigns[:chart_alignment].present? && local_assigns[:chart_alignment] == 'left' %>
       <%= render 'shared/wellbeing_chart/wellbeing_chart', local_assigns: local_assigns %>
       <%= render 'shared/wellbeing_chart/sliders', local_assigns: local_assigns%>
     <% else %>
       <%= render 'shared/wellbeing_chart/sliders', local_assigns: local_assigns %>
       <%= render 'shared/wellbeing_chart/wellbeing_chart', local_assigns: local_assigns %>
+    <% end %>
+
+    <% if local_assigns[:wellbeing_assessment].average.present? %>
+      <div class="average badge rounded-pill mt-2 wba-score__<%= local_assigns[:wellbeing_assessment].average.round %>">
+        Average: <%= score_description(local_assigns[:wellbeing_assessment].average.round) %>
+      </div>
     <% end %>
   </div>
 </div>
