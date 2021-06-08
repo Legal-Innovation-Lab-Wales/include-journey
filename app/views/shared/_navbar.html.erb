@@ -15,12 +15,6 @@
       <% unless dashboard_controller? %>
         <% if current_team_member %>
           <div class="navbar-items">
-            <% if current_team_member.admin? %>
-              <%= link_to team_members_path, class: 'btn btn-nav' do %>
-                <i class="fas fa-users"></i>
-                <div class="nav-label hide">Team Members</div>
-              <% end %>
-            <% end %>
             <%= link_to users_path, class: 'btn btn-nav' do %>
               <i class="fas fa-user"></i>
               <div class="nav-label hide">Users</div>
@@ -97,6 +91,12 @@
       <div class="navbar-right-buttons">
         <div class="navbar-items">
           <% if current_team_member %>
+            <% if current_team_member.admin? %>
+              <%= link_to team_members_path, class: "btn btn-info" do %>
+                <div class="nav-label hide">Team Members</div>
+                <i class="fas fa-users"></i>
+              <% end %>
+            <% end %>
             <%= link_to edit_team_member_registration_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
