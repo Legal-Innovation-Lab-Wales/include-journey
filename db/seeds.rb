@@ -10,7 +10,25 @@ require 'faker'
 
 @start_time = Time.now
 
-puts ('-' * 50).to_s
+MAX_NAME_LENGTH = 22
+MAX_TIME_LENGTH = 6
+DOTTED_LINE_LENGTH = MAX_NAME_LENGTH + (MAX_TIME_LENGTH * 3) + ('Start: '.length + 'Duration: '.length + 'Elapsed: '.length) + 8 # Tabs
+
+def pretty_print_name(name)
+  name = name[0..(MAX_NAME_LENGTH - 1)] if name.length > MAX_NAME_LENGTH
+  name + (' ' * (MAX_NAME_LENGTH - name.length))
+end
+
+def pretty_print(value)
+  str = value.to_f.to_s
+  if str.length < MAX_TIME_LENGTH
+    str + ('0' * (MAX_TIME_LENGTH - str.length))
+  else
+    str[0..(MAX_TIME_LENGTH - 1)]
+  end
+end
+
+puts ('-' * DOTTED_LINE_LENGTH).to_s
 puts 'Running Seeds'
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
 
@@ -28,24 +46,24 @@ unless User.find_by_email('john.smith@me.com').present?
   user.save!
 end
 
-puts ('-' * 50).to_s
+puts ('-' * DOTTED_LINE_LENGTH).to_s
 puts 'Counts'
-puts("Team Members\t\t#{TeamMember.count}")
-puts("Users\t\t\t#{User.count}")
-puts("User Profile View Logs\t#{UserProfileViewLog.count}")
-puts("Wellbeing Metrics\t#{WellbeingMetric.count}")
-puts("Wellbeing Services\t#{WellbeingService.count}")
-puts("Metrics Services\t#{MetricsService.count}")
-puts("Wellbeing Assessments\t#{WellbeingAssessment.count}")
-puts("WBA Scores\t\t#{WbaScore.count}")
-puts("Contacts\t\t#{Contact.count}")
-puts("Goals\t\t\t#{Goal.count}")
-puts("Appointments\t\t#{Appointment.count}")
-puts("Notes\t\t\t#{Note.count}")
-puts("Journal Entries\t\t#{JournalEntry.count}")
-puts("Journal Permissions\t#{JournalEntryPermission.count}")
-puts("Journal View Logs\t#{JournalEntryViewLog.count}")
-puts("Crisis Events\t\t#{CrisisEvent.count}")
-puts("Crisis Notes\t\t#{CrisisNote.count}")
-puts("Tags\t\t\t#{Tag.count}")
-puts("User Tags\t\t#{UserTag.count}")
+puts("#{pretty_print_name('Team Members')}\t#{TeamMember.count}")
+puts("#{pretty_print_name('Users')}\t#{User.count}")
+puts("#{pretty_print_name('User Profile View Logs')}\t#{UserProfileViewLog.count}")
+puts("#{pretty_print_name('Wellbeing Metrics')}\t#{WellbeingMetric.count}")
+puts("#{pretty_print_name('Wellbeing Services')}\t#{WellbeingService.count}")
+puts("#{pretty_print_name('Metrics Services')}\t#{MetricsService.count}")
+puts("#{pretty_print_name('Wellbeing Assessments')}\t#{WellbeingAssessment.count}")
+puts("#{pretty_print_name('WBA Scores')}\t#{WbaScore.count}")
+puts("#{pretty_print_name('Contacts')}\t#{Contact.count}")
+puts("#{pretty_print_name('Goals')}\t#{Goal.count}")
+puts("#{pretty_print_name('Appointments')}\t#{Appointment.count}")
+puts("#{pretty_print_name('Notes')}\t#{Note.count}")
+puts("#{pretty_print_name('Journal Entries')}\t#{JournalEntry.count}")
+puts("#{pretty_print_name('Journal Permissions')}\t#{JournalEntryPermission.count}")
+puts("#{pretty_print_name('Journal View Logs')}\t#{JournalEntryViewLog.count}")
+puts("#{pretty_print_name('Crisis Events')}\t#{CrisisEvent.count}")
+puts("#{pretty_print_name('Crisis Notes')}\t#{CrisisNote.count}")
+puts("#{pretty_print_name('Tags')}\t#{Tag.count}")
+puts("#{pretty_print_name('User Tags')}\t#{UserTag.count}")

@@ -4,39 +4,19 @@
       <h2>Dashboard</h2>
       <div class="container header-buttons">
         <div class="row">
-          <% if @admin %>
-            <%= render 'shared/dashboard_btn', path: team_members_path, icon: 'fa-users', text: 'Team Members' %>
-          <% end %>
-
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
           <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
-
-          <% unless @admin %>
-            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle', text: 'Crisis Events' %>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle', text: 'Crisis Events' %>
         </div>
         <div class="row">
-          <% if @admin  %>
-            <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
-                       text: 'Crisis Events' %>
-          <% end %>
-
-            <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open', text: 'Journal Entries' %>
-            <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart', text: 'Wellbeing Assessments' %>
-
-          <% unless @admin %>
-            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Services' %>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open', text: 'Journal Entries' %>
+          <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart', text: 'Wellbeing Assessments' %>
+          <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-tools', text: 'Wellbeing Management' %>
         </div>
         <div class="row">
-          <% if @admin %>
-            <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-map-signs', text: 'Wellbeing Management' %>
-          <% end %>
-            <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
-
-          <% unless @admin %>
-            <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>
-          <% end %>
+          <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>
+          <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
+          <%= render 'shared/dashboard_btn', path: tags_path, icon: '', text: '', hidden: true %>
         </div>
       </div>
     </div>

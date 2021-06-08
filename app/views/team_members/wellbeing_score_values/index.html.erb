@@ -4,9 +4,15 @@
       <h2>Wellbeing Score Values</h2>
       <p>This section allows you to edit the score names displayed next to values which users rank from 1-10.</p>
       <div class="iconbar">
-        <%= link_to "Wellbeing Services", wellbeing_services_path, class: "btn btn-primary" %>
-        <%= link_to "Wellbeing Metrics", wellbeing_metrics_path, class: "btn btn-primary" %>
-        <%= link_to "Score Values", wellbeing_score_values_path, class: "btn disabled btn-primary" %>
+        <%= link_to wellbeing_services_path, class: "btn btn-primary" do %>
+          Wellbeing Services <i class="fas fa-map-signs"></i>
+        <% end %>
+        <%= link_to wellbeing_metrics_path, class: "btn btn-primary" do %>
+          Wellbeing Metrics <i class="fas fa-sliders-h"></i>
+        <% end %>
+        <%= link_to wellbeing_score_values_path, class: "btn disabled btn-primary" do %>
+          Score Values <i class="fas fa-star-half-alt"></i>
+        <% end %>
       </div>
       <div class="table-container">
         <table class="table table-dark link-table">
