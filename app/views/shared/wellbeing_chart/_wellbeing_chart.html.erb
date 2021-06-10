@@ -1,7 +1,4 @@
 <div class="col-12 <%= local_assigns[:hide_sliders].present? ? '' : 'col-xl-5' %> chart">
-  <% if local_assigns[:chart_heading].present? %>
-    <h3><%= local_assigns[:chart_heading] %></h3>
-  <% end %>
   <% if local_assigns[:pyramid_view].present? && local_assigns[:pyramid_view] == true %>
     <div class="pyramid-view">
       <div class="pyramid-view-switch">

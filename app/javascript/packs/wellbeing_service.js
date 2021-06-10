@@ -2,9 +2,9 @@ const wellbeing_services = document.querySelectorAll('.wellbeing-service'),
       toggle_service = (slider, service) => {
         // Less than or equal to 'mediocre'
         if (slider.value <= 5) {
-            service.classList.add('visible')
+            service.classList.add('show')
         } else {
-            service.classList.remove('visible')
+            service.classList.remove('show')
         }
       }
 

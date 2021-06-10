@@ -1,0 +1,9 @@
+<th class="sort-column" scope="col">
+  <span class="text" data-value="<%= column_value %>"><%= column_text %></span>
+  <% if @sort != column_value %>
+    <i class="fas fa-sort" data-toggle="tooltip" data-placement="right" title="Sort Descending"></i>
+  <% else %>
+    <i class="fas <%= @direction == 'desc' ? 'fa-caret-down' : 'fa-caret-up' %>" data-toggle="tooltip"
+       data-placement="right" title="Reverse Sort"></i>
+  <% end %>
+</th>

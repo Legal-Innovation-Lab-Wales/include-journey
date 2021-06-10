@@ -1,16 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'team-members tags', header: 'All Tags', 
            index: 'tags', stats: render('stats'), new_modal: true do %>
   <div class="container p-0">
-    <div class="row mb-3">
-      <div class="col">
-        <div class="input-group date-sort-select">
-          <select class="form-select">
-            <option value="desc">Created At (Descending)</option>
-            <option value="asc">Created At (Ascending)</option>
-          </select>
-        </div>
-      </div>
-    </div>
     <div class="row">
       <div class="col">
         <div class="table-container">
@@ -18,7 +8,7 @@
             <thead>
             <th scope="col">Tag</th>
             <th scope="col">Created By</th>
-            <th scope="col">Created At</th>
+            <%= render(partial: 'shared/sort_column', locals: { column_value: 'created_at', column_text: 'Created At' }) %>
             <th scope="col">Users Tagged</th>
             </thead>
             <tbody>
@@ -46,4 +36,4 @@
   </div>
 <% end %>
 
-<%= javascript_pack_tag 'date_sort' %>
+<%= javascript_pack_tag 'sort_column' %>

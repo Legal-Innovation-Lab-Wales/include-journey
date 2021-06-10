@@ -33,6 +33,17 @@ class TeamMember < DeviseRecord
     (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count
   end
 
+  def to_csv
+    [id, full_name]
+  end
+
+  def json
+    {
+      'ID': id,
+      'Name': full_name
+    }
+  end
+
   # validations
   validates_presence_of :first_name,
                         :last_name,
