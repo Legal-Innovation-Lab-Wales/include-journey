@@ -1,27 +1,33 @@
 <main class="ij-form">
-  <div class="form-container">
-    <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
-      <h2>Resend unlock instructions</h2>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-5">
+        <div class="form-container">
+          <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+            <h2>Resend unlock instructions</h2>
 
-      <div class="form-group">
-        <%= render "users/shared/error_messages", resource: resource %>
-        <p class="text-danger">
-          <% if flash[:alert] %>
-            <%= flash[:alert] %>
+            <div class="form-group">
+              <%= render "users/shared/error_messages", resource: resource %>
+              <p class="text-danger">
+                <% if flash[:alert] %>
+                  <%= flash[:alert] %>
+                <% end %>
+              </p>
+            </div>
+
+            <div class="form-floating">
+              <%= f.email_field :email, autofocus: true, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
+              <%= f.label :email %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit "Resend unlock instructions", class: 'btn btn-primary' %>
+            </div>
+
+            <%= render 'users/shared/back_to_login' %>
           <% end %>
-        </p>
+        </div>
       </div>
-
-      <div class="form-floating">
-        <%= f.email_field :email, autofocus: true, class: 'form-control', autocomplete: "email", placeholder: "Email Address" %>
-        <%= f.label :email %>
-      </div>
-
-      <div class="form-group">
-        <%= f.submit "Resend unlock instructions", class: 'btn btn-primary' %>
-      </div>
-
-      <%= render 'team_members/shared/back_to_login' %>
-    <% end %>
+    </div>
   </div>
 </main>

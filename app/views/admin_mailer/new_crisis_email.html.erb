@@ -1,26 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
-</head>
-<body>
-<p>
-  <%= @user.full_name %> has pushed the SOS button as they are having a crisis.
-</p>
-<div>
-  <h3> Contact Details: </h3>
-  <p>Phone: <%= @user.mobile_number %></p>
-  <p>Email: <%= @user.email %></p>
+<p><%= @user.full_name %> has pushed the SOS button as they are having a crisis.</p>
+
+<%= render 'crisis_details' %>
+
+<p>Click the button below to login and manage this crisis.</p>
+
+<div class="btn-container">
+    <%= link_to 'Login', crisis_event_url(@crisis_event) %>
 </div>
-<div>
-  <h3>Crisis Details: </h3>
-  <p>Crisis Type: <%= @crisis_type %></p>
-  <p>Additional Details: <%= @crisis_event.additional_info %></p>
-</div>
-<div>
-  <p>
-    Login in now to <%= link_to 'manage this crisis', crisis_event_url(@crisis_event) %>.
-  </p>
-</div>
-</body>
-</html>

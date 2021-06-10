@@ -32,5 +32,9 @@ module IncludeJourney
         end
       end
     end
+
+    config.to_prepare do
+      Devise::Mailer.layout 'mailer'
+    end
   end
 end
