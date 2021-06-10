@@ -1,5 +1,5 @@
 if WellbeingMetric.count.zero?
-  print "Wellbeing Metrics\tStart: #{Time.now - @start_time}"
+  print "#{pretty_print_name('Wellbeing Metrics')}\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingMetric.create!(
     team_member_id: rand(1..TeamMember.count),
     name: 'Employment/Education/Training',
@@ -67,6 +67,6 @@ if WellbeingMetric.count.zero?
     icon: 'pizza-slice'
   )
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

@@ -1,5 +1,5 @@
 if CrisisEvent.count.zero?
-  print "Crisis Events\t\tStart: #{Time.now - @start_time}"
+  print "#{pretty_print_name('Crisis Events')}\tStart: #{pretty_print(Time.now - @start_time)}"
   Config::CRISIS_EVENTS_COUNT.times do |index|
     crisis_event = CrisisEvent.create!(
       additional_info: Faker::Hipster.sentences(number: 1)[0],
@@ -17,6 +17,6 @@ if CrisisEvent.count.zero?
     )
   end
 
-  puts "\tDuration: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

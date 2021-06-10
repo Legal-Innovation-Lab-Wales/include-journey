@@ -1,4 +1,5 @@
 if UserTag.count.zero?
+  print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     if user.id.even?
       half = (Tag.count / 2).floor
@@ -28,6 +29,6 @@ if UserTag.count.zero?
     end
   end
 
-  puts "User Tags\t\tTime: #{Time.now - @last_time}\tElapsed: #{Time.now - @start_time}"
+  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

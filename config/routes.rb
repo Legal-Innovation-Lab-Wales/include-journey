@@ -87,6 +87,7 @@ Rails.application.routes.draw do
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
+      resources :wellbeing_score_values, only: %i[index update]
       resources :tags, only: %i[show index create] do
         resources :user_tags, only: :index, on: :member, as: :tagged_users
       end

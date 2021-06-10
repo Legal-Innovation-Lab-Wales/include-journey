@@ -1,0 +1,2 @@
+class WellbeingScoreValue < ApplicationRecord
+end
