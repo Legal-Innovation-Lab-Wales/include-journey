@@ -12,19 +12,32 @@
           <% if local_assigns[:subheader].present? %>
             <h4><%= local_assigns[:subheader] %></h4>
           <% end %>
-
-          <% if local_assigns[:stats].present? %>
-            <%= local_assigns[:stats] %>
-          <% end %>
         </div>
 
         <div class="row">
           <%= render 'shared/search/search_results' %>
         </div>
 
+        <div class="row">
+          <% if local_assigns[:stats].present? %>
+            <%= local_assigns[:stats] %>
+          <% end %>
+        </div>
+
         <% if local_assigns[:new_btn].present? %>
           <div class="row">
             <%= local_assigns[:new_btn] %>
+          </div>
+        <% end %>
+
+        <% if local_assigns[:new_modal].present? %>
+          <div class="row">
+            <div class="col text-start">
+              <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#newModal">
+                <i class="fas fa-plus-circle"></i> Add Tag
+              </button>
+            </div>
+            <%= render 'modals/add_tag' %>
           </div>
         <% end %>
 

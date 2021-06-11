@@ -1,0 +1,16 @@
+<div class="subheading">
+  <% unless @query.present? %>
+    <p>
+      <%= pluralize(@count, 'tag has', 'tags have') %> been created and
+      <%= pluralize(@tagged_count, 'tag has', 'tags have') %> been assigned in total.
+    </p>
+  <% end %>
+  <p>
+    <%= pluralize(@count_in_last_week, 'tag was', 'tags were') %> created in the last week and
+    <%= pluralize(@count_in_last_month, 'tag was', 'tags were') %> created in the last month.
+  </p>
+  <p>
+    <%= pluralize(@tagged_count_in_last_week, 'tag was', 'tags were') %> assigned in the last week and
+    <%= pluralize(@tagged_count_in_last_month, 'tag was', 'tags were') %> assigned in the last month.
+  </p>
+</div>

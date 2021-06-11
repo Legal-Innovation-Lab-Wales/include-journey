@@ -1,9 +1,9 @@
 <main class="container team-members wellbeing-assessments show">
   <section class="row" id="wellbeing">
     <div class="col">
-      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '300', show_timestamp: true,
-                 chart_heading: "#{@wellbeing_assessment.user.full_name}'s Wellbeing", sliders_heading: 'Recorded At',
-                 wellbeing_assessment: @wellbeing_assessment %>
+      <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '245', show_timestamp: true,
+                 chart_heading: "#{@wellbeing_assessment.user.full_name}'s Wellbeing",
+                 wellbeing_assessment: @wellbeing_assessment, pyramid_view: true %>
     </div>
   </section>
   <% unless @wellbeing_assessment.today? %>

@@ -37,6 +37,15 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.bigint    :mobile_number
       t.datetime  :release_date
       t.boolean   :terms, default: false
+      t.datetime  :deletion_date
+
+      t.datetime  :date_of_birth
+      t.text      :disabilities
+      t.string    :ethnic_group
+      t.string    :religion
+      t.string    :sex
+      t.string    :gender_identity
+      t.string    :pronouns
 
       t.timestamps null: false
     end

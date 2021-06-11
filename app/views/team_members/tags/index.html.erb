@@ -1,0 +1,39 @@
+<%= render 'layouts/searchable', class_list: 'team-members tags', header: 'All Tags', 
+           index: 'tags', stats: render('stats'), new_modal: true do %>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col">
+        <div class="table-container">
+          <table class="table table-dark table-striped link-table">
+            <thead>
+            <th scope="col">Tag</th>
+            <th scope="col">Created By</th>
+            <%= render(partial: 'shared/sort_column', locals: { column_value: 'created_at', column_text: 'Created At' }) %>
+            <th scope="col">Users Tagged</th>
+            </thead>
+            <tbody>
+            <% @resources.each do |tag| %>
+              <tr>
+                <td>
+                  <%= link_to "#{tag.tag}", tag_tagged_users_path(tag) %>
+                </td>
+                <td>
+                  <%= link_to "#{tag.team_member.full_name}", tag_tagged_users_path(tag) %>
+                </td>
+                <td>
+                  <%= link_to "#{tag.created}", tag_tagged_users_path(tag) %>
+                </td>
+                <td>
+                  <%= link_to "#{tag.user_tags.count}", tag_tagged_users_path(tag) %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag 'sort_column' %>

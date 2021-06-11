@@ -18,10 +18,13 @@ Rails.application.routes.draw do
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
       get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
+      put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions
+        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+          get 'edit', action: :edit, on: :collection
+        end
       end
       resources :appointments do
         get 'upcoming', action: :upcoming, on: :collection
@@ -49,11 +52,13 @@ Rails.application.routes.draw do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
         put 'admin', action: 'toggle_admin', on: :member, as: :toggle_admin
-        put 'pause', action: 'toggle_pause', on: :member, as: :toggle_pause
+        put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :journal_entry_view_logs, only: :index, on: :member
-        resources :wellbeing_assessments, only: :index, on: :member
+        resources :wellbeing_assessments, only: :index, on: :member do
+          get 'export', on: :collection
+        end
       end
 
       resources :users, only: %i[index show] do
@@ -63,8 +68,11 @@ Rails.application.routes.draw do
         put 'unpin', action: 'unpin', on: :member, as: :unpin
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
-        resources :wellbeing_assessments, only: %i[new create index], on: :member
+        resources :wellbeing_assessments, only: %i[new create index], on: :member do
+          get 'export', on: :collection
+        end
         resources :appointments, only: %i[index new create edit update], on: :member
+        resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
       end
 
       resources :crisis_events, only: %i[index show] do
@@ -73,17 +81,32 @@ Rails.application.routes.draw do
         resources :notes, only: %i[create show update], controller: :crisis_notes
       end
 
-      resources :wellbeing_assessments, only: %i[show index]
+      resources :wellbeing_assessments, only: %i[show index] do
+        get 'export', on: :collection
+      end
       resources :journal_entries, only: %i[show index]
-      resources :appointments, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
+      resources :wellbeing_score_values, only: %i[index update]
+      resources :tags, only: %i[show index create] do
+        resources :user_tags, only: :index, on: :member, as: :tagged_users
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength
 
   unauthenticated do
-    root 'pages#main'
+    root to: redirect('/users/sign_in')
+    get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
   end
+
+  get 'guide', to: 'guides#index'
+  get 'guide_journal', to: 'guides#journal'
+  get 'guide_appointments', to: 'guides#appointments'
+  get 'guide_myNeeds', to: 'guides#myNeeds'
+  get 'guide_contacts', to: 'guides#contacts'
+  get 'guide_support', to: 'guides#support'
+  get 'guide_goals', to: 'guides#goals'
+
 end

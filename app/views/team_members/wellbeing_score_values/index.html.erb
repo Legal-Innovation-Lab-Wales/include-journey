@@ -1,0 +1,58 @@
+<main class="container team-members wellbeing-metrics index">
+  <section class="row">
+    <div class="col">
+      <h2>Wellbeing Score Values</h2>
+      <p>This section allows you to edit the score names displayed next to values which users rank from 1-10.</p>
+      <div class="iconbar">
+        <%= link_to wellbeing_services_path, class: "btn btn-primary" do %>
+          Wellbeing Services <i class="fas fa-map-signs"></i>
+        <% end %>
+        <%= link_to wellbeing_metrics_path, class: "btn btn-primary" do %>
+          Wellbeing Metrics <i class="fas fa-sliders-h"></i>
+        <% end %>
+        <%= link_to wellbeing_score_values_path, class: "btn disabled btn-primary" do %>
+          Score Values <i class="fas fa-star-half-alt"></i>
+        <% end %>
+      </div>
+      <div class="table-container">
+        <table class="table table-dark link-table">
+          <thead>
+          <th scope="col" class="hidden"></th>
+          <th scope="col">Value</th>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+          </thead>
+          <tbody>
+          <% @score_values.each do |score_value| %>
+            <tr class="metric-score value-<%= score_value.id %>">
+              <td class="hidden">
+                <form id="wellbeing_score_value_<%= score_value.id %>" name="wellbeing_score_value" method="post"
+                      action="<%= wellbeing_score_value_path(score_value) %>">
+                  <input type="hidden" name="_method" value="patch">
+                  <input type="hidden" name="authenticity_token" value="<%= session[:_csrf_token] %>">
+                  <input type="hidden" name="id" value="<%= score_value.id %>" />
+                </form>
+              </td>
+              <td>
+                <%= score_value.id %>
+              </td>
+              <td>
+                <input form="wellbeing_score_value_<%= score_value.id %>" type="text" name="wellbeing_score_value[name]"
+                       placeholder="Name" value="<%= score_value.name %>" disabled required />
+              </td>
+              <td>
+                <i class="fas fa-edit"></i>
+                <input form="wellbeing_score_value_<%= score_value.id %>" type="submit" class="btn btn-success hidden"
+                       value="Save" />
+                <div class="btn btn-danger cancel hidden">Cancel</div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'table_edit' %>

@@ -1,0 +1,7 @@
+i.fas {
+  &.fa-sort, &.fa-caret-down, &.fa-caret-up {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

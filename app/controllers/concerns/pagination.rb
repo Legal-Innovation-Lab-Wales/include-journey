@@ -7,10 +7,11 @@ module Pagination
 
   protected
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def pagination
     @page = pagination_params[:page].present? ? pagination_params[:page].to_i : 1
     @query = pagination_params[:query]
+    @direction = %w[asc desc].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'desc'
     @resources_per_page = resources_per_page
     @resources = @query.present? ? search : resources
     @count = @resources.count
@@ -20,7 +21,7 @@ module Pagination
     @resources = @resources.offset(offset).limit(@limit)
     @resources.present? ? render('index') : redirect
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def limit
     if pagination_params[:limit].present?
@@ -44,12 +45,16 @@ module Pagination
     'lower(users.first_name) similar to lower(:query) or lower(users.last_name) similar to lower(:query)'
   end
 
+  def team_member_search
+    'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query)'
+  end
+
   def wildcard_query
     { query: "%#{@query.split.join('%|%')}%" }
   end
 
   def pagination_params
-    params.permit(:page, :query, :limit)
+    params.permit(:page, :query, :limit, :sort, :direction)
   end
 
   def resources
@@ -68,5 +73,8 @@ module Pagination
 
   def redirect
     redirect_back(fallback_location: root_path, alert: 'No Results Found')
+  end
+
+  def direction_param
   end
 end

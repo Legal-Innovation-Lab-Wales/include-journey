@@ -5,6 +5,8 @@ class CreateWellbeingAssessments < ActiveRecord::Migration[6.1]
       t.belongs_to :team_member, foreign_key: true
       t.belongs_to :user, null: false, foreign_key: true
 
+      t.decimal :average
+
       t.timestamps
     end
   end

@@ -2,6 +2,18 @@
   <section class="row">
     <div class="col">
       <h2>Wellbeing Services</h2>
+      <p>This section is used to view and add services/charities that can offer help and advice.</p>
+      <div class="iconbar">
+        <%= link_to wellbeing_services_path, class: "btn disabled btn-primary" do %>
+          Wellbeing Services <i class="fas fa-map-signs"></i>
+        <% end %>
+        <%= link_to wellbeing_metrics_path, class: "btn btn-primary" do %>
+          Wellbeing Metrics <i class="fas fa-sliders-h"></i>
+        <% end %>
+        <%= link_to wellbeing_score_values_path, class: "btn btn-primary" do %>
+          Score Values <i class="fas fa-star-half-alt"></i>
+        <% end %>
+      </div>
       <div class="container">
         <div class="row mt-3 mb-3">
           <div class="col d-flex justify-content-start">
@@ -12,7 +24,7 @@
         </div>
         <div class="row">
           <% @wellbeing_services.each do |wellbeing_service| %>
-            <%= render 'card', wellbeing_service: wellbeing_service, user: false %>
+            <%= render 'shared/wellbeing_services/card', wellbeing_service: wellbeing_service, user: false %>
           <% end %>
         </div>
       </div>

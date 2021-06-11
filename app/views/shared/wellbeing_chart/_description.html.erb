@@ -1,27 +1,3 @@
-<div class="description badge rounded-pill wba-score__<%= value %>">
-  <%= case value
-      when 1
-        'Abysmal'
-      when 2
-        'Dreadful'
-      when 3
-        'Rubbish'
-      when 4
-        'Bad'
-      when 5
-        'Mediocre'
-      when 6
-        'Fine'
-      when 7
-        'Good'
-      when 8
-        'Great'
-      when 9
-        'Superb'
-      when 10
-        'Perfect'
-      else
-        'Unknown'
-      end
-  %>
+<div class="description badge rounded-pill wba-score__<%= score.value %>">
+  <%= score.wellbeing_score_value.name %><%= user_signed_in? ? '' : " - #{score.value}" %>
 </div>

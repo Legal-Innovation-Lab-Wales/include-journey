@@ -1,7 +1,10 @@
 <main class="container team-members users show">
   <div id="user-info" class="row mt-3 mb-3">
     <div class="col-12 col-md-6 col-lg-4 mx-auto">
-      <h1 class="text-center"><%= @user.full_name %></h1>
+      <h1 class="text-center <%= @user.pronouns.present? ? "mb-0" : "mb-0" %>"><%= @user.full_name %></h1>
+      <% if @user.pronouns.present? %>
+        <h4 class="text-center"><%= @user.pronouns %></h4>
+      <% end %>
       <p>
         <%= link_to "mailto:#{@user.email}" do %>
           <i class="fas fa-envelope"></i> <%= @user.email %>
@@ -59,7 +62,6 @@
       </div>
     </div>
   <% end %>
-
   <div class="row mb-4">
     <div class="col">
       <div class="card">
@@ -67,16 +69,18 @@
           <div class="row">
             <div class="col">
               <% if @wellbeing_assessment.present? %>
-                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '250',
-                           show_timestamp: true, chart_heading: "#{@user.full_name}'s Wellbeing",
-                           sliders_heading: 'Recorded At', wellbeing_assessment: @wellbeing_assessment %>
+                <%= render 'shared/wellbeing_chart/wrapper', chart_alignment: 'left', height: '200',
+                           show_timestamp: true, chart_heading: "Latest Wellbeing Assessment",
+                           show_author: true, wellbeing_assessment: @wellbeing_assessment,
+                           pyramid_view: true %>
               <% end %>
-
-              <div class="text-center">
-                <% unless @wellbeing_assessment.today? %>
-                  <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@wellbeing_assessment.user), class: "btn btn-primary btn-sm" %>
+              <div class="text-center mt-2">
+                <% unless @wellbeing_assessment.present? && @wellbeing_assessment.today? %>
+                  <%= link_to 'New Wellbeing Assessment', new_user_wellbeing_assessment_path(@user), class: "btn btn-success py-2 px-5" %>
                 <% end %>
-                <%= link_to "View All User's Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary btn-sm" %>
+                <% if @user.wellbeing_assessments.any? %>
+                    <%= link_to "View All Wellbeing Assessments", user_wellbeing_assessments_path(@user), class: "btn btn-primary py-2 px-5" %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -84,9 +88,11 @@
       </div>
     </div>
   </div>
-  <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+  <% if @user.wellbeing_assessments.count > 1 %>
+    <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
+  <% end %>
   <div class="row" id="journal-appointments">
-    <div class="col-12 col-md-6 mb-4">
+    <div class="col-12 col-lg-6 mb-4">
       <div id="journal-card" class="card h-100">
         <div class="card-header">
           <h3>Journal</h3>
@@ -141,7 +147,7 @@
       </div>
     </div>
 
-    <div class="col-12 col-md-6 mb-4">
+    <div class="col-12 col-lg-6 mb-4">
       <div class="card h-100">
         <div class="card-header d-flex">
           <h3 class="me-auto align-self-center">Appointments</h3>
@@ -216,11 +222,39 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <div class="row" id="notes">
-    <div class="col-12 mb-4">
+  <div class="row mb-4" id="tags-notes">
+    <div id="tags" class="col-12 col-lg-6 mb-3 mb-lg-0">
+      <div class="card tags h-100">
+        <div class="card-header">
+          <h3>User Tags</h3>
+        </div>
+        <div class="card-body bg-transparent h-100" id="tags">
+          <% if @user_tags.empty? %>
+            <span>There are no tags on this user yet.</span>
+          <% else %>
+            <div class="container">
+              <div class="row">
+                <%= render 'tag', user_tag: @new_user_tag %>
+                <% @user_tags.each do |user_tag| %>
+                  <%= render 'tag', user_tag: user_tag %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-success my-2 py-2 px-5" type="button">
+            Add Tag
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <%= javascript_pack_tag 'tags' %>
+
+    <div class="col-12 col-lg-6">
       <div class="card h-100">
         <div class="card-header">
           <h3>User Notes</h3>
@@ -245,7 +279,6 @@
     </div>
 
     <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
-
 
   </div>
 </main>

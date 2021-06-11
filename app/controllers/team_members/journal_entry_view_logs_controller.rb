@@ -19,28 +19,31 @@ module TeamMembers
                   .order(sort)
     end
 
-    def team_member
-      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
-    end
-
     def subheading_stats
-      # TODO: Add stats for team member view logs index
-
+      @viewed_in_last_week = @resources.viewed_in_last_week.size
+      @viewed_in_last_month = @resources.viewed_in_last_month.size
     end
 
     def sort
-      sort_param = journal_entry_view_logs_params[:sort]
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
+      { "#{sort_param}": @direction }
+    end
 
-      if %w[created_at_asc created_at_desc viewed_at_asc viewed_at_desc].include?(sort_param)
-        sort_param = sort_param.split('_')
-        { "#{sort_param[0..1].join('_') == 'viewed_at' ? 'created_at' : 'journal_entries.created_at'}": sort_param[2] }
+    private
+
+    def sort_param
+      case @sort
+      when 'published_at'
+        'journal_entries.created_at'
+      when 'first_viewed_at'
+        'journal_entry_view_logs.created_at'
       else
-        { 'created_at': :desc }
+        'journal_entry_view_logs.updated_at'
       end
     end
 
-    def journal_entry_view_logs_params
-      params.permit(:page, :query, :limit, :sort)
+    def team_member
+      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
     end
   end
 end

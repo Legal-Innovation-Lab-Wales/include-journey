@@ -4,7 +4,9 @@
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
-          <%= user.full_name %> <i class="fas fa-external-link-alt"></i>
+          <%= user.full_name %>
+          <small><%= user.pronouns.to_s.downcase %></small>
+          <i class="fas fa-external-link-alt"></i>
         <% end %>
       </span>
       <span>
@@ -52,7 +54,7 @@
               <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
               <% unless unread_journal_entries.zero? %>
                 <div class="row">
-                  <%= link_to '#' do %>
+                  <%= link_to journal_entries_path(query: user.full_name) do %>
                     <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
                   <% end %>
                 </div>
@@ -66,8 +68,8 @@
               <% end %>
             </div>
           </div>
-          <div class="col-12 col-md-6 wellbeing-chart-col">
-            <% last_wellbeing_assessment = user.last_wellbeing_assessment %>
+          <% last_wellbeing_assessment = user.last_wellbeing_assessment %>
+          <div class="col-12 col-md-6 <%= last_wellbeing_assessment.present? ? 'wellbeing-chart-col' : '' %>">
             <% if last_wellbeing_assessment.present? %>
               <%= link_to wellbeing_assessment_path(last_wellbeing_assessment) do %>
                 <%= render 'shared/wellbeing_chart/wrapper', hide_sliders: true,

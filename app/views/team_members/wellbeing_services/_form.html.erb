@@ -16,6 +16,10 @@
           <%= f.text_field :website, class: 'form-control', required: true %>
           <%= f.label :website %>
         </div>
+        <div class="form-floating">
+          <%= f.number_field :contact_number, class: 'form-control', required: true %>
+          <%= f.label :contact_number %>
+        </div>
         <div class="container p-0">
           <div class="row m-0">
             <% wellbeing_metrics.each do |metric| %>

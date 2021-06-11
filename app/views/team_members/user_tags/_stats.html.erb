@@ -1,0 +1,16 @@
+<div class="subheading">
+  <p>
+    <i class="fas fa-tag" title="Tag"></i> <%= @tag.tag %>&nbsp;
+    <i class="fas fa-user-tag" title="Created By"></i> <%= @tag.team_member.full_name %>&nbsp;
+    <i class="fas fa-calendar-alt" title="Date"></i> <%= @tag.created_date %>&nbsp;
+    <i class="fas fa-clock" title="Date"></i> <%= @tag.created_time %>
+  </p>
+  <br>
+  <% unless @query.present? %>
+    <p><%= pluralize(@count, 'user has', 'users have') %> been assigned this tag overall.</p>
+  <% end %>
+  <p>
+    <%= pluralize(@count_in_last_week, 'user has', 'users have') %> been assigned this tag in the last week and
+    <%= pluralize(@count_in_last_month, 'user has', 'users have') %> been assigned this tag in the last month.
+  </p>
+</div>

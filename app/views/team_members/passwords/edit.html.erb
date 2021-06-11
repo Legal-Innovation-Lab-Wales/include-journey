@@ -1,36 +1,40 @@
 <main class="ij-form">
-  <div class="form-container">
-    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-      <h2>Change your password</h2>
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-5">
+        <div class="form-container">
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+            <h2>Change your password</h2>
 
-      <div class="form-group">
-        <%= render "team_members/shared/error_messages", resource: resource %>
-        <p class="text-danger">
-          <% if flash[:alert] %>
-            <%= flash[:alert] %>
+            <div class="form-group">
+              <%= render 'team_members/shared/error_messages', resource: resource %>
+              <p class="text-danger">
+                <% if flash[:alert] %>
+                  <%= flash[:alert] %>
+                <% end %>
+              </p>
+            </div>
+            <%= f.hidden_field :reset_password_token %>
+
+            <div class="form-floating">
+              <%= f.password_field :password, class: 'form-control', autocomplete: 'password', placeholder: 'New Password - 6 characters minimum' %>
+              <%= f.label :password, 'New Password (6 characters minimum)' %>
+            </div>
+
+            <div class="form-floating">
+              <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: 'new-password', placeholder: 'Confirm new password' %>
+              <%= f.label :password_confirmation, 'Confirm new password' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit 'Change my password', class: 'btn btn-primary' %>
+            </div>
+
+            <%= render 'team_members/shared/back_to_login' %>
           <% end %>
-        </p>
+        </div>
       </div>
-      <%= f.hidden_field :reset_password_token %>
-
-      <div class="form-floating">
-        <%= f.password_field :password, class: 'form-control', autocomplete: "password", placeholder: "New Password - 6 characters minimum" %>
-        <%= f.label :password, "New Password (6 characters minimum)" %>
-      </div>
-
-      <div class="form-floating">
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-        <%= f.label :password_confirmation, "Confirm new password" %><br/>
-      </div>
-
-      <div class="form-group">
-        <%= f.submit "Change my password", class: 'btn btn-primary' %>
-      </div>
-
-      <div class="other-actions">
-        <%= render "team_members/shared/links" %>
-      </div>
-    <% end %>
+    </div>    
   </div>
 </main>
 

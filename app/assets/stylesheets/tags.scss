@@ -1,0 +1,137 @@
+@import "variables";
+
+$border: 6px;
+$row-height: 86px;
+$right-triangle: ($row-height / 2);
+$circle: ($right-triangle / 2);
+$tag-color: $brand-primary;
+$tag-border-color: $brand-primary-dark;
+
+.tags {
+  .card-body {
+    max-height: 50vh;
+    overflow-y: auto;
+
+    .tag {
+      display: flex;
+
+      .outer-triangle {
+        width: 0;
+        height: 0;
+        border-top: $right-triangle solid transparent;
+        border-bottom: $right-triangle solid transparent;
+        border-right: $right-triangle solid $tag-border-color;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .inner-triangle {
+          width: 0;
+          height: 0;
+          border-top: ($right-triangle - $border) solid transparent;
+          border-bottom: ($right-triangle - $border) solid transparent;
+          border-right: ($right-triangle - $border) solid $tag-color;
+          margin-left: ($right-triangle + $border);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .tag-body {
+        position: relative;
+        width: 100%;
+        max-height: $row-height;
+        background: $tag-color;
+        border: $border solid $tag-border-color;
+        border-left: none;
+        border-radius: 0 $border $border 0;
+        padding: 0.5rem 0;
+        font-size: 1.25rem;
+        text-align: center;
+
+        small {
+          font-size: 0.75rem;
+        }
+
+        .tag-control {
+          position: absolute;
+          font-size: 20px;
+          top: (($row-height / 2) - 20px);
+          right: 1rem;
+
+          i {
+            transition: transform 0.8s;
+          }
+
+          &:hover {
+            cursor: pointer;
+
+            i {
+              color: $brand-secondary;
+
+              &.fa-times-circle {
+                transform: rotate(-180deg);
+              }
+            }
+          }
+        }
+
+        form#new-user-tag-form button.btn {
+          padding: 0;
+          font-size: 20px;
+        }
+
+        input[form="new-user-tag-form"], select[form="new-user-tag-form"] {
+          text-align: center;
+          display: inline-block;
+          width: 200px;
+          font-size: 1.25rem;
+          background-color: transparent;
+          border: none;
+        }
+
+        select[form="new-user-tag-form"] {
+          height: 32px;
+          padding-top: 0;
+          padding-bottom: 0;
+          padding-left: 0;
+
+          option {
+            max-width: calc(200px - 2.25rem);
+          }
+        }
+
+        .input-switch:hover {
+          cursor: pointer;
+          color: $brand-secondary;
+        }
+      }
+
+      &.new {
+        color: $white;
+
+        .outer-triangle {
+          border-right-color: $brand-complementary-light;
+
+          .inner-triangle {
+            border-right-color: $brand-complementary-lightest;
+          }
+        }
+
+        .tag-body {
+          border-color: $brand-complementary-light;
+          background-color: $brand-complementary-lightest;
+        }
+
+        input, select, i {
+          color: $white;
+        }
+
+        option {
+          color: $black;
+        }
+      }
+    }
+  }
+}

@@ -2,12 +2,25 @@
   <section class="row">
     <div class="col">
       <h2>Wellbeing Metrics</h2>
+      <p>This section allows you to edit the metrics in a wellbeing assessment (Icons are currently only visible to Team Members).</p>
+      <div class="iconbar">
+        <%= link_to wellbeing_services_path, class: "btn btn-primary" do %>
+          Wellbeing Services <i class="fas fa-map-signs"></i>
+        <% end %>
+        <%= link_to wellbeing_metrics_path, class: "btn disabled btn-primary" do %>
+          Wellbeing Metrics <i class="fas fa-sliders-h"></i>
+        <% end %>
+        <%= link_to wellbeing_score_values_path, class: "btn btn-primary" do %>
+          Score Values <i class="fas fa-star-half-alt"></i>
+        <% end %>
+      </div>
       <div class="table-container">
         <table class="table table-dark table-striped link-table">
           <thead>
             <th scope="col" class="hidden"></th>
             <th scope="col">Name</th>
             <th scope="col">Category</th>
+            <th scope="col">Icon</th>
             <th scope="col"></th>
           </thead>
           <tbody>
@@ -28,6 +41,9 @@
                 <td>
                   <input form="wellbeing_metric_<%= metric.id %>" type="text" name="wellbeing_metric[category]"
                          placeholder="Category" value="<%= metric.category %>" disabled required />
+                </td>
+                <td>
+                  <i class="fas fa-<%= metric.icon %>"></i>
                 </td>
                 <td>
                   <i class="fas fa-edit"></i>

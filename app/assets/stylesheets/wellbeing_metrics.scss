@@ -6,59 +6,175 @@
 
 //Abysmal 1
 .wba-score__1 {
-  width:100%;
+  width: 100%;
   background-color: #E04444;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #E04444
+  }
+
+  &.triangle.down {
+    border-top-color: #E04444
+  }
 }
+
 //Dreadful 2
 .wba-score__2 {
-  width:100%;
+  width: 100%;
   background-color: #e66043;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #e66043
+  }
+
+  &.triangle.down {
+    border-top-color: #e66043
+  }
 }
+
 //Rubbish 3
-.wba-score__3{
-  width:100%;
+.wba-score__3 {
+  width: 100%;
   background-color: #eb7945;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #eb7945
+  }
+
+  &.triangle.down {
+    border-top-color: #eb7945
+  }
 }
+
 //Bad 4
 .wba-score__4 {
-  width:100%;
+  width: 100%;
   background-color: #ee904b;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #ee904b
+  }
+
+  &.triangle.down {
+    border-top-color: #ee904b
+  }
 }
+
 //Mediocre 5
 .wba-score__5 {
-  width:100%;
+  width: 100%;
   background-color: #F0A656;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #F0A656
+  }
+
+  &.triangle.down {
+    border-top-color: #F0A656
+  }
 }
+
 //Fine 6
 .wba-score__6 {
-  width:100%;
+  width: 100%;
   background-color: #DFC54C;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #DFC54C
+  }
+
+  &.triangle.down {
+    border-top-color: #DFC54C
+  }
 }
+
 //Good 7
 .wba-score__7 {
-  width:100%;
+  width: 100%;
   background-color: #c1c041;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #c1c041
+  }
+
+  &.triangle.down {
+    border-top-color: #c1c041
+  }
 }
+
 //Great 8
 .wba-score__8 {
-  width:100%;
+  width: 100%;
   background-color: #a2ba3a;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #a2ba3a
+  }
+
+  &.triangle.down {
+    border-top-color: #a2ba3a
+  }
 }
+
 //Superb 9
 .wba-score__9 {
-  width:100%;
+  width: 100%;
   background-color: #82b438;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #82b438
+  }
+
+  &.triangle.down {
+    border-top-color: #82b438
+  }
 }
+
 //Perfect 10
 .wba-score__10 {
-  width:100%;
+  width: 100%;
   background-color: #5DAD3A;
+
+  &.trapezoid, &.triangle.up, &.polygon {
+    border-bottom-color: #5DAD3A
+  }
+
+  &.triangle.down {
+    border-top-color: #5DAD3A
+  }
 }
 
 .wellbeing-metrics {
+
+  .iconbar {
+    .btn {
+      display: inline-block;
+      margin: 1rem;
+
+      &.disabled {
+        background-color: $brand-secondary;
+        border-color: $brand-secondary;
+        color: $brand-primary;
+      }
+    }
+  }
+
   &.index {
     .hidden {
       display: none !important;
+    }
+
+    tr.metric-score {
+        &.value-1 td {background-color: #E04444E6;}
+        &.value-2 td {background-color: #e66043E6;}
+        &.value-3 td {background-color: #eb7945E6;}
+        &.value-4 td {background-color: #ee904bE6;}
+        &.value-5 td {background-color: #F0A656E6;}
+        &.value-6 td {background-color: #DFC54CE6;}
+        &.value-7 td {background-color: #c1c041E6;}
+        &.value-8 td {background-color: #a2ba3aE6;}
+        &.value-9 td {background-color: #82b438E6;}
+        &.value-10 td {background-color: #5DAD3AE6;}
     }
 
     td {

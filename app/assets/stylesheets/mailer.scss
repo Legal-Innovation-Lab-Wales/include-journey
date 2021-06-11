@@ -1,0 +1,118 @@
+@import "variables";
+
+body {
+  Margin: 1.5rem;
+  padding: 0;
+  background-color: $white;
+
+  .wrapper {
+    width: 100%;
+    table-layout: fixed;
+    background-color: $white;
+    padding-bottom: 2rem;
+
+    .webkit {
+      Margin: 0 auto;
+      max-width: 600px;
+      background-color: $black;
+
+      .outer {
+        width: 100%;
+        max-width: 600px;
+        border-spacing: 0;
+        font-family: $font;
+        font-size: medium;
+        color: $white;
+
+        .inner {
+          width: 100%;
+
+          .banner {
+            padding: 1.5rem;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          .content {
+            padding: 0 3rem;
+
+            h2 {
+              Margin-top:1rem;
+              Margin-bottom: 2rem;
+            }
+
+            .crisis-details {
+              Margin: 2.5rem 1.5rem;
+
+              h3 {
+                text-align: center;
+              }
+            }
+
+            .btn-container {
+              Margin: 2.5rem 0;
+              text-align: center;
+
+              a {
+                background-color: $success;
+                color: $black;
+                font-size: 1rem;
+                font-weight: 700;
+                text-decoration: none;
+                text-align: center;
+                border: none;
+                cursor: pointer;
+                border-radius: 0.6rem;
+                padding: 0.8rem 3rem;
+              }
+            }
+
+            .signature {
+              Margin-top: 2.5rem;
+              Margin-bottom: 1rem;
+              font-size: large;
+              font-style: italic;
+              color: $grey;
+
+              p {
+                Margin: 0.5rem 0;
+              }
+            }
+
+            .im {
+              color: $white !important;
+            }
+          }
+
+          .footer {
+            position: relative;
+            padding: 1.5rem;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
+
+table {
+  border-spacing: 0;
+}
+
+.im {
+  color: $white !important;
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 400px) {
+
+}

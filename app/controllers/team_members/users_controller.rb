@@ -2,14 +2,10 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
     before_action :pinned_users, only: :index
-    before_action :user_counts, only: :index
     include Pagination
 
     before_action :user, except: :index
     before_action :user_pin, except: %i[show index wba_history]
-
-    # GET /users
-    def index; end
 
     # GET /users/:id
     def show
@@ -22,6 +18,9 @@ module TeamMembers
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
+      @user_tags = @user.user_tags.order({ 'created_at': :desc })
+      @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
+      @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
 
       render 'show'
     end
@@ -83,7 +82,9 @@ module TeamMembers
     private
 
     def log_view
-      current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
+      view_log = current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
+      view_log.increment_view_count
+      view_log.save!
     rescue ActiveRecord::RecordInvalid
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
     end
@@ -120,11 +121,6 @@ module TeamMembers
       @pinned_users = current_team_member.pinned_users.order(:order)
     end
 
-    def user_counts
-      @active_users = User.where(current_sign_in_at: (Time.zone.now - 30.days)..Time.zone.now).count
-      @user_count = User.count
-    end
-
     def user_pin
       @user_pin = current_team_member.user_pins.find_by(user_id: @user.id)
     end
@@ -145,6 +141,10 @@ module TeamMembers
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
     end
 
-    def subheading_stats; end
+    def subheading_stats
+      @total_users = User.all.count
+      @active_last_week = @resources.active_last_week.size
+      @active_last_month = @resources.active_last_month.size
+    end
   end
 end

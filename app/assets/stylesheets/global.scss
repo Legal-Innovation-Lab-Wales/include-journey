@@ -6,6 +6,7 @@
 
 html, body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .btn {
@@ -104,6 +105,7 @@ body#overboot {
   }
 
   .subheading {
+    color: $white;
     p {
       margin-bottom: 0;
     }

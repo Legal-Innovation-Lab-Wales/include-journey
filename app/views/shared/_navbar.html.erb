@@ -2,12 +2,10 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><h2>Include Journey</h2></a>
     <% if current_user %>
-      <% unless devise_controller? %>
-        <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
-           data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-          SOS <i class="fas fa-exclamation-circle"></i>
-        </a>
-      <% end %>
+      <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
+         data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+        SOS <i class="fas fa-exclamation-circle"></i>
+      </a>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,12 +15,6 @@
       <% unless dashboard_controller? %>
         <% if current_team_member %>
           <div class="navbar-items">
-            <% if current_team_member.admin? %>
-              <%= link_to team_members_path, class: 'btn btn-nav' do %>
-                <i class="fas fa-users"></i>
-                <div class="nav-label hide">Team Members</div>
-              <% end %>
-            <% end %>
             <%= link_to users_path, class: 'btn btn-nav' do %>
               <i class="fas fa-user"></i>
               <div class="nav-label hide">Users</div>
@@ -43,8 +35,16 @@
               <i class="fas fa-heart"></i>
               <div class="nav-label hide">Wellbeing Assessments</div>
             <% end %>
+            <%= link_to wellbeing_services_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-tools"></i>
+              <div class="nav-label hide">Wellbeing Management</div>
+            <% end %>
+            <%= link_to tags_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-tags"></i>
+              <div class="nav-label hide">Tags</div>
+            <% end %>
           </div>
-          <% end %>
+        <% end %>
 
         <% if current_user %>
           <div class="navbar-items">
@@ -91,6 +91,12 @@
       <div class="navbar-right-buttons">
         <div class="navbar-items">
           <% if current_team_member %>
+            <% if current_team_member.admin? %>
+              <%= link_to team_members_path, class: "btn btn-info" do %>
+                <div class="nav-label hide">Team Members</div>
+                <i class="fas fa-users"></i>
+              <% end %>
+            <% end %>
             <%= link_to edit_team_member_registration_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
@@ -101,16 +107,18 @@
             <% end %>
           <% end %>
           <% if current_user %>
-            <% unless devise_controller? %>
-              <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
-                 data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-                <div class="nav-label always-show">SOS</div>
-                <i class="fas fa-exclamation-circle"></i>
-              </a>
-            <% end %>
+            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"
+               data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
+              <div class="nav-label always-show">SOS</div>
+              <i class="fas fa-exclamation-circle"></i>
+            </a>
             <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
+            <% end %>
+            <%= link_to guide_path, class: "btn btn-info" do %>
+              <div class="nav-label hide">Guide</div>
+              <i class="fas fa-question-circle"></i>
             <% end %>
             <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>

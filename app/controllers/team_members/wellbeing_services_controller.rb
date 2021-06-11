@@ -27,7 +27,8 @@ module TeamMembers
       if (@wellbeing_service = current_team_member.wellbeing_services
                                                   .create!(name: wellbeing_service_params[:name],
                                                            description: wellbeing_service_params[:description],
-                                                           website: wellbeing_service_params[:website]))
+                                                           website: wellbeing_service_params[:website],
+                                                           contact_number: wellbeing_service_params[:contact_number]))
         redirect_to wellbeing_services_path, flash: { success: 'New wellbeing service added' }
       else
         redirect_to new_wellbeing_service_path,
@@ -46,7 +47,8 @@ module TeamMembers
     def update
       if @wellbeing_service.update(name: wellbeing_service_params[:name],
                                    description: wellbeing_service_params[:description],
-                                   website: wellbeing_service_params[:website])
+                                   website: wellbeing_service_params[:website],
+                                   contact_number: wellbeing_service_params[:contact_number])
         redirect_to wellbeing_services_path, flash: { success: 'Wellbeing service updated' }
       else
         redirect_to edit_wellbeing_service_path(@wellbeing_service),
@@ -86,7 +88,7 @@ module TeamMembers
     end
 
     def wellbeing_service_params
-      params.require(:wellbeing_service).permit(:name, :description, :website,
+      params.require(:wellbeing_service).permit(:name, :description, :website, :contact_number,
                                                 @wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
     end
   end

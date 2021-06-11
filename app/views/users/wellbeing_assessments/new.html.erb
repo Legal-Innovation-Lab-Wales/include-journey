@@ -1,23 +1,35 @@
 <main class="container team-members wellbeing-assessments new">
     <section class="row pb-0" id="wellbeing">
-    <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
-      <h3>Your Services</h3>
-      <div class="container wellbeing-services-list">
-        <% @wellbeing_services.each_with_index do |service| %>
-          <div class="row wellbeing-service" data-metrics="<%= service.metrics %>">
-            <div class="col">
-              <%= link_to service.name, service.website, class: 'btn btn-success' %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12">
       <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: @wellbeing_assessment,
-                 chart_alignment: 'left', chart_heading: 'Your Wellbeing',
-                 sliders_heading: 'How are you today?',
+                 chart_alignment: 'left',
+                 chart_heading: 'How are you today?',
                  wellbeing_metrics: @wellbeing_metrics,
-                 path: wellbeing_assessments_path, last_scores: @last_scores %>
+                 path: wellbeing_assessments_path,
+                 last_scores: @last_scores,
+                 height: '350' %>
+    </div>
+    <div class="col-12 services pb-3">
+      <h4>Your Services</h4>
+      <div class="container wellbeing-services-list">
+        <div class="row align-items-center justify-content-center">
+          <% @wellbeing_services.each_with_index do |service| %>
+            <div class="col-12 col-md-6 col-xl-4 wellbeing-service" data-metrics="<%= service.metrics %>">
+              <%= link_to service.website, class: 'btn btn-success' do %>
+                <%= service.name %> <i class="fas fa-external-link-alt"></i>
+              <% end %><a class="btn btn-info" href="tel:0<%= service.contact_number %>">
+                0<%= service.contact_number %>
+                <i class="fas fa-phone"></i>
+              </a>
+            </div>
+          <% end %>
+        </div>
+        <div class="row pt-2">
+          <div class="col-12">
+            <p>To see a list of all available services <%= link_to 'click here', wellbeing_services_path, class: 'btn btn-primary'%>.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>

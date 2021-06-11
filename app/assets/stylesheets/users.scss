@@ -1,14 +1,6 @@
 @import "variables";
 
 .team-members {
-  &.users.index section.row {
-    padding: 0 1rem;
-
-    &.back-btn {
-      padding: 1rem;
-    }
-  }
-
   .card {
     background-color: $grey;
     background: $grey-grad;
@@ -26,9 +18,16 @@
       &.btn-sm {
         padding: 0.25rem 0.5rem;
       }
-
+      
       &:hover {
         color: $white;
+      }
+
+      small {
+        color: $dark-grey;
+        &:hover {
+          color: $white;
+        }
       }
     }
 
@@ -142,8 +141,10 @@
   }
 
   &.show {
-
     #user-info {
+      h4 {
+        color: $dark-grey;
+      }
       padding: 0 1rem;
 
       p {
@@ -207,12 +208,16 @@
 
 
     .wellbeing-chart.wrapper {
-      h3, h5 {
+      .row {
+        padding-left: 0 !important;
+      }
+
+      h3, h5, .metadata {
         text-align: center !important;
       }
 
-      canvas {
-        margin-top: 1.5rem;
+      canvas, .pyramid {
+        margin: 1.5rem 0;
       }
     }
   }

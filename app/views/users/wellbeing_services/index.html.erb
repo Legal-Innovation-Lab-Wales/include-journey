@@ -1,5 +1,5 @@
 <main class="container team-members wellbeing-services index">
-  <section class="row mt-0 pt-0">
+  <section class="row">
     <div class="col">
       <div class="container">
         <div class="row">
@@ -8,7 +8,7 @@
           <div class="container">
             <div class="row">
               <% @wellbeing_services.each do |wellbeing_service| %>
-                <%= render 'team_members/wellbeing_services/card', wellbeing_service: wellbeing_service, user: true %>
+                <%= render 'shared/wellbeing_services/card', wellbeing_service: wellbeing_service, user: true %>
               <% end %>
             </div>
           </div>

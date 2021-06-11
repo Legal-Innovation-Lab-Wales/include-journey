@@ -10,8 +10,13 @@
               <span><%= journal_entry.feeling %></span>
               <span><%= journal_entry.created %></span>
             </div>
-            <div class="journal-text text-dark p-1">
+            <div class="card-body journal-text text-dark p-1">
               <%= simple_format(journal_entry.entry) %>
+            </div>
+            <div class="card-footer">
+              <%= link_to edit_journal_entry_permissions_path(journal_entry), class: 'btn btn-primary' do %>
+                <i class="fas fa-edit"></i> Edit Permissions
+              <% end %>
             </div>
           </div>
         </div>

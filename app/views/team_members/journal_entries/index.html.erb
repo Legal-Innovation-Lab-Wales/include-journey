@@ -1,5 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'team-members journal-entry', header: 'Journal Entries',
-           index: 'journal_entries', search: render(partial: 'shared/journal_entries/search') do %>
+           index: 'journal_entries', search: render(partial: 'shared/journal_entries/search'),
+           stats: render(partial: 'stats') do %>
   <div class="table-container">
     <table class="table table-dark table-striped link-table">
       <thead>

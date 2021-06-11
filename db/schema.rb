@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_111437) do
+ActiveRecord::Schema.define(version: 2021_05_28_104754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,8 +116,9 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   end
 
   create_table "journal_entry_view_logs", force: :cascade do |t|
-    t.bigint "journal_entry_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "journal_entry_id", null: false
+    t.integer "view_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["journal_entry_id"], name: "index_journal_entry_view_logs_on_journal_entry_id"
@@ -148,6 +149,14 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "tag"
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_tags_on_team_member_id"
+  end
+
   create_table "team_members", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -172,7 +181,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.boolean "approved", default: false
     t.boolean "admin", default: false
     t.boolean "terms", default: false
-    t.boolean "paused", default: false
+    t.boolean "suspended", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
@@ -201,6 +210,18 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.index ["user_id"], name: "index_user_profile_view_logs_on_user_id"
   end
 
+  create_table "user_tags", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "user_id"
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id", "user_id"], name: "index_user_tags_on_tag_id_and_user_id", unique: true
+    t.index ["tag_id"], name: "index_user_tags_on_tag_id"
+    t.index ["team_member_id"], name: "index_user_tags_on_team_member_id"
+    t.index ["user_id"], name: "index_user_tags_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -224,6 +245,14 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.bigint "mobile_number"
     t.datetime "release_date"
     t.boolean "terms", default: false
+    t.datetime "deletion_date"
+    t.datetime "date_of_birth"
+    t.text "disabilities"
+    t.string "ethnic_group"
+    t.string "religion"
+    t.string "sex"
+    t.string "gender_identity"
+    t.string "pronouns"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -246,6 +275,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   create_table "wellbeing_assessments", force: :cascade do |t|
     t.bigint "team_member_id"
     t.bigint "user_id", null: false
+    t.decimal "average"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_assessments_on_team_member_id"
@@ -255,10 +285,18 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
   create_table "wellbeing_metrics", force: :cascade do |t|
     t.string "name"
     t.string "category"
+    t.string "icon"
     t.bigint "team_member_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_metrics_on_team_member_id"
+  end
+
+  create_table "wellbeing_score_values", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "wellbeing_services", force: :cascade do |t|
@@ -266,6 +304,7 @@ ActiveRecord::Schema.define(version: 2021_05_05_111437) do
     t.string "name", null: false
     t.text "description"
     t.string "website", null: false
+    t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"

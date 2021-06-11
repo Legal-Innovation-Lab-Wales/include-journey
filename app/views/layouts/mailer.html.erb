@@ -1,13 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Include Journey Email</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>
-      /* Email styles need to be inline */
-    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag 'mailer' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="wrapper">
+      <div class="webkit">
+        <table class="outer">
+          <tr>
+            <td>
+              <table class="inner">
+                <tr>
+                  <td class="banner">
+                    <a href="http://localhost:3000">
+                      <%= email_image_tag('banner.png') %>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="content">
+                    <% if @resource.present? %>
+                      <h2>Hello <%= @resource.first_name %>!</h2>
+                    <% end %>
+
+                    <% if @admin.present? %>
+                      <% if @crisis_event.present? %>
+                        <h2>Attention <%= @admin.first_name %>!</h2>
+                      <% else %>
+                        <h2>Hello <%= @admin.first_name %>!</h2>
+                      <% end %>
+                    <% end %>
+
+                    <%= yield %>
+                    <div class="signature">
+                      <p>Best Regards,</p>
+                      <p>The Include Team</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="footer">
+                    <a href="https://include-uk.com/">
+                      <%= email_image_tag('footer.png') %>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>        
+      </div>
+    </div>    
   </body>
 </html>
