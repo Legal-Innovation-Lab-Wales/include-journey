@@ -1,3 +1,1 @@
-<div class="description badge rounded-pill wba-score__<%= score.value %>">
-  <%= score.wellbeing_score_value.name %><%= user_signed_in? ? '' : " - #{score.value}" %>
-</div>
+<div class="description badge rounded-pill wba-score__<%= value %>"><%= score_description(value) %></div>
