@@ -1,19 +1,24 @@
 <main class="container user wellbeing-assessments show">
-    <section class="row pb-4" id="wellbeing">
-    <div class="col-md-9">
+    <section class="row pb-0" id="wellbeing">
+    <div class="col-12">
       <%= render 'shared/wellbeing_chart/wrapper', wellbeing_assessment: @wellbeing_assessment,
                  chart_alignment: 'left', chart_heading: 'Your Wellbeing', show_timestamp: true %>
     </div>
-    <div class="col-12 col-md-3 services mt-3 mt-md-5 pb-3">
+    <div class="col-12 services pt-3 pb-3">
       <h4>Your Services</h4>
       <div class="container wellbeing-services-list">
-        <% @wellbeing_services.each_with_index do |service| %>
-          <div class="row wellbeing-service" data-metrics="<%= service.metrics %>">
-            <div class="col-12">
-              <%= link_to service.name, service.website, class: 'btn btn-success' %>
+        <div class="row align-items-center justify-content-center">
+          <% @wellbeing_services.each_with_index do |service| %>
+            <div class="col-12 col-md-6 col-xl-4 wellbeing-service" data-metrics="<%= service.metrics %>">
+              <%= link_to service.website, class: 'btn btn-success' do %>
+                <%= service.name %> <i class="fas fa-external-link-alt"></i>
+              <% end %><a class="btn btn-info" href="tel:0<%= service.contact_number %>">
+              0<%= service.contact_number %>
+              <i class="fas fa-phone"></i>
+            </a>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
         <div class="row pt-2">
           <div class="col-12">
             <p>To see a list of all available services <%= link_to 'click here', wellbeing_services_path %></p>
