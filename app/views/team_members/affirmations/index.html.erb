@@ -5,29 +5,8 @@
         <%= link_to new_affirmation_path, class: 'new-affirmation mt-5 btn btn-success' do %>
           <i class="fas fa-plus-circle"></i> Add New Affirmation
         <% end %>
-        <div class="table-container">
-          <table class="table table-dark table-striped table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Affirmation</th>
-                <th scope="col">Scheduled Date</th>
-                <th scope="col">Last Updated By</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @affirmations.each do |affirmation| %>
-                <tr>
-                  <td><%= affirmation.text %></td>
-                  <td><%= affirmation.date %></td>
-                  <td><%= affirmation.team_member.full_name %></td>
-                  <td><%= link_to edit_affirmation_path(affirmation) do %><i class="fas fa-edit"></i><% end %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-        <%= link_to '#', class: 'archive btn btn-primary' do %>
+        <%= render 'table', affirmations: @affirmations %>
+        <%= link_to affirmations_archive_index_path, class: 'archive btn btn-primary' do %>
           <i class="fas fa-archive"></i> View Archive
         <% end %>
       </div>

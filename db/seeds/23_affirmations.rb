@@ -1,9 +1,9 @@
 if Affirmation.count.zero?
   print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
-  30.times.each do |index|
-    text = if index < 10
+  Config::UPCOMING_AFFIRMATIONS.times.each do |index|
+    text = if index < (Config::UPCOMING_AFFIRMATIONS / 3)
              Faker::Quotes::Shakespeare.hamlet_quote
-           elsif index < 20
+           elsif index < ((Config::UPCOMING_AFFIRMATIONS / 3) * 2)
              Faker::Quotes::Shakespeare.romeo_and_juliet_quote
            else
              Faker::Quotes::Shakespeare.king_richard_iii_quote
@@ -12,6 +12,24 @@ if Affirmation.count.zero?
     Affirmation.create!(
       text: text,
       scheduled_date: Date.today + index.days,
+      team_member: TeamMember.find(rand(1..TeamMember.count))
+    )
+  end
+
+  Config::PAST_AFFIRMATIONS.times.each do |index|
+    text = if index < (Config::PAST_AFFIRMATIONS / 4)
+             Faker::Quotes::Shakespeare.hamlet_quote
+           elsif index < (Config::PAST_AFFIRMATIONS / 2)
+             Faker::Quotes::Shakespeare.as_you_like_it_quote
+           elsif index < ((Config::PAST_AFFIRMATIONS / 4) * 3)
+             Faker::Quotes::Shakespeare.romeo_and_juliet_quote
+           else
+             Faker::Quotes::Shakespeare.king_richard_iii_quote
+           end
+
+    Affirmation.create!(
+      text: text,
+      scheduled_date: Date.today - (index.days + 1),
       team_member: TeamMember.find(rand(1..TeamMember.count))
     )
   end

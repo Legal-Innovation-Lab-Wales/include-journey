@@ -1,0 +1,4 @@
+<%= render 'layouts/searchable', class_list: 'team-members affirmations-archive', header: 'Archived Daily Affirmations',
+           index: 'affirmations_archive_index' do %>
+  <%= render 'team_members/affirmations/table', affirmations: @resources %>
+<% end %>

@@ -9,9 +9,7 @@ module TeamMembers
 
     # GET /affirmations
     def index
-      @affirmations = Affirmation.includes(:team_member)
-                                 .where('scheduled_date >= ?', Date.today)
-                                 .order(scheduled_date: :asc)
+      @affirmations = Affirmation.includes(:team_member).upcoming.order(scheduled_date: :asc)
 
       render 'index'
     end
