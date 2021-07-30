@@ -1,0 +1,11 @@
+body#overboot .affirmations {
+  &.index {
+    table td {
+      overflow: auto;
+      text-overflow: initial;
+      white-space: pre-wrap;
+      line-height: 2rem;
+      padding: 0.5rem;
+    }
+  }
+}
