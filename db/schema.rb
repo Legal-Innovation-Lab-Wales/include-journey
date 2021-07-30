@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104754) do
+ActiveRecord::Schema.define(version: 2021_05_28_104755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "affirmations", force: :cascade do |t|
+    t.string "text"
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_affirmations_on_team_member_id"
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "user_id", null: false

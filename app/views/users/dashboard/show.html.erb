@@ -2,6 +2,11 @@
   <section class="row journey">
     <div class="col mb-3">
       <h2 class="mb-3">Your Journey</h2>
+      <% if @affirmation.present? %>
+        <div class="affirmation">
+          <p><%= @affirmation.text %></p>
+        </div>
+      <% end %>
       <div class="container header-buttons">
         <div class="row">
           <%= render 'shared/dashboard_btn', path: current_user.journal_entries.count.zero? ? new_journal_entry_path : journal_entries_path, 
