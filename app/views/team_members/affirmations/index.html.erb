@@ -2,7 +2,10 @@
     <section class="row">
       <div class="col">
         <h2>Upcoming Daily Affirmations</h2>
-        <div class="table-container mt-5">
+        <%= link_to new_affirmation_path, class: 'new-affirmation mt-5 btn btn-success' do %>
+          <i class="fas fa-plus-circle"></i> Add New Affirmation
+        <% end %>
+        <div class="table-container">
           <table class="table table-dark table-striped table-hover">
             <thead>
               <tr>
@@ -24,7 +27,7 @@
             </tbody>
           </table>
         </div>
-        <%= link_to '#', class: 'btn btn-primary' do %>
+        <%= link_to '#', class: 'archive btn btn-primary' do %>
           <i class="fas fa-archive"></i> View Archive
         <% end %>
       </div>

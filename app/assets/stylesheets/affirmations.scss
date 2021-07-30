@@ -2,29 +2,44 @@
 
 body#overboot .affirmations {
   &.index {
-    table td {
-      height: 100%;
-      overflow: auto;
-      text-overflow: initial;
-      white-space: pre-wrap;
-      line-height: 2rem;
-      padding: 1rem;
+    .col {
+      display: flex;
+      flex-direction: column;
 
-      &:first-child {
-        min-width: 100vw;
-
-        @media screen and (min-width: $screen-sm){
-          min-width: auto;
-        }
+      .new-affirmation.btn {
+        justify-self: start;
+        align-self: start;
       }
 
-      &:last-child {
-        width: 50px;
+      .archive.btn {
+        align-self: center;
+        justify-self: center;
+      }
+
+      table td {
+        height: 100%;
+        overflow: auto;
+        text-overflow: initial;
+        white-space: pre-wrap;
+        line-height: 2rem;
+        padding: 1rem;
+
+        &:first-child {
+          min-width: 100vw;
+
+          @media screen and (min-width: $screen-sm){
+            min-width: auto;
+          }
+        }
+
+        &:last-child {
+          width: 50px;
+        }
       }
     }
   }
 
-  &.edit {
+  &.edit, &.new {
     .row {
       justify-content: center;
 
