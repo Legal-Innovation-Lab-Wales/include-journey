@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'Montserrat';
-  src: local('Montserrat.ttf');
+  src: font-url('Montserrat.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
-  src: local('OpenSans.ttf');
+  src: font-url('OpenSans.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Rubik';
-  src: local('Rubik-VariableFont_wght.ttf');
+  src: font-url('Rubik-VariableFont_wght.ttf') format('truetype');
 }
 
 /* montserrat-100 - latin */
@@ -18,8 +18,8 @@
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 100;
-  src: local('montserrat/montserrat-v15-latin-100.woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-100.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  src: font-url('montserrat/montserrat-v15-latin-100.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-100.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-100italic - latin */
@@ -28,8 +28,8 @@
   font-style: italic;
   font-weight: 100;
   src: 
-  local('montserrat/montserrat-v15-latin-100italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-100italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-100italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-100italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-200 - latin */
@@ -38,8 +38,8 @@
   font-style: normal;
   font-weight: 200;
   src: 
-  local('montserrat/montserrat-v15-latin-200.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-200.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-200italic - latin */
@@ -48,8 +48,8 @@
   font-style: italic;
   font-weight: 200;
   src: 
-  local('montserrat/montserrat-v15-latin-200italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-200italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-200italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-200italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-300 - latin */
@@ -58,8 +58,8 @@
   font-style: normal;
   font-weight: 300;
   src: 
-  local('montserrat/montserrat-v15-latin-300.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-300.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-300italic - latin */
@@ -68,8 +68,8 @@
   font-style: italic;
   font-weight: 300;
   src: 
-  local('montserrat/montserrat-v15-latin-300italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-300italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-300italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-300italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-regular - latin */
@@ -78,8 +78,8 @@
   font-style: normal;
   font-weight: 400;
   src: 
-  local('montserrat/montserrat-v15-latin-regular.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-regular.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-italic - latin */
@@ -88,8 +88,8 @@
   font-style: italic;
   font-weight: 400;
   src: 
-  local('montserrat/montserrat-v15-latin-italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-500 - latin */
@@ -98,8 +98,8 @@
   font-style: normal;
   font-weight: 500;
   src: 
-  local('montserrat/montserrat-v15-latin-500.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-500.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-500italic - latin */
@@ -108,8 +108,8 @@
   font-style: italic;
   font-weight: 500;
   src: 
-  local('montserrat/montserrat-v15-latin-500italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-500italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-500italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-500italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-600 - latin */
@@ -118,8 +118,8 @@
   font-style: normal;
   font-weight: 600;
   src: 
-  local('montserrat/montserrat-v15-latin-600.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-600.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-700 - latin */
@@ -128,8 +128,8 @@
   font-style: normal;
   font-weight: 700;
   src: 
-  local('montserrat/montserrat-v15-latin-700.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-700.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-600italic - latin */
@@ -138,8 +138,8 @@
   font-style: italic;
   font-weight: 600;
   src: 
-  local('montserrat/montserrat-v15-latin-600italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-600italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-600italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-600italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-700italic - latin */
@@ -148,8 +148,8 @@
   font-style: italic;
   font-weight: 700;
   src: 
-  local('montserrat/montserrat-v15-latin-700italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-700italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-800 - latin */
@@ -158,8 +158,8 @@
   font-style: normal;
   font-weight: 800;
   src: 
-  local('montserrat/montserrat-v15-latin-800.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-800.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-800.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-800italic - latin */
@@ -168,8 +168,8 @@
   font-style: italic;
   font-weight: 800;
   src: 
-  local('montserrat/montserrat-v15-latin-800italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-800italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-800italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-900 - latin */
@@ -178,8 +178,8 @@
   font-style: normal;
   font-weight: 900;
   src: 
-  local('montserrat/montserrat-v15-latin-900.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-900.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* montserrat-900italic - latin */
@@ -188,6 +188,6 @@
   font-style: italic;
   font-weight: 900;
   src: 
-  local('montserrat/montserrat-v15-latin-900italic.woff2') , /* Chrome 26+, Opera 23+, Firefox 39+ */
-  local('montserrat/montserrat-v15-latin-900italic.woff') ; /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-url('montserrat/montserrat-v15-latin-900italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+  font-url('montserrat/montserrat-v15-latin-900italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
