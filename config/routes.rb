@@ -91,6 +91,10 @@ Rails.application.routes.draw do
       resources :tags, only: %i[show index create] do
         resources :user_tags, only: :index, on: :member, as: :tagged_users
       end
+      resources :affirmations, only: %i[index create] do
+        put '/', to: 'affirmations#update', on: :collection
+        delete '/', to: 'affirmations#destroy', on: :collection
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength
