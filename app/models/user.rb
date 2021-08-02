@@ -21,8 +21,8 @@ class User < DeviseRecord
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
 
-  def release
-    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+  def release_date
+    release.present? ? release.strftime('%d/%m/%Y') : ''
   end
 
   def dob
