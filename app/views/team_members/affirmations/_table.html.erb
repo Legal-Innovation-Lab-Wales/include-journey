@@ -3,7 +3,7 @@
     <thead>
     <tr>
       <th scope="col">Affirmation</th>
-      <th scope="col">Scheduled Date</th>
+      <%= render 'shared/sort_column', column_value: 'scheduled_date', column_text: 'Scheduled Date' %>
       <th scope="col">Last Updated By</th>
       <th scope="col"></th>
     </tr>
@@ -20,3 +20,5 @@
     </tbody>
   </table>
 </div>
+
+<%= javascript_pack_tag 'sort_column' %>

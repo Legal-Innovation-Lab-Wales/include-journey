@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/affirmations_controller.rb
   class AffirmationsController < TeamMembersApplicationController
     before_action :affirmation, except: %i[index new create]
+    before_action :sort, :direction, only: :index
     before_action :update_unique_check, only: :update
     before_action :create_unique_check, only: :create
 
@@ -9,7 +10,7 @@ module TeamMembers
 
     # GET /affirmations
     def index
-      @affirmations = Affirmation.includes(:team_member).upcoming.order(scheduled_date: :asc)
+      @affirmations = Affirmation.includes(:team_member).upcoming.order({ "#{@sort}": @direction })
 
       render 'index'
     end
@@ -59,6 +60,14 @@ module TeamMembers
       success('removed')
     end
 
+    def direction
+      @direction = %w[asc desc].include?(affirmations_params[:direction]) ? affirmations_params[:direction] : 'asc'
+    end
+
+    def sort
+      @sort = 'scheduled_date'
+    end
+
     private
 
     def affirmation
@@ -100,6 +109,10 @@ module TeamMembers
 
     def clear_session_data
       session.delete(:affirmation_text)
+    end
+
+    def affirmations_params
+      params.permit(:sort, :direction)
     end
   end
 end
