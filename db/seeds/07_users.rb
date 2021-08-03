@@ -10,7 +10,7 @@ if User.count.zero?
       last_name: Faker::Name.last_name,
       email: "IJ-test-user-#{user_counter}@purpleriver.dev",
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
-      release_date: rand(1..2).even? ? Faker::Date.between(from: DateTime.now - 20.days, to: DateTime.now) : '',
+      release: rand(1..2).even? ? Faker::Date.between(from: Date.today - 20.days, to: Date.today) : '',
       terms: true,
       password: 'test1234',
       current_sign_in_at: rand(1..100).days.ago
