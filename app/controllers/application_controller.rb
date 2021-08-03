@@ -1,7 +1,7 @@
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :deletion_date, :active_crisis_events, :crisis_event, :crisis_types, if: :user_signed_in?
+  before_action :deletion, :active_crisis_events, :crisis_event, :crisis_types, if: :user_signed_in?
 
   protected
 
@@ -14,14 +14,14 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
-  def deletion_date
-    return unless current_user.deletion_date.present?
+  def deletion
+    return unless current_user.deletion.present?
 
-    if current_user.deletion_date <= DateTime.now
+    if current_user.deletion <= DateTime.now
       current_user.destroy!
       sign_out_and_redirect(current_user)
     else
-      @deletion_date = current_user.deletion_date.to_f * 1000
+      @deletion_date = current_user.deletion.to_f * 1000
     end
   end
 
