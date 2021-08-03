@@ -73,6 +73,7 @@ Rails.application.routes.draw do
         end
         resources :appointments, only: %i[index new create edit update], on: :member
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
+        get 'edit', action: 'edit', on: :member, as: :edit
       end
 
       resources :crisis_events, only: %i[index show] do

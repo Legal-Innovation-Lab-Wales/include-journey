@@ -61,6 +61,11 @@ module TeamMembers
       end
     end
 
+    # GET /users/:user_id/edit
+    def edit
+      render 'edit'
+    end
+
     protected
 
     def resources

@@ -142,6 +142,14 @@
 
   &.show {
     #user-info {
+      .edit-user-details {
+        text-decoration: none;
+
+        .fa-edit {
+          font-size: 1.5rem;
+        }
+      }
+
       h4 {
         color: $dark-grey;
       }
@@ -206,7 +214,6 @@
       }
     }
 
-
     .wellbeing-chart.wrapper {
       .row {
         padding-left: 0 !important;
@@ -218,6 +225,46 @@
 
       canvas, .pyramid {
         margin: 1.5rem 0;
+      }
+    }
+  }
+
+  &.edit {
+    .col-lg-6 {
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      padding-bottom: 1rem;
+
+      @media screen and (min-width: $screen-md) {
+        background: $blue-grad;
+      }
+
+      form {
+        .col-md {
+          padding: 0;
+
+          @media screen and (min-width: $screen-md){
+            &:first-child {
+              padding-right: 0.25rem;
+            }
+
+            &:last-child {
+              padding-left: 0.25rem;
+            }
+          }
+        }
+
+        .form-floating {
+          margin-bottom: 0.5rem;
+
+          input[disabled] {
+            opacity: 0.8;
+          }
+        }
+
+        input[type="submit"] {
+          margin-top: 0.5rem;
+        }
       }
     }
   }

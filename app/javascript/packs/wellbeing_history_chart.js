@@ -73,7 +73,7 @@ const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
         parent.querySelectorAll(css_selector)[event.target.value].classList.add('active')
     }
 
-fetch(`${location}/wba_history`, {
+fetch(`${location.origin}${location.pathname}/wba_history`, {
     headers: {
         'Content-Type': 'application/json'
     }
