@@ -1,22 +1,22 @@
 <main class="container team-members users edit">
   <section class="row">
     <div class="col">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <%= form_with model: @user, url: '#' do |f| %>
-              <div class="form-group">
-                <%= render "team_members/shared/error_messages", resource: @user %>
+      <%= form_with model: @user, url: '#' do |f| %>
+        <div class="form-group">
+          <%= render "team_members/shared/error_messages", resource: @user %>
 
-                <p class="text-danger">
-                  <% if flash[:alert] %>
-                    <%= flash[:alert] %>
-                  <% end %>
-                </p>
-              </div>
+          <p class="text-danger">
+            <% if flash[:alert] %>
+              <%= flash[:alert] %>
+            <% end %>
+          </p>
+        </div>
 
+        <div class="container">
+          <h3>User Details</h3>
+          <div class="row">
+            <div class="col-lg">
               <div class="container">
-                <h3>User Defined Details</h3>
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
@@ -104,14 +104,17 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                <hr />
+            <hr />
 
-                <h3>Team Member Defined Details</h3>
+            <div class="col-lg">
+              <div class="container">
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :release, class: 'form-control', disabled: true %>
+                      <%= f.date_field :release, class: 'form-control', placeholder: 'Release' %>
                       <%= f.label :release %>
                     </div>
                   </div>
@@ -229,11 +232,11 @@
                   </div>
                 </div>
               </div>
-              <%= f.submit 'Update', class: 'btn btn-primary' %>
-            <% end %>
+            </div>
           </div>
         </div>
-      </div>
+        <%= f.submit 'Update', class: 'btn btn-primary' %>
+      <% end %>
     </div>
   </section>
 </main>
