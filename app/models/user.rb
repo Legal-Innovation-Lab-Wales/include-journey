@@ -8,7 +8,7 @@ class User < DeviseRecord
 
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
-  has_many :wellbeing_assessments, foreign_key: :user_id, dependent: :destroy
+  has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
   has_many :crisis_events, foreign_key: :user_id, dependent: :destroy
   has_many :journal_entries, foreign_key: :user_id, dependent: :destroy
@@ -20,6 +20,11 @@ class User < DeviseRecord
   scope :can_be_deleted, -> { where('deletion is not null and deletion <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
+  scope :deleted, -> { where(deleted: true) }
+
+  validates_presence_of :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
 
   def release_date
     release.present? ? release.strftime('%d/%m/%Y') : ''
@@ -96,12 +101,18 @@ class User < DeviseRecord
   end
   # rubocop:enable Metrics/MethodLength
 
-  # validations
-  validates_presence_of :first_name,
-                        :last_name,
-                        :mobile_number,
-                        :email,
-                        :terms
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :terms, acceptance: true
+  def destroy
+    [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
+    [journal_entries, crisis_events].each(&:destroy_all)
+
+    anonymize
+  end
+
+  private
+
+  def anonymize
+    skip_reconfirmation!
+    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: nil,
+           nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
+  end
 end

@@ -1,6 +1,6 @@
 <div class="col-12 col-md-6 mb-3">
   <% active_crisis_events = user.crisis_events.active %>
-  <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %>">
+  <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %> <%= user.deleted ? 'deleted' : '' %>">
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
@@ -41,11 +41,13 @@
                   <i class="fas fa-envelope"></i> <%= user.email %>
                 <% end %>
               </div>
-              <div class="row">
-                <%= link_to "tel:0#{user.mobile_number}" do %>
-                  <i class="fas fa-phone-alt"></i> <%= "0#{user.mobile_number}" %>
-                <% end %>
-              </div>
+              <% if user.mobile_number.present? %>
+                <div class="row">
+                  <%= link_to "tel:0#{user.mobile_number}" do %>
+                    <i class="fas fa-phone-alt"></i> <%= "0#{user.mobile_number}" %>
+                  <% end %>
+                </div>
+              <% end %>
               <% if user.release.present? %>
                 <div class="row">
                   <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
