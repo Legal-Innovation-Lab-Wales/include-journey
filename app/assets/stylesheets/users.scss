@@ -2,9 +2,20 @@
 
 .team-members {
   .card {
-    background-color: $grey;
     background: $grey-grad;
     color: $black;
+
+    &.deleted {
+      border-color: $danger;
+
+      .card-header, .card-footer {
+        background: $danger;
+      }
+
+      .card-body {
+        background: $danger-light;
+      }
+    }
 
     a {
       color: $black;
