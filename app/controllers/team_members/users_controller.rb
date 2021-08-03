@@ -66,6 +66,13 @@ module TeamMembers
       render 'edit'
     end
 
+    # PUT /users/:user_id
+    def update
+      @user.update(user_params)
+
+      redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
+    end
+
     protected
 
     def resources
@@ -150,6 +157,12 @@ module TeamMembers
       @total_users = User.all.count
       @active_last_week = @resources.active_last_week.size
       @active_last_month = @resources.active_last_month.size
+    end
+
+    def user_params
+      params.require(:user).permit(:release, :nomis_id, :pnc_no, :delius_no, :enrolment, :intervention,
+                                   :release_establishment, :probation_area, :local_authority, :pilot_completed,
+                                   :pilot_withdrawn, :withdrawn, :withdrawn_reason, :index_offence)
     end
   end
 end

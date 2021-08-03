@@ -274,8 +274,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104756) do
     t.string "probation_area"
     t.string "local_authority"
     t.date "pilot_completed"
-    t.boolean "pilot_withdrawn"
-    t.date "withdrawn"
+    t.date "pilot_withdrawn"
     t.string "withdrawn_reason"
     t.string "index_offence"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

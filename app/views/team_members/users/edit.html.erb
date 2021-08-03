@@ -1,7 +1,7 @@
 <main class="container team-members users edit">
   <section class="row">
     <div class="col">
-      <%= form_with model: @user, url: '#' do |f| %>
+      <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
         <div class="form-group">
           <%= render "team_members/shared/error_messages", resource: @user %>
 

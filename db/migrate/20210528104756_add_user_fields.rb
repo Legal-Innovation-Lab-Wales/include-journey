@@ -16,8 +16,7 @@ class AddUserFields < ActiveRecord::Migration[6.1]
       t.string :probation_area
       t.string :local_authority
       t.date :pilot_completed
-      t.boolean :pilot_withdrawn
-      t.date :withdrawn
+      t.date :pilot_withdrawn
       t.string :withdrawn_reason
       t.string :index_offence
     end
