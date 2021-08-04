@@ -1,8 +1,9 @@
 <main class="container team-members users show">
   <div id="user-info" class="row mt-3 mb-3">
     <div class="col-12 col-md-6 col-lg-4 mx-auto">
+      <h1 class="text-center mb-0"><%= @user.full_name %></h1>
       <%= link_to edit_user_path(@user), class: 'edit-user-details' do %>
-        <h1 class="text-center mb-0"><%= @user.full_name %> <i class="fas fa-edit"></i></h1>
+        <h4 class="text-center">Edit Details <i class="fas fa-edit"></i></h4>
       <% end %>
       <% if @user.pronouns.present? %>
         <h4 class="text-center"><%= @user.pronouns %></h4>
