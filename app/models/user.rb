@@ -22,7 +22,7 @@ class User < DeviseRecord
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
 
   def release_date
-    release.present? ? release.strftime('%d/%m/%Y') : ''
+    released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
   end
 
   def dob
@@ -72,7 +72,7 @@ class User < DeviseRecord
       id,
       full_name,
       dob,
-      release,
+      released_at,
       sex,
       gender_identity,
       ethnic_group,
@@ -86,7 +86,7 @@ class User < DeviseRecord
       'ID': id,
       'Name': full_name,
       'Date Of Birth': dob,
-      'Release Date': release,
+      'Release Date': released_at,
       'Sex': sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,

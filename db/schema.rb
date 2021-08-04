@@ -253,9 +253,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104756) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
-    t.date "release"
+    t.date "released_at"
     t.boolean "terms", default: false
-    t.datetime "deletion"
+    t.datetime "deleted_at"
     t.datetime "date_of_birth"
     t.text "disabilities"
     t.string "ethnic_group"
@@ -268,13 +268,13 @@ ActiveRecord::Schema.define(version: 2021_05_28_104756) do
     t.string "nomis_id"
     t.string "pnc_no"
     t.string "delius_no"
-    t.date "enrolment"
-    t.date "intervention"
+    t.date "enrolled_at"
+    t.date "intervened_at"
     t.string "release_establishment"
     t.string "probation_area"
     t.string "local_authority"
-    t.date "pilot_completed"
-    t.date "pilot_withdrawn"
+    t.date "pilot_completed_at"
+    t.date "pilot_withdrawn_at"
     t.string "withdrawn_reason"
     t.string "index_offence"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true

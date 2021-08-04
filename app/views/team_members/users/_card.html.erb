@@ -46,7 +46,7 @@
                   <i class="fas fa-phone-alt"></i> <%= "0#{user.mobile_number}" %>
                 <% end %>
               </div>
-              <% if user.release.present? %>
+              <% if user.released_at.present? %>
                 <div class="row">
                   <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
                 </div>
