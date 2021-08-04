@@ -1,4 +1,4 @@
-# db/migrate/20210528104763_create_survey_comments.rb
+# db/migrate/20210528104764_create_survey_comments.rb
 class CreateSurveyComments < ActiveRecord::Migration[6.1]
   def change
     create_table :survey_comments do |t|
