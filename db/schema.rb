@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104757) do
+ActiveRecord::Schema.define(version: 2021_05_28_104763) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,64 @@ ActiveRecord::Schema.define(version: 2021_05_28_104757) do
     t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "survey_answers", force: :cascade do |t|
+    t.integer "answer", null: false
+    t.bigint "survey_question_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
+    t.index ["user_id"], name: "index_survey_answers_on_user_id"
+  end
+
+  create_table "survey_comment_sections", force: :cascade do |t|
+    t.text "label", null: false
+    t.integer "order", null: false
+    t.bigint "survey_section_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_section_id"], name: "index_survey_comment_sections_on_survey_section_id"
+  end
+
+  create_table "survey_comments", force: :cascade do |t|
+    t.text "text", null: false
+    t.bigint "survey_comment_section_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_comment_section_id"], name: "index_survey_comments_on_survey_comment_section_id"
+    t.index ["user_id"], name: "index_survey_comments_on_user_id"
+  end
+
+  create_table "survey_questions", force: :cascade do |t|
+    t.text "question", null: false
+    t.integer "order", null: false
+    t.bigint "survey_section_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_section_id"], name: "index_survey_questions_on_survey_section_id"
+  end
+
+  create_table "survey_sections", force: :cascade do |t|
+    t.text "heading"
+    t.integer "order", null: false
+    t.bigint "survey_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_id"], name: "index_survey_sections_on_survey_id"
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.boolean "active", default: false, null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_surveys_on_team_member_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -358,6 +416,14 @@ ActiveRecord::Schema.define(version: 2021_05_28_104757) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "survey_answers", "survey_questions"
+  add_foreign_key "survey_answers", "users"
+  add_foreign_key "survey_comment_sections", "survey_sections"
+  add_foreign_key "survey_comments", "survey_comment_sections"
+  add_foreign_key "survey_comments", "users"
+  add_foreign_key "survey_questions", "survey_sections"
+  add_foreign_key "survey_sections", "surveys"
+  add_foreign_key "surveys", "team_members"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"
