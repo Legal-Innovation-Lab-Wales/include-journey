@@ -1,0 +1,43 @@
+@import "variables";
+
+.surveys {
+  &.show {
+    h3 {
+      text-align: center;
+    }
+
+    h4 {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    h3, h4 {
+      color: $white;
+    }
+
+    table {
+      td {
+        max-width: 500px !important;
+        vertical-align: middle;
+        white-space: pre-line;
+        overflow: auto !important;
+        text-overflow: initial !important;
+        line-height: 1.5rem !important;
+        padding: 0.5rem !important;
+
+        input[type="radio"] {
+          margin-top: -0.5rem;
+          
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    textarea {
+      height: 150px;
+      margin-bottom: 1rem;
+    }
+  }
+}

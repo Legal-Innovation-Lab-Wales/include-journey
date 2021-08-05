@@ -1,5 +1,5 @@
 # app/models/survey_comment.rb
-class SurveyUserComment < ApplicationRecord
+class SurveyComment < ApplicationRecord
   belongs_to :survey_comment_section
   belongs_to :survey_response
 
