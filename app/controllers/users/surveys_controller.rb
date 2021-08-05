@@ -6,8 +6,14 @@ module Users
     # GET /surveys
     def index
       @surveys = Survey.available
+      @survey_responses = current_user.survey_responses.includes(:survey)
 
-      render 'index'
+      if one_survey_available?
+        redirect_to survey_path(@surveys.first)
+      else
+        render 'index'
+      end
+
     end
 
     # GET /surveys/:id
@@ -55,6 +61,14 @@ module Users
                                                    survey_comment_section: SurveyCommentSection.find(comment_section[0]))
         comment.update(text: comment_section[1])
       end
+    end
+
+    def one_survey_available?
+      return false unless @surveys.count == 1
+
+      response = @survey_responses.where(survey_id: @surveys.first.id)
+
+      !response.present? || !response.first.submitted?
     end
 
     def mark_submitted

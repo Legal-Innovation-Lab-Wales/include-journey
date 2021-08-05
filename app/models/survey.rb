@@ -2,6 +2,7 @@
 class Survey < ApplicationRecord
   belongs_to :team_member
   has_many :survey_sections
+  has_many :survey_responses
 
   scope :available, -> { where('start_date <= :now and end_date >= :now and active = true', { now: DateTime.now }) }
 
