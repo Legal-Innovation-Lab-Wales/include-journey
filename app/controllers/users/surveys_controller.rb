@@ -15,15 +15,41 @@ module Users
       render 'show'
     end
 
+    # PUT /surveys/:id
+    def update
+      update_answers
+      update_comments
+
+      redirect_to authenticated_user_root_path,
+                  flash: { success: "Thank You! Survey (#{@survey.name}) was successfully submitted." }
+    end
+
     private
 
     def survey
-      @survey = Survey.includes(:survey_sections)
-                      .find(params[:id])
+      @survey = Survey.includes(:survey_sections).find(params[:id])
+      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
+      @survey_response = SurveyResponse.find_or_create_by!(user: current_user, survey: @survey)
+    end
 
-      @survey_sections = @survey.survey_sections
-                                .includes(:survey_questions, :survey_comment_sections)
-                                .order(order: :asc)
+    def update_answers
+      return unless params[:question].present?
+
+      params[:question].each do |question|
+        answer = SurveyAnswer.find_or_create_by!(survey_response: @survey_response,
+                                                 survey_question: SurveyQuestion.find(question[0]))
+        answer.update(answer: question[1])
+      end
+    end
+
+    def update_comments
+      return unless params[:comment_section].present?
+
+      params[:comment_section].each do |comment_section|
+        comment = SurveyComment.find_or_create_by!(survey_response: @survey_response,
+                                                   survey_comment_section: SurveyCommentSection.find(comment_section[0]))
+        comment.update(text: comment_section[1])
+      end
     end
   end
 end

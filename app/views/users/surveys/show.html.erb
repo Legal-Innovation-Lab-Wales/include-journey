@@ -2,46 +2,58 @@
   <section class="row">
     <div class="col">
       <h3><%= @survey.name %></h3>
-      <% @survey_sections.each do |section| %>
-        <% if section.heading.present? %>
-          <h4><%= section.heading %></h4>
-        <% end %>
+      <%= form_with url: survey_path(@survey), method: :put do |f| %>
+        <% @survey_sections.each do |section| %>
+          <% if section.heading.present? %>
+            <h4><%= section.heading %></h4>
+          <% end %>
 
-        <% unless section.survey_questions.count.zero? %>
-          <table class="table table-dark table-striped">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">Strongly Disagree</th>
-                <th scope="col">Disagree</th>
-                <th scope="col">Neither Agree<br/>Or Disagree</th>
-                <th scope="col">Agree</th>
-                <th scope="col">Strongly Agree</th>
-                <th scope="col">Not Applicable</th>
-              </tr>
-            </thead>
-            <tbody>
-            <% section.survey_questions.includes(:survey_answers).each do |question| %>
-              <tr>
-                <td><%= question.question %></td>
-                <% 6.times do |index| %>
-                  <td>
-                    <input class="form-check-input" type="radio" name="question[<%= question.id %>]" value="<%= index %>" />
-                  </td>
-                <% end %>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
-        <% end %>
+          <% unless section.survey_questions.count.zero? %>
+            <table class="table table-dark table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Strongly<br/>Disagree</th>
+                  <th scope="col">Disagree</th>
+                  <th scope="col">Neither Agree<br/>Or Disagree</th>
+                  <th scope="col">Agree</th>
+                  <th scope="col">Strongly<br/>Agree</th>
+                  <th scope="col">Not<br/>Applicable</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
+                <tr>
+                  <td><%= question.question %></td>
+                  <% 6.times do |index| %>
+                    <td>
+                      <label>
+                        <% survey_answer = question.survey_answers.find_by(survey_response: @survey_response) %>
+                        <% if survey_answer.present? && survey_answer.answer == index %>
+                          <input class="form-check-input" type="radio" name="question[<%= question.id %>]"
+                                 value="<%= index %>" required checked />
+                        <% else %>
+                          <input class="form-check-input" type="radio" name="question[<%= question.id %>]"
+                                 value="<%= index %>" required />
+                        <% end %>
+                      </label>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          <% end %>
 
-        <% section.survey_comment_sections.includes(:survey_comments).each do |comment_section| %>
-          <div class="form-floating">
-            <textarea class="form-control" name="comment_section[<%= comment_section.id %>]"
-                      id="comment_section[<%= comment_section.id %>]"></textarea>
-            <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
-          </div>
+          <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
+            <div class="form-floating">
+              <textarea class="form-control" name="comment_section[<%= comment_section.id %>]"
+                        id="comment_section[<%= comment_section.id %>]"></textarea>
+              <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
+            </div>
+          <% end %>
         <% end %>
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
       <% end %>
     </div>
   </section>

@@ -3,5 +3,5 @@ class SurveyAnswer < ApplicationRecord
   belongs_to :survey_question
   belongs_to :survey_response
 
-  validates_presence_of :survey_question_id, :survey_response_id, :answer
+  validates_presence_of :survey_question_id, :survey_response_id
 end

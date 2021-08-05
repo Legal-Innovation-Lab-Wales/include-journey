@@ -17,17 +17,29 @@
 
     table {
       td {
-        max-width: 500px !important;
-        vertical-align: middle;
+        position: relative;
         white-space: pre-line;
+        vertical-align: middle;
+        max-width: 500px !important;
         overflow: auto !important;
         text-overflow: initial !important;
         line-height: 1.5rem !important;
-        padding: 0.5rem !important;
+        padding: 0 !important;
 
-        input[type="radio"] {
-          margin-top: -0.5rem;
-          
+        &:first-child {
+          padding: 1rem !important;
+        }
+
+        label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
           &:hover {
             cursor: pointer;
           }

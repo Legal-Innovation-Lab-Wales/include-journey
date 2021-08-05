@@ -160,13 +160,13 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   end
 
   create_table "survey_answers", force: :cascade do |t|
-    t.integer "answer", null: false
+    t.integer "answer"
     t.bigint "survey_question_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "survey_response_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
-    t.index ["user_id"], name: "index_survey_answers_on_user_id"
+    t.index ["survey_response_id"], name: "index_survey_answers_on_survey_response_id"
   end
 
   create_table "survey_comment_sections", force: :cascade do |t|
@@ -179,13 +179,13 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   end
 
   create_table "survey_comments", force: :cascade do |t|
-    t.text "text", null: false
+    t.text "text"
     t.bigint "survey_comment_section_id", null: false
-    t.bigint "user_id", null: false
+    t.bigint "survey_response_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_comment_section_id"], name: "index_survey_comments_on_survey_comment_section_id"
-    t.index ["user_id"], name: "index_survey_comments_on_user_id"
+    t.index ["survey_response_id"], name: "index_survey_comments_on_survey_response_id"
   end
 
   create_table "survey_questions", force: :cascade do |t|
@@ -427,10 +427,10 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "survey_answers", "survey_questions"
-  add_foreign_key "survey_answers", "users"
+  add_foreign_key "survey_answers", "survey_responses"
   add_foreign_key "survey_comment_sections", "survey_sections"
   add_foreign_key "survey_comments", "survey_comment_sections"
-  add_foreign_key "survey_comments", "users"
+  add_foreign_key "survey_comments", "survey_responses"
   add_foreign_key "survey_questions", "survey_sections"
   add_foreign_key "survey_responses", "surveys"
   add_foreign_key "survey_responses", "users"
