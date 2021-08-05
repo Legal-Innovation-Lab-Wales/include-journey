@@ -49,7 +49,7 @@
             <div class="form-floating">
               <% survey_comment = comment_section.survey_comments.find_by(survey_response: @survey_response) %>
               <textarea class="form-control" name="comment_section[<%= comment_section.id %>]"
-                        id="comment_section[<%= comment_section.id %>]" data-id="<%= comment_section.id %>"><%= survey_comment.text %></textarea>
+                        id="comment_section[<%= comment_section.id %>]" data-id="<%= comment_section.id %>"><%= survey_comment.present? ? survey_comment.text : '' %></textarea>
               <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
             </div>
           <% end %>

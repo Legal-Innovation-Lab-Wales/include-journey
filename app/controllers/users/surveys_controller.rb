@@ -17,7 +17,7 @@ module Users
 
     # PUT /surveys/:id
     def update
-      return if @survey_response.submitted
+      return if @survey_response.submitted?
 
       update_answers
       update_comments
@@ -58,7 +58,7 @@ module Users
     end
 
     def mark_submitted
-      @survey_response.update(submitted: true)
+      @survey_response.update(submitted_at: DateTime.now)
 
       redirect_to authenticated_user_root_path,
                   flash: { success: "Thank You! (#{@survey.name}) was successfully submitted." }

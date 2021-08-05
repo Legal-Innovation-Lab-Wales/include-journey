@@ -2,7 +2,7 @@
 class CreateSurveyResponses < ActiveRecord::Migration[6.1]
   def change
     create_table :survey_responses do |t|
-      t.boolean :submitted, null: false, default: false
+      t.datetime :submitted_at
       t.belongs_to :survey, null: false, foreign_key: true
       t.belongs_to :user, null: false, foreign_key: true
 

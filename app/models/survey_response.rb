@@ -6,4 +6,8 @@ class SurveyResponse < ApplicationRecord
   has_many :survey_comments, dependent: :destroy
 
   validates_presence_of :survey_id, :user_id
+
+  def submitted?
+    submitted_at.present?
+  end
 end

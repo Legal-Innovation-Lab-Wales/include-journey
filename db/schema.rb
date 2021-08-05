@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   end
 
   create_table "survey_responses", force: :cascade do |t|
-    t.boolean "submitted", default: false, null: false
+    t.datetime "submitted_at"
     t.bigint "survey_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
