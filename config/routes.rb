@@ -38,7 +38,7 @@ Rails.application.routes.draw do
       end
       resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
-      resources :surveys, only: %i[index show create update]
+      resources :surveys, only: %i[index show update]
     end
   end
 

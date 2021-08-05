@@ -17,11 +17,16 @@ module Users
 
     # PUT /surveys/:id
     def update
+      return if @survey_response.submitted
+
       update_answers
       update_comments
 
-      redirect_to authenticated_user_root_path,
-                  flash: { success: "Thank You! Survey (#{@survey.name}) was successfully submitted." }
+      if params[:partial].present? && params[:partial] == true
+        respond_to { |format| format.json { render json: @survey_response.as_json, status: :ok } }
+      else
+        mark_submitted
+      end
     end
 
     private
@@ -50,6 +55,13 @@ module Users
                                                    survey_comment_section: SurveyCommentSection.find(comment_section[0]))
         comment.update(text: comment_section[1])
       end
+    end
+
+    def mark_submitted
+      @survey_response.update(submitted: true)
+
+      redirect_to authenticated_user_root_path,
+                  flash: { success: "Thank You! (#{@survey.name}) was successfully submitted." }
     end
   end
 end
