@@ -1,55 +1,109 @@
 @import "variables";
 
 .surveys {
+  section.row {
+    padding: 1rem 0;
+  }
+
   &.show {
-    h3 {
-      text-align: center;
-    }
+    .container {
+      padding: 0;
+      margin-bottom: 1.5rem;
 
-    h4 {
-      text-align: left;
-      margin-top: 1rem;
-    }
+      &:last-child {
+        margin-bottom: 0;
+      }
 
-    h3, h4 {
-      color: $white;
-    }
+      h3 {
+        text-align: center;
+      }
 
-    table {
-      td {
-        position: relative;
-        white-space: pre-line;
-        vertical-align: middle;
-        max-width: 500px !important;
-        overflow: auto !important;
-        text-overflow: initial !important;
-        line-height: 1.5rem !important;
-        padding: 0 !important;
+      h4 {
+        text-align: left;
+        margin-top: 1rem;
+      }
 
-        &:first-child {
-          padding: 1rem !important;
+      h3, h4 {
+        color: $white;
+      }
+
+      .row {
+        &:nth-of-type(2n) {
+          background-color: $table-row;
         }
 
-        label {
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+        &.comment-section {
+          background-color: transparent;
 
-          &:hover {
-            cursor: pointer;
+          .form-floating {
+            margin-top: 1rem;
+            padding: 0;
+
+            textarea {
+              height: 150px;
+
+              @media screen and (max-width: $screen-lg) {
+                padding-top: 3rem;
+              }
+            }
+          }
+        }
+
+        &.table-header {
+          display: none;
+          font-weight: bold;
+
+          @media screen and (min-width: $screen-lg) {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+          }
+
+          .col-12, .col-2 {
+            padding: 0 0 0.5rem 0;
+          }
+        }
+
+        .col-12 {
+          padding: 1rem;
+        }
+
+        .col-2 {
+          padding: 0;
+
+          .label {
+            font-size: 0.8rem;
+          }
+
+          label {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+
+            input[type="radio"] {
+              margin-bottom: 1rem;
+            }
+          }
+
+          @media screen and (min-width: $screen-lg) {
+            .label {
+              display: none;
+            }
+
+            label {
+              display: inline-block;
+              padding: 1rem;
+
+              input[type="radio"] {
+                margin-bottom: 0;
+              }
+            }
           }
         }
       }
-    }
-
-    textarea {
-      height: 150px;
-      margin-bottom: 1rem;
     }
   }
 }
