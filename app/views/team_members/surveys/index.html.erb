@@ -1,0 +1,32 @@
+<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys' do %>
+  <div class="table-container">
+    <table class="table link-table table-dark table-striped link-table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Active</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Responses</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @resources.each do |survey| %>
+          <tr>
+            <td><%= link_to survey.name, survey_path(survey) %></td>
+            <td>
+              <%= link_to survey_path(survey) do %>
+                <i class="fas fa-<%= survey.active ? 'check' : 'times'%>-circle"></i>
+              <% end %>
+            </td>
+            <td><%= link_to survey.start, survey_path(survey) %></td>
+            <td><%= link_to survey.end, survey_path(survey) %></td>
+            <td><%= link_to survey.survey_responses.count, survey_path(survey) %></td>
+            <td><%= link_to edit_survey_path(survey) do %><i class="fas fa-edit"></i><% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

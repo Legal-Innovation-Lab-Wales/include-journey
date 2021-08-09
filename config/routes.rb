@@ -95,6 +95,7 @@ Rails.application.routes.draw do
       end
       resources :affirmations, except: :show
       resources :affirmations_archive, only: :index
+      resources :surveys
     end
   end
   # rubocop:enable Metrics/BlockLength
