@@ -10,4 +10,11 @@ class SurveyResponse < ApplicationRecord
   def submitted?
     submitted_at.present?
   end
+
+  def completion
+    answered = survey_answers.count
+    total = survey.survey_questions.count
+
+    { answered: answered, total: total, percentage: ((answered.to_f / total) * 100) }
+  end
 end

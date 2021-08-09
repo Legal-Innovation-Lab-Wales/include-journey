@@ -1,6 +1,39 @@
 <main class="container user surveys index">
   <section class="row">
     <div class="col">
+      <h3>Surveys</h3>
+      <div class="container mt-4">
+        <div class="row justify-content-center">
+          <% @surveys.each do |survey| %>
+            <div class="col col-md-6 col-lg-4">
+              <div class="survey">
+                <h4><%= survey.name %></h4>
+                <p>This survey is available until <%= survey.end %>.</p>
+                <% survey_response = @survey_responses.find_by(survey: survey) %>
+                <% if survey_response.present? %>
+                  <% completion = survey_response.completion %>
+                  <p class="mb-0">You have answered <%= completion[:answered] %> out of <%= completion[:total] %> questions.</p>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar"
+                         style="width: <%= completion[:percentage] %>%"
+                         aria-valuenow="<%= completion[:percentage] %>"
+                         aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <% unless survey_response.submitted? %>
+                    <%= link_to survey_path(survey), class: 'btn btn-primary mt-3' do %>
+                      <i class="fas fa-clipboard-list"></i> Resume Survey
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <%= link_to survey_path(survey), class: 'btn btn-primary mt-3' do %>
+                    <i class="fas fa-clipboard-list"></i> Start Survey
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </section>
 </main>

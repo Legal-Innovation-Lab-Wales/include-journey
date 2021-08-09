@@ -1,11 +1,19 @@
 @import "variables";
 
 .surveys {
-  section.row {
-    padding: 1rem 0;
+  &.index {
+    .survey {
+      padding: 1rem;
+      border-radius: 1rem;
+      border: 1px solid $white;
+    }
   }
 
   &.show {
+    section.row {
+      padding: 1rem 0;
+    }
+
     .container {
       padding: 0;
       margin-bottom: 1.5rem;

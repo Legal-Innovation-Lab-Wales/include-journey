@@ -13,7 +13,6 @@ module Users
       else
         render 'index'
       end
-
     end
 
     # GET /surveys/:id
