@@ -83,6 +83,8 @@ module TeamMembers
                                 :survey_comment_sections,
                                 :survey_responses)
                       .find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })
     end
 
     def survey_search

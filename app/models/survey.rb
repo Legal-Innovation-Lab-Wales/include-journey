@@ -17,4 +17,10 @@ class Survey < ApplicationRecord
   def end
     end_date.strftime('%d/%m/%Y')
   end
+
+  def next_section
+    return 1 unless survey_sections.present?
+
+    survey_sections.order(order: :desc).first.order + 1
+  end
 end

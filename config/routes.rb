@@ -95,7 +95,9 @@ Rails.application.routes.draw do
       end
       resources :affirmations, except: :show
       resources :affirmations_archive, only: :index
-      resources :surveys
+      resources :surveys do
+        resources :survey_sections, only: %i[create update destroy], on: :member
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength

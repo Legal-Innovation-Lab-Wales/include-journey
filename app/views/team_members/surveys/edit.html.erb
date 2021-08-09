@@ -2,6 +2,19 @@
   <section class="row">
     <div class="col">
       <h2><%= @survey.name %></h2>
+        <% @survey.survey_sections.each do |survey_section| %>
+          <div class="container survey-section">
+            <div class="form-floating">
+              <%= text_field_tag "survey_section[#{survey_section.id}]", survey_section.heading,
+                                 class: 'form-control', data: { id: survey_section.id },
+                                 placeholder: 'Section Heading' %>
+              <%= label_tag "survey_section[#{survey_section.id}]", 'Section Heading' %>
+            </div>
+          </div>
+        <% end %>
+        <%= link_to survey_survey_sections_path(@survey), method: :post, class: 'btn btn-success' do %>
+          <i class="fas fa-plus-circle"></i> Add Section
+        <% end %>
     </div>
   </section>
 </main>

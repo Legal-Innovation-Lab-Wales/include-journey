@@ -39,6 +39,16 @@
         }
       }
     }
+
+    &.edit {
+      .survey-section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        border-radius: 1rem;
+        border: 1px dashed $white;
+        margin-bottom: 1.5rem;
+      }
+    }
   }
 
   &.user {
