@@ -1,5 +1,5 @@
-<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys',
-           stats: render(partial: 'stats') do %>
+<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys', stats: render('stats'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_survey_path, text: 'New Survey' }) do %>
   <div class="table-container">
     <table class="table link-table table-dark table-striped link-table">
       <thead>
