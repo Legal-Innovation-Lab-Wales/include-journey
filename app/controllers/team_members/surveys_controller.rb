@@ -51,7 +51,14 @@ module TeamMembers
     end
 
     def search
-      self.resources
+      @surveys = Survey.includes(:team_member,
+                                 :survey_sections,
+                                 :survey_questions,
+                                 :survey_comment_sections,
+                                 :survey_responses)
+                       .joins(:team_member)
+                       .where(survey_search, wildcard_query)
+                       .order(sort)
     end
 
     def direction
@@ -71,6 +78,14 @@ module TeamMembers
                                 :survey_comment_sections,
                                 :survey_responses)
                       .find(params[:id])
+    end
+
+    def survey_search
+      search = 'lower(team_members.first_name) similar to lower(:query)'
+      search += ' or lower(team_members.last_name) similar to lower(:query)'
+      search += ' or lower(name) similar to lower(:query)'
+
+      search
     end
   end
 end

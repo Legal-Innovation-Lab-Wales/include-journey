@@ -1,4 +1,5 @@
-<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys' do %>
+<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys',
+           stats: render(partial: 'stats') do %>
   <div class="table-container">
     <table class="table link-table table-dark table-striped link-table">
       <thead>
