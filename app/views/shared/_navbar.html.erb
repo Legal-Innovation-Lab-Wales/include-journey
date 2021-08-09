@@ -4,7 +4,8 @@
     <% if current_user %>
       <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
          data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-        SOS <i class="fas fa-exclamation-circle"></i>
+        <div class="nav-label always-show">SOS</div>
+        <i class="fas fa-exclamation-circle"></i>
       </a>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

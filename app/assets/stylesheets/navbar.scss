@@ -3,22 +3,26 @@
 nav.navbar {
   text-align: center;
 
-  .desktop-sos {
-    display: none;
-  }
+  .desktop-sos { display: none !important; }
+  .mobile-sos { display: flex !important; }
 
   .mobile-sos {
-    max-width: 7rem;
-    margin: 0 !important;
-  }
+    margin: 0.15rem 0.5rem 0.15rem auto;
+    width: auto;
+    padding: 0.5rem 1rem;
+    align-items: center;
 
-  @media (min-width: $screen-lg) {
-    .mobile-sos {
-      display: none !important;
+    .nav-label {
+      margin-right: 0.5rem;
     }
   }
 
-  .navbar-right-buttons{
+  @media (min-width: $screen-lg) {
+    .mobile-sos { display: none !important; }
+    .desktop-sos { display: flex !important; }
+  }
+
+  .navbar-right-buttons {
     margin-right: auto;
     margin-left: auto;
 
