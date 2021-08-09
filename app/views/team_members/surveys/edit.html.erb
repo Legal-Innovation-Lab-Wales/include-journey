@@ -2,14 +2,35 @@
   <section class="row">
     <div class="col">
       <h2><%= @survey.name %></h2>
-        <% @survey.survey_sections.each do |survey_section| %>
+        <% @survey_sections.each do |section| %>
           <div class="container survey-section">
-            <div class="form-floating">
-              <%= text_field_tag "survey_section[#{survey_section.id}]", survey_section.heading,
-                                 class: 'form-control', data: { id: survey_section.id },
-                                 placeholder: 'Section Heading' %>
-              <%= label_tag "survey_section[#{survey_section.id}]", 'Section Heading' %>
-            </div>
+            <%= text_field_tag "section[#{section.id}]", section.heading, class: 'form-control',
+                               data: { id: section.id }, placeholder: 'Section Heading' %>
+            <% unless section.survey_questions.count.zero? %>
+              <div class="row table-header">
+                <div class="col-12 col-lg-6"></div>
+                <% 6.times do |index| %>
+                  <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
+                <% end %>
+              </div>
+
+              <% section.survey_questions.order(order: :asc).each do |question| %>
+                <div class="row">
+                  <div class="col-12 col-lg-6">
+                    <%= text_field_tag "question[#{question.id}]", question.question, class: 'form-control form-control-sm',
+                                       data: { id: section.id }, placeholder: 'Question' %>
+                  </div>
+                  <% 6.times do |index| %>
+                    <div class="col-2 col-lg-1">
+                      <label>
+                        <div class="label"><%= survey_option(index) %></div>
+                        <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',  data: { id: question.id } %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
         <%= link_to survey_survey_sections_path(@survey), method: :post, class: 'btn btn-success' do %>

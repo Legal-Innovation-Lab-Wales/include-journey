@@ -3,7 +3,7 @@
     <h3><%= @survey.name %></h3>
     <%= form_with url: survey_path(@survey), method: :put do |f| %>
       <% @survey_sections.each do |section| %>
-        <div class="container">
+        <div class="container survey-section">
             <% if section.heading.present? %>
               <h4><%= section.heading %></h4>
             <% end %>
@@ -12,7 +12,7 @@
               <div class="row table-header">
                 <div class="col-12 col-lg-6"></div>
                 <% 6.times do |index| %>
-                  <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index )%></div></div>
+                  <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
                 <% end %>
               </div>
 

@@ -1,6 +1,89 @@
 @import "variables";
 
 .surveys {
+  .survey-section {
+    padding: 0;
+    margin-bottom: 1.5rem;
+
+    .row {
+      &:nth-of-type(2n) {
+        background-color: $table-row;
+      }
+
+      &.comment-section {
+        background-color: transparent;
+
+        .form-floating {
+          margin-top: 1rem;
+          padding: 0;
+
+          textarea {
+            height: 150px;
+
+            @media screen and (max-width: $screen-lg) {
+              padding-top: 3rem;
+            }
+          }
+        }
+      }
+
+      &.table-header {
+        display: none;
+        font-weight: bold;
+
+        @media screen and (min-width: $screen-lg) {
+          display: flex;
+          justify-content: center;
+          align-items: end;
+        }
+
+        .col-12, .col-2 {
+          padding: 0 0 0.5rem 0;
+        }
+      }
+
+      .col-12 {
+        padding: 1rem;
+      }
+
+      .col-2 {
+        padding: 0;
+
+        .label {
+          font-size: 0.8rem;
+        }
+
+        label {
+          display: flex;
+          flex-direction: column;
+          justify-content: end;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+
+          input[type="radio"] {
+            margin-bottom: 1rem;
+          }
+        }
+
+        @media screen and (min-width: $screen-lg) {
+          .label {
+            display: none;
+          }
+
+          label {
+            display: inline-block;
+            padding: 1rem;
+
+            input[type="radio"] {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
   &.team-members {
     &.new {
       .row {
@@ -42,11 +125,17 @@
 
     &.edit {
       .survey-section {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding: 1rem;
         border-radius: 1rem;
         border: 1px dashed $white;
-        margin-bottom: 1.5rem;
+
+        .row {
+          margin: 0;
+
+          &.table-header {
+            margin-top: 1rem;
+          }
+        }
       }
     }
   }
@@ -65,104 +154,17 @@
         padding: 1rem 0;
       }
 
-      .container {
-        padding: 0;
-        margin-bottom: 1.5rem;
+      .survey-section {
+        &:last-child { margin-bottom: 0; }
 
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        h3 {
-          text-align: center;
-        }
+        h3 {text-align: center; }
 
         h4 {
           text-align: left;
           margin-top: 1rem;
         }
 
-        h3, h4 {
-          color: $white;
-        }
-
-        .row {
-          &:nth-of-type(2n) {
-            background-color: $table-row;
-          }
-
-          &.comment-section {
-            background-color: transparent;
-
-            .form-floating {
-              margin-top: 1rem;
-              padding: 0;
-
-              textarea {
-                height: 150px;
-
-                @media screen and (max-width: $screen-lg) {
-                  padding-top: 3rem;
-                }
-              }
-            }
-          }
-
-          &.table-header {
-            display: none;
-            font-weight: bold;
-
-            @media screen and (min-width: $screen-lg) {
-              display: flex;
-              justify-content: center;
-              align-items: end;
-            }
-
-            .col-12, .col-2 {
-              padding: 0 0 0.5rem 0;
-            }
-          }
-
-          .col-12 {
-            padding: 1rem;
-          }
-
-          .col-2 {
-            padding: 0;
-
-            .label {
-              font-size: 0.8rem;
-            }
-
-            label {
-              display: flex;
-              flex-direction: column;
-              justify-content: end;
-              align-items: center;
-              height: 100%;
-              width: 100%;
-
-              input[type="radio"] {
-                margin-bottom: 1rem;
-              }
-            }
-
-            @media screen and (min-width: $screen-lg) {
-              .label {
-                display: none;
-              }
-
-              label {
-                display: inline-block;
-                padding: 1rem;
-
-                input[type="radio"] {
-                  margin-bottom: 0;
-                }
-              }
-            }
-          }
-        }
+        h3, h4 { color: $white; }
       }
     }
   }

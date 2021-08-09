@@ -78,11 +78,8 @@ module TeamMembers
     private
 
     def survey
-      @survey = Survey.includes(:survey_sections,
-                                :survey_questions,
-                                :survey_comment_sections,
-                                :survey_responses)
-                      .find(params[:id])
+      @survey = Survey.includes(:survey_sections, :survey_responses).find(params[:id])
+      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections)
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })
     end
