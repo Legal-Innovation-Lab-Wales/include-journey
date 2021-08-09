@@ -1,3 +1,5 @@
+<% unless @query.present? %>
 <div class="subheading">
   <p><%= pluralize(@surveys.available.count, 'survey is', 'surveys are') %> currently available to users.</p>
 </div>
+<% end %>
