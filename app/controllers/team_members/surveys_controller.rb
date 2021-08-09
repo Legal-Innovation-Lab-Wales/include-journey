@@ -42,18 +42,34 @@ module TeamMembers
     protected
 
     def resources
-      @surveys = Survey.includes(:survey_sections, :survey_questions, :survey_comment_sections, :survey_responses)
-                       .order(created_at: :desc)
+      @surveys = Survey.includes(:team_member,
+                                 :survey_sections,
+                                 :survey_questions,
+                                 :survey_comment_sections,
+                                 :survey_responses)
+                       .order(sort)
     end
 
     def search
       self.resources
     end
 
+    def direction
+      @direction = %w[asc desc].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'asc'
+    end
+
+    def sort
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'end_date'
+      { "#{@sort}": @direction }
+    end
+
     private
 
     def survey
-      @survey = Survey.includes(:survey_sections, :survey_questions, :survey_comment_sections, :survey_responses)
+      @survey = Survey.includes(:survey_sections,
+                                :survey_questions,
+                                :survey_comment_sections,
+                                :survey_responses)
                       .find(params[:id])
     end
   end

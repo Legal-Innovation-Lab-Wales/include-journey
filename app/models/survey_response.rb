@@ -7,6 +7,8 @@ class SurveyResponse < ApplicationRecord
 
   validates_presence_of :survey_id, :user_id
 
+  scope :submitted, -> { where('submitted_at is not null') }
+
   def submitted?
     submitted_at.present?
   end
