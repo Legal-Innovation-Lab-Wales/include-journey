@@ -1,7 +1,36 @@
 <main class="container team-members surveys new">
   <section class="row">
     <div class="col">
-      <h2>New Survey</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>New Survey</h3>
+            <%= form_with model: @survey, url: surveys_path do |f| %>
+              <div class="form-floating">
+                <%= f.text_field :name, class: 'form-control', placeholder: 'Name', required: true %>
+                <%= f.label :name %>
+              </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-floating">
+                      <%= f.date_field :start_date, class: 'form-control', min: Date.today, required: true %>
+                      <%= f.label :start_date %>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-floating">
+                      <%= f.date_field :end_date, class: 'form-control', required: true %>
+                      <%= f.label :end_date %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <%= f.submit 'Create', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>

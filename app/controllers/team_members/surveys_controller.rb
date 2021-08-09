@@ -11,12 +11,17 @@ module TeamMembers
 
     # GET /surveys/new
     def new
+      @survey = Survey.new
+
       render 'new'
     end
 
     # POST /surveys
     def create
-      puts 'Create action called...'
+      @survey = Survey.create!(name: survey_params[:name], start_date: survey_params[:start_date],
+                               end_date: survey_params[:end_date], team_member: current_team_member)
+
+      redirect_to surveys_path, flash: { success: "#{@survey.name} was successfully created." }
     end
 
     # GET /surveys/:id
@@ -82,6 +87,10 @@ module TeamMembers
 
     def survey_search
       'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'
+    end
+
+    def survey_params
+      params.require(:survey).permit(:name, :start_date, :end_date)
     end
   end
 end

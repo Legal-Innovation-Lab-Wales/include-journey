@@ -1,112 +1,154 @@
 @import "variables";
 
 .surveys {
-  &.index {
-    .survey {
-      padding: 1rem;
-      border-radius: 1rem;
-      border: 1px solid $white;
-    }
-  }
-
-  &.show {
-    section.row {
-      padding: 1rem 0;
-    }
-
-    .container {
-      padding: 0;
-      margin-bottom: 1.5rem;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      h3 {
-        text-align: center;
-      }
-
-      h4 {
-        text-align: left;
-        margin-top: 1rem;
-      }
-
-      h3, h4 {
-        color: $white;
-      }
-
+  &.team-members {
+    &.new {
       .row {
-        &:nth-of-type(2n) {
-          background-color: $table-row;
-        }
+        justify-content: center;
 
-        &.comment-section {
-          background-color: transparent;
+        .col-12, .col-lg-6 {
+          padding: 1.5rem;
+          background: $blue-grad;
+          border-radius: 0.5rem;
+
+          h2 {
+            margin-bottom: 1rem;
+          }
 
           .form-floating {
-            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+          }
+
+          input[type="submit"] {
+            margin: 1rem 0 0.5rem 0;
+          }
+
+          .container {
             padding: 0;
 
-            textarea {
-              height: 150px;
+            .col-6 {
+              &:first-child {
+                padding-right: 0.25rem;
+              }
 
-              @media screen and (max-width: $screen-lg) {
-                padding-top: 3rem;
+              &:last-child {
+                padding-left: 0.25rem;
               }
             }
           }
         }
+      }
+    }
+  }
 
-        &.table-header {
-          display: none;
-          font-weight: bold;
+  &.user {
+    &.index {
+      .survey {
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px solid $white;
+      }
+    }
 
-          @media screen and (min-width: $screen-lg) {
-            display: flex;
-            justify-content: center;
-            align-items: end;
-          }
+    &.show {
+      section.row {
+        padding: 1rem 0;
+      }
 
-          .col-12, .col-2 {
-            padding: 0 0 0.5rem 0;
-          }
+      .container {
+        padding: 0;
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
         }
 
-        .col-12 {
-          padding: 1rem;
+        h3 {
+          text-align: center;
         }
 
-        .col-2 {
-          padding: 0;
+        h4 {
+          text-align: left;
+          margin-top: 1rem;
+        }
 
-          .label {
-            font-size: 0.8rem;
+        h3, h4 {
+          color: $white;
+        }
+
+        .row {
+          &:nth-of-type(2n) {
+            background-color: $table-row;
           }
 
-          label {
-            display: flex;
-            flex-direction: column;
-            justify-content: end;
-            align-items: center;
-            height: 100%;
-            width: 100%;
+          &.comment-section {
+            background-color: transparent;
 
-            input[type="radio"] {
-              margin-bottom: 1rem;
+            .form-floating {
+              margin-top: 1rem;
+              padding: 0;
+
+              textarea {
+                height: 150px;
+
+                @media screen and (max-width: $screen-lg) {
+                  padding-top: 3rem;
+                }
+              }
             }
           }
 
-          @media screen and (min-width: $screen-lg) {
+          &.table-header {
+            display: none;
+            font-weight: bold;
+
+            @media screen and (min-width: $screen-lg) {
+              display: flex;
+              justify-content: center;
+              align-items: end;
+            }
+
+            .col-12, .col-2 {
+              padding: 0 0 0.5rem 0;
+            }
+          }
+
+          .col-12 {
+            padding: 1rem;
+          }
+
+          .col-2 {
+            padding: 0;
+
             .label {
-              display: none;
+              font-size: 0.8rem;
             }
 
             label {
-              display: inline-block;
-              padding: 1rem;
+              display: flex;
+              flex-direction: column;
+              justify-content: end;
+              align-items: center;
+              height: 100%;
+              width: 100%;
 
               input[type="radio"] {
-                margin-bottom: 0;
+                margin-bottom: 1rem;
+              }
+            }
+
+            @media screen and (min-width: $screen-lg) {
+              .label {
+                display: none;
+              }
+
+              label {
+                display: inline-block;
+                padding: 1rem;
+
+                input[type="radio"] {
+                  margin-bottom: 0;
+                }
               }
             }
           }
