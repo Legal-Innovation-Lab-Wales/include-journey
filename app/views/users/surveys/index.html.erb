@@ -19,15 +19,15 @@
                          aria-valuenow="<%= completion[:percentage] %>"
                          aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
-                  <% unless survey_response.submitted? %>
-                    <%= link_to survey_path(survey), class: 'btn btn-primary mt-3' do %>
-                      <i class="fas fa-clipboard-list"></i> Resume Survey
-                    <% end %>
-                  <% end %>
-                <% else %>
-                  <%= link_to survey_path(survey), class: 'btn btn-primary mt-3' do %>
-                    <i class="fas fa-clipboard-list"></i> Start Survey
-                  <% end %>
+                <% end %>
+
+                <%= link_to survey_path(survey), class: 'btn btn-primary mt-3' do %>
+                  <i class="fas fa-clipboard-list"></i>
+                  <%= if survey_response.present?
+                        survey_response.submitted? ? 'Review' : 'Resume'
+                      else
+                        'Start'
+                      end %> Survey
                 <% end %>
               </div>
             </div>
