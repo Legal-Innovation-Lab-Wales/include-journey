@@ -30,7 +30,7 @@ module TeamMembers
     end
 
     def survey_section
-      @survey_section = SurveySection.find(params[:id])
+      @survey_section = @survey.survey_sections.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: edit_survey_path(@survey), flash: { error: 'Survey Section not found' })
     end

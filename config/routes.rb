@@ -96,7 +96,10 @@ Rails.application.routes.draw do
       resources :affirmations, except: :show
       resources :affirmations_archive, only: :index
       resources :surveys do
-        resources :survey_sections, only: %i[create update destroy], on: :member
+        resources :survey_sections, only: %i[create update destroy], on: :member, as: :section do
+          resources :survey_questions, only: %i[create update destroy], on: :member, as: :question
+          resources :survey_comment_sections, only: %i[create update destroy], on: :member, as: :comment_section
+        end
       end
     end
   end

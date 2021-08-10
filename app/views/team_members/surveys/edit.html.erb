@@ -17,23 +17,47 @@
               <% section.survey_questions.order(order: :asc).each do |question| %>
                 <div class="row">
                   <div class="col-12 col-lg-6">
-                    <%= text_field_tag "question[#{question.id}]", question.question, class: 'form-control form-control-sm',
-                                       data: { id: section.id }, placeholder: 'Question' %>
+                    <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
+                                       class: 'form-control form-control-sm', data: { id: section.id } %>
                   </div>
                   <% 6.times do |index| %>
                     <div class="col-2 col-lg-1">
                       <label>
                         <div class="label"><%= survey_option(index) %></div>
-                        <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',  data: { id: question.id } %>
+                        <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',
+                                             data: { id: question.id } %>
                       </label>
                     </div>
                   <% end %>
                 </div>
               <% end %>
             <% end %>
+            <div class="row add-btn">
+              <div class="col">
+                <%= link_to survey_section_question_index_path(@survey, section), method: :post, class: 'btn btn-success' do %>
+                  <i class="fas fa-plus-circle"></i> Add Question
+                <% end %>
+              </div>
+            </div>
+            <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
+              <div class="row comment-section">
+                <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
+                                   placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
+                <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
+                                  id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
+              </div>
+            <% end %>
+            <div class="row add-btn">
+              <div class="col">
+                <%= link_to survey_section_comment_section_index_path(@survey, section), method: :post,
+                            class: 'btn btn-success' do %>
+                  <i class="fas fa-plus-circle"></i> Add Comment Section
+                <% end %>
+              </div>
+            </div>
           </div>
         <% end %>
-        <%= link_to survey_survey_sections_path(@survey), method: :post, class: 'btn btn-success' do %>
+        <%= link_to survey_section_path(@survey), method: :post, class: 'btn btn-success' do %>
           <i class="fas fa-plus-circle"></i> Add Section
         <% end %>
     </div>

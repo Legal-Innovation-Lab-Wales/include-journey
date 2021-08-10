@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   end
 
   create_table "survey_comment_sections", force: :cascade do |t|
-    t.text "label", null: false
+    t.text "label", default: "", null: false
     t.integer "order", null: false
     t.bigint "survey_section_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
   end
 
   create_table "survey_questions", force: :cascade do |t|
-    t.text "question", null: false
+    t.text "question", default: "", null: false
     t.integer "order", null: false
     t.bigint "survey_section_id", null: false
     t.datetime "created_at", precision: 6, null: false

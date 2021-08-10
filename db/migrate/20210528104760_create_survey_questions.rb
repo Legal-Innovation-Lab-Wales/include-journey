@@ -2,7 +2,7 @@
 class CreateSurveyQuestions < ActiveRecord::Migration[6.1]
   def change
     create_table :survey_questions do |t|
-      t.text :question, null: false
+      t.text :question, null: false, default: ''
       t.integer :order, null: false
       t.belongs_to :survey_section, null: false, foreign_key: true
 
