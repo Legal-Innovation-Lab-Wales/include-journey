@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104754) do
+ActiveRecord::Schema.define(version: 2021_05_28_104755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "affirmations", force: :cascade do |t|
+    t.string "text", null: false
+    t.date "scheduled_date", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scheduled_date"], name: "index_affirmations_on_scheduled_date", unique: true
+    t.index ["team_member_id"], name: "index_affirmations_on_team_member_id"
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -310,6 +320,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 
+  add_foreign_key "affirmations", "team_members"
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"

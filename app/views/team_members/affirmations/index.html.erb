@@ -1,0 +1,15 @@
+<main class="container index team-members affirmations">
+    <section class="row">
+      <div class="col">
+        <h2>Upcoming Daily Affirmations</h2>
+        <%= render 'stats' %>
+        <%= link_to new_affirmation_path, class: 'new-affirmation mt-5 btn btn-success' do %>
+          <i class="fas fa-plus-circle"></i> Add New Affirmation
+        <% end %>
+        <%= render 'table', affirmations: @affirmations %>
+        <%= link_to affirmations_archive_index_path, class: 'archive btn btn-primary' do %>
+          <i class="fas fa-archive"></i> View Archive
+        <% end %>
+      </div>
+    </section>
+</main>

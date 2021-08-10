@@ -1,0 +1,73 @@
+@import "variables";
+
+body#overboot {
+  .affirmations, .affirmations-archive {
+    table td {
+      height: 100%;
+      overflow: auto;
+      text-overflow: initial;
+      white-space: pre-wrap;
+      line-height: 2rem;
+      padding: 1rem;
+
+      &:first-child {
+        min-width: 100vw;
+
+        @media screen and (min-width: $screen-sm){
+          min-width: auto;
+        }
+      }
+
+      &:last-child {
+        width: 50px;
+      }
+    }
+  }
+
+  .affirmations {
+    &.index {
+      .col {
+        display: flex;
+        flex-direction: column;
+
+        .new-affirmation.btn {
+          justify-self: start;
+          align-self: start;
+        }
+
+        .archive.btn {
+          align-self: center;
+          justify-self: center;
+        }
+      }
+    }
+
+    &.edit, &.new {
+      .row {
+        justify-content: center;
+
+        .col-12, .col-lg-6 {
+          padding: 1.5rem;
+          background: $blue-grad;
+          border-radius: 0.5rem;
+
+          h3 {
+            margin-bottom: 1rem;
+          }
+
+          .form-floating {
+            margin-bottom: 0.5rem;
+
+            textarea {
+              height: 150px;
+            }
+          }
+
+          input[type="submit"] {
+            margin: 1rem 0 0.5rem 0;
+          }
+        }
+      }
+    }
+  }
+}

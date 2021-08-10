@@ -91,6 +91,8 @@ Rails.application.routes.draw do
       resources :tags, only: %i[show index create] do
         resources :user_tags, only: :index, on: :member, as: :tagged_users
       end
+      resources :affirmations, except: :show
+      resources :affirmations_archive, only: :index
     end
   end
   # rubocop:enable Metrics/BlockLength
