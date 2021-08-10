@@ -136,6 +136,8 @@
       }
 
       .col-md-4 {
+        padding: 0;
+
         &:first-child { padding: 0 0 0.5rem 0; }
         &:nth-child(2) { padding-right: 0.25rem; }
         &:last-child { padding-left: 0.25rem; }
