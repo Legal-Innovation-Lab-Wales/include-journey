@@ -37,7 +37,7 @@ module TeamMembers
     end
 
     def survey_comment_section
-      @survey_question = @survey_section.survey_comment_sections.find(params[:comment_section_id])
+      @survey_comment_section = @survey_section.survey_comment_sections.find(params[:comment_section_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: edit_survey_path(@survey), flash: { error: 'Survey Comment Section not found' })
     end

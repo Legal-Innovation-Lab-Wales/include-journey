@@ -40,7 +40,9 @@ module TeamMembers
 
     # DELETE /surveys/:survey_id
     def destroy
-      puts 'Destroy action called...'
+      @survey.destroy!
+
+      redirect_back(fallback_location: authenticated_team_member_root_path, flash: { success: 'Survey removed' })
     end
 
     protected

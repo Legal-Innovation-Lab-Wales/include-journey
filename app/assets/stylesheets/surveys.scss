@@ -133,8 +133,11 @@
         border: 1px dashed $white;
 
         .row {
+          &:not(.table-header) {
+            display: flex;
+          }
+
           position: relative;
-          display: flex;
           justify-content: end;
           margin: 0;
 

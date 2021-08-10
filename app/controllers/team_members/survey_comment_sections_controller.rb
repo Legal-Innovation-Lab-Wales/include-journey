@@ -16,7 +16,9 @@ module TeamMembers
 
     # DELETE /surveys/:survey_id/survey_sections/:section_id/survey_questions/:id
     def destroy
-      puts 'Destroy action called...'
+      @survey_comment_section.destroy!
+
+      redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'Comment Section removed' })
     end
   end
 end

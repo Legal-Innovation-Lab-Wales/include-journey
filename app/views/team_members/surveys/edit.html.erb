@@ -2,77 +2,82 @@
   <section class="row">
     <div class="col">
       <h2><%= @survey.name %></h2>
-        <% @survey_sections.each do |section| %>
-          <div class="container survey-section">
-            <%= text_field_tag "section[#{section.id}]", section.heading, class: 'form-control',
-                               data: { id: section.id }, placeholder: 'Section Heading' %>
-            <% unless section.survey_questions.count.zero? %>
-              <div class="row table-header">
-                <div class="col-12 col-lg-6"></div>
-                <% 6.times do |index| %>
-                  <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
-                <% end %>
-              </div>
-
-              <% section.survey_questions.order(order: :asc).each do |question| %>
-                <div class="row">
-                  <div class="col-12 col-lg-6">
-                    <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
-                                       class: 'form-control form-control-sm', data: { id: section.id } %>
-                  </div>
-                  <% 6.times do |index| %>
-                    <div class="col-2 col-lg-1">
-                      <label>
-                        <div class="label"><%= survey_option(index) %></div>
-                        <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',
-                                             data: { id: question.id } %>
-                      </label>
-                    </div>
-                  <% end %>
-                  <%= link_to survey_question_path(@survey, section, question), method: :delete,
-                              class: 'btn btn-sm btn-danger' do %>
-                    <i class="fas fa-times-circle"></i> Remove Question
-                  <% end %>
-                </div>
+      <%= link_to survey_path(@survey), method: :delete, class: 'btn btn-sm btn-danger mb-3',
+                  data: { confirm: 'This will delete the entire survey. Are you sure?' } do %>
+        <i class="fas fa-times-circle"></i> Delete Survey
+      <% end %>
+      <% @survey_sections.each do |section| %>
+        <div class="container survey-section">
+          <%= text_field_tag "section[#{section.id}]", section.heading, class: 'form-control',
+                             data: { id: section.id }, placeholder: 'Section Heading' %>
+          <% unless section.survey_questions.count.zero? %>
+            <div class="row table-header">
+              <div class="col-12 col-lg-6"></div>
+              <% 6.times do |index| %>
+                <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
               <% end %>
-            <% end %>
-            <div class="row add-btn">
-              <div class="col">
-                <%= link_to survey_question_index_path(@survey, section), method: :post,
-                            class: 'btn btn-sm btn-success' do %>
-                  <i class="fas fa-plus-circle"></i> Add Question
-                <% end %>
-              </div>
             </div>
-            <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
-              <div class="row comment-section">
-                <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
-                                   placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
-                <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
-                                  id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
-                <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
+
+            <% section.survey_questions.order(order: :asc).each do |question| %>
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
+                                     class: 'form-control form-control-sm', data: { id: section.id } %>
+                </div>
+                <% 6.times do |index| %>
+                  <div class="col-2 col-lg-1">
+                    <label>
+                      <div class="label"><%= survey_option(index) %></div>
+                      <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',
+                                           data: { id: question.id } %>
+                    </label>
+                  </div>
+                <% end %>
+                <%= link_to survey_question_path(@survey, section, question), method: :delete,
                             class: 'btn btn-sm btn-danger' do %>
-                  <i class="fas fa-times-circle"></i> Remove Comment Section
+                  <i class="fas fa-times-circle"></i> Remove Question
                 <% end %>
               </div>
             <% end %>
-            <div class="row add-btn">
-              <div class="col">
-                <%= link_to survey_comment_section_index_path(@survey, section), method: :post,
-                            class: 'btn btn-sm btn-success' do %>
-                  <i class="fas fa-plus-circle"></i> Add Comment Section
-                <% end %>
-              </div>
+          <% end %>
+          <div class="row add-btn">
+            <div class="col">
+              <%= link_to survey_question_index_path(@survey, section), method: :post,
+                          class: 'btn btn-sm btn-success' do %>
+                <i class="fas fa-plus-circle"></i> Add Question
+              <% end %>
             </div>
-            <%= link_to survey_section_path(@survey, section), method: :delete,
-                        class: 'btn btn-sm btn-danger remove-section' do %>
-              <i class="fas fa-times-circle"></i> Remove Section
-            <% end %>
           </div>
-        <% end %>
-        <%= link_to survey_section_index_path(@survey), method: :post, class: 'btn btn-sm btn-success' do %>
-          <i class="fas fa-plus-circle"></i> Add Section
-        <% end %>
+          <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
+            <div class="row comment-section">
+              <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
+                                 placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
+              <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
+                                id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
+              <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
+                          class: 'btn btn-sm btn-danger' do %>
+                <i class="fas fa-times-circle"></i> Remove Comment Section
+              <% end %>
+            </div>
+          <% end %>
+          <div class="row add-btn">
+            <div class="col">
+              <%= link_to survey_comment_section_index_path(@survey, section), method: :post,
+                          class: 'btn btn-sm btn-success' do %>
+                <i class="fas fa-plus-circle"></i> Add Comment Section
+              <% end %>
+            </div>
+          </div>
+          <%= link_to survey_section_path(@survey, section), method: :delete,
+                      class: 'btn btn-sm btn-danger remove-section',
+                      data: { confirm: 'This will delete the entire section including all questions and comment sections therein. Are you sure?' } do %>
+            <i class="fas fa-times-circle"></i> Remove Section
+          <% end %>
+        </div>
+      <% end %>
+      <%= link_to survey_section_index_path(@survey), method: :post, class: 'btn btn-sm btn-success' do %>
+        <i class="fas fa-plus-circle"></i> Add Section
+      <% end %>
     </div>
   </section>
 </main>
