@@ -36,7 +36,11 @@ module TeamMembers
 
     # PUT /surveys/:survey_id
     def update
-      puts 'Update action called...'
+      @survey.update!(survey_params)
+
+      respond_to do |format|
+        format.json { render json: @survey.as_json, status: :ok }
+      end
     end
 
     # DELETE /surveys/:survey_id
