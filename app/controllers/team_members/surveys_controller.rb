@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/surveys_controller.rb
   class SurveysController < SurveyApplicationController
+    skip_before_action :editable, except: %i[edit update destroy]
     include Pagination
 
     # GET /surveys

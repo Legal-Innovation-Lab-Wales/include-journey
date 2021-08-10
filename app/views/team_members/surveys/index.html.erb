@@ -25,8 +25,12 @@
             </td>
             <td><%= link_to survey.start, survey_path(survey) %></td>
             <td><%= link_to survey.end, survey_path(survey) %></td>
-            <td><%= link_to survey.survey_responses.submitted.count, survey_path(survey) %></td>
-            <td><%= link_to edit_survey_path(survey) do %><i class="fas fa-edit"></i><% end %></td>
+            <td><%= link_to survey.survey_responses.count, survey_path(survey) %></td>
+            <td>
+              <% if survey.survey_responses.count.zero? %>
+                <%= link_to edit_survey_path(survey) do %><i class="fas fa-edit"></i><% end %>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>

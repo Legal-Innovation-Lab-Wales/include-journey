@@ -10,7 +10,7 @@ module TeamMembers
     protected
 
     def editable
-      return unless @responses.present? && !@responses.submitted.count.zero?
+      return unless @responses.present? && !@responses.count.zero?
 
       redirect_back(fallback_location: surveys_path, flash: { error: 'You cannot edit a Survey which has responses' })
     end
