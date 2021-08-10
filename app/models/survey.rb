@@ -18,14 +18,6 @@ class Survey < ApplicationRecord
     end_date.strftime('%d/%m/%Y')
   end
 
-  def start_field_date
-    start_date.strftime('%Y-%m-%d')
-  end
-
-  def end_field_date
-    end_date.strftime('%Y-%m-%d')
-  end
-
   def next_section
     return 1 unless survey_sections.present?
 
