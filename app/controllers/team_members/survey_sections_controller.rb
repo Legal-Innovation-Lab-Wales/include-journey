@@ -11,7 +11,11 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/survey_sections/:id
     def update
-      puts 'Update action called...'
+      @survey_section.update!(section_params)
+
+      respond_to do |format|
+        format.json { render json: @survey_section.as_json, status: :ok }
+      end
     end
 
     # DELETE /surveys/:survey_id/survey_sections/:id
@@ -19,6 +23,12 @@ module TeamMembers
       @survey_section.destroy!
 
       redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'Section removed' })
+    end
+
+    private
+
+    def section_params
+      params.require(:survey_section).permit(:heading)
     end
   end
 end

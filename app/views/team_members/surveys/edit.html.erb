@@ -34,9 +34,9 @@
         </div>
       </div>
       <% @survey_sections.each do |section| %>
-        <div class="container survey-section">
+        <div class="container survey-section" data-id="<%= section.id %>">
           <%= text_field_tag "section[#{section.id}]", section.heading, class: 'form-control',
-                             data: { id: section.id }, placeholder: 'Section Heading' %>
+                             placeholder: 'Section Heading' %>
           <% unless section.survey_questions.count.zero? %>
             <div class="row table-header">
               <div class="col-12 col-lg-6"></div>
