@@ -17,12 +17,12 @@ class User < DeviseRecord
   has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
   has_many :user_tags, foreign_key: :user_id, dependent: :delete_all
 
-  scope :can_be_deleted, -> { where('deletion_date is not null and deletion_date <= ?', Time.now) }
+  scope :can_be_deleted, -> { where('deletion is not null and deletion <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
 
-  def release
-    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+  def release_date
+    released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
   end
 
   def dob
@@ -72,7 +72,7 @@ class User < DeviseRecord
       id,
       full_name,
       dob,
-      release,
+      released_at,
       sex,
       gender_identity,
       ethnic_group,
@@ -86,7 +86,7 @@ class User < DeviseRecord
       'ID': id,
       'Name': full_name,
       'Date Of Birth': dob,
-      'Release Date': release,
+      'Release Date': released_at,
       'Sex': sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,

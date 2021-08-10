@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104755) do
+ActiveRecord::Schema.define(version: 2021_05_28_104756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,9 +253,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104755) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
-    t.datetime "release_date"
+    t.date "released_at"
     t.boolean "terms", default: false
-    t.datetime "deletion_date"
+    t.datetime "deleted_at"
     t.datetime "date_of_birth"
     t.text "disabilities"
     t.string "ethnic_group"
@@ -265,6 +265,18 @@ ActiveRecord::Schema.define(version: 2021_05_28_104755) do
     t.string "pronouns"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "nomis_id"
+    t.string "pnc_no"
+    t.string "delius_no"
+    t.date "enrolled_at"
+    t.date "intervened_at"
+    t.string "release_establishment"
+    t.string "probation_area"
+    t.string "local_authority"
+    t.date "pilot_completed_at"
+    t.date "pilot_withdrawn_at"
+    t.string "withdrawn_reason"
+    t.string "index_offence"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -61,7 +61,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :users, only: %i[index show] do
+      resources :users, only: %i[index show update] do
         put 'pin', action: 'pin', on: :member, as: :pin
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
@@ -73,6 +73,7 @@ Rails.application.routes.draw do
         end
         resources :appointments, only: %i[index new create edit update], on: :member
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
+        get 'edit', action: 'edit', on: :member, as: :edit
       end
 
       resources :crisis_events, only: %i[index show] do
