@@ -153,18 +153,11 @@
 
   &.show {
     #user-info {
+      padding: 0 1rem;
+
       .edit-user-details {
         text-decoration: none;
-
-        .fa-edit {
-          font-size: 1.5rem;
-        }
       }
-
-      h4 {
-        color: $dark-grey;
-      }
-      padding: 0 1rem;
 
       p {
         margin: 0;

@@ -114,8 +114,8 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :release, class: 'form-control', placeholder: 'Release' %>
-                      <%= f.label :release %>
+                      <%= f.date_field :released_at, class: 'form-control', placeholder: 'Release' %>
+                      <%= f.label :released_at %>
                     </div>
                   </div>
                   <div class="col-md">
@@ -150,14 +150,14 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :enrolment, class: 'form-control' %>
-                      <%= f.label :enrolment %>
+                      <%= f.date_field :enrolled_at, class: 'form-control' %>
+                      <%= f.label :enrolled_at %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :intervention, class: 'form-control' %>
-                      <%= f.label :intervention do %>
+                      <%= f.date_field :intervened_at, class: 'form-control' %>
+                      <%= f.label :intervened_at do %>
                         Began Receiving Intervention
                       <% end %>
                     </div>
@@ -194,16 +194,16 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :pilot_completed, class: 'form-control', placeholder: 'Completed Pilot' %>
-                      <%= f.label :pilot_completed do %>
+                      <%= f.date_field :pilot_completed_at, class: 'form-control', placeholder: 'Completed Pilot' %>
+                      <%= f.label :pilot_completed_at do %>
                         Completed Pilot
                       <% end %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :pilot_withdrawn, class: 'form-control', placeholder: 'Withdrawn' %>
-                      <%= f.label :pilot_withdrawn do %>
+                      <%= f.date_field :pilot_withdrawn_at, class: 'form-control', placeholder: 'Withdrawn' %>
+                      <%= f.label :pilot_withdrawn_at do %>
                         Withdrawn
                       <% end %>
                     </div>
