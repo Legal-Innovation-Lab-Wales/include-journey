@@ -1,7 +1,7 @@
 # app/models/survey.rb
 class Survey < ApplicationRecord
   belongs_to :team_member
-  has_many :survey_sections
+  has_many :survey_sections, dependent: :destroy
   has_many :survey_responses
   has_many :survey_questions, through: :survey_sections
   has_many :survey_comment_sections, through: :survey_sections

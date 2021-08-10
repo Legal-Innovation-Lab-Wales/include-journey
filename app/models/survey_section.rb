@@ -1,8 +1,8 @@
 # app/models/survey_section.rb
 class SurveySection < ApplicationRecord
   belongs_to :survey
-  has_many :survey_questions
-  has_many :survey_comment_sections
+  has_many :survey_questions, dependent: :destroy
+  has_many :survey_comment_sections, dependent: :destroy
 
   validates_presence_of :survey_id
 
