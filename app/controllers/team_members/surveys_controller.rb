@@ -1,7 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/surveys_controller.rb
-  class SurveysController < TeamMembersApplicationController
-    before_action :survey, except: %i[index new create]
+  class SurveysController < SurveyApplicationController
     include Pagination
 
     # GET /surveys
@@ -24,22 +23,22 @@ module TeamMembers
       redirect_to surveys_path, flash: { success: "#{@survey.name} was successfully created." }
     end
 
-    # GET /surveys/:id
+    # GET /surveys/:survey_id
     def show
       render 'show'
     end
 
-    # GET /surveys/:id/edit
+    # GET /surveys/:survey_id/edit
     def edit
       render 'edit'
     end
 
-    # PUT /surveys/:id
+    # PUT /surveys/:survey_id
     def update
       puts 'Update action called...'
     end
 
-    # DELETE /surveys/:id
+    # DELETE /surveys/:survey_id
     def destroy
       puts 'Destroy action called...'
     end
@@ -76,13 +75,6 @@ module TeamMembers
     end
 
     private
-
-    def survey
-      @survey = Survey.includes(:survey_sections, :survey_responses).find(params[:id])
-      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections)
-    rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })
-    end
 
     def survey_search
       'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'

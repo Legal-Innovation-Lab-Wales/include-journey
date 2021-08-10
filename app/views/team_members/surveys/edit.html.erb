@@ -29,12 +29,17 @@
                       </label>
                     </div>
                   <% end %>
+                  <%= link_to survey_question_path(@survey, section, question), method: :delete,
+                              class: 'btn btn-sm btn-danger' do %>
+                    <i class="fas fa-times-circle"></i> Remove Question
+                  <% end %>
                 </div>
               <% end %>
             <% end %>
             <div class="row add-btn">
               <div class="col">
-                <%= link_to survey_section_question_index_path(@survey, section), method: :post, class: 'btn btn-success' do %>
+                <%= link_to survey_question_index_path(@survey, section), method: :post,
+                            class: 'btn btn-sm btn-success' do %>
                   <i class="fas fa-plus-circle"></i> Add Question
                 <% end %>
               </div>
@@ -45,19 +50,27 @@
                                    placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
                 <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
                                   id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
+                <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
+                            class: 'btn btn-sm btn-danger' do %>
+                  <i class="fas fa-times-circle"></i> Remove Comment Section
+                <% end %>
               </div>
             <% end %>
             <div class="row add-btn">
               <div class="col">
-                <%= link_to survey_section_comment_section_index_path(@survey, section), method: :post,
-                            class: 'btn btn-success' do %>
+                <%= link_to survey_comment_section_index_path(@survey, section), method: :post,
+                            class: 'btn btn-sm btn-success' do %>
                   <i class="fas fa-plus-circle"></i> Add Comment Section
                 <% end %>
               </div>
             </div>
+            <%= link_to survey_section_path(@survey, section), method: :delete,
+                        class: 'btn btn-sm btn-danger remove-section' do %>
+              <i class="fas fa-times-circle"></i> Remove Section
+            <% end %>
           </div>
         <% end %>
-        <%= link_to survey_section_path(@survey), method: :post, class: 'btn btn-success' do %>
+        <%= link_to survey_section_index_path(@survey), method: :post, class: 'btn btn-sm btn-success' do %>
           <i class="fas fa-plus-circle"></i> Add Section
         <% end %>
     </div>
