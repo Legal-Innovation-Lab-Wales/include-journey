@@ -1,11 +1,38 @@
 <main class="container team-members surveys edit">
   <section class="row">
     <div class="col">
-      <h2><%= @survey.name %></h2>
-      <%= link_to survey_path(@survey), method: :delete, class: 'btn btn-sm btn-danger mb-3',
-                  data: { confirm: 'This will delete the entire survey. Are you sure?' } do %>
-        <i class="fas fa-times-circle"></i> Delete Survey
-      <% end %>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <div class="form-floating">
+              <%= text_field_tag 'survey[name]', @survey.name, placeholder: 'Survey Name', class: 'form-control survey-name' %>
+              <%= label_tag 'survey[name]', 'Survey Name' %>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="form-floating">
+              <%= date_field_tag 'survey[start_date]', @survey.start_field_date, class: 'form-control date-field',
+                                 min: Date.today %>
+              <%= label_tag 'survey[start_date]', 'Start Date' %>
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <div class="form-floating">
+              <%= date_field_tag 'survey[end_date]', @survey.end_field_date, class: 'form-control date-field',
+                                 min: Date.today %>
+              <%= label_tag 'survey[end_date]', 'End Date' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <%= link_to survey_path(@survey), method: :delete, class: 'btn btn-sm btn-danger delete-btn',
+                        data: { confirm: 'This will delete the entire survey. Are you sure?' } do %>
+              <i class="fas fa-times-circle"></i> Delete Survey
+            <% end %>
+          </div>
+        </div>
+      </div>
       <% @survey_sections.each do |section| %>
         <div class="container survey-section">
           <%= text_field_tag "section[#{section.id}]", section.heading, class: 'form-control',
