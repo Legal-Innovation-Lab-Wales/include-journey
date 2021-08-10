@@ -6,17 +6,22 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
           <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
-          <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle', text: 'Crisis Events' %>
+          <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
+                     text: 'Crisis Events' %>
         </div>
         <div class="row">
-          <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open', text: 'Journal Entries' %>
-          <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart', text: 'Wellbeing Assessments' %>
-          <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-tools', text: 'Wellbeing Management' %>
+          <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open',
+                     text: 'Journal Entries' %>
+          <%= render 'shared/dashboard_btn', path: wellbeing_assessments_path, icon: 'fa-heart',
+                     text: 'Wellbeing Assessments' %>
+          <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-tools',
+                     text: 'Wellbeing Management' %>
         </div>
         <div class="row">
           <%= render 'shared/dashboard_btn', path: affirmations_path, icon: 'fa-smile', text: 'Daily Affirmations' %>
           <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
-          <%= render 'shared/dashboard_btn', path: surveys_path, icon: 'fa-clipboard-list', text: 'Surveys' %>
+          <%= render 'shared/dashboard_btn', path: Survey.count.zero? ? new_survey_path : surveys_path,
+                     icon: 'fa-clipboard-list', text: 'Surveys' %>
         </div>
       </div>
     </div>
