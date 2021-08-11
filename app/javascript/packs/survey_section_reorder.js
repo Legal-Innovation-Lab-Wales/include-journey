@@ -1,7 +1,8 @@
 const csrf_tokens = document.getElementsByName('csrf-token'),
     headers = {'Content-Type': 'application/json', 'X-CSRF-Token': csrf_tokens.length > 0 ? csrf_tokens[0].content : ''},
     survey_url = `${location.origin}/${location.pathname.replace('/edit', '')}`,
-    survey_sections = document.querySelectorAll('.survey-section')
+    survey_sections = document.querySelectorAll('.survey-section'),
+    resource_map = resources => [...resources].map(resource => resource.dataset.resourceId)
 
 survey_sections.forEach(survey_section => {
     survey_section.addEventListener('reorder', () => {
@@ -13,10 +14,7 @@ survey_sections.forEach(survey_section => {
             method: 'put',
             headers: headers,
             body: JSON.stringify({
-                survey_section: {
-                    questions: [...questions].map(question => question.dataset.questionId),
-                    comment_sections: [...comment_sections].map(comment_section => comment_section.dataset.commentSectionId)
-                }
+                survey_section: { questions: resource_map(questions), comment_sections: resource_map(comment_sections) }
             })
         })
             .then(response => {

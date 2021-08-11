@@ -48,7 +48,7 @@
 
             <% section.survey_questions.order(order: :asc).each do |question| %>
               <div class="row question" draggable="true" id="question[<%= question.id %>]"
-                   data-question-id="<%= question.id %>">
+                   data-resource-id="<%= question.id %>" data-resource-type="question">
                 <div class="col-12 col-lg-6">
                   <i class="fas fa-grip-lines"></i>
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
@@ -80,16 +80,22 @@
             </div>
           </div>
           <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
-            <div class="row comment-section" data-comment-section-id="<%= comment_section.id %>">
-              <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
-                                 placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
-              <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
-                                id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
-              <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
-                          class: 'btn btn-sm btn-danger', title: 'Remove Comment Section',
-                          data: { toggle: 'tooltip', placement: 'bottom' } do %>
-                <i class="fas fa-trash-alt"></i>
-              <% end %>
+            <div class="row comment-section" draggable="true" data-resource-id="<%= comment_section.id %>"
+                 data-resource-type="comment-section">
+              <div class="col-auto">
+                <i class="fas fa-grip-lines"></i>
+              </div>
+              <div class="col">
+                <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
+                                   placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
+                <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
+                                  id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
+                <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
+                            class: 'btn btn-sm btn-danger', title: 'Remove Comment Section',
+                            data: { toggle: 'tooltip', placement: 'bottom' } do %>
+                  <i class="fas fa-trash-alt"></i>
+                <% end %>
+              </div>
             </div>
           <% end %>
           <div class="row add-btn">

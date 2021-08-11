@@ -164,8 +164,30 @@
           &.comment-section {
             margin-top: 1rem;
 
-            input { border-radius: 0.2rem 0.2rem 0 0; }
-            textarea { border-radius: 0 0 0 0.2rem; }
+            .col-auto {
+              display: flex;
+              align-items: center;
+              padding: 0;
+            }
+
+            .col {
+              padding: 0;
+
+              input { border-radius: 0.2rem 0.2rem 0 0; }
+              textarea { border-radius: 0 0 0 0.2rem; }
+            }
+
+            &.drop-border-top {
+              padding-top: 1rem;
+            }
+
+            &.drop-border-bottom {
+              padding-bottom: 1rem;
+
+              .btn-danger {
+                bottom: 1rem !important;
+              }
+            }
           }
 
           &:hover {
@@ -182,22 +204,25 @@
             display: flex;
             align-items: center;
 
-            .fa-grip-lines {
-              margin-right: 1rem;
-
-              @media screen and (min-width: $screen-lg){
-                margin: 0 1rem;
-              }
-            }
-
             @media screen and (min-width: $screen-lg) {
               padding: 0 !important;
             }
           }
 
-          &.question {
-            &.drop-border-top { border-top: 5px solid $white; }
-            &.drop-border-bottom { border-bottom: 5px solid $white; }
+          &.drop-border-top {
+            border-top: 5px solid $white;
+          }
+
+          &.drop-border-bottom {
+            border-bottom: 5px solid $white;
+          }
+
+          .fa-grip-lines {
+            margin-right: 1rem;
+
+            @media screen and (min-width: $screen-lg){
+              margin: 0 1rem;
+            }
           }
         }
 
@@ -208,10 +233,12 @@
         .btn-danger {
           position: absolute;
           bottom: 0;
+          right: 0;
           z-index: 2;
           width: auto;
           margin-top: 0;
           border-radius: 0 !important;
+          transition: none !important;
 
           &.remove-section { right: 1rem }
         }

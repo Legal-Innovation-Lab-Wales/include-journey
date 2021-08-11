@@ -1,55 +1,66 @@
 const csrf_tokens = document.getElementsByName('csrf-token'),
     headers = {'Content-Type': 'application/json', 'X-CSRF-Token': csrf_tokens.length > 0 ? csrf_tokens[0].content : ''},
     survey_url = `${location.origin}/${location.pathname.replace('/edit', '')}`,
-    questions = document.querySelectorAll('.row.question'),
-    index = question => Array.from(question.parentNode.children).indexOf(question),
-    reset_border = question => question.classList.remove('drop-border-bottom', 'drop-border-top'),
+    question_rows = document.querySelectorAll('.row.question'),
+    comment_section_rows = document.querySelectorAll('.row.comment-section'),
+    index = row => Array.from(row.parentNode.children).indexOf(row),
+    reset_border = row => row.classList.remove('drop-border-bottom', 'drop-border-top'),
     reorder = new Event('reorder')
 
-let drag_src_el = null
+let drag_row = null
 
-questions.forEach(question => {
-    question.addEventListener('dragstart', e => {
-        question.style.opacity = 0.4
-        drag_src_el = question
-    })
-    question.addEventListener('dragend', () => question.style.opacity = 1)
-    question.addEventListener('dragenter', e => e.preventDefault())
-    question.addEventListener('dragover', e => {
-        e.preventDefault()
-        const drag_order = index(drag_src_el), drop_order = index(question)
-        if (drop_order !== drag_order)
-            question.classList.add(`drop-border-${drop_order > drag_order ? 'bottom' : 'top'}`)
-    })
-    question.addEventListener('dragleave', () => reset_border(question))
-    question.addEventListener('drop', e => {
-        e.preventDefault()
-        const drag_order = index(drag_src_el), drop_order = index(question)
-        if (drop_order !== drag_order) {
-            const drop_section = question.closest('.survey-section'),
-                drag_section = drag_src_el.closest('.survey-section'),
-                drop_section_id = drop_section.dataset.id,
-                drag_section_id = drag_section.dataset.id,
-                question_id = drag_src_el.dataset.questionId
+const setup_row_drag_drop = (rows, resource_type) => {
+    rows.forEach(row => {
+        row.addEventListener('dragstart', () => {
+            row.style.opacity = 0.4
+            drag_row = row
+        })
+        row.addEventListener('dragend', () => row.style.opacity = 1)
+        row.addEventListener('dragenter', e => e.preventDefault())
+        row.addEventListener('dragover', e => {
+            e.preventDefault()
+            if (drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
+                const drag_order = index(drag_row), drop_order = index(row)
+                row.classList.add(`drop-border-${drop_order > drag_order ? 'bottom' : 'top'}`)
+            }
+        })
+        row.addEventListener('dragleave', () => reset_border(row))
+        row.addEventListener('drop', e => {
+            e.preventDefault()
+            if (drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
+                const drag_order = index(drag_row),
+                    drop_order = index(row),
+                    drag_section = drag_row.closest('.survey-section'),
+                    drop_section = row.closest('.survey-section'),
+                    drag_section_id = drag_section.dataset.id,
+                    drop_section_id = drop_section.dataset.id,
+                    resourceId = drag_row.dataset.resourceId
 
-            fetch(`${survey_url}/survey_sections/${drag_section_id}/survey_questions/${question_id}`, {
-                method: 'put',
-                headers: headers,
-                body: JSON.stringify({ survey_question: { survey_section_id: drop_section_id }})
-            })
-                .then(response => {
-                    if (!response.ok) throw 'Survey Question could not be updated!'
-                    return response.json()
+                const data = {}
+                data[`survey_${resource_type}`] = {survey_section_id: drop_section_id}
+
+                fetch(`${survey_url}/survey_sections/${drag_section_id}/survey_${resource_type}s/${resourceId}`, {
+                    method: 'put',
+                    headers: headers,
+                    body: JSON.stringify(data)
                 })
-                .then(survey_question => {
-                    drag_src_el.dataset.sectionId = survey_question.survey_section_id
-                    question.insertAdjacentElement(drop_order > drag_order ? 'afterend' : 'beforebegin', drag_src_el)
-                    reset_border(question)
+                    .then(response => {
+                        if (!response.ok) throw `Survey ${resource_type.split('_').join(' ')} could not be updated!`
+                        return response.json()
+                    })
+                    .then(survey_question => {
+                        drag_row.dataset.sectionId = survey_question.survey_section_id
+                        row.insertAdjacentElement(drop_order > drag_order ? 'afterend' : 'beforebegin', drag_row)
+                        reset_border(row)
 
-                    if (drag_section_id !== drop_section_id) drag_section.dispatchEvent(reorder)
-                    drop_section.dispatchEvent(reorder)
-                })
-                .catch(error => alert(error))
-        }
+                        if (drag_section_id !== drop_section_id) drag_section.dispatchEvent(reorder)
+                        drop_section.dispatchEvent(reorder)
+                    })
+                    .catch(error => alert(error))
+            }
+        })
     })
-})
+}
+
+setup_row_drag_drop(question_rows, 'question')
+setup_row_drag_drop(comment_section_rows, 'comment_section')
