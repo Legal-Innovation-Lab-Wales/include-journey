@@ -15,8 +15,8 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
     reset_border = resource => resource.classList.remove('drop-border-bottom', 'drop-border-top'),
     can_drop = (drag, drop) => drag !== drop && drag.dataset.type === drop.dataset.type,
     drop_row = row => {
-        const drag_section = drag.closest('.survey-section'),
-            drop_section = row.closest('.survey-section'),
+        const drag_section = drag.parentNode,
+            drop_section = row.parentNode,
             drag_section_id = drag_section.dataset.id,
             drop_section_id = drop_section.dataset.id
 
@@ -43,7 +43,9 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
             .catch(error => alert(error))
     },
     drop_section = section => {
-        console.log('Drop Section', section)
+        section.parentNode.insertAdjacentElement(index(section) > index(drag) ? 'afterend' : 'beforebegin', drag.parentNode)
+        reset_border(section)
+        section.parentNode.parentNode.dispatchEvent(reorder)
     }
 
 let drag = null
