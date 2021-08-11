@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/survey_questions_controller.rb
   class SurveyQuestionsController < SurveyApplicationController
+    before_action :verify_section, only: :update
 
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_questions
     def create
@@ -28,7 +29,16 @@ module TeamMembers
     private
 
     def question_params
-      params.require(:survey_question).permit(:question)
+      params.require(:survey_question).permit(:question, :survey_section_id)
+    end
+
+    def verify_section
+      return unless question_params[:section_id].present?
+
+      return if @survey_sections.find(question_params[:section_id]).present?
+
+      redirect_back(fallback_location: edit_survey_path(@survey),
+                    flash: { error: 'Survey Section does not belong to this Survey' })
     end
   end
 end
