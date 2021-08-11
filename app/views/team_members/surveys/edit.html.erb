@@ -6,19 +6,20 @@
           <div class="row">
             <div class="col-12 col-md-4">
               <div class="form-floating">
-                <%= f.text_field :name, class: 'form-control', placeholder: 'Survey Name', required: true %>
+                <%= f.text_field :name, class: 'form-control', placeholder: 'Survey Name', required: true,
+                                 data: { name: 'name' } %>
                 <%= f.label :name, 'Survey Name' %>
               </div>
             </div>
             <div class="col-6 col-md-4">
               <div class="form-floating">
-                <%= f.date_field :start_date, class: 'form-control', required: true %>
+                <%= f.date_field :start_date, class: 'form-control', required: true, data: { name: 'start_date' } %>
                 <%= f.label :start_date, 'Start Date' %>
               </div>
             </div>
             <div class="col-6 col-md-4">
               <div class="form-floating">
-                <%= f.date_field :end_date, class: 'form-control', required: true %>
+                <%= f.date_field :end_date, class: 'form-control', required: true, data: { name: 'end_date' } %>
                 <%= f.label :end_date, 'End Date' %>
               </div>
             </div>
