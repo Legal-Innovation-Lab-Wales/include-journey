@@ -47,7 +47,7 @@
             </div>
 
             <% section.survey_questions.order(order: :asc).each do |question| %>
-              <div class="row" draggable="true">
+              <div class="row question" draggable="true" id="question[<%= question.id %>]">
                 <div class="col-12 col-lg-6">
                   <i class="fas fa-grip-lines"></i>
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',

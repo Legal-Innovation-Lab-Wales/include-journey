@@ -190,6 +190,11 @@
               padding: 0 !important;
             }
           }
+
+          &.question {
+            &.drop-border-top { border-top: 5px solid $white; }
+            &.drop-border-bottom { border-bottom: 5px solid $white; }
+          }
         }
 
         .btn {
