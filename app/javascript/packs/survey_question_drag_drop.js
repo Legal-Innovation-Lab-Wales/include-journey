@@ -3,7 +3,8 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
     survey_url = `${location.origin}/${location.pathname.replace('/edit', '')}`,
     questions = document.querySelectorAll('.row.question'),
     index = question => Array.from(question.parentNode.children).indexOf(question),
-    reset_border = question => question.classList.remove('drop-border-bottom', 'drop-border-top')
+    reset_border = question => question.classList.remove('drop-border-bottom', 'drop-border-top'),
+    reorder = new Event('reorder')
 
 let drag_src_el = null
 
@@ -25,14 +26,16 @@ questions.forEach(question => {
         e.preventDefault()
         const drag_order = index(drag_src_el), drop_order = index(question)
         if (drop_order !== drag_order) {
-            const new_section_id = question.closest('.survey-section').dataset.id,
-                orig_section_id = drag_src_el.dataset.sectionId,
+            const drop_section = question.closest('.survey-section'),
+                drag_section = drag_src_el.closest('.survey-section'),
+                drop_section_id = drop_section.dataset.id,
+                drag_section_id = drag_section.dataset.id,
                 question_id = drag_src_el.dataset.questionId
 
-            fetch(`${survey_url}/survey_sections/${orig_section_id}/survey_questions/${question_id}`, {
+            fetch(`${survey_url}/survey_sections/${drag_section_id}/survey_questions/${question_id}`, {
                 method: 'put',
                 headers: headers,
-                body: JSON.stringify({ survey_question: { survey_section_id: new_section_id }})
+                body: JSON.stringify({ survey_question: { survey_section_id: drop_section_id }})
             })
                 .then(response => {
                     if (!response.ok) throw 'Survey Question could not be updated!'
@@ -42,6 +45,9 @@ questions.forEach(question => {
                     drag_src_el.dataset.sectionId = survey_question.survey_section_id
                     question.insertAdjacentElement(drop_order > drag_order ? 'afterend' : 'beforebegin', drag_src_el)
                     reset_border(question)
+
+                    if (drag_section_id !== drop_section_id) drag_section.dispatchEvent(reorder)
+                    drop_section.dispatchEvent(reorder)
                 })
                 .catch(error => alert(error))
         }

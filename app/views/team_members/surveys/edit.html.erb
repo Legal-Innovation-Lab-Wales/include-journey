@@ -48,7 +48,7 @@
 
             <% section.survey_questions.order(order: :asc).each do |question| %>
               <div class="row question" draggable="true" id="question[<%= question.id %>]"
-                   data-question-id="<%= question.id %>" data-section-id="<%= section.id %>">
+                   data-question-id="<%= question.id %>">
                 <div class="col-12 col-lg-6">
                   <i class="fas fa-grip-lines"></i>
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
@@ -119,5 +119,7 @@
   </section>
 </main>
 
-<%= javascript_pack_tag 'survey_edit' %>
-<%= javascript_pack_tag 'survey_drag_drop' %>
+<%= javascript_pack_tag 'survey_text_field_edits' %>
+<%= javascript_pack_tag 'survey_question_drag_drop' %>
+<%= javascript_pack_tag 'survey_section_reorder' %>
+
