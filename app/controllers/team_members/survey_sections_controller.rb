@@ -9,7 +9,7 @@ module TeamMembers
       redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'New Section added' })
     end
 
-    # PUT /surveys/:survey_id/survey_sections/:id
+    # PUT /surveys/:survey_id/survey_sections/:section_id
     def update
       @survey_section.update!(section_params)
 
@@ -18,7 +18,12 @@ module TeamMembers
       end
     end
 
-    # DELETE /surveys/:survey_id/survey_sections/:id
+    # PUT /surveys/:survey_id/survey_sections/:section_id/reorder
+    def reorder
+      puts 'Survey Section reorder called...'
+    end
+
+    # DELETE /surveys/:survey_id/survey_sections/:section_id
     def destroy
       @survey_section.destroy!
 
@@ -29,6 +34,10 @@ module TeamMembers
 
     def section_params
       params.require(:survey_section).permit(:heading)
+    end
+
+    def section_reorder_params
+      params.require(:survey_section).permit(:survey_questions, :survey_comment_sections)
     end
   end
 end
