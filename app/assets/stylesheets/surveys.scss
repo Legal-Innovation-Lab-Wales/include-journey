@@ -183,7 +183,11 @@
             align-items: center;
 
             .fa-grip-lines {
-              margin: 0 1rem;
+              margin-right: 1rem;
+
+              @media screen and (min-width: $screen-lg){
+                margin: 0 1rem;
+              }
             }
 
             @media screen and (min-width: $screen-lg) {
