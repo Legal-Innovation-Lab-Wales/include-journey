@@ -29,7 +29,7 @@
           <div class="col">
             <%= link_to survey_path(@survey), method: :delete, class: 'btn btn-sm btn-danger delete-btn',
                         data: { confirm: 'This will delete the entire survey. Are you sure?' } do %>
-              <i class="fas fa-times-circle"></i> Delete Survey
+              <i class="fas fa-trash-alt"></i> Delete Survey
             <% end %>
           </div>
         </div>
@@ -47,8 +47,9 @@
             </div>
 
             <% section.survey_questions.order(order: :asc).each do |question| %>
-              <div class="row">
+              <div class="row" draggable="true">
                 <div class="col-12 col-lg-6">
+                  <i class="fas fa-grip-lines"></i>
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
                                      class: 'form-control form-control-sm', data: { id: section.id } %>
                 </div>
@@ -62,8 +63,9 @@
                   </div>
                 <% end %>
                 <%= link_to survey_question_path(@survey, section, question), method: :delete,
-                            class: 'btn btn-sm btn-danger' do %>
-                  <i class="fas fa-times-circle"></i> Remove Question
+                            class: 'btn btn-sm btn-danger', title: 'Remove Question',
+                            data: { toggle: 'tooltip', placement: 'bottom' } do %>
+                  <i class="fas fa-trash-alt"></i>
                 <% end %>
               </div>
             <% end %>
@@ -83,8 +85,9 @@
               <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
                                 id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
               <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
-                          class: 'btn btn-sm btn-danger' do %>
-                <i class="fas fa-times-circle"></i> Remove Comment Section
+                          class: 'btn btn-sm btn-danger', title: 'Remove Comment Section',
+                          data: { toggle: 'tooltip', placement: 'bottom' } do %>
+                <i class="fas fa-trash-alt"></i>
               <% end %>
             </div>
           <% end %>
@@ -98,8 +101,13 @@
           </div>
           <%= link_to survey_section_path(@survey, section), method: :delete,
                       class: 'btn btn-sm btn-danger remove-section',
-                      data: { confirm: 'This will delete the entire section including all questions and comment sections therein. Are you sure?' } do %>
-            <i class="fas fa-times-circle"></i> Remove Section
+                      title: 'Remove Section',
+                      data: {
+                        confirm: 'This will delete the entire section including all questions and comment sections therein. Are you sure?',
+                        toggle: 'tooltip',
+                        placement: 'bottom'
+                      } do %>
+            <i class="fas fa-trash-alt"></i>
           <% end %>
         </div>
       <% end %>
@@ -110,4 +118,5 @@
   </section>
 </main>
 
-<%= javascript_pack_tag 'edit_survey' %>
+<%= javascript_pack_tag 'survey_edit' %>
+<%= javascript_pack_tag 'survey_drag_drop' %>
