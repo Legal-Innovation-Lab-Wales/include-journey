@@ -19,7 +19,7 @@ const setup_row_drag_drop = (rows, resource_type) => {
         row.addEventListener('dragenter', e => e.preventDefault())
         row.addEventListener('dragover', e => {
             e.preventDefault()
-            if (drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
+            if (drag_row && drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
                 const drag_order = index(drag_row), drop_order = index(row)
                 row.classList.add(`drop-border-${drop_order > drag_order ? 'bottom' : 'top'}`)
             }
@@ -27,7 +27,7 @@ const setup_row_drag_drop = (rows, resource_type) => {
         row.addEventListener('dragleave', () => reset_border(row))
         row.addEventListener('drop', e => {
             e.preventDefault()
-            if (drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
+            if (drag_row && drag_row.dataset.resourceType === row.dataset.resourceType && drag_row !== row) {
                 const drag_order = index(drag_row),
                     drop_order = index(row),
                     drag_section = drag_row.closest('.survey-section'),

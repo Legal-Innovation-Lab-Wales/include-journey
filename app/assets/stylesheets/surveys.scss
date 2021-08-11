@@ -161,21 +161,24 @@
           &.table-header { margin-top: 1rem; }
           &.add-btn { background-color: transparent; }
 
+          .col-auto {
+            display: flex;
+            align-items: center;
+            padding: 0;
+          }
+
+          .col {
+            padding: 0;
+
+            input { border-radius: 0.2rem 0.2rem 0 0; }
+            textarea { border-radius: 0 0 0 0.2rem; }
+          }
+
           &.comment-section {
             margin-top: 1rem;
 
-            .col-auto {
-              display: flex;
-              align-items: center;
-              padding: 0;
-            }
-
-            .col {
-              padding: 0;
-
-              input { border-radius: 0.2rem 0.2rem 0 0; }
-              textarea { border-radius: 0 0 0 0.2rem; }
-            }
+            input { border-radius: 0.2rem 0.2rem 0 0; }
+            textarea { border-radius: 0 0 0 0.2rem; }
 
             &.drop-border-top {
               padding-top: 1rem;
