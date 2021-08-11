@@ -97,6 +97,7 @@ Rails.application.routes.draw do
       resources :affirmations_archive, only: :index
       resources :surveys, param: :survey_id do
         member do
+          put '/reorder', action: 'reorder'
           resources :survey_sections, only: %i[create update destroy], param: :section_id, as: :survey_section do
             member do
               put '/reorder', action: 'reorder'

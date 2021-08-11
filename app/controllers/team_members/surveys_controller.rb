@@ -43,6 +43,15 @@ module TeamMembers
       end
     end
 
+    # PUT /surveys/:survey_id/reorder
+    def reorder
+      reorder_params[:sections].each_with_index { |id, i| @survey.survey_sections.find(id).update!(order: i + 1) }
+
+      respond_to do |format|
+        format.json { render json: @survey.as_json, status: :ok }
+      end
+    end
+
     # DELETE /surveys/:survey_id
     def destroy
       @survey.destroy!
@@ -89,6 +98,10 @@ module TeamMembers
 
     def survey_params
       params.require(:survey).permit(:name, :start_date, :end_date)
+    end
+
+    def reorder_params
+      params.require(:survey).permit(sections: [])
     end
   end
 end

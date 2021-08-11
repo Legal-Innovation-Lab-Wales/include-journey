@@ -1,6 +1,6 @@
 <main class="container team-members surveys edit">
   <section class="row">
-    <div class="col">
+    <div class="col survey">
       <div class="container">
         <%= form_with model: @survey, url: survey_path(@survey), method: :put, id: 'survey' do |f| %>
           <div class="row">
@@ -35,7 +35,7 @@
         </div>
       </div>
       <% @survey_sections.each do |section| %>
-        <div class="container survey-section" data-id="<%= section.id %>">
+        <div class="container survey-section" data-id="<%= section.id %>" data-resource-id>
           <div class="row section" draggable="true" data-resource-id="<%= section.id %>" data-type="section">
             <div class="col-auto">
               <i class="fas fa-grip-lines"></i>
