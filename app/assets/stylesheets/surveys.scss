@@ -180,16 +180,18 @@
             input { border-radius: 0.2rem 0.2rem 0 0; }
             textarea { border-radius: 0 0 0 0.2rem; }
 
+            &.drop-border-bottom .btn-danger {
+              bottom: 1rem !important;
+            }
+          }
+
+          &.section, &.comment-section {
             &.drop-border-top {
               padding-top: 1rem;
             }
 
             &.drop-border-bottom {
               padding-bottom: 1rem;
-
-              .btn-danger {
-                bottom: 1rem !important;
-              }
             }
           }
 
