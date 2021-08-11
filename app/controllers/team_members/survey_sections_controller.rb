@@ -20,7 +20,12 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/survey_sections/:section_id/reorder
     def reorder
-      puts 'Survey Section reorder called...'
+      reorder_params[:questions].each_with_index { |id, i| order(@survey_section.survey_questions, id, i) }
+      reorder_params[:comment_sections].each_with_index { |id, i| order(@survey_section.survey_comment_sections, id, i) }
+
+      respond_to do |format|
+        format.json { render json: @survey_section.as_json, status: :ok }
+      end
     end
 
     # DELETE /surveys/:survey_id/survey_sections/:section_id
@@ -32,12 +37,16 @@ module TeamMembers
 
     private
 
+    def order(resources, id, index)
+      resources.find(id).update!(order: index + 1)
+    end
+
     def section_params
       params.require(:survey_section).permit(:heading)
     end
 
-    def section_reorder_params
-      params.require(:survey_section).permit(:survey_questions, :survey_comment_sections)
+    def reorder_params
+      params.require(:survey_section).permit(questions: [], comment_sections: [])
     end
   end
 end

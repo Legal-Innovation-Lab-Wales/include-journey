@@ -80,7 +80,7 @@
             </div>
           </div>
           <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
-            <div class="row comment-section">
+            <div class="row comment-section" data-comment-section-id="<%= comment_section.id %>">
               <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
                                  placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
               <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
