@@ -9,7 +9,7 @@ if Config::SURVEY_RESPONSES
 
     survey_sections.each do |survey_section|
       survey_section.survey_questions.each do |question|
-        SurveyAnswer.create!(answer: rand(1..6), survey_question: question, survey_response: response)
+        SurveyAnswer.create!(answer: rand(0..5), survey_question: question, survey_response: response)
       end
 
       survey_section.survey_comment_sections.each do |comment_section|

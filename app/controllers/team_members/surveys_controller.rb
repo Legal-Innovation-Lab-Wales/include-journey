@@ -26,6 +26,8 @@ module TeamMembers
 
     # GET /surveys/:survey_id
     def show
+      @survey
+
       render 'show'
     end
 
