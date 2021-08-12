@@ -59,7 +59,7 @@
                 <div class="col-12 col-lg-6">
                   <i class="fas fa-grip-lines"></i>
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
-                                     class: 'form-control form-control-sm', data: { id: section.id } %>
+                                     class: 'form-control form-control-sm', data: { id: question.id } %>
                 </div>
                 <% 6.times do |index| %>
                   <div class="col-2 col-lg-1">
@@ -94,7 +94,7 @@
               </div>
               <div class="col">
                 <%= text_field_tag "comment_section[#{comment_section.id}]", comment_section.label,
-                                   placeholder: 'Label', class: 'form-control', data: { id: section.id } %>
+                                   placeholder: 'Label', class: 'form-control', data: { id: comment_section.id } %>
                 <%= text_area_tag "comment_section[#{comment_section.id}]", '', class: 'form-control', disabled: true,
                                   id: "comment_section[#{comment_section.id}]", data: { id: comment_section.id } %>
                 <%= link_to survey_comment_section_path(@survey, section, comment_section), method: :delete,
@@ -134,5 +134,5 @@
 
 <%= javascript_pack_tag 'survey_text_fields' %>
 <%= javascript_pack_tag 'survey_drag_drop' %>
-<%= javascript_pack_tag 'survey_section_reorder' %>
+<%= javascript_pack_tag 'survey_reorder' %>
 

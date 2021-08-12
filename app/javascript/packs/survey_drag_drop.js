@@ -1,6 +1,6 @@
 const csrf_tokens = document.getElementsByName('csrf-token'),
     headers = {'Content-Type': 'application/json', 'X-CSRF-Token': csrf_tokens.length > 0 ? csrf_tokens[0].content : ''},
-    survey_url = `${location.origin}/${location.pathname.replace('/edit', '')}`,
+    survey_url = `${location.origin}${location.pathname.replace('/edit', '')}`,
     sections = document.querySelectorAll('.row.section'),
     questions = document.querySelectorAll('.row.question'),
     comment_sections = document.querySelectorAll('.row.comment-section'),

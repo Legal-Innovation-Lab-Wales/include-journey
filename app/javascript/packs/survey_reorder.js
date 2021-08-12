@@ -1,6 +1,6 @@
 const csrf_tokens = document.getElementsByName('csrf-token'),
     headers = {'Content-Type': 'application/json', 'X-CSRF-Token': csrf_tokens.length > 0 ? csrf_tokens[0].content : ''},
-    survey_url = `${location.origin}/${location.pathname.replace('/edit', '')}`,
+    survey_url = `${location.origin}${location.pathname.replace('/edit', '')}`,
     survey = document.querySelector('.col.survey'),
     survey_sections = survey.querySelectorAll('.survey-section'),
     resource_map = resources => [...resources].map(resource => resource.dataset.resourceId)

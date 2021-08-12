@@ -2,10 +2,12 @@
   <section class="row">
     <div class="col">
       <h2><%= @survey.name %></h2>
-      <p>This is an aggregate view of all the responses to this survey. If you would like to view a list of all of the
-      responses use the button below.</p>
+      <p>
+        This is an aggregate view of all <%= @response_count %> responses to this survey.<br>
+        If you would like to view a list of all of the responses use the button below.
+      </p>
       <%= link_to '#', class: 'btn btn-primary' do %>
-        <i class="fas fa-clipboard-list"></i> View All
+        <i class="fas fa-clipboard-list"></i> View List
       <% end %>
       <% @survey_sections.each do |section| %>
         <div class="container survey-section">
