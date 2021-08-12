@@ -30,7 +30,11 @@
                            style="width: <%= answer_pct %>%" aria-valuenow="<%= answer_pct %>"
                            aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <div class="label"><%= survey_option(index) %></div>
+                    <div class="label">
+                      <%= answer_count %><br>
+                      (<%= answer_pct %>%)<br>
+                      <%= survey_option(index) %>
+                    </div>
                   </div>
                 <% end %>
               </div>
