@@ -4,6 +4,10 @@
       <h2><%= @survey.name %></h2>
       <% @survey_sections.each do |section| %>
         <div class="container survey-section">
+          <% if section.heading.present? %>
+            <h4><%= section.heading %></h4>
+          <% end %>
+
           <% unless section.survey_questions.count.zero? %>
             <div class="row table-header">
               <div class="col-12 col-lg-6"></div>
@@ -20,7 +24,7 @@
                   <% answer_count = question.survey_answers.where(answer: index).count %>
                   <% answer_pct = (answer_count.to_f / total_answers) * 100 %>
                   <div class="col-2 col-lg-1" data-toggle="tooltip" data-placement="bottom"
-                       title="<%= answer_count %> [<%= answer_pct %>%]">
+                       title="<%= answer_count %> (<%= answer_pct %>%)">
                     <div class="progress">
                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
                            style="width: <%= answer_pct %>%" aria-valuenow="<%= answer_pct %>"

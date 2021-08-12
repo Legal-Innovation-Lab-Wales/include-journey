@@ -1,9 +1,24 @@
 @import "variables";
 
 .surveys {
+  section.row {
+    padding: 1rem 0;
+  }
+
   .survey-section {
     padding: 0;
     margin-bottom: 1.5rem;
+
+    &:last-child { margin-bottom: 0; }
+
+    h3 {text-align: center; }
+
+    h4 {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    h3, h4 { color: $white; }
 
     .row {
       &:nth-of-type(2n) {
@@ -150,10 +165,7 @@
         border: 1px dashed $white;
 
         .row {
-          &:not(.table-header) {
-            display: flex;
-          }
-
+          &:not(.table-header) { display: flex; }
           position: relative;
           justify-content: end;
           margin: 0;
@@ -179,61 +191,35 @@
 
             input { border-radius: 0.2rem 0.2rem 0 0; }
             textarea { border-radius: 0 0 0 0.2rem; }
-
-            &.drop-border-bottom .btn-danger {
-              bottom: 1rem !important;
-            }
+            &.drop-border-bottom .btn-danger { bottom: 1rem !important; }
           }
 
           &.section, &.comment-section {
-            &.drop-border-top {
-              padding-top: 1rem;
-            }
-
-            &.drop-border-bottom {
-              padding-bottom: 1rem;
-            }
+            &.drop-border-top { padding-top: 1rem; }
+            &.drop-border-bottom { padding-bottom: 1rem; }
           }
 
-          &:hover {
-            .btn-danger {
-              display: block;
-            }
-          }
-
-          &[draggable="true"] {
-            cursor: move;
-          }
+          &:hover .btn-danger { display: block; }
+          &[draggable="true"] { cursor: move; }
 
           .col-12 {
             display: flex;
             align-items: center;
 
-            @media screen and (min-width: $screen-lg) {
-              padding: 0 !important;
-            }
+            @media screen and (min-width: $screen-lg) { padding: 0 !important; }
           }
 
-          &.drop-border-top {
-            border-top: 5px solid $white;
-          }
-
-          &.drop-border-bottom {
-            border-bottom: 5px solid $white;
-          }
+          &.drop-border-top { border-top: 5px solid $white; }
+          &.drop-border-bottom { border-bottom: 5px solid $white; }
 
           .fa-grip-lines {
             margin-right: 1rem;
 
-            @media screen and (min-width: $screen-lg){
-              margin: 0 1rem;
-            }
+            @media screen and (min-width: $screen-lg){ margin: 0 1rem; }
           }
         }
 
-        .btn {
-          margin-top: 1rem;
-        }
+        .btn { margin-top: 1rem; }
 
         .btn-danger {
           position: absolute;
@@ -275,25 +261,6 @@
         padding: 1rem;
         border-radius: 1rem;
         border: 1px solid $white;
-      }
-    }
-
-    &.show {
-      section.row {
-        padding: 1rem 0;
-      }
-
-      .survey-section {
-        &:last-child { margin-bottom: 0; }
-
-        h3 {text-align: center; }
-
-        h4 {
-          text-align: left;
-          margin-top: 1rem;
-        }
-
-        h3, h4 { color: $white; }
       }
     }
   }
