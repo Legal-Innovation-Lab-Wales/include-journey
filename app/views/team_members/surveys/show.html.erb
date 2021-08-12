@@ -17,7 +17,7 @@
             </div>
 
             <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
-              <div class="row">
+              <div class="row question">
                 <div class="col-12 col-lg-6"><%= question.question %></div>
                 <% total_answers = question.survey_answers.count %>
                 <% 6.times do |index| %>
@@ -30,6 +30,7 @@
                            style="width: <%= answer_pct %>%" aria-valuenow="<%= answer_pct %>"
                            aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <div class="label"><%= survey_option(index) %></div>
                   </div>
                 <% end %>
               </div>
