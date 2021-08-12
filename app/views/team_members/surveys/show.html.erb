@@ -40,6 +40,23 @@
               </div>
             <% end %>
           <% end %>
+
+          <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
+            <div class="row comment-section">
+              <div class="col-12">
+                <%= comment_section.label %>
+              </div>
+              <div class="col-12">
+                <% comments_count = comment_section.survey_comments.count %>
+                Comments: <%= comments_count %> (<%= (comments_count.to_f / @response_count) * 100 %>%)
+              </div>
+              <div class="col-12">
+                <%= link_to '#', class: 'btn btn-primary' do %>
+                  <i class="fas fa-comments"></i> View Comments
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>

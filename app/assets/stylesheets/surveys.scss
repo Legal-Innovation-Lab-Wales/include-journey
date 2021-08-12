@@ -259,6 +259,26 @@
             border-radius: 0;
           }
         }
+
+        .comment-section {
+          margin-top: 1rem;
+          border: 1px solid $white;
+          border-radius: 0.2rem;
+
+          .col-12 {
+            padding: 0.5rem;
+
+            &:first-child {
+              text-align: left;
+              color: $black;
+              background-color: $white;
+            }
+
+            &:last-child {
+              background-color: transparent;
+            }
+          }
+        }
       }
     }
   }
