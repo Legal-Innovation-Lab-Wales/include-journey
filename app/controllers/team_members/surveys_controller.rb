@@ -26,8 +26,6 @@ module TeamMembers
 
     # GET /surveys/:survey_id
     def show
-      @survey
-
       render 'show'
     end
 
@@ -81,10 +79,6 @@ module TeamMembers
                        .joins(:team_member)
                        .where(survey_search, wildcard_query)
                        .order(sort)
-    end
-
-    def direction
-      @direction = %w[asc desc].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'asc'
     end
 
     def sort

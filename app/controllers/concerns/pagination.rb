@@ -74,7 +74,4 @@ module Pagination
   def redirect
     redirect_back(fallback_location: root_path, alert: 'No Results Found')
   end
-
-  def direction_param
-  end
 end
