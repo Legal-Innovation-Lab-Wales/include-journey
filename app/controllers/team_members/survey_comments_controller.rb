@@ -13,7 +13,7 @@ module TeamMembers
     def resources
       @survey_comment_section.survey_comments
                              .includes(:user)
-                             .order(created_at: :desc)
+                             .order(sort)
     end
 
     def search
@@ -21,7 +21,12 @@ module TeamMembers
                              .includes(:user)
                              .joins(:user)
                              .where(comment_search, wildcard_query)
-                             .order(created_at: :desc)
+                             .order(sort)
+    end
+
+    def sort
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'created_at'
+      { "#{@sort}": @direction }
     end
 
     private
