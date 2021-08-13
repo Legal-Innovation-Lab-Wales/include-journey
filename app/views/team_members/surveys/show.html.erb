@@ -58,7 +58,7 @@
                 Comments: <%= comments_count %> (<%= (comments_count.to_f / @response_count) * 100 %>%)
               </div>
               <div class="col-12">
-                <%= link_to '#', class: 'btn btn-primary' do %>
+                <%= link_to survey_comments_path(@survey, section, comment_section), class: 'btn btn-primary' do %>
                   <i class="fas fa-comments"></i> View Comments
                 <% end %>
               </div>

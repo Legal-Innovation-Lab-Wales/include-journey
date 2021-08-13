@@ -1,0 +1,23 @@
+<%= render 'layouts/searchable', class_list: 'team-members survey-comments', header: 'Survey Comments',
+           index: 'survey_comments' do %>
+  <div class="table-container">
+    <table class="table table-dark table-striped table-hover link-table">
+      <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Created At</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @resources.each do |survey_comment| %>
+        <tr>
+          <td><%= link_to "#{survey_comment.user.full_name}", '#' %></td>
+          <td><%= link_to "#{survey_comment.text}", '#' %></td>
+          <td><%= link_to "#{survey_comment.created}", '#' %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

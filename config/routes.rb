@@ -102,7 +102,11 @@ Rails.application.routes.draw do
             member do
               put '/reorder', action: 'reorder'
               resources :survey_questions, only: %i[create update destroy], param: :question_id, as: :survey_question
-              resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section
+              resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section do
+                member do
+                  resources :survey_comments, only: :index, as: :survey_comments
+                end
+              end
             end
           end
           resources :survey_responses, only: :index, param: :survey_response_id, as: :survey_response
