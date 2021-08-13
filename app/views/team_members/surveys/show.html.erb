@@ -6,7 +6,7 @@
         This is an aggregate view of all <%= @response_count %> responses to this survey.<br>
         If you would like to view a list of all of the responses use the button below.
       </p>
-      <%= link_to '#', class: 'btn btn-primary' do %>
+      <%= link_to survey_response_index_path(@survey, @response), class: 'btn btn-primary' do %>
         <i class="fas fa-clipboard-list"></i> View List
       <% end %>
       <% @survey_sections.each do |section| %>

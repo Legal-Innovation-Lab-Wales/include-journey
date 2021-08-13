@@ -1,0 +1,29 @@
+<%= render 'layouts/searchable', class_list: 'team-members survey-responses', header: 'Survey Responses',
+           index: 'survey_response_index', stats: render('stats') do %>
+  <div class="table-container">
+    <table class="table table-dark table-striped table-hover link-table">
+      <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Submitted At</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @resources.each do |survey_response| %>
+        <tr>
+          <td>
+            <%= link_to "#{survey_response.user.full_name}", '#' %>
+          </td>
+          <td>
+            <%= link_to "#{survey_response.created}", '#' %>
+          </td>
+          <td>
+            <%= link_to "#{survey_response.submitted}", '#' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

@@ -13,6 +13,12 @@ class SurveyResponse < ApplicationRecord
     submitted_at.present?
   end
 
+  def submitted
+    return 'N/A' unless submitted?
+
+    submitted_at.strftime('%d/%m/%Y %I:%M %p')
+  end
+
   def completion
     answered = survey_answers.count
     total = survey.survey_questions.count

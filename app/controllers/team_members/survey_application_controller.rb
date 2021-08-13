@@ -16,14 +16,9 @@ module TeamMembers
     end
 
     def survey
-      @survey = Survey.includes(:survey_sections, :survey_responses)
-                      .find(params[:survey_id])
-      @survey_sections = @survey.survey_sections
-                                .includes(:survey_questions, :survey_comment_sections)
-                                .order(order: :asc)
-      @responses = @survey.survey_responses
-                          .includes(:survey_answers, :survey_comments)
-                          .order(submitted_at: :desc)
+      @survey = Survey.includes(:survey_sections, :survey_responses).find(params[:survey_id])
+      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
+      @responses = @survey.survey_responses.includes(:user, :survey_answers, :survey_comments).order(submitted_at: :desc)
       @response_count = @responses.count
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })

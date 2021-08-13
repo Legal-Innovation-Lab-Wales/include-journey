@@ -105,6 +105,7 @@ Rails.application.routes.draw do
               resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section
             end
           end
+          resources :survey_responses, only: :index, param: :survey_response_id, as: :survey_response
         end
 
       end
