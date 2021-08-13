@@ -19,7 +19,7 @@
             <td><%= link_to survey.name, survey_path(survey) %></td>
             <td><%= link_to survey.team_member.full_name, survey_path(survey) %></td>
             <td>
-              <%= link_to survey_path(survey) do %>
+              <%= link_to activate_survey_path(survey), method: :put do %>
                 <i class="fas fa-<%= survey.active ? 'check' : 'times'%>-circle"></i>
               <% end %>
             </td>

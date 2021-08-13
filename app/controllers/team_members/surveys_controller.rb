@@ -52,6 +52,14 @@ module TeamMembers
       end
     end
 
+    # PUT /surveys/:survey_id/activate
+    def activate
+      @survey.update!(active: !@survey.active)
+
+      redirect_back(fallback_location: surveys_path,
+                    flash: { success: "#{@survey.name} is now #{@survey.active? ? '' : 'in'}active" })
+    end
+
     # DELETE /surveys/:survey_id
     def destroy
       @survey.destroy!
