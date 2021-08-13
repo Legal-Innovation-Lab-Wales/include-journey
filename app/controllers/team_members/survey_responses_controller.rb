@@ -11,11 +11,18 @@ module TeamMembers
     protected
 
     def resources
-      @responses
+      @responses.order(sort)
     end
 
     def search
-      @responses.joins(:user).where(user_search, wildcard_query)
+      @responses.joins(:user)
+                .where(user_search, wildcard_query)
+                .order(sort)
+    end
+
+    def sort
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'submitted_at'
+      { "#{@sort}": @direction }
     end
   end
 end

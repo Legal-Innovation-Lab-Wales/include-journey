@@ -5,8 +5,8 @@
       <thead>
       <tr>
         <th scope="col">User</th>
-        <th scope="col">Created At</th>
-        <th scope="col">Submitted At</th>
+        <%= render(partial: 'shared/sort_column', locals: { column_value: 'created_at', column_text: 'Created At' }) %>
+        <%= render(partial: 'shared/sort_column', locals: { column_value: 'submitted_at', column_text: 'Submitted At' }) %>
       </tr>
       </thead>
       <tbody>
@@ -27,3 +27,5 @@
     </table>
   </div>
 <% end %>
+
+<%= javascript_pack_tag 'sort_column' %>
