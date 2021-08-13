@@ -280,6 +280,13 @@
           }
         }
       }
+
+      &.response {
+        .comment-section {
+          border: none;
+          margin-top: 0;
+        }
+      }
     }
   }
 

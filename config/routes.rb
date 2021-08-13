@@ -109,7 +109,7 @@ Rails.application.routes.draw do
               end
             end
           end
-          resources :survey_responses, only: :index, param: :survey_response_id, as: :survey_response
+          resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
         end
 
       end

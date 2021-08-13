@@ -4,6 +4,7 @@ module TeamMembers
     before_action :survey, if: -> { params[:survey_id].present? }
     before_action :editable, if: -> { @survey.present? }
     before_action :survey_section, if: -> { @survey.present? && params[:section_id].present? }
+    before_action :survey_response, if: -> { @survey.present? && params[:response_id].present? }
     before_action :survey_question, if: -> { @survey_section.present? && params[:question_id].present? }
     before_action :survey_comment_section, if: -> { @survey_section.present? && params[:comment_section_id].present? }
 
@@ -22,6 +23,12 @@ module TeamMembers
       @response_count = @responses.count
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })
+    end
+
+    def survey_response
+      @survey_response = @responses.find(params[:response_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_back(fallback_location: survey_path(@survey), flash: { error: 'Survey Response not found' })
     end
 
     def survey_section

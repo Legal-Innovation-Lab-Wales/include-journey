@@ -8,6 +8,11 @@ module TeamMembers
       render 'index'
     end
 
+    # GET /survey/:survey_id/survey_responses/:survey_response_id
+    def show
+      render 'show'
+    end
+
     protected
 
     def resources

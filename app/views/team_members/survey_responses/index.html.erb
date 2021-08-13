@@ -13,13 +13,13 @@
       <% @resources.each do |survey_response| %>
         <tr>
           <td>
-            <%= link_to "#{survey_response.user.full_name}", '#' %>
+            <%= link_to "#{survey_response.user.full_name}", survey_response_path(@survey, survey_response) %>
           </td>
           <td>
-            <%= link_to "#{survey_response.created}", '#' %>
+            <%= link_to "#{survey_response.created}", survey_response_path(@survey, survey_response) %>
           </td>
           <td>
-            <%= link_to "#{survey_response.submitted}", '#' %>
+            <%= link_to "#{survey_response.submitted}", survey_response_path(@survey, survey_response) %>
           </td>
         </tr>
       <% end %>

@@ -12,9 +12,9 @@
       <tbody>
       <% @resources.each do |survey_comment| %>
         <tr>
-          <td><%= link_to "#{survey_comment.user.full_name}", '#' %></td>
-          <td><%= link_to "#{survey_comment.text}", '#' %></td>
-          <td><%= link_to "#{survey_comment.created}", '#' %></td>
+          <td><%= link_to "#{survey_comment.user.full_name}", survey_response_path(@survey, survey_comment.survey_response) %></td>
+          <td><%= link_to "#{survey_comment.text}", survey_response_path(@survey, survey_comment.survey_response) %></td>
+          <td><%= link_to "#{survey_comment.created}", survey_response_path(@survey, survey_comment.survey_response) %></td>
         </tr>
       <% end %>
       </tbody>
