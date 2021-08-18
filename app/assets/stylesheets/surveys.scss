@@ -51,7 +51,7 @@
         @media screen and (min-width: $screen-lg) {
           display: flex;
           justify-content: center;
-          align-items: end;
+          align-items: flex-end;
         }
 
         .col-12, .col-2 {
@@ -73,7 +73,7 @@
         label {
           display: flex;
           flex-direction: column;
-          justify-content: end;
+          justify-content: flex-end;
           align-items: center;
           height: 100%;
           width: 100%;
@@ -167,7 +167,7 @@
         .row {
           &:not(.table-header) { display: flex; }
           position: relative;
-          justify-content: end;
+          justify-content: flex-end;
           margin: 0;
 
           &.table-header { margin-top: 1rem; }

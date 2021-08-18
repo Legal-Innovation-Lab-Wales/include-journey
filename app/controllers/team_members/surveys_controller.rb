@@ -64,7 +64,7 @@ module TeamMembers
     def destroy
       @survey.destroy!
 
-      redirect_back(fallback_location: authenticated_team_member_root_path, flash: { success: 'Survey removed' })
+      redirect_to surveys_path, flash: { success: 'Survey removed' }
     end
 
     protected
