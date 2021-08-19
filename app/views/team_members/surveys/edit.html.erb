@@ -35,7 +35,7 @@
         </div>
       </div>
       <% @survey_sections.each do |section| %>
-        <div class="container survey-section" data-id="<%= section.id %>" data-resource-id>
+        <div class="container survey-section" id="section[<%= section.id %>]" data-id="<%= section.id %>" data-resource-id>
           <div class="row section" draggable="true" data-resource-id="<%= section.id %>" data-type="section">
             <div class="col-auto">
               <i class="fas fa-grip-lines"></i>
@@ -87,8 +87,8 @@
             </div>
           </div>
           <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
-            <div class="row comment-section" draggable="true" data-resource-id="<%= comment_section.id %>"
-                 data-type="comment_section">
+            <div class="row comment-section" draggable="true" id="comment-section[<%= comment_section.id %>]"
+                 data-resource-id="<%= comment_section.id %>" data-type="comment_section">
               <div class="col-auto">
                 <i class="fas fa-grip-lines"></i>
               </div>

@@ -5,9 +5,9 @@ module TeamMembers
 
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_questions
     def create
-      @survey_section.survey_questions.create!(order: @survey_section.next_question)
+      @survey_question = @survey_section.survey_questions.create!(order: @survey_section.next_question)
 
-      redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'New Question added' })
+      redirect_to edit_survey_path(@survey, anchor: "question[#{@survey_question.id}]")
     end
 
     # PUT /surveys/:survey_id/survey_sections/:section_id/survey_questions/:id
