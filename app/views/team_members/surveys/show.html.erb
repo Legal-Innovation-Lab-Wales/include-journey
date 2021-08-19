@@ -15,7 +15,7 @@
             <h4><%= section.heading %></h4>
           <% end %>
 
-          <% unless section.survey_questions.count.zero? %>
+          <% unless section.survey_questions.length.zero? %>
             <div class="row table-header">
               <div class="col-12 col-lg-6"></div>
               <% 6.times do |index| %>
@@ -26,9 +26,9 @@
             <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
               <div class="row question">
                 <div class="col-12 col-lg-6"><%= question.question %></div>
-                <% total_answers = question.survey_answers.count %>
+                <% total_answers = question.survey_answers.length %>
                 <% 6.times do |index| %>
-                  <% answer_count = question.survey_answers.where(answer: index).count %>
+                  <% answer_count = question.survey_answers.where(answer: index).length %>
                   <% answer_pct = (answer_count.to_f / total_answers) * 100 %>
                   <div class="col-2 col-lg-1" data-toggle="tooltip" data-placement="bottom"
                        title="<%= answer_count %> (<%= answer_pct %>%)">
@@ -54,7 +54,7 @@
                 <%= comment_section.label %>
               </div>
               <div class="col-12">
-                <% comments_count = comment_section.survey_comments.count %>
+                <% comments_count = comment_section.survey_comments.length %>
                 Comments: <%= comments_count %> (<%= (comments_count.to_f / @response_count) * 100 %>%)
               </div>
               <div class="col-12">

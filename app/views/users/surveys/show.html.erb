@@ -8,7 +8,7 @@
               <h4><%= section.heading %></h4>
             <% end %>
 
-            <% unless section.survey_questions.count.zero? %>
+            <% unless section.survey_questions.length.zero? %>
               <div class="row table-header">
                 <div class="col-12 col-lg-6"></div>
                 <% 6.times do |index| %>
