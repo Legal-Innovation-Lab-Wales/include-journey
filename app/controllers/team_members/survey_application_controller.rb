@@ -11,7 +11,7 @@ module TeamMembers
     protected
 
     def editable
-      return unless @responses.present? && !@responses.count.zero?
+      return unless @responses.present? && !@responses.length.zero?
 
       redirect_back(fallback_location: surveys_path, flash: { error: 'You cannot edit a Survey which has responses' })
     end
@@ -20,7 +20,7 @@ module TeamMembers
       @survey = Survey.includes(:survey_sections, :survey_responses).find(params[:survey_id])
       @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
       @responses = @survey.survey_responses.includes(:user, :survey_answers, :survey_comments).order(submitted_at: :desc)
-      @response_count = @responses.count
+      @response_count = @responses.length
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })
     end
