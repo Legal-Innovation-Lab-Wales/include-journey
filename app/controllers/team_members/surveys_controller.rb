@@ -54,10 +54,15 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/activate
     def activate
-      @survey.update!(active: !@survey.active)
+      if valid_survey?
+        @survey.update!(active: !@survey.active)
 
-      redirect_back(fallback_location: surveys_path,
-                    flash: { success: "#{@survey.name} is now #{@survey.active? ? '' : 'in'}active" })
+        flash[:success] = "#{@survey.name} is now #{@survey.active? ? '' : 'in'}active"
+      else
+        flash[:error] = "#{@survey.name} could not be activated. Please make sure all labels are set."
+      end
+
+      redirect_back(fallback_location: surveys_path)
     end
 
     # DELETE /surveys/:survey_id
@@ -106,6 +111,10 @@ module TeamMembers
 
     def reorder_params
       params.require(:survey).permit(sections: [])
+    end
+
+    def valid_survey?
+      @survey.active || (@survey.survey_questions.invalid.empty? && @survey.survey_comment_sections.invalid.empty?)
     end
   end
 end
