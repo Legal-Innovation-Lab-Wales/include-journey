@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
     t.text "label", default: "", null: false
     t.integer "order", null: false
     t.bigint "survey_section_id", null: false
+    t.integer "total", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_section_id"], name: "index_survey_comment_sections_on_survey_section_id"
@@ -192,6 +193,13 @@ ActiveRecord::Schema.define(version: 2021_05_28_104764) do
     t.text "question", default: "", null: false
     t.integer "order", null: false
     t.bigint "survey_section_id", null: false
+    t.integer "total", default: 0, null: false
+    t.integer "answer0", default: 0, null: false
+    t.integer "answer1", default: 0, null: false
+    t.integer "answer2", default: 0, null: false
+    t.integer "answer3", default: 0, null: false
+    t.integer "answer4", default: 0, null: false
+    t.integer "answer5", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_section_id"], name: "index_survey_questions_on_survey_section_id"

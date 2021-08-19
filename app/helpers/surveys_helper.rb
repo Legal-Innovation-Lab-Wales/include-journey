@@ -5,4 +5,8 @@ module SurveysHelper
 
     ['Strongly Disagree', 'Disagree', 'Neither Agree Or Disagree', 'Agree', 'Strongly Agree', 'Not Applicable'][index]
   end
+
+  def answer_pct(question, answer)
+    format('%.2f', (question["answer#{answer}"].to_f / question.total) * 100)
+  end
 end

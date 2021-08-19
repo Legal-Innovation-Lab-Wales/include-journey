@@ -3,10 +3,10 @@
     <div class="col">
       <h2><%= @survey.name %></h2>
       <p>
-        This is an aggregate view of all <%= @response_count %> responses to this survey.<br>
+        This is an aggregate view of all <%= @responses.length %> responses to this survey.<br>
         If you would like to view a list of all of the responses use the button below.
       </p>
-      <%= link_to survey_response_index_path(@survey, @response), class: 'btn btn-primary' do %>
+      <%= link_to survey_response_index_path(@survey), class: 'btn btn-primary' do %>
         <i class="fas fa-clipboard-list"></i> View List
       <% end %>
       <% @survey_sections.each do |section| %>
@@ -23,23 +23,21 @@
               <% end %>
             </div>
 
-            <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
+            <% section.survey_questions.order(order: :asc).each do |question| %>
               <div class="row question">
                 <div class="col-12 col-lg-6"><%= question.question %></div>
-                <% total_answers = question.survey_answers.length %>
                 <% 6.times do |index| %>
-                  <% answer_count = question.survey_answers.where(answer: index).length %>
-                  <% answer_pct = (answer_count.to_f / total_answers) * 100 %>
                   <div class="col-2 col-lg-1" data-toggle="tooltip" data-placement="bottom"
-                       title="<%= answer_count %> (<%= answer_pct %>%)">
+                       title="<%= question.total %> (<%= answer_pct(question, index) %>%)">
                     <div class="progress">
                       <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
-                           style="width: <%= answer_pct %>%" aria-valuenow="<%= answer_pct %>"
+                           style="width: <%= answer_pct(question, index) %>%"
+                           aria-valuenow="<%= answer_pct(question, index) %>"
                            aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <div class="label">
-                      <%= answer_count %><br>
-                      (<%= answer_pct %>%)<br>
+                      <%= question.total %><br>
+                      (<%= answer_pct(question, index) %>%)<br>
                       <%= survey_option(index) %>
                     </div>
                   </div>
@@ -48,14 +46,13 @@
             <% end %>
           <% end %>
 
-          <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
+          <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
             <div class="row comment-section">
               <div class="col-12">
                 <%= comment_section.label %>
               </div>
               <div class="col-12">
-                <% comments_count = comment_section.survey_comments.length %>
-                Comments: <%= comments_count %> (<%= (comments_count.to_f / @response_count) * 100 %>%)
+                Comments: <%= comment_section.total %> (<%= (comment_section.total.to_f / @responses.length) * 100 %>%)
               </div>
               <div class="col-12">
                 <%= link_to survey_comments_path(@survey, section, comment_section), class: 'btn btn-primary' do %>

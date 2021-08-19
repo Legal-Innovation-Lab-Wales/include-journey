@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/survey_responses_controller.rb
   class SurveyResponsesController < SurveyApplicationController
+    skip_before_action :editable
     include Pagination
 
     # GET /survey/:survey_id/survey_responses
@@ -16,11 +17,13 @@ module TeamMembers
     protected
 
     def resources
-      @responses.order(sort)
+      @responses.includes(:user)
+                .order(sort)
     end
 
     def search
-      @responses.joins(:user)
+      @responses.includes(:user)
+                .joins(:user)
                 .where(user_search, wildcard_query)
                 .order(sort)
     end

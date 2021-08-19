@@ -5,6 +5,7 @@ class CreateSurveyCommentSections < ActiveRecord::Migration[6.1]
       t.text :label, null: false, default: ''
       t.integer :order, null: false
       t.belongs_to :survey_section, null: false, foreign_key: true
+      t.integer :total, null: false, default: 0
 
       t.timestamps
     end

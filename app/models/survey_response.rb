@@ -25,4 +25,22 @@ class SurveyResponse < ApplicationRecord
 
     { answered: answered, total: total, percentage: ((answered.to_f / total) * 100) }
   end
+
+  def answer?(question, answer)
+    return unless survey_answers.present?
+
+    survey_answer = survey_answers.find_by(survey_question: question)
+
+    return unless survey_answer.present?
+
+    survey_answer.answer == answer
+  end
+
+  def comment(comment_section)
+    return '' unless survey_comments.present?
+
+    comment = survey_comments.find_by(survey_comment_section: comment_section)
+
+    comment.present? ? comment.text : ''
+  end
 end

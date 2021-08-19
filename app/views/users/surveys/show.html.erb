@@ -23,14 +23,9 @@
                     <div class="col-2 col-lg-1">
                       <label>
                         <div class="label"><%= survey_option(index) %></div>
-                        <% survey_answer = question.survey_answers.find_by(survey_response: @survey_response) %>
-                        <%= radio_button_tag "question[#{question.id}]",
-                                             index,
-                                             survey_answer.present? && survey_answer.answer == index,
-                                             class: 'form-check-input',
-                                             data: { id: question.id },
-                                             required: true,
-                                             disabled: @survey_response.present? && @survey_response.submitted? %>
+                        <%= radio_button_tag "question[#{question.id}]", index, @survey_response.answer?(question, index),
+                                             class: 'form-check-input', data: { id: question.id }, required: true,
+                                             disabled: @survey_response.submitted? %>
                       </label>
                     </div>
                   <% end %>
@@ -41,13 +36,9 @@
             <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
               <div class="row comment-section">
                 <div class="form-floating">
-                  <% survey_comment = comment_section.survey_comments.find_by(survey_response: @survey_response) %>
-                  <%= text_area_tag "comment_section[#{comment_section.id}]",
-                                    survey_comment.present? ? survey_comment.text : '',
-                                    class: 'form-control',
-                                    id: "comment_section[#{comment_section.id}]",
-                                    data: { id: comment_section.id },
-                                    disabled: @survey_response.present? && @survey_response.submitted? %>
+                  <%= text_area_tag "comment_section[#{comment_section.id}]", @survey_response.comment(comment_section),
+                                    class: 'form-control', id: "comment_section[#{comment_section.id}]",
+                                    data: { id: comment_section.id }, disabled: @survey_response.submitted? %>
                   <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
                 </div>
               </div>
@@ -55,7 +46,7 @@
           </div>
         </div>
       <% end %>
-      <% unless @survey_response.present? && @survey_response.submitted? %>
+      <% unless @survey_response.submitted? %>
         <div class="container">
           <div class="row justify-content-center">
             <div class="col">

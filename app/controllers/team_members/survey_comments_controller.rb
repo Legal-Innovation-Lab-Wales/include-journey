@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/survey_comments_controller.rb
   class SurveyCommentsController < SurveyApplicationController
+    skip_before_action :editable
     include Pagination
 
     # GET /surveys/:survey_id/survey_sections/:survey_section_id/survey_comment_sections/:survey_comment_section_id
