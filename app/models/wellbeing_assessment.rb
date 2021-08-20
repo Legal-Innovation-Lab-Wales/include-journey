@@ -3,6 +3,8 @@ class WellbeingAssessment < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
 
+  after_create :set_last_assessed_at
+
   has_many :wba_scores, foreign_key: :wellbeing_assessment_id, dependent: :delete_all
 
   def today?
@@ -40,4 +42,10 @@ class WellbeingAssessment < ApplicationRecord
              })
   end
   # rubocop:enable Metrics/AbcSize
+
+  private
+
+  def set_last_assessed_at
+    user.update!(last_assessed_at: DateTime.now)
+  end
 end
