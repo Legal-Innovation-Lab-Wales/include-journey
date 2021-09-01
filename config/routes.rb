@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
       resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
+      resources :surveys, only: %i[index show update]
     end
   end
 
@@ -94,6 +95,25 @@ Rails.application.routes.draw do
       end
       resources :affirmations, except: :show
       resources :affirmations_archive, only: :index
+      resources :surveys, param: :survey_id do
+        member do
+          put '/activate', action: 'activate'
+          put '/reorder', action: 'reorder'
+          resources :survey_sections, only: %i[create update destroy], param: :section_id, as: :survey_section do
+            member do
+              put '/reorder', action: 'reorder'
+              resources :survey_questions, only: %i[create update destroy], param: :question_id, as: :survey_question
+              resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section do
+                member do
+                  resources :survey_comments, only: :index, as: :survey_comments
+                end
+              end
+            end
+          end
+          resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
+        end
+
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength

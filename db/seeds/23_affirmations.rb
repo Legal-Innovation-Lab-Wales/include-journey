@@ -1,5 +1,5 @@
 if Affirmation.count.zero?
-  print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Affirmations')}\tStart: #{pretty_print(Time.now - @start_time)}"
   Config::UPCOMING_AFFIRMATIONS.times.each do |index|
     text = if index < (Config::UPCOMING_AFFIRMATIONS / 3)
              Faker::Quotes::Shakespeare.hamlet_quote

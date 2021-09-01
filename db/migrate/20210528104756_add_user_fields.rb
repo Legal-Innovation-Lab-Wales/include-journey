@@ -1,6 +1,6 @@
 # db/migrate/20210528104756_add_user_fields.rb
 class AddUserFields < ActiveRecord::Migration[6.1]
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength
   def change
     rename_column :users, :release_date, :released_at
     rename_column :users, :deletion_date, :deleted_at
@@ -21,5 +21,5 @@ class AddUserFields < ActiveRecord::Migration[6.1]
       t.string :index_offence
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength
 end

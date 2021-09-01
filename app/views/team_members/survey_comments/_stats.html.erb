@@ -1,0 +1,7 @@
+<% unless @query.present? %>
+  <div class="subheading">
+    <p><%= @survey.name %> comment section has <%= @count %> comments.</p>
+    <br>
+    <p>Comment Section Label: <em>"<%= @survey_comment_section.label %>"</em></p>
+  </div>
+<% end %>
