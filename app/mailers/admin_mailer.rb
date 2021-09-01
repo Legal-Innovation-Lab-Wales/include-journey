@@ -25,4 +25,8 @@ class AdminMailer < ApplicationMailer
     mail(to: @admin.email, subject: " #{@user.full_name}'s crisis has been updated.")
   end
 
+  def reminder_email(user)
+    @user = user
+    mail(to: @user.email, subject: 'Wellbeing Assessment Reminder!')
+  end
 end
