@@ -15,13 +15,13 @@ class ApplicationController < ActionController::Base
   end
 
   def deletion
-    return unless current_user.deletion.present?
+    return unless current_user.deleted_at.present?
 
-    if current_user.deletion <= DateTime.now
+    if current_user.deleted_at <= DateTime.now
       current_user.destroy!
       sign_out_and_redirect(current_user)
     else
-      @deletion_date = current_user.deletion.to_f * 1000
+      @deletion_date = current_user.deleted_at.to_f * 1000
     end
   end
 

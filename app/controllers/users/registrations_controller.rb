@@ -6,7 +6,7 @@ module Users
 
     # DELETE /users
     def destroy
-      current_user.update!(deletion: Time.now + 30.days)
+      current_user.update!(deleted_at: Time.now + 30.days)
 
       redirect_back(fallback_location: authenticated_user_root_path)
     end

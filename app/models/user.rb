@@ -18,7 +18,7 @@ class User < DeviseRecord
   has_many :user_tags, foreign_key: :user_id, dependent: :delete_all
   has_many :survey_responses, foreign_key: :user_id
 
-  scope :can_be_deleted, -> { where('deletion is not null and deletion <= ?', Time.now) }
+  scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
   scope :deleted, -> { where(deleted: true) }
