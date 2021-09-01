@@ -1,7 +1,7 @@
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :deletion, :active_crisis_events, :crisis_event, :crisis_types, if: :user_signed_in?
+  before_action :deletion, :create_session, :active_crisis_events, :crisis_event, :crisis_types, if: :user_signed_in?
 
   protected
 
@@ -35,5 +35,11 @@ class ApplicationController < ActionController::Base
 
   def crisis_types
     @crisis_types = CrisisType.all
+  end
+
+  def create_session
+    return if current_user.last_session_at == Date.today
+
+    current_user.sessions.create!(session_at: Date.today)
   end
 end

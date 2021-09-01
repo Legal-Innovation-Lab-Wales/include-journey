@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104765) do
+ActiveRecord::Schema.define(version: 2021_05_28_104769) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "resource", null: false
+    t.date "starts_at"
+    t.date "ends_at"
+    t.integer "count", default: 0, null: false
+    t.json "intervals"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "affirmations", force: :cascade do |t|
     t.string "text", null: false
@@ -159,6 +171,14 @@ ActiveRecord::Schema.define(version: 2021_05_28_104765) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "session_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "survey_answers", force: :cascade do |t|
     t.integer "answer"
     t.bigint "survey_question_id", null: false
@@ -276,6 +296,16 @@ ActiveRecord::Schema.define(version: 2021_05_28_104765) do
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
   end
 
+  create_table "user_achievements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "achievement_id", null: false
+    t.integer "progress", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"
+    t.index ["user_id"], name: "index_user_achievements_on_user_id"
+  end
+
   create_table "user_pins", force: :cascade do |t|
     t.bigint "team_member_id", null: false
     t.bigint "user_id", null: false
@@ -355,6 +385,16 @@ ActiveRecord::Schema.define(version: 2021_05_28_104765) do
     t.string "index_offence"
     t.boolean "deleted", default: false, null: false
     t.datetime "last_assessed_at"
+    t.date "last_session_at"
+    t.integer "sessions_streak", default: 0, null: false
+    t.integer "sessions_count", default: 0, null: false
+    t.integer "sessions_this_month_count", default: 0, null: false
+    t.integer "wellbeing_assessments_count", default: 0, null: false
+    t.integer "wellbeing_assessments_this_month_count", default: 0, null: false
+    t.integer "journal_entries_count", default: 0, null: false
+    t.integer "journal_entries_this_month_count", default: 0, null: false
+    t.integer "goals_achieved_count", default: 0, null: false
+    t.integer "goals_achieved_this_month_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -435,6 +475,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104765) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
   add_foreign_key "survey_comment_sections", "survey_sections"
@@ -445,6 +486,8 @@ ActiveRecord::Schema.define(version: 2021_05_28_104765) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "user_achievements", "achievements"
+  add_foreign_key "user_achievements", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"
