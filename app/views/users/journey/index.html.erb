@@ -3,41 +3,22 @@
     <h3>My Journey</h3>
     <div class="col-12 col-md-4">
       <div class="counter">
-        <div class="tick" data-value="0" data-did-init="sessions_streak">
-          <div data-layout="horizontal center" data-repeat="true"
-               data-transform="arrive(9, .001) -> round -> pad(<%= '0' * @sessions_streak.to_s.length %>) -> split -> delay(rtl, 100, 150)">
-            <span data-view="flip"></span>
-          </div>
-        </div>
+        <div data-count="<%= @sessions_streak %>"></div>
         <div>Current Active Streak</div>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="counter">
-        <div class="tick" data-value="0" data-did-init="sessions_count">
-          <div data-layout="horizontal center" data-repeat="true"
-               data-transform="arrive(9, .001) -> round -> pad(<%= '0' * @sessions_count.to_s.length %>) -> split -> delay(rtl, 100, 150)">
-            <span data-view="flip"></span>
-          </div>
-        </div>
+        <div data-count="<%= @sessions_count %>"></div>
         <div>Total Active Days</div>
       </div>
     </div>
     <div class="col-12 col-md-4">
       <div class="counter">
-        <div class="tick" data-value="0" data-did-init="achievements_count">
-          <div data-layout="horizontal center" data-repeat="true"
-               data-transform="arrive(9, .001) -> round -> pad(<%= '0' * @achievements_count.to_s.length %>) -> split -> delay(rtl, 100, 150)">
-            <span data-view="flip"></span>
-          </div>
-        </div>
+        <div data-count="<%= @achievements_count %>"></div>
         <div>Achievements Earned</div>
       </div>
     </div>
   </section>
 </main>
-<script>
-    sessions_streak = tick => { setTimeout(() => { tick.value = <%= @sessions_streak %> }, 100) }
-    sessions_count = tick => { setTimeout(() => { tick.value = <%= @sessions_count %> }, 100) }
-    achievements_count = tick => { setTimeout(() => { tick.value = <%= @achievements_count %> }, 100) }
-</script>
+<%= javascript_pack_tag 'journey' %>
