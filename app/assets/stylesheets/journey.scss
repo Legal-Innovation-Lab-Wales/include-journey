@@ -1,0 +1,44 @@
+@import "variables";
+
+.journey {
+  section.stats {
+    h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .col-md-4 {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+
+      .counter {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: $font-link;
+        font-weight: 700;
+        align-items: center;
+        height: 150px;
+        width: 100%;
+        border-radius: 2rem;
+        border: 0.5rem solid $brand-primary;
+        color: $brand-primary;
+        padding: 1rem 0;
+
+        .tick {
+          font-size: 2rem;
+          margin-bottom: 1rem;
+
+          .tick-flip-panel {
+            background-color: $brand-primary;
+            color: $dark !important;
+          }
+
+          .tick-flip {
+            font-family: $font-link;
+          }
+        }
+      }
+    }
+  }
+}

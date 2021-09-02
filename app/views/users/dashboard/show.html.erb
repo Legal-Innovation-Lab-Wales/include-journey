@@ -19,7 +19,7 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: current_user.contacts.count.zero? ? new_contact_path : contacts_path, icon: 'fa-address-book',
                      large_text: 'My Contacts', text: 'Contacts' %>
-          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-road',
+          <%= render 'shared/dashboard_btn', path: journey_path, icon: 'fa-road',
                      large_text: 'My Journey', text: 'Journey' %>
           <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-info-circle',
                      large_text: 'My Support', text: 'Support' %>

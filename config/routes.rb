@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get 'terms', to: 'users_application#terms'
       get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
+      get 'journey', to: 'journey#index', as: :journey
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
