@@ -1,42 +1,123 @@
 @import "variables";
 
 .journey {
-  section.stats {
-    h3 {
-      margin-bottom: 1.5rem;
+  section {
+    &.stats {
+      h3 {
+        margin-bottom: 1.5rem;
+      }
+
+      .col-md-4 {
+        display: flex;
+        justify-content: center;
+        padding: 0.5rem;
+
+        .counter {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-family: $font-link;
+          font-weight: 700;
+          align-items: center;
+          height: 150px;
+          width: 100%;
+          border-radius: 2rem;
+          border: 0.5rem solid $brand-primary;
+          color: $brand-primary;
+          padding: 1rem 0;
+
+          .tick {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+
+            .tick-flip-panel {
+              background-color: $brand-primary;
+              color: $dark !important;
+            }
+
+            .tick-flip {
+              font-family: $font-link;
+            }
+          }
+        }
+      }
     }
 
-    .col-md-4 {
-      display: flex;
-      justify-content: center;
-      padding: 0.5rem;
+    .nav {
+      border-bottom-color: $brand-primary;
 
-      .counter {
+      .nav-item .nav-link {
+        &.active {
+          background-color: $brand-primary;
+          color: $dark;
+          border-color: $brand-primary;
+        }
+
+        &:hover {
+          border-color: $brand-primary;
+        }
+      }
+    }
+
+    .tab-pane {
+      .progress {
+        position: relative;
+        height: 2rem;
+        padding: 0;
+        background-color: transparent;
+        border: 1px solid $success;
+
+        &:not(:last-child) {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-right: none;
+        }
+
+        &:not(:first-child) {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-left: none;
+        }
+
+        .text-overlay {
+          font-family: $font-link;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.75rem;
+          color: $white;
+
+          @media screen and (min-width: $screen-md) {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .medal {
+        border-top: 1px solid $success;
+        border-bottom: 1px solid $success;
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        font-family: $font-link;
-        font-weight: 700;
         align-items: center;
-        height: 150px;
-        width: 100%;
-        border-radius: 2rem;
-        border: 0.5rem solid $brand-primary;
-        color: $brand-primary;
-        padding: 1rem 0;
+        background-color: $dark;
 
-        .tick {
-          font-size: 2rem;
-          margin-bottom: 1rem;
+        &.achieved {
+          background-color: $success-dark;
+        }
 
-          .tick-flip-panel {
-            background-color: $brand-primary;
-            color: $dark !important;
-          }
+        &:last-child {
+          border-right: 1px solid $success;
+          border-top-right-radius: 0.25rem;
+          border-bottom-right-radius: 0.25rem;
+        }
 
-          .tick-flip {
-            font-family: $font-link;
-          }
+        i.fa-medal {
+          &.bronze { color: $bronze }
+          &.silver { color: $silver }
+          &.gold { color: $gold }
         }
       }
     }

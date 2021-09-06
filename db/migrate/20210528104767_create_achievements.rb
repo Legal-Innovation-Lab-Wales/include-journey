@@ -7,8 +7,9 @@ class CreateAchievements < ActiveRecord::Migration[6.1]
       t.string :resource, null: false
       t.date :starts_at
       t.date :ends_at
-      t.integer :count, null: false, default: 0
-      t.json :intervals
+      t.integer :bronze_count, null: false, default: 0
+      t.integer :silver_count, null: false, default: 0
+      t.integer :gold_count, null: false, default: 0
 
       t.timestamps
     end

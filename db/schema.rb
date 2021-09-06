@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104769) do
     t.string "resource", null: false
     t.date "starts_at"
     t.date "ends_at"
-    t.integer "count", default: 0, null: false
-    t.json "intervals"
+    t.integer "bronze_count", default: 0, null: false
+    t.integer "silver_count", default: 0, null: false
+    t.integer "gold_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -299,7 +300,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104769) do
   create_table "user_achievements", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "achievement_id", null: false
-    t.integer "progress", default: 0, null: false
+    t.boolean "bronze_achieved", default: false, null: false
+    t.boolean "silver_achieved", default: false, null: false
+    t.boolean "gold_achieved", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"

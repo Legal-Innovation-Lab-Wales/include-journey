@@ -21,41 +21,45 @@ namespace :achievements do
     Achievement.create!(
       name: "Familiar Face #{month}",
       description: 'This achievement demonstrates your commitment to using the Include Journey platform.',
-      resource: 'sessions',
+      resource: 'session',
       starts_at: start_date,
       ends_at: end_date,
-      count: count,
-      intervals: { 'bronze': 5, 'silver': 15, 'gold': 25 }
+      bronze_count: 10,
+      silver_count: 20,
+      gold_count: count
     )
 
     Achievement.create!(
       name: "Wellbeing Warrior #{month}",
       description: 'This achievement demonstrates your commitment to tracking your wellbeing.',
-      resource: 'wellbeing_assessments',
+      resource: 'wellbeing_assessment',
       starts_at: start_date,
       ends_at: end_date,
-      count: count,
-      intervals: { 'bronze': 5, 'silver': 15, 'gold': 25 }
+      bronze_count: 10,
+      silver_count: 20,
+      gold_count: count
     )
 
     Achievement.create!(
-      name: "William Shakespeare #{month}",
+      name: "Journal Journeyman #{month}",
       description: 'This achievement demonstrates your commitment to keeping a regular journal.',
-      resource: 'journal_entries',
+      resource: 'journal_entry',
       starts_at: start_date,
       ends_at: end_date,
-      count: count,
-      intervals: { 'bronze': 5, 'silver': 15, 'gold': 25 }
+      bronze_count: 10,
+      silver_count: 20,
+      gold_count: count
     )
 
     Achievement.create!(
       name: "Goal Getter #{month}",
       description: 'This achievement demonstrates your commitment to reaching your goals.',
-      resource: 'goals_achieved',
+      resource: 'goal',
       starts_at: start_date,
       ends_at: end_date,
-      count: count,
-      intervals: { 'bronze': 5, 'silver': 15, 'gold': 25 }
+      bronze_count: 10,
+      silver_count: 20,
+      gold_count: count
     )
   end
 end

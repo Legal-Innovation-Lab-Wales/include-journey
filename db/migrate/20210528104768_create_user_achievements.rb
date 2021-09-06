@@ -4,7 +4,9 @@ class CreateUserAchievements < ActiveRecord::Migration[6.1]
     create_table :user_achievements do |t|
       t.belongs_to :user, null: false, foreign_key: true
       t.belongs_to :achievement, null: false, foreign_key: true
-      t.integer :progress, null: false, default: 0
+      t.boolean :bronze_achieved, null: false, default: false
+      t.boolean :silver_achieved, null: false, default: false
+      t.boolean :gold_achieved, null: false, default: false
 
       t.timestamps
     end

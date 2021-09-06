@@ -19,6 +19,8 @@ class Session < ApplicationRecord
 
   # Shouldn't ever need to be invoked.
   def decrement_cache
+    # TODO: If the session_at is between today - current_streak and today (i.e. part of the current streak)
+    # then ... reset? decrement streak?
     user.update!(sessions_count: user.sessions_count - 1)
   end
 end
