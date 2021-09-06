@@ -11,7 +11,7 @@ class AddUserCacheColumns < ActiveRecord::Migration[6.1]
       t.integer :journal_entries_count, null: false, default: 0
       t.integer :journal_entries_this_month_count, null: false, default: 0
       t.integer :goals_achieved_count, null: false, default: 0
-      t.integer :goals_achieved_this_month_count, null: false, default: 0
+      t.integer :achievements_count, null: false, default: 0
     end
   end
 end

@@ -4,7 +4,7 @@ class CreateAchievements < ActiveRecord::Migration[6.1]
     create_table :achievements do |t|
       t.string :name, null: false
       t.text :description, null: false
-      t.string :resource, null: false
+      t.string :entities, null: false
       t.date :starts_at
       t.date :ends_at
       t.integer :bronze_count, null: false, default: 0

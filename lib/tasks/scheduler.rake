@@ -21,7 +21,7 @@ namespace :achievements do
     Achievement.create!(
       name: "Familiar Face #{month}",
       description: 'This achievement demonstrates your commitment to using the Include Journey platform.',
-      resource: 'session',
+      entities: 'sessions',
       starts_at: start_date,
       ends_at: end_date,
       bronze_count: 10,
@@ -32,7 +32,7 @@ namespace :achievements do
     Achievement.create!(
       name: "Wellbeing Warrior #{month}",
       description: 'This achievement demonstrates your commitment to tracking your wellbeing.',
-      resource: 'wellbeing_assessment',
+      entities: 'wellbeing_assessments',
       starts_at: start_date,
       ends_at: end_date,
       bronze_count: 10,
@@ -43,7 +43,7 @@ namespace :achievements do
     Achievement.create!(
       name: "Journal Journeyman #{month}",
       description: 'This achievement demonstrates your commitment to keeping a regular journal.',
-      resource: 'journal_entry',
+      entities: 'journal_entries',
       starts_at: start_date,
       ends_at: end_date,
       bronze_count: 10,
@@ -54,7 +54,7 @@ namespace :achievements do
     Achievement.create!(
       name: "Goal Getter #{month}",
       description: 'This achievement demonstrates your commitment to reaching your goals.',
-      resource: 'goal',
+      entities: 'goals_achieved',
       starts_at: start_date,
       ends_at: end_date,
       bronze_count: 10,

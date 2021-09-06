@@ -5,9 +5,10 @@ module Users
     def index
       @sessions_streak = current_user.sessions_streak
       @sessions_count = current_user.sessions_count
-      @available_monthly_achievements = Achievement.this_month
+      @available_monthly_achievements = Achievement.includes(:user_achievements)
+                                                   .this_month
                                                    .order(created_at: :asc)
-      @achievements_count = 100
+      @achievements_count = current_user.achievements_count
 
       render 'index'
     end

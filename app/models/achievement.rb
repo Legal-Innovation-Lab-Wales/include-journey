@@ -7,7 +7,20 @@ class Achievement < ApplicationRecord
   scope :this_month, lambda {
     where('starts_at = ? and ends_at = ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month)
   }
-  scope :resource, ->(resource) { where(resource: resource.name.downcase) }
+  scope :for, ->(entities) { where(entities: entities).first }
+  scope :available, -> { all_time.merge(this_month) }
 
-  validates_presence_of :name, :description, :resource, :bronze_count, :silver_count, :gold_count
+  validates_presence_of :name, :description, :entities, :bronze_count, :silver_count, :gold_count
+
+  def check(user)
+    count = starts_at.present? ? user["#{entities}_this_month_count"] : user["#{entities}_count"]
+
+    return unless count >= bronze_count
+
+    achievement = user_achievements.find_or_create_by!(user: user)
+
+    return if achievement.gold_achieved
+
+    %w[bronze silver gold].each { |x| achievement.update!({ "#{x}_achieved": count >= self["#{x}_count"] }) }
+  end
 end

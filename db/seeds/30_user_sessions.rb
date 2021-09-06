@@ -1,5 +1,5 @@
 if Session.count.zero?
-  print "#{pretty_print_name('Session')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Sessions')}\tStart: #{pretty_print(Time.now - @start_time)}"
 
   User.all.each do |user|
     30.times.reverse_each do |i|

@@ -79,5 +79,5 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
   team_member.save!
 end
 
-puts "\tDuration: #{pretty_print(Time.now - @start_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
+puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
 @last_time = Time.now

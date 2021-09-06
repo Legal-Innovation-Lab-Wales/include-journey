@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104769) do
   create_table "achievements", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
-    t.string "resource", null: false
+    t.string "entities", null: false
     t.date "starts_at"
     t.date "ends_at"
     t.integer "bronze_count", default: 0, null: false
@@ -397,7 +397,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104769) do
     t.integer "journal_entries_count", default: 0, null: false
     t.integer "journal_entries_this_month_count", default: 0, null: false
     t.integer "goals_achieved_count", default: 0, null: false
-    t.integer "goals_achieved_this_month_count", default: 0, null: false
+    t.integer "achievements_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
