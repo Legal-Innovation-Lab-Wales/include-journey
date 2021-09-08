@@ -117,10 +117,10 @@
             margin-left: -1.25rem;
             border-radius: 50%;
             border: 2px solid $success;
-            transition: 4s;
             z-index: 1;
             padding: 0;
             background-color: $dark;
+            transition: 4s;
 
             &.gold {
               right: 0;
@@ -157,6 +157,7 @@
               height: 100%;
               border-radius: 50%;
               backface-visibility: hidden;
+              transition: 4s;
             }
 
             .flip-card-back {
