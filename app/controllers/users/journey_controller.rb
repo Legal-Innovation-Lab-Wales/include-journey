@@ -9,10 +9,6 @@ module Users
       @available_monthly_achievements = Achievement.includes(:user_achievements)
                                                    .this_month
                                                    .order(created_at: :asc)
-      @bronze_achievements_count = current_user.bronze_achievements_count
-      @silver_achievements_count = current_user.silver_achievements_count
-      @gold_achievements_count = current_user.gold_achievements_count
-      @achievements_count = @bronze_achievements_count + @silver_achievements_count + @gold_achievements_count
 
       render 'index'
     end
