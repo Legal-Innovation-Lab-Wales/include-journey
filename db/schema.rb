@@ -400,7 +400,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104768) do
     t.date "last_goal_achieved_at"
     t.integer "goals_achieved_count", default: 0, null: false
     t.integer "goals_achieved_this_month_count", default: 0, null: false
-    t.integer "achievements_count", default: 0, null: false
+    t.integer "bronze_achievements_count", default: 0, null: false
+    t.integer "silver_achievements_count", default: 0, null: false
+    t.integer "gold_achievements_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

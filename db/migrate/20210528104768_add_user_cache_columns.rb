@@ -16,7 +16,9 @@ class AddUserCacheColumns < ActiveRecord::Migration[6.1]
       t.date :last_goal_achieved_at
       t.integer :goals_achieved_count, null: false, default: 0
       t.integer :goals_achieved_this_month_count, null: false, default: 0
-      t.integer :achievements_count, null: false, default: 0
+      t.integer :bronze_achievements_count, null: false, default: 0
+      t.integer :silver_achievements_count, null: false, default: 0
+      t.integer :gold_achievements_count, null: false, default: 0
     end
   end
   # rubocop:enable Metrics/MethodLength

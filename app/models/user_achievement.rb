@@ -10,6 +10,12 @@ class UserAchievement < ApplicationRecord
   private
 
   def update_cache
-    user.update!(achievements_count: user.achievements_count + 1)
+    if gold_achieved_changed?
+      user.update!(gold_achievements_count: user.gold_achievements_count + 1)
+    elsif silver_achieved_changed?
+      user.update!(silver_achievements_count: user.silver_achievements_count + 1)
+    else
+      user.update!(bronze_achievements_count: user.bronze_achievements_count + 1)
+    end
   end
 end

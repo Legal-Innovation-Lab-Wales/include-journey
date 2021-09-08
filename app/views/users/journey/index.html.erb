@@ -2,20 +2,33 @@
   <section class="row stats">
     <h3>My Journey</h3>
     <div class="col-4">
-      <div class="counter">
-        <div data-count="<%= @sessions_streak %>"></div>
+      <div class="counter session">
+        <div data-count="<%= current_user.sessions_streak %>"></div>
         <div>Current Active Streak</div>
       </div>
     </div>
     <div class="col-4">
-      <div class="counter">
-        <div data-count="<%= @sessions_count %>"></div>
+      <div class="counter session">
+        <div data-count="<%= current_user.sessions_count %>"></div>
         <div>Total Active Days</div>
       </div>
     </div>
     <div class="col-4">
       <div class="counter">
-        <div data-count="<%= @achievements_count %>"></div>
+        <div class="medals">
+          <div class="medal bronze">
+            <div data-count="<%= current_user.bronze_achievements_count %>">0</div>
+            <i class="fas fa-medal"></i>
+          </div>
+          <div class="medal silver">
+            <div data-count="<%= current_user.silver_achievements_count %>">0</div>
+            <i class="fas fa-medal"></i>
+          </div>
+          <div class="medal gold">
+            <div data-count="<%= current_user.gold_achievements_count %>">0</div>
+            <i class="fas fa-medal"></i>
+          </div>
+        </div>
         <div>Achievements Earned</div>
       </div>
     </div>

@@ -36,6 +36,31 @@
               font-family: $font-link;
             }
           }
+
+          .medals {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .medal {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 0.5rem;
+
+              @media screen and (min-width: $screen-md) {
+                margin-right: 1rem;
+              }
+
+              .fa-medal {
+                margin-left: 0.125rem;
+
+                @media screen and (min-width: $screen-md) {
+                  margin-left: 0.5rem;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -99,16 +124,7 @@
             transition: 4s;
             z-index: 1;
 
-            &.bronze {
-              color: $bronze;
-            }
-
-            &.silver {
-              color: $silver;
-            }
-
             &.gold {
-              color: $gold;
               right: 0;
             }
 
@@ -130,6 +146,20 @@
       hr {
         margin: 0.5rem 0;
       }
+    }
+  }
+
+  .medal {
+    &.bronze {
+      color: $bronze;
+    }
+
+    &.silver {
+      color: $silver;
+    }
+
+    &.gold {
+      color: $gold;
     }
   }
 }
