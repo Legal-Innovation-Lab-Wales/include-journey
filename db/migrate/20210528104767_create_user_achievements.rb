@@ -1,4 +1,4 @@
-# db/migrate/20210528104768_create_user_achievements.rb
+# db/migrate/20210528104767_create_user_achievements.rb
 class CreateUserAchievements < ActiveRecord::Migration[6.1]
   def change
     create_table :user_achievements do |t|

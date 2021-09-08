@@ -1,4 +1,4 @@
-# db/migrate/20210528104766_create_sessions.rb
+# db/migrate/20210528104765_create_sessions.rb
 class CreateSessions < ActiveRecord::Migration[6.1]
   def change
     create_table :sessions do |t|

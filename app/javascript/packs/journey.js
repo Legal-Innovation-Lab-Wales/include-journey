@@ -26,3 +26,18 @@ counters.forEach(counter => {
         didInit: tick => setTimeout(() => { tick.value = parseInt(count) }, 100)
     })
 })
+
+const progress_bars = document.querySelectorAll('.progress-bar')
+
+progress_bars.forEach(progress_bar => {
+    setTimeout(() => {
+        progress_bar.style.width = `${progress_bar.dataset.width}%`
+
+        const achievement = progress_bar.closest('.achievement'),
+              medals = achievement.querySelectorAll('.medal')
+
+        medals.forEach(medal => {
+            if (medal.dataset.achieved === 'true') medal.classList.add('achieved')
+        })
+    }, 500)
+})

@@ -3,7 +3,7 @@ class Goal < ApplicationRecord
   belongs_to :user
   belongs_to :goal_type
 
-  before_update :increment_cache, if: -> { achieved_on.changed? }
+  before_update :update_cache, if: -> { achieved_on_changed? }
 
   scope :short_term, -> { where(short_term: true) }
   scope :long_term, -> { where(short_term: false) }
@@ -24,8 +24,9 @@ class Goal < ApplicationRecord
 
   private
 
-  def increment_cache
-    user.update!(goals_achieved_count: user.goals_achieved_count + 1,
+  def update_cache
+    user.update!(last_goal_achieved_at: Date.today,
+                 goals_achieved_count: user.goals_achieved_count + 1,
                  goals_achieved_this_month_count: Date.today.day == 1 ? 1 : user.goals_achieved_this_month_count + 1)
   end
 end

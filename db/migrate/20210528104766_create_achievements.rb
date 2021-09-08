@@ -1,5 +1,6 @@
-# db/migrate/20210528104767_create_achievements.rb
+# db/migrate/20210528104766_create_achievements.rb
 class CreateAchievements < ActiveRecord::Migration[6.1]
+  # rubocop:disable Metrics/MethodLength
   def change
     create_table :achievements do |t|
       t.string :name, null: false
@@ -14,4 +15,5 @@ class CreateAchievements < ActiveRecord::Migration[6.1]
       t.timestamps
     end
   end
+  # rubocop:enable Metrics/MethodLength
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104769) do
+ActiveRecord::Schema.define(version: 2021_05_28_104768) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -387,16 +387,19 @@ ActiveRecord::Schema.define(version: 2021_05_28_104769) do
     t.string "withdrawn_reason"
     t.string "index_offence"
     t.boolean "deleted", default: false, null: false
-    t.datetime "last_assessed_at"
     t.date "last_session_at"
     t.integer "sessions_streak", default: 0, null: false
     t.integer "sessions_count", default: 0, null: false
     t.integer "sessions_this_month_count", default: 0, null: false
+    t.date "last_wellbeing_assessment_at"
     t.integer "wellbeing_assessments_count", default: 0, null: false
     t.integer "wellbeing_assessments_this_month_count", default: 0, null: false
+    t.date "last_journal_entry_at"
     t.integer "journal_entries_count", default: 0, null: false
     t.integer "journal_entries_this_month_count", default: 0, null: false
+    t.date "last_goal_achieved_at"
     t.integer "goals_achieved_count", default: 0, null: false
+    t.integer "goals_achieved_this_month_count", default: 0, null: false
     t.integer "achievements_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

@@ -1,26 +1,26 @@
 <main class="container user journey index">
   <section class="row stats">
     <h3>My Journey</h3>
-    <div class="col-auto2 col-md-4">
+    <div class="col col-md-4">
       <div class="counter">
         <div data-count="<%= @sessions_streak %>"></div>
         <div>Current Active Streak</div>
       </div>
     </div>
-    <div class="col-auto2 col-md-4">
+    <div class="col col-md-4">
       <div class="counter">
         <div data-count="<%= @sessions_count %>"></div>
         <div>Total Active Days</div>
       </div>
     </div>
-    <div class="col-auto2 col-md-4">
+    <div class="col col-md-4">
       <div class="counter">
         <div data-count="<%= @achievements_count %>"></div>
         <div>Achievements Earned</div>
       </div>
     </div>
   </section>
-  <section class="row">
+  <section class="row achievements">
     <h3>My Achievements</h3>
     <div class="col-auto2 mb-3">
       <ul class="nav nav-tabs justify-content-end">
@@ -45,48 +45,27 @@
               <h4><%= achievement.name %></h4>
               <p><%= achievement.description %></p>
             </div>
-            <div class="row">
-              <div class="progress col">
+            <div class="row achievement">
+              <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
-                     style="width: 100%"
-                     aria-valuenow="<%= achievement.bronze_count %>"
+                     data-width="<%= progress(current_user, achievement, true) %>"
+                     aria-valuenow="<%= count(current_user, achievement, true) %>"
                      aria-valuemin="0"
-                     aria-valuemax="<%= achievement.bronze_count %>">
-                </div>
-                <div class="text-overlay">
-                  <%= achievement.bronze_count %>
-                </div>
+                     aria-valuemax="<%= achievement.gold_count %>"></div>
               </div>
-              <div class="medal col-auto achieved">
-                <i class="fas fa-medal bronze"></i>
+              <div class="medal bronze"
+                   data-achieved="<%= count(current_user, achievement, true) >= achievement.bronze_count %>"
+                   style="left: <%= medal(achievement.bronze_count, achievement) %>">
+                <i class="fas fa-medal"></i>
               </div>
-              <div class="progress col">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
-                     style="width: 100%"
-                     aria-valuenow="<%= achievement.silver_count %>"
-                     aria-valuemin="0"
-                     aria-valuemax="<%= achievement.silver_count %>">
-                </div>
-                <div class="text-overlay">
-                  <%= achievement.silver_count %>
-                </div>
+              <div class="medal silver"
+                   data-achieved="<%= count(current_user, achievement, true) >= achievement.silver_count %>"
+                   style="left: <%= medal(achievement.silver_count, achievement) %>">
+                <i class="fas fa-medal"></i>
               </div>
-              <div class="medal col-auto achieved">
-                <i class="fas fa-medal silver"></i>
-              </div>
-              <div class="progress col">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
-                     style="width: 0%"
-                     aria-valuenow="<%= achievement.gold_count %>"
-                     aria-valuemin="0"
-                     aria-valuemax="<%= achievement.gold_count %>">
-                </div>
-                <div class="text-overlay">
-                  <%= achievement.gold_count %>
-                </div>
-              </div>
-              <div class="medal col-auto">
-                <i class="fas fa-medal gold"></i>
+              <div class="medal gold"
+                   data-achieved="<%= count(current_user, achievement, true) >= achievement.gold_count %>">
+                <i class="fas fa-medal"></i>
               </div>
             </div>
             <hr>

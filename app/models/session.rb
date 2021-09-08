@@ -2,13 +2,13 @@
 class Session < ApplicationRecord
   belongs_to :user
 
-  after_create :increment_cache
+  after_create :update_cache
 
   validates_presence_of :session_at
 
   private
 
-  def increment_cache
+  def update_cache
     user.update!(last_session_at: session_at,
                  sessions_count: user.sessions_count + 1,
                  sessions_this_month_count: Date.today.day == 1 ? 1 : user.sessions_this_month_count + 1,

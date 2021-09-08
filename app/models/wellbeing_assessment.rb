@@ -46,7 +46,7 @@ class WellbeingAssessment < ApplicationRecord
   private
 
   def update_cache
-    user.update!(last_assessed_at: DateTime.now,
+    user.update!(last_wellbeing_assessment_at: Date.today,
                  wellbeing_assessments_count: user.wellbeing_assessments_count + 1,
                  wellbeing_assessments_this_month_count: Date.today.day == 1 ? 1 : user.wellbeing_assessments_this_month_count + 1)
   end
