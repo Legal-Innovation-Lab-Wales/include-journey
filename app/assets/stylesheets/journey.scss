@@ -74,6 +74,7 @@
             background-color: transparent;
             border: 2px solid $success;
             height: 1.5rem;
+            margin-bottom: 2rem;
 
             .progress-bar {
               width: 0;
@@ -90,10 +91,12 @@
             font-size: 1rem;
             height: 2.5rem;
             width: 2.5rem;
+            top: -0.5rem;
             margin-left: -1.25rem;
             border-radius: 50%;
             border: 2px solid $success;
             transition: 4s;
+            z-index: 1;
 
             &.bronze {
               color: $bronze;
@@ -112,7 +115,19 @@
               background-color: $success-light;
             }
           }
+
+          .count {
+            position: absolute;
+            text-align: right;
+            font-size: 0.75rem;
+            bottom: 0;
+            padding: 0;
+          }
         }
+      }
+
+      hr {
+        margin: 0.5rem 0;
       }
     }
   }

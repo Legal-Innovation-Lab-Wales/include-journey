@@ -26,6 +26,9 @@
            data-achieved="<%= count(current_user, achievement, monthly) >= achievement.gold_count %>">
         <i class="fas fa-medal"></i>
       </div>
+      <div class="count">
+        <%= count(current_user, achievement, monthly) %> / <%= achievement.gold_count %>
+      </div>
     </div>
     <hr>
   <% end %>
