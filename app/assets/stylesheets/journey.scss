@@ -78,7 +78,7 @@
 
             .progress-bar {
               width: 0;
-              transition: 5s;
+              transition: 3s;
             }
           }
 
@@ -94,7 +94,7 @@
             margin-left: -1.25rem;
             border-radius: 50%;
             border: 2px solid $success;
-            transition: 6s;
+            transition: 4s;
 
             &.bronze {
               color: $bronze;

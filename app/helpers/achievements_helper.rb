@@ -2,7 +2,7 @@
 module AchievementsHelper
 
   def progress(user, achievement, month)
-    ((count(user, achievement, month).to_f / achievement.gold_count) * 100).ceil
+    (count(user, achievement, month).to_f / achievement.gold_count) * 100
   end
 
   def count(user, achievement, month)
