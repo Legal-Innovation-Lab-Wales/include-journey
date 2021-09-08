@@ -22,7 +22,7 @@
   </section>
   <section class="row achievements">
     <h3>My Achievements</h3>
-    <div class="col-auto2 mb-3">
+    <div class="col-12 mb-3">
       <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
           <button class="nav-link" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab"
@@ -34,45 +34,15 @@
         </li>
       </ul>
     </div>
-    <div class="col-auto2 tab-content">
+    <div class="col-12 tab-content">
       <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
-
+        <%= render 'achievements', achievements: @all_time_achievements, monthly: false %>
       </div>
       <div class="tab-pane fade show active" id="month" role="tabpanel" aria-labelledby="month-tab">
-        <div class="container">
-          <% @available_monthly_achievements.each do |achievement| %>
-            <div class="row">
-              <h4><%= achievement.name %></h4>
-              <p><%= achievement.description %></p>
-            </div>
-            <div class="row achievement">
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
-                     data-width="<%= progress(current_user, achievement, true) %>"
-                     aria-valuenow="<%= count(current_user, achievement, true) %>"
-                     aria-valuemin="0"
-                     aria-valuemax="<%= achievement.gold_count %>"></div>
-              </div>
-              <div class="medal bronze"
-                   data-achieved="<%= count(current_user, achievement, true) >= achievement.bronze_count %>"
-                   style="left: <%= medal(achievement.bronze_count, achievement) %>">
-                <i class="fas fa-medal"></i>
-              </div>
-              <div class="medal silver"
-                   data-achieved="<%= count(current_user, achievement, true) >= achievement.silver_count %>"
-                   style="left: <%= medal(achievement.silver_count, achievement) %>">
-                <i class="fas fa-medal"></i>
-              </div>
-              <div class="medal gold"
-                   data-achieved="<%= count(current_user, achievement, true) >= achievement.gold_count %>">
-                <i class="fas fa-medal"></i>
-              </div>
-            </div>
-            <hr>
-          <% end %>
-        </div>
+        <%= render 'achievements', achievements: @available_monthly_achievements, monthly: true %>
       </div>
     </div>
   </section>
 </main>
+
 <%= javascript_pack_tag 'journey' %>
