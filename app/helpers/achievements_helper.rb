@@ -12,8 +12,4 @@ module AchievementsHelper
   def medal(medal_count, achievement)
     "#{(medal_count.to_f / achievement.gold_count) * 100}%"
   end
-
-  def achieved(user, achievement, monthly, count)
-    count(user, achievement, monthly) >= count
-  end
 end
