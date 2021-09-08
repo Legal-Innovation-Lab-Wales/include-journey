@@ -126,6 +126,12 @@ class User < DeviseRecord
     end
   end
 
+  def reset_monthly_counts
+    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+      update!({ "#{entities}_this_month_count": 0 })
+    end
+  end
+
   private
 
   def anonymize

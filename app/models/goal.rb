@@ -27,6 +27,6 @@ class Goal < ApplicationRecord
   def update_cache
     user.update!(last_goal_achieved_at: Date.today,
                  goals_achieved_count: user.goals_achieved_count + 1,
-                 goals_achieved_this_month_count: Date.today.day == 1 ? 1 : user.goals_achieved_this_month_count + 1)
+                 goals_achieved_this_month_count: user.goals_achieved_this_month_count + 1)
   end
 end

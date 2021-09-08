@@ -11,7 +11,7 @@ class Session < ApplicationRecord
   def update_cache
     user.update!(last_session_at: session_at,
                  sessions_count: user.sessions_count + 1,
-                 sessions_this_month_count: Date.today.day == 1 ? 1 : user.sessions_this_month_count + 1,
+                 sessions_this_month_count: user.sessions_this_month_count + 1,
                  sessions_streak: sessions_streak)
   end
 
