@@ -17,6 +17,10 @@ class User < DeviseRecord
   has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
   has_many :user_tags, foreign_key: :user_id, dependent: :delete_all
   has_many :survey_responses, foreign_key: :user_id
+  has_many :sessions, foreign_key: :user_id, dependent: :delete_all
+  has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
+
+  before_update :verify_achievements
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
@@ -31,6 +35,7 @@ class User < DeviseRecord
   validates_presence_of :terms
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
+
 
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
@@ -112,6 +117,19 @@ class User < DeviseRecord
     [journal_entries, crisis_events].each(&:destroy_all)
 
     anonymize
+  end
+
+  def verify_achievements
+    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+      Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
+      Achievement.this_month.for(entities).check(self) if changed.include?("#{entities}_this_month_count")
+    end
+  end
+
+  def reset_monthly_counts
+    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+      update!({ "#{entities}_this_month_count": 0 })
+    end
   end
 
   private

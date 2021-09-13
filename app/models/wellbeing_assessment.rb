@@ -3,7 +3,7 @@ class WellbeingAssessment < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
 
-  after_create :set_last_assessed_at
+  after_create :update_cache
 
   has_many :wba_scores, foreign_key: :wellbeing_assessment_id, dependent: :delete_all
 
@@ -45,7 +45,9 @@ class WellbeingAssessment < ApplicationRecord
 
   private
 
-  def set_last_assessed_at
-    user.update!(last_assessed_at: DateTime.now)
+  def update_cache
+    user.update!(last_wellbeing_assessment_at: Date.today,
+                 wellbeing_assessments_count: user.wellbeing_assessments_count + 1,
+                 wellbeing_assessments_this_month_count: user.wellbeing_assessments_this_month_count + 1)
   end
 end
