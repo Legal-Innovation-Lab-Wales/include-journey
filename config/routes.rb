@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       get 'terms', to: 'users_application#terms'
       get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
+      get 'journey', to: 'journey#index', as: :journey
 
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
       end
       resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
+      resources :surveys, only: %i[index show update]
     end
   end
 
@@ -61,7 +63,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :users, only: %i[index show] do
+      resources :users, only: %i[index show update] do
         put 'pin', action: 'pin', on: :member, as: :pin
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
@@ -73,6 +75,7 @@ Rails.application.routes.draw do
         end
         resources :appointments, only: %i[index new create edit update], on: :member
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
+        get 'edit', action: 'edit', on: :member, as: :edit
       end
 
       resources :crisis_events, only: %i[index show] do
@@ -90,6 +93,27 @@ Rails.application.routes.draw do
       resources :wellbeing_score_values, only: %i[index update]
       resources :tags, only: %i[show index create] do
         resources :user_tags, only: :index, on: :member, as: :tagged_users
+      end
+      resources :affirmations, except: :show
+      resources :affirmations_archive, only: :index
+      resources :surveys, param: :survey_id do
+        member do
+          put '/activate', action: 'activate'
+          put '/reorder', action: 'reorder'
+          resources :survey_sections, only: %i[create update destroy], param: :section_id, as: :survey_section do
+            member do
+              put '/reorder', action: 'reorder'
+              resources :survey_questions, only: %i[create update destroy], param: :question_id, as: :survey_question
+              resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section do
+                member do
+                  resources :survey_comments, only: :index, as: :survey_comments
+                end
+              end
+            end
+          end
+          resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
+        end
+
       end
     end
   end

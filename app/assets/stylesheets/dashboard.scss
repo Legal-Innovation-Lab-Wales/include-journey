@@ -35,3 +35,18 @@
   }
 }
 
+.user .journey .col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .affirmation {
+    align-self: center;
+    max-width: $header-buttons--max-width;
+    padding: 0 $header-buttons--margin/2;
+
+    @media screen and (min-width: $screen-sm){
+      padding: 0;
+    }
+  }
+}

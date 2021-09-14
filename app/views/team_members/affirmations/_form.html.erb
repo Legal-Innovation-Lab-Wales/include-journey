@@ -1,0 +1,32 @@
+<main class="container <%= type %> team-members affirmations">
+  <section class="row">
+    <div class="col">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h3><%= type %> Daily Affirmation</h3>
+            <%= form_with model: @affirmation, url: path do |f| %>
+              <div class="form-floating">
+                <%= f.text_area :text, class: 'form-control', required: true %>
+                <%= f.label :text %>
+              </div>
+              <div class="form-floating">
+                <%= f.date_field :scheduled_date, min: Date.today, class: 'form-control', required: true %>
+                <%= f.label :scheduled_date %>
+              </div>
+              <%= f.submit submit_btn, class: 'btn btn-primary' %>
+            <% end %>
+
+            <% if include_remove_btn %>
+              <%= link_to 'Remove', path, method: :delete, class: 'btn btn-sm btn-danger',
+                          data: { confirm: 'This will delete the affirmation. Are you sure?' } %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+

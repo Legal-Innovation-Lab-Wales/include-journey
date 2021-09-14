@@ -1,0 +1,302 @@
+@import "variables";
+
+.surveys {
+  section.row {
+    padding: 1rem 0;
+  }
+
+  .survey-section {
+    padding: 0;
+    margin-bottom: 1.5rem;
+
+    &:last-child { margin-bottom: 0; }
+
+    h3 {text-align: center; }
+
+    h4 {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    h3, h4 { color: $white; }
+
+    .row {
+      &:nth-of-type(2n) {
+        background-color: $table-row;
+      }
+
+      &.comment-section {
+        background-color: transparent;
+
+        .form-floating {
+          margin-top: 1rem;
+          padding: 0;
+
+          textarea {
+            @media screen and (max-width: $screen-lg) {
+              padding-top: 3rem;
+            }
+          }
+        }
+
+        textarea {
+          height: 150px;
+        }
+      }
+
+      &.table-header {
+        display: none;
+        font-weight: bold;
+
+        @media screen and (min-width: $screen-lg) {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+
+        .col-12, .col-2 {
+          padding: 0 0 0.5rem 0;
+        }
+      }
+
+      .col-12 {
+        padding: 1rem;
+      }
+
+      .col-2 {
+        padding: 0;
+
+        .label {
+          font-size: 0.8rem;
+        }
+
+        label {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+
+          input[type="radio"] {
+            margin-bottom: 1rem;
+          }
+        }
+
+        @media screen and (min-width: $screen-lg) {
+          .label {
+            display: none;
+          }
+
+          label {
+            display: inline-block;
+            padding: 1rem;
+
+            input[type="radio"] {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.team-members {
+    &.new {
+      .row {
+        justify-content: center;
+
+        .col-12, .col-lg-6 {
+          padding: 1.5rem;
+          background: $blue-grad;
+          border-radius: 0.5rem;
+
+          h2 {
+            margin-bottom: 1rem;
+          }
+
+          .form-floating {
+            margin-bottom: 0.5rem;
+          }
+
+          input[type="submit"] {
+            margin: 1rem 0 0.5rem 0;
+          }
+
+          .container {
+            padding: 0;
+
+            .col-6 {
+              &:first-child {
+                padding-right: 0.25rem;
+              }
+
+              &:last-child {
+                padding-left: 0.25rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.edit {
+      .delete-btn {
+        width: auto;
+        margin: 0.5rem auto 1rem auto;
+      }
+
+      .col-md-4 {
+        padding: 0 0 0.5rem 0;
+
+        &:nth-child(2) { padding-right: 0.25rem; }
+        &:last-child { padding-left: 0.25rem; }
+
+        @media screen and (min-width: $screen-md) {
+          &:first-child { padding-right: 0.25rem; }
+          &:nth-child(2) { padding-left: 0.25rem; }
+        }
+      }
+
+      .survey-section {
+        position: relative;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px dashed $white;
+
+        .row {
+          &:not(.table-header) { display: flex; }
+          position: relative;
+          justify-content: flex-end;
+          margin: 0;
+
+          &.table-header { margin-top: 1rem; }
+          &.add-btn { background-color: transparent; }
+
+          .col-auto {
+            display: flex;
+            align-items: center;
+            padding: 0;
+          }
+
+          .col {
+            padding: 0;
+
+            input { border-radius: 0.2rem 0.2rem 0 0; }
+            textarea { border-radius: 0 0 0 0.2rem; }
+          }
+
+          &.comment-section {
+            margin-top: 1rem;
+
+            input { border-radius: 0.2rem 0.2rem 0 0; }
+            textarea { border-radius: 0 0 0 0.2rem; }
+            &.drop-border-bottom .btn-danger { bottom: 1rem !important; }
+          }
+
+          &.section, &.comment-section {
+            &.drop-border-top { padding-top: 1rem; }
+            &.drop-border-bottom { padding-bottom: 1rem; }
+          }
+
+          &:hover .btn-danger { display: block; }
+          &[draggable="true"] { cursor: move; }
+
+          .col-12 {
+            display: flex;
+            align-items: center;
+
+            @media screen and (min-width: $screen-lg) { padding: 0 !important; }
+          }
+
+          &.drop-border-top { border-top: 5px solid $white; }
+          &.drop-border-bottom { border-bottom: 5px solid $white; }
+
+          .fa-grip-lines {
+            margin-right: 1rem;
+
+            @media screen and (min-width: $screen-lg){ margin: 0 1rem; }
+          }
+        }
+
+        .btn { margin-top: 1rem; }
+
+        .btn-danger {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 2;
+          width: auto;
+          margin-top: 0;
+          border-radius: 0 !important;
+          transition: none !important;
+
+          &.remove-section { right: 1rem }
+        }
+      }
+    }
+
+    &.show {
+      .survey-section {
+        .col-2 {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          @media screen and (max-width: $screen-lg){
+            .label {
+              min-height: 110px;
+              padding-top: 10px;
+            }
+          }
+
+          .progress {
+            background-color: transparent;
+            transform: rotateZ(-90deg);
+            height: 3rem;
+            width: 56px;
+            border-radius: 0;
+          }
+        }
+
+        .comment-section {
+          margin-top: 1rem;
+          border: 1px solid $white;
+          border-radius: 0.2rem;
+
+          .col-12 {
+            padding: 0.5rem;
+
+            &:first-child {
+              text-align: left;
+              color: $black;
+              background-color: $white;
+            }
+
+            &:last-child {
+              background-color: transparent;
+            }
+          }
+        }
+      }
+
+      &.response {
+        .comment-section {
+          border: none;
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  &.user {
+    &.index {
+      .survey {
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px solid $white;
+      }
+    }
+  }
+}

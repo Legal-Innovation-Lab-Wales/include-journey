@@ -1,0 +1,25 @@
+<%= render 'layouts/searchable', class_list: 'team-members survey-comments', header: 'Survey Comments',
+           index: 'survey_comments', stats: render('stats') do %>
+  <div class="table-container">
+    <table class="table table-dark table-striped table-hover link-table">
+      <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Comment</th>
+        <%= render(partial: 'shared/sort_column', locals: { column_value: 'created_at', column_text: 'Created At' }) %>
+      </tr>
+      </thead>
+      <tbody>
+      <% @resources.each do |survey_comment| %>
+        <tr>
+          <td><%= link_to "#{survey_comment.user.full_name}", survey_response_path(@survey, survey_comment.survey_response) %></td>
+          <td><%= link_to "#{survey_comment.text}", survey_response_path(@survey, survey_comment.survey_response) %></td>
+          <td><%= link_to "#{survey_comment.created}", survey_response_path(@survey, survey_comment.survey_response) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag 'sort_column' %>

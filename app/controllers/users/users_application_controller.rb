@@ -13,7 +13,7 @@ module Users
 
     # PUT /cancel_deletion
     def cancel_deletion
-      current_user.update!(deletion_date: nil)
+      current_user.update!(deleted_at: nil)
 
       redirect_back(fallback_location: authenticated_user_root_path,
                     flash: { success: 'Your account will no longer be deleted.' })

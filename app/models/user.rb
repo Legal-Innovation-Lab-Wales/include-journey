@@ -8,7 +8,7 @@ class User < DeviseRecord
 
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
-  has_many :wellbeing_assessments, foreign_key: :user_id, dependent: :destroy
+  has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
   has_many :crisis_events, foreign_key: :user_id, dependent: :destroy
   has_many :journal_entries, foreign_key: :user_id, dependent: :destroy
@@ -16,13 +16,29 @@ class User < DeviseRecord
   has_many :goals, foreign_key: :user_id, dependent: :delete_all
   has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
   has_many :user_tags, foreign_key: :user_id, dependent: :delete_all
+  has_many :survey_responses, foreign_key: :user_id
+  has_many :sessions, foreign_key: :user_id, dependent: :delete_all
+  has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
 
-  scope :can_be_deleted, -> { where('deletion_date is not null and deletion_date <= ?', Time.now) }
+  before_update :verify_achievements
+
+  scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
+  scope :deleted, -> { where(deleted: true) }
+  scope :last_assessed_today, lambda {
+    where(':start <= last_assessed_at and last_assessed_at <= :end',
+          { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })
+  }
+  scope :not_assessed_today, -> { where.not(id: last_assessed_today) }
 
-  def release
-    release_date.present? ? release_date.strftime('%d/%m/%Y') : ''
+  validates_presence_of :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
+
+
+  def release_date
+    released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
   end
 
   def dob
@@ -72,7 +88,7 @@ class User < DeviseRecord
       id,
       full_name,
       dob,
-      release,
+      released_at,
       sex,
       gender_identity,
       ethnic_group,
@@ -86,7 +102,7 @@ class User < DeviseRecord
       'ID': id,
       'Name': full_name,
       'Date Of Birth': dob,
-      'Release Date': release,
+      'Release Date': released_at,
       'Sex': sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,
@@ -96,12 +112,31 @@ class User < DeviseRecord
   end
   # rubocop:enable Metrics/MethodLength
 
-  # validations
-  validates_presence_of :first_name,
-                        :last_name,
-                        :mobile_number,
-                        :email,
-                        :terms
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :terms, acceptance: true
+  def destroy
+    [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
+    [journal_entries, crisis_events].each(&:destroy_all)
+
+    anonymize
+  end
+
+  def verify_achievements
+    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+      Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
+      Achievement.this_month.for(entities).check(self) if changed.include?("#{entities}_this_month_count")
+    end
+  end
+
+  def reset_monthly_counts
+    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+      update!({ "#{entities}_this_month_count": 0 })
+    end
+  end
+
+  private
+
+  def anonymize
+    skip_reconfirmation!
+    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: nil,
+           nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
+  end
 end

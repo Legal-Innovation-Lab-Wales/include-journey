@@ -10,10 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104754) do
+ActiveRecord::Schema.define(version: 2021_05_28_104768) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "entities", null: false
+    t.date "starts_at"
+    t.date "ends_at"
+    t.integer "bronze_count", default: 0, null: false
+    t.integer "silver_count", default: 0, null: false
+    t.integer "gold_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "affirmations", force: :cascade do |t|
+    t.string "text", null: false
+    t.date "scheduled_date", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["scheduled_date"], name: "index_affirmations_on_scheduled_date", unique: true
+    t.index ["team_member_id"], name: "index_affirmations_on_team_member_id"
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -149,6 +172,90 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "session_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "survey_answers", force: :cascade do |t|
+    t.integer "answer"
+    t.bigint "survey_question_id", null: false
+    t.bigint "survey_response_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
+    t.index ["survey_response_id"], name: "index_survey_answers_on_survey_response_id"
+  end
+
+  create_table "survey_comment_sections", force: :cascade do |t|
+    t.text "label", default: "", null: false
+    t.integer "order", null: false
+    t.bigint "survey_section_id", null: false
+    t.integer "total", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_section_id"], name: "index_survey_comment_sections_on_survey_section_id"
+  end
+
+  create_table "survey_comments", force: :cascade do |t|
+    t.text "text"
+    t.bigint "survey_comment_section_id", null: false
+    t.bigint "survey_response_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_comment_section_id"], name: "index_survey_comments_on_survey_comment_section_id"
+    t.index ["survey_response_id"], name: "index_survey_comments_on_survey_response_id"
+  end
+
+  create_table "survey_questions", force: :cascade do |t|
+    t.text "question", default: "", null: false
+    t.integer "order", null: false
+    t.bigint "survey_section_id", null: false
+    t.integer "total", default: 0, null: false
+    t.integer "answer0", default: 0, null: false
+    t.integer "answer1", default: 0, null: false
+    t.integer "answer2", default: 0, null: false
+    t.integer "answer3", default: 0, null: false
+    t.integer "answer4", default: 0, null: false
+    t.integer "answer5", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_section_id"], name: "index_survey_questions_on_survey_section_id"
+  end
+
+  create_table "survey_responses", force: :cascade do |t|
+    t.datetime "submitted_at"
+    t.bigint "survey_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_id"], name: "index_survey_responses_on_survey_id"
+    t.index ["user_id"], name: "index_survey_responses_on_user_id"
+  end
+
+  create_table "survey_sections", force: :cascade do |t|
+    t.text "heading"
+    t.integer "order", null: false
+    t.bigint "survey_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["survey_id"], name: "index_survey_sections_on_survey_id"
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.boolean "active", default: false, null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_surveys_on_team_member_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "tag"
     t.bigint "team_member_id"
@@ -188,6 +295,18 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
+  end
+
+  create_table "user_achievements", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "achievement_id", null: false
+    t.boolean "bronze_achieved", default: false, null: false
+    t.boolean "silver_achieved", default: false, null: false
+    t.boolean "gold_achieved", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["achievement_id"], name: "index_user_achievements_on_achievement_id"
+    t.index ["user_id"], name: "index_user_achievements_on_user_id"
   end
 
   create_table "user_pins", force: :cascade do |t|
@@ -243,9 +362,9 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
-    t.datetime "release_date"
+    t.date "released_at"
     t.boolean "terms", default: false
-    t.datetime "deletion_date"
+    t.datetime "deleted_at"
     t.datetime "date_of_birth"
     t.text "disabilities"
     t.string "ethnic_group"
@@ -255,6 +374,35 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.string "pronouns"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "nomis_id"
+    t.string "pnc_no"
+    t.string "delius_no"
+    t.date "enrolled_at"
+    t.date "intervened_at"
+    t.string "release_establishment"
+    t.string "probation_area"
+    t.string "local_authority"
+    t.date "pilot_completed_at"
+    t.date "pilot_withdrawn_at"
+    t.string "withdrawn_reason"
+    t.string "index_offence"
+    t.boolean "deleted", default: false, null: false
+    t.date "last_session_at"
+    t.integer "sessions_streak", default: 0, null: false
+    t.integer "sessions_count", default: 0, null: false
+    t.integer "sessions_this_month_count", default: 0, null: false
+    t.date "last_wellbeing_assessment_at"
+    t.integer "wellbeing_assessments_count", default: 0, null: false
+    t.integer "wellbeing_assessments_this_month_count", default: 0, null: false
+    t.date "last_journal_entry_at"
+    t.integer "journal_entries_count", default: 0, null: false
+    t.integer "journal_entries_this_month_count", default: 0, null: false
+    t.date "last_goal_achieved_at"
+    t.integer "goals_achieved_count", default: 0, null: false
+    t.integer "goals_achieved_this_month_count", default: 0, null: false
+    t.integer "bronze_achievements_count", default: 0, null: false
+    t.integer "silver_achievements_count", default: 0, null: false
+    t.integer "gold_achievements_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -310,6 +458,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 
+  add_foreign_key "affirmations", "team_members"
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
@@ -334,6 +483,19 @@ ActiveRecord::Schema.define(version: 2021_05_28_104754) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "sessions", "users"
+  add_foreign_key "survey_answers", "survey_questions"
+  add_foreign_key "survey_answers", "survey_responses"
+  add_foreign_key "survey_comment_sections", "survey_sections"
+  add_foreign_key "survey_comments", "survey_comment_sections"
+  add_foreign_key "survey_comments", "survey_responses"
+  add_foreign_key "survey_questions", "survey_sections"
+  add_foreign_key "survey_responses", "surveys"
+  add_foreign_key "survey_responses", "users"
+  add_foreign_key "survey_sections", "surveys"
+  add_foreign_key "surveys", "team_members"
+  add_foreign_key "user_achievements", "achievements"
+  add_foreign_key "user_achievements", "users"
   add_foreign_key "user_pins", "team_members"
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"

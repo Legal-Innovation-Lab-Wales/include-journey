@@ -1,3 +1,4 @@
+# db/migrate/20210225200409_devise_create_users.rb
 class DeviseCreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|

@@ -1,0 +1,44 @@
+<div class="container">
+  <% achievements.each do |achievement| %>
+    <div class="row">
+      <h4><%= achievement.name %></h4>
+      <p><%= achievement.description %></p>
+    </div>
+    <div class="row achievement">
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar"
+             data-width="<%= progress(current_user, achievement, monthly) %>"
+             aria-valuenow="<%= count(current_user, achievement, monthly) %>"
+             aria-valuemin="0"
+             aria-valuemax="<%= achievement.gold_count %>"></div>
+      </div>
+      <div class="medal bronze"
+           data-achieved="<%= count(current_user, achievement, monthly) >= achievement.bronze_count %>"
+           style="left: <%= medal(achievement.bronze_count, achievement) %>">
+          <div class="flip-card-inner">
+            <div class="flip-card-front"><i class="fas fa-medal"></i></div>
+            <div class="flip-card-back"><%= achievement.bronze_count %></div>
+          </div>
+      </div>
+      <div class="medal silver"
+           data-achieved="<%= count(current_user, achievement, monthly) >= achievement.silver_count %>"
+           style="left: <%= medal(achievement.silver_count, achievement) %>">
+        <div class="flip-card-inner">
+          <div class="flip-card-front"><i class="fas fa-medal"></i></div>
+          <div class="flip-card-back"><%= achievement.silver_count %></div>
+        </div>
+      </div>
+      <div class="medal gold"
+           data-achieved="<%= count(current_user, achievement, monthly) >= achievement.gold_count %>">
+        <div class="flip-card-inner">
+          <div class="flip-card-front"><i class="fas fa-medal"></i></div>
+          <div class="flip-card-back"><%= achievement.gold_count %></div>
+        </div>
+      </div>
+      <div class="count">
+        <%= count(current_user, achievement, monthly) %> / <%= achievement.gold_count %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>
