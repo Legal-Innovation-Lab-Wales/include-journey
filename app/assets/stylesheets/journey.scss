@@ -1,0 +1,198 @@
+@import "variables";
+
+.journey {
+  section {
+    &.stats {
+      @media screen and (min-width: $screen-md) {
+        margin-bottom: 0;
+      }
+
+      .col-4 {
+        display: flex;
+        justify-content: center;
+        padding: 0.5rem;
+
+        .counter {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-family: $font-link;
+          font-weight: 700;
+          align-items: center;
+          width: 100%;
+          border: 2px solid $brand-primary;
+          color: $brand-primary;
+          padding: 1rem 0;
+
+          .tick {
+            font-size: 1.5rem;
+
+            .tick-flip-panel {
+              background-color: $brand-primary;
+              color: $dark;
+            }
+
+            .tick-flip {
+              font-family: $font-link;
+            }
+          }
+
+          .medals {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .medal {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 0.5rem;
+
+              @media screen and (min-width: $screen-md) {
+                margin-right: 1rem;
+              }
+
+              .fa-medal {
+                margin-left: 0.125rem;
+
+                @media screen and (min-width: $screen-md) {
+                  margin-left: 0.5rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.achievements {
+      @media screen and (min-width: $screen-md) {
+        margin-top: 0;
+      }
+
+      .nav {
+        border-bottom-color: $brand-primary;
+
+        .nav-item .nav-link {
+          &.active {
+            background-color: $brand-primary;
+            color: $dark;
+            border-color: $brand-primary;
+          }
+
+          &:hover {
+            border-color: $brand-primary;
+          }
+        }
+      }
+
+      .tab-pane {
+        .achievement {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-right: 1.25rem;
+
+          .progress {
+            padding: 0;
+            background-color: transparent;
+            border: 2px solid $success;
+            height: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 1rem;
+
+            .progress-bar {
+              width: 0;
+              transition: 3s;
+            }
+          }
+
+          .medal {
+            position: absolute;
+            font-size: 1rem;
+            height: 2.5rem;
+            width: 2.5rem;
+            top: -0.5rem;
+            margin-left: -1.25rem;
+            border-radius: 50%;
+            border: 2px solid $success;
+            z-index: 1;
+            padding: 0;
+            background-color: $dark;
+            transition: 4s;
+
+            &.gold {
+              right: 0;
+            }
+
+            &.achieved {
+              background-color: $success-light;
+
+              .flip-card-front, .flip-card-back {
+                background-color: $success-light;
+              }
+            }
+
+            .flip-card-inner {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              text-align: center;
+              transition: transform 0.8s;
+              transform-style: preserve-3d;
+            }
+
+            &:hover .flip-card-inner {
+              transform: rotateY(180deg);
+            }
+
+            .flip-card-front, .flip-card-back {
+              position: absolute;
+              display: flex;
+              background-color: $dark;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              backface-visibility: hidden;
+              transition: 4s;
+            }
+
+            .flip-card-back {
+              font-family: $heading-font;
+              transform: rotateY(180deg);
+            }
+          }
+
+          .count {
+            position: absolute;
+            text-align: right;
+            font-size: 0.75rem;
+            bottom: 0;
+            padding: 0;
+          }
+        }
+      }
+
+      hr {
+        margin: 0.5rem 0;
+      }
+    }
+  }
+
+  .medal {
+    &.bronze {
+      color: $bronze;
+    }
+
+    &.silver {
+      color: $silver;
+    }
+
+    &.gold {
+      color: $gold;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<main class="container user surveys show">
+  <section class="row">
+    <h3><%= @survey.name %></h3>
+    <%= form_with url: survey_path(@survey), method: :put do |f| %>
+      <% @survey_sections.each do |section| %>
+        <div class="container survey-section">
+            <% if section.heading.present? %>
+              <h4><%= section.heading %></h4>
+            <% end %>
+
+            <% unless section.survey_questions.length.zero? %>
+              <div class="row table-header">
+                <div class="col-12 col-lg-6"></div>
+                <% 6.times do |index| %>
+                  <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
+                <% end %>
+              </div>
+
+              <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
+                <div class="row">
+                  <div class="col-12 col-lg-6"><%= question.question %></div>
+                  <% 6.times do |index| %>
+                    <div class="col-2 col-lg-1">
+                      <label>
+                        <div class="label"><%= survey_option(index) %></div>
+                        <%= radio_button_tag "question[#{question.id}]", index, @survey_response.answer?(question, index),
+                                             class: 'form-check-input', data: { id: question.id }, required: true,
+                                             disabled: @survey_response.submitted? %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+
+            <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
+              <div class="row comment-section">
+                <div class="form-floating">
+                  <%= text_area_tag "comment_section[#{comment_section.id}]", @survey_response.comment(comment_section),
+                                    class: 'form-control', id: "comment_section[#{comment_section.id}]",
+                                    data: { id: comment_section.id }, disabled: @survey_response.submitted? %>
+                  <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <% unless @survey_response.submitted? %>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col">
+              <%= f.submit 'Submit', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'survey' %>

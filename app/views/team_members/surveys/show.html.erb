@@ -1,0 +1,68 @@
+<main class="container team-members surveys show">
+  <section class="row">
+    <div class="col">
+      <h2><%= @survey.name %></h2>
+      <p>
+        This is an aggregate view of all <%= @responses.length %> responses to this survey.<br>
+        If you would like to view a list of all of the responses use the button below.
+      </p>
+      <%= link_to survey_response_index_path(@survey), class: 'btn btn-primary' do %>
+        <i class="fas fa-clipboard-list"></i> View List
+      <% end %>
+      <% @survey_sections.each do |section| %>
+        <div class="container survey-section">
+          <% if section.heading.present? %>
+            <h4><%= section.heading %></h4>
+          <% end %>
+
+          <% unless section.survey_questions.length.zero? %>
+            <div class="row table-header">
+              <div class="col-12 col-lg-6"></div>
+              <% 6.times do |index| %>
+                <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
+              <% end %>
+            </div>
+
+            <% section.survey_questions.order(order: :asc).each do |question| %>
+              <div class="row question">
+                <div class="col-12 col-lg-6"><%= question.question %></div>
+                <% 6.times do |index| %>
+                  <div class="col-2 col-lg-1" data-toggle="tooltip" data-placement="bottom"
+                       title="<%= question.total %> (<%= answer_pct(question, index) %>%)">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                           style="width: <%= answer_pct(question, index) %>%"
+                           aria-valuenow="<%= answer_pct(question, index) %>"
+                           aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="label">
+                      <%= question.total %><br>
+                      (<%= answer_pct(question, index) %>%)<br>
+                      <%= survey_option(index) %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
+            <div class="row comment-section">
+              <div class="col-12">
+                <%= comment_section.label %>
+              </div>
+              <div class="col-12">
+                Comments: <%= comment_section.total %> (<%= (comment_section.total.to_f / @responses.length) * 100 %>%)
+              </div>
+              <div class="col-12">
+                <%= link_to survey_comments_path(@survey, section, comment_section), class: 'btn btn-primary' do %>
+                  <i class="fas fa-comments"></i> View Comments
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

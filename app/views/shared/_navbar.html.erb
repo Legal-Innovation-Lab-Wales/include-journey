@@ -4,7 +4,8 @@
     <% if current_user %>
       <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"
          data-bs-target="<%= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">
-        SOS <i class="fas fa-exclamation-circle"></i>
+        <div class="nav-label always-show">SOS</div>
+        <i class="fas fa-exclamation-circle"></i>
       </a>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -39,9 +40,17 @@
               <i class="fas fa-tools"></i>
               <div class="nav-label hide">Wellbeing Management</div>
             <% end %>
+            <%= link_to affirmations_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-smile"></i>
+              <div class="nav-label hide">Daily Affirmations</div>
+            <% end %>
             <%= link_to tags_path, class: 'btn btn-nav' do %>
               <i class="fas fa-tags"></i>
               <div class="nav-label hide">Tags</div>
+            <% end %>
+            <%= link_to Survey.count.zero? ? new_survey_path : surveys_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-clipboard-list"></i>
+              <div class="nav-label hide">Surveys</div>
             <% end %>
           </div>
         <% end %>
@@ -50,7 +59,7 @@
           <div class="navbar-items">
             <%= link_to journal_entries_path, class: 'btn btn-nav' do %>
               <i class="fas fa-book"></i>
-              <div class="nav-label hide">My journal</div>
+              <div class="nav-label hide">My Journal</div>
             <% end %>
             <%= link_to upcoming_appointments_path, class: 'btn btn-nav' do %>
               <i class="fas fa-calendar-alt"></i>
@@ -64,11 +73,11 @@
               <i class="fas fa-address-book"></i>
               <div class="nav-label hide">My Contacts</div>
             <% end %>
-            <%= link_to '#', class: 'btn btn-nav' do %>
+            <%= link_to journey_path, class: 'btn btn-nav' do %>
               <i class="fas fa-road"></i>
               <div class="nav-label hide">My Journey</div>
             <% end %>
-            <%= link_to '#', class: 'btn btn-nav' do %>
+            <%= link_to wellbeing_services_path, class: 'btn btn-nav' do %>
               <i class="fas fa-info-circle"></i>
               <div class="nav-label hide">My Support</div>
             <% end %>
@@ -76,11 +85,11 @@
               <i class="fas fa-tasks"></i>
               <div class="nav-label hide">My Goals</div>
             <% end %>
-            <%= link_to '#', class: 'btn btn-nav' do %>
+            <%= link_to coming_soon_path, class: 'btn btn-nav' do %>
               <i class="fas fa-calendar-check"></i>
               <div class="nav-label hide">What's on</div>
             <% end %>
-            <%= link_to '#', class: 'btn btn-nav' do %>
+            <%= link_to surveys_path, class: 'btn btn-nav' do %>
               <i class="fas fa-comments"></i>
               <div class="nav-label hide">My Voice</div>
             <% end %>

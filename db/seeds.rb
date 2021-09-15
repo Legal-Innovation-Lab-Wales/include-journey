@@ -38,7 +38,7 @@ unless User.find_by_email('john.smith@me.com').present?
     last_name: 'Smith',
     email: 'john.smith@me.com',
     mobile_number: Faker::Number.leading_zero_number(digits: 11),
-    release_date: rand(1..2).even? ? Faker::Date.between(from: DateTime.now - 20.days, to: DateTime.now) : '',
+    released_at: rand(1..2).even? ? Faker::Date.between(from: Date.today - 20.days, to: Date.today) : '',
     terms: true,
     password: 'password'
   )
@@ -67,3 +67,11 @@ puts("#{pretty_print_name('Crisis Events')}\t#{CrisisEvent.count}")
 puts("#{pretty_print_name('Crisis Notes')}\t#{CrisisNote.count}")
 puts("#{pretty_print_name('Tags')}\t#{Tag.count}")
 puts("#{pretty_print_name('User Tags')}\t#{UserTag.count}")
+puts("#{pretty_print_name('Affirmations')}\t#{Affirmation.count}")
+puts("#{pretty_print_name('Survey')}\t#{Survey.count}")
+puts("#{pretty_print_name('Survey Sections')}\t#{SurveySection.count}")
+puts("#{pretty_print_name('Survey Questions')}\t#{SurveyQuestion.count}")
+puts("#{pretty_print_name('Survey Comment Sections')}\t#{SurveyCommentSection.count}")
+puts("#{pretty_print_name('Survey Responses')}\t#{SurveyResponse.count}")
+puts("#{pretty_print_name('Sessions')}\t#{Session.count}")
+puts("#{pretty_print_name('Achievements')}\t#{Achievement.count}")

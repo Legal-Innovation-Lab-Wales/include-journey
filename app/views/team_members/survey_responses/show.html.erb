@@ -1,0 +1,58 @@
+<main class="container team-members surveys response show">
+  <section class="row">
+    <div class="col">
+      <h2><%= @survey.name %> Response</h2>
+      <h2><%= @survey_response.user.full_name %></h2>
+
+      <% @survey.survey_sections.each do |section| %>
+        <div class="container survey-section">
+          <% if section.heading.present? %>
+            <h4><%= section.heading %></h4>
+          <% end %>
+
+          <% unless section.survey_questions.count.zero? %>
+            <div class="row table-header">
+              <div class="col-12 col-lg-6"></div>
+              <% 6.times do |index| %>
+                <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
+              <% end %>
+            </div>
+
+            <% section.survey_questions.includes(:survey_answers).order(order: :asc).each do |question| %>
+              <div class="row">
+                <div class="col-12 col-lg-6"><%= question.question %></div>
+                <% 6.times do |index| %>
+                  <div class="col-2 col-lg-1">
+                    <label>
+                      <div class="label"><%= survey_option(index) %></div>
+                      <% survey_answer = question.survey_answers.find_by(survey_response: @survey_response) %>
+                      <%= radio_button_tag "question[#{question.id}]", index,
+                                           survey_answer.present? && survey_answer.answer == index,
+                                           class: 'form-check-input',
+                                           disabled: true %>
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <% section.survey_comment_sections.includes(:survey_comments).order(order: :asc).each do |comment_section| %>
+            <div class="row comment-section">
+              <div class="form-floating">
+                <% survey_comment = comment_section.survey_comments.find_by(survey_response: @survey_response) %>
+                <%= text_area_tag "comment_section[#{comment_section.id}]",
+                                  survey_comment.present? ? survey_comment.text : '',
+                                  class: 'form-control',
+                                  id: "comment_section[#{comment_section.id}]",
+                                  disabled: true %>
+                <label for="comment_section[<%= comment_section.id %>]"><%= comment_section.label %></label>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</main>

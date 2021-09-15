@@ -5,6 +5,10 @@ module Pagination
     before_action :pagination, only: :index
   end
 
+  def self.permitted_params
+    %i[page query limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
+  end
+
   protected
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -54,7 +58,7 @@ module Pagination
   end
 
   def pagination_params
-    params.permit(:page, :query, :limit, :sort, :direction)
+    params.permit(Pagination.permitted_params)
   end
 
   def resources
@@ -73,8 +77,5 @@ module Pagination
 
   def redirect
     redirect_back(fallback_location: root_path, alert: 'No Results Found')
-  end
-
-  def direction_param
   end
 end

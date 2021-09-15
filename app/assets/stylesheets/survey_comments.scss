@@ -1,0 +1,15 @@
+body#overboot {
+  .survey-comments {
+    table td {
+      height: 100%;
+      overflow: auto;
+      text-overflow: initial;
+      white-space: pre-wrap;
+      line-height: 2rem;
+
+      a {
+        padding: 1rem;
+      }
+    }
+  }
+}

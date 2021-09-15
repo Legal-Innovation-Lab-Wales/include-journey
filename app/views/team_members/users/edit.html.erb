@@ -1,0 +1,242 @@
+<main class="container team-members users edit">
+  <section class="row">
+    <div class="col">
+      <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
+        <div class="form-group">
+          <%= render "team_members/shared/error_messages", resource: @user %>
+
+          <p class="text-danger">
+            <% if flash[:alert] %>
+              <%= flash[:alert] %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="container">
+          <h3>User Details</h3>
+          <div class="row">
+            <div class="col-lg">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :first_name, class: 'form-control', disabled: true %>
+                      <%= f.label :first_name %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :last_name, class: 'form-control', disabled: true %>
+                      <%= f.label :last_name %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :pronouns, class: 'form-control', disabled: true %>
+                      <%= f.label :pronouns %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :date_of_birth, class: 'form-control', disabled: true %>
+                      <%= f.label :date_of_birth %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :email, class: 'form-control', disabled: true %>
+                      <%= f.label :email %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :mobile_number, class: 'form-control', disabled: true %>
+                      <%= f.label :mobile_number %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :sex, class: 'form-control', disabled: true %>
+                      <%= f.label :sex %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :gender_identity, class: 'form-control', disabled: true %>
+                      <%= f.label :gender_identity do %>
+                        Gender
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :religion, class: 'form-control', disabled: true %>
+                      <%= f.label :religion %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :ethnic_group, class: 'form-control', disabled: true %>
+                      <%= f.label :ethnic_group do %>
+                        Ethnicity
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col p-0">
+                    <div class="form-floating mb-0">
+                      <%= f.text_field :disabilities, class: 'form-control', disabled: true %>
+                      <%= f.label :disabilities %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="col-lg">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :released_at, class: 'form-control', placeholder: 'Release' %>
+                      <%= f.label :released_at %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :nomis_id, class: 'form-control', placeholder: 'NOMIS ID' %>
+                      <%= f.label :nomis_id do %>
+                        NOMIS ID
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :pnc_no, class: 'form-control', placeholder: 'PNC No.' %>
+                      <%= f.label :pnc_no do %>
+                        PNC No.
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :delius_no, class: 'form-control', placeholder: 'DELIUS No.' %>
+                      <%= f.label :delius_no do %>
+                        DELIUS No.
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :enrolled_at, class: 'form-control' %>
+                      <%= f.label :enrolled_at %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :intervened_at, class: 'form-control' %>
+                      <%= f.label :intervened_at do %>
+                        Began Receiving Intervention
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col p-0">
+                    <div class="form-floating">
+                      <%= f.text_field :release_establishment, class: 'form-control',
+                                       placeholder: 'Establishment Released From' %>
+                      <%= f.label :release_establishment do %>
+                        Establishment Released From
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :probation_area, class: 'form-control', placeholder: 'Probation Area' %>
+                      <%= f.label :probation_area %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.text_field :local_authority, class: 'form-control', placeholder: 'Local Authority' %>
+                      <%= f.label :local_authority %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :pilot_completed_at, class: 'form-control', placeholder: 'Completed Pilot' %>
+                      <%= f.label :pilot_completed_at do %>
+                        Completed Pilot
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="col-md">
+                    <div class="form-floating">
+                      <%= f.date_field :pilot_withdrawn_at, class: 'form-control', placeholder: 'Withdrawn' %>
+                      <%= f.label :pilot_withdrawn_at do %>
+                        Withdrawn
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col p-0">
+                    <div class="form-floating">
+                      <%= f.text_field :withdrawn_reason, class: 'form-control', placeholder: 'Reason For Withdrawal' %>
+                      <%= f.label :withdrawn_reason do %>
+                        Reason For Withdrawal
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col p-0">
+                    <div class="form-floating">
+                      <%= f.text_field :index_offence, class: 'form-control', placeholder: 'Index Offence' %>
+                      <%= f.label :index_offence do %>
+                        Index Offence
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%= f.submit 'Update', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </section>
+</main>

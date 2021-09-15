@@ -1,0 +1,41 @@
+<%= render 'layouts/searchable', class_list: 'team-members surveys', header: 'Surveys', index: 'surveys', stats: render('stats'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_survey_path, text: 'New Survey' }) do %>
+  <div class="table-container">
+    <table class="table link-table table-dark table-striped link-table">
+      <thead>
+        <tr>
+          <%= render 'shared/sort_column', column_value: 'name', column_text: 'Name' %>
+          <th scope="col">Created By</th>
+          <th scope="col">Active</th>
+          <%= render 'shared/sort_column', column_value: 'start_date', column_text: 'Start Date' %>
+          <%= render 'shared/sort_column', column_value: 'end_date', column_text: 'End Date' %>
+          <th scope="col">Responses</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @resources.each do |survey| %>
+          <tr>
+            <td><%= link_to survey.name, survey_path(survey) %></td>
+            <td><%= link_to survey.team_member.full_name, survey_path(survey) %></td>
+            <td>
+              <%= link_to activate_survey_path(survey), method: :put do %>
+                <i class="fas fa-<%= survey.active ? 'check' : 'times'%>-circle"></i>
+              <% end %>
+            </td>
+            <td><%= link_to survey.start, survey_path(survey) %></td>
+            <td><%= link_to survey.end, survey_path(survey) %></td>
+            <td><%= link_to survey.survey_responses.count, survey_path(survey) %></td>
+            <td>
+              <% if survey.survey_responses.count.zero? %>
+                <%= link_to edit_survey_path(survey) do %><i class="fas fa-edit"></i><% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag 'sort_column' %>
