@@ -122,7 +122,10 @@ class User < DeviseRecord
   def verify_achievements
     %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
       Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
-      Achievement.this_month.for(entities).check(self) if changed.include?("#{entities}_this_month_count")
+
+      if Achievement.this_month.for(entities).present? && changed.include?("#{entities}_this_month_count")
+        Achievement.this_month.for(entities).check(self)
+      end
     end
   end
 
