@@ -1,0 +1,13 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/tmp-data/convert.rb'
+    - 'config/**/*'
+    - 'bin/{rails,rake,yarn,bundle}'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/*'
+
