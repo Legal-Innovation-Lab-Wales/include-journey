@@ -1,5 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe "CrisisNotes", type: :request do
-
+RSpec.describe 'CrisisNotes', type: :request do
 end

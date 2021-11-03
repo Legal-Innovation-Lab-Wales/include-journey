@@ -27,21 +27,30 @@ class WellbeingAssessment < ApplicationRecord
 
   # rubocop:disable Metrics/AbcSize
   def to_csv
-    [id, created] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + wba_scores.order(:wellbeing_metric_id).map(&:value)
+    [id,
+     created] + user.to_csv + (if team_member.present?
+                                 team_member.to_csv
+                               else
+                                 [nil,
+                                  nil]
+                               end) + wba_scores.order(:wellbeing_metric_id).map(&:value)
   end
 
+  # rubocop:disable Metrics/MethodLength
   def json
     {
-      'ID': id,
-      'Date': created
+      ID: id,
+      Date: created
     }
       .merge(user.json.transform_keys { |key| "User #{key}" })
       .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
       .merge({
-               'Scores': wba_scores.order(:wellbeing_metric_id).map { |score| { "#{score.wellbeing_metric.name}": score.value } }
+               Scores: wba_scores.order(:wellbeing_metric_id).map do |score|
+                         { "#{score.wellbeing_metric.name}": score.value }
+                       end
              })
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
 

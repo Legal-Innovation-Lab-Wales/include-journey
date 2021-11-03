@@ -1,6 +1,6 @@
 if JournalEntryViewLog.count.zero?
   print "#{pretty_print_name('Journal View Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
-  JournalEntry.all.each do |journal_entry, index|
+  JournalEntry.all.each do |journal_entry, _index|
     # Create View Log for every 7th journal entry
     next unless (journal_entry.id % 7).zero?
 

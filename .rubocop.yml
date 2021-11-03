@@ -2,12 +2,25 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'db/schema.rb'
-    - 'db/tmp-data/convert.rb'
+    - 'db/migrate/*'
     - 'config/**/*'
     - 'bin/{rails,rake,yarn,bundle}'
+    - 'lib/tasks/*'
+    - 'test/**/*'
 Style/FrozenStringLiteralComment:
   Enabled: false
-Style/ClassAndModuleChildren:
+Layout/LineLength:
   Exclude:
-    - 'test/*'
+    - 'db/seeds.rb'
+    - 'db/seeds/*'
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Style/Documentation:
+  Exclude:
+    - 'app/helpers/*'
+
 

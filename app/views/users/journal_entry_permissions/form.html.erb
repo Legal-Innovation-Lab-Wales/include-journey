@@ -29,7 +29,7 @@
             <div class="row">
               <%  @team_members.each do |team_member| %>
                 <div class="col-6 p-1">
-                  <% permitted = has_permission(@default_permission, @permissions, team_member.id) %>
+                  <% permitted = permission?(@default_permission, @permissions, team_member.id) %>
                   <%= f.check_box "team_member_#{team_member.id}", class: 'btn-check', checked: permitted, value: permitted ? '1' : '0' %>
                   <%= f.label "team_member_#{team_member.id}", class: "btn w-100 #{ permitted ? 'selected' : '' }" do %>
                     <%= team_member.full_name %>

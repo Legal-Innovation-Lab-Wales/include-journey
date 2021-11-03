@@ -5,7 +5,8 @@ module TeamMembers
 
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_comment_sections
     def create
-      @survey_comment_section = @survey_section.survey_comment_sections.create!(order: @survey_section.next_comment_section)
+      @survey_comment_section =
+        @survey_section.survey_comment_sections.create!(order: @survey_section.next_comment_section)
 
       redirect_to edit_survey_path(@survey, anchor: "comment-section[#{@survey_comment_section.id}]")
     end

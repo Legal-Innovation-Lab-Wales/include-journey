@@ -102,7 +102,8 @@ module TeamMembers
     private
 
     def survey_search
-      'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'
+      'lower(team_members.first_name) similar to lower(:query) or' \
+        'lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'
     end
 
     def survey_params

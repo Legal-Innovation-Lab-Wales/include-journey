@@ -29,6 +29,7 @@ module Users
       puts '=========================================================================================================='
     end
 
+    # rubocop:disable Metrics/MethodLength
     def email
       @crisis_type = @crisis_event.crisis_type.category
       @crisis_notes = @crisis_event.crisis_notes.includes(:team_member)
@@ -43,6 +44,7 @@ module Users
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

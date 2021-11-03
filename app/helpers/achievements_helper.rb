@@ -1,6 +1,5 @@
 # app/helpers/achievements_helper.rb
 module AchievementsHelper
-
   def progress(user, achievement, monthly)
     (count(user, achievement, monthly).to_f / achievement.gold_count) * 100
   end

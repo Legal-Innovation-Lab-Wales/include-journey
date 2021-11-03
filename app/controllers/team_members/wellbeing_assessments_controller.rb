@@ -1,5 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
+  # rubocop:disable Metrics/ClassLength
   class WellbeingAssessmentsController < TeamMembersApplicationController
     before_action :user, except: :show
     before_action :wba_values, only: :index
@@ -119,7 +120,8 @@ module TeamMembers
     def wba_values
       return unless @user.present?
 
-      @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb', 'Perfect']
+      @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb',
+                     'Perfect']
     end
 
     def wellbeing_assessment
@@ -159,4 +161,5 @@ module TeamMembers
       @count_by_user = @resources.count { |wba| wba.team_member_id.nil? }
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

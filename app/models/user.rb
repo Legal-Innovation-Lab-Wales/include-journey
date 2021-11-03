@@ -1,4 +1,5 @@
 # app/models/user.rb
+# rubocop:disable Metrics/ClassLength
 class User < DeviseRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -35,7 +36,6 @@ class User < DeviseRecord
   validates_presence_of :terms
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
-
 
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
@@ -99,15 +99,15 @@ class User < DeviseRecord
 
   def json
     {
-      'ID': id,
-      'Name': full_name,
+      ID: id,
+      Name: full_name,
       'Date Of Birth': dob,
       'Release Date': released_at,
-      'Sex': sex,
+      Sex: sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,
-      'Disabilities': disabilities,
-      'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
+      Disabilities: disabilities,
+      Tags: user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     }
   end
   # rubocop:enable Metrics/MethodLength
@@ -143,3 +143,4 @@ class User < DeviseRecord
            nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
   end
 end
+# rubocop:enable Metrics/ClassLength

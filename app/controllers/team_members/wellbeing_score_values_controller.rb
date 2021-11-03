@@ -11,9 +11,10 @@ module TeamMembers
     def update
       @score_values = WellbeingScoreValue.find(params[:id])
       if @score_values.update(wellbeing_score_params)
-        redirect_to wellbeing_score_values_path, flash: { success: "Wellbeing Score values updated"}
+        redirect_to wellbeing_score_values_path, flash: { success: 'Wellbeing Score values updated' }
       else
-        redirect_to wellbeing_score_values_path, flash: { error: "Wellbeing score values not updated. Please try again"}
+        redirect_to wellbeing_score_values_path,
+                    flash: { error: 'Wellbeing score values not updated. Please try again' }
       end
     end
 

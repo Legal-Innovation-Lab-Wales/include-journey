@@ -44,7 +44,7 @@ module TeamMembers
 
     def sort
       @sort = 'tagged_on'
-      { 'created_at': @direction }
+      { created_at: @direction }
     end
 
     private
