@@ -54,6 +54,25 @@
         color: $white;
       }
 
+      .form-control {
+        &:focus {
+          box-shadow: 0 0 0 0.2rem $brand-primary-dark;
+        }
+
+        &.invalid {
+          box-shadow: 0 0 0 0.2rem $danger;
+        }
+      }
+
+      .error-message {
+        position: absolute;
+        top: -0.5rem;
+        right: 0;
+        padding: 1rem 0.75rem;
+        color: $danger;
+        font-size: 0.85rem;
+      }
+
       a {
         text-decoration: none;
         font-weight: 600;
@@ -106,6 +125,10 @@
       }
 
       .form-check {
+        padding: 0.5rem;
+        position: relative;
+        border-radius: 0.25rem;
+
         .form-check-input {
           float: none;
 
