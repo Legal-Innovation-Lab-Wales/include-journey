@@ -8,6 +8,10 @@ detectors:
   DuplicateMethodCall:
     exclude:
       - ApplicationController
+      - JournalEntriesController
+  FeatureEnvy:
+    exclude:
+      - journal_entry_search
   TooManyMethods:
     exclude:
       - AffirmationsController
@@ -15,6 +19,7 @@ detectors:
     exclude:
       - new
       - update
+      - JournalEntriesController
   UtilityFunction:
     public_methods_only: true
 
