@@ -8,6 +8,13 @@ detectors:
   DuplicateMethodCall:
     exclude:
       - ApplicationController
+  TooManyMethods:
+    exclude:
+      - AffirmationsController
+  TooManyStatements:
+    exclude:
+      - AffirmationsController#new
+
 
 directories:
   "db/migrate":
