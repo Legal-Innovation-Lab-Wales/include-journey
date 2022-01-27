@@ -9,6 +9,9 @@ detectors:
     exclude:
       - app/controllers/application_controller.rb
       - app/controllers/concerns/accessible.rb
+  NestedIterators:
+    exclude:
+      - app/controllers/concerns/exportable.rb
 
 directories:
   "db/migrate":
