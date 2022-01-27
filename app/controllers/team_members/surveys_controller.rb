@@ -45,7 +45,9 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/reorder
     def reorder
-      reorder_params[:sections].each_with_index { |id, index| @survey.survey_sections.find(id).update!(order: index + 1) }
+      reorder_params[:sections].each_with_index do |id, index|
+        @survey.survey_sections.find(id).update!(order: index + 1)
+      end
 
       respond_to do |format|
         format.json { render json: @survey.as_json, status: :ok }

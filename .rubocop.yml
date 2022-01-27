@@ -4,9 +4,13 @@ AllCops:
     - 'db/schema.rb'
     - 'db/migrate/*'
     - 'config/**/*'
-    - 'bin/{rails,rake,yarn,bundle}'
     - 'lib/tasks/*'
     - 'test/**/*'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
 Style/FrozenStringLiteralComment:
   Enabled: false
 Layout/LineLength:
