@@ -50,10 +50,9 @@ module TeamMembers
     private
 
     def tag
-      user_tag_params_new_tag = user_tag_params[:new_tag]
       @tag =
-        if user_tag_params_new_tag.present?
-          Tag.create!(tag: user_tag_params_new_tag.downcase.titleize, team_member: current_team_member)
+        if user_tag_params[:new_tag].present?
+          Tag.create!(tag: user_tag_params[:new_tag].downcase.titleize, team_member: current_team_member)
         else
           Tag.find(user_tag_params[:tag].to_i)
         end

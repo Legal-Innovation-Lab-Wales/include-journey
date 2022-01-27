@@ -6,9 +6,10 @@ detectors:
   IrresponsibleModule:
     enabled: false
   DuplicateMethodCall:
+    max_calls: 3
+  NilCheck:
     exclude:
-      - ApplicationController
-      - JournalEntriesController
+      - subheading_stats
   FeatureEnvy:
     exclude:
       - journal_entry_search
@@ -20,6 +21,8 @@ detectors:
       - AffirmationsController
       - SurveysController
       - UsersController
+      - WellbeingAssessmentsController
+      - AppointmentsController
   TooManyStatements:
     exclude:
       - show
@@ -41,16 +44,16 @@ directories:
   "app/controllers":
     IrresponsibleModule:
       enabled: false
-    NestedIterators:
-      max_allowed_nesting: 2
-    UnusedPrivateMethod:
-      enabled: false
     InstanceVariableAssumption:
       enabled: false
+    NestedIterators:
+      max_allowed_nesting: 2
     TooManyInstanceVariables:
       max_instance_variables: 10
     TooManyStatements:
       max_statements: 10
+    UnusedPrivateMethod:
+      enabled: false
   "app/helpers":
     IrresponsibleModule:
       enabled: false

@@ -25,8 +25,7 @@ module TeamMembers
     end
 
     def sort
-      pagination_params_sort = pagination_params[:sort]
-      @sort = pagination_params_sort.present? ? pagination_params_sort : 'last_viewed_at'
+      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
       { "#{sort_param}": @direction }
     end
 
