@@ -5,6 +5,9 @@ detectors:
       - t
   IrresponsibleModule:
     enabled: false
+  DuplicateMethodCall:
+    exclude:
+      - app/controllers/application_controller.rb
 
 directories:
   "db/migrate":
