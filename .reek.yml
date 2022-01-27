@@ -12,3 +12,10 @@ directories:
       enabled: false
     FeatureEnvy:
       enabled: false
+
+exclude_paths:
+  - db/seeds.rb
+  - db/printer.rb
+  - db/seeds/journey.rb
+  - db/seeds/assessment_builder.rb
+  - spec/mailers/previews/crisis_event_mailer_preview.rb
