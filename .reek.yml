@@ -31,6 +31,9 @@ directories:
       enabled: false
     InstanceVariableAssumption:
       enabled: false
+    TooManyInstanceVariables:
+      max_instance_variables: 10
+
   "app/helpers":
     IrresponsibleModule:
       enabled: false
