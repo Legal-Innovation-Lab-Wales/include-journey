@@ -15,7 +15,7 @@ class Note < ApplicationRecord
   end
 
   def latest
-    return self if replaced_by.nil?
+    return self unless replaced_by.present?
 
     replaced_by.latest
   end
