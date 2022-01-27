@@ -48,6 +48,12 @@ group :development, :test do
   gem 'rspec-rails'
   # Factory Bot for testing
   gem 'factory_bot_rails'
+  # CI Tools
+  gem 'reek', require: false
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'simplecov', require: false
 end
 
 group :development do
