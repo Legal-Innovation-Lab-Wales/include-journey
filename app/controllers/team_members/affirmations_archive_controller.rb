@@ -23,6 +23,7 @@ module TeamMembers
     end
 
     def sort
+      
       @sort = 'scheduled_date'
       { "#{@sort}": @direction }
     end
