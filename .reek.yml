@@ -7,11 +7,7 @@ detectors:
     enabled: false
   DuplicateMethodCall:
     exclude:
-      - app/controllers/application_controller.rb
-      - app/controllers/concerns/accessible.rb
-  NestedIterators:
-    exclude:
-      - app/controllers/concerns/exportable.rb
+      - ApplicationController
 
 directories:
   "db/migrate":
@@ -27,3 +23,6 @@ exclude_paths:
   - db/seeds/journey.rb
   - db/seeds/assessment_builder.rb
   - spec/mailers/previews/crisis_event_mailer_preview.rb
+  - app/controllers/concerns/accessible.rb
+  - app/controllers/concerns/exportable.rb
+  - app/controllers/concerns/pagination.rb
