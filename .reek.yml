@@ -23,6 +23,9 @@ detectors:
       - JournalEntriesController
   UtilityFunction:
     public_methods_only: true
+  ControlParameter:
+    exclude:
+      - success
 
 directories:
   "db/migrate":
