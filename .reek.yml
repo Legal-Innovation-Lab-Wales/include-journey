@@ -8,6 +8,7 @@ detectors:
   DuplicateMethodCall:
     exclude:
       - app/controllers/application_controller.rb
+      - app/controllers/concerns/accessible.rb
 
 directories:
   "db/migrate":
