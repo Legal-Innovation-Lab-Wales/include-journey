@@ -12,12 +12,17 @@ detectors:
   FeatureEnvy:
     exclude:
       - journal_entry_search
+  TooManyInstanceVarialbes:
+    exclude:
+      - UsersController
   TooManyMethods:
     exclude:
       - AffirmationsController
       - SurveysController
+      - UsersController
   TooManyStatements:
     exclude:
+      - show
       - new
       - update
       - JournalEntriesController
