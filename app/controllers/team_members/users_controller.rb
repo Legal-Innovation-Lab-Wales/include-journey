@@ -31,8 +31,9 @@ module TeamMembers
     # PUT /users/:id/pin
     def pin
       verify_pin
-      maximum = current_team_member.user_pins.maximum(:order)
-      @user_pin = current_team_member.user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
+      current_user_pins = current_team_member.user_pins
+      maximum = current_user_pins.maximum(:order)
+      @user_pin = current_user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
 
       redirect_back(fallback_location: authenticated_team_member_root_path,
                     notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
@@ -123,9 +124,10 @@ module TeamMembers
     end
 
     def invalid_ip
-      return true if @user.current_sign_in_ip.blank?
+      current_ip = @user.current_sign_in_ip
+      return true if current_ip.blank?
 
-      ['127.0.0.1', '::1'].include?(@user.current_sign_in_ip)
+      %w[127.0.0.1 ::1].include?(current_ip)
     end
 
     def wellbeing_assessment
