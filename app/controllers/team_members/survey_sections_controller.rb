@@ -19,9 +19,9 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/survey_sections/:section_id/reorder
     def reorder
-      reorder_params[:questions].each_with_index { |id, i| order(@survey_section.survey_questions, id, i) }
-      reorder_params[:comment_sections].each_with_index do |id, i|
-        order(@survey_section.survey_comment_sections, id, i)
+      reorder_params[:questions].each_with_index { |id, index| order(@survey_section.survey_questions, id, index) }
+      reorder_params[:comment_sections].each_with_index do |id, index|
+        order(@survey_section.survey_comment_sections, id, index)
       end
 
       respond_to do |format|
