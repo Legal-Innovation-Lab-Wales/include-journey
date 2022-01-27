@@ -40,6 +40,8 @@ directories:
       enabled: false
     TooManyInstanceVariables:
       max_instance_variables: 10
+    TooManyStatments:
+      max_statements: 10
 
   "app/helpers":
     IrresponsibleModule:
