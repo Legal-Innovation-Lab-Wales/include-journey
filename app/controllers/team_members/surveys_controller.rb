@@ -54,12 +54,14 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/activate
     def activate
+      survey_name = @survey.name
+
       if valid_survey?
         @survey.update!(active: !@survey.active)
 
-        flash[:success] = "#{@survey.name} is now #{@survey.active? ? '' : 'in'}active"
+        flash[:success] = "#{survey_name} is now #{@survey.active? ? '' : 'in'}active"
       else
-        flash[:error] = "#{@survey.name} could not be activated. Please make sure all labels are set."
+        flash[:error] = "#{survey_name} could not be activated. Please make sure all labels are set."
       end
 
       redirect_back(fallback_location: surveys_path)
@@ -95,7 +97,8 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'end_date'
+      pagination_params_sort = pagination_params[:sort]
+      @sort = pagination_params_sort.present? ? pagination_params_sort : 'end_date'
       { "#{@sort}": @direction }
     end
 
