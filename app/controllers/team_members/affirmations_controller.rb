@@ -17,9 +17,11 @@ module TeamMembers
 
     # GET /affirmations/new
     def new
-      text = session[:affirmation_text].present? ? session[:affirmation_text] : ''
+      today = Date.today
+      text = session[:affirmation_text] || ''
       latest = Affirmation.order(scheduled_date: :desc).first
-      date = latest.present? && latest.scheduled_date > Date.today ? latest.scheduled_date + 1.days : Date.today
+      latest_date = latest.scheduled_date || nil
+      date = latest.present? && latest_date >= today ? latest_date + 1.days : today
 
       @affirmation = Affirmation.new(text: text, scheduled_date: date)
 
@@ -61,7 +63,8 @@ module TeamMembers
     end
 
     def direction
-      @direction = %w[asc desc].include?(affirmations_params[:direction]) ? affirmations_params[:direction] : 'asc'
+      direction_param = affirmations_params[:direction]
+      @direction = %w[asc desc].include?(direction_param) ? direction_param : 'asc'
     end
 
     def sort
