@@ -78,4 +78,4 @@ exclude_paths:
   - app/controllers/concerns/exportable.rb
   - app/controllers/concerns/pagination.rb
   - app/controllers/team_members/users_controller.rb
-  - app/controllers/team_members/wellbeing_assessment_controller.rb
+  - app/controllers/team_members/wellbeing_assessments_controller.rb
