@@ -15,6 +15,7 @@ detectors:
   TooManyMethods:
     exclude:
       - AffirmationsController
+      - SurveysController
   TooManyStatements:
     exclude:
       - new
