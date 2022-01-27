@@ -25,6 +25,7 @@ detectors:
       - WellbeingAssessmentsController
       - AppointmentsController
   TooManyStatements:
+    max_statements: 10
     exclude:
       - show
       - new
@@ -35,6 +36,7 @@ detectors:
   ControlParameter:
     exclude:
       - success
+      - AchievementsHelper
 
 directories:
   "db/migrate":
@@ -51,8 +53,6 @@ directories:
       max_allowed_nesting: 2
     TooManyInstanceVariables:
       max_instance_variables: 10
-    TooManyStatements:
-      max_statements: 10
     UnusedPrivateMethod:
       enabled: false
   "app/helpers":
