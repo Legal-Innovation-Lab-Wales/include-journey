@@ -5,7 +5,8 @@ module TeamMembers
 
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_comment_sections
     def create
-      @survey_comment_section = @survey_section.survey_comment_sections.create!(order: @survey_section.next_comment_section)
+      @survey_comment_section =
+        @survey_section.survey_comment_sections.create!(order: @survey_section.next_comment_section)
 
       redirect_to edit_survey_path(@survey, anchor: "comment-section[#{@survey_comment_section.id}]")
     end
@@ -33,9 +34,11 @@ module TeamMembers
     end
 
     def verify_section
-      return unless comment_section_params[:section_id].present?
+      comment_section_params_section_id = comment_section_params[:section_id]
 
-      return if @survey_sections.find(comment_section_params[:section_id]).present?
+      return unless comment_section_params_section_id.present?
+
+      return if @survey_sections.find(comment_section_params_section_id).present?
 
       redirect_back(fallback_location: edit_survey_path(@survey),
                     flash: { error: 'Survey Section does not belong to this Survey' })

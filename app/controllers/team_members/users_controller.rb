@@ -1,5 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
+  # rubocop:disable Metrics/ClassLength
   class UsersController < TeamMembersApplicationController
     before_action :pinned_users, only: :index
     include Pagination
@@ -8,6 +9,7 @@ module TeamMembers
     before_action :user_pin, except: %i[show index wba_history]
 
     # GET /users/:id
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def show
       log_view
       user_location
@@ -18,18 +20,20 @@ module TeamMembers
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
       @active_crisis = @user.crisis_events.active
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
-      @user_tags = @user.user_tags.order({ 'created_at': :desc })
+      @user_tags = @user.user_tags.order({ created_at: :desc })
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
 
       render 'show'
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
     # PUT /users/:id/pin
     def pin
       verify_pin
-      maximum = current_team_member.user_pins.maximum(:order)
-      @user_pin = current_team_member.user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
+      current_user_pins = current_team_member.user_pins
+      maximum = current_user_pins.maximum(:order)
+      @user_pin = current_user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
 
       redirect_back(fallback_location: authenticated_team_member_root_path,
                     notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
@@ -110,13 +114,20 @@ module TeamMembers
     def user_location
       return @location = { 'city' => 'unknown' } if invalid_ip
 
-      @location = Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}" )).body) } rescue { 'city' => 'unknown' }
+      @location = begin
+        Timeout.timeout(5) do
+          JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}")).body)
+        end
+      rescue StandardError
+        { 'city' => 'unknown' }
+      end
     end
 
     def invalid_ip
-      return true if @user.current_sign_in_ip.blank?
+      current_ip = @user.current_sign_in_ip
+      return true if current_ip.blank?
 
-      ['127.0.0.1', '::1'].include?(@user.current_sign_in_ip)
+      %w[127.0.0.1 ::1].include?(current_ip)
     end
 
     def wellbeing_assessment
@@ -165,4 +176,5 @@ module TeamMembers
                                    :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

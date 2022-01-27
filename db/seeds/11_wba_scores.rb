@@ -8,7 +8,9 @@ if WbaScore.count.zero?
         score_value =
           if index.positive?
             # Users wba_score for a given metric will only increment by +/- 1
-            (wellbeing_assessments[index - 1].wba_scores.find_by(wellbeing_metric: wellbeing_metric).value + rand(-1..1)).clamp(1, 10)
+            (wellbeing_assessments[index - 1].wba_scores.find_by(wellbeing_metric: wellbeing_metric).value + rand(-1..1)).clamp(
+              1, 10
+            )
           else
             rand(1..10)
           end

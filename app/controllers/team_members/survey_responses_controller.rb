@@ -29,7 +29,8 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'submitted_at'
+      pagination_params_sort = pagination_params[:sort]
+      @sort = pagination_params_sort.present? ? pagination_params_sort : 'submitted_at'
       { "#{@sort}": @direction }
     end
   end

@@ -9,6 +9,7 @@ class UserAchievement < ApplicationRecord
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def update_cache
     if gold_achieved_changed?
       user.update!(gold_achievements_count: user.gold_achievements_count + 1)
@@ -18,4 +19,5 @@ class UserAchievement < ApplicationRecord
       user.update!(bronze_achievements_count: user.bronze_achievements_count + 1)
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end

@@ -103,7 +103,8 @@ module Users
 
     def success(status)
       redirect_back(fallback_location: appointments_path,
-                    flash: { success: "#{status ? 'Congrats! ' : ''}Appointment has been marked as #{status ? 'now' : 'no longer'} attended" })
+                    flash: { success: "#{status ? 'Congrats! ' : ''}Appointment has been marked as " \
+                                      "#{status ? 'now' : 'no longer'} attended" })
     end
 
     def validate_dates

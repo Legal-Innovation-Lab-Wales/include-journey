@@ -33,9 +33,11 @@ module TeamMembers
     end
 
     def verify_section
-      return unless question_params[:section_id].present?
+      question_params_section_id = question_params[:section_id]
 
-      return if @survey_sections.find(question_params[:section_id]).present?
+      return unless question_params_section_id.present?
+
+      return if @survey_sections.find(question_params_section_id).present?
 
       redirect_back(fallback_location: edit_survey_path(@survey),
                     flash: { error: 'Survey Section does not belong to this Survey' })

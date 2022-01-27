@@ -1,6 +1,5 @@
 # Preview all emails at http://localhost:3000/rails/mailers/crisis_event_mailer
 class AdminMailerPreview < ActionMailer::Preview
-
   # Accessible from /new_crisis_email
   def new_crisis_email
     @admin = TeamMember.admins.first
@@ -18,5 +17,4 @@ class AdminMailerPreview < ActionMailer::Preview
     @crisis_notes = @crisis_event.crisis_notes.includes(:team_member)
     AdminMailer.updated_crisis_email(@user, @admin, @crisis_event, @crisis_type, @crisis_notes)
   end
-
 end

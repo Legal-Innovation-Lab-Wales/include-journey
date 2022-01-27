@@ -6,7 +6,8 @@ if Tag.count.zero?
   Tag.create!(tag: 'Physical Violence', team_member_id: rand(1..TeamMember.count), created_at: rand(1..30).days.ago)
   Tag.create!(tag: 'Addiction', team_member_id: rand(1..TeamMember.count), created_at: rand(1..30).days.ago)
   Tag.create!(tag: 'Mental Health', team_member_id: rand(1..TeamMember.count), created_at: rand(1..30).days.ago)
-  Tag.create!(tag: "Women's Pathfinder Project", team_member_id: rand(1..TeamMember.count), created_at: rand(1..30).days.ago)
+  Tag.create!(tag: "Women's Pathfinder Project", team_member_id: rand(1..TeamMember.count),
+              created_at: rand(1..30).days.ago)
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now

@@ -25,23 +25,26 @@ module TeamMembers
     def reject
       return if @team_member.approved
 
+      team_member_name = @team_member.full_name
       if @team_member.destroy
-        redirect_to team_members_path, flash: { success: "#{@team_member.full_name} has been rejected" }
+        redirect_to team_members_path, flash: { success: "#{team_member_name} has been rejected" }
       else
-        redirect_to team_members_path, flash: { error: "#{@team_member.full_name} could not be rejected" }
+        redirect_to team_members_path, flash: { error: "#{team_member_name} could not be rejected" }
       end
     end
 
     # PUT /team_members/:id/admin
     def toggle_admin
-      @team_member.update(admin: !@team_member.admin?) ? success(@team_member.admin?, 'an admin') : failure('admin')
+      team_member_is_admin = @team_member.admin?
+      @team_member.update(admin: !team_member_is_admin) ? success(team_member_is_admin, 'an admin') : failure('admin')
     end
 
     # PUT /team_members/:id/suspend
     def toggle_suspend
-      @team_member.update!(suspended: !@team_member.suspended?)
+      team_member_is_suspended = @team_member.suspended?
+      @team_member.update!(suspended: !team_member_is_suspended)
 
-      success(@team_member.suspended?, 'suspended')
+      success(team_member_is_suspended, 'suspended')
     end
 
     private

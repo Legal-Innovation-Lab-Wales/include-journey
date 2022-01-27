@@ -1,0 +1,30 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'config/**/*'
+    - 'lib/tasks/*'
+    - 'test/**/*'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Layout/LineLength:
+  Exclude:
+    - 'db/seeds.rb'
+    - 'db/seeds/*'
+Lint/EmptyBlock:
+  Exclude:
+    - 'spec/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Style/Documentation:
+  Exclude:
+    - 'app/helpers/*'
+
+

@@ -9,7 +9,7 @@ module TeamMembers
 
     # POST /crisis_events/:crisis_event_id/notes
     def create
-      if @new_crisis_note = create_note
+      if (@new_crisis_note = create_note)
         redirect_to crisis_event_path(@crisis_event), flash: { success: 'Successfully added note!' }
       else
         error_redirect
@@ -35,7 +35,8 @@ module TeamMembers
         @crisis_note.update!(replaced_by: @new_crisis_note)
       end
 
-      redirect_to crisis_event_note_path(@crisis_event, @new_crisis_note), flash: { success: 'Successfully updated note!' }
+      redirect_to crisis_event_note_path(@crisis_event, @new_crisis_note),
+                  flash: { success: 'Successfully updated note!' }
     rescue ActiveRecord::RecordInvalid
       error_redirect
     end

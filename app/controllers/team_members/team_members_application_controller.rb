@@ -27,7 +27,8 @@ module TeamMembers
 
       sign_out_and_redirect(current_team_member)
       session[:sign_out_notice] =
-        'Your account has been suspended. An admin will need to remove this suspension before you can access the system.'
+        'Your account has been suspended. ' \
+        'An admin will need to remove this suspension before you can access the system.'
     end
   end
 end

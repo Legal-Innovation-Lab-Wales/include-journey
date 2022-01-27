@@ -45,7 +45,9 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/reorder
     def reorder
-      reorder_params[:sections].each_with_index { |id, i| @survey.survey_sections.find(id).update!(order: i + 1) }
+      reorder_params[:sections].each_with_index do |id, index|
+        @survey.survey_sections.find(id).update!(order: index + 1)
+      end
 
       respond_to do |format|
         format.json { render json: @survey.as_json, status: :ok }
@@ -54,12 +56,14 @@ module TeamMembers
 
     # PUT /surveys/:survey_id/activate
     def activate
+      survey_name = @survey.name
+
       if valid_survey?
         @survey.update!(active: !@survey.active)
 
-        flash[:success] = "#{@survey.name} is now #{@survey.active? ? '' : 'in'}active"
+        flash[:success] = "#{survey_name} is now #{@survey.active? ? '' : 'in'}active"
       else
-        flash[:error] = "#{@survey.name} could not be activated. Please make sure all labels are set."
+        flash[:error] = "#{survey_name} could not be activated. Please make sure all labels are set."
       end
 
       redirect_back(fallback_location: surveys_path)
@@ -95,14 +99,16 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'end_date'
+      pagination_params_sort = pagination_params[:sort]
+      @sort = pagination_params_sort.present? ? pagination_params_sort : 'end_date'
       { "#{@sort}": @direction }
     end
 
     private
 
     def survey_search
-      'lower(team_members.first_name) similar to lower(:query) or lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'
+      'lower(team_members.first_name) similar to lower(:query) or' \
+        'lower(team_members.last_name) similar to lower(:query) or lower(name) similar to lower(:query)'
     end
 
     def survey_params

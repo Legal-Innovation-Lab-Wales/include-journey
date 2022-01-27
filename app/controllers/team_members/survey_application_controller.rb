@@ -16,7 +16,8 @@ module TeamMembers
 
     def survey
       @survey = Survey.includes(:survey_sections, :survey_responses).find(params[:survey_id])
-      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
+      @survey_sections = @survey.survey_sections.includes(:survey_questions,
+                                                          :survey_comment_sections).order(order: :asc)
       @responses = @survey.survey_responses.order(submitted_at: :desc)
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: surveys_path, flash: { error: 'Survey not found' })

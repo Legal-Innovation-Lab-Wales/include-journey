@@ -13,6 +13,7 @@ module TeamMembers
 
     protected
 
+    # rubocop:disable Metrics/AbcSize
     def resources
       if journal_entry_params[:feeling].present? || journal_entry_params[:viewed].present?
         current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)
@@ -24,6 +25,7 @@ module TeamMembers
                            .order(created_at: :desc)
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def search
       current_team_member.journal_entries.includes(:user, :journal_entry_view_logs)

@@ -12,7 +12,7 @@ class GuidesController < ApplicationController
     render template: 'guide/appointments'
   end
 
-  def myNeeds
+  def my_needs
     render template: 'guide/my_needs'
   end
 

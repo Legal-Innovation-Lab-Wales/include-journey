@@ -13,10 +13,11 @@ module TeamMembers
 
     # POST /users/:user_id/appointments
     def create
+      redirect_path = user_path(@user)
       if (@appointment = @user.appointments.create!(appointment_params.merge!(team_member: current_team_member)))
-        redirect_to user_path(@user), flash: { success: 'Appointment created' }
+        redirect_to redirect_path, flash: { success: 'Appointment created' }
       else
-        redirect_to user_path(@user),
+        redirect_to redirect_path,
                     flash: { error: "Appointment could not be created: #{@appointment.errors}" }
       end
     end

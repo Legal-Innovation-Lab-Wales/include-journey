@@ -12,7 +12,6 @@ class Appointment < ApplicationRecord
   scope :user_created, -> { where('team_member_id is null') }
   scope :team_member_created, -> { where('team_member_id is not null') }
 
-
   def time_on_date
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
   end

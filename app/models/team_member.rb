@@ -39,8 +39,8 @@ class TeamMember < DeviseRecord
 
   def json
     {
-      'ID': id,
-      'Name': full_name
+      ID: id,
+      Name: full_name
     }
   end
 

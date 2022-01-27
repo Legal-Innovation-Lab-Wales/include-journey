@@ -26,7 +26,8 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
+      pagination_params_sort = pagination_params[:sort]
+      @sort = pagination_params_sort.present? ? pagination_params_sort : 'last_viewed_at'
       { "#{@sort == 'first_viewed_at' ? 'created_at' : 'updated_at'}": @direction }
     end
 
