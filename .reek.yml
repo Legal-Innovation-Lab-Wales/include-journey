@@ -14,6 +14,7 @@ detectors:
     exclude:
       - journal_entry_search
   TooManyInstanceVariables:
+    max_instance_variables: 10
     exclude:
       - UsersController
       - WellbeingAssessmentsController
@@ -51,8 +52,6 @@ directories:
       enabled: false
     NestedIterators:
       max_allowed_nesting: 2
-    TooManyInstanceVariables:
-      max_instance_variables: 10
     UnusedPrivateMethod:
       enabled: false
   "app/helpers":
@@ -77,5 +76,3 @@ exclude_paths:
   - app/controllers/concerns/accessible.rb
   - app/controllers/concerns/exportable.rb
   - app/controllers/concerns/pagination.rb
-  - app/controllers/team_members/users_controller.rb
-  - app/controllers/team_members/wellbeing_assessments_controller.rb
