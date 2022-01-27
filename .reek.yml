@@ -7,12 +7,16 @@ detectors:
     enabled: false
   DuplicateMethodCall:
     max_calls: 3
+    exclude:
+      - time_between
   NilCheck:
     exclude:
       - subheading_stats
   FeatureEnvy:
     exclude:
       - journal_entry_search
+      - time_between
+      - answer_pct
   TooManyInstanceVariables:
     max_instance_variables: 10
     exclude:
@@ -32,12 +36,14 @@ detectors:
       - new
       - update
       - JournalEntriesController
+      - score_description
   UtilityFunction:
     public_methods_only: true
   ControlParameter:
     exclude:
       - success
       - AchievementsHelper
+      - WellbeingAssessmentsHelper
 
 directories:
   "db/migrate":
@@ -61,6 +67,8 @@ directories:
       enabled: false
   "app/mailers":
     InstanceVariableAssumption:
+      enabled: false
+    LongParameterList:
       enabled: false
   "app/models":
     InstanceVariableAssumption:
