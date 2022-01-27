@@ -13,7 +13,8 @@ detectors:
       - AffirmationsController
   TooManyStatements:
     exclude:
-      - AffirmationsController#new
+      - new
+      - update
   UtilityFunction:
     public_methods_only: true
 
