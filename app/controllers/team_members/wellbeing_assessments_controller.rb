@@ -55,7 +55,7 @@ module TeamMembers
     end
 
     def resources_per_page
-      @user.present? ? 20 : 6
+      user_present ? 20 : 6
     end
 
     def search
@@ -100,6 +100,7 @@ module TeamMembers
       return unless params[:user_id].present?
 
       @user = User.includes(:wellbeing_assessments).find(params[:user_id])
+      @user_present = @user.present?
     end
 
     def wba_params
@@ -118,7 +119,7 @@ module TeamMembers
     end
 
     def wba_values
-      return unless @user.present?
+      return unless @user_present
 
       @wba_values = ['', 'Abysmal', 'Dreadful', 'Rubbish', 'Bad', 'Mediocre', 'Fine', 'Good', 'Great', 'Superb',
                      'Perfect']
@@ -132,7 +133,7 @@ module TeamMembers
       @wellbeing_assessments =
         if @team_member.present?
           @team_member.wellbeing_assessments.includes(:user, wba_scores: :wellbeing_metric)
-        elsif @user.present?
+        elsif @user_present
           @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
           WellbeingAssessment.includes(:user, :team_member, wba_scores: :wellbeing_metric)
