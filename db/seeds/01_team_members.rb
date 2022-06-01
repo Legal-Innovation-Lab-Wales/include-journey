@@ -79,5 +79,21 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
   team_member.save!
 end
 
+unless TeamMember.find_by_email('t.b.sheerhardwick@swansea.ac.uk').present?
+  team_member = TeamMember.new(
+    first_name: 'Tobias',
+    last_name: 'Sheer Hardwick',
+    email: 't.b.sheerhardwick@swansea.ac.uk',
+    mobile_number: '07890123456',
+    admin: true,
+    approved: true,
+    terms: true,
+    suspended: false,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
 puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
 @last_time = Time.now
