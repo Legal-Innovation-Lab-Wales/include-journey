@@ -2,8 +2,9 @@
   <div class="container">
     <div class="row">
       <div class="col">
+        <% params.delete :page%>
         <% unless @page == 1 %>
-          <%= link_to send("#{index}_path", page: @page - 1, params: params.permit(Pagination.permitted_params)),
+          <%=  link_to send("#{index}_path", page: @page - 1, params: params.permit(Pagination.permitted_params)),
                       class: 'btn btn-primary' do %>
             <i class="fas fa-arrow-circle-left"></i> Previous
           <% end %>
@@ -27,7 +28,7 @@
             <% unless @page + 1 == @last_page - 1 %> ... <% end %>
           <% end %>
 
-          <%= link_to @last_page, send("#{index}_path", page: @last_page, params: params.permit(Pagination.permitted_params)) %>
+          <%= link_to @last_page, send("#{index}_path",  page: @last_page, params: params.permit(Pagination.permitted_params)) %>
         <% end %>
       </div>
       <div class="col">
