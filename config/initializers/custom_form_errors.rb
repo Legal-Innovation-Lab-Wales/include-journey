@@ -3,8 +3,6 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
   field = fragment.at('input,select,textarea')
   error_messages = instance.object.errors.messages
 
-  debugger
-
   html = nil
   if field
     field['class'] = "#{field['class']} invalid"
