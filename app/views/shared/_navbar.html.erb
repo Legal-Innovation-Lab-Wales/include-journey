@@ -114,6 +114,10 @@
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
+            <%= link_to "#", class: "btn btn-danger" do %>
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-tools"></i>
+            <% end %>
           <% end %>
           <% if current_user %>
 <!--            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"-->
@@ -132,6 +136,10 @@
             <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
+            <% end %>
+            <%= link_to "#", class: "btn btn-danger" do %>
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-tools"></i>
             <% end %>
           <% end %>
         </div>
