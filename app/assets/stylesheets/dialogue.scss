@@ -1,0 +1,32 @@
+@import "variables";
+
+.dialogue{
+    display:none;
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    .dialogue-clickoff{
+        height: 100%;
+        width: 100%;
+        background-color: rgba(1, 1, 1, 0.3);
+        z-index: 10;
+    }
+    .dialogue-box{
+        display:block;
+        position:fixed;
+        height:400px;
+        width:600px;
+        background-color: $brand-primary;
+        color: $brand-complementary-dark;
+        border: 0.2rem solid $brand-complementary;
+        border-radius: 1rem;
+        text-align: center;
+        z-index: 11;
+        top:100px;
+        left:410px;
+        .dialogue-title{
+            margin-top:1rem;
+        }
+    }
+}
