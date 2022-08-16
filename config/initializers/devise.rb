@@ -28,7 +28,7 @@ Devise.setup do |config|
     if Rails.env.production?
       'journey@include.uk'
     else
-      'include.journey.demo@legaltech.wales'
+      'plic.journey.demo@legaltech.wales'
     end
 
   # Configure the class responsible to send e-mails.
