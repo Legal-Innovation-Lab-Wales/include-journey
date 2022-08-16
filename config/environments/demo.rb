@@ -72,13 +72,13 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: 'apikey',
     password: ENV['SENDGRID_API_KEY'],
-    domain: 'include-journey-demo.legaltech.wales',
+    domain: 'plic-journey-demo.herokuapp.com',
     address: 'smtp.sendgrid.net',
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = { host: 'include-journey-demo.legaltech.wales', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'plic-journey-demo.herokuapp.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

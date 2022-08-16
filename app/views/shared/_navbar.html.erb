@@ -114,6 +114,10 @@
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
+            <div class= "btn btn-danger", id= "report">
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-tools"></i>
+            </div>
           <% end %>
           <% if current_user %>
 <!--            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"-->
@@ -133,6 +137,10 @@
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
+            <div class= "btn btn-danger", id= "report">
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-tools"></i>
+            </div>
           <% end %>
         </div>
       </div>
@@ -140,4 +148,5 @@
   </div>
 </nav>
 
+<%= render 'shared/report_issue' %>
 <%= javascript_pack_tag 'navbar' %>
