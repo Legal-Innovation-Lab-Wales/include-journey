@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < TeamMembersApplicationController
+    before_action :index_breadcrumbs, only: :index
     before_action :user, except: :show
     before_action :wba_values, only: :index
     before_action :team_member, :wellbeing_assessments, only: %i[index export]
@@ -23,6 +24,8 @@ module TeamMembers
 
     # GET /wellbeing_assessments/:id
     def show
+      add_breadcrumb('Wellbeing Assessments', wellbeing_assessments_path, 'fas fa-heart')
+      add_breadcrumb('This Wellbeing Assessment')
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
 
       render 'show'
@@ -30,6 +33,10 @@ module TeamMembers
 
     # GET /users/:user_id/wellbeing_assessments/new
     def new
+      add_breadcrumb('Users', users_path, 'fas fa-user')
+      add_breadcrumb(user.full_name, user_path(user))
+      add_breadcrumb("New Wellbeing Assessment", nil, 'fas fa-plus-circle')
+
       wellbeing_assessment_today
       last_scores
       @wellbeing_assessment = WellbeingAssessment.new
@@ -157,6 +164,17 @@ module TeamMembers
 
       @count_by_team_member = @resources.count { |wba| wba.team_member_id.present? }
       @count_by_user = @resources.count { |wba| wba.team_member_id.nil? }
+    end
+
+    def index_breadcrumbs
+      if user
+        add_breadcrumb('Users', users_path, 'fas fa-user')
+        add_breadcrumb(user.full_name, user_path(user))
+      elsif team_member
+        add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
+        add_breadcrumb(team_member.full_name, team_member_path(team_member))
+      end
+      add_breadcrumb('Wellbeing Assessments', nil, 'fas fa-heart')
     end
   end
 end

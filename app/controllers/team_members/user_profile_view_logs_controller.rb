@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/user_profile_view_logs_controller.rb
   class UserProfileViewLogsController < AdminApplicationController
     before_action :team_member
+    before_action :set_breadcrumbs
     include Pagination
 
     protected
@@ -34,6 +35,12 @@ module TeamMembers
 
     def team_member
       @team_member = TeamMember.includes(:user_profile_view_logs).find(pagination_params[:team_member_id])
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
+      add_breadcrumb(team_member.full_name, team_member_path(team_member))
+      add_breadcrumb('User Profile View Logs')
     end
   end
 end

@@ -1,26 +1,5 @@
 @import "variables";
 
-.crisis-modal {
-  .modal-dialog {
-    .modal-header {
-      border-width: 0 15px;
-      border-style: solid;
-      border-image: linear-gradient(to bottom, $danger, $warning) 1 100%;
-      text-align: center;
-    }
-
-    .modal-body {
-      border-width: 0 15px;
-      border-style: solid;
-      border-image: linear-gradient(to top, $danger, $warning) 1 100%;
-    }
-
-    label.btn {
-      color: $black !important;
-    }
-  }
-}
-
 #existingSosModal {
   form {
     textarea {

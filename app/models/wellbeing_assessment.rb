@@ -1,6 +1,6 @@
 # app/models/wba_self.rb
 class WellbeingAssessment < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   belongs_to :team_member, optional: true
 
   after_create :update_cache

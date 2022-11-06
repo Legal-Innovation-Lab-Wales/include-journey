@@ -14,11 +14,13 @@ module Users
 
     # GET /wellbeing_assessments/:id
     def show
+      add_breadcrumb('My Needs', nil, 'fas fa-heart')
       render 'show'
     end
 
     # GET /wellbeing_assessments/new
     def new
+      add_breadcrumb('My Needs', nil, 'fas fa-heart')
       render 'new'
     end
 

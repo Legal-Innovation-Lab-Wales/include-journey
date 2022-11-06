@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/user_tags_controller.rb
   class UserTagsController < TeamMembersApplicationController
     before_action :selected_tag, only: :index
+    before_action :set_breadcrumbs, only: :index
 
     # GET /tags/:tag_id/user_tags
     include Pagination
@@ -72,6 +73,12 @@ module TeamMembers
 
     def user_tag_params
       params.require(:user_tag).permit(:tag, :new_tag)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : user_tags_path
+      add_breadcrumb('Tags', tags_path, 'fas fa-tag')
+      add_breadcrumb(@tag.tag, path)
     end
   end
 end

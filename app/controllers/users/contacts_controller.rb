@@ -1,11 +1,13 @@
 module Users
   # app/controllers/users/contacts_controller.rb
   class ContactsController < UsersApplicationController
+    before_action :set_breadcrumbs
     before_action :contact, only: %i[edit update destroy]
     include Pagination
 
     # GET /contacts/new
     def new
+      add_breadcrumb('New Contact', nil, 'fas fa-plus-circle')
       @contact = Contact.new
 
       render 'new'
@@ -22,6 +24,7 @@ module Users
 
     # GET /contacts/:id/edit
     def edit
+      add_breadcrumb('Edit Contact', nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -71,6 +74,11 @@ module Users
 
     def contact_params
       params.require(:contact).permit(:name, :description, :number, :email)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : contacts_path
+      add_breadcrumb('My Contacts', path, 'fas fa-address-book')
     end
   end
 end

@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/affirmations_archive_controller.rb
   class AffirmationsArchiveController < TeamMembersApplicationController
+    before_action :set_breadcrumbs
     include Pagination
 
     # GET /affirmations_archive
@@ -35,6 +36,11 @@ module TeamMembers
 
     def affirmations_archive_search
       'scheduled_date < :today and lower(text) similar to lower(:query)'
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Daily Affirmations', affirmations_path, 'fas fa-smile')
+      add_breadcrumb('Archive', nil, 'fas fa-archive')
     end
   end
 end

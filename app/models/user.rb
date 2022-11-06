@@ -10,7 +10,6 @@ class User < DeviseRecord
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
   has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
-  has_many :crisis_events, foreign_key: :user_id, dependent: :destroy
   has_many :journal_entries, foreign_key: :user_id, dependent: :destroy
   has_many :appointments, foreign_key: :user_id, dependent: :delete_all
   has_many :goals, foreign_key: :user_id, dependent: :delete_all
@@ -31,6 +30,11 @@ class User < DeviseRecord
           { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })
   }
   scope :not_assessed_today, -> { where.not(id: last_assessed_today) }
+  scope :last_wellbeing, lambda {
+    joins(:wellbeing_assessments)
+      .where('wellbeing_assessments.created_at = (SELECT MAX(wellbeing_assessments.created_at)
+      FROM wellbeing_assessments WHERE wellbeing_assessments.user_id = users.id)')
+  }
 
   validates_presence_of :terms
   validates :email, uniqueness: { case_sensitive: false }
@@ -43,10 +47,6 @@ class User < DeviseRecord
 
   def dob
     date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''
-  end
-
-  def active_crisis_events
-    crisis_events.where('created_at > ? and closed is ?', 1.hours.ago, false).includes(:crisis_type)
   end
 
   def last_wellbeing_assessment
@@ -114,7 +114,7 @@ class User < DeviseRecord
 
   def destroy
     [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
-    [journal_entries, crisis_events].each(&:destroy_all)
+    [journal_entries].each(&:destroy_all)
 
     anonymize
   end

@@ -2,10 +2,12 @@ module TeamMembers
   # app/controllers/team_members/appointments_controller.rb
   class AppointmentsController < TeamMembersApplicationController
     before_action :user
+    before_action :set_breadcrumbs
     include Pagination
 
     # GET /users/:user_id/appointments/new
     def new
+      add_breadcrumb('New Appointment', nil, 'fas fa-plus-circle')
       @appointment = Appointment.new
 
       render 'new'
@@ -59,6 +61,13 @@ module TeamMembers
       @count_in_last_week = @resources.last_week.size
       @count_in_last_month = @resources.last_month.size
       @count_in_next_weeks = @resources.next_fortnight.size
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Users', users_path, 'fas fa-user')
+      add_breadcrumb(user.full_name, user_path(user))
+
+      add_breadcrumb('Appointments') unless action_name != 'index'
     end
   end
 end

@@ -14,6 +14,20 @@ class JournalEntry < PermissionRecord
     journal_entry_permissions
   end
 
+  def to_csv
+    [id, created] + user.to_csv + [feeling, entry]
+  end
+
+  def json
+    {
+      'ID': id,
+      'Date': created,
+      'Feeling': feeling,
+      'Entry': entry
+    }
+      .merge(user.json.transform_keys { |key| "User #{key}" })
+  end
+
   private
 
   def update_cache

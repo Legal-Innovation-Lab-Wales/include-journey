@@ -5,3 +5,12 @@ i.fas {
     }
   }
 }
+
+.sort-bar{
+  display:flex;
+  margin-bottom: 0.3rem;
+  .sort-column{
+    cursor:pointer;
+    margin-right:1rem;
+  }
+}

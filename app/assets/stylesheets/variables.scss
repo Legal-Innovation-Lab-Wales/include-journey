@@ -109,6 +109,9 @@ $warning: #ffa719;
 $danger: #FF5C3F;
 $light: #f8f9fa;
 $dark: $black;
+$form-range-thumb-bg: $color-secondary-2-2;
+$form-range-thumb-active-bg: $color-secondary-2-1;
+$form-range-thumb-focus-box-shadow: 0 0 0 1px $form-range-thumb-active-bg;
 
 // Bootstrap Derivatives
 $success-dark: #258935;

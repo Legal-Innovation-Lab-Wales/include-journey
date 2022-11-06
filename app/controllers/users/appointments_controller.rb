@@ -2,6 +2,7 @@ module Users
   # app/controllers/users/appointments_controller.rb
   class AppointmentsController < UsersApplicationController
     before_action :appointment, only: %i[edit update destroy toggle_attended]
+    before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
 
@@ -26,6 +27,7 @@ module Users
 
     # GET /appointments/new
     def new
+      add_breadcrumb('New Appointment', nil, 'fas fa-plus-circle')
       @appointment = Appointment.new(session[:appointment_params])
 
       render 'new'
@@ -33,6 +35,7 @@ module Users
 
     # GET /appointments/:id/edit
     def edit
+      add_breadcrumb('Edit Appointment', nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -117,6 +120,12 @@ module Users
     def subheading_stats
       @count_in_last_week = @resources.last_week.size
       @count_in_last_month = @resources.last_month.size
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'upcoming' ? nil : upcoming_appointments_path
+      add_breadcrumb('My Appointments', path, 'fas fa-calendar-alt')
+      add_breadcrumb('Past Appointments') unless action_name != 'index'
     end
   end
 end

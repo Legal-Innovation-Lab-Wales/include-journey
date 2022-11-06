@@ -1,6 +1,5 @@
 <div class="col-12 col-md-6 mb-3">
-  <% active_crisis_events = user.crisis_events.active %>
-  <div class="card <%= active_crisis_events.empty? ? '' : 'has-crisis' %> <%= user.deleted ? 'deleted' : '' %>">
+  <div class="card <%= user.deleted ? 'deleted' : '' %>">
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
@@ -58,13 +57,6 @@
                 <div class="row">
                   <%= link_to journal_entries_path(query: user.full_name) do %>
                     <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
-                  <% end %>
-                </div>
-              <% end %>
-              <% unless active_crisis_events.empty? %>
-                <div class="row">
-                  <%= link_to active_crisis_events_path do %>
-                    <i class="fas fa-exclamation-circle"></i> <%= active_crisis_events.count %> active crisis events
                   <% end %>
                 </div>
               <% end %>

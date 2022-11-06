@@ -1,10 +1,12 @@
 module Users
   # app/controllers/users/journal_entries_controller.rb
   class JournalEntriesController < UsersApplicationController
+    before_action :set_breadcrumbs
     include Pagination
 
     # GET /journal_entries/new
     def new
+      add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
       @journal_entry = JournalEntry.new
 
       render 'new'
@@ -46,6 +48,11 @@ module Users
 
     def journal_entry_params
       params.require(:journal_entry).permit(:entry, :feeling)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : journal_entries_path
+      add_breadcrumb('My Journal', path, 'fas fa-book')
     end
   end
 end

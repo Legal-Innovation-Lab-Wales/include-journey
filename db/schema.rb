@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_28_104768) do
+ActiveRecord::Schema.define(version: 2022_10_26_060825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,42 +62,6 @@ ActiveRecord::Schema.define(version: 2021_05_28_104768) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_contacts_on_user_id"
-  end
-
-  create_table "crisis_events", force: :cascade do |t|
-    t.text "additional_info"
-    t.boolean "closed", default: false
-    t.bigint "closed_by_id"
-    t.datetime "closed_at"
-    t.bigint "user_id", null: false
-    t.bigint "crisis_type_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["closed_by_id"], name: "index_crisis_events_on_closed_by_id"
-    t.index ["crisis_type_id"], name: "index_crisis_events_on_crisis_type_id"
-    t.index ["user_id"], name: "index_crisis_events_on_user_id"
-  end
-
-  create_table "crisis_notes", force: :cascade do |t|
-    t.text "content"
-    t.bigint "crisis_event_id", null: false
-    t.bigint "team_member_id", null: false
-    t.bigint "replaced_by_id"
-    t.bigint "replacing_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["crisis_event_id"], name: "index_crisis_notes_on_crisis_event_id"
-    t.index ["replaced_by_id"], name: "index_crisis_notes_on_replaced_by_id"
-    t.index ["replacing_id"], name: "index_crisis_notes_on_replacing_id"
-    t.index ["team_member_id"], name: "index_crisis_notes_on_team_member_id"
-  end
-
-  create_table "crisis_types", force: :cascade do |t|
-    t.string "category"
-    t.bigint "team_member_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_member_id"], name: "index_crisis_types_on_team_member_id"
   end
 
   create_table "goal_types", force: :cascade do |t|
@@ -403,6 +367,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_104768) do
     t.integer "bronze_achievements_count", default: 0, null: false
     t.integer "silver_achievements_count", default: 0, null: false
     t.integer "gold_achievements_count", default: 0, null: false
+    t.boolean "notifications_enabled", default: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -462,14 +427,6 @@ ActiveRecord::Schema.define(version: 2021_05_28_104768) do
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
   add_foreign_key "contacts", "users"
-  add_foreign_key "crisis_events", "crisis_types"
-  add_foreign_key "crisis_events", "team_members", column: "closed_by_id"
-  add_foreign_key "crisis_events", "users"
-  add_foreign_key "crisis_notes", "crisis_events"
-  add_foreign_key "crisis_notes", "crisis_notes", column: "replaced_by_id"
-  add_foreign_key "crisis_notes", "crisis_notes", column: "replacing_id"
-  add_foreign_key "crisis_notes", "team_members"
-  add_foreign_key "crisis_types", "team_members"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
   add_foreign_key "journal_entries", "users"

@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/surveys_controller.rb
   class SurveysController < SurveyApplicationController
     skip_before_action :editable, except: %i[edit update destroy]
+    before_action :set_breadcrumbs
     include Pagination
 
     # GET /surveys
@@ -11,6 +12,7 @@ module TeamMembers
 
     # GET /surveys/new
     def new
+      add_breadcrumb('New Survey', nil, 'fas fa-plus-circle')
       @survey = Survey.new
 
       render 'new'
@@ -26,11 +28,13 @@ module TeamMembers
 
     # GET /surveys/:survey_id
     def show
+      add_breadcrumb(@survey.name)
       render 'show'
     end
 
     # GET /surveys/:survey_id/edit
     def edit
+      add_breadcrumb("Edit #{@survey.name}", nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -115,6 +119,11 @@ module TeamMembers
 
     def valid_survey?
       @survey.active || (@survey.survey_questions.invalid.empty? && @survey.survey_comment_sections.invalid.empty?)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : surveys_path
+      add_breadcrumb('Surveys', path, 'fas fa-clipboard-list')
     end
   end
 end

@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/wellbeing_score_values_controller.rb
   class WellbeingScoreValuesController < TeamMembersApplicationController
+    before_action :set_breadcrumbs
     # GET /wellbeing_score_values
     def index
       @score_values = WellbeingScoreValue.all.order(:id)
@@ -21,6 +22,11 @@ module TeamMembers
 
     def wellbeing_score_params
       params.require(:wellbeing_score_value).permit(:name)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : wellbeing_score_values_path
+      add_breadcrumb('Wellbeing Management', path, 'fas fa-tools')
     end
   end
 end
