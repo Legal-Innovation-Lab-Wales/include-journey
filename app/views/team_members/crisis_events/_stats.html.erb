@@ -1,7 +1,0 @@
-<div class="subheading">
-  <p>There are <%= @count %> closed events.</p>
-  <% unless @count.positive? %>
-    <p><%= @closed_events_7_days.count %> were closed in the last 7 days from <%= @closed_events_7_days.distinct.count(:user_id) %> users.</p>
-    <p><%= @closed_events_30_days.count %> were closed in the last 30 days from <%= @closed_events_30_days.distinct.count(:user_id) %> users.</p>
-  <% end %>
-</div>

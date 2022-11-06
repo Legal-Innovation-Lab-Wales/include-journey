@@ -3,6 +3,7 @@ module TeamMembers
   class WellbeingServicesController < TeamMembersApplicationController
     before_action :wellbeing_metrics, except: %i[show index destroy]
     before_action :wellbeing_service, only: %i[show edit update destroy]
+    before_action :set_breadcrumbs
     after_action :metrics_services, only: %i[create update]
 
     # GET /wellbeing_services
@@ -19,6 +20,7 @@ module TeamMembers
 
     # GET /wellbeing_services/:id/edit
     def edit
+      add_breadcrumb('Edit Wellbeing Service', nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -38,6 +40,7 @@ module TeamMembers
 
     # GET /wellbeing_services/new
     def new
+      add_breadcrumb('New Wellbeing Service', nil, 'fas fa-plus-circle')
       @wellbeing_service = WellbeingService.new
 
       render 'new'
@@ -90,6 +93,11 @@ module TeamMembers
     def wellbeing_service_params
       params.require(:wellbeing_service).permit(:name, :description, :website, :contact_number,
                                                 @wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : wellbeing_services_path
+      add_breadcrumb('Wellbeing Management', path, 'fas fa-tools')
     end
   end
 end

@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/team_members_controller.rb
   class TeamMembersController < AdminApplicationController
     before_action :team_member, except: :index
+    before_action :set_breadcrumbs
 
     # GET /team_members
     def index
@@ -13,6 +14,7 @@ module TeamMembers
 
     # GET /team_members/:id
     def show
+      add_breadcrumb(team_member.full_name)
       render 'show'
     end
 
@@ -57,6 +59,11 @@ module TeamMembers
 
     def team_member
       @team_member = TeamMember.find(params[:id])
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : team_members_path
+      add_breadcrumb('Team Members', path, 'fas fa-users')
     end
   end
 end

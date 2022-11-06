@@ -1,13 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-brand">
   <div class="container-fluid">
     <a class="navbar-brand" href="/"><h2>Include Journey</h2></a>
-    <%# if current_user %>
-<!--      <a class="mobile-sos btn btn-danger" data-bs-toggle="modal"-->
-<!--         data-bs-target="<%#= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">-->
-<!--        <div class="nav-label always-show">SOS</div>-->
-<!--        <i class="fas fa-exclamation-circle"></i>-->
-<!--      </a>-->
-    <%# end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -20,13 +13,9 @@
               <i class="fas fa-user"></i>
               <div class="nav-label hide">Users</div>
             <% end %>
-            <%= link_to '#', class: 'btn btn-nav' do %>
+            <%= link_to analytics_path, class: 'btn btn-nav' do %>
               <i class="fas fa-chart-line"></i>
               <div class="nav-label hide">Analytics</div>
-            <% end %>
-            <%= link_to active_crisis_events_path, class: 'btn btn-nav' do %>
-              <i class="fas fa-exclamation-circle"></i>
-              <div class="nav-label hide">Crisis Events</div>
             <% end %>
             <%= link_to journal_entries_path, class: 'btn btn-nav' do %>
               <i class="fas fa-book-open"></i>
@@ -85,9 +74,9 @@
               <i class="fas fa-tasks"></i>
               <div class="nav-label hide">My Goals</div>
             <% end %>
-            <%= link_to coming_soon_path, class: 'btn btn-nav' do %>
-              <i class="fas fa-calendar-check"></i>
-              <div class="nav-label hide">What's on</div>
+            <%= link_to edit_user_registration_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-user-edit"></i>
+              <div class="nav-label hide">My Profile</div>
             <% end %>
             <%= link_to surveys_path, class: 'btn btn-nav' do %>
               <i class="fas fa-comments"></i>
@@ -110,25 +99,24 @@
               <div class="nav-label hide">Edit Profile</div>
               <i class="fas fa-user-edit"></i>
             <% end %>
+            <div class= "btn btn-danger", id= "report">
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-flag"></i>
+            </div>
             <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
           <% end %>
           <% if current_user %>
-<!--            <a class="desktop-sos btn btn-danger" data-bs-toggle="modal"-->
-<!--               data-bs-target="<%#= @active_crisis_events.present? ? '#existingSosModal' : '#sosModal' %>">-->
-<!--              <div class="nav-label always-show">SOS</div>-->
-<!--              <i class="fas fa-exclamation-circle"></i>-->
-<!--            </a>-->
-            <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
-              <div class="nav-label hide">Edit Profile</div>
-              <i class="fas fa-user-edit"></i>
-            <% end %>
             <%= link_to guide_path, class: "btn btn-info" do %>
               <div class="nav-label hide">Guide</div>
               <i class="fas fa-question-circle"></i>
             <% end %>
+            <div class= "btn btn-danger", id= "report">
+              <div class="nav-label hide">Report Issue</div>
+              <i class="fas fa-flag"></i>
+            </div>
             <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
@@ -140,4 +128,6 @@
   </div>
 </nav>
 
+<%= render 'shared/breadcrumbs' %>
+<%= render 'shared/report_issue' %>
 <%= javascript_pack_tag 'navbar' %>

@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/tags_controller.rb
   class TagsController < TeamMembersApplicationController
+    before_action :set_breadcrumbs
     before_action :new_tag, :tagged_count, only: :index
     before_action :tag_params, only: :create
     include Pagination
@@ -57,6 +58,11 @@ module TeamMembers
 
     def tags_search
       'lower(tags.tag) similar to lower(:query)'
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : tags_path
+      add_breadcrumb('Tags', path, 'fas fa-tag')
     end
   end
 end

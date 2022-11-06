@@ -10,7 +10,7 @@
       <div class="container header-buttons guide">
         <div class="row">
           <%= render 'shared/dashboard_btn', path: guide_journal_path,
-                    icon: 'fa-book', large_text: 'Journal Guide', text: 'Journal' %>
+                    icon: 'fa-book', large_text: 'Journal', text: 'Journal' %>
           <%= render 'shared/dashboard_btn', path: guide_appointments_path, icon: 'fa-calendar-alt',
                     large_text: 'My Appointments', text: 'Appts' %>
           <%= render 'shared/dashboard_btn', path: guide_myNeeds_path, icon: 'fa-heart',
@@ -27,8 +27,8 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: guide_goals_path, icon: 'fa-tasks',
                     large_text: 'My Goals', text: 'Goals' %>
-          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-calendar-check',
-                    large_text: "Include: What's On", text: "What's On" %>
+          <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-user-edit',
+                     large_text: "My Profile", text: "My Profile" %>
           <%= render 'shared/dashboard_btn', path: coming_soon_path, icon: 'fa-comments',
                      large_text: 'My Voice', text: 'Voice' %>
         </div>

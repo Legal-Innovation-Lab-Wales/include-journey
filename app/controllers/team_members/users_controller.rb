@@ -1,7 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
-    before_action :pinned_users, only: :index
+    before_action :set_breadcrumbs
+    before_action :pinned_users, :sort, :direction, only: :index
     include Pagination
 
     before_action :user, except: :index
@@ -9,6 +10,7 @@ module TeamMembers
 
     # GET /users/:id
     def show
+      add_breadcrumb(user.full_name)
       log_view
       user_location
       wellbeing_assessment
@@ -16,7 +18,6 @@ module TeamMembers
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order(created_at: :desc)
       @journal_entries = current_team_member.journal_entries.where(user: @user).includes(:journal_entry_view_logs)
       @unread_journal_entries = current_team_member.unread_journal_entries(@user)
-      @active_crisis = @user.crisis_events.active
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
       @user_tags = @user.user_tags.order({ 'created_at': :desc })
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
@@ -63,6 +64,8 @@ module TeamMembers
 
     # GET /users/:user_id/edit
     def edit
+      add_breadcrumb(user.full_name, user_path(user))
+      add_breadcrumb("Edit Details", nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -76,9 +79,20 @@ module TeamMembers
     protected
 
     def resources
-      User.includes(:wellbeing_assessments, :crisis_events)
-          .where.not(id: @pinned_users)
-          .order(created_at: :desc)
+      case @sort
+      when 'average'
+        User.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
+      when 'first_name'
+        # switch direction for alphabet sort
+        @direction_flipped = @direction == 'desc' ? 'asc' : 'desc'
+        User.includes(:wellbeing_assessments)
+            .where.not(id: @pinned_users)
+            .order({ "#{@sort}": @direction_flipped, "last_name": @direction_flipped })
+      else
+        User.includes(:wellbeing_assessments)
+            .where.not(id: @pinned_users)
+            .order({ "#{@sort}": @direction })
+      end
     end
 
     def resources_per_page
@@ -86,9 +100,15 @@ module TeamMembers
     end
 
     def search
-      User.includes(:wellbeing_assessments, :crisis_events)
-          .where(user_search, wildcard_query)
-          .order(created_at: :desc)
+      resources.where(user_search, wildcard_query)
+    end
+
+    def sort
+      @sort = users_params[:sort] ? users_params[:sort] : 'created_at'
+    end
+
+    def direction
+      @direction = %w[asc desc].include?(users_params[:direction]) ? users_params[:direction] : 'asc'
     end
 
     private
@@ -163,6 +183,15 @@ module TeamMembers
       params.require(:user).permit(:released_at, :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
                                    :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence)
+    end
+
+    def users_params
+      params.permit(:sort, :direction)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : users_path
+      add_breadcrumb('Users', path, 'fas fa-user')
     end
   end
 end

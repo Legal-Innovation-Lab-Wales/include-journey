@@ -13,7 +13,7 @@
 
 ## Introduction
 
-This project is a web application for Include Uk. The application is a journey tracker allowing
+This project is a web application for the MoJ. The application is a journey tracker allowing
 users to track their wellbeing journey. The features includes:
 * Journaling + Sharing with Staff
 * Visual analytics to track progress and wellbeing
@@ -92,8 +92,6 @@ module Config
     PAST_APPOINTMENTS_FOR_EACH_USER = 20
     NOTES_COUNT = 100
     GOALS_FOR_EACH_USER = 10 # Half short-term, half long-term
-    CRISIS_EVENTS_COUNT = 20
-    CRISIS_NOTES_COUNT = 20
     UPCOMING_AFFIRMATIONS = 5
     PAST_AFFIRMATIONS = 10
     SURVEY_RESPONSES = 15
@@ -201,14 +199,6 @@ Update routes, generate views, generate controllers, finish multi-user-model gui
  rails g model Note content:text visible_to_user:boolean team_member:belongs_to user:references 
 
  rails g scaffold_controller Note 
-
- rails g model CrisisType type:string team_member:belongs_to 
-
- rails g model CrisisEvent additional_info:text closed:boolean closed_by:integer closed_at:datetime user:belongs_to crisis_type:belongs_to 
-
- rails g model CrisisNote content:text crisis_event:belongs_to team_member:belongs_to 
-
- rails g controller CrisisTypes; rails g controller CrisisEvents; rails g controller CrisisNotes; 
 
  rails g model WellbeingMetric name:string type:string team_member:belongs_to 
 

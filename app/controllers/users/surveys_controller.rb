@@ -2,6 +2,7 @@ module Users
   # app/controllers/users/surveys_controller.rb
   class SurveysController < UsersApplicationController
     before_action :survey, except: :index
+    before_action :set_breadcrumbs
 
     # GET /surveys
     def index
@@ -17,6 +18,7 @@ module Users
 
     # GET /surveys/:id
     def show
+      add_breadcrumb(@survey.name, nil, 'fas fa-clipboard-list')
       render 'show'
     end
 
@@ -75,6 +77,11 @@ module Users
 
       redirect_to authenticated_user_root_path,
                   flash: { success: "Thank You! (#{@survey.name}) was successfully submitted." }
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : surveys_path
+      add_breadcrumb('My Voice', path, 'fas fa-comments')
     end
   end
 end

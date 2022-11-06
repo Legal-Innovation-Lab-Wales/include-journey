@@ -1,0 +1,32 @@
+<% if (current_user || current_team_member) && !current_page?(root_url) %>
+  <main class="container breadcrumbs">
+    <section class="row">
+      <div class="col btn-container" style="text-align: left;">
+        <%= link_to root_url, class: 'btn btn-primary breadcrumb-btn' do %>
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        <% end %>
+        <% breadcrumbs.each do |crumb| %>
+          <div class="breadcrumb-chevron">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+          <% if crumb.link? %>
+            <%= link_to crumb.path, class: 'btn btn-primary breadcrumb-btn' do %>
+              <% if crumb.icon? %>
+                <i class="<%= crumb.icon %>"></i>
+              <% end %>
+              <span><%= crumb.name %></span>
+            <% end %>
+          <% else %>
+            <div class='btn btn-secondary btn-no-link breadcrum-btn'>
+              <% if crumb.icon? %>
+               <i class="<%= crumb.icon %>"></i>
+              <% end %>
+              <span><%= crumb.name %></span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  </main>
+<% end %>

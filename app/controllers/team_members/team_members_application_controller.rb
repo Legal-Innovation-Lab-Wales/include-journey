@@ -6,6 +6,7 @@ module TeamMembers
     before_action :require_not_suspended
 
     def terms
+      add_breadcrumb('Terms', nil, 'fas fa-gavel')
       render 'pages/terms'
     end
 

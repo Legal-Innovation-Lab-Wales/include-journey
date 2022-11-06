@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/registrations_controller.rb
   class RegistrationsController < Devise::RegistrationsController
+    before_action :set_breadcrumbs, only: :edit
     include Accessible
     skip_before_action :check_user, except: %i[new create]
 
@@ -15,6 +16,10 @@ module TeamMembers
       TeamMember.admins.each do |admin|
         AdminMailer.new_team_member_email(@team_member, admin, unapproved_count).deliver_later
       end
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Edit Profile', nil, 'fas fa-user-edit')
     end
   end
 end

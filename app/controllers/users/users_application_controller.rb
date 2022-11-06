@@ -4,6 +4,7 @@ module Users
     before_action :authenticate_user!
 
     def terms
+      add_breadcrumb('Terms', nil, 'fas fa-gavel')
       render 'pages/terms'
     end
 

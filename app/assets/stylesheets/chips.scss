@@ -1,0 +1,18 @@
+@import "variables";
+
+div.chip{
+    font-family: $font-link;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.4);
+    background-color: $blue-grey;
+    transition: 0.2s;
+    margin: 0.5rem;
+    padding: 0 0.2rem 0 0.5rem;
+    border-radius: 1rem; 
+    width: fit-content;
+    color: $black;
+    cursor: pointer;
+
+    &:hover{
+        background-color: $white;
+    }
+}

@@ -31,44 +31,11 @@
         <% end %>
       </p>
       <p>
-        <% unless @active_crisis.count.zero? %>
-          <%= link_to active_crisis_events_path do %>
-            <i class="fas fa-exclamation-circle"></i> <%= @active_crisis.count %> active crisis
-            events
-          <% end %>
-        <% end %>
-      </p>
-      <p>
         Last Sign
         In: <%= @user.current_sign_in_at.present? ? "#{time_ago_in_words(@user.current_sign_in_at)} ago from #{@location["city"]}" : "Never" %>
       </p>
     </div>
   </div>
-  <% unless @active_crisis.empty? %>
-    <div id="crisis-info" class="row">
-      <div class="alert alert-danger">
-        <h3 class="text-center"><%= @user.first_name %> has an active crisis <i class="fas fa-exclamation-triangle"></i>
-        </h3>
-        <div class="text-center"><%= link_to "View Crisis", active_crisis_events_path, class: "btn btn-danger" %></div>
-        <div class="table-container">
-          <table class="mx-auto">
-            <tr>
-              <td>When:</td>
-              <td class="text-start"><%= @active_crisis.first.created %></td>
-            </tr>
-            <tr>
-              <td>Type:</td>
-              <td class="text-start"><%= @active_crisis.first.crisis_type.category %></td>
-            </tr>
-            <tr>
-              <td>Info:</td>
-              <td class="text-start text-wrap"><%= @active_crisis.first.additional_info %></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  <% end %>
   <div class="row mb-4">
     <div class="col">
       <div class="card">
@@ -241,6 +208,11 @@
           <div class="card-body bg-transparent h-100" id="tags">
             <% if @user_tags.empty? %>
               <span>There are no tags on this user yet.</span>
+              <div class="container">
+                <div class="row">
+                  <%= render 'tag', user_tag: @new_user_tag %>
+                </div>
+              </div>
             <% else %>
               <div class="container">
                 <div class="row">

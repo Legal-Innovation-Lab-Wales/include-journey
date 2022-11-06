@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/wellbeing_metrics_controller.rb
   class WellbeingMetricsController < TeamMembersApplicationController
     # GET /wellbeing_metrics
+    before_action :set_breadcrumbs
     def index
       @wellbeing_metrics = WellbeingMetric.all
 
@@ -23,6 +24,11 @@ module TeamMembers
 
     def wellbeing_metric_params
       params.require(:wellbeing_metric).permit(:name, :category)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : wellbeing_metrics_path
+      add_breadcrumb('Wellbeing Management', path, 'fas fa-tools')
     end
   end
 end

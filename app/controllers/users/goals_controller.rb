@@ -1,6 +1,7 @@
 module Users
   # app/controllers/users/goals_controller.rb
   class GoalsController < UsersApplicationController
+    before_action :set_breadcrumbs
     before_action :goal, except: %i[index create]
 
     # GET /goals
@@ -57,6 +58,11 @@ module Users
 
     def goal_params
       params.require(:goal).permit(:goal, :goal_type_id, :short_term)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : goals_path
+      add_breadcrumb('My Goals', path, 'fas fa-tasks')
     end
   end
 end
