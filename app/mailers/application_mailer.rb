@@ -2,6 +2,6 @@
 class ApplicationMailer < ActionMailer::Base
   helper :mailer
 
-  default from: 'plic-journey@legaltech.wales'
+  default from: 'journey@legaltech.wales'
   layout 'mailer'
 end
