@@ -7,6 +7,10 @@ module Users
       render 'pages/terms'
     end
 
+    def privacy_notice
+      render 'pages/privacy_notice'
+    end
+
     def home
       render 'pages/main'
     end
