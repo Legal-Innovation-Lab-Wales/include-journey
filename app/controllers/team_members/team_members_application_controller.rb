@@ -13,6 +13,10 @@ module TeamMembers
       render 'pages/privacy_notice'
     end
 
+    def cookie_policy
+      render 'pages/cookie_policy'
+    end
+
     def home
       render 'pages/main'
     end
