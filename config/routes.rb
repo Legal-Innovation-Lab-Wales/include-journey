@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get 'home', to: 'users_application#home'
       get 'terms', to: 'users_application#terms'
       get 'privacy_notice', to: 'users_application#privacy_notice'
+      get 'cookie_policy', to: 'users_application#cookie_policy'
       get 'coming_soon', to: 'coming_soon#coming_soon', as: :coming_soon
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
       get 'journey', to: 'journey#index', as: :journey
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
       get 'privacy_notice', to: 'team_members_application#privacy_notice'
+      get 'cookie_policy', to: 'team_members_application#cookie_policy'
 
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve', on: :member, as: :approve
@@ -126,6 +128,7 @@ Rails.application.routes.draw do
     get 'about', to: 'pages#about'
     get 'terms', to: 'pages#terms'
     get 'privacy_notice', to: 'pages#privacy_notice'
+    get 'cookie_policy', to: 'pages#cookie_policy'
   end
 
   get 'guide', to: 'guides#index'
