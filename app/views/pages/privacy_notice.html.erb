@@ -2,9 +2,7 @@
   <div class="mx-auto col-12 col-md-10 col-lg-8">
     <div class="text-lg-start">
       <% unless user_signed_in? || team_member_signed_in? %>
-        <%= link_to root_path, class: 'btn btn-primary mt-3' do %>
-          <i class="fas fa-arrow-circle-left"></i> Homepage
-        <% end %>
+        <%= render 'shared/breadcrumbs' %>
       <% end %>
     </div>
     <div class="mt-4 text-center homepage-header homepage-section">
@@ -129,7 +127,7 @@
 
         <h2 class="section-title">WHERE IS MY DATA HELD?</h2>
         <p>
-          Data input on the My Journey app is held on a cloud server. The data is held in a postgres database on Heroku hosted on data.heroku.com -  <a href="https://www.heroku.com/postgres" target="_blank" rel="noopener noreferrer">https://www.heroku.com/postgres</a>, the application is hosted on Heroku as well, running as 'dynos' which are containers spread across several servers in the cloud - <a href="https://www.heroku.com/dynos" target="_blank" rel="noopener noreferrer">https://www.heroku.com/dynos</a>. This server network itself is then hosted on Amazon's EC2 cloud-computing platform - <a href="https://aws.amazon.com/ec2/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/ec2/</a>.
+          Data input on the My Journey app is held on a cloud server. The data is held in a postgres database on Heroku hosted on data.heroku.com -  <a class="link-secondary" href="https://www.heroku.com/postgres" target="_blank" rel="noopener noreferrer">https://www.heroku.com/postgres</a>, the application is hosted on Heroku as well, running as 'dynos' which are containers spread across several servers in the cloud - <a class="link-secondary" href="https://www.heroku.com/dynos" target="_blank" rel="noopener noreferrer">https://www.heroku.com/dynos</a>. This server network itself is then hosted on Amazon's EC2 cloud-computing platform - <a class="link-secondary" href="https://aws.amazon.com/ec2/" target="_blank" rel="noopener noreferrer">https://aws.amazon.com/ec2/</a>.
         </p>
 
         <p><strong>YOUR RIGHTS over your personal data</strong></p>

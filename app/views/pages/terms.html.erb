@@ -2,9 +2,7 @@
   <div class="mx-auto col-12 col-md-10 col-lg-8">
     <div class="text-lg-start">
       <% unless user_signed_in? || team_member_signed_in? %>
-        <%= link_to root_path, class: 'btn btn-primary mt-3' do %>
-          <i class="fas fa-arrow-circle-left"></i> Homepage
-        <% end %>
+        <%= render 'shared/breadcrumbs' %>
       <% end %>
     </div>
     <div class="mt-4 text-center homepage-header homepage-section">
@@ -37,7 +35,7 @@
             <li><strong>Service</strong> refers to the My Journey Website.</li>
             <li><strong>Terms and Conditions</strong> (also referred as "Terms" or "Terms of Use") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service.</li>
             <li><strong>Third-party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</li>
-            <li><strong>Website</strong> refers to Include-uk.com, accessible from <a href="http://include-uk.com">http://include-uk.com</a></li>
+            <li><strong>Website</strong> refers to Include-uk.com, accessible from <a class="link-secondary" href="http://include-uk.com">http://include-uk.com</a></li>
             <li><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
         </ul>
 
@@ -64,8 +62,8 @@
           Other terms that also apply to the Service are:  
         </p>
         <ul>
-          <li><a href="/cookie_policy">Cookie Policy</a></li>
-          <li><a href="/privacy_notice">Privacy Policy</a></li>
+          <li><a class="link-secondary" href="/cookie_policy">Cookie Policy</a></li>
+          <li><a class="link-secondary" href="/privacy_notice">Privacy Policy</a></li>
         </ul>
 
         <h2 class="section-title">User Accounts</h2>
@@ -297,7 +295,7 @@
           If you have any questions about these Terms and Conditions, You can contact:
         </p>
         <p>Emma Jones</p>
-        <p>Email: <a href="mailto:emma@includehub.co.uk">emma@includehub.co.uk</a></p>
+        <p>Email: <a class="link-secondary" href="mailto:emma@includehub.co.uk">emma@includehub.co.uk</a></p>
         <p>Address: 2 Humphrey Street, Swansea, SA1 6BG.</p>
         <p>Telephone: 01792 814792</p>
         

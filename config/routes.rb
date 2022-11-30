@@ -136,5 +136,5 @@ Rails.application.routes.draw do
   get 'guide_support', to: 'guides#support'
   get 'guide_goals', to: 'guides#goals'
   post 'report_issue', to: 'report_issue#send_report'
-  
+
 end
