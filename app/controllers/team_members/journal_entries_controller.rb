@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/journal_entries_controller.rb
   class JournalEntriesController < TeamMembersApplicationController
+    before_action :index_breadcrumbs, only: :index
     include Pagination
 
     # GET /journal_entries/:id
@@ -8,6 +9,8 @@ module TeamMembers
       journal_entry
       log_view
 
+      add_breadcrumb('Journal Entries', journal_entries_path, 'fas fa-book-open')
+      add_breadcrumb('This Journal Entry')
       render 'show'
     end
 
@@ -75,6 +78,10 @@ module TeamMembers
       end
 
       search
+    end
+
+    def index_breadcrumbs
+      add_breadcrumb('Journal Entries', nil, 'fas fa-book-open')
     end
   end
 end

@@ -11,6 +11,19 @@ body#overboot {
     &:hover {
       box-shadow: none;
     }
+
+    &.btn-no-link{
+      cursor: default;
+
+      &:hover{
+        background-color: $brand-secondary-alt;
+        border-color: $brand-secondary-alt;
+        color: $white;
+      }
+    }
+    &.btn-success{
+      text-align: center;
+    }
   }
 
   .btn-primary {
@@ -102,4 +115,5 @@ body#overboot {
       max-width: 400px;
     }
   }
+
 }

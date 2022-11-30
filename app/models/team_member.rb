@@ -7,13 +7,8 @@ class TeamMember < DeviseRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
   has_many :notes, foreign_key: :team_member_id
-  has_many :crisis_types, foreign_key: :team_member_id
-  has_many :crisis_notes, foreign_key: :team_member_id
   has_many :wellbeing_metrics, foreign_key: :team_member_id
   has_many :wellbeing_assessments, foreign_key: :team_member_id
-  has_many :crisis_types, foreign_key: :team_member_id
-  has_many :crisis_events, foreign_key: 'closed_by'
-  has_many :crisis_notes, foreign_key: :team_member_id
   has_many :journal_entry_permissions, foreign_key: :team_member_id
   has_many :journal_entry_view_logs, foreign_key: :team_member_id
   has_many :viewed_journal_entries, through: :journal_entry_view_logs, source: :journal_entry

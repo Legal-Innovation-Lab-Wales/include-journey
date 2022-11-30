@@ -5,6 +5,7 @@ module TeamMembers
     before_action :sort, :direction, only: :index
     before_action :update_unique_check, only: :update
     before_action :create_unique_check, only: :create
+    before_action :set_breadcrumbs
 
     after_action :clear_session_data, only: :new
 
@@ -17,6 +18,7 @@ module TeamMembers
 
     # GET /affirmations/new
     def new
+      add_breadcrumb('New Affirmation',nil, 'fas fa-plus-circle')
       text = session[:affirmation_text].present? ? session[:affirmation_text] : ''
       latest = Affirmation.order(scheduled_date: :desc).first
       date = latest.present? && latest.scheduled_date > Date.today ? latest.scheduled_date + 1.days : Date.today
@@ -39,6 +41,7 @@ module TeamMembers
 
     # GET /affirmations/:id/edit
     def edit
+      add_breadcrumb('Edit Affirmation', nil, 'fas fa-edit')
       render 'edit'
     end
 
@@ -113,6 +116,11 @@ module TeamMembers
 
     def affirmations_params
       params.permit(:sort, :direction)
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : affirmations_path
+      add_breadcrumb('Daily Affirmations', path, 'fas fa-smile')
     end
   end
 end

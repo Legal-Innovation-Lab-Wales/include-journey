@@ -1,0 +1,19 @@
+<div class="dropdown me-2">
+  <button class="btn btn-primary dropdown-toggle" id="<%= filter_name %>-menu" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <%= filter_name %> Filters
+  </button>
+  <ul class="dropdown-menu">
+    <% options.each do |option| %>
+      <li class="<%= filter_name %>"><a class="dropdown-item"><%= option %></a></li>
+    <% end %>
+  </ul>
+  <%= form.hidden_field filter_name.parameterize, :value => params[filter_name.parameterize] %>
+  <div>
+    <% options.each do |option| %>
+      <div id="<%= filter_name %>" class="chip dropdown-<%= filter_name.parameterize %>-<%= option.parameterize %>" 
+      style="display:<%= params[filter_name.parameterize].present? ? params[filter_name.parameterize][option] ? "block" : "none" : "none" %>">
+        <%= option %><i class="fas fa-times-circle ms-2"></i>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -5,9 +5,7 @@
       <div class="container header-buttons">
         <div class="row">
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
-          <%= render 'shared/dashboard_btn', path: '#', icon: 'fa-chart-line', text: 'Analytics' %>
-          <%= render 'shared/dashboard_btn', path: active_crisis_events_path, icon: 'fa-exclamation-circle',
-                     text: 'Crisis Events' %>
+          <%= render 'shared/dashboard_btn', path: analytics_path, icon: 'fa-chart-line', text: 'Analytics' %>
         </div>
         <div class="row">
           <%= render 'shared/dashboard_btn', path: journal_entries_path, icon: 'fa-book-open',

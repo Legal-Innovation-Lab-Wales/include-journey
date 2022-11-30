@@ -1,5 +1,10 @@
 <th class="sort-column" scope="col">
-  <span class="text" data-value="<%= column_value %>"><%= column_text %></span>
+  <% if defined?(column_icon) %>
+    <i class= "<%=column_icon%>"data-value="<%= column_value %>"id='image'></i>
+  <% else %>
+    <span class="text" data-value="<%= column_value %>"><%= column_text %></span>
+  <% end %>
+  
   <% if @sort != column_value %>
     <i class="fas fa-sort" data-toggle="tooltip" data-placement="right" title="Sort Descending"></i>
   <% else %>

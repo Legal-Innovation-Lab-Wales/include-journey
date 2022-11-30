@@ -33,7 +33,6 @@ Rails.application.routes.draw do
         get 'upcoming', action: :upcoming, on: :collection
         put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
       end
-      resources :crisis_events, only: %i[create update]
       resources :contacts
       resources :goals, only: %i[index create show destroy] do
         put 'achieve', action: :achieve, on: :member
@@ -82,12 +81,10 @@ Rails.application.routes.draw do
         get 'edit', action: 'edit', on: :member, as: :edit
       end
 
-      resources :crisis_events, only: %i[index show] do
-        get 'active', action: 'active', on: :collection
-        put 'close', action: 'close', on: :member, as: :close
-        resources :notes, only: %i[create show update], controller: :crisis_notes
+      resources :analytics, only: %i[index] do
+        get 'export', on: :collection
       end
-
+      get 'analytics/update_search'
       resources :wellbeing_assessments, only: %i[show index] do
         get 'export', on: :collection
       end
@@ -117,7 +114,6 @@ Rails.application.routes.draw do
           end
           resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
         end
-
       end
     end
   end
@@ -129,6 +125,7 @@ Rails.application.routes.draw do
     get 'terms', to: 'pages#terms'
     get 'privacy_notice', to: 'pages#privacy_notice'
     get 'cookie_policy', to: 'pages#cookie_policy'
+    get '/*path', to: redirect('/users/sign_in')
   end
 
   get 'guide', to: 'guides#index'
@@ -138,5 +135,6 @@ Rails.application.routes.draw do
   get 'guide_contacts', to: 'guides#contacts'
   get 'guide_support', to: 'guides#support'
   get 'guide_goals', to: 'guides#goals'
-
+  post 'report_issue', to: 'report_issue#send_report'
+  
 end

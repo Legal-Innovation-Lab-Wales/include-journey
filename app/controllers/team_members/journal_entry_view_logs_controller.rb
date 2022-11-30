@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/journal_entry_view_logs_controller.rb
   class JournalEntryViewLogsController < AdminApplicationController
     before_action :team_member
+    before_action :set_breadcrumbs
     include Pagination
 
     protected
@@ -44,6 +45,12 @@ module TeamMembers
 
     def team_member
       @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
+      add_breadcrumb(team_member.full_name, team_member_path(team_member))
+      add_breadcrumb('Journal Entry View Logs')
     end
   end
 end

@@ -1,0 +1,55 @@
+@import "variables";
+
+.dialogue{
+    display:none;
+    position:fixed;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    z-index: 20;
+    top:0;
+    .dialogue-clickoff{
+        height: 100%;
+        width: 100%;
+        background-color: rgba(1, 1, 1, 0.3);
+    }
+    .dialogue-box{
+        display:block;
+        position:fixed;
+        height:400px;
+        width:600px;
+        background-color: $brand-secondary-alt;
+        color: white;
+        border: 0.2rem solid $brand-complementary;
+        border-radius: 1rem;
+        text-align: center;
+        top:20%;
+        left:50%; 
+        transform: translateX(-50%);
+        .dialogue-title{
+            margin-top:1rem;
+        }
+        .dialogue-form{
+            text-align: left;
+            margin: 1rem;
+            .form-type{
+                display:block;
+                margin-bottom:1rem;
+            }
+            .form-body{
+                margin-bottom:1rem;
+                textarea{
+                    width:100%;
+                    height: 150px;
+                    resize:none;
+                }
+            }
+            .form-label{
+                display:block;
+            }
+            .form-buttons{
+                text-align:center;
+            }
+        }
+    }
+}

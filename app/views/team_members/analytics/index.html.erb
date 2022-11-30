@@ -1,0 +1,87 @@
+<main class="container index team-members analytics">
+  <section class="row">
+    <div class="col">
+      <h2>Analytics</h2>
+      <p>This section is used to view and analyse groups of data on our users.</p>
+      <hr>
+      <%= form_for '', url: { controller: 'analytics', action: 'update_search' }, method: :get, class: 'btn btn-primary' do |f| %>
+      <div class="col-12">
+        <div class="row"> 
+          <div class="search input-group">
+            <%= render 'filter_selection', form: f, filter_name: 'Age', options: @ages %>
+            <%= render 'filter_selection', form: f, filter_name: 'Sex', options: @sexes %>
+            <%= render 'filter_selection', form: f, filter_name: 'Pronoun', options: @pronouns %>
+            <%= render 'filter_selection', form: f, filter_name: 'Ethnicity', options: @ethnic_groups %>
+            <%= render 'filter_selection', form: f, filter_name: 'Religion', options: @religions %>
+            <%= render 'filter_selection', form: f, filter_name: 'Tag', options: @tags %>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="col-12">
+        <div class="row pb-3">
+          <div class="search input-group">
+            <span class="input-group-text">
+                <i class="fas fa-database"></i>
+            </span>
+            <div class="form-floating me-2">
+              <%= f.label 'Data', class: "form-label" %>
+              <%= f.select "data", ['Journal Entries', 'Wellbeing Assessments'], :selected => params[:data] %>
+            </div>
+            <span class="input-group-text">
+                <i class="fas fa-chart-pie"></i>
+            </span>
+            <div class="form-floating me-2">
+              <%= f.label 'Display', class: "form-label" %>
+              <%= f.select "display", ['Pie Chart', 'Bar Chart', 'Line Chart'], :selected => params[:display] %>
+            </div>
+            <% if current_team_member.admin? %>
+              <div class="form-floating">
+                <%= f.label 'Shared With', class: "form-label" %>
+                <%= f.select "member", ['All'] + @team_member_emails, :selected => params[:member] %>
+              </div>
+            <% end %>
+            <div class="form-floating">
+              <%= f.label 'Author', class: "form-label" %>
+              <%= f.select "author", ['Anyone', 'Staff', 'User'] + @team_member_emails, :selected => params[:author], class: 'test'%>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="row pb-3">
+          <div class="search input-group">
+            <span class="input-group-text">
+                <i class="fas fa-calendar"></i>
+            </span>
+            <div class="form-floating">
+              <%= f.date_field 'date_from', :order => [:day, :month, :year], :value => params['date_from'] %>
+              <label for="date-input">From</label>
+            </div>
+            <div class="form-floating me-2">
+              <%= f.date_field 'date_to', :order => [:day, :month, :year], :value => params['date_to'] %>
+              <label for="date-input">To</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="card-view" class="container p-0">
+        <div class="row mb-3">
+          <div class="col text-start">
+            <%= f.submit "Search", class:"btn btn-primary" %>
+          </div>
+          <div class="col text-end">
+              <%= render(partial: 'export_btn', locals: {file_format: 'csv', file_format_icon: 'fa-table'}) %>
+              <%= render(partial: 'export_btn', locals: {file_format: 'json', file_format_icon: 'fa-code'}) %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <div>Currently selected  <%= @resource.size %> <%= params[:data] %>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%= javascript_pack_tag 'chips' %>
+<%= javascript_pack_tag 'analytics' %>

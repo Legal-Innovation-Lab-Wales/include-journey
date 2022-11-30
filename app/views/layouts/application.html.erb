@@ -24,8 +24,6 @@
     <%= render "shared/navbar" %>
 
     <% if user_signed_in? %>
-      <%= render partial: '/modals/crisis_events/new' %>
-      <%= render partial: '/modals/crisis_events/existing' %>
       <%= render partial: '/modals/contact_times/index' %>
     <% end %>
   <% end %>
