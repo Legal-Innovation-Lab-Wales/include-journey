@@ -49,6 +49,7 @@ module TeamMembers
                   .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
 
       apply_filters
+      @resource = @resource.sort_by(&:created_at)
     end
 
     # rubocop:disable Metrics/LineLength
@@ -87,7 +88,7 @@ module TeamMembers
 
       tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
       users = User.all.joins(:user_tags).merge(tags)
-      @resource = @resource.joins(:user).merge(users)
+      @resource = @resource.joins(:user).merge(users).order_by('Date')
     end
     # rubocop:enable Metrics/LineLength
 
@@ -162,5 +163,14 @@ module TeamMembers
 
       redirect_back(fallback_location: root_path, alert: 'No Users')
     end
+
+    def collection_to_json(collection)
+      @array = []
+      collection.each do |entry|
+        @array.append(entry.json)
+      end
+      @array.to_json
+    end
+    helper_method :collection_to_json
   end
 end
