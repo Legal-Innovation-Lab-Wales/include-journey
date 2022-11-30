@@ -1,0 +1,64 @@
+<section class="d-flex min-vh-100 homepage-cover">
+  <div class="mx-auto col-12 col-md-10 col-lg-8">
+    <div class="text-lg-start">
+      <% unless user_signed_in? || team_member_signed_in? %>
+        <%= render 'shared/breadcrumbs' %>
+      <% end %>
+    </div>
+    <div class="mt-4 text-center homepage-header homepage-section">
+      <h1>My Journey</h1>
+      <p>track and progress on my journey to make the changes you want and need.</p>
+      <p>Built by the Legal Innovation lab Wales</p>
+    </div>
+    <div class="homepage-section">
+      <div class="col-xs-12">
+        <h2 class="section-title">Cookie policy</h2>
+        <h2 class="section-title">What are cookies?</h2>
+        <p>
+          This Cookie Policy explains what cookies are and how we use them, the types of cookies we use. Cookies are small text files that are used to store small pieces of information. They are stored on your device when the website is loaded on your browser. Cookies help us make the website function properly, make it more secure, provide better user experience, and understand how the website performs and to analyze what works and where it needs improvement.
+        </p>
+
+        <p><strong>How do we use cookies?</strong></p>
+        <p>My Journey uses a first-party cookie. First-party cookies are mostly necessary for the website to function the right way.</p>
+
+        <h2 class="section-title">Types of Cookies we use</h2>
+        <h2 class="section-title">Essential/Necessary</h2>
+        <table style="width:100%; table-layout:fixed; text-align: left; margin-bottom:2rem;">
+            <tr style="border: 1px solid #CBCED6; background:#D9DFE7;">
+                <th style="padding-left:1rem;">Cookie</th>
+                <th style="width:15%; padding-left:1rem;border: 1px solid #CBCED6;">Duration</th>
+                <th style="width:65%; padding-left:1rem;">Description</th>
+            </tr>
+            <tr style="border: 1px solid #CBCED6; background: #F1F5FA; padding: 1rem 0 1rem;">
+                <td style="white-space: normal; line-height: 1.5rem; word-wrap:break-word;" >
+                    include_journey_session
+                </td>
+                <td style="white-space: normal; line-height: 1.5rem; word-wrap:break-word; border: 1px solid #CBCED6;">20 minutes</td>
+                <td style="white-space: normal; line-height: 1.5rem;padding: 1rem 0 1rem 1rem;" >
+                    This cookie is used to validate requests when users are logged in so that the application knows who they are (and thus can validate them as being logged in) without it, users wouldn't get past the login page even if they correctly signed in.
+                </td>
+            </tr>
+        </table>
+        
+        <h2 class="section-title">Manage cookie preferences</h2>
+        <p>
+          In general, different browsers provide different methods to block and delete cookies used by websites. You can change the settings of your browser to block/delete the cookies. Listed below are the links to the support documents on how to manage and delete cookies from the major web browsers.
+        </p>
+        <p>
+          Chrome: <a class="link-secondary" href="https://support.google.com/accounts/answer/32050" target="_blank" rel="noopener noreferrer">https://support.google.com/accounts/answer/32050</a>
+        </p>
+        <p>
+          Safari: <a class="link-secondary" href="https://support.apple.com/en-in/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">https://support.apple.com/en-in/guide/safari/sfri11471/mac</a>
+        </p>
+        <p>
+          Firefox: <a class="link-secondary" href="https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox?redirectslug=delete-cookies-remove-info-websites-stored&redirectlocale=en-US" target="_blank" rel="noopener noreferrer">https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox?redirectslug=delete-cookies-remove-info-websites-stored&redirectlocale=en-US</a>
+        </p>
+        <p>
+          Internet Explorer: <a class="link-secondary" href="https://support.microsoft.com/en-us/topic/how-to-delete-cookie-files-in-internet-explorer-bca9446f-d873-78de-77ba-d42645fa52fc" target="_blank" rel="noopener noreferrer"> https://support.microsoft.com/en-us/topic/how-to-delete-cookie-files-in-internet-explorer-bca9446f-d873-78de-77ba-d42645fa52fc<a class="link-secondary">
+        </p>
+        <p>If you are using any other web browser, please visit your browser's official support documents.</p>
+
+     </div>
+    </div>
+  </div>
+</section>

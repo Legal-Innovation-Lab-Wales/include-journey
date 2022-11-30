@@ -10,6 +10,16 @@ module TeamMembers
       render 'pages/terms'
     end
 
+    def privacy_notice
+      add_breadcrumb('Privacy Notice', nil, 'fas fa-eye')
+      render 'pages/privacy_notice'
+    end
+
+    def cookie_policy
+      add_breadcrumb('Cookie Policy', nil, 'fas fa-cookie-bite')
+      render 'pages/cookie_policy'
+    end
+
     def home
       render 'pages/main'
     end
