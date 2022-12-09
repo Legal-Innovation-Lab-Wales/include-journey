@@ -9,7 +9,7 @@
           <%= form_with model: @journal_entry do |f| %>
             <div class="col-12">
               <div class="form-floating mb-4">
-                <%= f.text_area :entry, class: 'form-control' %>
+                <%= f.text_area :entry, class: 'form-control', pattern: '^[a-zA-Z0-9_ ]*$' %>
                 <%= f.label :entry, 'New Journal Entry' %>
               </div>
             </div>

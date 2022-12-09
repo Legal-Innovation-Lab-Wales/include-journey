@@ -30,13 +30,19 @@ module TeamMembers
 
     # POST /affirmations
     def create
-      @affirmation = Affirmation.create!(
+      @affirmation = Affirmation.new(
         text: affirmation_params[:text],
         scheduled_date: affirmation_params[:scheduled_date],
         team_member: current_team_member
       )
 
-      success('created')
+      if @affirmation.save
+        success('created')
+      else
+        add_breadcrumb('New Affirmation',nil, 'fas fa-plus-circle')
+        flash[:error] = 'Please only use the characters A-Z & 0-9'
+        render 'new'
+      end
     end
 
     # GET /affirmations/:id/edit
@@ -47,13 +53,17 @@ module TeamMembers
 
     # PUT /affirmations/:id
     def update
-      @affirmation.update(
+      if @affirmation.update(
         text: affirmation_params[:text],
         scheduled_date: affirmation_params[:scheduled_date],
         team_member: current_team_member
       )
-
-      success('updated')
+        success('created')
+      else
+        add_breadcrumb('Edit Affirmation', nil, 'fas fa-edit')
+        flash[:error] = 'Please only use the characters A-Z & 0-9'
+        render 'edit'
+      end
     end
 
     # DELETE /affirmations/:id
