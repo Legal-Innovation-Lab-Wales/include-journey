@@ -1,6 +1,7 @@
 # app/models/journal_entry.rb
 class JournalEntry < PermissionRecord
   belongs_to :user
+  validates_format_of :entry, with: /\A[a-zA-Z0-9_@]*\z/, on: :create, message: "Invalid: Please only use the characters A-Z & 0-9"
 
   has_many :journal_entry_permissions, foreign_key: :journal_entry_id, dependent: :delete_all
   has_many :journal_entry_view_logs, foreign_key: :journal_entry_id, dependent: :delete_all
