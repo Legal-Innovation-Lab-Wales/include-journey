@@ -15,11 +15,29 @@ module Users
 
     # POST /contacts
     def create
-      if (@contact = current_user.contacts.create!(contact_params))
+      
+      @contact = Contact.new(
+        user: current_user,
+        name: contact_params[:name],
+        description: contact_params[:description],
+        number: contact_params[:number],
+        email: contact_params[:email]
+      )
+
+      if @contact.save
         redirect_to contacts_path, flash: { success: 'Contact created' }
       else
-        redirect_to new_contact_path, flash: { error: 'Error creating contact' }
+        add_breadcrumb('New Contact', nil, 'fas fa-plus circle')
+        render 'new'
       end
+
+      #<---Old code start here--->
+      # if (@contact = current_user.contacts.create!(contact_params))
+      #   redirect_to contacts_path, flash: { success: 'Contact created' }
+      # else
+      #   redirect_to new_contact_path, flash: { error: 'Error creating contact' }
+      # end
+      #<---Old code ends here--->
     end
 
     # GET /contacts/:id/edit
