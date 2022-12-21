@@ -14,7 +14,7 @@ module TeamMembers
       if @score_values.update(wellbeing_score_params)
         redirect_to wellbeing_score_values_path, flash: { success: "Wellbeing Score values updated"}
       else
-        redirect_to wellbeing_score_values_path, flash: { error: "Wellbeing score values not updated. Please try again"}
+        redirect_to wellbeing_score_values_path, flash: { error: "Wellbeing score values not updated. Please only use characters A-Z"}
       end
     end
 

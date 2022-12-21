@@ -38,7 +38,7 @@
               </td>
               <td>
                 <input form="wellbeing_score_value_<%= score_value.id %>" type="text" name="wellbeing_score_value[name]"
-                       placeholder="Name" value="<%= score_value.name %>" disabled required />
+                       placeholder="Name" value="<%= score_value.name %>" disabled required pattern='^[a-zA-Z]*$' />
               </td>
               <td>
                 <i class="fas fa-edit"></i>
