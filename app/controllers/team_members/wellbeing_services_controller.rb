@@ -26,16 +26,34 @@ module TeamMembers
 
     # POST /wellbeing_services
     def create
-      if (@wellbeing_service = current_team_member.wellbeing_services
-                                                  .create!(name: wellbeing_service_params[:name],
-                                                           description: wellbeing_service_params[:description],
-                                                           website: wellbeing_service_params[:website],
-                                                           contact_number: wellbeing_service_params[:contact_number]))
+      @wellbeing_service = WellbeingService.new(
+        name: wellbeing_service_params[:name],
+        description: wellbeing_service_params[:description],
+        website: wellbeing_service_params[:website],
+        contact_number: wellbeing_service_params[:contact_number],
+        team_member: current_team_member
+      )
+
+      if @wellbeing_service.save
         redirect_to wellbeing_services_path, flash: { success: 'New wellbeing service added' }
       else
-        redirect_to new_wellbeing_service_path,
-                    flash: { error: 'Wellbeing service could not be created. Please try again.' }
+        add_breadcrumb('New Wellbeing Service', nil, 'fas fa-plus-circle')
+        render 'new'
       end
+
+      # <--Older code starts here-->
+      # if (@wellbeing_service = current_team_member.wellbeing_services
+      #                                             .create!(name: wellbeing_service_params[:name],
+      #                                                      description: wellbeing_service_params[:description],
+      #                                                      website: wellbeing_service_params[:website],
+      #                                                      contact_number: wellbeing_service_params[:contact_number]))
+      #   redirect_to wellbeing_services_path, flash: { success: 'New wellbeing service added' }
+      # else
+      #   redirect_to new_wellbeing_service_path,
+      #               flash: { error: 'Wellbeing service could not be created. Please try again.' }
+      # end
+      # <--Older code ends here-->
+
     end
 
     # GET /wellbeing_services/new
@@ -54,8 +72,10 @@ module TeamMembers
                                    contact_number: wellbeing_service_params[:contact_number])
         redirect_to wellbeing_services_path, flash: { success: 'Wellbeing service updated' }
       else
-        redirect_to edit_wellbeing_service_path(@wellbeing_service),
-                    flash: { error: 'Wellbeing service could not be created. Please try again' }
+        # redirect_to edit_wellbeing_service_path(@wellbeing_service),
+        #             flash: { error: 'Wellbeing service could not be created. Please try again' }
+        add_breadcrumb('Edit Wellbeing Service', nil, 'fas fa-edit')
+        render 'edit'
       end
     end
 
