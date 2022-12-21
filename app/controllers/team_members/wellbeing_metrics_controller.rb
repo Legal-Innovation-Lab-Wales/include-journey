@@ -16,7 +16,7 @@ module TeamMembers
       if @wellbeing_metric.update(wellbeing_metric_params)
         redirect_to wellbeing_metrics_path, flash: { success: 'Wellbeing metric updated' }
       else
-        redirect_to wellbeing_metrics_path, flash: { error: 'Wellbeing metric could not be updated. Please try again' }
+        redirect_to wellbeing_metrics_path, flash: { error: 'Wellbeing metric could not be updated. Please use only characters A-Z & 0-9' }
       end
     end
 
