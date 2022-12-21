@@ -15,14 +15,35 @@ module Users
 
     # POST /appointments
     def create
-      if (@appointment = current_user.appointments.create!(appointment_params))
-        session.delete(:appointment_params)
 
+      @appointment = Appointment.new(
+        where: appointment_params[:where], 
+        who_with: appointment_params[:who_with], 
+        what: appointment_params[:what], 
+        start: appointment_params[:start],
+        end: appointment_params[:end],
+        user: current_user
+      )
+
+      if @appointment.save
+        session.delete(:appointment_params)
         redirect_to upcoming_appointments_path, flash: { success: 'Appointment created' }
       else
-        redirect_to upcoming_appointments_path,
-                    flash: { error: "Appointment could not be created: #{@appointment.errors}" }
+        add_breadcrumb('New Appointment', nil, 'fas fa-plus circle')
+        render 'new'
       end
+
+      #<--- Older code starts here --->
+      # if (@appointment = current_user.appointments.create!(appointment_params))
+      #   session.delete(:appointment_params)
+
+      #   redirect_to upcoming_appointments_path, flash: { success: 'Appointment created' }
+      # else
+      #   redirect_to upcoming_appointments_path,
+      #               flash: { error: "Appointment could not be created: #{@appointment.errors}" }
+      # end
+      #<--- Older code ends here --->
+
     end
 
     # GET /appointments/new
