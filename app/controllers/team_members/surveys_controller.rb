@@ -20,10 +20,18 @@ module TeamMembers
 
     # POST /surveys
     def create
-      @survey = Survey.create!(name: survey_params[:name], start_date: survey_params[:start_date],
-                               end_date: survey_params[:end_date], team_member: current_team_member)
-
-      redirect_to surveys_path, flash: { success: "#{@survey.name} was successfully created." }
+      @survey = Survey.new(
+        name: survey_params[:name],
+        start_date: survey_params[:start_date],
+        end_date: survey_params[:end_date], 
+        team_member: current_team_member
+      )
+      if @survey.save
+        redirect_to surveys_path, flash: { success: "#{@survey.name} was successfully created." }
+      else
+        add_breadcrumb('New Survey', nil, 'fas fa-plus-circle')
+        render 'new'
+      end
     end
 
     # GET /surveys/:survey_id
@@ -42,8 +50,8 @@ module TeamMembers
     def update
       @survey.update!(survey_params)
 
-      respond_to do |format|
-        format.json { render json: @survey.as_json, status: :ok }
+        respond_to do |format|
+          format.json { render json: @survey.as_json, status: :ok }
       end
     end
 
