@@ -17,7 +17,7 @@
         </div>
 
         <div class="form-floating">
-          <%= f.text_field :website, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9_.- ]*$' %>
+          <%= f.text_field :website, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9:/._- ]*$' %>
           <%= f.label :website %>
           <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @wellbeing_service.errors.has_key?(:website)%></p>
         </div>
