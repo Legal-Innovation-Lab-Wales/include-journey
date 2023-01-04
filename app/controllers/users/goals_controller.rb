@@ -30,13 +30,6 @@ module Users
         redirect_to goals_path, flash: { error: "Please use only characters A-Z, 0-9, '.' & ',' " }
       end
 
-      #<---Older code starts here
-      # if current_user.goals.create!(goal_params)
-      #   redirect_to goals_path, flash: { success: 'Goal added' }
-      # else
-      #   redirect_to goals_path, flash: { error: 'Goal could not be added' }
-      # end
-      #<---Older code ends here
     end
 
     # PUT /goals/:id/achieve

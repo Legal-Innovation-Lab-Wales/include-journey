@@ -33,17 +33,6 @@ module Users
         render 'new'
       end
 
-      #<--- Older code starts here --->
-      # if (@appointment = current_user.appointments.create!(appointment_params))
-      #   session.delete(:appointment_params)
-
-      #   redirect_to upcoming_appointments_path, flash: { success: 'Appointment created' }
-      # else
-      #   redirect_to upcoming_appointments_path,
-      #               flash: { error: "Appointment could not be created: #{@appointment.errors}" }
-      # end
-      #<--- Older code ends here --->
-
     end
 
     # GET /appointments/new

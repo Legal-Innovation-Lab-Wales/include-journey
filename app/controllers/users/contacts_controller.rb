@@ -30,14 +30,7 @@ module Users
         add_breadcrumb('New Contact', nil, 'fas fa-plus circle')
         render 'new'
       end
-
-      #<---Old code start here--->
-      # if (@contact = current_user.contacts.create!(contact_params))
-      #   redirect_to contacts_path, flash: { success: 'Contact created' }
-      # else
-      #   redirect_to new_contact_path, flash: { error: 'Error creating contact' }
-      # end
-      #<---Old code ends here--->
+      
     end
 
     # GET /contacts/:id/edit

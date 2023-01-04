@@ -4,7 +4,7 @@ module TeamMembers
     before_action :wellbeing_metrics, except: %i[show index destroy]
     before_action :wellbeing_service, only: %i[show edit update destroy]
     before_action :set_breadcrumbs
-    after_action :metrics_services, only: %i[create update]
+    after_action :metrics_services, only: %i[update]
 
     # GET /wellbeing_services
     def index
@@ -35,24 +35,12 @@ module TeamMembers
       )
 
       if @wellbeing_service.save
+        metrics_services
         redirect_to wellbeing_services_path, flash: { success: 'New wellbeing service added' }
       else
         add_breadcrumb('New Wellbeing Service', nil, 'fas fa-plus-circle')
         render 'new'
       end
-
-      # <--Older code starts here-->
-      # if (@wellbeing_service = current_team_member.wellbeing_services
-      #                                             .create!(name: wellbeing_service_params[:name],
-      #                                                      description: wellbeing_service_params[:description],
-      #                                                      website: wellbeing_service_params[:website],
-      #                                                      contact_number: wellbeing_service_params[:contact_number]))
-      #   redirect_to wellbeing_services_path, flash: { success: 'New wellbeing service added' }
-      # else
-      #   redirect_to new_wellbeing_service_path,
-      #               flash: { error: 'Wellbeing service could not be created. Please try again.' }
-      # end
-      # <--Older code ends here-->
 
     end
 
