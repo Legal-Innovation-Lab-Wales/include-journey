@@ -3,6 +3,11 @@ class Appointment < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
 
+  # Input validation
+  validates_presence_of :where, :who_with, :what, :start, :end
+  validates_format_of :where, with: /\A[a-zA-Z0-9,. ]*\z/, on: :create
+  validates_format_of :who_with, :what, with: /\A[a-zA-Z0-9 ]*\z/, on: :create
+
   scope :future, -> { where('start >= ?', Time.now) }
   scope :past, -> { where('start <= ?', Time.now) }
   scope :last_week, -> { where('start >= ?', 1.week.ago) }
@@ -56,5 +61,4 @@ class Appointment < ApplicationRecord
     start >= DateTime.now - 1.month
   end
 
-  validates_presence_of :where, :who_with, :what, :start, :end
 end

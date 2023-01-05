@@ -5,21 +5,29 @@
       <div class="col-12 col-lg-6 form">
         <h3><%= title %> Wellbeing Service</h3>
         <div class="form-floating">
-          <%= f.text_field :name, class: 'form-control', required: true %>
+          <%= f.text_field :name, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9_- ]*$' %>
           <%= f.label :name %>
+          <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @wellbeing_service.errors.has_key?(:name)%></p>
         </div>
+
         <div class="form-floating">
-          <%= f.text_area :description, class: 'form-control' %>
+          <%= f.text_area :description, class: 'form-control', pattern: '^[a-zA-Z0-9_.,- ]*$' %>
           <%= f.label :description %>
+          <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, '.' & ','" if @wellbeing_service.errors.has_key?(:description)%></p>
         </div>
+
         <div class="form-floating">
-          <%= f.text_field :website, class: 'form-control', required: true %>
+          <%= f.text_field :website, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9:/._- ]*$' %>
           <%= f.label :website %>
+          <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @wellbeing_service.errors.has_key?(:website)%></p>
         </div>
+
         <div class="form-floating">
-          <%= f.number_field :contact_number, class: 'form-control', required: true %>
+          <%= f.text_field :contact_number, class: 'form-control', required: true, pattern: '^[0-9]*$' %>
           <%= f.label :contact_number %>
+          <p class="actual-error-message" ><%= "Please enter valid characters: 0-9" if @wellbeing_service.errors.has_key?(:contact_number)%></p>
         </div>
+
         <div class="container p-0">
           <div class="row m-0">
             <% wellbeing_metrics.each do |metric| %>

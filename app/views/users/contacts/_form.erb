@@ -1,19 +1,27 @@
 <%= form_with model: @contact do |f| %>
   <div class="form-floating">
-    <%= f.text_field :name, class: 'form-control', required: true %>
+    <%= f.text_field :name, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9_ ]*$' %>
     <%= f.label :name, 'Name' %>
+    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @contact.errors.has_key?(:name)%></p>
+
   </div>
   <div class="form-floating">
-    <%= f.text_area :description, class: 'form-control',  required: true %>
+    <%= f.text_area :description, class: 'form-control',  required: true, pattern: '^[a-zA-Z0-9_., ]*$' %>
     <%= f.label :description, 'Description' %>
+    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, '.' & ','" if @contact.errors.has_key?(:description)%></p>
+
   </div>
   <div class="form-floating">
-    <%= f.text_field :number, class: 'form-control' %>
+    <%= f.text_field :number, class: 'form-control', pattern: '^[0-9]*$' %>
     <%= f.label :number, 'Phone Number' %>
+    <p class="actual-error-message" ><%= "Please enter valid characters: 0-9" if @contact.errors.has_key?(:number)%></p>
+
   </div>
   <div class="form-floating">
-    <%= f.text_field :email, class: 'form-control' %>
+    <%= f.email_field :email, class: 'form-control', pattern: '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$' %>
     <%= f.label :email, 'Email' %>
+    <p class="actual-error-message" ><%= "Please enter valid email address" if @contact.errors.has_key?(:email)%></p>
+
   </div>
 
   <%= f.submit submit_btn_text, class: 'btn btn-primary' %>

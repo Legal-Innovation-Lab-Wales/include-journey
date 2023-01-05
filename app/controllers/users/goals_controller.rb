@@ -16,11 +16,20 @@ module Users
 
     # POST /goals
     def create
-      if current_user.goals.create!(goal_params)
+
+      @goal = Goal.new(
+        user: current_user,
+        goal: goal_params[:goal],
+        goal_type_id: goal_params[:goal_type_id],
+        short_term: goal_params[:short_term]
+      )
+
+      if @goal.save
         redirect_to goals_path, flash: { success: 'Goal added' }
       else
-        redirect_to goals_path, flash: { error: 'Goal could not be added' }
+        redirect_to goals_path, flash: { error: "Please use only characters A-Z, 0-9, '.' & ',' " }
       end
+
     end
 
     # PUT /goals/:id/achieve

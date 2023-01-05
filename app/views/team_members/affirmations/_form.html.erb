@@ -7,7 +7,7 @@
             <h3><%= type %> Daily Affirmation</h3>
             <%= form_with model: @affirmation, url: path do |f| %>
               <div class="form-floating">
-                <%= f.text_area :text, class: 'form-control', required: true %>
+                <%= f.text_area :text, pattern: '^[a-zA-Z0-9_ ]*$', class: 'form-control', required: true %>
                 <%= f.label :text %>
               </div>
               <div class="form-floating">
