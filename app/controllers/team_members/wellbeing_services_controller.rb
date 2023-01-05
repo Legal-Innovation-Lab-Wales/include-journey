@@ -60,8 +60,6 @@ module TeamMembers
                                    contact_number: wellbeing_service_params[:contact_number])
         redirect_to wellbeing_services_path, flash: { success: 'Wellbeing service updated' }
       else
-        # redirect_to edit_wellbeing_service_path(@wellbeing_service),
-        #             flash: { error: 'Wellbeing service could not be created. Please try again' }
         add_breadcrumb('Edit Wellbeing Service', nil, 'fas fa-edit')
         render 'edit'
       end

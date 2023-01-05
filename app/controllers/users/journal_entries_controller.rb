@@ -25,7 +25,6 @@ module Users
         flash: { success: 'New journal entry added' }
       else
         add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
-        #flash[:error] = 'Please only use the characters A-Z & 0-9'
         render 'new'
       end
 
