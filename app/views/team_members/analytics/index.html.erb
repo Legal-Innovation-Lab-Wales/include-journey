@@ -78,7 +78,8 @@
       </div>
       <% end %>
       <% if @resource.size > 0 %>
-        <div id="resources" data-resource="<%= collection_to_json(@resource) %>" data-type="<%= params[:data] %>" data-chart="<%=params[:display] %>" data-dateFrom="<%= params[:date_from]%>" data-dateTo="<%= params[:date_to] %>"></div>
+        <div id="resources" data-resource="<%= collection_to_json(@resource) %>" data-type="<%= params[:data] %>" data-chart="<%=params[:display] %>" data-dateFrom="<%= params[:date_from]%>" 
+        data-labels="<%= @labels %>" data-colours="<%= @colours %>" data-dateTo="<%= params[:date_to] %>"></div>
         <%= render 'analytics_charts' %>
       <%end%>
       <div>Currently selected  <%= @resource.size %> <%= params[:data] %>
