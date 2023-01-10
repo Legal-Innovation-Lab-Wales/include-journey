@@ -11,7 +11,6 @@ class WellbeingService < ApplicationRecord
   validates_format_of :website, with: /\A[a-zA-Z0-9_,. ]*\z/, on: [:create, :update]
   validates_format_of :contact_number, with: /\A[0-9]*\z/, on: [:create, :update]
 
-
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }
   end
