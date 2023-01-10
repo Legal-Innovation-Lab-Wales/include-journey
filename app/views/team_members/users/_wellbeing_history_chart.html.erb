@@ -4,7 +4,8 @@
     <div class="mobile-hint">
       <h5 class="pt-5 px-3">The wellbeing history chart doesn't work very well on mobile so we've disabled it. Please view this on a larger screen.</h5>
     </div>
-    <div id="wellbeing-history-chart-carousel" class="carousel slide carousel-dark mobile-hide" data-bs-interval="false">
+    <div id="wellbeing-history-chart-carousel" class="carousel slide carousel-dark mobile-hide" data-bs-interval="false"
+      data-scale="<%= WellbeingScoreValue.order(id: :asc).select(:name, :color).to_json %>">
       <select class="form-select mx-auto" aria-label="Select Wellbeing Metric"></select>
       <div class="carousel-inner"></div>
       <div class="carousel-indicators"></div>
