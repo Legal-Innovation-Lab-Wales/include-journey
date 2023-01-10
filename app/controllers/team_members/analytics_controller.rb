@@ -50,8 +50,9 @@ module TeamMembers
 
       apply_filters
       @resource = @resource.sort_by(&:created_at)
-      @labels = WellbeingScoreValue.order(id: :asc).pluck(:name)
-      @colours = WellbeingScoreValue.order(id: :asc).pluck(:color)
+      @scores = WellbeingScoreValue.order(id: :asc)
+      @labels = @scores.pluck(:name)
+      @colours = @scores.pluck(:color)
     end
 
     # rubocop:disable Metrics/LineLength
