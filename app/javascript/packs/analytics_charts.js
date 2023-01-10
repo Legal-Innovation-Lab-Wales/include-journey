@@ -6,30 +6,8 @@ const type = resources.dataset.type;
 const chart_select = resources.dataset.chart;
 var date_from = resources.dataset.datefrom;
 var date_to = resources.dataset.dateto;
-const wellbeing_labels = [
-    'Abysmal',
-    'Dreadful',
-    'Rubbish',
-    'Bad',
-    'Medicore',
-    'Fine',
-    'Good',
-    'Great',
-    'Superb',
-    'Perfect'
-];
-const wellbeing_colours = [
-    '#E04444E6',
-    '#e66043E6',
-    '#eb7945E6',
-    '#ee904bE6',
-    '#F0A656E6',
-    '#DFC54CE6',
-    '#c1c041E6',
-    '#a2ba3aE6',
-    '#82b438E6',
-    '#5DAD3AE6'
-];
+const wellbeing_labels = JSON.parse(resources.dataset.labels);
+const wellbeing_colours = JSON.parse(resources.dataset.colours);
 const journal_labels = [
     String.fromCodePoint("0x"+'1F973'),
     String.fromCodePoint("0x"+'1F60A'),

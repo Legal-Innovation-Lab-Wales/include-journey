@@ -1,20 +1,10 @@
 const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
+    resources = document.getElementById('wellbeing-history-chart-carousel'),
     chart_wrapper = carousel.querySelector('.carousel-inner'),
     slide_buttons = carousel.querySelectorAll('button'),
     metric_select = carousel.querySelector('select'),
     indicators = carousel.querySelector('.carousel-indicators'),
-    scale = [
-      { description: "Abysmal", colour: "#E04444" },
-      { description: "Dreadful", colour: "#e66043" },
-      { description: "Rubbish", colour: "#eb7945" },
-      { description: "Bad", colour: "#ee904b" },
-      { description: "Mediocre", colour: "#F0A656" },
-      { description: "Fine", colour: "#DFC54C" },
-      { description: "Good", colour: "#c1c041" },
-      { description: "Great", colour: "#a2ba3a" },
-      { description: "Superb", colour: "#82b438" },
-      { description: "Perfect", colour: "#5DAD3A" }
-    ],
+    scale = JSON.parse(resources.dataset.scale),
     create_chart = (history_chart, data) => {
         new Chart(history_chart.getContext('2d'), {
             type: 'line',
@@ -46,20 +36,20 @@ const carousel = document.querySelector('#wellbeing-history-chart-carousel'),
                             max: 10,
                             stepSize: 1,
                             padding: 15,
-                            callback: value => scale[value - 1].description
+                            callback: value => scale[value - 1].name
                         },
                         gridLines: {
                             drawBorder: false,
                             tickMarkLength: 0,
                             lineWidth: Array(10).fill(10),
-                            color: scale.map(s => s.colour).reverse()
+                            color: scale.map(s => s.color).reverse()
                         }
                     }]
                 },
                 tooltips: {
                     callbacks: {
                         label: (tooltipItem, data) =>
-                            `${data.datasets[tooltipItem.datasetIndex].label}: ${scale[tooltipItem.yLabel - 1].description}`
+                            `${data.datasets[tooltipItem.datasetIndex].label}: ${scale[tooltipItem.yLabel - 1].name}`
                     }
                 },
                 legend: {

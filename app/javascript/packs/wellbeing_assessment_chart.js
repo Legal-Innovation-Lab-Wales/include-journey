@@ -1,16 +1,6 @@
 const wellbeing_charts = document.querySelectorAll('.wellbeing-chart.wrapper'),
-      scale = [
-          { description: "Abysmal", colour: "#E04444" },
-          { description: "Dreadful", colour: "#e66043" },
-          { description: "Rubbish", colour: "#eb7945" },
-          { description: "Bad", colour: "#ee904b" },
-          { description: "Mediocre", colour: "#F0A656" },
-          { description: "Fine", colour: "#DFC54C" },
-          { description: "Good", colour: "#c1c041" },
-          { description: "Great", colour: "#a2ba3a" },
-          { description: "Superb", colour: "#82b438" },
-          { description: "Perfect", colour: "#5DAD3A" }
-      ],
+      resources = document.getElementById('chart-wrapper'),
+      scale = JSON.parse(resources.dataset.scale),
       classes = [...Array(10).keys()].map(i => `wba-score__${i+1}`)
 
 wellbeing_charts.forEach(wellbeing_chart_wrapper => {
@@ -24,7 +14,7 @@ wellbeing_charts.forEach(wellbeing_chart_wrapper => {
         data: {
             datasets: [{
                 data: [...inputs].map(input => input.value),
-                backgroundColor: [...inputs].map(input => scale[input.value - 1].colour)
+                backgroundColor: [...inputs].map(input => scale[input.value - 1].color)
             }],
             labels: [...labels].map(label => label.innerText.trim())
         },
@@ -51,7 +41,7 @@ wellbeing_charts.forEach(wellbeing_chart_wrapper => {
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem, data) {
-                        return `${data.labels[tooltipItem.index]}: ${scale[tooltipItem.yLabel - 1].description}`
+                        return `${data.labels[tooltipItem.index]}: ${scale[tooltipItem.yLabel - 1].name}`
                     }
                 }
             }
@@ -60,7 +50,7 @@ wellbeing_charts.forEach(wellbeing_chart_wrapper => {
         setDescription = function (input) {
             // The description field is only relevant when a the wellbeing charts sliders are visible.
             const description = input.closest('.row').querySelector('.description')
-            description.innerText = scale[input.value - 1].description
+            description.innerText = scale[input.value - 1].name
 
             description.classList.remove(...classes)
             description.classList.add(`wba-score__${input.value}`)
@@ -69,7 +59,7 @@ wellbeing_charts.forEach(wellbeing_chart_wrapper => {
     inputs.forEach((input, index) => {
         input.addEventListener('change', () => {
             chart.data.datasets[0].data[index] = input.value
-            chart.data.datasets[0].backgroundColor[index] = scale[input.value - 1].colour
+            chart.data.datasets[0].backgroundColor[index] = scale[input.value - 1].color
             setDescription(input)
 
             chart.update()

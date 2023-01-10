@@ -1,4 +1,5 @@
-<div class="container wellbeing-chart wrapper p-0">
+<div class="container wellbeing-chart wrapper p-0" id="chart-wrapper"
+  data-scale="<%= WellbeingScoreValue.order(id: :asc).select(:name, :color).to_json %>">
   <div class="row align-items-center" style="padding-left: 0 !important;" >
     <% if local_assigns[:chart_heading].present? %>
       <h3><%= local_assigns[:chart_heading] %></h3>

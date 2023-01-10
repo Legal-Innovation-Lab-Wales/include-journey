@@ -40,7 +40,6 @@ class User < DeviseRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
 
-
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
   end
