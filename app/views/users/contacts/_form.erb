@@ -1,6 +1,6 @@
 <%= form_with model: @contact do |f| %>
   <div class="form-floating">
-    <%= f.text_field :name, class: 'form-control', required: true, pattern: '^[a-zA-Z0-9_ ]*$' %>
+    <%= f.text_field :name, class: 'form-control', required: true, pattern: "^[a-zA-Z0-9_' ]*$" %>
     <%= f.label :name, 'Name' %>
     <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @contact.errors.has_key?(:name)%></p>
 
