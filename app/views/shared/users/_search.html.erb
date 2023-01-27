@@ -1,0 +1,16 @@
+<div class="col-12 col-md-6">
+    <div class="search input-group">
+        <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="Search">
+        <% if @tag_list.present? %>
+            <select id="search-filter">
+                <option value="all">All Tags</option>
+                <% @tag_list.each do |tag| %>
+                <option value="<%=tag.tag%>"><%=tag.tag%></option>
+                <% end %>
+            </select>
+        <% end %>
+        <span class="input-group-text" id="search-btn"><i class="fas fa-search"></i></span>
+    </div>
+</div>
+
+<%= javascript_pack_tag 'users_search' %>

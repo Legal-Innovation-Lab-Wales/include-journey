@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/users_controller.rb
   class UsersController < TeamMembersApplicationController
     before_action :set_breadcrumbs
-    before_action :pinned_users, :sort, :direction, only: :index
+    before_action :pinned_users, :sort, :direction, :set_filters, only: :index
     include Pagination
 
     before_action :user, except: :index
@@ -97,6 +97,10 @@ module TeamMembers
 
     def resources_per_page
       6
+    end
+
+    def set_filters
+      @tag_list = Tag.all
     end
 
     def search
