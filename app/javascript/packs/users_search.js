@@ -10,8 +10,10 @@ const search_input_group = document.querySelector('.search.input-group'),
             url.searchParams.delete('query')
         }
         if(tag_input!=null){
-            if (tag_input.value === 'all' && url.searchParams.has('tag')) {
-                url.searchParams.delete('tag')
+            if (tag_input.value == 'all') {
+                if(url.searchParams.has('tag')){
+                    url.searchParams.delete('tag')
+                }
             } else {
                 url.searchParams.set('tag', tag_input.value)
             }
