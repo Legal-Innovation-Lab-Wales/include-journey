@@ -261,6 +261,22 @@
       <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
 
     </div>
+
+     <div class="row" id="journal-appointments">
+      <div class="col-12 col-lg-6 mb-4">
+        <div id="journal-card" class="card h-100">
+          <div class="card-header">
+            <h3>Contact Logs</h3>
+          </div>
+          <div class="card-body">
+          <p><%= @user.first_name %> has <%= @contact_logs.size %> contact log(s).</p>
+          </div>
+          <div class="card-footer text-center">
+            <%= link_to "View User Contact Logs", users_contact_logs_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
 </main>
 
