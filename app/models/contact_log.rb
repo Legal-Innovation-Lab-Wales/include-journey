@@ -3,6 +3,7 @@ class ContactLog < ApplicationRecord
   belongs_to :team_member
   belongs_to :user
   belongs_to :contact_type
+  belongs_to :contact_purpose
 
   validates_presence_of :contact_type, :user, :start, :end
   validates_format_of :notes, with: /\A[a-zA-Z0-9,.\-()]*\z/, on: %i[create update]
