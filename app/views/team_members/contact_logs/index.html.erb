@@ -1,0 +1,12 @@
+<%= render 'layouts/searchable', class_list: 'user contact-logs', header: 'Archived Contact Logs', index: 'contact_logs',
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_contact_log_path, text: 'Add Contact Log' } ),
+           stats: render('stats'),
+           footer_section: render(partial: 'shared/footer_section', locals: {path: recent_contact_logs_path, text: 'View Recent Contact Logs'}) do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |contact_log| %>
+        <%= render(partial: 'card', locals: {contact_log: contact_log}) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
