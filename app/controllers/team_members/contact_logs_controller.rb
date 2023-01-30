@@ -2,13 +2,14 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
+    before_action :get_user, only: %i[recent]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = current_team_member.contact_logs.recent.order(start: :desc)
+      @contact_logs = params[:user_id].present? ? current_team_member.contact_logs.where('user_id': params[:user_id]).order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
@@ -130,9 +131,19 @@ module TeamMembers
     end
 
     def set_breadcrumbs
+      user = params[:user_id].present? ? User.where(id: params[:user_id]).first : nil
       path = action_name == 'recent' ? nil : recent_contact_logs_path
-      add_breadcrumb('My Contact logs', path, 'fas fa-clipboard-list')
+      @user ? add_breadcrumb("#{@user.first_name}'s Contact logs", path, 'fas fa-clipboard-list') : add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
       add_breadcrumb('Archived Contact logs') unless action_name != 'index'
+    end
+
+    def get_user
+      if(params[:user_id].present?)
+        @user = User.where(id: params[:user_id]).first
+        if(!@user.present?)
+          redirect_to :authenticated_team_member_root_path
+        end
+      end
     end
   end
 end
