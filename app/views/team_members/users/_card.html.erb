@@ -47,11 +47,6 @@
                   <% end %>
                 </div>
               <% end %>
-              <% if user.released_at.present? %>
-                <div class="row">
-                  <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
-                </div>
-              <% end %>
               <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
               <% unless unread_journal_entries.zero? %>
                 <div class="row">
