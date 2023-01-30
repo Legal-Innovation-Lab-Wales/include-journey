@@ -38,7 +38,6 @@ unless User.find_by_email('john.smith@me.com').present?
     last_name: 'Smith',
     email: 'john.smith@me.com',
     mobile_number: Faker::Number.leading_zero_number(digits: 11),
-    released_at: rand(1..2).even? ? Faker::Date.between(from: Date.today - 20.days, to: Date.today) : '',
     terms: true,
     password: 'password'
   )
