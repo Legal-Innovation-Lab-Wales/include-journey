@@ -10,7 +10,6 @@ module TeamMembers
     def recent
       @contact_logs = current_team_member.contact_logs.recent.order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
-      @count_in_last_month = @contact_logs.last_month.size
 
       render 'recent'
     end
