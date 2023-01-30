@@ -5,6 +5,7 @@ class ContactLog < ApplicationRecord
   belongs_to :contact_type
 
   validates_presence_of :contact_type, :user, :start, :end
+  validates_format_of :notes, with: /\A[a-zA-Z0-9,.\-()]*\z/, on: %i[create update]
   scope :recent, -> { where('start >= ?', 1.month.ago) }
   scope :past, -> { where('start < ?', 1.month.ago) }
   scope :last_week, -> { where('start >= ?', 1.week.ago) }
@@ -19,7 +20,7 @@ class ContactLog < ApplicationRecord
   end
 
   def start_date
-    return Date.tomorrow unless start.present?
+    return Date.today unless start.present?
 
     start.strftime('%Y-%m-%d')
   end
@@ -31,7 +32,7 @@ class ContactLog < ApplicationRecord
   end
 
   def end_date
-    return Date.tomorrow unless self.end.present?
+    return Date.today unless self.end.present?
 
     self.end.strftime('%Y-%m-%d')
   end
