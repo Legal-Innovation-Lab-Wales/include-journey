@@ -1,0 +1,21 @@
+<div class="col-12 col-md-4 archived">
+  <div class="card border-primary mb-3 text-al">
+    <div class="card-header bg-primary"><%= contact_log.contact_type.name %>
+      <%= link_to edit_contact_log_path(contact_log.id), class: 'float-end' do %>
+        <i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+      <% end %>
+    </div>
+    <div class="card-body bg-transparent">
+      <p class="card-text"> <i class="fas fa-user"></i> <%= contact_log.user.full_name %> </p>
+      <p class="card-text"> <i class="fas fa-heartbeat"></i> <%= contact_log.contact_purpose.name %> </p>
+      <% if contact_log.notes.present? %>
+        <p class="card-text"> 
+          <i class="fas fa-clipboard-list"></i>
+          <%= truncate(contact_log.notes, 40) %> 
+        </p>
+      <% end %>
+      <p> <i class="fas fa-clock"></i> <%= contact_log.time_on_date %></p>
+      <p> <i class="fas fa-hourglass-start"></i> <%= distance_of_time_in_words(contact_log.start, contact_log.end) %></p>
+    </div>
+  </div>
+</div>

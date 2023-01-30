@@ -1,0 +1,64 @@
+<%= form_with model: contact_log, url: url do |form| %>
+  <div class="form-floating">
+    <% user_options = options_from_collection_for_select(@users, 'id', 'full_name_with_email') %>
+    <%= form.select :user_id, user_options,  { include_blank: false }, { class: 'form-control'} %>
+    <%= form.label :user_id %>
+    <p class="actual-error-message" ><%= "User does not exist" if @contact_log.errors.has_key?(:user)%></p>
+  </div>
+
+  <div class="form-floating">
+   <% contact_type_options = options_from_collection_for_select(@contact_types, 'id', 'name') %>
+    <%= form.select :contact_type_id, contact_type_options,  { include_blank: false }, { class: 'form-control'} %>
+    <%= form.label :contact_type_id %>
+    <p class="actual-error-message" ><%= "Contact type does not exist" if @contact_log.errors.has_key?(:contact_type)%></p>
+  </div>
+
+  <div class="form-floating">
+   <% contact_purpose_options = options_from_collection_for_select(@contact_purposes, 'id', 'name') %>
+    <%= form.select :contact_purpose_id, contact_purpose_options,  { include_blank: false }, { class: 'form-control'} %>
+    <%= form.label :contact_purpose_id %>
+    <p class="actual-error-message" ><%= "Contact purpose does not exist" if @contact_log.errors.has_key?(:contact_purpose)%></p>
+  </div>
+
+  <div class="form-floating">
+    <%= form.text_area :notes, class: 'form-control', autocomplete: "Notes", placeholder: "Notes" %>
+    <%= form.label :notes %>
+    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, & ,.-() " if @contact_log.errors.has_key?(:notes)%></p>
+  </div>
+
+  <%= form.hidden_field :start %>
+
+  <div class="row date-time-fields">
+    <div class="col-8 form-floating">
+      <input class="form-control" autocomplete="when" placeholder="when" value="<%= contact_log.start_date %>"
+             max="<%= Date.today %>" type="date" id="contact_log_start_when">
+      <label for="contact_log_start_when">Start</label>
+    </div>
+
+    <div class="col-4 form-floating">
+      <input class="form-control" autocomplete="time" placeholder="time" value="<%= contact_log.start_time %>"
+             type="time" id="contact_log_start_time">
+      <label for="contact_log_start_time">Time</label>
+    </div>
+  </div>
+
+  <%= form.hidden_field :end %>
+
+  <div class="row date-time-fields">
+    <div class="col-8 form-floating">
+      <input class="form-control" autocomplete="when" placeholder="when" value="<%= contact_log.end_date %>"
+             max="<%= Date.today %>" type="date" id="contact_log_end_when">
+      <label for="contact_log_end_when">End</label>
+    </div>
+
+    <div class="col-4 form-floating">
+      <input class="form-control" autocomplete="time" placeholder="time" value="<%= contact_log.end_time %>" type="time"
+             id="contact_log_end_time">
+      <label for="contact_log_end_time">Time</label>
+    </div>
+  </div>
+
+  <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
+<% end %>
+
+<%= javascript_pack_tag 'contact_log_datetime_picker' %>
