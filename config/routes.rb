@@ -88,6 +88,9 @@ Rails.application.routes.draw do
       resources :wellbeing_assessments, only: %i[show index] do
         get 'export', on: :collection
       end
+      resources :contact_logs do
+        get 'recent', action: :recent, on: :collection
+      end
       resources :journal_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
