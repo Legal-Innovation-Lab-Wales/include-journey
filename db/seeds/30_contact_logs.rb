@@ -7,6 +7,7 @@ if ContactLog.count.zero?
         team_member: team_member,
         user: User.where(id: rand(1..User.all.size)).first,
         contact_type: ContactType.where(id: rand(1..ContactType.all.size)).first,
+        contact_purpose: ContactPurpose.where(id: rand(1..ContactPurpose.all.size)).first,
         notes: Faker::Quotes::Shakespeare.hamlet_quote,
         start: app_time,
         end: app_time + rand(10..120).minutes

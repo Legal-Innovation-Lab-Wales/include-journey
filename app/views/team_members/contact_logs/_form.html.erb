@@ -14,6 +14,13 @@
   </div>
 
   <div class="form-floating">
+   <% contact_purpose_options = options_from_collection_for_select(@contact_purposes, 'id', 'name') %>
+    <%= form.select :contact_purpose_id, contact_purpose_options,  { include_blank: false }, { class: 'form-control'} %>
+    <%= form.label :contact_purpose_id %>
+    <p class="actual-error-message" ><%= "Contact purpose does not exist" if @contact_log.errors.has_key?(:contact_purpose)%></p>
+  </div>
+
+  <div class="form-floating">
     <%= form.text_area :notes, class: 'form-control', autocomplete: "Notes", placeholder: "Notes" %>
     <%= form.label :notes %>
     <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, & ,.-() " if @contact_log.errors.has_key?(:notes)%></p>

@@ -19,6 +19,7 @@ module TeamMembers
       @contact_log = ContactLog.new(
         user: User.where(id: contact_log_params[:user_id]).first,
         contact_type: ContactType.where(id: contact_log_params[:contact_type_id]).first,
+        contact_purpose: ContactPurpose.where(id: contact_log_params[:contact_purpose_id]).first,
         notes: contact_log_params[:notes],
         start: contact_log_params[:start],
         end: contact_log_params[:end],
@@ -92,6 +93,7 @@ module TeamMembers
 
     def form_resources
       @contact_types = ContactType.all
+      @contact_purposes = ContactPurpose.all
       @users = User.all.order(email: :asc)
     end
 
@@ -112,7 +114,7 @@ module TeamMembers
     end
 
     def contact_log_params
-      params.require(:contact_log).permit(:user_id, :notes, :contact_type_id, :start, :end)
+      params.require(:contact_log).permit(:user_id, :notes, :contact_type_id, :contact_purpose_id, :start, :end)
     end
 
     def failure
