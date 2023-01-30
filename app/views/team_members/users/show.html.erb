@@ -21,9 +21,6 @@
         </p>
       <% end %>
       <p>
-        <i class="fas fa-calendar"></i> Release: <%= @user.release_date %>
-      </p>
-      <p>
         <% unless @unread_journal_entries.zero? %>
           <%= link_to '#journal' do %>
             <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
