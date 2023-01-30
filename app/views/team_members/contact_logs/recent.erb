@@ -3,8 +3,7 @@
     <h2 class="mb-0">Recent contact logs</h2>
     <div class="subheading">
       <p>There are a total of <%= @contact_logs.size %> recent contact logs.</p>
-      <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week
-      and <%= @count_in_last_month %> in the last month.</p>
+      <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week.
     </div>
     <div class="container">
       <%= render 'shared/new_btn', path: new_contact_log_path, text: 'Add Contact Log' %>
