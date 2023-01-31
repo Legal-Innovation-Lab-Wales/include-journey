@@ -6,7 +6,13 @@
       <% end %>
     </div>
     <div class="card-body bg-transparent">
-      <p class="card-text"> <i class="fas fa-user"></i> <%= contact_log.user.full_name %> </p>
+      <p class="card-text"> <i class="fas fa-user"></i> 
+        <% if @user %>
+          <%= contact_log.team_member.full_name %> 
+        <% else %>
+          <%= contact_log.user.full_name %> 
+        <% end %>
+      </p>
       <p class="card-text"> <i class="fas fa-heartbeat"></i> <%= contact_log.contact_purpose.name %> </p>
       <% if contact_log.notes.present? %>
         <p class="card-text"> 

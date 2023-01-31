@@ -133,6 +133,7 @@ module TeamMembers
     def set_breadcrumbs
       user = params[:user_id].present? ? User.where(id: params[:user_id]).first : nil
       path = action_name == 'recent' ? nil : recent_contact_logs_path
+      @user ?  add_breadcrumb(@user.full_name, @user, 'fas fa-user') : nil
       @user ? add_breadcrumb("#{@user.first_name}'s Contact logs", path, 'fas fa-clipboard-list') : add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
       add_breadcrumb('Archived Contact logs') unless action_name != 'index'
     end
