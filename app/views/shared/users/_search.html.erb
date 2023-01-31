@@ -2,7 +2,7 @@
     <div class="search input-group">
         <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="Search">
         <% if @tag_list.present? %>
-            <select id="search-filter">
+            <select id="search-filter" class="form-select">
                 <option value="all">All Tags</option>
                 <% @tag_list.each do |tag| %>
                     <option value="<%=tag.id%>"><%=tag.tag%></option>
