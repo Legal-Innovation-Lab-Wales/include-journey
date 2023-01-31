@@ -11,7 +11,7 @@ class Goal < ApplicationRecord
   scope :unarchived, -> { where(archived: false) }
 
   validates_presence_of :user_id, :goal, :goal_type
-  validates_format_of :goal, with: /\A[a-zA-Z0-9,._ ]*\z/, on: :create
+  validates_format_of :goal, with: /\A[a-zA-Z0-9,.—'()&@:+_\n\- ]*\z/, on: :create
 
   def achieved?
     achieved_on.present?

@@ -8,7 +8,7 @@ if Affirmation.count.zero?
            else
              Faker::Quotes::Shakespeare.king_richard_iii_quote
            end
-
+    text.gsub! ';', ':'
     Affirmation.create!(
       text: text,
       scheduled_date: Date.today + index.days,
@@ -26,7 +26,7 @@ if Affirmation.count.zero?
            else
              Faker::Quotes::Shakespeare.king_richard_iii_quote
            end
-
+    text.gsub! ';', ':'
     Affirmation.create!(
       text: text,
       scheduled_date: Date.today - (index.days + 1),

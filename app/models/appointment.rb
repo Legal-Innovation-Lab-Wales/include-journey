@@ -5,8 +5,8 @@ class Appointment < ApplicationRecord
 
   # Input validation
   validates_presence_of :where, :who_with, :what, :start, :end
-  validates_format_of :where, with: /\A[a-zA-Z0-9,. ]*\z/, on: :create
-  validates_format_of :who_with, :what, with: /\A[a-zA-Z0-9 ]*\z/, on: :create
+  validates_format_of :where, with: /\A[a-zA-Z0-9_!?,"'\-.()&@ ]*\z/, on: :create
+  validates_format_of :who_with, :what, with: /\A[a-zA-Z0-9'\-._() ]*\z/, on: :create
 
   scope :future, -> { where('start >= ?', Time.now) }
   scope :past, -> { where('start <= ?', Time.now) }

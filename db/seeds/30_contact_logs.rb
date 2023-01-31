@@ -3,12 +3,13 @@ if ContactLog.count.zero?
   TeamMember.all.each do |team_member|
     Config::CONTACT_LOGS_FOR_EACH_TEAM_MEMBER.times do
       app_time = Faker::Time.between(from: DateTime.now, to: DateTime.yesterday - 60.days)
+      note = Faker::Quotes::Shakespeare.hamlet_quote.gsub! ';', ':'
       ContactLog.create!(
         team_member: team_member,
         user: User.where(id: rand(1..User.all.size)).first,
         contact_type: ContactType.where(id: rand(1..ContactType.all.size)).first,
         contact_purpose: ContactPurpose.where(id: rand(1..ContactPurpose.all.size)).first,
-        notes: Faker::Quotes::Shakespeare.hamlet_quote,
+        notes: note,
         start: app_time,
         end: app_time + rand(10..120).minutes
       )
