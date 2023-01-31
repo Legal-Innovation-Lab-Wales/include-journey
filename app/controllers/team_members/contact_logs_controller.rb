@@ -14,6 +14,14 @@ module TeamMembers
       render 'recent'
     end
 
+    # GET team_members/:member_id/contact_logs
+    def admin_contacts
+      @contact_logs = ContactLog.where('team_member_id': params[:member_id])
+      @count_in_last_week = @contact_logs.last_week.size
+
+      render 'recent'
+    end
+
     # POST /contact_logs
     def create
       @contact_log = ContactLog.new(

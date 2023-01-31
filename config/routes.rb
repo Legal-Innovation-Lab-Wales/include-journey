@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       get 'privacy_notice', to: 'team_members_application#privacy_notice'
       get 'cookie_policy', to: 'team_members_application#cookie_policy'
 
+      get "team_members/:member_id/contact_logs" => "contact_logs#admin_contacts", as: "admin_contact_logs"
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
