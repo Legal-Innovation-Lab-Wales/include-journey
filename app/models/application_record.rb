@@ -1,6 +1,7 @@
 # app/models/application_record.rb
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
+  # after_validation :failed_validation
 
   def created
     created_at.strftime('%d/%m/%Y %I:%M %p')
@@ -17,4 +18,13 @@ class ApplicationRecord < ActiveRecord::Base
   def last_update
     updated_at.strftime('%d/%m/%Y %I:%M %p')
   end
+
+  # def failed_validation
+  #  return unless errors.present?
+
+  #  puts '', "Errors found in validation for: #{errors.attribute_names}"
+  #  errors.attribute_names.each do |err|
+  #    puts "#{err}: #{attributes[err.to_s]}"
+  #  end
+  # end
 end

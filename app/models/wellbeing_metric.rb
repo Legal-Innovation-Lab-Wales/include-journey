@@ -8,5 +8,5 @@ class WellbeingMetric < ApplicationRecord
   has_many :wellbeing_services, through: :metrics_services
 
   validates_presence_of :name, :category, :icon
-  validates_format_of :name, :category, with: /\A[a-zA-Z0-9\/ ]*\z/, on: :update
+  validates_format_of :name, :category, with: Rails.application.config.regex_name, on: :update
 end

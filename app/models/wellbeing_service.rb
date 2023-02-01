@@ -6,10 +6,10 @@ class WellbeingService < ApplicationRecord
   has_many :wellbeing_metrics, through: :metrics_services
 
   validates_presence_of :name, :website
-  validates_format_of :name, with: /\A[a-zA-Z0-9,.\- ]*\z/, on: [:create, :update]
-  validates_format_of :description, with: /\A[a-zA-Z0-9,._\- ]*\z/, on: [:create, :update]
-  validates_format_of :website, with: /\A[a-zA-Z0-9_:.\-\/ ]*\z/, on: [:create, :update]
-  validates_format_of :contact_number, with: /\A[0-9]*\z/, on: [:create, :update]
+  validates_format_of :name, with: Rails.application.config.regex_name, on: [:create, :update]
+  validates_format_of :description, with: Rails.application.config.regex_text_field, on: [:create, :update]
+  validates_format_of :website, with: Rails.application.config.regex_website, on: [:create, :update]
+  validates_format_of :contact_number, with: Rails.application.config.regex_telephone, on: [:create, :update]
 
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }
