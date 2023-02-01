@@ -48,6 +48,8 @@ Rails.application.routes.draw do
   authenticated :team_member do
     scope module: 'team_members' do
       root 'dashboard#show', as: :authenticated_team_member_root
+      get "users/:user_id/contact_logs/recent" => "contact_logs#recent", as: "users_recent_contact_logs"
+      get "users/:user_id/contact_logs" => "contact_logs#index", as: "users_contact_logs"
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
       get 'privacy_notice', to: 'team_members_application#privacy_notice'

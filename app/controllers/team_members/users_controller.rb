@@ -22,7 +22,7 @@ module TeamMembers
       @user_tags = @user.user_tags.order({ 'created_at': :desc })
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
-
+      @contact_logs = ContactLog.where('user_id': @user.id)
       render 'show'
     end
 
