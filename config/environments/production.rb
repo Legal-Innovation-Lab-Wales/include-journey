@@ -85,6 +85,7 @@ Rails.application.configure do
   config.regex_name = /\A[a-zA-Z0-9'\-._() ]*\z/
   config.regex_telephone = /\A[0-9]*\z/
   config.regex_website = /\A[a-zA-Z0-9_:.@\-\/ ]*\z/
+  config.regex_email = /\A[a-zA-Z0-9_:.@\-\/ ]*\z/
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
