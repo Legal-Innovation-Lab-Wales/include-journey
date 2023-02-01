@@ -40,6 +40,41 @@ class User < DeviseRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
 
+  PRONOUN_OPTIONS = ['He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'].freeze
+  SEX_OPTIONS = ['Male', 'Female', 'Prefer not to say'].freeze
+  GENDER_IDENTITY_OPTIONS = ['Yes', 'No', 'Prefer not to say'].freeze
+  RELIGION_OPTIONS = [
+    'Prefer not to say',
+    'No religion',
+    'Christian',
+    'Buddhist',
+    'Hindu',
+    'Jewish',
+    'Muslim',
+    'Sikh',
+    'Any other religion'
+  ].freeze
+  ETHNICITY_OPTIONS = [
+    'Prefer not to say',
+    'Arab',
+    'Asian or Asian British: Bangladeshi',
+    'Asian or Asian British: Chinese',
+    'Asian or Asian British: Indian',
+    'Asian or Asian British: Other',
+    'Black or Black British: African',
+    'Black or Black British: Carribean',
+    'Black or Black British: Other',
+    'Mixed: Other',
+    'Mixed: White and Asian',
+    'Mixed: White and Black African',
+    'Mixed: White and Black Carribean',
+    'White: Irish',
+    'White: Other',
+    'White: British/English/Welsh/Scottish/Northern Irish',
+    'White: Gypsy/Irish Traveller/Romany',
+    'Other Ethnic Group'
+  ].freeze
+
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
   end
