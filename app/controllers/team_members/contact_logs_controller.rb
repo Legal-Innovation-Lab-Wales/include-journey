@@ -9,7 +9,7 @@ module TeamMembers
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = params[:user_id].present? ? current_team_member.contact_logs.where('user_id': params[:user_id]).order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
+      @contact_logs = @user ? ContactLog.where('user_id': @user.id).order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
@@ -131,10 +131,14 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      user = params[:user_id].present? ? User.where(id: params[:user_id]).first : nil
       path = action_name == 'recent' ? nil : recent_contact_logs_path
-      @user ?  add_breadcrumb(@user.full_name, @user, 'fas fa-user') : nil
-      @user ? add_breadcrumb("#{@user.first_name}'s Contact logs", path, 'fas fa-clipboard-list') : add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
+      if @user
+        add_breadcrumb('Users', users_path, 'fas fa-user')
+        add_breadcrumb(@user.full_name, @user, 'fas fa-user')
+        add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
+      else
+        add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
+      end
       add_breadcrumb('Archived Contact logs') unless action_name != 'index'
     end
 
