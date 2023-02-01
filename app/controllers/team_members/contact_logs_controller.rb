@@ -2,13 +2,14 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
+    before_action :get_user, only: %i[index recent]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = current_team_member.contact_logs.recent.order(start: :desc)
+      @contact_logs = @user ? ContactLog.where('user_id': @user.id).recent.order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
@@ -86,7 +87,11 @@ module TeamMembers
     protected
 
     def resources
-      current_team_member.contact_logs.past.order(start: :desc)
+      if @user
+        ContactLog.where('user_id': @user.id).past.order(start: :desc)
+      else
+        current_team_member.contact_logs.past.order(start: :desc)
+      end
     end
 
     def resources_per_page
@@ -94,7 +99,11 @@ module TeamMembers
     end
 
     def search
-      current_team_member.contact_logs.where(contact_log_search, wildcard_query).order(start: :desc)
+      if @user
+        ContactLog.where('user_id': @user.id).where(contact_log_search, wildcard_query).order(start: :desc)
+      else
+        current_team_member.contact_logs.where(contact_log_search, wildcard_query).order(start: :desc)
+      end
     end
 
     private
@@ -138,9 +147,27 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      path = action_name == 'recent' ? nil : recent_contact_logs_path
-      add_breadcrumb('My Contact logs', path, 'fas fa-clipboard-list')
+      # if recent action, no path
+      # if user exists use user recent logs
+      # if none use admin recent logs
+      path = action_name == 'recent' ? nil : @user? users_recent_contact_logs_path(@user) : recent_contact_logs_path
+      if @user
+        add_breadcrumb('Users', users_path, 'fas fa-user')
+        add_breadcrumb(@user.full_name, @user)
+        add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
+      else
+        add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
+      end
       add_breadcrumb('Archived Contact logs') unless action_name != 'index'
+    end
+
+    def get_user
+      if(params[:user_id].present?)
+        @user = User.where(id: params[:user_id]).first
+        if(!@user.present?)
+          redirect_to :authenticated_team_member_root_path
+        end
+      end
     end
   end
 end

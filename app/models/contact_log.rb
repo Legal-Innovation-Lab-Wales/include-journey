@@ -6,7 +6,7 @@ class ContactLog < ApplicationRecord
   belongs_to :contact_purpose
 
   validates_presence_of :contact_type, :user, :start, :end
-  validates_format_of :notes, with: /\A[a-zA-Z0-9,.\-()]*\z/, on: %i[create update]
+  validates_format_of :notes, with: Rails.application.config.regex_text_field, on: %i[create update]
   scope :recent, -> { where('start >= ?', 1.month.ago) }
   scope :past, -> { where('start < ?', 1.month.ago) }
   scope :last_week, -> { where('start >= ?', 1.week.ago) }
