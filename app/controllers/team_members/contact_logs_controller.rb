@@ -2,14 +2,14 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
-    before_action :get_user, only: %i[recent]
+    before_action :get_user, only: %i[index recent]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = @user ? ContactLog.where('user_id': @user.id).order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
+      @contact_logs = @user ? ContactLog.where('user_id': @user.id).recent.order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
@@ -79,7 +79,11 @@ module TeamMembers
     protected
 
     def resources
-      current_team_member.contact_logs.past.order(start: :desc)
+      if @user
+        ContactLog.where('user_id': @user.id).past.order(start: :desc)
+      else
+        current_team_member.contact_logs.past.order(start: :desc)
+      end
     end
 
     def resources_per_page
@@ -87,7 +91,11 @@ module TeamMembers
     end
 
     def search
-      current_team_member.contact_logs.where(contact_log_search, wildcard_query).order(start: :desc)
+      if @user
+        ContactLog.where('user_id': @user.id).where(contact_log_search, wildcard_query).order(start: :desc)
+      else
+        current_team_member.contact_logs.where(contact_log_search, wildcard_query).order(start: :desc)
+      end
     end
 
     private

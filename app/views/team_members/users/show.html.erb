@@ -272,7 +272,7 @@
           <p><%= @user.first_name %> has <%= @contact_logs.size %> contact log(s).</p>
           </div>
           <div class="card-footer text-center">
-            <%= link_to "View User Contact Logs", users_contact_logs_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
+            <%= link_to "View User Contact Logs", users_recent_contact_logs_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
           </div>
         </div>
       </div>

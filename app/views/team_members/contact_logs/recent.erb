@@ -23,8 +23,14 @@
   <section class="row">
     <div class="col-2 col-md-4"></div>
     <div class="col-8 col-md-4">
-      <%= link_to contact_logs_path, class: 'btn btn-primary' do %>
-        View Archived Contact Logs <i class="fas fa-arrow-circle-right"></i>
+      <% if @user %>
+        <%= link_to users_contact_logs_path(@user), class: 'btn btn-primary' do %>
+          View Archived Contact Logs <i class="fas fa-arrow-circle-right"></i>
+        <% end %>
+      <% else %>
+        <%= link_to contact_logs_path, class: 'btn btn-primary' do %>
+          View Archived Contact Logs <i class="fas fa-arrow-circle-right"></i>
+        <% end %>
       <% end %>
     </div>
     <div class="col-2 col-md-4"></div>
