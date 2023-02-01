@@ -36,10 +36,6 @@ class User < DeviseRecord
       FROM wellbeing_assessments WHERE wellbeing_assessments.user_id = users.id)')
   }
 
-  validates_presence_of :terms
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :terms, acceptance: true
-
   PRONOUN_OPTIONS = ['He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'].freeze
   SEX_OPTIONS = ['Male', 'Female', 'Prefer not to say'].freeze
   GENDER_IDENTITY_OPTIONS = ['Yes', 'No', 'Prefer not to say'].freeze
@@ -74,6 +70,15 @@ class User < DeviseRecord
     'White: Gypsy/Irish Traveller/Romany',
     'Other Ethnic Group'
   ].freeze
+
+  validates_presence_of :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
+  validates :ethnic_group, inclusion: { in: ETHNICITY_OPTIONS }
+  validates :religion, inclusion: { in: RELIGION_OPTIONS }
+  validates :sex, inclusion: { in: SEX_OPTIONS }
+  validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
+  validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
 
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
