@@ -139,10 +139,13 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      path = action_name == 'recent' ? nil : recent_contact_logs_path
+      # if recent action, no path
+      # if user exists use user recent logs
+      # if none use admin recent logs
+      path = action_name == 'recent' ? nil : @user? users_recent_contact_logs_path(@user) : recent_contact_logs_path
       if @user
         add_breadcrumb('Users', users_path, 'fas fa-user')
-        add_breadcrumb(@user.full_name, @user, 'fas fa-user')
+        add_breadcrumb(@user.full_name, @user)
         add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
       else
         add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
