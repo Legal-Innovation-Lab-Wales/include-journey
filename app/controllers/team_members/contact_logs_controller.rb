@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
-    before_action :get_user, only: %i[index recent admin_recent_contacts]
+    before_action :get_user, only: %i[index recent admin_recent_contacts new create]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
