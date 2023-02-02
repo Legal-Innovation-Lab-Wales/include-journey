@@ -36,11 +36,11 @@ class User < DeviseRecord
       FROM wellbeing_assessments WHERE wellbeing_assessments.user_id = users.id)')
   }
 
-  PRONOUN_OPTIONS = ['He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'].freeze
-  SEX_OPTIONS = ['Male', 'Female', 'Prefer not to say'].freeze
-  GENDER_IDENTITY_OPTIONS = ['Yes', 'No', 'Prefer not to say'].freeze
+  PRONOUN_OPTIONS = ['', 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'].freeze
+  SEX_OPTIONS = ['', 'Male', 'Female', 'Prefer not to say'].freeze
+  GENDER_IDENTITY_OPTIONS = ['', 'Yes', 'No', 'Prefer not to say'].freeze
   RELIGION_OPTIONS = [
-    'Prefer not to say',
+    '',
     'No religion',
     'Christian',
     'Buddhist',
@@ -48,9 +48,11 @@ class User < DeviseRecord
     'Jewish',
     'Muslim',
     'Sikh',
-    'Any other religion'
+    'Any other religion',
+    'Prefer not to say'
   ].freeze
   ETHNICITY_OPTIONS = [
+    '',
     'Prefer not to say',
     'Arab',
     'Asian or Asian British: Bangladeshi',
