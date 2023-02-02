@@ -37,7 +37,7 @@ body#overboot {
 
 
   .header-buttons {
-    max-width: calc(#{$header-buttons--max-width} + 300px);
+    max-width: $header-buttons--max-width;
     padding: 0;
 
     &.guide {
