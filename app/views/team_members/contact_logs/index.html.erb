@@ -1,7 +1,7 @@
-<%= render 'layouts/searchable', class_list: 'user contact-logs', header: 'Archived Contact Logs', index: 'contact_logs',
+<%= render 'layouts/searchable', class_list: 'user contact-logs', header: 'Archived Contact Logs', index: @team_member ? 'admin_contact_logs' : @user ? 'users_contact_logs' : 'contact_logs',
            new_btn: render(partial: 'shared/new_btn', locals: { path: new_contact_log_path, text: 'Add Contact Log' } ),
            stats: render('stats'),
-           footer_section: render(partial: 'shared/footer_section', locals: {path: recent_contact_logs_path, text: 'View Recent Contact Logs'}) do %>
+           footer_section: render(partial: 'shared/footer_section', locals: {path: @team_member ? admin_recent_contact_logs_path(@team_member) : @user ? users_recent_contact_logs_path(@user) : recent_contact_logs_path, text: 'View Recent Contact Logs'}) do %>
   <div class="container p-0">
     <div class="row">
       <% @resources.each do |contact_log| %>
