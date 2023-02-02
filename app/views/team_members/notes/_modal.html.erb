@@ -16,6 +16,23 @@
           <% end %>
           <%= form.check_box :visible_to_user, class: 'form-check-input' %>
         </div>
+
+        <%= form.hidden_field :optional_date %>
+
+        <div class="row date-time-fields">
+          <div class="col-8 form-floating">
+            <input class="form-control" autocomplete="when" placeholder="when" value="<%= note.date %>"
+                    type="date" id="optional_date_when">
+            <label for="optional_date_when">Date</label>
+          </div>
+
+          <div class="col-4 form-floating">
+            <input class="form-control" autocomplete="time" placeholder="time" value="<%= note.time %>" type="time"
+                  id="optional_date_time">
+            <label for="optional_date_time">Time</label>
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
@@ -25,3 +42,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag 'note_datetime_picker' %>

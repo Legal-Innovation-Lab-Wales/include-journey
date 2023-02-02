@@ -21,6 +21,22 @@ class Note < ApplicationRecord
   end
 
   def changes?(note_params)
-    content != note_params[:content] || visible_to_user != note_params[:visible_to_user]
+    content != note_params[:content] || visible_to_user != note_params[:visible_to_user] || optional_date != note_params[:optional_date]
+  end
+
+  def created
+    if self.optional_date.present?
+      self.optional_date.strftime('%d/%m/%Y %I:%M %p')
+    else
+      created_at.strftime('%d/%m/%Y %I:%M %p')
+    end
+  end
+
+  def date
+    self.optional_date.strftime('%Y-%m-%d') if self.optional_date.present?
+  end
+
+  def time
+    self.optional_date.strftime('%H:%M') if self.optional_date.present?
   end
 end
