@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_30_044805) do
+ActiveRecord::Schema.define(version: 2023_02_02_001118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 2023_01_30_044805) do
     t.bigint "replacing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "optional_date"
     t.index ["replaced_by_id"], name: "index_notes_on_replaced_by_id"
     t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
