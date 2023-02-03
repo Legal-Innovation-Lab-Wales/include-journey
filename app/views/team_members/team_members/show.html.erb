@@ -4,7 +4,7 @@
       <h2><%= @team_member.full_name %> </h2>
       <div class="container header-buttons">
         <div class="row">
-          <%= link_to team_member_user_profile_view_logs_path(@team_member), class: 'col d-flex align-items-center btn' do %>
+          <%= link_to team_member_user_profile_view_logs_path(@team_member), class: 'col-md-3 d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -17,7 +17,7 @@
             </div>
           <% end %>
           <%= link_to team_member_wellbeing_assessments_path(@team_member),
-                      class: 'col d-flex align-items-center btn' do %>
+                      class: 'col-md-3 d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -29,7 +29,7 @@
               </div>
             </div>
           <% end %>
-          <%= link_to team_member_journal_entry_view_logs_path(@team_member), class: 'col d-flex align-items-center btn' do %>
+          <%= link_to team_member_journal_entry_view_logs_path(@team_member), class: 'col-md-3 d-flex align-items-center btn' do %>
             <div class="container">
               <div class="row">
                 <div class="col">
@@ -38,6 +38,18 @@
               </div>
               <div class="row">
                 <div class="col">Journal Entry View Logs</div>
+              </div>
+            </div>
+          <% end %>
+          <%= link_to admin_recent_contact_logs_path(@team_member), class: 'col-md-3 d-flex align-items-center btn' do %>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <i class="mb-1 fas fa-clipboard-list"></i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">Contact Logs</div>
               </div>
             </div>
           <% end %>

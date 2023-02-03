@@ -1,8 +1,10 @@
 <div class="col-12 col-md-4 archived">
   <div class="card border-primary mb-3 text-al">
     <div class="card-header bg-primary"><%= contact_log.contact_type.name %>
-      <%= link_to edit_contact_log_path(contact_log.id), class: 'float-end' do %>
-        <i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+      <% if contact_log.team_member_id === current_team_member.id %>
+        <%= link_to edit_contact_log_path(contact_log.id), class: 'float-end' do %>
+          <i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+        <% end %>
       <% end %>
     </div>
     <div class="card-body bg-transparent">

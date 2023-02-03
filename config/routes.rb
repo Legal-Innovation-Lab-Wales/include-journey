@@ -50,11 +50,14 @@ Rails.application.routes.draw do
       root 'dashboard#show', as: :authenticated_team_member_root
       get "users/:user_id/contact_logs/recent" => "contact_logs#recent", as: "users_recent_contact_logs"
       get "users/:user_id/contact_logs" => "contact_logs#index", as: "users_contact_logs"
+      get "users/:user_id/contact_logs/new" => "contact_logs#new", as: "users_new_contact_logs"
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
       get 'privacy_notice', to: 'team_members_application#privacy_notice'
       get 'cookie_policy', to: 'team_members_application#cookie_policy'
 
+      get "team_members/:member_id/contact_logs/recent" => "contact_logs#admin_recent_contacts", as: "admin_recent_contact_logs"
+      get "team_members/:member_id/contact_logs" => "contact_logs#index", as: "admin_contact_logs"
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
