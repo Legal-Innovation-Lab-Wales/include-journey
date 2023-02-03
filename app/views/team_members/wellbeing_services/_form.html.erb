@@ -27,6 +27,13 @@
           <%= f.label :contact_number %>
           <p class="actual-error-message" ><%= "Please enter valid characters: 0-9" if @wellbeing_service.errors.has_key?(:contact_number)%></p>
         </div>
+        
+        <div class="form-check form-switch d-flex px-0 pb-3">
+          <%= f.label :recommend, class: 'form-check-label' do %>
+            Recommend this wellbeing service to users?
+          <% end %>
+          <%= f.check_box :recommend, class: 'form-check-input' %>
+        </div>
 
         <div class="container p-0">
           <div class="row m-0">
