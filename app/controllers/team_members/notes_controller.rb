@@ -17,6 +17,9 @@ module TeamMembers
 
     # GET /notes/:id
     def show
+      add_breadcrumb('Users', users_path, 'fas fa-user')
+      add_breadcrumb(@user.full_name, @user)
+      add_breadcrumb("Note", nil, 'fas fa-clipboard-list')
       if @note.replaced_by.present?
         redirect_to user_note_path(@user, @note.latest)
       else
