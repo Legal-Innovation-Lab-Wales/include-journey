@@ -33,10 +33,10 @@ class Note < ApplicationRecord
   end
 
   def date
-    self.optional_date.strftime('%Y-%m-%d') if self.optional_date.present?
+    self.optional_date.present? ? self.optional_date.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
   end
 
   def time
-    self.optional_date.strftime('%H:%M') if self.optional_date.present?
+    self.optional_date.present? ? self.optional_date.strftime('%H:%M') : Time.now.strftime('%H:%M')
   end
 end
