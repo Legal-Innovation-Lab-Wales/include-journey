@@ -81,7 +81,7 @@ module TeamMembers
     end
 
     def note_params
-      params.require(:note).permit(:id, :content, :visible_to_user, :optional_date, :show_optional_date)
+      params.require(:note).permit(:id, :content, :visible_to_user, :optional_date)
     end
   end
 end
