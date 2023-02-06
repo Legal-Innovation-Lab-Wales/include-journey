@@ -1,20 +1,32 @@
 <%= form_with model: appointment, url: url do |form| %>
   <div class="form-floating">
-    <%= form.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where", pattern: '^[a-zA-Z0-9_., ]*$' %>
+    <%= form.text_field :where, autofocus: true, class: 'form-control', autocomplete: "where", placeholder: "where" %>
     <%= form.label :where %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, '.' & ','" if @appointment.errors.has_key?(:where)%></p>
+    <p class="actual-error-message" >
+      <% appointment.errors[:where].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <div class="form-floating">
-    <%= form.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with", pattern: '^[a-zA-Z0-9_., ]*$' %>
+    <%= form.text_field :who_with, class: 'form-control', autocomplete: "who_with", placeholder: "who with" %>
     <%= form.label :who_with %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @appointment.errors.has_key?(:who_with)%></p>
+    <p class="actual-error-message" >
+      <% appointment.errors[:who_with].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <div class="form-floating">
-    <%= form.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about", pattern: '^[a-zA-Z0-9_., ]*$' %>
+    <%= form.text_field :what, class: 'form-control', autocomplete: "what", placeholder: "what about" %>
     <%= form.label :what %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @appointment.errors.has_key?(:what)%></p>
+    <p class="actual-error-message" >
+      <% appointment.errors[:what].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <%= form.hidden_field :start %>
@@ -33,6 +45,12 @@
     </div>
   </div>
 
+  <p class="actual-error-message" >
+    <% appointment.errors[:start].each do |err| %>
+      <%= err %>
+    <% end %>
+  </p>
+
   <%= form.hidden_field :end %>
 
   <div class="row date-time-fields">
@@ -48,6 +66,12 @@
       <label for="appointment_end_time">Time</label>
     </div>
   </div>
+
+  <p class="actual-error-message" >
+    <% appointment.errors[:end].each do |err| %>
+      <%= err %>
+    <% end %>
+  </p>
 
   <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
 <% end %>
