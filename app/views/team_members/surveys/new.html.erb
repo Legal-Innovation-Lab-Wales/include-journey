@@ -7,9 +7,13 @@
             <h3>New Survey</h3>
             <%= form_with model: @survey, url: surveys_path do |f| %>
               <div class="form-floating">
-                <%= f.text_field :name, pattern: '^[a-zA-Z0-9_ ]*$', class: 'form-control', placeholder: 'Name', required: true %>
+                <%= f.text_field :name, class: 'form-control', placeholder: 'Name', required: true %>
                 <%= f.label :name %> 
-                <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9 & '_'" if @survey.errors.has_key?(:name)%></p> 
+                <p class="actual-error-message" >
+                  <% @survey.errors[:name].each do |err| %>
+                    <%= err %>
+                  <% end %>
+                </p>
               </div>  
               <div class="container">
                 <div class="row">
@@ -18,12 +22,22 @@
                       <%= f.date_field :start_date, class: 'form-control', required: true %>
                       <%= f.label :start_date %>
                     </div>
+                    <p class="actual-error-message" >
+                      <% @survey.errors[:start_date].each do |err| %>
+                        <%= err %>
+                      <% end %>
+                    </p>
                   </div>
                   <div class="col-6">
                     <div class="form-floating">
                       <%= f.date_field :end_date, class: 'form-control', required: true %>
                       <%= f.label :end_date %>
                     </div>
+                    <p class="actual-error-message" >
+                      <% @survey.errors[:end_date].each do |err| %>
+                        <%= err %>
+                      <% end %>
+                    </p>
                   </div>
                 </div>
               </div>
