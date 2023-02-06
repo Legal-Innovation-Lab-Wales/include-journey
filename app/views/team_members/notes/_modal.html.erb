@@ -23,13 +23,13 @@
         <div class="row date-time-fields">
           <div class="col-8 form-floating">
             <input class="form-control" autocomplete="when" placeholder="when" value="<%= note.date %>"
-                    type="date" id="dated_when">
+                    type="date" id="dated_when" required="true">
             <label for="dated_when" id="datelabel">Date</label>
           </div>
 
           <div class="col-4 form-floating">
             <input class="form-control" autocomplete="time" placeholder="time" value="<%= note.time %>" type="time"
-                  id="dated_time">
+                  id="dated_time" required="true">
             <label for="dated_time" id="timelabel">Time</label>
           </div>
         </div>
