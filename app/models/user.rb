@@ -73,7 +73,7 @@ class User < DeviseRecord
     'Other Ethnic Group'
   ].freeze
 
-  validates_presence_of :terms
+  validates_presence_of :terms, :first_name, :last_name, :mobile_number, :email
   validates_format_of :first_name, with: Rails.application.config.regex_name
   validates_format_of :last_name, with: Rails.application.config.regex_name
   validates_format_of :mobile_number, with: Rails.application.config.regex_telephone

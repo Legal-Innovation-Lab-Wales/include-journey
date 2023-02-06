@@ -1,27 +1,40 @@
 <%= form_with model: @contact do |f| %>
   <div class="form-floating">
-    <%= f.text_field :name, class: 'form-control', required: true, pattern: "^[a-zA-Z0-9_' ]*$" %>
+    <%= f.text_field :name, class: 'form-control', required: true%>
     <%= f.label :name, 'Name' %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z & 0-9" if @contact.errors.has_key?(:name)%></p>
+    <p class="actual-error-message" >
+      <% @contact.errors[:name].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
 
   </div>
   <div class="form-floating">
-    <%= f.text_area :description, class: 'form-control',  required: true, pattern: '^[a-zA-Z0-9_., ]*$' %>
+    <%= f.text_area :description, class: 'form-control',  required: true%>
     <%= f.label :description, 'Description' %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, '.' & ','" if @contact.errors.has_key?(:description)%></p>
-
+    <p class="actual-error-message" >
+      <% @contact.errors[:description].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
   <div class="form-floating">
-    <%= f.text_field :number, class: 'form-control', pattern: '^[0-9]*$' %>
+    <%= f.text_field :number, class: 'form-control'%>
     <%= f.label :number, 'Phone Number' %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: 0-9" if @contact.errors.has_key?(:number)%></p>
-
+    <p class="actual-error-message" >
+      <% @contact.errors[:number].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
   <div class="form-floating">
-    <%= f.email_field :email, class: 'form-control', pattern: '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$' %>
+    <%= f.email_field :email, class: 'form-control' %>
     <%= f.label :email, 'Email' %>
-    <p class="actual-error-message" ><%= "Please enter valid email address" if @contact.errors.has_key?(:email)%></p>
-
+   <p class="actual-error-message" >
+      <% @contact.errors[:email].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <%= f.submit submit_btn_text, class: 'btn btn-primary' %>

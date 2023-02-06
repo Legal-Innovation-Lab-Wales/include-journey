@@ -1,7 +1,8 @@
 # app/models/journal_entry.rb
 class JournalEntry < PermissionRecord
   belongs_to :user
-  validates_format_of :entry, with: Rails.application.config.regex_text_field
+  validates_format_of :entry, with: Rails.application.config.regex_text_field,
+                              message: Rails.application.config.text_field_error
   
   has_many :journal_entry_permissions, foreign_key: :journal_entry_id, dependent: :delete_all
   has_many :journal_entry_view_logs, foreign_key: :journal_entry_id, dependent: :delete_all
@@ -10,6 +11,18 @@ class JournalEntry < PermissionRecord
 
   scope :created_in_last_week, -> { where('journal_entries.created_at >= ?', 1.week.ago) }
   scope :created_in_last_month, -> { where('journal_entries.created_at >= ?', 1.month.ago) }
+
+  # <!-- 🥳,☺️,😔,😠,💩,😐 -->
+  FEELING_OPTIONS = [
+    '😔',
+    '😐',
+    '😠',
+    '💩',
+    '🥳',
+    '😊'
+  ].freeze
+
+  validates :feeling, inclusion: { in: FEELING_OPTIONS, message: 'Please select a valid feeling from the list' }
 
   def permissions
     journal_entry_permissions
