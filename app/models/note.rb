@@ -5,7 +5,7 @@ class Note < ApplicationRecord
   belongs_to :replaced_by, class_name: 'Note', optional: true, foreign_key: 'replaced_by_id'
   belongs_to :replacing, class_name: 'Note', optional: true, foreign_key: 'replacing_id'
 
-  validates_presence_of :team_member_id, :user_id, :content, :optional_date
+  validates_presence_of :team_member_id, :user_id, :content, :dated
 
   def chain(array)
     array << self
@@ -21,22 +21,22 @@ class Note < ApplicationRecord
   end
 
   def changes?(note_params)
-    content != note_params[:content] || visible_to_user != note_params[:visible_to_user] || optional_date != note_params[:optional_date]
+    content != note_params[:content] || visible_to_user != note_params[:visible_to_user] || dated != note_params[:dated]
   end
 
   def created
-    if self.optional_date.present?
-      self.optional_date.strftime('%d/%m/%Y %I:%M %p')
+    if self.dated.present?
+      self.dated.strftime('%d/%m/%Y %I:%M %p')
     else
       created_at.strftime('%d/%m/%Y %I:%M %p')
     end
   end
 
   def date
-    self.optional_date.present? ? self.optional_date.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
+    self.dated.present? ? self.dated.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
   end
 
   def time
-    self.optional_date.present? ? self.optional_date.strftime('%H:%M') : Time.now.strftime('%H:%M')
+    self.dated.present? ? self.dated.strftime('%H:%M') : Time.now.strftime('%H:%M')
   end
 end

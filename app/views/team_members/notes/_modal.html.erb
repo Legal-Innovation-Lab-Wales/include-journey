@@ -17,20 +17,20 @@
           <%= form.check_box :visible_to_user, class: 'form-check-input' %>
         </div>
 
-        <%= form.hidden_field :optional_date %>
+        <%= form.hidden_field :dated %>
         <p class="text-black-50 pt-2">Date and time created (historical date and time permitted):</p>
 
         <div class="row date-time-fields">
           <div class="col-8 form-floating">
             <input class="form-control" autocomplete="when" placeholder="when" value="<%= note.date %>"
-                    type="date" id="optional_date_when">
-            <label for="optional_date_when">Date</label>
+                    type="date" id="dated_when">
+            <label for="dated_when" id="datelabel">Date</label>
           </div>
 
           <div class="col-4 form-floating">
             <input class="form-control" autocomplete="time" placeholder="time" value="<%= note.time %>" type="time"
-                  id="optional_date_time">
-            <label for="optional_date_time">Time</label>
+                  id="dated_time">
+            <label for="dated_time" id="timelabel">Time</label>
           </div>
         </div>
 
