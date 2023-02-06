@@ -5,7 +5,8 @@ if Note.count.zero?
       team_member_id: rand(1..TeamMember.count),
       visible_to_user: [true, false].sample,
       user_id: rand(1..User.count),
-      content: Faker::TvShows::TheExpanse.quote
+      content: Faker::TvShows::TheExpanse.quote,
+      optional_date: Faker::Time.between(from: 2.years.ago, to: Time.now)
     )
 
     # Every fifth note is replaced by a new note to demonstrate the edit history functionality
@@ -16,7 +17,8 @@ if Note.count.zero?
       visible_to_user: [true, false].sample,
       user_id: note.user.id,
       content: Faker::TvShows::TheExpanse.quote,
-      replacing: note
+      replacing: note,
+      optional_date: Faker::Time.between(from: 2.years.ago, to: Time.now)
     )
 
     note.update!(replaced_by: new_note)
