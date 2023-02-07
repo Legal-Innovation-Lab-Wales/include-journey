@@ -47,4 +47,14 @@ class ContactLog < ApplicationRecord
   def last_month
     start >= DateTime.now - 1.month
   end
+
+  def json
+    {
+      'ID': id,
+      'Date': created
+    }
+      .merge(user.json.transform_keys { |key| "User #{key}" })
+      .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
+      .merge(contact_type.present? ? contact_type.json.transform_keys { |key| "contact_type_#{key}" } : {})
+  end
 end
