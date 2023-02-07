@@ -24,7 +24,7 @@ module Users
     end
 
     def check_captcha
-      return unless verify_recaptcha
+      return if verify_recaptcha
 
       self.resource = resource_class.new user_params
       resource.validate
@@ -32,7 +32,7 @@ module Users
         # delete default recaptcha error
         flash.delete(:recaptcha_error)
         # add custom recaptcha error
-        flash[:error] = 'reCAPTCHA verification failed, please try again';
+        flash[:error] = 'reCAPTCHA verification failed, please try again'
         flash.discard(:error)
         render :new
       }
