@@ -60,6 +60,7 @@ module TeamMembers
     def create_note(replacing: nil)
       current_team_member.notes.create!(content: note_params[:content],
                                         visible_to_user: note_params[:visible_to_user],
+                                        dated: note_params[:dated],
                                         user: @user,
                                         replacing: replacing)
     end
@@ -83,7 +84,7 @@ module TeamMembers
     end
 
     def note_params
-      params.require(:note).permit(:id, :content, :visible_to_user)
+      params.require(:note).permit(:id, :content, :visible_to_user, :dated)
     end
   end
 end

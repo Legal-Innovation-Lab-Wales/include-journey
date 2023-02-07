@@ -4,6 +4,7 @@ module Users
     before_action :set_breadcrumbs
     include Accessible
     skip_before_action :check_user, except: %i[new create]
+    prepend_before_action :check_captcha, only: :create
 
     # DELETE /users
     def destroy
@@ -15,5 +16,27 @@ module Users
     def set_breadcrumbs
       add_breadcrumb('My Profile', nil, 'fas fa-user-edit')
     end
+
+    private
+
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :mobile_number, :released_at, :terms, :email, :password, :password_confirmation)
+    end
+
+    def check_captcha
+      return if verify_recaptcha
+
+      self.resource = resource_class.new user_params
+      resource.validate
+      respond_with_navigational(resource) {
+        # delete default recaptcha error
+        flash.delete(:recaptcha_error)
+        # add custom recaptcha error
+        flash[:error] = 'reCAPTCHA verification failed, please try again'
+        flash.discard(:error)
+        render :new
+      }
+    end
+
   end
 end
