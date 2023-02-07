@@ -34,4 +34,8 @@ class WellbeingService < ApplicationRecord
   def metrics
     wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" }
   end
+
+  def recommend?
+    self.recommend
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_30_044805) do
+ActiveRecord::Schema.define(version: 2023_02_02_225741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -449,6 +449,7 @@ ActiveRecord::Schema.define(version: 2023_01_30_044805) do
     t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "recommend", default: false, null: false
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 

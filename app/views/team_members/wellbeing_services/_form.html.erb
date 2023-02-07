@@ -43,6 +43,13 @@
             <% end %>
           </p>
         </div>
+        
+        <div class="form-check form-switch d-flex px-0 pb-3">
+          <%= f.label :recommend, class: 'form-check-label' do %>
+            Recommend this wellbeing service to users?
+          <% end %>
+          <%= f.check_box :recommend, class: 'form-check-input' %>
+        </div>
 
         <div class="container p-0">
           <div class="row m-0">

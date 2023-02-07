@@ -2,7 +2,7 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
-    before_action :get_user, only: %i[index recent]
+    before_action :get_user, only: %i[index recent admin_recent_contacts new create]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
@@ -14,6 +14,15 @@ module TeamMembers
 
       render 'recent'
     end
+
+    # GET team_members/:member_id/contact_logs/recent
+    def admin_recent_contacts
+      @contact_logs = ContactLog.where('team_member_id': params[:member_id]).recent.order(start: :desc)
+      @count_in_last_week = @contact_logs.last_week.size
+
+      render 'recent'
+    end
+
 
     # POST /contact_logs
     def create
@@ -81,6 +90,8 @@ module TeamMembers
     def resources
       if @user
         ContactLog.where('user_id': @user.id).past.order(start: :desc)
+      elsif @team_member
+        ContactLog.where('team_member_id': @team_member.id).past.order(start: :desc)
       else
         current_team_member.contact_logs.past.order(start: :desc)
       end
@@ -93,6 +104,8 @@ module TeamMembers
     def search
       if @user
         ContactLog.where('user_id': @user.id).where(contact_log_search, wildcard_query).order(start: :desc)
+      elsif @team_member
+        ContactLog.where('team_member_id': @team_member.id).where(contact_log_search, wildcard_query).order(start: :desc)
       else
         current_team_member.contact_logs.where(contact_log_search, wildcard_query).order(start: :desc)
       end
@@ -147,6 +160,11 @@ module TeamMembers
         add_breadcrumb('Users', users_path, 'fas fa-user')
         add_breadcrumb(@user.full_name, @user)
         add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
+      elsif @team_member
+        path = action_name == 'admin_recent_contacts' ? nil : admin_recent_contact_logs_path(@team_member)
+        add_breadcrumb('Team Members', team_members_path, 'fas fa-user')
+        add_breadcrumb(@team_member.full_name, @team_member)
+        add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
       else
         add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
       end
@@ -157,6 +175,12 @@ module TeamMembers
       if(params[:user_id].present?)
         @user = User.where(id: params[:user_id]).first
         if(!@user.present?)
+          redirect_to :authenticated_team_member_root_path
+        end
+      end
+      if(params[:member_id].present?)
+        @team_member = TeamMember.where(id: params[:member_id]).first
+        if(!@team_member.present?)
           redirect_to :authenticated_team_member_root_path
         end
       end
