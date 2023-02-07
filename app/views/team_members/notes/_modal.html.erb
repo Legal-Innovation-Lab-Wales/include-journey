@@ -11,7 +11,7 @@
           <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
         </div>
 
-        <%= form.hidden_field :dated %>
+        <%= form.hidden_field :dated, id: 'dated' %>
         <p class="text-black-50">Date and time created (historical date and time permitted):</p>
         <div class="row date-time-fields">
           <div class="col-8 form-floating">
@@ -44,4 +44,4 @@
   </div>
 </div>
 
-<%= javascript_pack_tag 'note_datetime_picker' %>
+<%= javascript_pack_tag 'datetime_picker' %>
