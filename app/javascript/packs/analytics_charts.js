@@ -33,11 +33,60 @@ if(chart_select=="Line Chart"){
 }else{
     if(type=="Wellbeing Assessments"){        
         create_wellbeing();
+    } else if (type=="Contact Logs"){
+        create_contact_log()
     }else{
         create_journal();
     }
 }
 
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
+
+function create_contact_log(){
+    const labelsValue = {}
+    const randomColors = []
+    data.forEach(item =>{
+        if (labelsValue[item.contact_type_name]) {
+            labelsValue[item.contact_type_name] = labelsValue[item.contact_type_name] + 1
+        } else {
+            labelsValue[item.contact_type_name] = 1
+            randomColors.push(getRandomColor())
+        }
+    })
+
+    wellbeing_labels.forEach(label => {
+        if(!labelsValue[label]){
+            labelsValue[label] = 0
+            randomColors.push(getRandomColor())
+        }
+    })
+
+    const contact_data = {
+        labels: Object.keys(labelsValue),
+        datasets: [{
+            label: '',
+            data: Object.values(labelsValue),
+            backgroundColor: randomColors
+        }]
+    }
+    canvas = create_canvas(0, 'Contact Log', true)
+    switch(chart_select){
+        case 'Pie Chart':
+            create_pie_chart(canvas, contact_data)
+            break;
+        case 'Bar Chart':
+            create_bar_chart(canvas, contact_data)
+            break;
+    }
+}
 function create_wellbeing(){
     scores = new Array();
     data.forEach((assessment) => {
