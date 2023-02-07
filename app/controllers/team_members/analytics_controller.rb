@@ -66,7 +66,7 @@ module TeamMembers
         if params[:author] == 'User'
           @resource = WellbeingAssessment.all.where(team_member_id: nil)
         else
-          @resource = params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email:params).wellbeibng_assessments
+          @resource = params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email:params[:member]).wellbeing_assessments
         end
       else
         @resource = WellbeingAssessment.all

@@ -1,7 +1,11 @@
 <%= form_with model: contact_log, url: url do |form| %>
   <div class="form-floating">
     <% user_options = options_from_collection_for_select(@users, 'id', 'full_name_with_email') %>
-    <%= form.select :user_id, user_options,  { include_blank: false }, { class: 'form-control'} %>
+    <% if @user %>
+      <p class='form-control text-start'> <%= @user.full_name %></p>
+    <% else %>
+      <%= form.select :user_id, user_options,  { include_blank: false }, { class: 'form-control'} %>
+    <% end %>
     <%= form.label :user_id %>
     <p class="actual-error-message" ><%= "User does not exist" if @contact_log.errors.has_key?(:user)%></p>
   </div>
@@ -61,4 +65,4 @@
   <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
 <% end %>
 
-<%= javascript_pack_tag 'contact_log_datetime_picker' %>
+<%= javascript_pack_tag 'datetime_picker' %>

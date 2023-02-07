@@ -270,6 +270,8 @@
           </div>
           <div class="card-body">
           <p><%= @user.first_name %> has <%= @contact_logs.size %> contact log(s).</p>
+          <p><%= @user.first_name %> has <%= @contact_logs.last_week.size %> contact log(s) last week.</p>
+          <p><%= @user.first_name %> has <%= @contact_logs.last_month.size %> contact log(s) last month.</p>
           </div>
           <div class="card-footer text-center">
             <%= link_to "View User Contact Logs", users_recent_contact_logs_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>

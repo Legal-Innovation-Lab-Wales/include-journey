@@ -450,7 +450,6 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "recommend"
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 

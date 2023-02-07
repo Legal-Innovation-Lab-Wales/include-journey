@@ -11,7 +11,9 @@
       <p><%= pluralize(@count_in_last_week, 'has', 'have') %> happened in the last week.
     </div>
     <div class="container">
-      <%= render 'shared/new_btn', path: new_contact_log_path, text: 'Add Contact Log' %>
+      <% if !(@team_member && (@team_member.id != current_team_member.id))  %>
+        <%= render 'shared/new_btn', path: @user ? users_new_contact_logs_path : new_contact_log_path, text: 'Add Contact Log' %>
+      <% end %>
       <hr>
       <div class="row">
         <% @contact_logs.each do |contact_log| %>
@@ -25,6 +27,10 @@
     <div class="col-8 col-md-4">
       <% if @user %>
         <%= link_to users_contact_logs_path(@user), class: 'btn btn-primary' do %>
+          View Archived Contact Logs <i class="fas fa-arrow-circle-right"></i>
+        <% end %>
+      <% elsif @team_member %>
+       <%= link_to admin_contact_logs_path(@team_member), class: 'btn btn-primary' do %>
           View Archived Contact Logs <i class="fas fa-arrow-circle-right"></i>
         <% end %>
       <% else %>
