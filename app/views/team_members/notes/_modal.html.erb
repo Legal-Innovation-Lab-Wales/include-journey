@@ -10,12 +10,29 @@
         <div class="input-group mb-3">
           <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
         </div>
-        <div class="form-check form-switch d-flex justify-content-between px-0">
+
+        <%= form.hidden_field :dated, id: 'dated' %>
+        <div class="row date-time-fields">
+          <div class="col-8 form-floating">
+            <input class="form-control" autocomplete="when" placeholder="when" value="<%= note.date %>"
+                    type="date" id="dated_when" required="true">
+            <label for="dated_when" class="ms-2">Date</label>
+          </div>
+
+          <div class="col-4 form-floating">
+            <input class="form-control" autocomplete="time" placeholder="time" value="<%= note.time %>" type="time"
+                  id="dated_time" required="true">
+            <label for="dated_time" class="ms-2">Time</label>
+          </div>
+        </div>
+
+        <div class="form-check form-switch d-flex justify-content-between px-0 pt-2">
           <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
           Allow user to see this note?
           <% end %>
           <%= form.check_box :visible_to_user, class: 'form-check-input' %>
         </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
@@ -25,3 +42,5 @@
     </div>
   </div>
 </div>
+
+<%= javascript_pack_tag 'datetime_picker' %>
