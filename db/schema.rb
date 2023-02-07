@@ -356,7 +356,6 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
-    t.date "released_at"
     t.boolean "terms", default: false
     t.datetime "deleted_at"
     t.datetime "date_of_birth"
@@ -398,6 +397,7 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.integer "silver_achievements_count", default: 0, null: false
     t.integer "gold_achievements_count", default: 0, null: false
     t.boolean "notifications_enabled", default: true
+    t.date "released_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -450,6 +450,7 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "recommend"
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 
