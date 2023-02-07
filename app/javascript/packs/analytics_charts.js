@@ -225,6 +225,31 @@ function create_line_charts(){
             }
         }
         chart_label = "Average Wellbeing Assessment Scores"
+    } else if (type == "Contact Logs") {
+        const colors = [];
+        wellbeing_labels.forEach(() => {
+            colors.push(getRandomColor())
+        })
+        line_datasets = new Array(wellbeing_labels.length);
+        for (var i = 0; i < line_datasets.length; i++) {
+            line_datasets[i] = {
+                label: wellbeing_labels[i],
+                data: new Array(number_of_weeks).fill(0),
+                fill: false,
+                borderColor: colors[i],
+                tension: 0
+            }
+        }
+        options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                    }
+                }]
+            }
+        }
+        chart_label = "Contact Logs"
     }else{
         line_datasets = new Array(journal_labels.length);
         for(var i=0;i<line_datasets.length;i++){
@@ -253,7 +278,7 @@ function create_line_charts(){
         if(week_number==0){ week_number = 1;}
         entry.week_index = week_number-1;
         week_groups[week_number-1].push(entry)
-        if(type!="Wellbeing Assessments"){       
+        if(type === "Journal Entries"){     
             unicode = entry.Feeling.codePointAt(0).toString(16).toUpperCase();
             switch(unicode){
                 case '1F973':
@@ -275,7 +300,15 @@ function create_line_charts(){
                     line_datasets[5].data[entry.week_index]++;
                     break;
             }
-        }
+        }else if(type === "Contact Logs"){   
+
+            line_datasets.forEach(line_data=>{
+                if(line_data.label === entry.contact_type_name){
+                    line_data.data[entry.week_index]++;
+                }
+            })
+        
+         }
     })
     if(type =="Wellbeing Assessments"){
         for(var i=0;i<number_of_weeks;i++){
