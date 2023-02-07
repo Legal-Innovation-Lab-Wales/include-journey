@@ -8,4 +8,8 @@ class ContactType < ApplicationRecord
       'name': name
     }
   end
+
+  def to_csv
+    [name]
+  end
 end

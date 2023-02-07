@@ -57,4 +57,8 @@ class ContactLog < ApplicationRecord
       .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
       .merge(contact_type.present? ? contact_type.json.transform_keys { |key| "contact_type_#{key}" } : {})
   end
+
+  def to_csv
+    [id, created] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv
+  end
 end
