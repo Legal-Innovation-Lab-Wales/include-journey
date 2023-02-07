@@ -3,27 +3,43 @@
     <% user_options = options_from_collection_for_select(@users, 'id', 'full_name_with_email') %>
     <%= form.select :user_id, user_options,  { include_blank: false }, { class: 'form-control'} %>
     <%= form.label :user_id %>
-    <p class="actual-error-message" ><%= "User does not exist" if @contact_log.errors.has_key?(:user)%></p>
+    <p class="actual-error-message" >
+      <% contact_log.errors[:user].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <div class="form-floating">
    <% contact_type_options = options_from_collection_for_select(@contact_types, 'id', 'name') %>
     <%= form.select :contact_type_id, contact_type_options,  { include_blank: false }, { class: 'form-control'} %>
     <%= form.label :contact_type_id %>
-    <p class="actual-error-message" ><%= "Contact type does not exist" if @contact_log.errors.has_key?(:contact_type)%></p>
+    <p class="actual-error-message" >
+      <% contact_log.errors[:contact_type].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <div class="form-floating">
    <% contact_purpose_options = options_from_collection_for_select(@contact_purposes, 'id', 'name') %>
     <%= form.select :contact_purpose_id, contact_purpose_options,  { include_blank: false }, { class: 'form-control'} %>
     <%= form.label :contact_purpose_id %>
-    <p class="actual-error-message" ><%= "Contact purpose does not exist" if @contact_log.errors.has_key?(:contact_purpose)%></p>
+    <p class="actual-error-message" >
+      <% contact_log.errors[:contact_purpose].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <div class="form-floating">
     <%= form.text_area :notes, class: 'form-control', autocomplete: "Notes", placeholder: "Notes" %>
     <%= form.label :notes %>
-    <p class="actual-error-message" ><%= "Please enter valid characters: A-Z, 0-9, & ,.-() " if @contact_log.errors.has_key?(:notes)%></p>
+    <p class="actual-error-message" >
+      <% contact_log.errors[:notes].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
   </div>
 
   <%= form.hidden_field :start %>
@@ -42,6 +58,12 @@
     </div>
   </div>
 
+  <p class="actual-error-message" >
+      <% contact_log.errors[:start].each do |err| %>
+        <%= err %>
+      <% end %>
+    </p>
+
   <%= form.hidden_field :end %>
 
   <div class="row date-time-fields">
@@ -57,6 +79,12 @@
       <label for="contact_log_end_time">Time</label>
     </div>
   </div>
+
+  <p class="actual-error-message" >
+    <% contact_log.errors[:end].each do |err| %>
+      <%= err %>
+    <% end %>
+  </p>
 
   <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
 <% end %>

@@ -7,13 +7,23 @@
             <h3><%= type %> Daily Affirmation</h3>
             <%= form_with model: @affirmation, url: path do |f| %>
               <div class="form-floating">
-                <%= f.text_area :text, pattern: '^[a-zA-Z0-9_ ]*$', class: 'form-control', required: true %>
+                <%= f.text_area :text, class: 'form-control', required: true %>
                 <%= f.label :text %>
               </div>
+              <p class="actual-error-message" >
+                <% @affirmation.errors[:text].each do |err| %>
+                  <%= err %>
+                <% end %>
+              </p>
               <div class="form-floating">
                 <%= f.date_field :scheduled_date, min: Date.today, class: 'form-control', required: true %>
                 <%= f.label :scheduled_date %>
               </div>
+              <p class="actual-error-message" >
+                <% @affirmation.errors[:scheduled_date].each do |err| %>
+                  <%= err %>
+                <% end %>
+              </p>
               <%= f.submit submit_btn, class: 'btn btn-primary' %>
             <% end %>
 
