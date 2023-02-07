@@ -88,7 +88,10 @@ module Users
     end
 
     def set_breadcrumbs
-      path = action_name == 'index' ? nil : contacts_path
+      path = nil
+      if action_name != 'index' && resources.present?
+        path = contacts_path
+      end
       add_breadcrumb('My Contacts', path, 'fas fa-address-book')
     end
   end
