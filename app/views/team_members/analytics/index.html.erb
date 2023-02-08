@@ -37,7 +37,11 @@
             </div>
             <% if current_team_member.admin? %>
               <div class="form-floating">
-                <%= f.label 'Shared With', class: "form-label" %>
+                <% if params[:data] === "Contact Logs"%>
+                  <%= f.label 'Created By', class: "form-label" %>
+                <% else %>
+                  <%= f.label 'Shared With', class: "form-label" %>
+                <% end %>
                 <%= f.select "member", ['All'] + @team_member_emails, :selected => params[:member] %>
               </div>
             <% end %>
