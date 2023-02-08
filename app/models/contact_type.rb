@@ -5,7 +5,8 @@ class ContactType < ApplicationRecord
   def json
     {
       'id': id,
-      'name': name
+      'name': name,
+      'color': color
     }
   end
 

@@ -17,8 +17,8 @@ module TeamMembers
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
          'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type']
+        ['ID', 'Date','Notes','Start Time','End Time', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type', 'Contact Purpose']
       else
         ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Feeling', 'Entry']
@@ -61,8 +61,8 @@ module TeamMembers
 
       apply_filters
       @resource = @resource.sort_by(&:created_at)
-      @scores = WellbeingScoreValue.order(id: :asc)
-      @labels = params[:data] === 'Contact Logs' ? ContactType.all.pluck(:name) : @scores.pluck(:name)
+      @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
+      @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
     end
 

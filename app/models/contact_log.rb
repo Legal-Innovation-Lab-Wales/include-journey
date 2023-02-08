@@ -59,6 +59,6 @@ class ContactLog < ApplicationRecord
   end
 
   def to_csv
-    [id, created] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv
+    [id, created, notes, start_time, end_time] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv + contact_purpose.to_csv
   end
 end
