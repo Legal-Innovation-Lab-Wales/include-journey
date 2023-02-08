@@ -40,16 +40,6 @@ if(chart_select=="Line Chart"){
     }
 }
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-  
-
 function create_contact_log(){
     const labelsValue = {}
     const randomColors = []
@@ -58,14 +48,14 @@ function create_contact_log(){
             labelsValue[item.contact_type_name] = labelsValue[item.contact_type_name] + 1
         } else {
             labelsValue[item.contact_type_name] = 1
-            randomColors.push(getRandomColor())
+            randomColors.push(item.contact_type_color)
         }
     })
 
-    wellbeing_labels.forEach(label => {
+    wellbeing_labels.forEach((label, i) => {
         if(!labelsValue[label]){
             labelsValue[label] = 0
-            randomColors.push(getRandomColor())
+            randomColors.push(wellbeing_colours[i])
         }
     })
 
@@ -226,17 +216,14 @@ function create_line_charts(){
         }
         chart_label = "Average Wellbeing Assessment Scores"
     } else if (type == "Contact Logs") {
-        const colors = [];
-        wellbeing_labels.forEach(() => {
-            colors.push(getRandomColor())
-        })
+       
         line_datasets = new Array(wellbeing_labels.length);
         for (var i = 0; i < line_datasets.length; i++) {
             line_datasets[i] = {
                 label: wellbeing_labels[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill: false,
-                borderColor: colors[i],
+                borderColor: wellbeing_colours[i],
                 tension: 0
             }
         }
