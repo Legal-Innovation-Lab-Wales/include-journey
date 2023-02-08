@@ -88,6 +88,7 @@ module Users
     end
 
     def set_breadcrumbs
+      path = action_name == 'index' ? nil : contacts_path
       path = nil
       if action_name != 'index' && resources.present?
         path = contacts_path
