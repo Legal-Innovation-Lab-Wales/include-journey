@@ -1,7 +1,9 @@
 <ul class="list-group">
   <% goals.each do |goal| %>
     <li class="list-group-item <%= goal.achieved_on.present? ? 'achieved' : '' %>">
-      <div><%= goal.goal_type.emoji %></div>
+      <div>
+      <!-- <%= goal.goal_type.emoji %> -->
+      </div>
       <div><%= simple_format(goal.goal) %></div>
       <div><div><%= render 'users/goals/control', goal: goal %></div></div>
     </li>

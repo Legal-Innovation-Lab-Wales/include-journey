@@ -20,7 +20,7 @@ module Users
       @goal = Goal.new(
         user: current_user,
         goal: goal_params[:goal],
-        goal_type_id: goal_params[:goal_type_id],
+        goal_type_id: goal_params[:goal_type_id] ? goal_params[:goal_type_id] : GoalType.first.id,
         short_term: goal_params[:short_term]
       )
 
