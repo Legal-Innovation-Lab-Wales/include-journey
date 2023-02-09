@@ -41,10 +41,11 @@ module Users
 
     # PUT /contacts/:id
     def update
-      if (@contact = @contact.update!(contact_params))
+      if @contact.update(contact_params)
         redirect_to contacts_path, flash: { success: 'Contact updated' }
       else
-        redirect_to edit_contact_path, flash: { error: 'Error updating contact' }
+        add_breadcrumb('Edit Contact', nil, 'fas fa-edit')
+        render 'edit'
       end
     end
 

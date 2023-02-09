@@ -15,11 +15,14 @@ module TeamMembers
 
     # POST /users/:user_id/appointments
     def create
-      if (@appointment = @user.appointments.create!(appointment_params.merge!(team_member: current_team_member)))
+      @appointment = @user.appointments.create(
+        appointment_params.merge!(team_member: current_team_member)
+      )
+      if @appointment.save
         redirect_to user_path(@user), flash: { success: 'Appointment created' }
       else
-        redirect_to user_path(@user),
-                    flash: { error: "Appointment could not be created: #{@appointment.errors}" }
+        add_breadcrumb('New Appointment', nil, 'fas fa-plus circle')
+        render 'new'
       end
     end
 

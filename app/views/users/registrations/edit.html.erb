@@ -87,7 +87,7 @@
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= form.select :pronouns, User::PRONOUN_OPTIONS, { selected: current_user.pronouns }, { class: 'form-select' } %>
+                <%= form.select :pronouns, User::PRONOUN_OPTIONS[0..User::PRONOUN_OPTIONS.count-2], { selected: current_user.pronouns }, { class: 'form-select' } %>
                 <%= form.label :pronouns %>
               </div>
             </div>
@@ -95,13 +95,13 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.select :sex, User::SEX_OPTIONS, { selected: current_user.sex }, { class: 'form-select' }  %>
+                <%= form.select :sex, User::SEX_OPTIONS[0..User::SEX_OPTIONS.count-2], { selected: current_user.sex }, { class: 'form-select' }  %>
                 <%= form.label :sex %>
               </div>
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <%= form.select :gender_identity, User::GENDER_IDENTITY_OPTIONS, { selected: current_user.gender_identity }, { class: 'form-select' }  %>
+                <%= form.select :gender_identity, User::GENDER_IDENTITY_OPTIONS[0..User::GENDER_IDENTITY_OPTIONS.count-2], { selected: current_user.gender_identity }, { class: 'form-select' }  %>
                 <%= form.label :gender_identity, 'Gender identity same as sex?' %>
               </div>
             </div>
@@ -109,7 +109,7 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.select :ethnic_group, User::ETHNICITY_OPTIONS, { selected: current_user.ethnic_group }, { class: 'form-select' }  %>
+                <%= form.select :ethnic_group, User::ETHNICITY_OPTIONS[0..User::ETHNICITY_OPTIONS.count-2], { selected: current_user.ethnic_group }, { class: 'form-select' }  %>
                 <%= form.label :ethnic_group %>
               </div>
             </div>
@@ -117,7 +117,7 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.select :religion, User::RELIGION_OPTIONS, { selected: current_user.religion }, { class: 'form-select' }  %>
+                <%= form.select :religion, User::RELIGION_OPTIONS[0..User::RELIGION_OPTIONS.count-2], { selected: current_user.religion }, { class: 'form-select' }  %>
                 <%= form.label :religion %>
               </div>
             </div>

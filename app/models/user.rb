@@ -36,9 +36,9 @@ class User < DeviseRecord
       FROM wellbeing_assessments WHERE wellbeing_assessments.user_id = users.id)')
   }
 
-  PRONOUN_OPTIONS = ['', 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)'].freeze
-  SEX_OPTIONS = ['', 'Male', 'Female', 'Prefer not to say'].freeze
-  GENDER_IDENTITY_OPTIONS = ['', 'Yes', 'No', 'Prefer not to say'].freeze
+  PRONOUN_OPTIONS = ['', 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)', nil].freeze
+  SEX_OPTIONS = ['', 'Male', 'Female', 'Prefer not to say', nil].freeze
+  GENDER_IDENTITY_OPTIONS = ['', 'Yes', 'No', 'Prefer not to say', nil].freeze
   RELIGION_OPTIONS = [
     '',
     'No religion',
@@ -49,7 +49,8 @@ class User < DeviseRecord
     'Muslim',
     'Sikh',
     'Any other religion',
-    'Prefer not to say'
+    'Prefer not to say',
+    nil
   ].freeze
   ETHNICITY_OPTIONS = [
     '',
@@ -70,7 +71,8 @@ class User < DeviseRecord
     'White: Other',
     'White: British/English/Welsh/Scottish/Northern Irish',
     'White: Gypsy/Irish Traveller/Romany',
-    'Other Ethnic Group'
+    'Other Ethnic Group',
+    nil
   ].freeze
 
   validates_presence_of :terms, :first_name, :last_name, :mobile_number, :email
