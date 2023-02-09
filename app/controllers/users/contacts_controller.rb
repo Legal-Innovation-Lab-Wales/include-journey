@@ -15,7 +15,6 @@ module Users
 
     # POST /contacts
     def create
-      
       @contact = Contact.new(
         user: current_user,
         name: contact_params[:name],
@@ -23,14 +22,12 @@ module Users
         number: contact_params[:number],
         email: contact_params[:email]
       )
-
       if @contact.save
         redirect_to contacts_path, flash: { success: 'Contact created' }
       else
-        add_breadcrumb('New Contact', nil, 'fas fa-plus circle')
+        add_breadcrumb('New Contact', nil, 'fas fa-plus-circle')
         render 'new'
       end
-      
     end
 
     # GET /contacts/:id/edit
@@ -89,7 +86,10 @@ module Users
     end
 
     def set_breadcrumbs
-      path = action_name == 'index' ? nil : contacts_path
+      path = nil
+      if action_name != 'index' && resources.present?
+        path = contacts_path
+      end
       add_breadcrumb('My Contacts', path, 'fas fa-address-book')
     end
   end
