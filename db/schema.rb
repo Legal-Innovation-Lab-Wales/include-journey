@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_06_121448) do
+ActiveRecord::Schema.define(version: 2023_02_09_091252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,6 +285,12 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.boolean "suspended", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_otp_secret"
+    t.string "encrypted_otp_secret_iv"
+    t.string "encrypted_otp_secret_salt"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.string "otp_backup_codes", array: true
     t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
@@ -450,6 +456,7 @@ ActiveRecord::Schema.define(version: 2023_02_06_121448) do
     t.bigint "contact_number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "recommend"
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 
