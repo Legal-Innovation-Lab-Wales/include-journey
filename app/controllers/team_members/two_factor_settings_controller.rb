@@ -42,6 +42,16 @@ module TeamMembers
             current_team_member.save!
         end
 
+        def destroy
+          if current_team_member.disable_two_factor!
+            flash[:notice] = 'Successfully disabled two factor authentication.'
+            redirect_to root_path
+          else
+            flash[:alert] = 'Could not disable two factor authentication.'
+            redirect_back fallback_location: root_path
+          end
+        end
+
         private
 
         def enable_2fa_params
