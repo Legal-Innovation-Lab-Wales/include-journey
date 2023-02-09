@@ -11,6 +11,6 @@ class ContactType < ApplicationRecord
   end
 
   def to_csv
-    [name]
+    [id, name, color]
   end
 end

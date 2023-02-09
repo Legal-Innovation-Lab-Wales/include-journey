@@ -51,14 +51,18 @@ class ContactLog < ApplicationRecord
   def json
     {
       'ID': id,
-      'Date': created
+      'Date': created,
+      "Notes": notes, 
+      "Start Date": "#{start_date} #{start_time}",
+      "End Date": "#{end_date} #{end_time}"
     }
       .merge(user.json.transform_keys { |key| "User #{key}" })
       .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
       .merge(contact_type.present? ? contact_type.json.transform_keys { |key| "contact_type_#{key}" } : {})
+      .merge(contact_purpose.present? ? contact_purpose.json.transform_keys { |key| "contact_purpose_#{key}" } : {})
   end
 
   def to_csv
-    [id, created, notes, start_time, end_time] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv + contact_purpose.to_csv
+    [id, created, notes, "#{start_date} #{start_time}", "#{end_date} #{end_time}"] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv + contact_purpose.to_csv
   end
 end
