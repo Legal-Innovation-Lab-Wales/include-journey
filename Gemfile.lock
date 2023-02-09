@@ -140,6 +140,8 @@ GEM
     mini_portile2 (2.8.1)
     minitest (5.17.0)
     msgpack (1.6.0)
+    net-http (0.3.2)
+      uri
     net-imap (0.3.4)
       date
       net-protocol
@@ -266,6 +268,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (0.10.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -308,6 +311,9 @@ DEPENDENCIES
   font-awesome-sass (~> 5.15.1)
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  net-http
+  net-imap
+  net-smtp
   pg (~> 1.1)
   premailer-rails
   puma (~> 5.5)
@@ -322,6 +328,7 @@ DEPENDENCIES
   spring
   turbolinks (~> 5)
   tzinfo-data
+  uri (= 0.10.0)
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
