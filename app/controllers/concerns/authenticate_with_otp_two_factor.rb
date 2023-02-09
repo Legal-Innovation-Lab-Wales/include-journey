@@ -22,7 +22,7 @@ module AuthenticateWithOtpTwoFactor
         @team_member = team_member
     
         session[:otp_team_member_id] = team_member.id
-        render 'devise/sessions/two_factor'
+        render 'team_members/sessions/two_factor'
     end
 
     def authenticate_team_member_with_otp_two_factor(team_member)
