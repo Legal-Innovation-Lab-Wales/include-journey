@@ -1,4 +1,4 @@
-module TeamMember
+module TeamMembers
     # app/controller/team_member/two_factor_settings_controller.rb
     class TwoFactorSettingsController < TeamMembersApplicationController
         def new
