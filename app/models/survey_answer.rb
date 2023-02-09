@@ -10,6 +10,7 @@ class SurveyAnswer < ApplicationRecord
   after_update :increment_answer_count
 
   validates_presence_of :survey_question_id, :survey_response_id
+  validates :answer, numericality: { only_integer: true, greater_than: -1, less_than: 6 }
 
   def increment_total
     survey_question.update!(total: survey_question.total + 1)

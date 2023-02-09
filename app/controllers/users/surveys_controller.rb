@@ -26,13 +26,19 @@ module Users
     def update
       return if @survey_response.submitted?
 
+      @errors = false
       update_answers
       update_comments
-
-      if params[:partial].present? && params[:partial] == true
-        respond_to { |format| format.json { render json: @survey_response.as_json, status: :ok } }
+      if @errors
+        add_breadcrumb(@survey.name, nil, 'fas fa-clipboard-list')
+        flash.now[:alert] = 'Failed to save: Please only use standard characters and punctuation'
+        render 'show', status: :unprocessable_entity
       else
-        mark_submitted
+        if params[:partial].present? && params[:partial] == true
+          respond_to { |format| format.json { render json: @survey_response.as_json, status: :ok } }
+        else
+          mark_submitted
+        end
       end
     end
 
@@ -50,7 +56,9 @@ module Users
       params[:question].each do |question|
         answer = SurveyAnswer.find_or_create_by!(survey_response: @survey_response,
                                                  survey_question: SurveyQuestion.find(question[0]))
-        answer.update(answer: question[1])
+        unless answer.update(answer: question[1])
+          @errors = true
+        end
       end
     end
 
@@ -60,7 +68,9 @@ module Users
       params[:comment_section].each do |comment_section|
         comment = SurveyComment.find_or_create_by!(survey_response: @survey_response,
                                                    survey_comment_section: SurveyCommentSection.find(comment_section[0]))
-        comment.update(text: comment_section[1])
+        unless comment.update(text: comment_section[1])
+          @errors = true
+        end
       end
     end
 

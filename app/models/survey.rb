@@ -9,7 +9,10 @@ class Survey < ApplicationRecord
   scope :available, -> { where('start_date <= :now and end_date >= :now and active = true', { now: DateTime.now }) }
 
   validates_presence_of :name, :start_date, :end_date
-  validates_format_of :name, with: Rails.application.config.regex_text_field, on: :create
+  validates_format_of :name, with: Rails.application.config.regex_text_field,
+                             message: Rails.application.config.text_field_error
+  validates_format_of :start_date, :end_date, with: Rails.application.config.regex_datetime,
+                                              message: Rails.application.config.datetime_error
 
   def start
     start_date.strftime('%d/%m/%Y')

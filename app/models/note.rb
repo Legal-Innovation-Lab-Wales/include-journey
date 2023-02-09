@@ -6,6 +6,10 @@ class Note < ApplicationRecord
   belongs_to :replacing, class_name: 'Note', optional: true, foreign_key: 'replacing_id'
 
   validates_presence_of :team_member_id, :user_id, :content, :dated
+  validates_format_of :content, with: Rails.application.config.regex_text_field,
+                                message: Rails.application.config.text_field_error
+  validates_format_of :dated, with: Rails.application.config.regex_datetime,
+                              message: Rails.application.config.datetime_error
 
   def chain(array)
     array << self

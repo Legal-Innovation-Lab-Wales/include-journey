@@ -3,7 +3,12 @@
   <div class="container p-0 m-0">
     <div class="row p-0 m-0">
       <div class="col-8 p-0">
-        <%= f.text_area :goal, class: 'form-control flex-2', placeholder: 'Goal', rows: 1, required: true, pattern: '^[a-zA-Z0-9_., ]*$' %>
+        <%= f.text_area :goal, class: 'form-control flex-2', placeholder: 'Goal', rows: 1, required: true %>
+        <p class="actual-error-message" >
+          <% goal.errors[:goal].each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
       </div>
       <div class="col-4 p-0">
         <select class="form-select" name="goal[goal_type_id]">

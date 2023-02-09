@@ -8,7 +8,8 @@ module TeamMembers
 
     # POST /notes
     def create
-      if (@note = create_note)
+      @note = create_note
+      if @note.save
         redirect_to user_path(@user), flash: { notice: 'Successfully added note!' }
       else
         error_redirect
@@ -54,15 +55,16 @@ module TeamMembers
     end
 
     def error_redirect
-      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please try again.' }
+      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please only use standard
+                                                    characters and punctuation' }
     end
 
     def create_note(replacing: nil)
-      current_team_member.notes.create!(content: note_params[:content],
-                                        visible_to_user: note_params[:visible_to_user],
-                                        dated: note_params[:dated],
-                                        user: @user,
-                                        replacing: replacing)
+      current_team_member.notes.new(content: note_params[:content],
+                                    visible_to_user: note_params[:visible_to_user],
+                                    dated: note_params[:dated],
+                                    user: @user,
+                                    replacing: replacing)
     end
 
     def user

@@ -25,7 +25,7 @@
                       <h4 class="me-auto"><%= appointment.what %></h4>
                       <span class="actions">
                         <% if appointment.team_member.present? %>
-                          <p>Created by <%= appointments.team_member.full_name %></p>
+                          <p>Created by <%= appointment.team_member.full_name %></p>
                         <% else %>
                           <span>
                             <%= link_to edit_appointment_path(appointment.id) do %><i class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Edit"></i><% end %>

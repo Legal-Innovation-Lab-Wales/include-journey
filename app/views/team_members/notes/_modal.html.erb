@@ -10,7 +10,11 @@
         <div class="input-group mb-3">
           <%= form.text_area :content, class: 'form-control', rows: '8', placeholder: 'Add your note', aria: { label: 'Add your note' }, required: 'true' %>
         </div>
-
+        <p class="actual-error-message" >
+          <% note.errors[:content].each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
         <%= form.hidden_field :dated, id: 'dated' %>
         <div class="row date-time-fields">
           <div class="col-8 form-floating">
@@ -25,7 +29,11 @@
             <label for="dated_time" class="ms-2">Time</label>
           </div>
         </div>
-
+        <p class="actual-error-message" >
+          <% note.errors[:dated].each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
         <div class="form-check form-switch d-flex justify-content-between px-0 pt-2">
           <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
           Allow user to see this note?

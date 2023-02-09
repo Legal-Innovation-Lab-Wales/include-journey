@@ -36,9 +36,58 @@ class User < DeviseRecord
       FROM wellbeing_assessments WHERE wellbeing_assessments.user_id = users.id)')
   }
 
-  validates_presence_of :terms
+  PRONOUN_OPTIONS = ['', 'He/Him', 'She/Her', 'They/Them', 'Ze (or Zie)', nil].freeze
+  SEX_OPTIONS = ['', 'Male', 'Female', 'Prefer not to say', nil].freeze
+  GENDER_IDENTITY_OPTIONS = ['', 'Yes', 'No', 'Prefer not to say', nil].freeze
+  RELIGION_OPTIONS = [
+    '',
+    'No religion',
+    'Christian',
+    'Buddhist',
+    'Hindu',
+    'Jewish',
+    'Muslim',
+    'Sikh',
+    'Any other religion',
+    'Prefer not to say',
+    nil
+  ].freeze
+  ETHNICITY_OPTIONS = [
+    '',
+    'Prefer not to say',
+    'Arab',
+    'Asian or Asian British: Bangladeshi',
+    'Asian or Asian British: Chinese',
+    'Asian or Asian British: Indian',
+    'Asian or Asian British: Other',
+    'Black or Black British: African',
+    'Black or Black British: Carribean',
+    'Black or Black British: Other',
+    'Mixed: Other',
+    'Mixed: White and Asian',
+    'Mixed: White and Black African',
+    'Mixed: White and Black Carribean',
+    'White: Irish',
+    'White: Other',
+    'White: British/English/Welsh/Scottish/Northern Irish',
+    'White: Gypsy/Irish Traveller/Romany',
+    'Other Ethnic Group',
+    nil
+  ].freeze
+
+  validates_presence_of :terms, :first_name, :last_name, :mobile_number, :email
+  validates_format_of :first_name, with: Rails.application.config.regex_name
+  validates_format_of :last_name, with: Rails.application.config.regex_name
+  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone
+  validates_format_of :email, with: Rails.application.config.regex_email
+  validates_format_of :disabilities, with: Rails.application.config.regex_text_field
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
+  validates :ethnic_group, inclusion: { in: ETHNICITY_OPTIONS }
+  validates :religion, inclusion: { in: RELIGION_OPTIONS }
+  validates :sex, inclusion: { in: SEX_OPTIONS }
+  validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
+  validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
 
   def release_date
     released_at.present? ? released_at.strftime('%d/%m/%Y') : ''

@@ -40,7 +40,6 @@ module TeamMembers
         success('created')
       else
         add_breadcrumb('New Affirmation',nil, 'fas fa-plus-circle')
-        flash[:error] = 'Please only use the characters A-Z & 0-9'
         render 'new'
       end
     end
@@ -61,7 +60,6 @@ module TeamMembers
         success('created')
       else
         add_breadcrumb('Edit Affirmation', nil, 'fas fa-edit')
-        flash[:error] = 'Please only use the characters A-Z & 0-9'
         render 'edit'
       end
     end
