@@ -35,8 +35,7 @@
               <%= f.label 'Display', class: "form-label" %>
               <%= f.select "display", ['Pie Chart', 'Bar Chart', 'Line Chart'], :selected => params[:display] %>
             </div>
-            <% if current_team_member.admin? %>
-              <div class="form-floating">
+              <div id="member-parent" class="form-floating" data-admin="<%= current_team_member.admin %>">
                 <% if params[:data] === "Contact Logs"%>
                   <%= f.label 'Created By', class: "form-label" %>
                 <% else %>
@@ -44,7 +43,6 @@
                 <% end %>
                 <%= f.select "member", ['All'] + @team_member_emails, :selected => params[:member] %>
               </div>
-            <% end %>
             <div class="form-floating">
               <%= f.label 'Author', class: "form-label" %>
               <%= f.select "author", ['Anyone', 'Staff', 'User'] + @team_member_emails, :selected => params[:author], class: 'test'%>
