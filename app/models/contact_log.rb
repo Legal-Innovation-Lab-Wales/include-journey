@@ -51,7 +51,7 @@ class ContactLog < ApplicationRecord
   def json
     {
       'ID': id,
-      'Date': created,
+      'Creation Date': created,
       "Notes": notes, 
       "Start Date": "#{start_date} #{start_time}",
       "End Date": "#{end_date} #{end_time}"

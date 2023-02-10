@@ -17,7 +17,7 @@ module TeamMembers
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
          'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
-        ['ID', 'Creation Date','Notes','Start Time','End Time', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
+        ['ID', 'Creation Date','Notes','Start Date','End Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type','Contact Color', 'Contact Purpose']
       else
         ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
