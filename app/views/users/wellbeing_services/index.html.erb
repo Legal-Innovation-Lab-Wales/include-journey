@@ -1,13 +1,11 @@
-<main class="container team-members wellbeing-services index">
+<%= render 'layouts/searchable', class_list: 'container team-members wellbeing-services index', header: 'Wellbeing Services', index: 'wellbeing_services' do %>
   <section class="row">
     <div class="col">
       <div class="container">
         <div class="row">
-          <h3>Wellbeing Services</h3>
-
           <div class="container">
             <div class="row">
-              <% @wellbeing_services.each do |wellbeing_service| %>
+              <% @resources.each do |wellbeing_service| %>
                 <%= render 'shared/wellbeing_services/card', wellbeing_service: wellbeing_service, user: true %>
               <% end %>
             </div>
@@ -16,4 +14,4 @@
       </div>
     </div>
   </section>
-</main>
+<% end %>
