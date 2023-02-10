@@ -42,20 +42,20 @@ if(chart_select=="Line Chart"){
 
 function create_contact_log(){
     const labelsValue = {}
-    const randomColors = []
+    const colors = []
     data.forEach(item =>{
         if (labelsValue[item.contact_type_name]) {
             labelsValue[item.contact_type_name] = labelsValue[item.contact_type_name] + 1
         } else {
             labelsValue[item.contact_type_name] = 1
-            randomColors.push(item.contact_type_color)
+            colors.push(item.contact_type_color)
         }
     })
 
     wellbeing_labels.forEach((label, i) => {
         if(!labelsValue[label]){
             labelsValue[label] = 0
-            randomColors.push(wellbeing_colours[i])
+            colors.push(wellbeing_colours[i])
         }
     })
 
@@ -64,7 +64,7 @@ function create_contact_log(){
         datasets: [{
             label: '',
             data: Object.values(labelsValue),
-            backgroundColor: randomColors
+            backgroundColor: colors
         }]
     }
     canvas = create_canvas(0, 'Contact Log', true)
