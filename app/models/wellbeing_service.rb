@@ -14,6 +14,8 @@ class WellbeingService < ApplicationRecord
                                 message: Rails.application.config.website_error
   validates_format_of :contact_number, with: Rails.application.config.regex_telephone,
                                        message: Rails.application.config.telephone_error
+  validates_format_of :postcode, with: Rails.application.config.regex_postcode,
+                                 message: Rails.application.config.postcode_error
 
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }
