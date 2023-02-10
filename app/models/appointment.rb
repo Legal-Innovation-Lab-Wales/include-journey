@@ -5,8 +5,10 @@ class Appointment < ApplicationRecord
 
   # Input validation
   validates_presence_of :where, :who_with, :what, :start, :end
-  validates_format_of :where, with: Rails.application.config.regex_name, on: :create
-  validates_format_of :who_with, :what, with: Rails.application.config.regex_name, on: :create
+  validates_format_of :where, :who_with, :what, with: Rails.application.config.regex_name,
+                                                message: Rails.application.config.name_error
+  validates_format_of :start, :end, with: Rails.application.config.regex_datetime,
+                                    message: Rails.application.config.datetime_error
 
   scope :future, -> { where('start >= ?', Time.now) }
   scope :past, -> { where('start <= ?', Time.now) }

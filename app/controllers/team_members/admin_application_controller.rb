@@ -8,7 +8,7 @@ module TeamMembers
     def require_admin
       return if current_team_member.admin?
 
-      redirect_to authenticated_team_member_root_path, error: 'You are not an admin'
+      redirect_to authenticated_team_member_root_path, flash: { error: 'You are not an admin' }
     end
   end
 end

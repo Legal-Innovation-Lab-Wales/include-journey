@@ -11,7 +11,7 @@ class Goal < ApplicationRecord
   scope :unarchived, -> { where(archived: false) }
 
   validates_presence_of :user_id, :goal, :goal_type
-  validates_format_of :goal, with: Rails.application.config.regex_text_field, on: :create
+  validates_format_of :goal, with: Rails.application.config.regex_text_field
 
   def achieved?
     achieved_on.present?

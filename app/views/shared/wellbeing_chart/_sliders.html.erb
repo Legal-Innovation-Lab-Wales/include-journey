@@ -23,6 +23,11 @@
             </div>
           </div>
         <% end %>
+        <p class="actual-error-message" >
+          <% local_assigns[:wellbeing_assessment].errors.each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
         <div class="row submit-btn">
           <div class="col">
             <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>

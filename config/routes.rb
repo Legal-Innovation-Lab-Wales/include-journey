@@ -12,6 +12,15 @@ Rails.application.routes.draw do
                                            passwords: 'team_members/passwords',
                                            unlocks: 'team_members/unlocks' }
 
+  get 'guide', to: 'guides#index'
+  get 'guide_journal', to: 'guides#journal'
+  get 'guide_appointments', to: 'guides#appointments'
+  get 'guide_myNeeds', to: 'guides#myNeeds'
+  get 'guide_contacts', to: 'guides#contacts'
+  get 'guide_support', to: 'guides#support'
+  get 'guide_goals', to: 'guides#goals'
+  post 'report_issue', to: 'report_issue#send_report'
+  
   authenticated :user do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
@@ -42,6 +51,7 @@ Rails.application.routes.draw do
       resources :wellbeing_services, only: :index
       resources :surveys, only: %i[index show update]
     end
+    get '/*path', to: redirect('')
   end
 
   # rubocop:disable Metrics/BlockLength
@@ -124,6 +134,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    get '/*path', to: redirect('')
   end
   # rubocop:enable Metrics/BlockLength
 
@@ -135,14 +146,5 @@ Rails.application.routes.draw do
     get 'cookie_policy', to: 'pages#cookie_policy'
     get '/*path', to: redirect('/users/sign_in')
   end
-
-  get 'guide', to: 'guides#index'
-  get 'guide_journal', to: 'guides#journal'
-  get 'guide_appointments', to: 'guides#appointments'
-  get 'guide_myNeeds', to: 'guides#myNeeds'
-  get 'guide_contacts', to: 'guides#contacts'
-  get 'guide_support', to: 'guides#support'
-  get 'guide_goals', to: 'guides#goals'
-  post 'report_issue', to: 'report_issue#send_report'
 
 end

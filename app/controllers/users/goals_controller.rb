@@ -27,7 +27,7 @@ module Users
       if @goal.save
         redirect_to goals_path, flash: { success: 'Goal added' }
       else
-        redirect_to goals_path, flash: { error: "Please use only characters A-Z, 0-9, '.' & ',' " }
+        redirect_to goals_path, flash: { error: Rails.application.config.text_field_error }
       end
 
     end

@@ -51,11 +51,11 @@ module Users
 
     # PUT /appointments/:id
     def update
-      if @appointment.update!(appointment_params)
+      if @appointment.update(appointment_params)
         redirect_to upcoming_appointments_path, flash: { success: 'Appointment updated' }
       else
-        redirect_to edit_appointment_path(@appointment),
-                    flash: { error: 'Appointment could not be updated. Please try again.' }
+        add_breadcrumb('Edit Appointment', nil, 'fas fa-edit')
+        render 'edit'
       end
     end
 
