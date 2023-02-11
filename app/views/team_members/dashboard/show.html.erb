@@ -22,6 +22,9 @@
           <%= render 'shared/dashboard_btn', path: Survey.count.zero? ? new_survey_path : surveys_path,
                      icon: 'fa-clipboard-list', text: 'Surveys' %>
         </div>
+        <div class="row">
+            <%= render 'shared/dashboard_btn', path: approvals_path	, icon: 'fa-check', text: 'Approvals', col: "col-md-3" %>
+        </div>
       </div>
     </div>
   </section>

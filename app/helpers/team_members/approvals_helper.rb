@@ -1,0 +1,2 @@
+module TeamMembers::ApprovalsHelper
+end
