@@ -2,12 +2,12 @@
   <main class="container breadcrumbs">
     <section class="row">
       <div class="col btn-container" style="text-align: left;">
-        <% if current_user || current_team_member %>
+        <% if current_user || current_team_member&.two_factor_enabled? %>
           <%= link_to root_url, class: 'btn btn-primary breadcrumb-btn' do %>
             <i class="fas fa-home"></i>
             <span>Home</span>
           <% end %>
-        <% else %>
+        <% elsif !current_team_member %>
           <%= link_to root_path, class: 'btn btn-primary breadcrumb-btn' do %>
             <i class="fas fa-arrow-circle-left"></i> 
             <span>Homepage</span>
