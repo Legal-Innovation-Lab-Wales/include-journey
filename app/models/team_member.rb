@@ -92,4 +92,8 @@ class TeamMember < DeviseRecord
     otp_backup_codes: nil)
   end
 
+  # Determine if user has two-factor authentication enabled
+  def two_factor_enabled?
+    otp_required_for_login
+  end
 end

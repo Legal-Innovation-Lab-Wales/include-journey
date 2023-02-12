@@ -1,6 +1,8 @@
 module TeamMembers
     # app/controller/team_member/two_factor_settings_controller.rb
     class TwoFactorSettingsController < TeamMembersApplicationController
+      skip_before_action :set_up_two_factor
+
         def new
             if current_team_member.otp_required_for_login
               flash[:alert] = 'Two Factor Authentication is already enabled.'
