@@ -1,0 +1,19 @@
+.team-members {
+    .btn-new {
+        width: 200px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-cover {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .left {
+        margin-right: 25px;
+    }
+}

@@ -1,13 +1,28 @@
-<section class="container team-member">
-<div class="row">
-    <div class="col-12 col-md-7 mb-3">
-        <div class="card">
-            <div class="card-header">Set Up Two Factor Authentication</div>
-            <div class="card-body">
-                <%=link_to 'Yes', new_two_factor_settings_path, class: "btn btn-success" %>
-                <%=link_to 'No', destroy_team_member_session_path, method: :delete, class: "btn btn-warning" %>
-            </div>
-        </div>
+<main class="container team-members two-factor">
+  <div class="row my-3">
+    <div class="col-12 col-md-6 col-lg-4 mx-auto">
+      <h1 class="text-center mb-0 mt-5">Set Up Two Factor Authentication</h1>
     </div>
-</div>
-</section>
+  </div>
+  <div class="row mb-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div clss="col">
+                <div class="card-header">
+                Do you want to set up your two-factor authentication right now?
+                </div>
+                <div class="card-body">
+                    <div class="btn-cover">
+                    <%=link_to 'Yes', new_two_factor_settings_path, class: "btn btn-success btn-new left" %>
+                    <%=link_to 'No', destroy_team_member_session_path, method: :delete, class: "btn btn-warning btn-new" %>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div>
+</main>
