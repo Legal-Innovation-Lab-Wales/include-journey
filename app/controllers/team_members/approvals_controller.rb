@@ -28,7 +28,8 @@ module TeamMembers
             
             @selected_users = User.where(id: params.fetch(:user_ids, []).compact)
             @selected_users.each do |user| 
-                user.skip_confirmation!
+                user.approved = true
+                user.approved_at = DateTime.now
                 user.save!
             end
             redirect_to approvals_path, flash: { success: 'Approvals Successful' }
@@ -37,7 +38,7 @@ module TeamMembers
         end
         protected
         def user_data
-            User.where("confirmed_at IS NULL")
+            User.where(approved: false)
         end
 
         def resources
