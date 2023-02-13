@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, :sign_out_notice, if: :devise_controller?
   before_action :deletion, :create_session, if: :user_signed_in?
   helper_method :breadcrumbs
+  before_action :require_approval
 
   def breadcrumbs
     @breadcrumbs ||= []
@@ -46,5 +47,12 @@ class ApplicationController < ActionController::Base
 
     flash.now[:alert] = session[:sign_out_notice]
     session.delete(:sign_out_notice)
+  end
+
+  def require_approval
+    return unless current_user && !current_user.approved?
+
+    sign_out_and_redirect(current_user)
+    session[:sign_out_notice] = 'An admin needs to approve you before you can access the system.'
   end
 end
