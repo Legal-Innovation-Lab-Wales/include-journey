@@ -1,3 +1,4 @@
+#app/controllers/concerns/authenticate_with_otp_two_factor.rb
 module AuthenticateWithOtpTwoFactor
     extend ActiveSupport::Concern
 
@@ -31,6 +32,7 @@ module AuthenticateWithOtpTwoFactor
           session.delete(:otp_team_member_id)
 
           team_member.save!
+          flash[:notice] = 'Signed in sucessfully.'
           sign_in(team_member, event: :authentication)
         else
           flash.now[:alert] = 'Invalid two-factor code.'
