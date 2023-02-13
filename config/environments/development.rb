@@ -59,7 +59,7 @@ Rails.application.configure do
   config.regex_text_field = /\A[a-zA-Z0-9_!?,"'’+\-.()&@\n–:— ]*\z/
   config.regex_name = /\A[a-zA-Z0-9'\-._() ]*\z/
   config.regex_telephone = /\A[0-9+]*\z/
-  config.regex_website = %r{\A[a-zA-Z0-9'\-._()/# ]*\z}
+  config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
   config.regex_email = URI::MailTo::EMAIL_REGEXP
   config.regex_datetime = /\A[a-zA-Z0-9+\-.:() ]*\z/
   config.regex_postcode = /\A[a-zA-Z0-9]*\z/
