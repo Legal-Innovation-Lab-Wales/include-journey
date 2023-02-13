@@ -4,7 +4,8 @@ class User < DeviseRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
+        #  :confirmable,
+         :lockable, :timeoutable, :trackable
 
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
@@ -20,6 +21,7 @@ class User < DeviseRecord
   has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
 
   before_update :verify_achievements
+  before_update :mail_approved_user, if: -> { approved_changed? && approved? }
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
@@ -115,6 +117,10 @@ class User < DeviseRecord
     wellbeing_assessments.order(created_at: :desc).each { |score| score.add_to_history(history) }
 
     history
+  end
+
+  def mail_approved_user
+    UserMailer.approved(self).deliver_now
   end
 
   # Appointments filters
