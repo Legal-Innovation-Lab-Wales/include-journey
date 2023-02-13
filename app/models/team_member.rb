@@ -84,13 +84,13 @@ class TeamMember < DeviseRecord
     otp_backup_codes.present?
   end
 
-  # Disable the use of OTP-based two-factor
-  def disable_two_factor!
-    update!(
-    otp_required_for_login: false,
-    otp_secret: nil,
-    otp_backup_codes: nil)
-  end
+  # Uncomment to be able to disable the use of OTP-based two-factor
+  # def disable_two_factor!
+  #   update!(
+  #   otp_required_for_login: false,
+  #   otp_secret: nil,
+  #   otp_backup_codes: nil)
+  # end
 
   # Determine if user has two-factor authentication enabled
   def two_factor_enabled?
