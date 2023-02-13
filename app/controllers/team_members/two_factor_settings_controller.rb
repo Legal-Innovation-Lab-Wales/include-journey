@@ -6,7 +6,7 @@ module TeamMembers
         def new
             if current_team_member.otp_required_for_login
               flash[:alert] = 'Two Factor Authentication is already enabled.'
-              return #redirect_to somewhere
+              return redirect_back fallback_location: root_path
             end
             
             current_team_member.generate_two_factor_secret_if_missing!
@@ -37,22 +37,23 @@ module TeamMembers
         
             if current_team_member.two_factor_backup_codes_generated?
               flash[:alert] = 'You have already seen your backup codes.'
-              return #redirect_to somewhere
+              return redirect_back fallback_location: root_path
             end
         
             @backup_codes = current_team_member.generate_otp_backup_codes!
             current_team_member.save!
         end
 
-        def destroy
-          if current_team_member.disable_two_factor!
-            flash[:notice] = 'Successfully disabled two factor authentication.'
-            redirect_to root_path
-          else
-            flash[:alert] = 'Could not disable two factor authentication.'
-            redirect_back fallback_location: root_path
-          end
-        end
+        # Uncomment to be able to disable OTP two factor
+        # def destroy
+        #   if current_team_member.disable_two_factor!
+        #     flash[:notice] = 'Successfully disabled two factor authentication.'
+        #     redirect_to root_path
+        #   else
+        #     flash[:alert] = 'Could not disable two factor authentication.'
+        #     redirect_back fallback_location: root_path
+        #   end
+        # end
 
         private
 
