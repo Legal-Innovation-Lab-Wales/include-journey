@@ -60,7 +60,10 @@ module Users
     end
 
     def set_breadcrumbs
-      path = action_name == 'index' ? nil : journal_entries_path
+      path = nil
+      if action_name != 'index' && resources.present?
+        path = journal_entries_path
+      end
       add_breadcrumb('My Journal', path, 'fas fa-book')
     end
   end

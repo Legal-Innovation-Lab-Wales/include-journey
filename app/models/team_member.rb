@@ -49,6 +49,13 @@ class TeamMember < DeviseRecord
   validates_presence_of :first_name, :last_name, :mobile_number, :email, :terms
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
+  validates_format_of :first_name, :last_name, with: Rails.application.config.regex_name,
+                                               message: Rails.application.config.name_error
+  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone,
+                                      message: Rails.application.config.telephone_error
+  validates_format_of :email, with: Rails.application.config.regex_email,
+                              message: Rails.application.config.email_error
+
 
   # Two factor authentication set up begins here
   devise :two_factor_authenticatable, :two_factor_backupable,

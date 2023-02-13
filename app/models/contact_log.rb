@@ -6,7 +6,10 @@ class ContactLog < ApplicationRecord
   belongs_to :contact_purpose
 
   validates_presence_of :contact_type, :user, :start, :end
-  validates_format_of :notes, with: Rails.application.config.regex_text_field, on: %i[create update]
+  validates_format_of :notes, with: Rails.application.config.regex_text_field,
+                              message: Rails.application.config.text_field_error
+  validates_format_of :start, :end, with: Rails.application.config.regex_datetime,
+                                    message: Rails.application.config.datetime_error
   scope :recent, -> { where('start >= ?', 1.month.ago) }
   scope :past, -> { where('start < ?', 1.month.ago) }
   scope :last_week, -> { where('start >= ?', 1.week.ago) }
@@ -46,5 +49,23 @@ class ContactLog < ApplicationRecord
 
   def last_month
     start >= DateTime.now - 1.month
+  end
+
+  def json
+    {
+      'ID': id,
+      'Creation Date': created,
+      "Notes": notes, 
+      "Start Date": "#{start_date} #{start_time}",
+      "End Date": "#{end_date} #{end_time}"
+    }
+      .merge(user.json.transform_keys { |key| "User #{key}" })
+      .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
+      .merge(contact_type.present? ? contact_type.json.transform_keys { |key| "contact_type_#{key}" } : {})
+      .merge(contact_purpose.present? ? contact_purpose.json.transform_keys { |key| "contact_purpose_#{key}" } : {})
+  end
+
+  def to_csv
+    [id, created, notes, "#{start_date} #{start_time}", "#{end_date} #{end_time}"] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + contact_type.to_csv + contact_purpose.to_csv
   end
 end

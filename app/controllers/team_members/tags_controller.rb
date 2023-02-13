@@ -11,8 +11,16 @@ module TeamMembers
       existing_tag = Tag.where(tag: tag_input).present?
       redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
 
-      Tag.create!(tag: tag_input, team_member: current_team_member)
-      redirect_back(fallback_location: tags_path, flash: { success: 'Tag created' })
+      @tag = Tag.new(
+        tag: tag_input,
+        team_member: current_team_member
+      )
+      if @tag.save
+        redirect_back(fallback_location: tags_path, flash: { success: 'Tag created' })
+      else
+        redirect_back(fallback_location: tags_path, flash:
+          { alert: 'Failed to save: Please only use standard characters and punctuation' })
+      end
     end
 
     protected

@@ -51,12 +51,21 @@ module TeamMembers
     private
 
     def tag
-      @tag =
-        if user_tag_params[:new_tag].present?
-          Tag.create!(tag: user_tag_params[:new_tag].downcase.titleize, team_member: current_team_member)
+      if user_tag_params[:new_tag].present?
+        @tag = Tag.new(tag: user_tag_params[:new_tag].downcase.titleize, team_member: current_team_member)
+        if @tag.save
+          @tag
         else
-          Tag.find(user_tag_params[:tag].to_i)
+          error_redirect
         end
+      else
+        @tag = Tag.find(user_tag_params[:tag].to_i)
+      end
+    end
+
+    def error_redirect
+      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please only use standard
+        characters and punctuation' }
     end
 
     def selected_tag

@@ -1,7 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/registrations_controller.rb
   class RegistrationsController < Devise::RegistrationsController
-    before_action :set_breadcrumbs, only: :edit
+    before_action :set_breadcrumbs
     include Accessible
     skip_before_action :check_user, except: %i[new create]
 

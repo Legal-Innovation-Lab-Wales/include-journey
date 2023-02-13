@@ -20,14 +20,14 @@ module Users
       @goal = Goal.new(
         user: current_user,
         goal: goal_params[:goal],
-        goal_type_id: goal_params[:goal_type_id],
+        goal_type_id: goal_params[:goal_type_id] ? goal_params[:goal_type_id] : GoalType.first.id,
         short_term: goal_params[:short_term]
       )
 
       if @goal.save
         redirect_to goals_path, flash: { success: 'Goal added' }
       else
-        redirect_to goals_path, flash: { error: "Please use only characters A-Z, 0-9, '.' & ',' " }
+        redirect_to goals_path, flash: { error: Rails.application.config.text_field_error }
       end
 
     end
