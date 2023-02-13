@@ -33,7 +33,8 @@ module TeamMembers
         contact_number: wellbeing_service_params[:contact_number],
         recommend: wellbeing_service_params[:recommend],
         team_member: current_team_member,
-        postcode: wellbeing_service_params[:postcode]
+        postcode: wellbeing_service_params[:postcode],
+        address: wellbeing_service_params[:address]
       )
      
       if @wellbeing_service.save
@@ -60,7 +61,8 @@ module TeamMembers
                                    website: wellbeing_service_params[:website],
                                    contact_number: wellbeing_service_params[:contact_number],
                                    recommend: wellbeing_service_params[:recommend],
-                                   postcode: wellbeing_service_params[:postcode])
+                                   postcode: wellbeing_service_params[:postcode],
+                                   address: wellbeing_service_params[:address])
         redirect_to wellbeing_services_path, flash: { success: 'Wellbeing service updated' }
       else
         add_breadcrumb('Edit Wellbeing Service', nil, 'fas fa-edit')
@@ -100,7 +102,7 @@ module TeamMembers
     end
 
     def wellbeing_service_params
-      params.require(:wellbeing_service).permit(:name, :description, :website, :contact_number, :recommend, :postcode,
+      params.require(:wellbeing_service).permit(:name, :description, :website, :contact_number, :recommend, :postcode, :address,
                                                 @wellbeing_metrics.map { |metric| "wellbeing_metric_#{metric.id}" })
     end
 
