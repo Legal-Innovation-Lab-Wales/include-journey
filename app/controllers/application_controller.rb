@@ -1,9 +1,9 @@
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, :sign_out_notice, if: :devise_controller?
+  before_action :require_approval
   before_action :deletion, :create_session, if: :user_signed_in?
   helper_method :breadcrumbs
-  before_action :require_approval
 
   def breadcrumbs
     @breadcrumbs ||= []

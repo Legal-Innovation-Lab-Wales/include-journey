@@ -119,8 +119,16 @@ class User < DeviseRecord
     history
   end
 
+  def mail_admin
+    UserMailer.approved(self).deliver_now
+  end
+
   def mail_approved_user
     UserMailer.approved(self).deliver_now
+  end
+
+  def mail_rejected_user
+    UserMailer.rejected(self).deliver_later
   end
 
   # Appointments filters
@@ -166,6 +174,11 @@ class User < DeviseRecord
   end
   # rubocop:enable Metrics/MethodLength
 
+
+  def delete
+    mail_rejected_user
+  end
+
   def destroy
     [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
     [journal_entries].each(&:destroy_all)
@@ -192,8 +205,8 @@ class User < DeviseRecord
   private
 
   def anonymize
-    skip_reconfirmation!
-    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: nil,
+    # skip_reconfirmation!
+    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: Faker::Number.leading_zero_number(digits: 11),
            nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
   end
 end

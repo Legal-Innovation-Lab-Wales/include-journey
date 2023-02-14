@@ -1,9 +1,9 @@
-<p>A new team member has signed up.</p>
+<p>A <%= @userType%> new team member has signed up.</p>
 <p>You have <strong><%= pluralize(@unapproved_count, 'user') %></strong> awaiting approval.</p>
 <p>
   Click the button below to login and approve new team members.
 </p>
 
 <div class="btn-container">
-  <%= link_to 'Login', team_members_url %>
+  <%= link_to 'Login', @url %>
 </div>

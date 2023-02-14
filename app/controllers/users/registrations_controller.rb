@@ -5,6 +5,7 @@ module Users
     include Accessible
     skip_before_action :check_user, except: %i[new create]
     prepend_before_action :check_captcha, only: :create
+    after_action :send_new_user_email, only: :create
 
     # DELETE /users
     def destroy
@@ -38,5 +39,14 @@ module Users
       }
     end
 
+
+    def send_new_user_email
+      return unless @user.created_at? || Time.now - User.second_to_last.created_at < 6.hours
+
+      unapproved_count = User.where(approved: false).count
+      TeamMember.admins.each do |admin|
+        AdminMailer.new_team_member_email(current_user, admin, unapproved_count, true).deliver_later
+      end
+    end
   end
 end
