@@ -81,15 +81,15 @@ module TeamMembers
     def resources
       case @sort
       when 'average'
-        @users = User.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
+        @users = User.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
       when 'first_name'
         # switch direction for alphabet sort
         @direction_flipped = @direction == 'desc' ? 'asc' : 'desc'
-        @users = User.includes(:wellbeing_assessments, :user_tags)
+        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction_flipped, "last_name": @direction_flipped })
       else
-        @users = User.includes(:wellbeing_assessments, :user_tags)
+        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction })
       end
@@ -179,7 +179,7 @@ module TeamMembers
     end
 
     def subheading_stats
-      @total_users = User.all.count
+      @total_users = User.approved.count
       @active_last_week = @resources.active_last_week.size
       @active_last_month = @resources.active_last_month.size
     end
