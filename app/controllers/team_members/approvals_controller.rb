@@ -27,9 +27,9 @@ module TeamMembers
             end
             
             isApprove = params[:status] === "1" 
-            
+
             @selected_users = User.where(id: params.fetch(:user_ids, []).compact)
-            count = 0
+
             @selected_users.each do |user| 
                 if isApprove
                     user.approved = true
@@ -37,10 +37,10 @@ module TeamMembers
                     user.save!
                 else
                     user.unapprove
-                    count += 1
                 end
             end
-            redirect_to @selected_users.length === count ? root_path : approvals_path, flash: { success: "#{isApprove ? 'Approvals' : 'Rejections' } Successful" }
+
+            redirect_to user_data.count === 0 ? root_path : approvals_path, flash: { success: "#{isApprove ? 'Approvals' : 'Rejections' } Successful" }
             rescue ActiveRecord::RecordNotFound
                 redirect_to approvals_path, flash: { error: 'No users selected' }
         end

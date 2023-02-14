@@ -177,6 +177,7 @@ class User < DeviseRecord
 
 
   def unapprove
+    sessions.destroy_all
     mail_rejected_user
     self.delete
   end
