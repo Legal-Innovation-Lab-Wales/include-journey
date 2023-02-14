@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-floating">
-          <%= f.text_field :address, class: 'form-control', required: true %>
+          <%= f.text_field :address, class: 'form-control' %>
           <%= f.label :address %>
           <p class="actual-error-message" >
             <% wellbeing_service.errors[:address].each do |err| %>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-floating">
-          <%= f.text_field :postcode, class: 'form-control', required: true %>
+          <%= f.text_field :postcode, class: 'form-control' %>
           <%= f.label :postcode %>
           <p class="actual-error-message" >
             <% wellbeing_service.errors[:postcode].each do |err| %>

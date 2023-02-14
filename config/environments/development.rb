@@ -62,7 +62,7 @@ Rails.application.configure do
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
   config.regex_email = URI::MailTo::EMAIL_REGEXP
   config.regex_datetime = /\A[a-zA-Z0-9+\-.:() ]*\z/
-  config.regex_postcode = /\A[a-zA-Z0-9]*\z/
+  config.regex_postcode = /\A[a-zA-Z0-9 ]*\z/
 
   config.text_field_error = 'Please only use standard characters and punctuation'
   config.name_error = 'Please only use alphanumeric characters'
