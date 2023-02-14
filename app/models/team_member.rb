@@ -60,7 +60,7 @@ class TeamMember < DeviseRecord
   # Two factor authentication set up begins here
   devise :two_factor_authenticatable, :two_factor_backupable,
           otp_backup_code_length: 10, otp_number_of_backup_codes: 10,
-         :otp_secret_encryption_key => ENV['OTP_SECRET_KEY']
+         :otp_secret_encryption_key => ENV['MFA_OTP_SECRET_KEY']
 
   # Ensure that backup codes can be serialized
   serialize :otp_backup_codes, JSON       
@@ -80,7 +80,7 @@ class TeamMember < DeviseRecord
 
   # URI for OTP two-factor QR code
   def two_factor_qr_code_uri
-    issuer = ENV['ISSUER_NAME']
+    issuer = ENV['MFA_ISSUER_NAME']
     label = [issuer, email].join(':')
 
     otp_provisioning_uri(label, issuer: issuer)
