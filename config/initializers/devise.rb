@@ -11,6 +11,7 @@
 Devise.setup do |config|
   config.warden do |manager|
     manager.default_strategies(:scope => :team_member).unshift :two_factor_authenticatable
+    manager.default_strategies(:scope => :team_member).unshift :two_factor_backupable
   end
 
   # The secret key used by Devise. Devise uses this key to generate
