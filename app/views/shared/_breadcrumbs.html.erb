@@ -1,4 +1,4 @@
-<% if !current_page?(root_url) %>
+<% if !current_page?(root_url) && params[:controller] != "team_members/two_factor_settings"%>
   <main class="container breadcrumbs">
     <section class="row">
       <div class="col btn-container" style="text-align: left;">
