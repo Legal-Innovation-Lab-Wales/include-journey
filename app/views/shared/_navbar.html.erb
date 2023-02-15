@@ -103,6 +103,10 @@
               <div class="nav-label hide">Report Issue</div>
               <i class="fas fa-flag"></i>
             </div>
+            <%= link_to approvals_path, class: 'btn btn-secondary' do %>
+              <i class="fas fa-check"></i>
+              <div class="nav-label hide">Approvals</div>
+            <% end %>
             <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>

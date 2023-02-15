@@ -1,6 +1,7 @@
 module TeamMembers
     # app/controllers/team_members/approvals_controller.rb
     class ApprovalsController < TeamMembersApplicationController
+        before_action :set_breadcrumbs
         include Pagination
 
         def index
@@ -60,6 +61,9 @@ module TeamMembers
         def resources_per_page
           6
         end
-    
+
+        def set_breadcrumbs
+            add_breadcrumb('Approvals', nil, 'fas fa-check')
+        end
     end
 end
