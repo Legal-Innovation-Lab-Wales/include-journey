@@ -1,0 +1,17 @@
+<div class="col-12 col-md-6">
+    <div class="search input-group">
+        <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="Search">
+        <input type="text" class="form-control" id="postcode-input" placeholder="Postcode"aria-label="Postcode">
+        <% if @service_type_list.present? %>
+            <select id="search-filter" class="form-select">
+                <option value="all">All Types</option>
+                <% @service_type_list.each do |type| %>
+                    <option value="<%=type.id%>"><%=type.name%></option>
+                <% end %>
+            </select>
+        <% end %>
+        <span class="input-group-text" id="search-btn"><i class="fas fa-search"></i></span>
+    </div>
+</div>
+
+<%= javascript_pack_tag 'wellbeing_services_search' %>
