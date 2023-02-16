@@ -57,9 +57,7 @@ Rails.application.routes.draw do
   # rubocop:disable Metrics/BlockLength
   authenticated :team_member do
     scope module: 'team_members' do
-      
-      #remove destroy to be able to disable OTP two factor
-      resource :two_factor_settings, except: [:index, :show, :destroy]
+      resource :two_factor_settings, except: [:index, :show]
 
       root 'dashboard#show', as: :authenticated_team_member_root
       get "users/:user_id/contact_logs/recent" => "contact_logs#recent", as: "users_recent_contact_logs"

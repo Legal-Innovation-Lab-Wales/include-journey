@@ -7,7 +7,7 @@ class TeamMember < DeviseRecord
          :confirmable, :lockable, :timeoutable, :trackable
 
   # Ensure that backup codes can be serialized
-  serialize :otp_backup_codes, JSON       
+  serialize :otp_backup_codes, JSON
 
   attr_accessor :otp_plain_backup_codes
 
@@ -91,13 +91,13 @@ class TeamMember < DeviseRecord
     otp_backup_codes.present?
   end
 
-  # Uncomment to be able to disable the use of OTP-based two-factor
-  # def disable_two_factor!
-  #   update!(
-  #   otp_required_for_login: false,
-  #   otp_secret: nil,
-  #   otp_backup_codes: nil)
-  # end
+  # Ensure team members are able to disable the use of OTP-based two-factor
+  def disable_two_factor!
+    update!(
+    otp_required_for_login: false,
+    otp_secret: nil,
+    otp_backup_codes: nil)
+  end
 
   # Determine if user has two-factor authentication enabled
   def two_factor_enabled?
