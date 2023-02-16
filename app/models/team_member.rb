@@ -4,12 +4,11 @@ class TeamMember < DeviseRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
-
-  # Ensure that backup codes can be serialized
-  serialize :otp_backup_codes, JSON
-
-  attr_accessor :otp_plain_backup_codes
+         :confirmable, :lockable, :timeoutable, :trackable,
+         # options for two factor authentication
+         :two_factor_authenticatable, :two_factor_backupable,
+         otp_backup_code_length: 10, otp_number_of_backup_codes: 10,
+         otp_secret_encryption_key: ENV['MFA_OTP_SECRET_KEY']
 
   has_many :notes, foreign_key: :team_member_id
   has_many :wellbeing_metrics, foreign_key: :team_member_id
@@ -30,6 +29,17 @@ class TeamMember < DeviseRecord
   scope :unapproved, -> { where(approved: false) }
   scope :admins, -> { where(admin: true) }
 
+  # validations
+  validates_presence_of :first_name, :last_name, :mobile_number, :email, :terms
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, acceptance: true
+  validates_format_of :first_name, :last_name, with: Rails.application.config.regex_name,
+                                               message: Rails.application.config.name_error
+  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone,
+                                      message: Rails.application.config.telephone_error
+  validates_format_of :email, with: Rails.application.config.regex_email,
+                              message: Rails.application.config.email_error
+
   def unread_journal_entries(user)
     (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count
   end
@@ -45,31 +55,11 @@ class TeamMember < DeviseRecord
     }
   end
 
-  # validations
-  validates_presence_of :first_name, :last_name, :mobile_number, :email, :terms
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :terms, acceptance: true
-  validates_format_of :first_name, :last_name, with: Rails.application.config.regex_name,
-                                               message: Rails.application.config.name_error
-  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone,
-                                      message: Rails.application.config.telephone_error
-  validates_format_of :email, with: Rails.application.config.regex_email,
-                              message: Rails.application.config.email_error
-
-
-  # Two factor authentication set up begins here
-  devise :two_factor_authenticatable, :two_factor_backupable,
-          otp_backup_code_length: 10, otp_number_of_backup_codes: 10,
-         :otp_secret_encryption_key => ENV['MFA_OTP_SECRET_KEY']
-
-  # Ensure that backup codes can be serialized
-  serialize :otp_backup_codes, JSON       
-
-  attr_accessor :otp_plain_backup_codes
-
-   # Generate an OTP secret it it does not already exist
+  # Two factor authentication methods begins here -->
+  # Generate an OTP secret it it does not already exist
   def generate_two_factor_secret_if_missing!
     return unless otp_secret.nil?
+
     update!(otp_secret: TeamMember.generate_otp_secret)
   end
 
@@ -94,9 +84,10 @@ class TeamMember < DeviseRecord
   # Ensure team members are able to disable the use of OTP-based two-factor
   def disable_two_factor!
     update!(
-    otp_required_for_login: false,
-    otp_secret: nil,
-    otp_backup_codes: nil)
+      otp_required_for_login: false,
+      otp_secret: nil,
+      otp_backup_codes: nil
+    )
   end
 
   # Determine if user has two-factor authentication enabled
