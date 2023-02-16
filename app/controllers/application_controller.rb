@@ -1,7 +1,7 @@
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, :sign_out_notice, if: :devise_controller?
-  before_action :require_approval
+  before_action :require_approval, :check_suspended
   before_action :deletion, :create_session, if: :user_signed_in?
   helper_method :breadcrumbs
 
@@ -54,5 +54,12 @@ class ApplicationController < ActionController::Base
 
     sign_out_and_redirect(current_user)
     session[:sign_out_notice] = 'An admin needs to approve you before you can access the system.'
+  end
+
+  def check_suspended
+    return unless current_user && current_user.suspended?
+
+    sign_out_and_redirect(current_user)
+    session[:sign_out_notice] = 'Your account has been suspended and you can not access this platform'
   end
 end
