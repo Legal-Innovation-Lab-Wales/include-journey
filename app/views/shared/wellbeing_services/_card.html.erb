@@ -13,6 +13,12 @@
         <div class="row"><%= wellbeing_service.description %></div>
         <div class="row link"><%= link_to wellbeing_service.website, wellbeing_service.website %></div>
         <div class="row link"><%= link_to "0#{wellbeing_service.contact_number}", "tel:0#{wellbeing_service.contact_number}" %></div>
+        <% if wellbeing_service.distance.present? %>
+          <div class="details-row">
+            <i class="fas fa-road"></i>
+            <%= wellbeing_service.distance.truncate(2) %> Miles
+          </div>
+        <% end %>
         <div class="row"><%= wellbeing_service.address %></div>
         <div class="row"><%= wellbeing_service.postcode %></div>
         <% #unless user %>

@@ -38,6 +38,8 @@ const search_input_group = document.querySelector('.search.input-group'),
 
 search_btn.addEventListener('click', search)
 search_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
+postcode_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
+radius_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
 
 if (url.searchParams.has('query')) search_input.value = url.searchParams.get('query')
 if (url.searchParams.has('type')) type_input.value = url.searchParams.get('type')

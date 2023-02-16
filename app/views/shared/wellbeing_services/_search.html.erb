@@ -13,6 +13,9 @@
         <% end %>
         <span class="input-group-text" id="search-btn"><i class="fas fa-search"></i></span>
     </div>
+    <% if @error && @error.present?%>
+        <p class="text-danger small text-start text-capitalize" ><%= @error %></p>
+    <% end %>
 </div>
 
 <%= javascript_pack_tag 'wellbeing_services_search' %>

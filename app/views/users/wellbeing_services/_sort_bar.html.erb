@@ -1,0 +1,12 @@
+<div class='sort-bar'>
+    <div class="sort-column">
+        <%= render 'shared/sort_column', column_value: 'name', column_icon: 'fas fa-font' %>
+    </div>
+    <% if @distances.present? %>
+        <div class="sort-column">
+            <%= render 'shared/sort_column', column_value: 'distance', column_icon: 'fas fa-road' %>
+        </div>
+    <% end %>
+</div>
+
+<%= javascript_pack_tag 'sort_column' %>
