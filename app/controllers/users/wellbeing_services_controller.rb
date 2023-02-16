@@ -11,6 +11,7 @@ module Users
       @wellbeing_services = WellbeingService.all
       @wellbeing_services = wellbeing_services_params[:type].present? ? @wellbeing_services.joins(:wellbeing_metrics).where('wellbeing_metrics.id': wellbeing_services_params[:type]) : @wellbeing_services
       process_postcode
+      @wellbeing_services = @wellbeing_services.order({"#{@sort}": @direction }) if !@distances
       return @wellbeing_services
     end
 
