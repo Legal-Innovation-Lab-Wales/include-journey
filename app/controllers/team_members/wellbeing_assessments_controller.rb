@@ -126,7 +126,7 @@ module TeamMembers
     def wba_values
       return unless @user.present?
 
-      @wba_values = [''] + WellBeingScoreValues.order(id: :asc).pluck(:name)
+      @wba_values = [''] + WellbeingScoreValue.order(id: :asc).pluck(:name)
     end
 
     def wellbeing_assessment

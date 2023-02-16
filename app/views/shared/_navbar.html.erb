@@ -89,6 +89,10 @@
       <div class="navbar-right-buttons">
         <div class="navbar-items">
           <% if current_team_member %>
+            <%= link_to approvals_path, class: 'btn btn-info' do %>
+              <i class="fas fa-check"></i>
+              <div class="nav-label hide">Approvals</div>
+            <% end %>
             <% if current_team_member.admin? %>
               <%= link_to team_members_path, class: "btn btn-info" do %>
                 <div class="nav-label hide">Team Members</div>

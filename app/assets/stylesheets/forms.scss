@@ -87,6 +87,11 @@
         text-decoration: none;
       }
 
+      .btn-wrap {
+        white-space: normal;
+        word-wrap: break-word;
+      }
+
       .form-link {
         color: $brand-primary;
         text-decoration: none;

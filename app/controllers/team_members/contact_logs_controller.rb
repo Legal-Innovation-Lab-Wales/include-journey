@@ -116,7 +116,7 @@ module TeamMembers
     def form_resources
       @contact_types = ContactType.all
       @contact_purposes = ContactPurpose.all
-      @users = User.all.order(email: :asc)
+      @users = User.approved.order(email: :asc)
     end
 
     def contact_log

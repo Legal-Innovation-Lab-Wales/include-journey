@@ -26,7 +26,7 @@
             </span>
             <div class="form-floating me-2">
               <%= f.label 'Data', class: "form-label" %>
-              <%= f.select "data", ['Journal Entries', 'Wellbeing Assessments'], :selected => params[:data] %>
+              <%= f.select "data", ['Journal Entries', 'Wellbeing Assessments', 'Contact Logs'], :selected => params[:data] %>
             </div>
             <span class="input-group-text">
                 <i class="fas fa-chart-pie"></i>
@@ -35,12 +35,14 @@
               <%= f.label 'Display', class: "form-label" %>
               <%= f.select "display", ['Pie Chart', 'Bar Chart', 'Line Chart'], :selected => params[:display] %>
             </div>
-            <% if current_team_member.admin? %>
-              <div class="form-floating">
-                <%= f.label 'Shared With', class: "form-label" %>
+              <div id="member-parent" class="form-floating" data-admin="<%= current_team_member.admin %>">
+                <% if params[:data] === "Contact Logs"%>
+                  <%= f.label 'Created By', class: "form-label" %>
+                <% else %>
+                  <%= f.label 'Shared With', class: "form-label" %>
+                <% end %>
                 <%= f.select "member", ['All'] + @team_member_emails, :selected => params[:member] %>
               </div>
-            <% end %>
             <div class="form-floating">
               <%= f.label 'Author', class: "form-label" %>
               <%= f.select "author", ['Anyone', 'Staff', 'User'] + @team_member_emails, :selected => params[:author], class: 'test'%>

@@ -81,8 +81,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'include-journey-demo.legaltech.wales', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
 
-  config.regex_text_field = /\A[a-zA-Z0-9_!?,"'’+\-.()&@\n–:— ]*\z/
-  config.regex_name = /\A[a-zA-Z0-9'\-._() ]*\z/
+  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()/&@\n–:— ]*\z}
+  config.regex_name = %r{\A[a-zA-Z0-9'\-._()/ ]*\z}
   config.regex_telephone = /\A[0-9+]*\z/
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
   config.regex_email = URI::MailTo::EMAIL_REGEXP

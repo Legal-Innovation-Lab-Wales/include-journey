@@ -16,6 +16,9 @@ module TeamMembers
         ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
          'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+      elsif params[:data] == 'Contact Logs'
+        ['ID', 'Creation Date','Notes','Start Date','End Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type','Contact Color', 'Contact Purpose']
       else
         ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Feeling', 'Entry']
@@ -43,14 +46,22 @@ module TeamMembers
     def update_resource
       base_resources
 
-      table = params[:data] == 'Wellbeing Assessments' ? 'wellbeing_assessments' : 'journal_entries'
+      case params[:data]
+      when 'Wellbeing Assessments'
+        table = 'wellbeing_assessments'
+      when 'Contact Logs'
+        table = 'contact_logs'
+      else
+        table = 'journal_entries'
+      end
+      
       @resource = @resource
                   .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
                   .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
 
       apply_filters
       @resource = @resource.sort_by(&:created_at)
-      @scores = WellbeingScoreValue.order(id: :asc)
+      @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
       @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
     end
@@ -58,7 +69,14 @@ module TeamMembers
     # rubocop:disable Metrics/LineLength
     # rubocop:disable Metrics/AbcSize
     def base_resources
-      params[:data] == 'Wellbeing Assessments' ? wellbeing_data : journal_data
+      case params[:data]
+      when 'Wellbeing Assessments'
+        wellbeing_data
+      when 'Contact Logs'
+        contact_log_data
+      else
+        journal_data
+      end
     end
 
     def wellbeing_data
@@ -78,6 +96,14 @@ module TeamMembers
         @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).journal_entries : JournalEntry.all
       else
         @resource = current_team_member.journal_entries
+      end
+    end
+
+    def contact_log_data
+      if current_team_member.admin?
+        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).contact_logs : ContactLog.all
+      else
+        @resource = current_team_member.contact_logs
       end
     end
 

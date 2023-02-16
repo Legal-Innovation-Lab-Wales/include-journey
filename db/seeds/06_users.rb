@@ -15,7 +15,6 @@ if User.count.zero?
       password: 'test1234',
       current_sign_in_at: rand(1..100).days.ago
     )
-    user.skip_confirmation!
     user.save!
   end
 

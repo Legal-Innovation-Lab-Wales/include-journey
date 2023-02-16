@@ -4,6 +4,7 @@ module TeamMembers
     before_action :authenticate_team_member!
     before_action :require_approval
     before_action :require_not_suspended
+    before_action :set_up_two_factor
 
     def terms
       add_breadcrumb('Terms', nil, 'fas fa-gavel')
@@ -39,6 +40,13 @@ module TeamMembers
       sign_out_and_redirect(current_team_member)
       session[:sign_out_notice] =
         'Your account has been suspended. An admin will need to remove this suspension before you can access the system.'
+    end
+
+    def set_up_two_factor
+      return if current_team_member.two_factor_enabled?
+
+      flash.now[:alert] = 'You must have two-factor authentication enabled to have access!'
+      render 'team_members/sessions/set_up_two_factor'
     end
   end
 end

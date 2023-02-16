@@ -4,7 +4,8 @@ class User < DeviseRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :lockable, :timeoutable, :trackable
+        #  :confirmable,
+         :lockable, :timeoutable, :trackable
 
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
@@ -20,11 +21,13 @@ class User < DeviseRecord
   has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
 
   before_update :verify_achievements
+  before_update :mail_approved_user, if: -> { approved_changed? && approved? }
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
   scope :deleted, -> { where(deleted: true) }
+  scope :approved, -> { where(approved: true) }
   scope :last_assessed_today, lambda {
     where(':start <= last_assessed_at and last_assessed_at <= :end',
           { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })
@@ -117,6 +120,18 @@ class User < DeviseRecord
     history
   end
 
+  def mail_admin
+    UserMailer.approved(self).deliver_now
+  end
+
+  def mail_approved_user
+    UserMailer.approved(self).deliver_now
+  end
+
+  def mail_rejected_user
+    UserMailer.rejected(self).deliver_now
+  end
+
   # Appointments filters
   def future_appointments
     appointments.order(start: :asc).filter(&:future)
@@ -160,6 +175,13 @@ class User < DeviseRecord
   end
   # rubocop:enable Metrics/MethodLength
 
+
+  def unapprove
+    sessions.destroy_all
+    mail_rejected_user
+    self.delete
+  end
+
   def destroy
     [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
     [journal_entries].each(&:destroy_all)
@@ -186,8 +208,8 @@ class User < DeviseRecord
   private
 
   def anonymize
-    skip_reconfirmation!
-    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: nil,
+    # skip_reconfirmation!
+    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: Faker::Number.leading_zero_number(digits: 11),
            nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
   end
 end
