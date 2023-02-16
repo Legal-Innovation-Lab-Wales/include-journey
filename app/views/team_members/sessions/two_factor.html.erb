@@ -4,7 +4,8 @@
       <div class="col-12 col-md-5">
         <div class="form-container">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {method: :post}) do |f| %>
-            <h2><i class="fas fa-users"></i> Log in</h2>
+            <h2><i class="fas fa-users"></i> Verify your identity</h2>
+            <p>Open your Authenticator app, and enter your OTP code to log in</p>
 
             <div class="form-group">
               <p class="text-danger">
