@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_09_091252) do
+ActiveRecord::Schema.define(version: 2023_02_08_195909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2023_02_09_091252) do
     t.text "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "color"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -362,6 +363,7 @@ ActiveRecord::Schema.define(version: 2023_02_09_091252) do
     t.string "first_name", default: "", null: false
     t.string "last_name", default: "", null: false
     t.bigint "mobile_number"
+    t.date "released_at"
     t.boolean "terms", default: false
     t.datetime "deleted_at"
     t.datetime "date_of_birth"
@@ -403,7 +405,6 @@ ActiveRecord::Schema.define(version: 2023_02_09_091252) do
     t.integer "silver_achievements_count", default: 0, null: false
     t.integer "gold_achievements_count", default: 0, null: false
     t.boolean "notifications_enabled", default: true
-    t.date "released_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
