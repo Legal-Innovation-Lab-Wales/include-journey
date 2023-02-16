@@ -45,7 +45,7 @@ module Users
 
       unapproved_count = User.where(approved: false).count
       TeamMember.admins.each do |admin|
-        AdminMailer.new_team_member_email(current_user, admin, unapproved_count, true).deliver_later
+        AdminMailer.new_team_member_email(current_user, admin, unapproved_count, true).deliver_now
       end
     end
   end

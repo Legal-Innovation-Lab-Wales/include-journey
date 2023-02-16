@@ -129,7 +129,7 @@ class User < DeviseRecord
   end
 
   def mail_rejected_user
-    UserMailer.rejected(self).deliver_later
+    UserMailer.rejected(self).deliver_now
   end
 
   # Appointments filters
