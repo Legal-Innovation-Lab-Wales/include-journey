@@ -1,0 +1,42 @@
+@import "variables";
+
+.team-members {
+    .btn-new {
+        width: 200px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-cover {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .left {
+        margin-right: 25px;
+    }
+}
+
+.card-form {
+    justify-content: center;
+    text-align: center;
+
+    .card-blue {
+        background-color: $black;
+    }
+
+    .card-header {
+        color: aliceblue;
+    }
+
+    @media screen and (min-width: $screen-md) {
+        background-color: $black;
+        .card {
+          background-color: $grey;
+          background: $blue-grad;
+        }
+    }
+}
