@@ -1,6 +1,8 @@
 const search_input_group = document.querySelector('.search.input-group'),
       search_input = search_input_group.querySelector('#search-input'),
       type_input = search_input_group.querySelector('#search-filter'),
+      postcode_input =search_input_group.querySelector('#postcode-input'),
+      radius_input = search_input_group.querySelector('#radius-input'),
       search_btn = search_input_group.querySelector('#search-btn'),
       url = new URL(location.href),
       search = function() {
@@ -8,6 +10,16 @@ const search_input_group = document.querySelector('.search.input-group'),
             url.searchParams.set('query', search_input.value)
         } else if (url.searchParams.has('query')) {
             url.searchParams.delete('query')
+        }
+        if(postcode_input.value){
+            url.searchParams.set('postcode', postcode_input.value)
+        }else if(url.searchParams.has('postcode')){
+            url.searchParams.delete('postcode')
+        }
+        if(radius_input.value){
+            url.searchParams.set('radius', radius_input.value)
+        }else if(url.searchParams.has('radius')){
+            url.searchParams.delete('radius')
         }
         if(type_input!=null){
             if (type_input.value == 'all') {
@@ -29,3 +41,5 @@ search_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
 
 if (url.searchParams.has('query')) search_input.value = url.searchParams.get('query')
 if (url.searchParams.has('type')) type_input.value = url.searchParams.get('type')
+if (url.searchParams.has('postcode')) postcode_input.value = url.searchParams.get('postcode')
+if (url.searchParams.has('radius')) radius_input.value = url.searchParams.get('radius')

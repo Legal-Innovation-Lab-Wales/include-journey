@@ -32,6 +32,7 @@ gem 'font-awesome-sass', '~> 5.15.1'
 gem 'whenever'
 gem 'premailer-rails'
 gem 'rest-client'
+gem 'geocoder'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

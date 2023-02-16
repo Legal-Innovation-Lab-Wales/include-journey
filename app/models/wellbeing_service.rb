@@ -21,6 +21,8 @@ class WellbeingService < ApplicationRecord
   validates_format_of :address, with: Rails.application.config.regex_text_field,
                                 message: Rails.application.config.text_field_error
 
+  attr_accessor :distance
+
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }
   end
