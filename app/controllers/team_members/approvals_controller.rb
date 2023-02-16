@@ -41,7 +41,7 @@ module TeamMembers
         end
       end
 
-      redirect_to user_data.count.zero? ? root_path : approvals_path, flash: { success: "#{isApprove ? 'Approvals' : 'Rejections' } Successful" }
+      redirect_to user_data.count.zero? ? root_path : approvals_path, flash: { success: "#{is_approve ? 'Approvals' : 'Rejections' } Successful" }
     rescue ActiveRecord::RecordNotFound
       redirect_to approvals_path, flash: { error: 'No users selected' }
     end
