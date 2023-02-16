@@ -42,7 +42,6 @@ unless User.find_by_email('john.smith@me.com').present?
     terms: true,
     password: 'password'
   )
-  user.skip_confirmation!
   user.save!
 end
 
