@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_08_195909) do
+ActiveRecord::Schema.define(version: 2023_02_15_095939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -353,10 +353,6 @@ ActiveRecord::Schema.define(version: 2023_02_08_195909) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
@@ -405,7 +401,8 @@ ActiveRecord::Schema.define(version: 2023_02_08_195909) do
     t.integer "silver_achievements_count", default: 0, null: false
     t.integer "gold_achievements_count", default: 0, null: false
     t.boolean "notifications_enabled", default: true
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.boolean "approved", default: false
+    t.datetime "approved_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
