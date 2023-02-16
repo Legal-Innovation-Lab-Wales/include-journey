@@ -32,6 +32,12 @@ gem 'font-awesome-sass', '~> 5.15.1'
 gem 'whenever'
 gem 'premailer-rails'
 
+# Remove warning message when running rails s
+gem "net-http"
+gem "net-smtp"
+gem "net-imap"
+gem "uri", "0.10.0"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -76,3 +82,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'recaptcha'
+
+# For setting up two factor authentication
+gem 'devise-two-factor'
+gem 'rqrcode'

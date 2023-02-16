@@ -2,7 +2,7 @@
   <%= f.hidden_field :short_term, value: short_term %>
   <div class="container p-0 m-0">
     <div class="row p-0 m-0">
-      <div class="col-8 p-0">
+      <div class="col-12 p-0">
         <%= f.text_area :goal, class: 'form-control flex-2', placeholder: 'Goal', rows: 1, required: true %>
         <p class="actual-error-message" >
           <% goal.errors[:goal].each do |err| %>
@@ -10,13 +10,13 @@
           <% end %>
         </p>
       </div>
-      <div class="col-4 p-0">
+      <!-- <div class="col-4 p-0">
         <select class="form-select" name="goal[goal_type_id]">
           <% goal_types.each do |goal_type| %>
             <option value="<%= goal_type.id %>"><%= goal_type.emoji %> <%= goal_type.name %></option>
           <% end %>
         </select>
-      </div>
+      </div> -->
     </div>
     <div class="row p-0 m-0 mt-2 justify-content-end">
       <div class="col-2 p-0">
