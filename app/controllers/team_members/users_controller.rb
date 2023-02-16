@@ -76,6 +76,15 @@ module TeamMembers
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
     end
 
+    def suspend
+      user = User.find(params[:id])
+      user.suspended_at = user.suspended ? nil : DateTime.now
+      user.suspended = !user.suspended
+      user.save!
+      
+      redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
+    end
+
     protected
 
     def resources
