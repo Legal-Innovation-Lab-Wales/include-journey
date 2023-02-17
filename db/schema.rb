@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_15_095939) do
+ActiveRecord::Schema.define(version: 2023_02_16_142515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -403,6 +403,8 @@ ActiveRecord::Schema.define(version: 2023_02_15_095939) do
     t.boolean "notifications_enabled", default: true
     t.boolean "approved", default: false
     t.datetime "approved_at"
+    t.boolean "suspended", default: false
+    t.datetime "suspended_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
