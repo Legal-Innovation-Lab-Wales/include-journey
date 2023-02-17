@@ -87,6 +87,7 @@ Rails.application.configure do
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
   config.regex_email = URI::MailTo::EMAIL_REGEXP
   config.regex_datetime = /\A[a-zA-Z0-9+\-.:() ]*\z/
+  config.regex_postcode = /\A[a-zA-Z0-9 ]*\z/
 
   config.text_field_error = 'Please only use standard characters and punctuation'
   config.name_error = 'Please only use alphanumeric characters'
@@ -94,6 +95,7 @@ Rails.application.configure do
   config.website_error = 'Please enter a valid website address'
   config.email_error = 'Please enter a valid email address'
   config.datetime_error = 'Please select a valid date'
+  config.postcode_error = 'Please enter a valid postcode'
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

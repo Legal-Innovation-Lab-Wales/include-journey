@@ -5,6 +5,8 @@ class WellbeingService < ApplicationRecord
   has_many :metrics_services
   has_many :wellbeing_metrics, through: :metrics_services
 
+  before_save :fetch_long_and_lat
+
   validates_presence_of :name, :website
   validates_format_of :name, with: Rails.application.config.regex_name,
                              message: Rails.application.config.name_error
@@ -14,6 +16,12 @@ class WellbeingService < ApplicationRecord
                                 message: Rails.application.config.website_error
   validates_format_of :contact_number, with: Rails.application.config.regex_telephone,
                                        message: Rails.application.config.telephone_error
+  validates_format_of :postcode, with: Rails.application.config.regex_postcode,
+                                 message: Rails.application.config.postcode_error
+  validates_format_of :address, with: Rails.application.config.regex_text_field,
+                                message: Rails.application.config.text_field_error
+
+  attr_accessor :distance
 
   def linked(wellbeing_metric_id)
     metrics_services.any? { |ms| ms.wellbeing_metric_id == wellbeing_metric_id }
@@ -37,5 +45,31 @@ class WellbeingService < ApplicationRecord
 
   def recommend?
     self.recommend
+  end
+
+  private
+
+  def fetch_long_and_lat
+    postcode_data = get_codes(postcode.delete(' '))
+    if postcode_data['error']
+      errors.add(:postcode, 'Could not retrieve postcode information, please include a complete postcode')
+      throw(:abort)
+    else
+      result = postcode_data['result']
+      self.longitude = result['longitude']
+      self.latitude = result['latitude']
+      true
+    end
+  end
+
+  def get_codes(code)
+    RestClient.get("api.postcodes.io/postcodes/#{code}") { |response, request, result, &block|
+      case response.code
+      when 200
+        JSON.parse response
+      else
+        JSON.parse response
+      end
+    }
   end
 end

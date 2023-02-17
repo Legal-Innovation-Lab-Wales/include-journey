@@ -455,6 +455,10 @@ ActiveRecord::Schema.define(version: 2023_02_15_095939) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "recommend"
+    t.string "postcode"
+    t.string "address"
+    t.float "longitude"
+    t.float "latitude"
     t.index ["team_member_id"], name: "index_wellbeing_services_on_team_member_id"
   end
 

@@ -6,7 +6,7 @@ module Pagination
   end
 
   def self.permitted_params
-    %i[page query tag limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
+    %i[page query tag type radius postcode limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
   end
 
   protected
@@ -22,7 +22,11 @@ module Pagination
     @limit = limit
     subheading_stats
     @last_page = (@count.to_f / @limit).ceil
-    @resources = @resources.offset(offset).limit(@limit)
+    if resources.kind_of?(Array) #Different methods based on array or activeobject array
+      @resources = @resources[offset, @limit]
+    else
+      @resources = @resources.offset(offset).limit(@limit)
+    end
     @resources.present? ? render('index') : redirect
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

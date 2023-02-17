@@ -43,6 +43,26 @@
             <% end %>
           </p>
         </div>
+
+        <div class="form-floating">
+          <%= f.text_field :address, class: 'form-control' %>
+          <%= f.label :address %>
+          <p class="actual-error-message" >
+            <% wellbeing_service.errors[:address].each do |err| %>
+              <%= err %>
+            <% end %>
+          </p>
+        </div>
+
+        <div class="form-floating">
+          <%= f.text_field :postcode, class: 'form-control' %>
+          <%= f.label :postcode %>
+          <p class="actual-error-message" >
+            <% wellbeing_service.errors[:postcode].each do |err| %>
+              <%= err %>
+            <% end %>
+          </p>
+        </div>
         
         <div class="form-check form-switch d-flex px-0 pb-3">
           <%= f.label :recommend, class: 'form-check-label' do %>
