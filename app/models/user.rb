@@ -22,6 +22,7 @@ class User < DeviseRecord
 
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
+  before_update :mail_suspended_user, if: -> { suspended_changed? }
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
@@ -126,6 +127,10 @@ class User < DeviseRecord
 
   def mail_approved_user
     UserMailer.approved(self).deliver_now
+  end
+
+  def mail_suspended_user
+    UserMailer.suspended(self).deliver_now
   end
 
   def mail_rejected_user
