@@ -60,6 +60,6 @@ class ApplicationController < ActionController::Base
     return unless current_user && current_user.suspended?
 
     sign_out_and_redirect(current_user)
-    session[:sign_out_notice] = 'Your account has been suspended and you can not access this platform'
+    session[:sign_out_notice] = 'Your account is suspended.'
   end
 end

@@ -1,8 +1,10 @@
-<p>Your user account has been <%= @keyword %></p>
-<p>
-  Click the button below to login
-</p>
+<p><%= @message %></p>
+<% if !@recipient.suspended %>
+  <p>
+    Click the button below to login
+  </p>
 
-<div class="btn-container">
-  <%= link_to 'Login', new_user_session_url %>
-</div>
+  <div class="btn-container">
+    <%= link_to 'Login', new_user_session_url %>
+  </div>
+<% end %>
