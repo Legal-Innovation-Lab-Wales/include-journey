@@ -73,7 +73,7 @@ module Users
     end
 
     def set_sort
-      @sort = %w[name, distance].include?(params[:sort]) ? params[:sort] : 'name'
+      @sort = params[:sort] == 'distance' && params[:postcode].present? && params[:radius].present? ? params[:sort] : 'name'
     end
 
     def get_codes(code)
