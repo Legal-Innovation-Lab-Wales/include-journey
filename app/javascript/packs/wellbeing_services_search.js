@@ -32,6 +32,8 @@ const search_input_group = document.querySelector('.search.input-group'),
         }
         if (url.searchParams.has('page')) url.searchParams.delete('page')
         if (url.searchParams.has('limit')) url.searchParams.delete('limit')
+        if (url.searchParams.has('sort')) url.searchParams.delete('sort')
+        if (url.searchParams.has('direction')) url.searchParams.delete('direction')
 
         location.href = url.href
       }

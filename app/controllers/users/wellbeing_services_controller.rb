@@ -11,8 +11,8 @@ module Users
       @wellbeing_services = WellbeingService.all
       @wellbeing_services = wellbeing_services_params[:type].present? ? @wellbeing_services.joins(:wellbeing_metrics).where('wellbeing_metrics.id': wellbeing_services_params[:type]) : @wellbeing_services
       process_postcode
-      @wellbeing_services = @wellbeing_services.order({"#{@sort}": @direction }) if !@distances
-      return @wellbeing_services
+      @wellbeing_services = @wellbeing_services.order({ "#{@sort}": @direction }) unless @distances
+      @wellbeing_services
     end
 
     def resources_per_page
@@ -73,7 +73,7 @@ module Users
     end
 
     def set_sort
-      @sort = params[:sort] == 'distance' && params[:postcode].present? && params[:radius].present? ? params[:sort] : 'name'
+      @sort = %w[name distance].include?(params[:sort]) ? params[:sort] : 'name'
     end
 
     def get_codes(code)
