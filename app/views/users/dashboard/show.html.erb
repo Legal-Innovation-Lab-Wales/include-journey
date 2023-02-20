@@ -9,7 +9,7 @@
       <% end %>
       <div class="container header-buttons">
         <div class="row">
-          <%= render 'shared/dashboard_btn', path: current_user.journal_entries_count.positive? ? journal_entries_path : new_journal_entry_path,
+          <%= render 'shared/dashboard_btn', path: current_user.diary_entries_count.positive? ? diary_entries_path : new_diary_entry_path,
                      icon: 'fa-book', large_text: 'My Journal', text: 'Journal' %>
           <%= render 'shared/dashboard_btn', path: upcoming_appointments_path, icon: 'fa-calendar-alt',
                      large_text: 'My Appointments', text: 'Appts' %>

@@ -1,4 +1,4 @@
-<%= render 'layouts/searchable', class_list: 'team-members journal-entry', header: 'Unapproved Users', index:'approvals' do %>
+<%= render 'layouts/searchable', class_list: 'team-members diary-entry', header: 'Unapproved Users', index:'approvals' do %>
     <%= form_with(url: bulk_action_approvals_path, method: :post, data: {controller: "approvals"}) do |f| %>
         <div class="table-container">
             <table class="table table-dark table-striped link-table">

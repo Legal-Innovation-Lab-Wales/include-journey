@@ -1,16 +1,16 @@
-<main class="container team-members journal-entry">
+<main class="container team-members diary-entry">
     <section class="row">
     <div class="col">
       <h3 class="mb-3">Journal Entry</h3>
-      <h5 class="mb-3"><%= link_to "#{@journal_entry.user.full_name}", user_path(@journal_entry.user) %>
-        created this entry <%= time_ago_in_words(@journal_entry.created_at) %> ago</h5>
+      <h5 class="mb-3"><%= link_to "#{@diary_entry.user.full_name}", user_path(@diary_entry.user) %>
+        created this entry <%= time_ago_in_words(@diary_entry.created_at) %> ago</h5>
       <div class="card mb-3">
         <div class="card-header">
-          <span><%= @journal_entry.feeling %></span>
-          <span><strong>Created At:</strong> <%= @journal_entry.created %></span>
+          <span><%= @diary_entry.feeling %></span>
+          <span><strong>Created At:</strong> <%= @diary_entry.created %></span>
         </div>
-        <div class="journal-text text-dark p-1">
-          <%= simple_format(@journal_entry.entry) %>
+        <div class="diary-text text-dark p-1">
+          <%= simple_format(@diary_entry.entry) %>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 module TeamMembers
-  # app/controllers/team_members/journal_entry_view_logs_controller.rb
+  # app/controllers/team_members/diary_entry_view_logs_controller.rb
   class JournalEntryViewLogsController < AdminApplicationController
     before_action :team_member
     before_action :set_breadcrumbs
@@ -8,14 +8,14 @@ module TeamMembers
     protected
 
     def resources
-      @team_member.journal_entry_view_logs.includes(:user, :journal_entry)
-                  .joins(:journal_entry)
+      @team_member.diary_entry_view_logs.includes(:user, :diary_entry)
+                  .joins(:diary_entry)
                   .order(sort)
     end
 
     def search
-      @team_member.journal_entry_view_logs.includes(:user, :journal_entry)
-                  .joins(:journal_entry)
+      @team_member.diary_entry_view_logs.includes(:user, :diary_entry)
+                  .joins(:diary_entry)
                   .where(user_search, wildcard_query)
                   .order(sort)
     end
@@ -35,16 +35,16 @@ module TeamMembers
     def sort_param
       case @sort
       when 'published_at'
-        'journal_entries.created_at'
+        'diary_entries.created_at'
       when 'first_viewed_at'
-        'journal_entry_view_logs.created_at'
+        'diary_entry_view_logs.created_at'
       else
-        'journal_entry_view_logs.updated_at'
+        'diary_entry_view_logs.updated_at'
       end
     end
 
     def team_member
-      @team_member = TeamMember.includes(:journal_entry_view_logs).find(params[:team_member_id])
+      @team_member = TeamMember.includes(:diary_entry_view_logs).find(params[:team_member_id])
     end
 
     def set_breadcrumbs

@@ -13,10 +13,10 @@ class TeamMember < DeviseRecord
   has_many :notes, foreign_key: :team_member_id
   has_many :wellbeing_metrics, foreign_key: :team_member_id
   has_many :wellbeing_assessments, foreign_key: :team_member_id
-  has_many :journal_entry_permissions, foreign_key: :team_member_id
-  has_many :journal_entry_view_logs, foreign_key: :team_member_id
-  has_many :viewed_journal_entries, through: :journal_entry_view_logs, source: :journal_entry
-  has_many :journal_entries, through: :journal_entry_permissions
+  has_many :diary_entry_permissions, foreign_key: :team_member_id
+  has_many :diary_entry_view_logs, foreign_key: :team_member_id
+  has_many :viewed_diary_entries, through: :diary_entry_view_logs, source: :diary_entry
+  has_many :diary_entries, through: :diary_entry_permissions
   has_many :user_profile_view_logs, foreign_key: :team_member_id
   has_many :user_pins, foreign_key: :team_member_id
   has_many :pinned_users, through: :user_pins, source: :user
@@ -40,8 +40,8 @@ class TeamMember < DeviseRecord
   validates_format_of :email, with: Rails.application.config.regex_email,
                               message: Rails.application.config.email_error
 
-  def unread_journal_entries(user)
-    (journal_entries.where(user: user) - viewed_journal_entries.where(user: user)).count
+  def unread_diary_entries(user)
+    (diary_entries.where(user: user) - viewed_diary_entries.where(user: user)).count
   end
 
   def to_csv

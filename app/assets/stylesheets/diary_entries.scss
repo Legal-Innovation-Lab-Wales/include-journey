@@ -1,6 +1,6 @@
 @import "variables";
 
-.journal-entry {
+.diary-entry {
   &.new {
     margin: 1rem auto;
 
@@ -40,7 +40,7 @@
         &.back-btn {
           background-color: transparent;
         }
-        &.new-journal-section {
+        &.new-diary-section {
           background: $blue-grad;
         }
 
@@ -90,7 +90,7 @@
       }
     }
 
-    .journal-text {
+    .diary-text {
       text-align: start;
       overflow: auto;
     }

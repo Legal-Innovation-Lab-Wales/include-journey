@@ -1,18 +1,18 @@
-<main class="container user journal-entry new">
-  <section class="row mx-auto new-journal-section">
+<main class="container user diary-entry new">
+  <section class="row mx-auto new-diary-section">
     <div class="col">
       <div class="container p-0">
         <div class="row">
           <div class="col-12">
             <h2 class="mb-3">New Journal Entry</h2>
           </div>
-          <%= form_with model: @journal_entry do |f| %>
+          <%= form_with model: @diary_entry do |f| %>
             <div class="col-12">
               <div class="form-floating mb-4">
                 <%= f.text_area :entry, class: 'form-control', pattern: '^[a-zA-Z0-9_,.@\' ]*$' %>
                 <%= f.label :entry, 'New Journal Entry' %>
                 <p class="actual-error-message" >
-                  <% @journal_entry.errors[:entry].each do |err| %>
+                  <% @diary_entry.errors[:entry].each do |err| %>
                     <%= err %>
                   <% end %>
                 </p>
@@ -25,12 +25,12 @@
                   <!-- 🥳,☺️,😔,😡,💩,😐 -->
                   <% %w[1F973 1F60A 1F614 1F620 1F4A9 1F610].each_with_index do |unicode, index| %>
                     <div class="col">
-                      <input class="btn-check" type="radio" value="&#x<%= unicode %>;" name="journal_entry[feeling]" id="journal_feeling_id_<%= index %>">
-                      <label class="btn btn-outline-primary w-100" for="journal_feeling_id_<%= index %>">&#x<%= unicode %>;</label>
+                      <input class="btn-check" type="radio" value="&#x<%= unicode %>;" name="diary_entry[feeling]" id="diary_feeling_id_<%= index %>">
+                      <label class="btn btn-outline-primary w-100" for="diary_feeling_id_<%= index %>">&#x<%= unicode %>;</label>
                     </div>
                   <% end %>
                   <p class="actual-error-message" >
-                    <% @journal_entry.errors[:feeling].each do |err| %>
+                    <% @diary_entry.errors[:feeling].each do |err| %>
                       <%= err %>
                     <% end %>
                   </p>

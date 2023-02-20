@@ -1,8 +1,8 @@
 if JournalEntryViewLog.count.zero?
   print "#{pretty_print_name('Journal View Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
-  JournalEntry.all.each do |journal_entry, index|
-    # Create View Log for every 7th journal entry
-    next unless (journal_entry.id % 7).zero?
+  JournalEntry.all.each do |diary_entry, index|
+    # Create View Log for every 7th diary entry
+    next unless (diary_entry.id % 7).zero?
 
     TeamMember.all.each do |team_member|
       created_at = rand(1..100).days.ago
@@ -11,7 +11,7 @@ if JournalEntryViewLog.count.zero?
 
       JournalEntryViewLog.create!(
         team_member: team_member,
-        journal_entry: journal_entry,
+        diary_entry: diary_entry,
         created_at: created_at,
         updated_at: updated_at,
         view_count: view_count

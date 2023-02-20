@@ -24,7 +24,7 @@
           </div>
         </div>
         <hr>
-        <%= form_with model: @model, url: journal_entry_permissions_path(@model), method: :post do |f| %>
+        <%= form_with model: @model, url: diary_entry_permissions_path(@model), method: :post do |f| %>
           <div class="container p-0 mb-2">
             <div class="row">
               <%  @team_members.each do |team_member| %>
