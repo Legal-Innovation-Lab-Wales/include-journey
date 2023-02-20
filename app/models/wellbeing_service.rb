@@ -52,8 +52,7 @@ class WellbeingService < ApplicationRecord
   def fetch_long_and_lat
     postcode_data = get_codes(postcode.delete(' '))
     if postcode_data['error']
-      errors.add(:postcode, 'Could not retrieve postcode information, please include a complete postcode')
-      throw(:abort)
+      postcode_error
     else
       result = postcode_data['result']
       self.longitude = result['longitude']
@@ -63,13 +62,20 @@ class WellbeingService < ApplicationRecord
   end
 
   def get_codes(code)
-    RestClient.get("api.postcodes.io/postcodes/#{code}") { |response, request, result, &block|
+    RestClient.get("#{ENV['POSTCODE_API']}#{code}") { |response, request, result, &block|
       case response.code
-      when 200
+      when 200...300
         JSON.parse response
       else
-        JSON.parse response
+        postcode_error
       end
     }
+  rescue
+    postcode_error
+  end
+
+  def postcode_error
+    errors.add(:postcode, 'Could not retrieve postcode information, please include a complete postcode')
+    throw(:abort)
   end
 end
