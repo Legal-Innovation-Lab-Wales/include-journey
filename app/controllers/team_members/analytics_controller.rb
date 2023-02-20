@@ -93,7 +93,7 @@ module TeamMembers
 
     def diary_data
       if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).diary_entries : JournalEntry.all
+        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).diary_entries : DiaryEntry.all
       else
         @resource = current_team_member.diary_entries
       end
@@ -176,7 +176,7 @@ module TeamMembers
     end
 
     def initialize_params
-      params['data'] = 'Journal Entries'
+      params['data'] = 'Diary Entries'
       params['display'] = 'Pie Chart'
       params['date_to'] = Date.today
       params['date_from'] = Date.today - 1.month

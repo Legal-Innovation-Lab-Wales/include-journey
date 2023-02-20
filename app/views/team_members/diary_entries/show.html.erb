@@ -1,7 +1,7 @@
 <main class="container team-members diary-entry">
     <section class="row">
     <div class="col">
-      <h3 class="mb-3">Journal Entry</h3>
+      <h3 class="mb-3">Diary Entry</h3>
       <h5 class="mb-3"><%= link_to "#{@diary_entry.user.full_name}", user_path(@diary_entry.user) %>
         created this entry <%= time_ago_in_words(@diary_entry.created_at) %> ago</h5>
       <div class="card mb-3">

@@ -156,7 +156,7 @@ function create_diary(){
             backgroundColor: diary_colours
         }]
     }
-    canvas = create_canvas(0, 'Journal Feelings', true)
+    canvas = create_canvas(0, 'Diary Feelings', true)
     switch(chart_select){
         case 'Pie Chart':
             create_pie_chart(canvas, diary_data)
@@ -257,7 +257,7 @@ function create_line_charts(){
                 }]
             }
         }
-        chart_label = "Journal Feelings"
+        chart_label = "Diary Feelings"
     }
     data.forEach((entry) => {
         entry_date = new Date(convert_date(entry.Date));
@@ -265,7 +265,7 @@ function create_line_charts(){
         if(week_number==0){ week_number = 1;}
         entry.week_index = week_number-1;
         week_groups[week_number-1].push(entry)
-        if(type === "Journal Entries"){     
+        if(type === "Diary Entries"){     
             unicode = entry.Feeling.codePointAt(0).toString(16).toUpperCase();
             switch(unicode){
                 case '1F973':

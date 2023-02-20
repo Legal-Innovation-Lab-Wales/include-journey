@@ -1,20 +1,20 @@
 module Users
   # app/controllers/users/diary_entries_controller.rb
-  class JournalEntriesController < UsersApplicationController
+  class DiaryEntriesController < UsersApplicationController
     before_action :set_breadcrumbs
     include Pagination
 
     # GET /diary_entries/new
     def new
       add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
-      @diary_entry = JournalEntry.new
+      @diary_entry = DiaryEntry.new
 
       render 'new'
     end
 
     # POST /diary_entries
     def create
-      @diary_entry = JournalEntry.new(
+      @diary_entry = DiaryEntry.new(
         entry: diary_entry_params[:entry],
         feeling: diary_entry_params[:feeling],
         user: current_user
@@ -64,7 +64,7 @@ module Users
       if action_name != 'index' && resources.present?
         path = diary_entries_path
       end
-      add_breadcrumb('My Journal', path, 'fas fa-book')
+      add_breadcrumb('My Diary', path, 'fas fa-book')
     end
   end
 end

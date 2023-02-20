@@ -1,8 +1,8 @@
-if JournalEntryPermission.count.zero?
-  print "#{pretty_print_name('Journal Permissions')}\tStart: #{pretty_print(Time.now - @start_time)}"
-  JournalEntry.all.each do |diary_entry|
+if DiaryEntryPermission.count.zero?
+  print "#{pretty_print_name('Diary Permissions')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  DiaryEntry.all.each do |diary_entry|
     TeamMember.all.each do |team_member|
-      JournalEntryPermission.create!(
+      DiaryEntryPermission.create!(
         team_member: team_member,
         diary_entry: diary_entry,
         created_at: diary_entry.created_at

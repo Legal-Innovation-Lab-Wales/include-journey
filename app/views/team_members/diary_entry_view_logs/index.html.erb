@@ -12,7 +12,7 @@
             <%= render(partial: 'shared/sort_column', locals: { column_value: 'first_viewed_at', column_text: 'First Viewed At' }) %>
             <%= render(partial: 'shared/sort_column', locals: { column_value: 'last_viewed_at', column_text: 'Last Viewed At' }) %>
             <th scope="col">View Count</th>
-            <th scope="col">Journal Entry</th>
+            <th scope="col">Diary Entry</th>
           </thead>
           <tbody>
           <% @resources.each do |view_log| %>
@@ -25,7 +25,7 @@
               <td>
                 <%= link_to diary_entry_path(view_log.diary_entry) do %>
                   <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
-                     title="View Journal Entry"></i>
+                     title="View Diary Entry"></i>
                 <% end %>
               </td>
             </tr>

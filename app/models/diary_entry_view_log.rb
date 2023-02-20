@@ -1,5 +1,5 @@
 # app/models/diary_entry_view_log.rb
-class JournalEntryViewLog < ApplicationRecord
+class DiaryEntryViewLog < ApplicationRecord
   belongs_to :team_member
   belongs_to :diary_entry
   has_one :user, through: :diary_entry

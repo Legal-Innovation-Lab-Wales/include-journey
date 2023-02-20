@@ -1,6 +1,6 @@
 module Users
   # app/controllers/users/diary_entry_permission_controller.rb
-  class JournalEntryPermissionsController < PermissionsController
+  class DiaryEntryPermissionsController < PermissionsController
     before_action :set_breadcrumbs
     # GET /diary_entries/:diary_entry_id/diary_entry_permissions/new
     def new
@@ -35,7 +35,7 @@ module Users
     end
 
     def set_breadcrumbs
-      add_breadcrumb('My Journal', diary_entries_path, 'fas fa-book')
+      add_breadcrumb('My Diary', diary_entries_path, 'fas fa-book')
     end
   end
 end

@@ -1,6 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/diary_entry_view_logs_controller.rb
-  class JournalEntryViewLogsController < AdminApplicationController
+  class DiaryEntryViewLogsController < AdminApplicationController
     before_action :team_member
     before_action :set_breadcrumbs
     include Pagination
@@ -50,7 +50,7 @@ module TeamMembers
     def set_breadcrumbs
       add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
       add_breadcrumb(team_member.full_name, team_member_path(team_member))
-      add_breadcrumb('Journal Entry View Logs')
+      add_breadcrumb('Diary Entry View Logs')
     end
   end
 end

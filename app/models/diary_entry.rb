@@ -1,5 +1,5 @@
 # app/models/diary_entry.rb
-class JournalEntry < PermissionRecord
+class DiaryEntry < PermissionRecord
   belongs_to :user
   validates_format_of :entry, with: Rails.application.config.regex_text_field,
                               message: Rails.application.config.text_field_error

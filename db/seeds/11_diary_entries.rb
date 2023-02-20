@@ -1,8 +1,8 @@
-if JournalEntry.count.zero?
-  print "#{pretty_print_name('Journal Entries')}\tStart: #{pretty_print(Time.now - @start_time)}"
+if DiaryEntry.count.zero?
+  print "#{pretty_print_name('Diary Entries')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|
     Config::JOURNAL_ENTRIES_FOR_EACH_USER.times do
-      JournalEntry.create!(
+      DiaryEntry.create!(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
         feeling: %w[🥳 😊 😔 😠 💩 😐].sample,

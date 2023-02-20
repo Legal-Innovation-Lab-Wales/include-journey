@@ -1,6 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/diary_entries_controller.rb
-  class JournalEntriesController < TeamMembersApplicationController
+  class DiaryEntriesController < TeamMembersApplicationController
     before_action :index_breadcrumbs, only: :index
     include Pagination
 
@@ -9,8 +9,8 @@ module TeamMembers
       diary_entry
       log_view
 
-      add_breadcrumb('Journal Entries', diary_entries_path, 'fas fa-book-open')
-      add_breadcrumb('This Journal Entry')
+      add_breadcrumb('Diary Entries', diary_entries_path, 'fas fa-book-open')
+      add_breadcrumb('This Diary Entry')
       render 'show'
     end
 
@@ -81,7 +81,7 @@ module TeamMembers
     end
 
     def index_breadcrumbs
-      add_breadcrumb('Journal Entries', nil, 'fas fa-book-open')
+      add_breadcrumb('Diary Entries', nil, 'fas fa-book-open')
     end
   end
 end
