@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_20_113941) do
+ActiveRecord::Schema.define(version: 2023_02_16_142515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,34 +94,6 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
 
-  create_table "diaries", force: :cascade do |t|
-    t.text "entry"
-    t.text "feeling"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_diaries_on_user_id"
-  end
-
-  create_table "diary_permissions", force: :cascade do |t|
-    t.bigint "diary_id", null: false
-    t.bigint "team_member_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["diary_id"], name: "index_diary_permissions_on_diary_id"
-    t.index ["team_member_id"], name: "index_diary_permissions_on_team_member_id"
-  end
-
-  create_table "diary_view_logs", force: :cascade do |t|
-    t.bigint "team_member_id", null: false
-    t.bigint "diary_id", null: false
-    t.integer "view_count", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["diary_id"], name: "index_diary_view_logs_on_diary_id"
-    t.index ["team_member_id"], name: "index_diary_view_logs_on_team_member_id"
-  end
-
   create_table "goal_types", force: :cascade do |t|
     t.text "name", null: false
     t.text "emoji", null: false
@@ -140,6 +112,34 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
     t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.text "entry"
+    t.text "feeling"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_journal_entries_on_user_id"
+  end
+
+  create_table "journal_entry_permissions", force: :cascade do |t|
+    t.bigint "journal_entry_id", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_entry_id"], name: "index_journal_entry_permissions_on_journal_entry_id"
+    t.index ["team_member_id"], name: "index_journal_entry_permissions_on_team_member_id"
+  end
+
+  create_table "journal_entry_view_logs", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "journal_entry_id", null: false
+    t.integer "view_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_entry_id"], name: "index_journal_entry_view_logs_on_journal_entry_id"
+    t.index ["team_member_id"], name: "index_journal_entry_view_logs_on_team_member_id"
   end
 
   create_table "metrics_services", force: :cascade do |t|
@@ -391,9 +391,9 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
     t.date "last_wellbeing_assessment_at"
     t.integer "wellbeing_assessments_count", default: 0, null: false
     t.integer "wellbeing_assessments_this_month_count", default: 0, null: false
-    t.date "last_diary_at"
-    t.integer "diaries_count", default: 0, null: false
-    t.integer "diaries_this_month_count", default: 0, null: false
+    t.date "last_journal_entry_at"
+    t.integer "journal_entries_count", default: 0, null: false
+    t.integer "journal_entries_this_month_count", default: 0, null: false
     t.date "last_goal_achieved_at"
     t.integer "goals_achieved_count", default: 0, null: false
     t.integer "goals_achieved_this_month_count", default: 0, null: false
@@ -472,13 +472,13 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
   add_foreign_key "contact_logs", "team_members"
   add_foreign_key "contact_logs", "users"
   add_foreign_key "contacts", "users"
-  add_foreign_key "diaries", "users"
-  add_foreign_key "diary_permissions", "diaries"
-  add_foreign_key "diary_permissions", "team_members"
-  add_foreign_key "diary_view_logs", "diaries"
-  add_foreign_key "diary_view_logs", "team_members"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
+  add_foreign_key "journal_entries", "users"
+  add_foreign_key "journal_entry_permissions", "journal_entries"
+  add_foreign_key "journal_entry_permissions", "team_members"
+  add_foreign_key "journal_entry_view_logs", "journal_entries"
+  add_foreign_key "journal_entry_view_logs", "team_members"
   add_foreign_key "metrics_services", "wellbeing_metrics"
   add_foreign_key "metrics_services", "wellbeing_services"
   add_foreign_key "notes", "notes", column: "replaced_by_id"
