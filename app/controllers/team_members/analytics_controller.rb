@@ -52,7 +52,7 @@ module TeamMembers
       when 'Contact Logs'
         table = 'contact_logs'
       else
-        table = 'journal_entries'
+        table = 'diary_entries'
       end
       
       @resource = @resource
@@ -75,7 +75,7 @@ module TeamMembers
       when 'Contact Logs'
         contact_log_data
       else
-        journal_data
+        diary_data
       end
     end
 
@@ -91,11 +91,11 @@ module TeamMembers
       end
     end
 
-    def journal_data
+    def diary_data
       if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).journal_entries : JournalEntry.all
+        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).diary_entries : DiaryEntry.all
       else
-        @resource = current_team_member.journal_entries
+        @resource = current_team_member.diary_entries
       end
     end
 
@@ -176,7 +176,7 @@ module TeamMembers
     end
 
     def initialize_params
-      params['data'] = 'Journal Entries'
+      params['data'] = 'Diary Entries'
       params['display'] = 'Pie Chart'
       params['date_to'] = Date.today
       params['date_from'] = Date.today - 1.month

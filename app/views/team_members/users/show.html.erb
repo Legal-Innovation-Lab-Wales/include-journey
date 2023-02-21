@@ -24,9 +24,9 @@
         <i class="fas fa-calendar"></i> Release: <%= @user.release_date %>
       </p>
       <p>
-        <% unless @unread_journal_entries.zero? %>
-          <%= link_to '#journal' do %>
-            <i class="fas fa-book-reader"></i> <%= @unread_journal_entries %> unread journal entries
+        <% unless @unread_diary_entries.zero? %>
+          <%= link_to '#diary' do %>
+            <i class="fas fa-book-reader"></i> <%= @unread_diary_entries %> unread diary entries
           <% end %>
         <% end %>
       </p>
@@ -66,20 +66,20 @@
     <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <% end %>
   <% unless @user.deleted %>
-    <div class="row" id="journal-appointments">
+    <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
-        <div id="journal-card" class="card h-100">
+        <div id="diary-card" class="card h-100">
           <div class="card-header">
-            <h3>Journal</h3>
+            <h3>Diary</h3>
           </div>
           <div class="card-body">
-            <% if @journal_entries.present? %>
+            <% if @diary_entries.present? %>
               <span><%= @user.first_name %> has written
-                <%= link_to "#{@journal_entries.count} entries", journal_entries_path(query: @user.full_name) %>
-                in total of which <%= @unread_journal_entries %> are unread
+                <%= link_to "#{@diary_entries.count} entries", diary_entries_path(query: @user.full_name) %>
+                in total of which <%= @unread_diary_entries %> are unread
               </span>
               <h5 class="pt-3">Latest entries</h5>
-              <% recent_entries = @journal_entries.last(10) %>
+              <% recent_entries = @diary_entries.last(10) %>
               <div class="col-12 table-container">
                 <table class="table table-hover">
                   <thead>
@@ -90,17 +90,17 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <% recent_entries.each do |journal_entry| %>
+                  <% recent_entries.each do |diary_entry| %>
                     <tr>
                       <td class="h3 border-0">
-                        <%= link_to "#{journal_entry.feeling}", journal_entry_path(journal_entry), class: 'feeling' %>
+                        <%= link_to "#{diary_entry.feeling}", diary_entry_path(diary_entry), class: 'feeling' %>
                       </td>
                       <td class="border-0">
-                        <%= link_to "#{journal_entry.created}", journal_entry_path(journal_entry) %>
+                        <%= link_to "#{diary_entry.created}", diary_entry_path(diary_entry) %>
                       </td>
                       <td class="border-0">
-                        <%= link_to journal_entry_path(journal_entry) do %>
-                          <% if journal_entry.journal_entry_view_logs.empty? %>
+                        <%= link_to diary_entry_path(diary_entry) do %>
+                          <% if diary_entry.diary_entry_view_logs.empty? %>
                             <i class="fas fa-times-circle"></i>
                           <% else %>
                             <i class="fas fa-check-circle"></i>
@@ -113,11 +113,11 @@
                 </table>
               </div>
             <% else %>
-              <span>No journal entries have been written yet</span>
+              <span>No diary entries have been written yet</span>
             <% end %>
           </div>
           <div class="card-footer text-center">
-            <%= link_to "View User's Journal", journal_entries_path(query: @user.full_name), class: "btn btn-primary my-2 py-2 px-5" %>
+            <%= link_to "View User's Diary", diary_entries_path(query: @user.full_name), class: "btn btn-primary my-2 py-2 px-5" %>
           </div>
         </div>
       </div>
@@ -262,9 +262,9 @@
 
     </div>
 
-     <div class="row" id="journal-appointments">
+     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
-        <div id="journal-card" class="card h-100">
+        <div id="diary-card" class="card h-100">
           <div class="card-header">
             <h3>Contact Logs</h3>
           </div>

@@ -8,7 +8,7 @@ var date_from = resources.dataset.datefrom;
 var date_to = resources.dataset.dateto;
 const wellbeing_labels = JSON.parse(resources.dataset.labels);
 const wellbeing_colours = JSON.parse(resources.dataset.colours);
-const journal_labels = [
+const diary_labels = [
     String.fromCodePoint("0x"+'1F973'),
     String.fromCodePoint("0x"+'1F60A'),
     String.fromCodePoint("0x"+'1F614'),
@@ -16,7 +16,7 @@ const journal_labels = [
     String.fromCodePoint("0x"+'1F4A9'),
     String.fromCodePoint("0x"+'1F610')
 ];
-const journal_colours= [
+const diary_colours= [
     '#5DAD3AE6', // 🥳
     '#82b438E6', // ☺️
     '#F0A656E6', // 😔
@@ -36,7 +36,7 @@ if(chart_select=="Line Chart"){
     } else if (type=="Contact Logs"){
         create_contact_log()
     }else{
-        create_journal();
+        create_diary();
     }
 }
 
@@ -121,7 +121,7 @@ function create_wellbeing(){
     })
 }
 
-function create_journal(){
+function create_diary(){
     //  🥳    ☺️     😔    😡    💩     😐  //
     //1F973 1F60A 1F614 1F620 1F4A9 1F610//
     values = [0,0,0,0,0,0];
@@ -148,21 +148,21 @@ function create_journal(){
                 break;
         }
     }
-    journal_data = {
-        labels: journal_labels,
+    diary_data = {
+        labels: diary_labels,
         datasets: [{
             label: '',
             data: values,
-            backgroundColor: journal_colours
+            backgroundColor: diary_colours
         }]
     }
-    canvas = create_canvas(0, 'Journal Feelings', true)
+    canvas = create_canvas(0, 'Diary Feelings', true)
     switch(chart_select){
         case 'Pie Chart':
-            create_pie_chart(canvas, journal_data)
+            create_pie_chart(canvas, diary_data)
             break;
         case 'Bar Chart':
-            create_bar_chart(canvas, journal_data)
+            create_bar_chart(canvas, diary_data)
             break;
     }
 }
@@ -238,13 +238,13 @@ function create_line_charts(){
         }
         chart_label = "Contact Logs"
     }else{
-        line_datasets = new Array(journal_labels.length);
+        line_datasets = new Array(diary_labels.length);
         for(var i=0;i<line_datasets.length;i++){
             line_datasets[i] = {
-                label: journal_labels[i],
+                label: diary_labels[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill:false,
-                borderColor:journal_colours[i],
+                borderColor:diary_colours[i],
                 tension: 0
             }
         }
@@ -257,7 +257,7 @@ function create_line_charts(){
                 }]
             }
         }
-        chart_label = "Journal Feelings"
+        chart_label = "Diary Feelings"
     }
     data.forEach((entry) => {
         entry_date = new Date(convert_date(entry.Date));
@@ -265,7 +265,7 @@ function create_line_charts(){
         if(week_number==0){ week_number = 1;}
         entry.week_index = week_number-1;
         week_groups[week_number-1].push(entry)
-        if(type === "Journal Entries"){     
+        if(type === "Diary Entries"){     
             unicode = entry.Feeling.codePointAt(0).toString(16).toUpperCase();
             switch(unicode){
                 case '1F973':

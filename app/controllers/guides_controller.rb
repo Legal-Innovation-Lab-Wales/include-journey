@@ -6,9 +6,9 @@ class GuidesController < ApplicationController
     render template: 'guide/index'
   end
 
-  def journal
-    add_breadcrumb('Journal', nil, 'fas fa-book')
-    render template: 'guide/journal'
+  def diary
+    add_breadcrumb('Diary', nil, 'fas fa-book')
+    render template: 'guide/diary'
   end
 
   def appointments

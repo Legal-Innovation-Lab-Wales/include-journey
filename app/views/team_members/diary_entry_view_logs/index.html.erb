@@ -1,7 +1,7 @@
-<%= render 'layouts/searchable', class_list: 'team-members journal-entry-view-logs',
+<%= render 'layouts/searchable', class_list: 'team-members diary-entry-view-logs',
            header: "#{@team_member.full_name}",
-           subheader: "journal entry view logs (#{@count})",
-           index: 'team_member_journal_entry_view_logs', stats: render(partial: 'stats') do %>
+           subheader: "diary entry view logs (#{@count})",
+           index: 'team_member_diary_entry_view_logs', stats: render(partial: 'stats') do %>
   <div class="container p-0">
     <div class="row">
       <div class="col">
@@ -12,20 +12,20 @@
             <%= render(partial: 'shared/sort_column', locals: { column_value: 'first_viewed_at', column_text: 'First Viewed At' }) %>
             <%= render(partial: 'shared/sort_column', locals: { column_value: 'last_viewed_at', column_text: 'Last Viewed At' }) %>
             <th scope="col">View Count</th>
-            <th scope="col">Journal Entry</th>
+            <th scope="col">Diary Entry</th>
           </thead>
           <tbody>
           <% @resources.each do |view_log| %>
             <tr>
               <td><%= view_log.user.full_name %></td>
-              <td><%= view_log.journal_entry.created %></td>
+              <td><%= view_log.diary_entry.created %></td>
               <td><%= view_log.created %></td>
               <td><%= view_log.last_update %></td>
               <td><%= view_log.view_count %></td>
               <td>
-                <%= link_to journal_entry_path(view_log.journal_entry) do %>
+                <%= link_to diary_entry_path(view_log.diary_entry) do %>
                   <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
-                     title="View Journal Entry"></i>
+                     title="View Diary Entry"></i>
                 <% end %>
               </td>
             </tr>

@@ -86,7 +86,7 @@ In the `db` directory, create a new file called `config.rb`. This file should co
 module Config
     TOTAL_USER_COUNT = 10
     WELLBEING_ASSESSMENTS_FOR_EACH_USER = 20
-    JOURNAL_ENTRIES_FOR_EACH_USER = 5
+    DIARY_ENTRIES_FOR_EACH_USER = 5
     CONTACTS_FOR_EACH_USER = 5
     APPOINTMENTS_FOR_EACH_USER = 20
     PAST_APPOINTMENTS_FOR_EACH_USER = 20
