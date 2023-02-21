@@ -44,7 +44,7 @@ namespace :achievements do
     )
 
     Achievement.create!(
-      name: "Journal Journeyman #{month}",
+      name: "Diary Journeyman #{month}",
       description: 'This achievement demonstrates your commitment to keeping a regular diary.',
       entities: 'diary_entries',
       starts_at: start_date,
