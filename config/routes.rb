@@ -32,6 +32,10 @@ Rails.application.routes.draw do
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
       get 'journey', to: 'journey#index', as: :journey
 
+      resources :goal_permissions, as: :goal_permissions, path: "user/:user_id/goals/permissions"  do
+        delete 'destroy', action: :destroy
+      end
+
       resources :wellbeing_assessments, only: %i[show new create]
       resources :journal_entries, only: %i[index new create] do
         resources :journal_entry_permissions, only: %i[new create], as: :permissions do

@@ -43,6 +43,13 @@
       </div>
     </section>
   <% end %>
+  <section class="row justify-content-md-center">
+     <div class="col-auto">
+       <%= link_to goal_permissions_path(current_user), class: 'btn btn-primary' do %>
+         <i class="fas fa-archive"></i> Manage Permissions
+       <% end %>
+     </div>
+  </section>
 </main>
 
 <%= render 'goal_modal' %>

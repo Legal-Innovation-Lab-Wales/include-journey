@@ -26,7 +26,11 @@
       }
     }
   }
-
+  .select-form{
+    label{
+      background: none !important;
+    }
+  }
   label {
     background-color: $danger-dark;
     border-color: $danger-dark;

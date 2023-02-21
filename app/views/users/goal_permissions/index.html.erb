@@ -1,0 +1,47 @@
+<div class="table-container">
+  <table class="table table-dark table-striped link-table">
+    <thead>
+            <th>
+                Team Member
+            </th>
+            <th>
+                Goal Type
+            </th>
+            <th>
+                Date Assigned
+            </th>
+            <th>Actions</th>
+    </thead>
+    <tbody>
+      <% @model.each do |permission| %>
+          <tr>
+              <td>
+                  <%=permission.team_member.full_name%>
+              </td>
+              <td>
+                  <% if permission.short_term && permission.long_term %>
+                    All
+                  <% elsif permission.short_term %>
+                    Short Term
+                  <% else %>
+                    Long Term
+                  <% end%>
+              </td>
+              <td>
+                  <%=permission.created_at%>
+              </td>
+              <td class="d-flex align-items-center justify-content-center">
+                  <%= button_to "Revoke", goal_permission_destroy_path(current_user, permission), class: "btn btn-danger", method: :delete, role: 'button', data: { confirm: "Are you sure you want to revoke this team member?" }%>
+              </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% if @can_add %>
+  <div class="row my-3">
+    <div class="col text-center">
+        <%= link_to "Add new", new_goal_permission_path(current_user), class: "btn btn-primary"%>
+    </div>
+  </div>
+<% end %>
