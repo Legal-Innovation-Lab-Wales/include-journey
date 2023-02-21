@@ -264,7 +264,7 @@
 
      <div class="row" id="journal-appointments">
       <div class="col-12 col-lg-6 mb-4">
-        <div id="journal-card" class="card h-100">
+        <div id="contact-card" class="card h-100">
           <div class="card-header">
             <h3>Contact Logs</h3>
           </div>
@@ -278,7 +278,33 @@
           </div>
         </div>
       </div>
+      <% if @has_user_goals_permission %>
+        <div class="col-12 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h3>Goals</h3>
+          </div>
+          <div class="card-body">
+            <% if @goals.empty? %>
+              <span>There are no Goals on this user yet.</span>
+            <% else %>
+              <% if @has_short_term_permissions %>
+                <p><%= @user.first_name %> has <%= @goals.short_term.size %> short term goal(s).</p>
+              <% end %>
+              <% if @has_long_term_permissions %>
+                <p><%= @user.first_name %> has <%= @goals.long_term.size %> long term term goal(s)</p>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="card-footer text-center">
+            <%= link_to "View User Goals", goals_user_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
+          </div>
+        </div>
+        </div>
+      <% end %>
     </div>
+
+    
   <% end %>
 </main>
 

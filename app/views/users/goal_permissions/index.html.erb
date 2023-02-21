@@ -13,6 +13,11 @@
             <th>Actions</th>
     </thead>
     <tbody>
+    <% if @model.empty? %>
+      <tr>
+        <td colspan="12">No Permissions Set</td>
+      </tr>
+    <% end %>
       <% @model.each do |permission| %>
           <tr>
               <td>
