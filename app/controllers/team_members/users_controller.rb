@@ -17,8 +17,8 @@ module TeamMembers
       wellbeing_assessment
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order('dated DESC')
-      @journal_entries = current_team_member.journal_entries.where(user: @user).includes(:journal_entry_view_logs)
-      @unread_journal_entries = current_team_member.unread_journal_entries(@user)
+      @diary_entries = current_team_member.diary_entries.where(user: @user).includes(:diary_entry_view_logs)
+      @unread_diary_entries = current_team_member.unread_diary_entries(@user)
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
       @user_tags = @user.user_tags.order({ 'created_at': :desc })
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })

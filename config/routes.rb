@@ -13,7 +13,7 @@ Rails.application.routes.draw do
                                            unlocks: 'team_members/unlocks' }
 
   get 'guide', to: 'guides#index'
-  get 'guide_journal', to: 'guides#journal'
+  get 'guide_diary', to: 'guides#diary'
   get 'guide_appointments', to: 'guides#appointments'
   get 'guide_myNeeds', to: 'guides#myNeeds'
   get 'guide_contacts', to: 'guides#contacts'
@@ -37,8 +37,8 @@ Rails.application.routes.draw do
       end
 
       resources :wellbeing_assessments, only: %i[show new create]
-      resources :journal_entries, only: %i[index new create] do
-        resources :journal_entry_permissions, only: %i[new create], as: :permissions do
+      resources :diary_entries, only: %i[index new create] do
+        resources :diary_entry_permissions, only: %i[new create], as: :permissions do
           get 'edit', action: :edit, on: :collection
         end
       end
@@ -83,7 +83,7 @@ Rails.application.routes.draw do
         put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
         resources :user_profile_view_logs, only: :index, on: :member
-        resources :journal_entry_view_logs, only: :index, on: :member
+        resources :diary_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member do
           get 'export', on: :collection
         end
@@ -122,7 +122,7 @@ Rails.application.routes.draw do
       resources :contact_logs do
         get 'recent', action: :recent, on: :collection
       end
-      resources :journal_entries, only: %i[show index]
+      resources :diary_entries, only: %i[show index]
       resources :wellbeing_services
       resources :wellbeing_metrics, only: %i[index update]
       resources :wellbeing_score_values, only: %i[index update]

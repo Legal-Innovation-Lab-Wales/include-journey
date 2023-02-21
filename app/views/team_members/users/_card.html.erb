@@ -52,11 +52,11 @@
                   <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
                 </div>
               <% end %>
-              <% unread_journal_entries = current_team_member.unread_journal_entries(user) %>
-              <% unless unread_journal_entries.zero? %>
+              <% unread_diary_entries = current_team_member.unread_diary_entries(user) %>
+              <% unless unread_diary_entries.zero? %>
                 <div class="row">
-                  <%= link_to journal_entries_path(query: user.full_name) do %>
-                    <i class="fas fa-book-reader"></i> <%= unread_journal_entries %> unread journal entries
+                  <%= link_to diary_entries_path(query: user.full_name) do %>
+                    <i class="fas fa-book-reader"></i> <%= unread_diary_entries %> unread diary entries
                   <% end %>
                 </div>
               <% end %>

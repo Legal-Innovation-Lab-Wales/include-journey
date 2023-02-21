@@ -11,7 +11,7 @@ class User < DeviseRecord
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
   has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
-  has_many :journal_entries, foreign_key: :user_id, dependent: :destroy
+  has_many :diary_entries, foreign_key: :user_id, dependent: :destroy
   has_many :goal_permissions, foreign_key: :user_id, dependent: :destroy
   has_many :appointments, foreign_key: :user_id, dependent: :delete_all
   has_many :goals, foreign_key: :user_id, dependent: :delete_all
@@ -190,13 +190,13 @@ class User < DeviseRecord
 
   def destroy
     [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
-    [journal_entries, goal_permissions].each(&:destroy_all)
+    [diary_entries, goal_permissions].each(&:destroy_all)
 
     anonymize
   end
 
   def verify_achievements
-    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+    %w[sessions wellbeing_assessments diary_entries goals_achieved].each do |entities|
       Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
 
       if Achievement.this_month.for(entities).present? && changed.include?("#{entities}_this_month_count")
@@ -206,7 +206,7 @@ class User < DeviseRecord
   end
 
   def reset_monthly_counts
-    %w[sessions wellbeing_assessments journal_entries goals_achieved].each do |entities|
+    %w[sessions wellbeing_assessments diary_entries goals_achieved].each do |entities|
       update!({ "#{entities}_this_month_count": 0 })
     end
   end

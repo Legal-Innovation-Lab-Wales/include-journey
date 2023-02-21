@@ -1,0 +1,26 @@
+<%= render 'layouts/searchable', class_list: 'user diary-entry', header: 'Diary Entries', index: 'diary_entries',
+           stats: render(partial: 'stats'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_diary_entry_path, text: 'New Entry' }) do %>
+  <div class="container p-0">
+    <div class="row">
+      <% @resources.each do |diary_entry| %>
+        <div class="col-12 col-md-4">
+          <div class="card mb-3">
+            <div class="card-header">
+              <span><%= diary_entry.feeling %></span>
+              <span><%= diary_entry.created %></span>
+            </div>
+            <div class="card-body diary-text text-dark p-1">
+              <%= simple_format(diary_entry.entry) %>
+            </div>
+            <div class="card-footer">
+              <%= link_to edit_diary_entry_permissions_path(diary_entry), class: 'btn btn-primary' do %>
+                <i class="fas fa-edit"></i> Edit Permissions
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

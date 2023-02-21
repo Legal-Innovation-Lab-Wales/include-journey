@@ -77,14 +77,16 @@ module Users
     end
 
     def get_codes(code)
-      RestClient.get("api.postcodes.io/postcodes/#{code}") { |response, request, result, &block|
+      RestClient.get("#{ENV['POSTCODE_API']}#{code}") { |response, request, result, &block|
         case response.code
-          when 200
-            JSON.parse response
-          else
-            JSON.parse response
+        when 200...300
+          JSON.parse response
+        else
+          @error = 'Error retrieving postcode information'
         end
       }
+    rescue 
+      @error = 'Error retrieving postcode information'
     end
   end
 end

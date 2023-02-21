@@ -1,28 +1,28 @@
 module Users
-  # app/controllers/users/journal_entries_controller.rb
-  class JournalEntriesController < UsersApplicationController
+  # app/controllers/users/diary_entries_controller.rb
+  class DiaryEntriesController < UsersApplicationController
     before_action :set_breadcrumbs
     include Pagination
 
-    # GET /journal_entries/new
+    # GET /diary_entries/new
     def new
       add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
-      @journal_entry = JournalEntry.new
+      @diary_entry = DiaryEntry.new
 
       render 'new'
     end
 
-    # POST /journal_entries
+    # POST /diary_entries
     def create
-      @journal_entry = JournalEntry.new(
-        entry: journal_entry_params[:entry],
-        feeling: journal_entry_params[:feeling],
+      @diary_entry = DiaryEntry.new(
+        entry: diary_entry_params[:entry],
+        feeling: diary_entry_params[:feeling],
         user: current_user
       )
 
-      if @journal_entry.save
-        redirect_to new_journal_entry_permission_path(@journal_entry), 
-        flash: { success: 'New journal entry added' }
+      if @diary_entry.save
+        redirect_to new_diary_entry_permission_path(@diary_entry), 
+        flash: { success: 'New diary entry added' }
       else
         add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
         render 'new'
@@ -37,11 +37,11 @@ module Users
     end
 
     def resources
-      current_user.journal_entries.order(created_at: :desc)
+      current_user.diary_entries.order(created_at: :desc)
     end
 
     def search
-      current_user.journal_entries
+      current_user.diary_entries
                   .where('lower(entry) similar to lower(:query)', wildcard_query)
                   .order(created_at: :desc)
     end
@@ -55,16 +55,16 @@ module Users
 
     private
 
-    def journal_entry_params
-      params.require(:journal_entry).permit(:entry, :feeling)
+    def diary_entry_params
+      params.require(:diary_entry).permit(:entry, :feeling)
     end
 
     def set_breadcrumbs
       path = nil
       if action_name != 'index' && resources.present?
-        path = journal_entries_path
+        path = diary_entries_path
       end
-      add_breadcrumb('My Journal', path, 'fas fa-book')
+      add_breadcrumb('My Diary', path, 'fas fa-book')
     end
   end
 end
