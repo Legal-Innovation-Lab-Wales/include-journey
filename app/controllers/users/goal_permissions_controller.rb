@@ -3,9 +3,9 @@ module Users
         before_action :permissions, :can_add, :set_breadcrumbs
 
         def index
-            add_breadcrumb('Manage permissions', nil, 'fas fa-lock')
-            @default_permission = false
             @type = !params[:type] ? 'short' : params[:type]
+            add_breadcrumb("Manage #{@type} term permissions", nil, 'fas fa-lock')
+            @default_permission = false
 
         end
 
@@ -25,7 +25,7 @@ module Users
                 permission.update!(instance_obj)
             end
 
-            redirect_to goal_permissions_path(current_user, :type => permissions_params[:type]), flash: { success: 'Permissions Shared successfully' }
+            redirect_to goals_path, flash: { success: 'Permissions Shared successfully' }
         end
 
         def destroy

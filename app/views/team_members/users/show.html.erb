@@ -278,20 +278,21 @@
           </div>
         </div>
       </div>
-      <% if @has_user_goals_permission %>
-        <div class="col-12 col-lg-6">
-        <div class="card mb-3">
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card h-100">
           <div class="card-header">
             <h3>Goals</h3>
           </div>
           <div class="card-body">
-            <% if @goals.empty? %>
+            <% if !@has_user_goals_permission %>
+              <span>User has not shared any goals with you yet.</span>
+            <% elsif @goals.empty? %>
               <span>There are no Goals on this user yet.</span>
             <% else %>
               <% if @has_short_term_permissions %>
                 <h4>Short Term</h4>
                 <% if @goals.short_term.length === 0 %>
-                  <span>There are noShort term Goals on this user yet.</span>
+                  <span>There are no Short term Goals on this user yet.</span>
                 <% end %>
                 <% @goals.short_term.each do |goal| %>
                   <p class="bg-primary p-3"><%= goal.goal %></p>
@@ -308,12 +309,8 @@
               <% end %>
             <% end %>
           </div>
-          <div class="card-footer text-center">
-            <%= link_to "View User Goals", goals_user_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
-          </div>
         </div>
-        </div>
-      <% end %>
+      </div>
     </div>
 
     

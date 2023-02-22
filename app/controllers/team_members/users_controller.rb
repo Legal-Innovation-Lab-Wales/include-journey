@@ -89,11 +89,6 @@ module TeamMembers
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
     end
 
-    def goals
-      if !has_goal_permissions
-        redirect_to user_path(@user), flash: { error: "Not permitted." }
-      end
-    end
 
     protected
     def goal_permissions
