@@ -14,7 +14,12 @@
               <div class="card-body">
                 <%= render 'list', goals: @goals.short_term %>
                 <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: true %>
-                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+                <div class="d-flex text-align-cebter justify-content-center">
+                  <%= link_to 'Add New', nil, class: 'btn btn-primary add me-2' %>                
+                  <%= link_to goal_permissions_path(current_user, :type => "short"), class: 'btn btn-primary' do %>
+                    <i class="fas fa-lock"></i> Manage Permissions
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
@@ -26,7 +31,12 @@
               <div class="card-body">
                 <%= render 'list', goals: @goals.long_term %>
                 <%= render 'form', goal: @goal, goal_types: @goal_types, short_term: false %>
-                <%= link_to 'Add New', nil, class: 'btn btn-primary add' %>
+                <div class="d-flex text-align-cebter justify-content-center">
+                  <%= link_to 'Add New', nil, class: 'btn btn-primary add me-2' %>      
+                  <%= link_to goal_permissions_path(current_user, :type => "long"), class: 'btn btn-primary' do %>
+                    <i class="fas fa-lock"></i> Manage Permissions
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
@@ -43,13 +53,6 @@
       </div>
     </section>
   <% end %>
-  <section class="row justify-content-md-center">
-     <div class="col-auto">
-       <%= link_to goal_permissions_path(current_user), class: 'btn btn-primary' do %>
-         <i class="fas fa-archive"></i> Manage Permissions
-       <% end %>
-     </div>
-  </section>
 </main>
 
 <%= render 'goal_modal' %>

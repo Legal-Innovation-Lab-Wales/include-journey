@@ -101,8 +101,7 @@ module TeamMembers
     end
 
     def has_goal_permissions
-      @has_user_goals_permission = goal_permissions.length > 0
-      if !@has_user_goals_permission
+      if goal_permissions.length < 1
         return false
       end
       
@@ -110,7 +109,9 @@ module TeamMembers
       @goals = user.goals.where(archived: false)
       @has_short_term_permissions = permission.short_term
       @has_long_term_permissions = permission.long_term
-      return true
+      
+      @has_user_goals_permission = @has_long_term_permissions || @has_short_term_permissions
+      return @has_user_goals_permission
     end
 
     def resources

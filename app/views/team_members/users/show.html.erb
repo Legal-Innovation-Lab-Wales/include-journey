@@ -280,7 +280,7 @@
       </div>
       <% if @has_user_goals_permission %>
         <div class="col-12 col-lg-6">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-header">
             <h3>Goals</h3>
           </div>
@@ -289,10 +289,22 @@
               <span>There are no Goals on this user yet.</span>
             <% else %>
               <% if @has_short_term_permissions %>
-                <p><%= @user.first_name %> has <%= @goals.short_term.size %> short term goal(s).</p>
+                <h4>Short Term</h4>
+                <% if @goals.short_term.length === 0 %>
+                  <span>There are noShort term Goals on this user yet.</span>
+                <% end %>
+                <% @goals.short_term.each do |goal| %>
+                  <p class="bg-primary p-3"><%= goal.goal %></p>
+                <% end %>
               <% end %>
               <% if @has_long_term_permissions %>
-                <p><%= @user.first_name %> has <%= @goals.long_term.size %> long term term goal(s)</p>
+                <h4>Long Term</h4>
+                <% if @goals.long_term.length === 0 %>
+                  <span>There are no Long term Goals on this user yet.</span>
+                <% end %>
+                <% @goals.long_term.each do |goal| %>
+                  <p class="bg-primary p-3"><%= goal.goal %></p>
+                <% end %>
               <% end %>
             <% end %>
           </div>

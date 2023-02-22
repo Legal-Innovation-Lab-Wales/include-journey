@@ -3,36 +3,29 @@ module Users
         before_action :permissions, :can_add, :set_breadcrumbs
 
         def index
-            add_breadcrumb('Manage permissions', nil, 'fas fa-book')
-            @select_list = { 'All': 0, "Long Term": 1, "Short Term": 2 }
+            add_breadcrumb('Manage permissions', nil, 'fas fa-lock')
             @default_permission = false
+            @type = !params[:type] ? 'short' : params[:type]
 
         end
 
-        def new
-            if !can_add
-                redirect_to goal_permissions_path(current_user), flash: { error: 'No new Team member to add' }
-            end
-            add_breadcrumb('Add permission', nil, 'fas fa-book')
-            @select_list = { 'All': 0, "Long Term": 1, "Short Term": 2 }
-            @default_permission = false
 
-        end
-
-        def create
-            if !can_add
-                redirect_to goal_permissions_path(current_user), flash: { error: 'No new Team member to add' }
-            end
-            is_short_term = permissions_params[:goal_type] === '0' || permissions_params[:goal_type] === '2'
-            is_long_term = permissions_params[:goal_type] === '0' || permissions_params[:goal_type] === '1'
-
+        def create     
             @team_members.each do |team_member|
-                next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
-        
-                current_user.goal_permissions.create!({team_member: team_member, short_term: is_short_term, long_term: is_long_term})
+                is_declined = permissions_params["team_member_#{team_member.id}"].to_i.zero?
+                permission = current_user.goal_permissions.where(team_member_id: team_member.id).first
+                instance_obj = {}
+                instance_obj[permissions_params[:type] === 'long' ? 'long_term' : 'short_term'] = !is_declined
+
+                if !permission
+                    instance_obj['team_member_id'] = team_member.id
+                    current_user.goal_permissions.create!(instance_obj)
+                    next
+                end
+                permission.update!(instance_obj)
             end
 
-            redirect_to goal_permissions_path(current_user), flash: { success: 'Permissions Shared successfully' }
+            redirect_to goal_permissions_path(current_user, :type => permissions_params[:type]), flash: { success: 'Permissions Shared successfully' }
         end
 
         def destroy
@@ -48,15 +41,16 @@ module Users
 
         protected
         def model
-            @model = current_user.goal_permissions
+            @model = params[:type] === 'long' ? current_user.goal_permissions.long_term : current_user.goal_permissions.short_term
         end
 
         def permissions_params
-            params.require(:goal_permission).permit(:goal_type, @team_members.map { |t_m| "team_member_#{t_m.id}" })
+            params.require(:goal_permission).permit(:goal_type, :type, @team_members.map { |t_m| "team_member_#{t_m.id}" })
         end
 
         def permissions
-            @permissions = @model.collect { |permission| { id: permission.team_member_id } }
+            model_collection = params[:type] === 'long'? @model.long_term : @model.short_term
+            @permissions = model_collection.collect { |permission| { id: permission.team_member_id, short_term: permission.short_term, long_term: permission.long_term } }
         end
 
         def can_add
