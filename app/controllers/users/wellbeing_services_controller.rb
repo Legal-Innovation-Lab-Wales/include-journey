@@ -6,9 +6,13 @@ module Users
     include Pagination
 
     def resources
+      @wellbeing_services = WellbeingService.all
+      process_resources
+    end
+
+    def process_resources
       @distances = false
       params[:postcode] = params[:postcode].present? ? params[:postcode].upcase : nil
-      @wellbeing_services = WellbeingService.all
       @wellbeing_services = wellbeing_services_params[:type].present? ? @wellbeing_services.joins(:wellbeing_metrics).where('wellbeing_metrics.id': wellbeing_services_params[:type]) : @wellbeing_services
       process_postcode
       @wellbeing_services = @wellbeing_services.order({ "#{@sort}": @direction }) unless @distances
@@ -24,8 +28,8 @@ module Users
     end
 
     def search
-      WellbeingService.where('lower(name) similar to lower(:query)', wildcard_query)
-                      .order(created_at: :desc)
+      @wellbeing_services = WellbeingService.where('lower(name) similar to lower(:query)', wildcard_query)
+      process_resources
     end
 
     def set_wellbeing_filters
@@ -64,7 +68,7 @@ module Users
           filtered_services.push(service)
         end
       end
-      @wellbeing_services = filtered_services.sort_by{|element| element.values_at(@sort)}
+      @wellbeing_services = filtered_services.sort_by { |element| element.values_at(@sort) }
       @wellbeing_services = @wellbeing_services.reverse if direction == 'desc'
     end
 
