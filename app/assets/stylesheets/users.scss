@@ -119,6 +119,12 @@
     }
   }
 
+  #goal-permissions-card{
+    .goal-card-wrapper{
+      max-height: 50vh;
+      overflow: auto;
+    }
+  }
   #diary-appointments {
     #past-appointments-accordion {
       .accordion-button {

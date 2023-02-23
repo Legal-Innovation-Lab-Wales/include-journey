@@ -269,9 +269,9 @@
             <h3>Contact Logs</h3>
           </div>
           <div class="card-body">
-          <p><%= @user.first_name %> has <%= @contact_logs.size %> contact log(s).</p>
-          <p><%= @user.first_name %> has <%= @contact_logs.last_week.size %> contact log(s) last week.</p>
-          <p><%= @user.first_name %> has <%= @contact_logs.last_month.size %> contact log(s) last month.</p>
+          <p><%= @user.first_name %> has <%= pluralize(@contact_logs.size, "contact log")%> </p>
+          <p><%= @user.first_name %> has <%= pluralize(@contact_logs.last_week.size, "contact log")%> last week.</p>
+          <p><%= @user.first_name %> has <%= pluralize(@contact_logs.last_month.size, "contact log")%> last month.</p>
           </div>
           <div class="card-footer text-center">
             <%= link_to "View User Contact Logs", users_recent_contact_logs_path(@user), class: "btn btn-primary my-2 py-2 px-5" %>
@@ -283,30 +283,14 @@
           <div class="card-header">
             <h3>Goals</h3>
           </div>
-          <div class="card-body">
+          <div class="card-body" id="goal-permissions-card">
             <% if !@has_user_goals_permission %>
-              <span>User has not shared any goals with you yet.</span>
+              <span><%= @user.first_name %> has not shared any goals with you yet.</span>
             <% elsif @goals.empty? %>
-              <span>There are no Goals on this user yet.</span>
+              <span><%= @user.first_name %> has no goals yet.</span>
             <% else %>
-              <% if @has_short_term_permissions %>
-                <h4>Short Term</h4>
-                <% if @goals.short_term.length === 0 %>
-                  <span>There are no Short term Goals on this user yet.</span>
-                <% end %>
-                <% @goals.short_term.each do |goal| %>
-                  <p class="bg-primary p-3"><%= goal.goal %></p>
-                <% end %>
-              <% end %>
-              <% if @has_long_term_permissions %>
-                <h4>Long Term</h4>
-                <% if @goals.long_term.length === 0 %>
-                  <span>There are no Long term Goals on this user yet.</span>
-                <% end %>
-                <% @goals.long_term.each do |goal| %>
-                  <p class="bg-primary p-3"><%= goal.goal %></p>
-                <% end %>
-              <% end %>
+              <%= render 'goal_permissions_card.html', goals: @goals.short_term, type: "Short", has_permission: @has_short_term_permissions %>
+              <%= render 'goal_permissions_card.html', goals: @goals.long_term, type: "Long", has_permission: @has_long_term_permissions %>
             <% end %>
           </div>
         </div>
