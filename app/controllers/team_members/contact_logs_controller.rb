@@ -27,7 +27,7 @@ module TeamMembers
     # POST /contact_logs
     def create
       @contact_log = ContactLog.new(
-        user: User.where(id: contact_log_params[:user_id]).first,
+        user: @user ? @user : User.where(id: contact_log_params[:user_id]).first,
         contact_type: ContactType.where(id: contact_log_params[:contact_type_id]).first,
         contact_purpose: ContactPurpose.where(id: contact_log_params[:contact_purpose_id]).first,
         notes: contact_log_params[:notes],
@@ -38,7 +38,7 @@ module TeamMembers
 
       if @contact_log.save
         session.delete(:contact_log_params)
-        redirect_to recent_contact_logs_path, flash: { success: 'Contact log created' }
+        redirect_to @user ? users_recent_contact_logs_path(@user) : recent_contact_logs_path, flash: { success: 'Contact log created' }
       else
         add_breadcrumb('New Contact log', nil, 'fas fa-plus circle')
         form_resources

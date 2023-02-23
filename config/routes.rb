@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       get "users/:user_id/contact_logs/recent" => "contact_logs#recent", as: "users_recent_contact_logs"
       get "users/:user_id/contact_logs" => "contact_logs#index", as: "users_contact_logs"
       get "users/:user_id/contact_logs/new" => "contact_logs#new", as: "users_new_contact_logs"
+      post "users/:user_id/contact_logs/create" => "contact_logs#create", as: "users_create_contact_logs"
       get "users/:user_id/approve" => "approvals#approve", as: "approve_user"
 
       get 'home', to: 'team_members_application#home'
