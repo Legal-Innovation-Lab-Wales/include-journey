@@ -81,7 +81,7 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth' %>
+                <%= form.date_field :date_of_birth, class: 'form-control', autocomplete: 'date-of-birth', placeholder: 'Date of Birth', :max => DateTime.now %>
                 <%= form.label :date_of_birth %>
               </div>
             </div>

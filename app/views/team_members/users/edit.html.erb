@@ -40,7 +40,7 @@
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :date_of_birth, class: 'form-control' %>
+                      <%= f.date_field :date_of_birth, class: 'form-control', :max => DateTime.now %>
                       <%= f.label :date_of_birth %>
                     </div>
                   </div>
