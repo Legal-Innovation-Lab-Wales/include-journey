@@ -91,7 +91,7 @@ Rails.application.routes.draw do
           post :bulk_action
         end
       end
-      resources :users, only: %i[index show update] do
+      resources :users, only: %i[index show update destroy] do
         put 'pin', action: 'pin', on: :member, as: :pin
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement

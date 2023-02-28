@@ -36,6 +36,12 @@ module TeamMembers
                     notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
     end
 
+    # DELETE /users/:id/pin
+    def destroy
+      @user.destroy!
+      redirect_to users_path, flash: { success: "#{@user.full_name} was successfully deleted." }
+    end
+
     # PUT /users/:id/unpin
     def unpin
       verify_unpin
