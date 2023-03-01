@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_20_113941) do
+ActiveRecord::Schema.define(version: 2023_02_20_194800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,17 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["diary_entry_id"], name: "index_diary_entry_view_logs_on_diary_entry_id"
     t.index ["team_member_id"], name: "index_diary_entry_view_logs_on_team_member_id"
+  end
+
+  create_table "goal_permissions", force: :cascade do |t|
+    t.boolean "short_term", default: false
+    t.boolean "long_term", default: false
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_goal_permissions_on_team_member_id"
+    t.index ["user_id"], name: "index_goal_permissions_on_user_id"
   end
 
   create_table "goal_types", force: :cascade do |t|
@@ -477,6 +488,8 @@ ActiveRecord::Schema.define(version: 2023_02_20_113941) do
   add_foreign_key "diary_entry_permissions", "team_members"
   add_foreign_key "diary_entry_view_logs", "diary_entries"
   add_foreign_key "diary_entry_view_logs", "team_members"
+  add_foreign_key "goal_permissions", "team_members"
+  add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"

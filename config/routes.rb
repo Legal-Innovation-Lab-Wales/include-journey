@@ -64,7 +64,6 @@ Rails.application.routes.draw do
       resource :two_factor_settings, except: %i[index show]
 
       root 'dashboard#show', as: :authenticated_team_member_root
-      get "users/:user_id/approve" => "approvals#approve", as: "approve_user"
 
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
@@ -98,6 +97,7 @@ Rails.application.routes.draw do
         put 'unpin', action: 'unpin', on: :member, as: :unpin
         patch 'suspend', action: 'suspend', on: :member, as: :suspend
         get 'goals', action: 'goals', on: :member, as: :goals
+        get 'approve', action: 'approve', on: :member, as: :approve
 
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
