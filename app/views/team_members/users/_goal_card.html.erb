@@ -1,7 +1,7 @@
 <% if has_permission %>
     <h4><%= type %> Term</h4>
     <% if goals.length === 0 %>
-        <span><%= @user.first_name %> has no <%= type %> term goals yet.</span>
+        <span><%= @user.first_name %> has no <%= type %> term goals currently.</span>
     <% end %>
     <div class="goal-card-wrapper">
         <% goals.each do |goal| %>
