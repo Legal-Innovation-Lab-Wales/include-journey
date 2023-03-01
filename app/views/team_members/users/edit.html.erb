@@ -19,13 +19,13 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :first_name, class: 'form-control', disabled: true %>
+                      <%= f.text_field :first_name, class: 'form-control' %>
                       <%= f.label :first_name %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :last_name, class: 'form-control', disabled: true %>
+                      <%= f.text_field :last_name, class: 'form-control' %>
                       <%= f.label :last_name %>
                     </div>
                   </div>
@@ -34,13 +34,13 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :pronouns, class: 'form-control', disabled: true %>
+                      <%= f.select :pronouns, User::PRONOUN_OPTIONS[0..User::PRONOUN_OPTIONS.count-2], {}, { class: 'form-select' } %>
                       <%= f.label :pronouns %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.date_field :date_of_birth, class: 'form-control', disabled: true %>
+                      <%= f.date_field :date_of_birth, class: 'form-control', :max => DateTime.now %>
                       <%= f.label :date_of_birth %>
                     </div>
                   </div>
@@ -49,13 +49,13 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :email, class: 'form-control', disabled: true %>
+                      <%= f.text_field :email, class: 'form-control' %>
                       <%= f.label :email %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :mobile_number, class: 'form-control', disabled: true %>
+                      <%= f.text_field :mobile_number, class: 'form-control' %>
                       <%= f.label :mobile_number %>
                     </div>
                   </div>
@@ -64,13 +64,13 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :sex, class: 'form-control', disabled: true %>
+                      <%= f.select :sex, User::SEX_OPTIONS[0..User::SEX_OPTIONS.count-2], {}, { class: 'form-select' }  %>
                       <%= f.label :sex %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :gender_identity, class: 'form-control', disabled: true %>
+                      <%= f.select :gender_identity, User::GENDER_IDENTITY_OPTIONS[0..User::GENDER_IDENTITY_OPTIONS.count-2], { }, { class: 'form-select' }  %>
                       <%= f.label :gender_identity do %>
                         Gender
                       <% end %>
@@ -81,13 +81,13 @@
                 <div class="row">
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :religion, class: 'form-control', disabled: true %>
+                      <%= f.select :religion, User::RELIGION_OPTIONS[0..User::RELIGION_OPTIONS.count-2], { }, { class: 'form-select' }  %>
                       <%= f.label :religion %>
                     </div>
                   </div>
                   <div class="col-md">
                     <div class="form-floating">
-                      <%= f.text_field :ethnic_group, class: 'form-control', disabled: true %>
+                      <%= f.select :ethnic_group, User::ETHNICITY_OPTIONS[0..User::ETHNICITY_OPTIONS.count-2], { }, { class: 'form-select' }  %>
                       <%= f.label :ethnic_group do %>
                         Ethnicity
                       <% end %>
@@ -98,7 +98,7 @@
                 <div class="row">
                   <div class="col p-0">
                     <div class="form-floating mb-0">
-                      <%= f.text_field :disabilities, class: 'form-control', disabled: true %>
+                      <%= f.text_field :disabilities, class: 'form-control' %>
                       <%= f.label :disabilities %>
                     </div>
                   </div>
