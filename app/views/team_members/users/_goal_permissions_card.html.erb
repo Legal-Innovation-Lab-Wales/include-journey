@@ -1,0 +1,15 @@
+<% if has_permission %>
+    <h4><%= type %> Term</h4>
+    <% if goals.length === 0 %>
+        <span><%= @user.first_name %> has no <%= type %> term Goals yet.</span>
+    <% end %>
+    <div class="goal-card-wrapper">
+        <% goals.each do |goal| %>
+            <div class="card my-2">
+                <div class="card-body <%= goal.achieved? ? 'bg-success' : 'bg-white'%>">
+                    <i title="<%= goal.achieved? ? 'Achieved' : 'Pending'%>" class="fas fa-<%= goal.achieved? ? 'check' : 'clock'%>"></i> <%= goal.goal %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+<% end %>

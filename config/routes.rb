@@ -32,6 +32,10 @@ Rails.application.routes.draw do
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
       get 'journey', to: 'journey#index', as: :journey
 
+      resources :goal_permissions, as: :goal_permissions, path: "user/:user_id/goals/permissions"  do
+        delete 'destroy', action: :destroy
+      end
+
       resources :wellbeing_assessments, only: %i[show new create]
       resources :diary_entries, only: %i[index new create] do
         resources :diary_entry_permissions, only: %i[new create], as: :permissions do
@@ -97,6 +101,8 @@ Rails.application.routes.draw do
         put 'decrement', action: 'decrement', on: :member, as: :decrement
         put 'unpin', action: 'unpin', on: :member, as: :unpin
         patch 'suspend', action: 'suspend', on: :member, as: :suspend
+        get 'goals', action: 'goals', on: :member, as: :goals
+
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member do

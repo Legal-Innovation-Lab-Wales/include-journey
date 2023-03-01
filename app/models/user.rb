@@ -12,6 +12,7 @@ class User < DeviseRecord
   has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
   has_many :diary_entries, foreign_key: :user_id, dependent: :destroy
+  has_many :goal_permissions, foreign_key: :user_id, dependent: :destroy
   has_many :appointments, foreign_key: :user_id, dependent: :delete_all
   has_many :goals, foreign_key: :user_id, dependent: :delete_all
   has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
@@ -189,7 +190,7 @@ class User < DeviseRecord
 
   def destroy
     [notes, contacts, appointments, goals, user_tags].each(&:delete_all)
-    [diary_entries].each(&:destroy_all)
+    [diary_entries, goal_permissions].each(&:destroy_all)
 
     anonymize
   end

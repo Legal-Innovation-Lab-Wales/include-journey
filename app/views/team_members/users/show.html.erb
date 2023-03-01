@@ -262,9 +262,9 @@
 
     </div>
 
-     <div class="row" id="diary-appointments">
+     <div class="row" id="contact-appointments">
       <div class="col-12 col-lg-6 mb-4">
-        <div id="diary-card" class="card h-100">
+        <div id="contact-card" class="card h-100">
           <div class="card-header">
             <h3>Contact Logs</h3>
           </div>
@@ -278,7 +278,26 @@
           </div>
         </div>
       </div>
+      <div class="col-12 col-lg-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3>Goals</h3>
+          </div>
+          <div class="card-body" id="goal-permissions-card">
+            <% if !@has_user_goals_permission %>
+              <span><%= @user.first_name %> has not shared any goals with you yet.</span>
+            <% elsif @goals.empty? %>
+              <span><%= @user.first_name %> has no goals yet.</span>
+            <% else %>
+              <%= render 'goal_permissions_card.html', goals: @goals.short_term, type: "Short", has_permission: @has_short_term_permissions %>
+              <%= render 'goal_permissions_card.html', goals: @goals.long_term, type: "Long", has_permission: @has_long_term_permissions %>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
+
+    
   <% end %>
 </main>
 

@@ -6,6 +6,7 @@ module TeamMembers
     include Pagination
 
     before_action :user, except: :index
+    before_action :goal_permissions, except: :index
     before_action :user_pin, except: %i[show index wba_history]
 
     # GET /users/:id
@@ -23,6 +24,9 @@ module TeamMembers
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
       @contact_logs = ContactLog.where('user_id': @user.id)
+
+      has_goal_permissions
+      
       render 'show'
     end
 
@@ -85,7 +89,25 @@ module TeamMembers
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
     end
 
+
     protected
+    def goal_permissions
+      @user.goal_permissions.where(team_member_id: current_team_member.id)
+    end
+
+    def has_goal_permissions
+      if goal_permissions.length < 1
+        return false
+      end
+      
+      permission = goal_permissions.first
+      @goals = user.goals.where(archived: false)
+      @has_short_term_permissions = permission.short_term
+      @has_long_term_permissions = permission.long_term
+      
+      @has_user_goals_permission = @has_long_term_permissions || @has_short_term_permissions
+      return @has_user_goals_permission
+    end
 
     def resources
       case @sort
