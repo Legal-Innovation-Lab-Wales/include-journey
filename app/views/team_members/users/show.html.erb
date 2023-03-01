@@ -283,14 +283,14 @@
           <div class="card-header">
             <h3>Goals</h3>
           </div>
-          <div class="card-body" id="goal-permissions-card">
+          <div class="card-body" id="goals-card">
             <% if !@has_user_goals_permission %>
               <span><%= @user.first_name %> has not shared any goals with you yet.</span>
             <% elsif @goals.empty? %>
               <span><%= @user.first_name %> has no goals yet.</span>
             <% else %>
-              <%= render 'goal_permissions_card.html', goals: @goals.short_term, type: "Short", has_permission: @has_short_term_permissions %>
-              <%= render 'goal_permissions_card.html', goals: @goals.long_term, type: "Long", has_permission: @has_long_term_permissions %>
+              <%= render 'goal_card.html', goals: @goals.short_term, type: "short", has_permission: @has_short_term_permissions %>
+              <%= render 'goal_card.html', goals: @goals.long_term, type: "long", has_permission: @has_long_term_permissions %>
             <% end %>
           </div>
         </div>
