@@ -119,10 +119,21 @@
     }
   }
 
-  #goal-permissions-card{
+  #goals-card{
     max-height: 50vh;
     overflow: auto;
+    .goal-card-wrapper{
+      margin-bottom: 1rem;
+    }
+    .goal-card {
+      background: $white;
+      .goal-icon {
+        font-size: 1.4rem;
+        margin-right: 1rem;
+      }
+    }
   }
+
   #diary-appointments {
     #past-appointments-accordion {
       .accordion-button {
