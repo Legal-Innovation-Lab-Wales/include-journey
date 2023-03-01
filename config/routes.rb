@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       put 'cancel_deletion', to: 'users_application#cancel_deletion', as: :cancel_deletion
       get 'journey', to: 'journey#index', as: :journey
 
-      resources :goal_permissions, as: :goal_permissions, path: "user/:user_id/goals/permissions"  do
+      resources :goal_permissions, as: :goal_permissions do
         delete 'destroy', action: :destroy
       end
 
@@ -162,5 +162,4 @@ Rails.application.routes.draw do
     get 'cookie_policy', to: 'pages#cookie_policy'
     get '/*path', to: redirect('/users/sign_in')
   end
-
 end
