@@ -2,27 +2,24 @@ module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
     before_action :contact_log, only: %i[edit update destroy toggle_attended]
-    before_action :get_user, only: %i[index recent admin_recent_contacts new create]
+    before_action :get_user, only: %i[index recent recent_team_member_contacts new create]
     before_action :set_breadcrumbs
     include Pagination
     before_action :validate_dates, only: :create
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = @user ? ContactLog.where('user_id': @user.id).recent.order(start: :desc) : current_team_member.contact_logs.recent.order(start: :desc)
+      if @user
+        @contact_logs = ContactLog.where('user_id': @user.id).recent.order(start: :desc)
+      elsif @team_member
+        @contact_logs = ContactLog.where('team_member_id': @team_member.id).recent.order(start: :desc)
+      else
+        @contact_logs = current_team_member.contact_logs.recent.order(start: :desc)
+      end
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
     end
-
-    # GET team_members/:member_id/contact_logs/recent
-    def admin_recent_contacts
-      @contact_logs = ContactLog.where('team_member_id': params[:member_id]).recent.order(start: :desc)
-      @count_in_last_week = @contact_logs.last_week.size
-
-      render 'recent'
-    end
-
 
     # POST /contact_logs
     def create
@@ -38,7 +35,7 @@ module TeamMembers
 
       if @contact_log.save
         session.delete(:contact_log_params)
-        redirect_to @user ? users_recent_contact_logs_path(@user) : recent_contact_logs_path, flash: { success: 'Contact log created' }
+        redirect_to @user ? recent_user_contact_logs_path(@user) : recent_contact_logs_path, flash: { success: 'Contact log created' }
       else
         add_breadcrumb('New Contact log', nil, 'fas fa-plus circle')
         form_resources
@@ -154,35 +151,36 @@ module TeamMembers
     def set_breadcrumbs
       # if recent action, no path
       # if user exists use user recent logs
-      # if none use admin recent logs
-      path = action_name == 'recent' ? nil : @user? users_recent_contact_logs_path(@user) : recent_contact_logs_path
+      # if none use team member recent logs
+      path = action_name == 'recent' ? nil : @user ? recent_user_contact_logs_path(@user) : recent_contact_logs_path
       if @user
         add_breadcrumb('Users', users_path, 'fas fa-user')
         add_breadcrumb(@user.full_name, @user)
-        add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
+        add_breadcrumb('Contact logs', path, 'fas fa-clipboard-list')
       elsif @team_member
-        path = action_name == 'admin_recent_contacts' ? nil : admin_recent_contact_logs_path(@team_member)
+        path = action_name == 'recent' ? nil : recent_team_member_contact_logs_path(@team_member)
         add_breadcrumb('Team Members', team_members_path, 'fas fa-user')
         add_breadcrumb(@team_member.full_name, @team_member)
-        add_breadcrumb("Contact logs", path, 'fas fa-clipboard-list')
+        add_breadcrumb('Contact logs', path, 'fas fa-clipboard-list')
       else
-        add_breadcrumb("My Contact logs", path, 'fas fa-clipboard-list')
+        add_breadcrumb('My Contact logs', path, 'fas fa-clipboard-list')
       end
       add_breadcrumb('Archived Contact logs') unless action_name != 'index'
     end
 
     def get_user
-      if(params[:user_id].present?)
+      if params[:user_id].present?
+        puts 'User ID'
         @user = User.where(id: params[:user_id]).first
-        if(!@user.present?)
-          redirect_to :authenticated_team_member_root_path
-        end
-      end
-      if(params[:member_id].present?)
-        @team_member = TeamMember.where(id: params[:member_id]).first
-        if(!@team_member.present?)
-          redirect_to :authenticated_team_member_root_path
-        end
+        return unless !@user.present?
+
+        redirect_to authenticated_team_member_root_path
+      elsif params[:team_member_id].present?
+        puts 'Team Member ID'
+        @team_member = TeamMember.where(id: params[:team_member_id]).first
+        return unless !@team_member.present?
+
+        redirect_to authenticated_team_member_root_path
       end
     end
   end

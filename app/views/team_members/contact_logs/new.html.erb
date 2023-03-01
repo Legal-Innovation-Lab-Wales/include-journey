@@ -4,7 +4,7 @@
     <div class="col-12 col-md-4 create">
       <h3 class="mb-0">Create new contact log</h3>
       <p> Enter in the information to add a new contact log.</p>
-      <%= render 'form', contact_log: @contact_log, url: @user ? users_create_contact_logs_path(@user): contact_logs_path %>
+      <%= render 'form', contact_log: @contact_log, url: @user ? user_contact_logs_path(@user): contact_logs_path %>
     </div>
     <div class="col-0 col-md-4"></div>
   </section>

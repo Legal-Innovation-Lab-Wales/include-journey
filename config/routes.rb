@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'guide_support', to: 'guides#support'
   get 'guide_goals', to: 'guides#goals'
   post 'report_issue', to: 'report_issue#send_report'
-  
+
   authenticated :user do
     scope module: 'users' do
       root 'dashboard#show', as: :authenticated_user_root
@@ -64,19 +64,12 @@ Rails.application.routes.draw do
       resource :two_factor_settings, except: %i[index show]
 
       root 'dashboard#show', as: :authenticated_team_member_root
-      get "users/:user_id/contact_logs/recent" => "contact_logs#recent", as: "users_recent_contact_logs"
-      get "users/:user_id/contact_logs" => "contact_logs#index", as: "users_contact_logs"
-      get "users/:user_id/contact_logs/new" => "contact_logs#new", as: "users_new_contact_logs"
-      post "users/:user_id/contact_logs/create" => "contact_logs#create", as: "users_create_contact_logs"
       get "users/:user_id/approve" => "approvals#approve", as: "approve_user"
 
       get 'home', to: 'team_members_application#home'
       get 'terms', to: 'team_members_application#terms'
       get 'privacy_notice', to: 'team_members_application#privacy_notice'
       get 'cookie_policy', to: 'team_members_application#cookie_policy'
-
-      get "team_members/:member_id/contact_logs/recent" => "contact_logs#admin_recent_contacts", as: "admin_recent_contact_logs"
-      get "team_members/:member_id/contact_logs" => "contact_logs#index", as: "admin_contact_logs"
       resources :team_members, only: %i[index show] do
         put 'approve', action: 'approve', on: :member, as: :approve
         put 'reject', action: 'reject', on: :member, as: :reject
@@ -87,6 +80,9 @@ Rails.application.routes.draw do
         resources :diary_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member do
           get 'export', on: :collection
+        end
+        resources :contact_logs, on: :member do
+          get 'recent', action: :recent, on: :collection
         end
       end
 
@@ -109,6 +105,9 @@ Rails.application.routes.draw do
           get 'export', on: :collection
         end
         resources :appointments, only: %i[index new create edit update], on: :member
+        resources :contact_logs, on: :member do
+          get 'recent', action: :recent, on: :collection
+        end
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
         get 'edit', action: 'edit', on: :member, as: :edit
       end
