@@ -5,7 +5,11 @@
     <% end %>
     <div class="goal-card-wrapper">
         <% goals.each do |goal| %>
-            <p class="bg-white p-3"><%= goal.goal %></p>
+            <div class="card my-2">
+                <div class="card-body bg-white">
+                    <i title="<%= goal.achieved? ? 'Achieved' : 'Pending'%>" class="fas fa-<%= goal.achieved? ? 'check' : 'clock'%>"></i> <%= goal.goal %>
+                </div>
+            </div>
         <% end %>
     </div>
 <% end %>
