@@ -28,7 +28,7 @@ class User < DeviseRecord
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
   scope :deleted, -> { where(deleted: true) }
-  scope :approved, -> { where(approved: true) }
+  scope :approved, -> { where({approved: true, deleted: false}) }
   scope :last_assessed_today, lambda {
     where(':start <= last_assessed_at and last_assessed_at <= :end',
           { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })

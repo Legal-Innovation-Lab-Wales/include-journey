@@ -1,5 +1,5 @@
 <div class="col-12 col-md-6 mb-3">
-  <div class="card <%= user.deleted ? 'deleted' : '' %>">
+  <div class="card <%= user.suspended ? 'deleted' : '' %>">
     <div class="card-header">
       <span>
         <%= link_to user_path(user) do %>
@@ -50,6 +50,11 @@
               <% if user.released_at.present? %>
                 <div class="row">
                   <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
+                </div>
+              <% end %>
+              <% if user.suspended? %>
+                <div class="row">
+                  <span><i class="fa fa-ban" aria-hidden="true"></i> Status: Suspended</span>
                 </div>
               <% end %>
               <% unread_diary_entries = current_team_member.unread_diary_entries(user) %>
