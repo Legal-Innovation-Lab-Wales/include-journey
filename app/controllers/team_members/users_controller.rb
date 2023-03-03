@@ -81,7 +81,7 @@ module TeamMembers
     end
 
     def suspend
-      user = User.find(params[:id])
+      user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
       user.suspended_at = user.suspended ? nil : DateTime.now
       user.suspended = !user.suspended
       user.save!
@@ -158,7 +158,7 @@ module TeamMembers
     end
 
     def user
-      @user = User.includes(:notes).find(params[:id])
+      @user = User.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end

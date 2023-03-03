@@ -76,7 +76,7 @@ module Users
     private
 
     def contact
-      @contact = current_user.contacts.find(params[:id])
+      @contact = current_user.contacts.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: contacts_path, flash: { error: 'That contact does not exist' })
     end

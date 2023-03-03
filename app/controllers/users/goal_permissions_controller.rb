@@ -27,7 +27,7 @@ module Users
     end
 
     def destroy
-      permission = @model.find(params[:goal_permission_id])
+      permission = @model.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:goal_permission_id]))
 
       permission.destroy!
 

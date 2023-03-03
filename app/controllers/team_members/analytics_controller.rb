@@ -84,7 +84,7 @@ module TeamMembers
         if params[:author] == 'User'
           @resource = WellbeingAssessment.all.where(team_member_id: nil)
         else
-          @resource = params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email:params[:member]).wellbeing_assessments
+          @resource = params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).wellbeing_assessments
         end
       else
         @resource = WellbeingAssessment.all
@@ -93,7 +93,7 @@ module TeamMembers
 
     def diary_data
       if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).diary_entries : DiaryEntry.all
+        @resource = params[:member] != 'All' ? TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).diary_entries : DiaryEntry.all
       else
         @resource = current_team_member.diary_entries
       end
@@ -101,7 +101,7 @@ module TeamMembers
 
     def contact_log_data
       if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: params[:member]).contact_logs : ContactLog.all
+        @resource = params[:member] != 'All' ? TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).contact_logs : ContactLog.all
       else
         @resource = current_team_member.contact_logs
       end

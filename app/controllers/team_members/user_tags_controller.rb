@@ -69,15 +69,15 @@ module TeamMembers
     end
 
     def selected_tag
-      @tag = Tag.find(params[:tag_id])
+      @tag = Tag.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:tag_id]))
     end
 
     def user
-      @user = User.find(params[:user_id])
+      @user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def user_tag
-      @user_tag = @user.user_tags.find(params[:id])
+      @user_tag = @user.user_tags.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     end
 
     def user_tag_params
