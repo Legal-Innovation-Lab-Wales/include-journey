@@ -38,8 +38,9 @@ module TeamMembers
 
     # DELETE /users/:id/pin
     def destroy
+      name = @user.full_name
       @user.destroy!
-      redirect_to users_path, flash: { success: "#{@user.full_name} was successfully deleted." }
+      redirect_to users_path, flash: { success: "#{name} was successfully deleted." }
     end
 
     # PUT /users/:id/unpin

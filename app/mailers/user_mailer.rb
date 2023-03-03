@@ -19,4 +19,10 @@ class UserMailer < ApplicationMailer
     @message = @recipient.suspended ? "Your account was suspended at #{user.suspended_at.to_time.strftime('%B %e at %l:%M %p')}" : 'Your user account has been reinstated'
     mail(to: @recipient.email, subject:"Your account has been #{@keyword}")
   end
+
+  def deleted(user)
+    @recipient = user
+
+    mail(to: @recipient.email, subject:"Your account has been Deleted")
+  end
 end
