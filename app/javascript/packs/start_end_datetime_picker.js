@@ -14,10 +14,16 @@ const groupedDateValidation = (name) => {
          end_hidden_field.value = new Date(`${end_date_field.value} ${end_time_field.value}`)
          setEndTime()
       },
-      setMinDate = (value) => end_date_field.setAttribute('min', value),
+      setMinDate = (value) =>{
+         end_date_field.setAttribute('min', value)
+      },
       setEndTime = ()=> {
         if (start_date_field.value === end_date_field.value) {
-          end_time_field.value = start_time_field.value
+          const startDateTime = new Date(`${start_date_field.value} ${start_time_field.value}`);
+          const endDateTime = new Date(`${end_date_field.value} ${end_time_field.value}`);
+          if(startDateTime.getTime() > endDateTime.getTime()){
+            end_time_field.value = start_time_field.value
+          }
           end_time_field.setAttribute('min', start_time_field.value)
         }
       }
@@ -30,6 +36,7 @@ const groupedDateValidation = (name) => {
   setMinDate(start_date_field.value)
   update_start()
   update_end()
+  end_time_field.value = start_time_field.value
 }
 
 const identifier = "_start_when"
