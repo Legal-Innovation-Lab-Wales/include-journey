@@ -54,7 +54,7 @@ Rails.application.routes.draw do
       resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
       resources :surveys, only: %i[index show update]
-      resources :team_members_notes, only: [:show]
+      resources :team_members_notes, only: [:index]
     end
     get '/*path', to: redirect('')
   end
