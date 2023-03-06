@@ -24,12 +24,13 @@ class User < DeviseRecord
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
   before_update :mail_suspended_user, if: -> { suspended_changed? }
+  before_update :mail_deleted_user, if: -> { deleted_changed? && deleted? }
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
   scope :deleted, -> { where(deleted: true) }
-  scope :approved, -> { where(approved: true) }
+  scope :approved, -> { where({approved: true, deleted: false}) }
   scope :last_assessed_today, lambda {
     where(':start <= last_assessed_at and last_assessed_at <= :end',
           { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })
@@ -138,6 +139,10 @@ class User < DeviseRecord
     UserMailer.rejected(self).deliver_now
   end
 
+  def mail_deleted_user
+    UserMailer.deleted(self).deliver_now
+  end
+
   # Appointments filters
   def future_appointments
     appointments.order(start: :asc).filter(&:future)
@@ -214,7 +219,7 @@ class User < DeviseRecord
   private
 
   def anonymize
-    # skip_reconfirmation!
+    skip_email_changed_notification!
     update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: Faker::Number.leading_zero_number(digits: 11),
            nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
   end

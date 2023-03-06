@@ -136,12 +136,13 @@ module TeamMembers
     def wellbeing_assessments
       @wellbeing_assessments =
         if @team_member.present?
-          @team_member.wellbeing_assessments.includes(:user, wba_scores: :wellbeing_metric)
+          @team_member.wellbeing_assessments.joins(:user).where({"user.deleted": false}).includes(:user, wba_scores: :wellbeing_metric)
         elsif @user.present?
           @user.wellbeing_assessments.includes(:team_member, wba_scores: :wellbeing_metric)
         else
-          WellbeingAssessment.includes(:user, :team_member, wba_scores: :wellbeing_metric)
+          WellbeingAssessment.joins(:user).where({"user.deleted": false}).includes(:user, :team_member, wba_scores: :wellbeing_metric)
         end
+
     end
 
     def wellbeing_assessment_today
