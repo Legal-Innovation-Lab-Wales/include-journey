@@ -107,13 +107,13 @@
               <div class="nav-label hide">Report Issue</div>
               <i class="fas fa-flag"></i>
             </div>
-            <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
+            <%= button_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
           <% end %>
           <% if current_user %>
-            <%= link_to team_members_notes_path, class: "btn btn-success" do %>
+            <%= link_to messages_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Message</div>
               <i class="fas fa-envelope"></i>
             <% end %>
@@ -125,7 +125,7 @@
               <div class="nav-label hide">Report Issue</div>
               <i class="fas fa-flag"></i>
             </div>
-            <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
+            <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>

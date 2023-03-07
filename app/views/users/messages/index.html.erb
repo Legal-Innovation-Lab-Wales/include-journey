@@ -1,9 +1,9 @@
 <main class="container team-members notes show">
   <section class="row">
     <h1>Messages</h1>
-    <% if @team_members_notes.present? %>
+    <% if @messages.present? %>
       <div class="text-dark">
-        <%@team_members_notes.each do |note|%>
+        <%@messages.each do |note|%>
           <div class="card my-2 note-card">
             <div class='card-header'>
               <span>
