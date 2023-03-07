@@ -32,9 +32,10 @@ module TeamMembers
     end
 
     def search
+      search_query = ActiveRecord::Base::sanitize_sql_for_conditions("#{team_member_search} or #{user_search}")
       @resources = @tag.user_tags.includes(:team_member, :user)
                        .joins(:team_member)
-                       .where("#{team_member_search} or #{user_search}", wildcard_query)
+                       .where(search_query, wildcard_query)
                        .order(sort)
     end
 
