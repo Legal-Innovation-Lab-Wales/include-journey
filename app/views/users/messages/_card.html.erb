@@ -1,0 +1,12 @@
+<div class="card my-2 note-card">
+    <div class='card-header d-flex justify-content-between"'>
+        <span>
+            Added by <strong><%= message.team_member.first_name %></strong> dated <strong><%= message.created %></strong>
+        </span>
+    </div>
+    <div class="card-body ">
+        <span>
+            <%= simple_format(message.content) %>
+        </span>
+    </div>
+</div>

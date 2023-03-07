@@ -1,23 +1,21 @@
-<main class="container team-members notes show">
-  <section class="row">
-    <h1>Messages</h1>
-    <% if @messages.present? %>
-      <div class="text-dark">
-        <%@messages.each do |note|%>
-          <div class="card my-2 note-card">
-            <div class='card-header'>
-              <span>
-                Added by <strong><%= note.team_member.first_name %></strong> dated <strong><%= note.created %></strong>
-              </span>
-            </div>
-            <div class="card-body ">
-              <span>
-                <%= simple_format(note.content) %>
-              </span>
-            </div>
-          </div>
-        <% end %>
-      <% end %>
+<main class="container team-members users show">
+  <div class="">
+    <div class="card h-100">
+      <div class="card-header">
+        <h3>Messages</h3>
+      </div>
+        <div class="card-body bg-transparent h-100" id="notes-card">
+          <% if @messages.empty? %>
+            <span>There are no messages to display yet.</span>
+          <% else %>
+            <% @messages.each do |message| %>
+              <% unless message.replaced_by.present? %>
+                <%= render 'users/messages/card', message: message%>
+              <% end %>
+            <% end %>
+          <% end %>
+      </div>
     </div>
-  </section>
+  </div>
 </main>
+
