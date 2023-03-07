@@ -4,7 +4,7 @@ module Users
     before_action :appointment, only: %i[edit update destroy toggle_attended]
     before_action :set_breadcrumbs
     include Pagination
-    before_action :validate_dates, only: :create
+    before_action :validate_dates, only: %i[create update]
 
     # GET /appointments/upcoming
     def upcoming
@@ -120,7 +120,10 @@ module Users
     end
 
     def validate_dates
-      return if appointment_params[:start] <= appointment_params[:end]
+      start_date = DateTime.parse(appointment_params[:start])
+      end_date = DateTime.parse(appointment_params[:end])
+
+      return if (end_date.after? start_date) || (start_date === end_date)
 
       session[:appointment_params] = appointment_params
 

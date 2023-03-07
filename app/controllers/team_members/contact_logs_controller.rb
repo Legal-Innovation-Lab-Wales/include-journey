@@ -5,7 +5,7 @@ module TeamMembers
     before_action :get_user, only: %i[index recent recent_team_member_contacts new create]
     before_action :set_breadcrumbs
     include Pagination
-    before_action :validate_dates, only: :create
+    before_action :validate_dates, only: %i[create update]
 
     # GET /contact_logs/recent
     def recent
@@ -141,7 +141,10 @@ module TeamMembers
     end
 
     def validate_dates
-      return if contact_log_params[:start] <= contact_log_params[:end]
+      start_date = DateTime.parse(contact_log_params[:start])
+      end_date = DateTime.parse(contact_log_params[:end])
+
+      return if (end_date.after? start_date) || (start_date === end_date)
 
       session[:contact_log_params] = contact_log_params
 
