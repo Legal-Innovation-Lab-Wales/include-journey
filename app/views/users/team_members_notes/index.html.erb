@@ -1,54 +1,23 @@
-<main class="container user surveys show">
+<main class="container team-members notes show">
   <section class="row">
-    <h3> Hello World!</h3>
+    <h1>Messages</h1>
     <% if @team_members_notes.present? %>
-      <%@team_members_notes.each do |note|%>
-        <ul class='card text-dark'>
-          <div class="card-body ">
-            <span>
-              <%= simple_format(note.content) %>
-            </span>
+      <div class="text-dark">
+        <%@team_members_notes.each do |note|%>
+          <div class="card my-2 note-card">
+            <div class='card-header'>
+              <span>
+                Added by <strong><%= note.team_member.first_name %></strong> dated <strong><%= note.created %></strong>
+              </span>
+            </div>
+            <div class="card-body ">
+              <span>
+                <%= simple_format(note.content) %>
+              </span>
+            </div>
           </div>
-        </ul>
-      <% end %>
-    <% end %>
-  </section>
-</main>
-
-<%
-=begin%>
- <div class="card <%= current_note ? "border-primary border-3" : "" %> my-2 note-card">
-  <div class="card-header <%= current_note ? "border-primary" : "" %> d-flex justify-content-between">
-    
-    <div class="note-icons">
-      <% if user_member_page %>
-        <% if note.team_member == current_team_member %>
-          <span>
-            <%= link_to user_note_path(@user, note) do %>
-              <i class="fas fa-edit ms-2" data-toggle="tooltip" data-placement="bottom" title="Edit / View History"></i>
-            <% end %>
-          </span>
-        <% elsif note.replacing.present? %>
-          <span>
-            <%= link_to user_note_path(@user, note) do %>
-              <i class="fas fa-history ms-2" data-toggle="tooltip" data-placement="bottom" title="View History"></i>
-            <% end %>
-          </span>
-        <% end %>
-      <% else %>
-        <% if current_team_member == note.team_member && edit %>
-          <span class="edit-btn" data-user-id="<%= @user.id %>" data-note-id="<%= note.id %>">
-            <i class="fas fa-edit ms-2" data-bs-toggle="modal" data-bs-target="#note-modal" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
-          </span>
         <% end %>
       <% end %>
     </div>
-  </div>
-  <div class="card-body">
-    <span>
-      <%= simple_format(note.content) %>
-    </span>
-  </div>
-</div> 
-<%
-=end%>
+  </section>
+</main>
