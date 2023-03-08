@@ -26,7 +26,7 @@ module TeamMembers
     def show
       add_breadcrumb('Wellbeing Assessments', wellbeing_assessments_path, 'fas fa-heart')
       add_breadcrumb('This Wellbeing Assessment')
-      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
 
       render 'show'
     end
@@ -99,13 +99,13 @@ module TeamMembers
     def team_member
       return unless params[:team_member_id].present?
 
-      @team_member = TeamMember.includes(:wellbeing_assessments).find(params[:team_member_id])
+      @team_member = TeamMember.includes(:wellbeing_assessments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:team_member_id]))
     end
 
     def user
       return unless params[:user_id].present?
 
-      @user = User.includes(:wellbeing_assessments).find(params[:user_id])
+      @user = User.includes(:wellbeing_assessments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def wba_params
@@ -130,7 +130,7 @@ module TeamMembers
     end
 
     def wellbeing_assessment
-      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(params[:id])
+      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     end
 
     def wellbeing_assessments
