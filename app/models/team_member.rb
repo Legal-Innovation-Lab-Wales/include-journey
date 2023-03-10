@@ -11,6 +11,7 @@ class TeamMember < DeviseRecord
          otp_secret_encryption_key: ENV['MFA_OTP_SECRET_KEY']
 
   has_many :notes, foreign_key: :team_member_id
+  has_many :messages, foreign_key: :team_member_id, dependent: :destroy
   has_many :wellbeing_metrics, foreign_key: :team_member_id
   has_many :wellbeing_assessments, foreign_key: :team_member_id
   has_many :diary_entry_permissions, foreign_key: :team_member_id

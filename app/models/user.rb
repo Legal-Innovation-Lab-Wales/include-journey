@@ -8,6 +8,7 @@ class User < DeviseRecord
          :lockable, :timeoutable, :trackable
 
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
+  has_many :messages, foreign_key: :user_id, dependent: :destroy
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
   has_many :wellbeing_assessments, foreign_key: :user_id
   has_many :wba_scores, through: :wellbeing_assessments
