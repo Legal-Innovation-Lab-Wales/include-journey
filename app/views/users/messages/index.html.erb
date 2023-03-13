@@ -9,9 +9,7 @@
             <span>There are no messages to display yet.</span>
           <% else %>
             <% @messages.each do |message| %>
-              <% unless message.replaced_by.present? %>
-                <%= render 'users/messages/card', message: message%>
-              <% end %>
+              <%= render 'users/messages/card', message: message%>
             <% end %>
           <% end %>
       </div>

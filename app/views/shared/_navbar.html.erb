@@ -107,7 +107,7 @@
               <div class="nav-label hide">Report Issue</div>
               <i class="fas fa-flag"></i>
             </div>
-            <%= button_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
+            <%= link_to destroy_team_member_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
@@ -115,8 +115,14 @@
           <% if current_user %>
             <%= link_to messages_path, class: "btn btn-success" do %>
               <div class="nav-label hide">Message</div>
-              <i class="fas fa-envelope"></i>
+              <div class="notification">
+                <i class="fas fa-envelope"></i>
+                <%if alert_user_of_messages?%>
+                  <span class="notification-dot"></span>
+                <%end%>
+              </div>
             <% end %>
+
             <%= link_to guide_path, class: "btn btn-info" do %>
               <div class="nav-label hide">Guide</div>
               <i class="fas fa-question-circle"></i>
@@ -125,7 +131,7 @@
               <div class="nav-label hide">Report Issue</div>
               <i class="fas fa-flag"></i>
             </div>
-            <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
+            <%= link_to destroy_user_session_path, method: :delete, class: "btn btn-warning" do %>
               <div class="nav-label hide">Logout</div>
               <i class="fas fa-sign-out-alt"></i>
             <% end %>
