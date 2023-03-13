@@ -73,7 +73,7 @@ module Users
     end
 
     def wellbeing_assessment
-      @wellbeing_assessment = current_user.wellbeing_assessments.includes(:wba_scores).find(params[:id])
+      @wellbeing_assessment = current_user.wellbeing_assessments.includes(:wba_scores).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_to new_wellbeing_assessment_path, error: 'No such wellbeing assessment could be found'
     end

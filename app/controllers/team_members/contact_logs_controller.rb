@@ -5,7 +5,7 @@ module TeamMembers
     before_action :get_user, only: %i[index recent recent_team_member_contacts new create]
     before_action :set_breadcrumbs
     include Pagination
-    before_action :validate_dates, only: :create
+    before_action :validate_dates, only: %i[create update]
 
     # GET /contact_logs/recent
     def recent
@@ -141,7 +141,10 @@ module TeamMembers
     end
 
     def validate_dates
-      return if contact_log_params[:start] <= contact_log_params[:end]
+      start_date = DateTime.parse(contact_log_params[:start])
+      end_date = DateTime.parse(contact_log_params[:end])
+
+      return if (end_date.after? start_date) || (start_date === end_date)
 
       session[:contact_log_params] = contact_log_params
 
@@ -171,13 +174,13 @@ module TeamMembers
     def get_user
       if params[:user_id].present?
         puts 'User ID'
-        @user = User.where(id: params[:user_id]).first
+        @user = User.where(id: ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id])).first
         return unless !@user.present?
 
         redirect_to authenticated_team_member_root_path
       elsif params[:team_member_id].present?
         puts 'Team Member ID'
-        @team_member = TeamMember.where(id: params[:team_member_id]).first
+        @team_member = TeamMember.where(id: ActiveRecord::Base::sanitize_sql_for_conditions(params[:team_member_id])).first
         return unless !@team_member.present?
 
         redirect_to authenticated_team_member_root_path

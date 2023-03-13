@@ -45,7 +45,7 @@ module Users
     private
 
     def survey
-      @survey = Survey.includes(:survey_sections).find(params[:id])
+      @survey = Survey.includes(:survey_sections).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
       @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
       @survey_response = SurveyResponse.find_or_create_by!(user: current_user, survey: @survey)
     end

@@ -58,6 +58,7 @@ module Pagination
   end
 
   def wildcard_query
+    @query = ActiveRecord::Base::sanitize_sql_like(@query)
     { query: "%#{@query.split.join('%|%')}%" }
   end
 

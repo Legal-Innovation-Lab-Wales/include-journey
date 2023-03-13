@@ -11,7 +11,7 @@ module TeamMembers
 
     # PUT /wellbeing_metrics/:id
     def update
-      @wellbeing_metric = WellbeingMetric.find(params[:id])
+      @wellbeing_metric = WellbeingMetric.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
 
       if @wellbeing_metric.update(wellbeing_metric_params)
         redirect_to wellbeing_metrics_path, flash: { success: 'Wellbeing metric updated' }

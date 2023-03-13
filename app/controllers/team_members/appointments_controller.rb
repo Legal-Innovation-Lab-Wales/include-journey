@@ -27,7 +27,7 @@ module TeamMembers
     end
 
     def user
-      @user = User.includes(:appointments).find(params[:user_id])
+      @user = User.includes(:appointments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
     end
 
     protected

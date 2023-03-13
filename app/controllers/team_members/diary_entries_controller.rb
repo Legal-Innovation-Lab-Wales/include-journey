@@ -38,7 +38,7 @@ module TeamMembers
     private
 
     def diary_entry
-      @diary_entry = current_team_member.diary_entries.includes(:user).find(params[:id])
+      @diary_entry = current_team_member.diary_entries.includes(:user).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: diary_entries_path,
                     alert: "That diary entry doesn't exist or you do not have permission to view it")
