@@ -15,7 +15,9 @@ module Users
     def update_messages_to_read
       return unless current_user.messages.where(read: false).present?
 
-      current_user.messages.update!(read: true)
+      current_user.messages.each do |message|
+        message.update!(read: true)
+      end
     end
   end
 end
