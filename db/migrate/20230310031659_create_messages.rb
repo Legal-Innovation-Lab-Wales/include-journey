@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration[6.1]
     create_table :messages do |t|
       t.references :user, null: false, foreign_key: true, index: true
       t.references :team_member, null: false, foreign_key: true, index: true
-      t.integer :note_id
+      t.references :note, null: false, foreign_key: true, index: true
       t.boolean :read, default: false
       t.string :message_status
 
