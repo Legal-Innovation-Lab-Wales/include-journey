@@ -6,7 +6,7 @@ module Users
     def index
       add_breadcrumb('Message', nil, 'fas fa-envelope')
       @messages = current_user.notes.order('dated DESC, created_at DESC').where(visible_to_user: true, replaced_by: nil)
-      @message_notifications = current_user.messages
+      # @message_notifications = current_user.messages
     end
 
     private
@@ -14,7 +14,7 @@ module Users
     def update_messages_to_read
       return unless current_user.messages.where(read: false).present?
 
-      @message_notifications.each do |message|
+      current_user.messages.each do |message|
         message.update!(read: true)
       end
     end
