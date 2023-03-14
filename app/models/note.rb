@@ -1,6 +1,6 @@
 # app/models/note.rb
 class Note < ApplicationRecord
-  has_one :message
+  has_one :message, dependent: :destroy
   belongs_to :team_member
   belongs_to :user
   belongs_to :replaced_by, class_name: 'Note', optional: true, foreign_key: 'replaced_by_id'
