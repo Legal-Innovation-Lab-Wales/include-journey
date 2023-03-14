@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_14_051338) do
+ActiveRecord::Schema.define(version: 2023_03_14_062358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 2023_03_14_051338) do
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "notes_id"
-    t.index ["notes_id"], name: "index_messages_on_notes_id"
+    t.bigint "note_id"
+    t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -505,7 +505,7 @@ ActiveRecord::Schema.define(version: 2023_03_14_051338) do
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
-  add_foreign_key "messages", "notes", column: "notes_id"
+  add_foreign_key "messages", "notes"
   add_foreign_key "messages", "team_members"
   add_foreign_key "messages", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"
