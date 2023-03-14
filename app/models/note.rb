@@ -1,10 +1,10 @@
 # app/models/note.rb
 class Note < ApplicationRecord
-  has_one :message, dependent: :destroy
   belongs_to :team_member
   belongs_to :user
   belongs_to :replaced_by, class_name: 'Note', optional: true, foreign_key: 'replaced_by_id'
   belongs_to :replacing, class_name: 'Note', optional: true, foreign_key: 'replacing_id'
+  has_one :message, dependent: :destroy
 
   validates_presence_of :team_member_id, :user_id, :content, :dated
   validates_format_of :content, with: Rails.application.config.regex_text_field,

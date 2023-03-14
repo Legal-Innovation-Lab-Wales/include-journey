@@ -2,14 +2,33 @@
   <div class="">
     <div class="card h-100">
       <div class="card-header">
-        <h3>Messages</h3>
+        <h3>New Messages</h3>
+      </div>
+        <div class="card-body bg-transparent h-100" id="notes-card">
+          <% if @messages.empty? || @notifications.where(read: false).empty? %>
+            <span>There are no new messages to display yet.</span>
+          <% else %>
+            <% @messages.all.each do |message| %>
+              <% if !message.message.read?%>
+                <%= render 'users/messages/card', message: message%>
+              <% end %> 
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="card h-100 mt-5 mb-5">
+      <div class="card-header">
+        <h3>Read Messages</h3>
       </div>
         <div class="card-body bg-transparent h-100" id="notes-card">
           <% if @messages.empty? %>
-            <span>There are no messages to display yet.</span>
+            <span>There are no read messages to display yet.</span>
           <% else %>
-            <% @messages.each do |message| %>
-              <%= render 'users/messages/card', message: message%>
+            <% @messages.all.each do |message| %>
+              <% if message.message.read?%>
+                <%= render 'users/messages/card', message: message%>
+              <% end %> 
             <% end %>
           <% end %>
       </div>

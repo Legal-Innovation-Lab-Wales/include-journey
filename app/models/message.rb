@@ -5,4 +5,8 @@ class Message < ApplicationRecord
   belongs_to :note
 
   validates_presence_of :user_id, :team_member_id, :note_id
+
+  def read?
+    self[:read]
+  end
 end
