@@ -5,16 +5,7 @@ module MessagesHelper
   end
 
   def archive_messages?
-    older_dated_notes? || older_created_notes?
-  end
-
-  def older_dated_notes?
-    current_user.notes.past_dated.joins(:message)
-                .where(visible_to_user: true, replaced_by: nil).present?
-  end
-
-  def older_created_notes?
-    current_user.notes.past_created.joins(:message)
+    current_user.notes.past.joins(:message)
                 .where(visible_to_user: true, replaced_by: nil).present?
   end
 end

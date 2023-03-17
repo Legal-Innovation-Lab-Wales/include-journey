@@ -5,14 +5,14 @@
         <h3 class="text-white">New Messages</h3>
       </div>
         <div class="" id="notes-card">
-          <% if @messages.empty? || @notifications.where(read: false).empty? %>
+          <% if @new_messages.empty? || @notifications.where(read: false).empty? %>
             <div class="card my-2 note-card">
               <div class="card-body ">
                 <span> There are no new messages to display yet. </span>
               </div>
             </div>
           <% else %>
-            <% @messages.all.each do |message| %>
+            <% @new_messages.all.each do |message| %>
               <% if !message.message.read?%>
                 <%= render 'users/messages/card', message: message%>
               <% end %> 
@@ -26,14 +26,14 @@
         <h3 class="text-white">Read Messages</h3>
       </div>
         <div class=" " id="notes-card">
-          <% if @messages.empty? %>
+          <% if @read_messages.empty? %>
             <div class="card my-2 note-card">
               <div class="card-body ">
                 <span> There are no read messages to display yet. </span>
               </div>
             </div>
             <% else %>
-            <% @messages.all.each do |message| %>
+            <% @read_messages.each do |message| %>
               <% if message.message.read?%>
                 <%= render 'users/messages/card', message: message%>
               <% end %> 

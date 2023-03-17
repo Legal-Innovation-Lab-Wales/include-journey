@@ -6,21 +6,22 @@ module Users
     include Pagination
 
     def main
-      @messages = current_user.notes.recent.joins(:message).order('dated DESC', 'created_at DESC').where(visible_to_user: true,
-                                                                                                  replaced_by: nil)
+      @new_messages = current_user.notes.joins(:message).order('dated DESC', 'created_at DESC').where(visible_to_user: true, replaced_by: nil)
+      @read_messages = []
+      @new_messages.each do |message|
+        if message.created >= 1.month.ago
+          @read_messages.push(message)
+        end
+      end
+
       @notifications = current_user.messages
     end
 
     protected
 
     def resources
-      if older_dated_notes?
-        current_user.notes.past_dated.joins(:message).order('dated DESC', 'notes.created_at DESC')
-                    .where(visible_to_user: true, replaced_by: nil)
-      elsif older_created_notes?
-        current_user.notes.past_created.joins(:message).order('dated DESC', 'notes.created_at DESC')
-                    .where(visible_to_user: true, replaced_by: nil)
-      end
+      current_user.notes.past.joins(:message).order('dated DESC', 'notes.created_at DESC')
+                  .where(visible_to_user: true, replaced_by: nil)
     end
 
     def resources_per_page
@@ -45,16 +46,6 @@ module Users
       path = action_name == 'main' ? nil : main_messages_path
       add_breadcrumb('My Messages', path, 'fas fa-envelope')
       add_breadcrumb('Archive Messages') if action_name == 'index'
-    end
-
-    def older_dated_notes?
-      current_user.notes.past_dated.joins(:message)
-                  .where(visible_to_user: true, replaced_by: nil).present?
-    end
-
-    def older_created_notes?
-      current_user.notes.past_created.joins(:message)
-                  .where(visible_to_user: true, replaced_by: nil).present?
     end
   end
 end
