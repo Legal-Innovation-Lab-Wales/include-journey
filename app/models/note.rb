@@ -12,6 +12,9 @@ class Note < ApplicationRecord
   validates_format_of :dated, with: Rails.application.config.regex_datetime,
                               message: Rails.application.config.datetime_error
 
+  scope :past_dated, -> { where('dated <= ? ', 1.month.ago) }
+  scope :past_created, -> { where('notes.created_at <= ?', 1.month.ago) }
+
   def chain(array)
     array << self
     return unless replacing.present?
@@ -43,5 +46,9 @@ class Note < ApplicationRecord
 
   def time
     self.dated.present? ? self.dated.strftime('%H:%M') : Time.now.strftime('%H:%M')
+  end
+
+  def dated?
+    self.dated.present?
   end
 end
