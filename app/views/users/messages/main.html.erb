@@ -1,0 +1,57 @@
+<main class="container users appointments">
+  <div class="">
+    <div class="h-100">
+      <div class="card-header">
+        <h3 class="text-white">New Messages</h3>
+      </div>
+        <div class="" id="notes-card">
+          <% if @messages.empty? || @notifications.where(read: false).empty? %>
+            <div class="card my-2 note-card">
+              <div class="card-body ">
+                <span> There are no new messages to display yet. </span>
+              </div>
+            </div>
+          <% else %>
+            <% @messages.all.each do |message| %>
+              <% if !message.message.read?%>
+                <%= render 'users/messages/card', message: message%>
+              <% end %> 
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <div class="card-header">
+        <h3 class="text-white">Read Messages</h3>
+      </div>
+        <div class=" " id="notes-card">
+          <% if @messages.empty? %>
+            <div class="card my-2 note-card">
+              <div class="card-body ">
+                <span> There are no read messages to display yet. </span>
+              </div>
+            </div>
+            <% else %>
+            <% @messages.all.each do |message| %>
+              <% if message.message.read?%>
+                <%= render 'users/messages/card', message: message%>
+              <% end %> 
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+    <section class="row mb-5 mt-5">
+      <% if archive_messages? %>
+        <div class="col-2 col-md-4"></div>
+        <div class="col-8 col-md-4">
+          <%= link_to archive_messages_path, class: 'btn btn-primary' do %>
+            View Archive Messages <i class="fas fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+        <div class="col-2 col-md-4"></div>
+        <% end %>
+    </section>
+  </div>
+</main>
+
