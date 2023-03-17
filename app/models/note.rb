@@ -14,6 +14,8 @@ class Note < ApplicationRecord
 
   scope :past_dated, -> { where('dated <= ? ', 1.month.ago) }
   scope :past_created, -> { where('notes.created_at <= ?', 1.month.ago) }
+  scope :recent, -> { where('dated >= :one_month or notes.created_at >= :one_month', :one_month  => 1.month.ago) }
+
 
   def chain(array)
     array << self

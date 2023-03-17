@@ -6,7 +6,7 @@ module Users
     include Pagination
 
     def main
-      @messages = current_user.notes.joins(:message).order('dated DESC', 'created_at DESC').where(visible_to_user: true,
+      @messages = current_user.notes.recent.joins(:message).order('dated DESC', 'created_at DESC').where(visible_to_user: true,
                                                                                                   replaced_by: nil)
       @notifications = current_user.messages
     end
@@ -27,9 +27,9 @@ module Users
       6
     end
 
-    # def search
-    #   current_user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
-    # end
+    def search
+      resources.joins(:team_member).where(team_member_search, wildcard_query)
+    end
 
     private
 
