@@ -56,7 +56,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()/&@\n–:— ]*\z}
+  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
   config.regex_name = %r{\A[a-zA-Z0-9'\-._()/ ]*\z}
   config.regex_telephone = /\A[0-9+]*\z/
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
