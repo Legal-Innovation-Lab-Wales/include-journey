@@ -67,7 +67,12 @@ module TeamMembers
     end
 
     def visible_note?
-      note_params[:visible_to_user]
+      case note_params[:visible_to_user]
+      when '1'
+        true
+      when '0'
+        false
+      end
     end
 
     def nothing_to_update_redirect
