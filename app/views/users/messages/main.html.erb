@@ -41,17 +41,14 @@
           <% end %>
       </div>
     </div>
-    <section class="row mb-5 mt-5">
+    <section class="row mb-3 mt-3">
       <% if archive_messages? %>
-        <div class="col-2 col-md-4"></div>
-        <div class="col-8 col-md-4">
+        <div class="text-center">
           <%= link_to archive_messages_path, class: 'btn btn-primary' do %>
-            View Archive Messages <i class="fas fa-arrow-circle-right"></i>
+            View Archived Messages <i class="fas fa-arrow-circle-right"></i>
           <% end %>
         </div>
-        <div class="col-2 col-md-4"></div>
         <% end %>
     </section>
   </div>
 </main>
-

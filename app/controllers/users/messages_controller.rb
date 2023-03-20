@@ -45,7 +45,7 @@ module Users
     def set_breadcrumbs
       path = action_name == 'main' ? nil : main_messages_path
       add_breadcrumb('My Messages', path, 'fas fa-envelope')
-      add_breadcrumb('Archive Messages') if action_name == 'index'
+      add_breadcrumb('Archived Messages') if action_name == 'index'
     end
   end
 end
