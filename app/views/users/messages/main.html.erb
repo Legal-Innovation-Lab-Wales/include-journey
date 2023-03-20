@@ -8,7 +8,7 @@
           <% if @new_messages.empty? || @notifications.where(read: false).empty? %>
             <div class="card my-2 note-card">
               <div class="card-body ">
-                <span> There are no new messages to display yet. </span>
+                <span> You have no new messages. </span>
               </div>
             </div>
           <% else %>
@@ -29,7 +29,7 @@
           <% if @read_messages.empty? %>
             <div class="card my-2 note-card">
               <div class="card-body ">
-                <span> There are no read messages to display yet. </span>
+                <span> You have no read messages. </span>
               </div>
             </div>
             <% else %>
