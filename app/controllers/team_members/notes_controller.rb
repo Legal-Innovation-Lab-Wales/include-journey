@@ -10,6 +10,7 @@ module TeamMembers
     def create
       @note = create_note
       if @note.save
+        create_message(@note, @user, 'created') if visible_note?
         redirect_to user_path(@user), flash: { notice: 'Successfully added note!' }
       else
         error_redirect
@@ -20,7 +21,7 @@ module TeamMembers
     def show
       add_breadcrumb('Users', users_path, 'fas fa-user')
       add_breadcrumb(@user.full_name, @user)
-      add_breadcrumb("Note", nil, 'fas fa-clipboard-list')
+      add_breadcrumb('Note', nil, 'fas fa-clipboard-list')
       if @note.replaced_by.present?
         redirect_to user_note_path(@user, @note.latest)
       else
@@ -37,6 +38,7 @@ module TeamMembers
         @new_note = create_note(replacing: @note)
         @note.update!(replaced_by: @new_note)
       end
+      update_message(@note, @new_note, user)
 
       redirect_to user_note_path(@user, @new_note), flash: { success: 'Successfully updated note!' }
     rescue ActiveRecord::RecordInvalid
@@ -49,6 +51,29 @@ module TeamMembers
     end
 
     private
+
+    def create_message(note, user, status)
+      Message.create!(user_id: user.id,
+                      team_member_id: current_team_member.id,
+                      note_id: note.id,
+                      message_status: status)
+    end
+
+    def update_message(old_note, new_note, user)
+      Message.find_by(note_id: old_note.id).destroy if Message.find_by(note_id: old_note.id).present?
+      return unless visible_note?
+
+      create_message(new_note, user, 'updated')
+    end
+
+    def visible_note?
+      case note_params[:visible_to_user]
+      when '1'
+        true
+      when '0'
+        false
+      end
+    end
 
     def nothing_to_update_redirect
       redirect_to user_path(@user), notice: 'Nothing to update!'

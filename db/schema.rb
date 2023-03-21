@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_20_194800) do
+ActiveRecord::Schema.define(version: 2023_03_14_062358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,19 @@ ActiveRecord::Schema.define(version: 2023_02_20_194800) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
     t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id", null: false
+    t.boolean "read", default: false
+    t.string "message_status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "note_id"
+    t.index ["note_id"], name: "index_messages_on_note_id"
+    t.index ["team_member_id"], name: "index_messages_on_team_member_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "metrics_services", force: :cascade do |t|
@@ -492,6 +505,9 @@ ActiveRecord::Schema.define(version: 2023_02_20_194800) do
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
+  add_foreign_key "messages", "notes"
+  add_foreign_key "messages", "team_members"
+  add_foreign_key "messages", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"
   add_foreign_key "metrics_services", "wellbeing_services"
   add_foreign_key "notes", "notes", column: "replaced_by_id"

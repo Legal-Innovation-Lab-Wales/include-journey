@@ -1,0 +1,16 @@
+<%= render 'layouts/searchable', class_list: 'user appointments', header: 'Archive Messages', index: 'archive_messages',
+           footer_section: render(partial: 'shared/footer_section', locals: {path: main_messages_path, text: 'View Current Messages'}) do %>
+  <div>
+    <% if @resources.empty? %>
+      <div class="card my-2 note-card">
+        <div class="card-body ">
+            <span> You have no archived messages. </span>
+        </div>
+      </div>
+    <% else %>
+      <% @resources.each do |message|%>
+        <%= render 'users/messages/card', message: message%>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

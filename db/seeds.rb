@@ -72,3 +72,5 @@ puts("#{pretty_print_name('Survey Comment Sections')}\t#{SurveyCommentSection.co
 puts("#{pretty_print_name('Survey Responses')}\t#{SurveyResponse.count}")
 puts("#{pretty_print_name('Sessions')}\t#{Session.count}")
 puts("#{pretty_print_name('Achievements')}\t#{Achievement.count}")
+puts("#{pretty_print_name('Messages')}\t#{Message.count}")
+

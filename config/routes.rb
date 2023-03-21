@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       resources :goals_archive, only: :index
       resources :wellbeing_services, only: :index
       resources :surveys, only: %i[index show update]
+      resources :messages, only: [:index], as: :archive_messages
+      get 'main_messages', to: 'messages#main'
     end
     get '/*path', to: redirect('')
   end
