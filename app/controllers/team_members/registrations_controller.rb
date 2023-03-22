@@ -4,6 +4,8 @@ module TeamMembers
     before_action :set_breadcrumbs
     include Accessible
     skip_before_action :check_user, except: %i[new create]
+    before_action :set_up_two_factor, except: %i[new create]
+    before_action :set_breadcrumbs
 
     after_action :send_new_team_member_email, only: :create
 
@@ -20,6 +22,13 @@ module TeamMembers
 
     def set_breadcrumbs
       add_breadcrumb('Edit Profile', nil, 'fas fa-user-edit')
+    end
+
+    def set_up_two_factor
+      return if current_team_member.two_factor_enabled?
+
+      flash.now[:alert] = 'You must have two-factor authentication enabled to have access!'
+      render 'team_members/sessions/set_up_two_factor'
     end
   end
 end
