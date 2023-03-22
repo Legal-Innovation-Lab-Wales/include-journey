@@ -82,7 +82,7 @@ class User < DeviseRecord
     nil
   ].freeze
 
-  validates_presence_of :terms, :first_name, :last_name, :mobile_number, :email
+  validates_presence_of :terms, :first_name, :last_name, :email
   validates_format_of :first_name, with: Rails.application.config.regex_name
   validates_format_of :last_name, with: Rails.application.config.regex_name
   validates_format_of :mobile_number, with: Rails.application.config.regex_telephone
