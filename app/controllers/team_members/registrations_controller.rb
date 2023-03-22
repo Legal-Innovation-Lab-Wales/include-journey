@@ -3,6 +3,7 @@ module TeamMembers
   class RegistrationsController < Devise::RegistrationsController
     before_action :set_breadcrumbs
     include Accessible
+    prepend_before_action :check_captcha, only: :create
     skip_before_action :check_user, except: %i[new create]
     before_action :set_up_two_factor, except: %i[new create]
     before_action :set_breadcrumbs
@@ -22,6 +23,25 @@ module TeamMembers
 
     def set_breadcrumbs
       add_breadcrumb('Edit Profile', nil, 'fas fa-user-edit')
+    end
+
+    def team_member_params
+      params.require(:team_member).permit(:first_name, :last_name, :mobile_number, :terms, :email, :password, :password_confirmation)
+    end
+
+    def check_captcha
+      return if verify_recaptcha
+
+      self.resource = resource_class.new team_member_params
+      resource.validate
+      respond_with_navigational(resource) {
+        # delete default recaptcha error
+        flash.delete(:recaptcha_error)
+        # add custom recaptcha error
+        flash[:error] = 'reCAPTCHA verification failed, please try again'
+        flash.discard(:error)
+        render :new
+      }
     end
 
     def set_up_two_factor
