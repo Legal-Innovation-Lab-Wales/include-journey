@@ -53,7 +53,11 @@ module TeamMembers
 
     def tag
       if user_tag_params[:new_tag].present?
-        @tag = Tag.new(tag: user_tag_params[:new_tag].downcase.titleize, team_member: current_team_member)
+        new_tag_name = user_tag_params[:new_tag].downcase.titleize
+        existing_tag = Tag.where(tag: new_tag_name).present?
+        redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
+
+        @tag = Tag.new(tag: new_tag_name, team_member: current_team_member)
         if @tag.save
           @tag
         else

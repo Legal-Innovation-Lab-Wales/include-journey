@@ -11,4 +11,5 @@ class Tag < ApplicationRecord
   validates_presence_of :tag, :team_member_id
   validates_format_of :tag, with: Rails.application.config.regex_name,
                             message: Rails.application.config.name_error
+  validates_uniqueness_of :tag
 end
