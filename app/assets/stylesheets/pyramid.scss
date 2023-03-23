@@ -205,7 +205,7 @@ $mobile-font-size: 20px;
       .parallelogram {
         height: $mobile-row-height;
         width: $mobile-row-height * 2;
-
+        margin: 0;
         @media screen and (min-width: $screen-md) {
           height: $row-height;
           width: $row-height * 2;
