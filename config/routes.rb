@@ -108,7 +108,7 @@ Rails.application.routes.draw do
         end
         resources :appointments, only: %i[index new create edit update], on: :member do
           put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
-        end 
+        end
         resources :contact_logs, on: :member do
           get 'recent', action: :recent, on: :collection
         end
