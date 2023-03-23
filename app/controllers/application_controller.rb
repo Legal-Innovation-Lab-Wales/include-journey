@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     added_attrs = %i[
-      first_name last_name mobile_number released_at email password password_confirmation remember_me
+      first_name last_name mobile_number email password password_confirmation remember_me
       terms date_of_birth sex gender_identity pronouns ethnic_group religion disabilities
       notifications_enabled
     ]

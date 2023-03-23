@@ -231,7 +231,7 @@ module TeamMembers
     def user_params
       params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex, 
                                    :gender_identity, :religion, :ethnic_group, :disabilities,
-                                   :released_at, :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
+                                   :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
                                    :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence)
     end

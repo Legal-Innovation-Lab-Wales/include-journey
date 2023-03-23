@@ -96,10 +96,6 @@ class User < DeviseRecord
   validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
   validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
 
-  def release_date
-    released_at.present? ? released_at.strftime('%d/%m/%Y') : ''
-  end
-
   def dob
     date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''
   end
@@ -163,7 +159,6 @@ class User < DeviseRecord
       id,
       full_name,
       dob,
-      released_at,
       sex,
       gender_identity,
       ethnic_group,
@@ -177,7 +172,6 @@ class User < DeviseRecord
       'ID': id,
       'Name': full_name,
       'Date Of Birth': dob,
-      'Release Date': released_at,
       'Sex': sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,

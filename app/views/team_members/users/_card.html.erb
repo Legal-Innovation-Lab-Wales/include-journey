@@ -47,11 +47,6 @@
                   <% end %>
                 </div>
               <% end %>
-              <% if user.released_at.present? %>
-                <div class="row">
-                  <span><i class="fas fa-calendar"></i> Release: <%= user.release_date %></span>
-                </div>
-              <% end %>
               <% if user.suspended? %>
                 <div class="row">
                   <span><i class="fa fa-ban" aria-hidden="true"></i> Status: Suspended</span>
