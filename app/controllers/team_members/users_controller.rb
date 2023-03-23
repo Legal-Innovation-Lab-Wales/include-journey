@@ -3,6 +3,7 @@ module TeamMembers
   class UsersController < TeamMembersApplicationController
     before_action :set_breadcrumbs
     before_action :pinned_users, :sort, :direction, :set_filters, only: :index
+    before_action :check_admin, only: %i[suspend destroy]
     include Pagination
 
     before_action :user, except: :index
@@ -92,10 +93,9 @@ module TeamMembers
       user.suspended_at = user.suspended ? nil : DateTime.now
       user.suspended = !user.suspended
       user.save!
-      
+
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
     end
-
 
     protected
     def goal_permissions
@@ -106,7 +106,7 @@ module TeamMembers
       if goal_permissions.length < 1
         return false
       end
-      
+
       permission = goal_permissions.first
       @goals = user.goals.where(archived: false)
       @has_short_term_permissions = permission.short_term
@@ -220,6 +220,12 @@ module TeamMembers
       @total_users = User.approved.count
       @active_last_week = @resources.active_last_week.size
       @active_last_month = @resources.active_last_month.size
+    end
+
+    def check_admin
+      return if current_team_member.admin?
+
+      redirect_to(authenticated_team_member_root_path) and return
     end
 
     def user_params

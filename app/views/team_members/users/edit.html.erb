@@ -239,22 +239,24 @@
     </div>
   </section>
 </main>
-<section class="card-form">
- <div class="row mb-5 justify-content-center">
-  <div class="col-12 col-md-7">
-    <div class="card card-blue">
-      <h4 class="card-header">
-        User Access
-      </h4>
-      <div class="card-body">
-        <% if @user.suspended %>
-        <%= link_to('Reinstate User', suspend_user_path(@user), class: 'btn btn-primary mt-3', method: :patch, data: {confirm: 'Are you sure you want to reinstate this user?'}) %>
-        <%= link_to('Delete User', user_path(@user), class: 'btn btn-danger mt-3 ms-2', method: :delete, data: {confirm: 'Are you sure you want to delete this user?'}) %>
-        <% else %>
-        <%= link_to('Suspend User', suspend_user_path(@user), class: 'btn btn-danger mt-3', method: :patch, data: {confirm: 'Are you sure you want to suspend this user?'}) %>
-        <% end %>
+<% if current_team_member.admin %>
+  <section class="card-form">
+    <div class="row mb-5 justify-content-center">
+      <div class="col-12 col-md-7">
+        <div class="card card-blue">
+          <h4 class="card-header">
+            User Access
+          </h4>
+          <div class="card-body">
+            <% if @user.suspended %>
+            <%= link_to('Reinstate User', suspend_user_path(@user), class: 'btn btn-primary mt-3', method: :patch, data: {confirm: 'Are you sure you want to reinstate this user?'}) %>
+            <%= link_to('Delete User', user_path(@user), class: 'btn btn-danger mt-3 ms-2', method: :delete, data: {confirm: 'Are you sure you want to delete this user?'}) %>
+            <% else %>
+            <%= link_to('Suspend User', suspend_user_path(@user), class: 'btn btn-danger mt-3', method: :patch, data: {confirm: 'Are you sure you want to suspend this user?'}) %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</section> 
+  </section> 
+<% end %>
