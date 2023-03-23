@@ -54,7 +54,7 @@ module TeamMembers
       else
         table = 'diary_entries'
       end
-      
+
       @resource = @resource
                   .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
                   .where("#{table}.created_at < ?", convert_date(params['date_to'], false))

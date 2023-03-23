@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/appointments_controller.rb
   class AppointmentsController < TeamMembersApplicationController
+    before_action :appointment, only: %i[toggle_attended]
     before_action :user
     before_action :set_breadcrumbs
     include Pagination
@@ -30,6 +31,11 @@ module TeamMembers
       @user = User.includes(:appointments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
     end
 
+    # PUT /appointment/:id
+    def toggle_attended
+      @appointment.update(attended: !@appointment.attended?) ? success(@appointment.attended?) : failure
+    end
+
     protected
 
     def resources
@@ -45,6 +51,17 @@ module TeamMembers
     end
 
     private
+
+    def appointment
+      @appointment = user.appointments.where('team_member_id is null').find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
+    end
+
+    def success(status)
+      redirect_back(fallback_location: appointments_path,
+                    flash: { success: "Appointment has been marked as #{status ? 'now' : 'no longer'} attended" })
+    end
 
     def appointment_search
       'lower(who_with) similar to lower(:query) or lower(what) similar to lower(:query)'

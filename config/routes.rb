@@ -106,7 +106,9 @@ Rails.application.routes.draw do
         resources :wellbeing_assessments, only: %i[new create index], on: :member do
           get 'export', on: :collection
         end
-        resources :appointments, only: %i[index new create edit update], on: :member
+        resources :appointments, only: %i[index new create edit update], on: :member do
+          put 'attended', action: 'toggle_attended', on: :member, as: :toggle_attended
+        end 
         resources :contact_logs, on: :member do
           get 'recent', action: :recent, on: :collection
         end
