@@ -66,6 +66,12 @@ if WellbeingMetric.count.zero?
     category: 'Environment',
     icon: 'pizza-slice'
   )
+  WellbeingMetric.create!(
+    team_member_id: rand(1..TeamMember.count),
+    name: 'Leisure',
+    category: 'Personal',
+    icon: 'gamepad'
+  )
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
