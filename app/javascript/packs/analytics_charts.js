@@ -25,18 +25,18 @@ const diary_colours= [
     '#DFC54CE6' // 😐
 ];
 const wellbeing_metric_colours = [
-    '#FF3333',
-    '#FF9933',
-    '#FFFF33',
-    '#99FF33',
-    '#33FF33',
-    '#33FF99',
-    '#33FFFF',
-    '#3399FF',
-    '#3333FF',
-    '#9933FF',
-    '#FF33FF',
-    '#FF3399'
+    '#FF3333E6',
+    '#FF9933E6',
+    '#FFFF33E6',
+    '#99FF33E6',
+    '#33FF33E6',
+    '#33FF99E6',
+    '#33FFFFE6',
+    '#3399FFE6',
+    '#3333FFE6',
+    '#9933FFE6',
+    '#FF33FFE6',
+    '#FF3399E6'
 ];
 
 [...chart_wrapper.children].forEach(child => child.remove());
