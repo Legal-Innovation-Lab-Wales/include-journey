@@ -24,6 +24,20 @@ const diary_colours= [
     '#eb7945E6', // 💩
     '#DFC54CE6' // 😐
 ];
+const wellbeing_metric_colours = [
+    '#FF3333',
+    '#FF9933',
+    '#FFFF33',
+    '#99FF33',
+    '#33FF33',
+    '#33FF99',
+    '#33FFFF',
+    '#3399FF',
+    '#3333FF',
+    '#9933FF',
+    '#FF33FF',
+    '#FF3399'
+];
 
 [...chart_wrapper.children].forEach(child => child.remove());
 [...metric_select.children].forEach(child => child.remove());
@@ -198,7 +212,7 @@ function create_line_charts(){
                 label: metrics[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill:false,
-                borderColor: wellbeing_colours[i],
+                borderColor: wellbeing_metric_colours[i],
                 tension: 0
             };
         }
