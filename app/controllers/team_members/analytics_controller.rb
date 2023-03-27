@@ -64,6 +64,9 @@ module TeamMembers
       @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
       @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
+      if params[:display] == 'Line Chart' && params[:data] == 'Wellbeing Assessments'
+        @colours = WellbeingMetric.all.pluck(:colour)
+      end
     end
 
     # rubocop:disable Metrics/LineLength

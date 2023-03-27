@@ -7,7 +7,7 @@ const chart_select = resources.dataset.chart;
 var date_from = resources.dataset.datefrom;
 var date_to = resources.dataset.dateto;
 const wellbeing_labels = JSON.parse(resources.dataset.labels);
-const wellbeing_colours = JSON.parse(resources.dataset.colours);
+const colours = JSON.parse(resources.dataset.colours);
 const diary_labels = [
     String.fromCodePoint("0x"+'1F973'),
     String.fromCodePoint("0x"+'1F60A'),
@@ -23,20 +23,6 @@ const diary_colours= [
     '#E04444E6', // 😡
     '#eb7945E6', // 💩
     '#DFC54CE6' // 😐
-];
-const wellbeing_metric_colours = [
-    '#FF3333E6',
-    '#FF9933E6',
-    '#FFFF33E6',
-    '#99FF33E6',
-    '#33FF33E6',
-    '#33FF99E6',
-    '#33FFFFE6',
-    '#3399FFE6',
-    '#3333FFE6',
-    '#9933FFE6',
-    '#FF33FFE6',
-    '#FF3399E6'
 ];
 
 [...chart_wrapper.children].forEach(child => child.remove());
@@ -69,7 +55,7 @@ function create_contact_log(){
     wellbeing_labels.forEach((label, i) => {
         if(!labelsValue[label]){
             labelsValue[label] = 0
-            colors.push(wellbeing_colours[i])
+            colors.push(colours[i])
         }
     })
 
@@ -112,7 +98,7 @@ function create_wellbeing(){
             datasets: [{
                 label: '',
                 data: values,
-                backgroundColor: wellbeing_colours
+                backgroundColor: colours
             }],
             options: {
                 animateRotate: true,
@@ -212,7 +198,7 @@ function create_line_charts(){
                 label: metrics[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill:false,
-                borderColor: wellbeing_metric_colours[i],
+                borderColor: colours[i],
                 tension: 0
             };
         }
@@ -237,7 +223,7 @@ function create_line_charts(){
                 label: wellbeing_labels[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill: false,
-                borderColor: wellbeing_colours[i],
+                borderColor: colours[i],
                 tension: 0
             }
         }
