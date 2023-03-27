@@ -260,7 +260,7 @@ function create_line_charts(){
         chart_label = "Diary Feelings"
     }
     data.forEach((entry) => {
-        entry_date = new Date(convert_date(entry.Date));
+        entry_date = type =='Contact Logs' ? new Date(convert_date(entry['Start Date'])) : new Date(convert_date(entry.Date));
         week_number = Math.ceil(Math.floor((entry_date - start_date) / (1000*60*60*24))/7)
         if(week_number==0){ week_number = 1;}
         entry.week_index = week_number-1;
