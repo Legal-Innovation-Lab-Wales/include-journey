@@ -55,15 +55,23 @@ module TeamMembers
         table = 'diary_entries'
       end
 
-      @resource = @resource
-                  .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
-                  .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
-
+      if table == 'contact_logs'
+        @resource = @resource
+                    .where("#{table}.start > ?", convert_date(params['date_from'], true))
+                    .where("#{table}.start < ?", convert_date(params['date_to'], false))
+      else
+        @resource = @resource
+                    .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
+                    .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
+      end
       apply_filters
-      @resource = @resource.sort_by(&:created_at)
+      @resource = table == 'contact_logs' ? @resource.sort_by(&:start) : @resource.sort_by(&:created_at)
       @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
       @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
+      if params[:display] == 'Line Chart' && params[:data] == 'Wellbeing Assessments'
+        @colours = WellbeingMetric.all.pluck(:colour)
+      end
     end
 
     # rubocop:disable Metrics/LineLength

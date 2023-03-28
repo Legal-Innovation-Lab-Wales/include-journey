@@ -7,7 +7,7 @@ const chart_select = resources.dataset.chart;
 var date_from = resources.dataset.datefrom;
 var date_to = resources.dataset.dateto;
 const wellbeing_labels = JSON.parse(resources.dataset.labels);
-const wellbeing_colours = JSON.parse(resources.dataset.colours);
+const colours = JSON.parse(resources.dataset.colours);
 const diary_labels = [
     String.fromCodePoint("0x"+'1F973'),
     String.fromCodePoint("0x"+'1F60A'),
@@ -55,7 +55,7 @@ function create_contact_log(){
     wellbeing_labels.forEach((label, i) => {
         if(!labelsValue[label]){
             labelsValue[label] = 0
-            colors.push(wellbeing_colours[i])
+            colors.push(colours[i])
         }
     })
 
@@ -98,7 +98,7 @@ function create_wellbeing(){
             datasets: [{
                 label: '',
                 data: values,
-                backgroundColor: wellbeing_colours
+                backgroundColor: colours
             }],
             options: {
                 animateRotate: true,
@@ -198,7 +198,7 @@ function create_line_charts(){
                 label: metrics[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill:false,
-                borderColor: wellbeing_colours[i],
+                borderColor: colours[i],
                 tension: 0
             };
         }
@@ -223,7 +223,7 @@ function create_line_charts(){
                 label: wellbeing_labels[i],
                 data: new Array(number_of_weeks).fill(0),
                 fill: false,
-                borderColor: wellbeing_colours[i],
+                borderColor: colours[i],
                 tension: 0
             }
         }
@@ -260,7 +260,7 @@ function create_line_charts(){
         chart_label = "Diary Feelings"
     }
     data.forEach((entry) => {
-        entry_date = new Date(convert_date(entry.Date));
+        entry_date = type =='Contact Logs' ? new Date(convert_date(entry['Start Date'])) : new Date(convert_date(entry.Date));
         week_number = Math.ceil(Math.floor((entry_date - start_date) / (1000*60*60*24))/7)
         if(week_number==0){ week_number = 1;}
         entry.week_index = week_number-1;
