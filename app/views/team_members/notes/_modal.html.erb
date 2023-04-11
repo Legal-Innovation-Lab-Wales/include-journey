@@ -38,13 +38,13 @@
           <%= form.label :visible_to_user, class: 'form-check-label text-black-50' do %>
           Allow user to see this note?
           <% end %>
-          <%= form.check_box :visible_to_user, class: 'form-check-input' %>
+          <%= form.check_box :visible_to_user, class: 'form-check-input', id: 'visible-to-user' %>
         </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-        <%= form.submit "#{action} note", class: 'btn btn-success' %>
+        <%= form.submit "#{action} note", class: 'btn btn-success', id: 'submit'%>
       </div>
       <% end %>
     </div>
@@ -52,3 +52,4 @@
 </div>
 
 <%= javascript_pack_tag 'datetime_picker' %>
+<%= javascript_pack_tag 'note_modal' %>
