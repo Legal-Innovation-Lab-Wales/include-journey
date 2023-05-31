@@ -1,0 +1,49 @@
+<%= render 'layouts/searchable', class_list: 'team-members diary-entry', header: 'Assign Users', index:'team_member_users' do %>
+<%= form_with(url: team_member_users_path, method: :post, id: 'assign-users-form', data: { controller: "team_member_users" }) do |f| %>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col">
+        <table class="table table-dark table-striped">
+          <thead>
+            <tr>
+              <th>User Name</th>
+              <th>Email Address</th>
+              <th>Date Created</th>
+              <th>Action</th>
+              <th><%= check_box_tag "all-users", nil %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @resources.each do |user| %>
+              <tr>
+                <td><%= user.full_name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.created_at %></td>
+                <td class="d-flex align-items-center justify-content-center"> 
+                  <%= button_tag "", class: "btn btn-success me-3 approve-button", disabled: user.team_member == @team_member, data: { submit_url: team_member_user_approve_path(@team_member, user) } do %>
+                    <i class="fas fa-check-circle"></i>
+                  <% end %>
+                  <%= button_tag "", class: "btn btn-danger me-3 approve-button", disabled: !user.team_member, data: { submit_url: team_member_user_approve_path(@team_member, user, remove: "true") } do %>
+                    <i class="fas fa-user-slash"></i>
+                  <% end %>
+                </td>
+                <td>
+                  <%= check_box_tag "user_ids[]", user.id, nil, checked: user.team_member == @team_member, class: "user_ids" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= f.hidden_field :status, :value => 1 %>
+        <%= f.submit "Assign Selected", class: "btn btn-success me-3 assign-selected-button", onclick: "status.value = '1'" %>
+        <%= f.button "Remove Selected", class: "btn btn-warning me-3", id: "reject-selected", onclick: "status.value = '2'"%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% end %>
+
+<%= javascript_pack_tag 'sort_column' %>
+<%= javascript_pack_tag 'approvals' %>
+<%= javascript_pack_tag 'assign_users' %>
