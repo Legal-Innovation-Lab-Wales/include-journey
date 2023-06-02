@@ -20,23 +20,26 @@
                 <td><%= user.email %></td>
                 <td><%= user.created_at %></td>
                 <td class="d-flex align-items-center justify-content-center"> 
-                  <%= button_tag "", class: "btn btn-success me-3 approve-button", disabled: user.team_member == @team_member, data: { submit_url: team_member_user_approve_path(@team_member, user) } do %>
-                    <i class="fas fa-check-circle"></i>
-                  <% end %>
-                  <%= button_tag "", class: "btn btn-danger me-3 approve-button", disabled: !user.team_member, data: { submit_url: team_member_user_approve_path(@team_member, user, remove: "true") } do %>
-                    <i class="fas fa-user-slash"></i>
+                <% if user.assigned_team_member(@team_member.id)%>
+                    <%= link_to team_member_user_approve_url(@team_member, user, remove: "true"), class: "btn btn-danger p-2 mx-1 w-auto h-auto", disabled: !user.assigned_team_member(@team_member.id) do %>
+                      <i class="fas fa-user-slash"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to team_member_user_approve_url(@team_member, user), class: "btn btn-success p-2 mx-1 w-auto h-auto", disabled: user.assigned_team_member(@team_member.id) do %>
+                      <i class="fas fa-check-circle"></i>
+                    <% end %>
                   <% end %>
                 </td>
                 <td>
-                  <%= check_box_tag "user_ids[]", user.id, nil, checked: user.team_member == @team_member, class: "user_ids" %>
+                  <%= check_box_tag "user_ids[]", user.id, nil, checked: user.assigned_team_member(@team_member.id), class: "user_ids" %>
                 </td>
               </tr>
             <% end %>
           </tbody>
         </table>
         <%= f.hidden_field :status, :value => 1 %>
-        <%= f.submit "Assign Selected", class: "btn btn-success me-3 assign-selected-button", onclick: "status.value = '1'" %>
-        <%= f.button "Remove Selected", class: "btn btn-warning me-3", id: "reject-selected", onclick: "status.value = '2'"%>
+        <%= f.submit "Assign Selected", class: "btn btn-success p-2 mx-1 w-auto h-auto assign-selected-button", onclick: "status.value = '1'" %>
+        <%= f.button "Remove Selected", class: "btn btn-warning p-2 mx-1 w-auto h-auto", id: "reject-selected", onclick: "status.value = '2'"%>
       </div>
     </div>
   </div>

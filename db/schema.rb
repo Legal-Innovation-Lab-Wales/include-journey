@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_30_172149) do
+ActiveRecord::Schema.define(version: 2023_06_02_093349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 2023_05_30_172149) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["team_member_id"], name: "index_appointments_on_team_member_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
+  end
+
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "team_member_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_assignments_on_team_member_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
   create_table "contact_logs", force: :cascade do |t|
@@ -428,10 +437,8 @@ ActiveRecord::Schema.define(version: 2023_05_30_172149) do
     t.datetime "approved_at"
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
-    t.bigint "team_member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["team_member_id"], name: "index_users_on_team_member_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -493,6 +500,8 @@ ActiveRecord::Schema.define(version: 2023_05_30_172149) do
   add_foreign_key "affirmations", "team_members"
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
+  add_foreign_key "assignments", "team_members"
+  add_foreign_key "assignments", "users"
   add_foreign_key "contact_logs", "contact_purposes"
   add_foreign_key "contact_logs", "contact_types"
   add_foreign_key "contact_logs", "team_members"
@@ -533,7 +542,6 @@ ActiveRecord::Schema.define(version: 2023_05_30_172149) do
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"
   add_foreign_key "user_profile_view_logs", "users"
-  add_foreign_key "users", "team_members"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"

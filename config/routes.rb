@@ -79,7 +79,7 @@ Rails.application.routes.draw do
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :assign_users, only: %i[index create approve], on: :member, as: :users do
-          post 'approve', to: 'assign_users#approve', as: 'approve'
+          get 'approve', to: 'assign_users#approve', as: 'approve'
         end
         resources :diary_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member do
