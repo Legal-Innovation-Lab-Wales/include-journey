@@ -78,6 +78,9 @@ Rails.application.routes.draw do
         put 'suspend', action: 'toggle_suspend', on: :member, as: :toggle_suspend
 
         resources :user_profile_view_logs, only: :index, on: :member
+        resources :assign_users, only: %i[index create approve], on: :member, as: :users do
+          post 'approve', to: 'assign_users#approve', as: 'approve'
+        end
         resources :diary_entry_view_logs, only: :index, on: :member
         resources :wellbeing_assessments, only: :index, on: :member do
           get 'export', on: :collection

@@ -21,7 +21,8 @@ class User < DeviseRecord
   has_many :survey_responses, foreign_key: :user_id
   has_many :sessions, foreign_key: :user_id, dependent: :delete_all
   has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
-
+  belongs_to :team_member, optional: true
+  
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
   before_update :mail_suspended_user, if: -> { suspended_changed? }
