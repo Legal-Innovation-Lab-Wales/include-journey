@@ -25,9 +25,10 @@ module TeamMembers
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
       @contact_logs = ContactLog.where('user_id': @user.id)
+      @summary_panel = @user.summary_panel
 
       has_goal_permissions
-      
+
       render 'show'
     end
 
@@ -115,7 +116,7 @@ module TeamMembers
       @goals = user.goals.where(archived: false)
       @has_short_term_permissions = permission.short_term
       @has_long_term_permissions = permission.long_term
-      
+
       @has_user_goals_permission = @has_long_term_permissions || @has_short_term_permissions
       return @has_user_goals_permission
     end

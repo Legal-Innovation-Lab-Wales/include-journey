@@ -257,9 +257,31 @@
 
       <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
 
+       <div class="col-12 col-lg-6 mt-3">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3>User Summary Panel</h3>
+          </div>
+          <div class="card-body bg-transparent h-100" id="notes-card">
+            <% if @summary_panel.nil? %>
+              <span>There is no summary on this user yet.</span>
+            <% else %>
+              <%= @summary_panel %>
+            <% end %>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#note-modal">
+              Add Summary
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
+
     </div>
 
-     <div class="row" id="contact-appointments">
+    <div class="row" id="contact-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="contact-card" class="card h-100">
           <div class="card-header">
