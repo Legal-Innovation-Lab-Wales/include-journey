@@ -83,7 +83,11 @@ module TeamMembers
 
     # PUT /users/:user_id
     def update
-      @user.update(user_params)
+      if user_params[:summary_panel].present?
+        @user.update(summary_panel: user_params[:summary_panel])
+      else
+        @user.update(user_params)
+      end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
     end
@@ -233,7 +237,7 @@ module TeamMembers
                                    :gender_identity, :religion, :ethnic_group, :disabilities,
                                    :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
-                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence)
+                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel)
     end
 
     def users_params
