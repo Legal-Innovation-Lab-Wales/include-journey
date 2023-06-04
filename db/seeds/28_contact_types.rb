@@ -5,7 +5,8 @@ if ContactType.count.zero?
   ContactType.create!(name: 'Telephone call', color: '#ee904b')
   ContactType.create!(name: 'Email', color: '#F0A656')
   ContactType.create!(name: 'Other', color: '#DFC54C')
-  
+  ContactType.create!(name: 'Support using the app', color: '9933FFE6')
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end
