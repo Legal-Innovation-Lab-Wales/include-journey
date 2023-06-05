@@ -66,11 +66,11 @@
     <div class="row col mb-4 mx-auto">
         <div class="card h-100">
           <div class="card-header">
-            <h3>Summary Panel</h3>
+            <h3>Pen Profile</h3>
           </div>
           <div class="card-body bg-transparent h-100" id="summary-panel-card">
             <% if @summary_panel.nil? %>
-              <span>There is no summary on this user yet.</span>
+              <span>There is no information on this user yet.</span>
             <% else %>
               <%= @summary_panel %>
             <% end %>
@@ -78,9 +78,9 @@
           <div class="card-footer text-center">
             <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
               <% if @summary_panel.nil? %>
-                <%= "Add Summary" %>
+                <%= "Add Pen Profile" %>
               <% else %>
-                <%= "Edit Summary" %>
+                <%= "Edit Pen Profile" %>
               <% end %>
             </button>
           </div>

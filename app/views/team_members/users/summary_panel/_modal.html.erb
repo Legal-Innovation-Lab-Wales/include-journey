@@ -4,15 +4,15 @@
         <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
             <div class="modal-header border-0">
                 <% if @summary_panel.nil? %>
-                    <h5 class="modal-title text-black-50">Add Summary</h5>
+                    <h5 class="modal-title text-black-50">Add Pen Profile</h5>
                 <% else %>
-                    <h5 class="modal-title text-black-50">Edit Summary</h5>
+                    <h5 class="modal-title text-black-50">Edit Pen Profile</h5>
                 <% end %>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body border-0">
                 <div class="input-group mb-3">
-                    <%= f.text_area :summary_panel, class: 'form-control', rows: '8', placeholder: 'Add summary on user', aria: { label: 'Add summary on user' }, required: 'true' %>
+                    <%= f.text_area :summary_panel, class: 'form-control', rows: '8', placeholder: 'Add information on user', aria: { label: 'Add Pen Profile on user' }, required: 'true' %>
                 </div>
                 <p class="actual-error-message" >
                     <% @user.errors[:summary_panel].each do |err| %>
@@ -22,11 +22,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-                <% if @summary_panel.nil? %>
-                    <%= f.submit 'Add Summary', class: 'btn btn-primary' %>
-                <% else %>
-                    <%= f.submit 'Edit Summary', class: 'btn btn-success' %>
-                <% end %>
+                <%= f.submit 'Save Pen Profile', class: 'btn btn-success' %>
             </div>   
         <% end %>
     </div>
