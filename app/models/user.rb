@@ -22,6 +22,8 @@ class User < DeviseRecord
   has_many :sessions, foreign_key: :user_id, dependent: :delete_all
   has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
   has_many :assignments
+  has_many :diary_entry_permissions
+  has_many :diary_entry_permissions, through: :diary_entries
   has_many :team_members, through: :assignments
   
   before_update :verify_achievements
@@ -224,11 +226,18 @@ class User < DeviseRecord
     end
   end
 
+  def remove_diary_entry_permissions(team_member_id)
+    permission = diary_entry_permissions.where(team_member_id: team_member_id)
+    if permission
+      permission.destroy_all
+    end
+  end
+
   def remove_team_member(team_member_id)
     return unless assigned_team_member(team_member_id)
 
     remove_goal_permissions(team_member_id)
-
+    remove_diary_entry_permissions(team_member_id)
     assignments.find_by(team_member_id: team_member_id).destroy!
   end
 
