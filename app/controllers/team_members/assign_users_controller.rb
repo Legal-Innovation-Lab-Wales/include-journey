@@ -14,8 +14,7 @@ module TeamMembers
           return redirect_to team_member_users_path, flash: { error: 'No user selected' }
         end
         is_assign = !params[:remove].present?
-        user.team_member = is_assign ? team_member : nil
-        user.save!
+        is_assign ? user.assign_team_member(team_member.id) : user.remove_team_member(team_member.id)
         redirect_to team_member_users_path, flash: { success: "Success" }
       end
 
@@ -32,8 +31,7 @@ module TeamMembers
         is_assign = params[:status] == '1'
     
         @selected_users.each do |user|
-            user.team_member = is_assign ? team_member : nil
-            user.save!
+          is_assign ? user.assign_team_member(team_member.id) : user.remove_team_member(team_member.id)
         end
     
         redirect_to team_member_users_path, flash: { success: "Success" }
