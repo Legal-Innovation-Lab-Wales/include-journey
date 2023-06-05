@@ -89,6 +89,7 @@ class User < DeviseRecord
   validates_format_of :mobile_number, with: Rails.application.config.regex_telephone
   validates_format_of :email, with: Rails.application.config.regex_email
   validates_format_of :disabilities, with: Rails.application.config.regex_text_field
+  validates_format_of :summary_panel, with: Rails.application.config.regex_text_field
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
   validates :ethnic_group, inclusion: { in: ETHNICITY_OPTIONS }
