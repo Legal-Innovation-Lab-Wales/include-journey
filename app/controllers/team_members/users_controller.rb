@@ -237,7 +237,7 @@ module TeamMembers
     end
 
     def users_params
-      params.permit(:sort, :direction, :tag, :query, :page)
+      params.permit(:sort, :direction, :tag, :query, :page, :assigned)
     end
 
     def set_breadcrumbs

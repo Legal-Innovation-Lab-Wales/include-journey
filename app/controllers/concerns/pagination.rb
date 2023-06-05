@@ -6,7 +6,7 @@ module Pagination
   end
 
   def self.permitted_params
-    %i[page query tag type radius postcode limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
+    %i[page query tag assigned type radius postcode limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
   end
 
   protected
