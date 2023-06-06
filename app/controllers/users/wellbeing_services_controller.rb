@@ -28,7 +28,7 @@ module Users
     end
 
     def search
-      @wellbeing_services = WellbeingService.where('lower(wellbeing_sevices.name) similar to lower(:query)', wildcard_query)
+      @wellbeing_services = WellbeingService.where('lower(wellbeing_services.name) similar to lower(:query)', wildcard_query)
       process_resources
     end
 

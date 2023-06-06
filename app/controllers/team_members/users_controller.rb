@@ -137,6 +137,12 @@ module TeamMembers
                      .order({ "#{@sort}": @direction })
       end
       @users = users_params[:tag].present? ? @users.joins(:user_tags).where('user_tags.tag_id': users_params[:tag]) : @users
+      assigned = users_params[:assigned]
+      if assigned.present? && assigned == 'false'
+        @users
+      else
+        @users.joins(:assignments).where('assignments.team_member': current_team_member)
+      end
     end
 
     def resources_per_page
@@ -242,7 +248,7 @@ module TeamMembers
     end
 
     def users_params
-      params.permit(:sort, :direction, :tag, :query, :page)
+      params.permit(:sort, :direction, :tag, :query, :page, :assigned)
     end
 
     def set_breadcrumbs

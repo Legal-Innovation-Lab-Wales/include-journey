@@ -22,7 +22,7 @@
       <% end %>
       <p>
         <% unless @unread_diary_entries.zero? %>
-          <%= link_to '#diary' do %>
+          <%= link_to diary_entries_path(query: @user.full_name) do %>
             <i class="fas fa-book-reader"></i> <%= @unread_diary_entries %> unread diary entries
           <% end %>
         <% end %>

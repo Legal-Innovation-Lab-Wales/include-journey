@@ -21,7 +21,10 @@ class User < DeviseRecord
   has_many :survey_responses, foreign_key: :user_id
   has_many :sessions, foreign_key: :user_id, dependent: :delete_all
   has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
-  belongs_to :team_member, optional: true
+  has_many :assignments
+  has_many :diary_entry_permissions
+  has_many :diary_entry_permissions, through: :diary_entries
+  has_many :team_members, through: :assignments
   
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
@@ -211,6 +214,37 @@ class User < DeviseRecord
     %w[sessions wellbeing_assessments diary_entries goals_achieved].each do |entities|
       update!({ "#{entities}_this_month_count": 0 })
     end
+  end
+
+  def assigned_team_member(team_member_id)
+    assignments.any? { |tm| tm.team_member_id == team_member_id }
+  end
+
+  def remove_goal_permissions(team_member_id)
+    permission = goal_permissions.where(team_member_id: team_member_id)
+    if permission
+      permission.destroy_all
+    end
+  end
+
+  def remove_diary_entry_permissions(team_member_id)
+    permission = diary_entry_permissions.where(team_member_id: team_member_id)
+    if permission
+      permission.destroy_all
+    end
+  end
+
+  def remove_team_member(team_member_id)
+    return unless assigned_team_member(team_member_id)
+
+    remove_goal_permissions(team_member_id)
+    remove_diary_entry_permissions(team_member_id)
+    assignments.find_by(team_member_id: team_member_id).destroy!
+  end
+
+  def assign_team_member(team_member_id)
+    return if assigned_team_member(team_member_id)
+    assignments.create!(team_member_id: team_member_id)
   end
 
   private

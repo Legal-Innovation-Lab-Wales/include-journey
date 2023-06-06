@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "team_member_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_assignments_on_team_member_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
   create_table "contact_logs", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
@@ -432,7 +441,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.bigint "team_member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["team_member_id"], name: "index_users_on_team_member_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -494,6 +502,8 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   add_foreign_key "affirmations", "team_members"
   add_foreign_key "appointments", "team_members"
   add_foreign_key "appointments", "users"
+  add_foreign_key "assignments", "team_members"
+  add_foreign_key "assignments", "users"
   add_foreign_key "contact_logs", "contact_purposes"
   add_foreign_key "contact_logs", "contact_types"
   add_foreign_key "contact_logs", "team_members"
@@ -508,7 +518,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
-  add_foreign_key "messages", "notes"
   add_foreign_key "messages", "team_members"
   add_foreign_key "messages", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"
@@ -534,7 +543,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"
   add_foreign_key "user_profile_view_logs", "users"
-  add_foreign_key "users", "team_members"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"

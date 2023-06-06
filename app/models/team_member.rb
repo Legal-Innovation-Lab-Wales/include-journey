@@ -25,7 +25,8 @@ class TeamMember < DeviseRecord
   has_many :created_tags, foreign_key: :team_member_id, class_name: 'Tag'
   has_many :assigned_tags, through: :user_tags, source: :tag
   has_many :contact_logs, foreign_key: :team_member_id, dependent: :delete_all
-  has_many :users
+  has_many :assignments
+  has_many :users, through: :assignments
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }

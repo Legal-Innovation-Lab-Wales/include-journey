@@ -57,7 +57,7 @@ module Users
     end
 
     def team_members
-      @team_members = TeamMember.all.order(:created_at)
+      @team_members = current_user.team_members.order(:created_at)
     end
   end
 end

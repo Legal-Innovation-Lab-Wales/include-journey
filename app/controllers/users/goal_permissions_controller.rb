@@ -1,6 +1,6 @@
 module Users
   class GoalPermissionsController < PermissionsController
-    before_action :permissions, :can_add, :set_breadcrumbs
+    before_action :team_members, :permissions, :can_add, :set_breadcrumbs
 
     def index
       @type = !params[:type] ? 'short' : params[:type]
@@ -41,7 +41,7 @@ module Users
     end
 
     def permissions_params
-      params.require(:goal_permission).permit(:goal_type, :type, @team_members.map { |t_m| "team_member_#{t_m.id}" })
+      params.require(:goal_permission).permit(:goal_type, :type, team_members.map { |t_m| "team_member_#{t_m.id}" })
     end
 
     def permissions
@@ -55,6 +55,10 @@ module Users
 
     def can_add
       @can_add = @permissions.length < @team_members.length
+    end
+
+    def team_members
+      @team_members = current_user.team_members.order(:created_at)
     end
 
     def set_breadcrumbs
