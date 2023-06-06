@@ -132,7 +132,8 @@ module TeamMembers
                      .order({ "#{@sort}": @direction })
       end
       @users = users_params[:tag].present? ? @users.joins(:user_tags).where('user_tags.tag_id': users_params[:tag]) : @users
-      if users_params[:assigned].present? && users_params[:assigned] == 'false'
+      assigned = users_params[:assigned]
+      if assigned.present? && assigned == 'false'
         @users
       else
         @users.joins(:assignments).where('assignments.team_member': current_team_member)
