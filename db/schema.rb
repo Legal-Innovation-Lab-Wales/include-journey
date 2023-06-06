@@ -165,12 +165,11 @@ ActiveRecord::Schema.define(version: 2023_06_02_093349) do
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
-    t.bigint "note_id", null: false
+    t.integer "note_id"
     t.boolean "read", default: false
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -516,7 +515,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_093349) do
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
-  add_foreign_key "messages", "notes"
   add_foreign_key "messages", "team_members"
   add_foreign_key "messages", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"

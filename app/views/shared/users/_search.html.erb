@@ -1,4 +1,4 @@
-<div class="col-12 col-md-6">
+<div class="col-12 col-md-7">
     <div class="search input-group">
         <input type="text" class="form-control" id="search-input" placeholder="Search" aria-label="Search">
         <% if @tag_list.present? %>
@@ -9,6 +9,10 @@
                 <% end %>
             </select>
         <% end %>
+        <div class="form-control">
+            <label for="search-assigned">Only show assigned</label>
+            <input type="checkbox" id="search-assigned" value='true' checked>
+        </div>
         <span class="input-group-text" id="search-btn"><i class="fas fa-search"></i></span>
     </div>
 </div>
