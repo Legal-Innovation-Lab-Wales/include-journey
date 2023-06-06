@@ -25,9 +25,10 @@ module TeamMembers
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
       @contact_logs = ContactLog.where('user_id': @user.id)
+      @summary_panel = @user.summary_panel
 
       has_goal_permissions
-      
+
       render 'show'
     end
 
@@ -83,7 +84,11 @@ module TeamMembers
 
     # PUT /users/:user_id
     def update
-      @user.update(user_params)
+      if user_params[:summary_panel].present?
+        @user.update(summary_panel: user_params[:summary_panel])
+      else
+        @user.update(user_params)
+      end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
     end
@@ -111,7 +116,7 @@ module TeamMembers
       @goals = user.goals.where(archived: false)
       @has_short_term_permissions = permission.short_term
       @has_long_term_permissions = permission.long_term
-      
+
       @has_user_goals_permission = @has_long_term_permissions || @has_short_term_permissions
       return @has_user_goals_permission
     end
@@ -239,7 +244,7 @@ module TeamMembers
                                    :gender_identity, :religion, :ethnic_group, :disabilities,
                                    :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
-                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence)
+                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel)
     end
 
     def users_params

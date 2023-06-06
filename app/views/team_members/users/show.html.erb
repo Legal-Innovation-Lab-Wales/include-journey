@@ -62,6 +62,33 @@
   <% if @user.wellbeing_assessments.count > 1 %>
     <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <% end %>
+  <div>
+    <div class="row col mb-4 mx-auto">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3>Pen Profile</h3>
+          </div>
+          <div class="card-body bg-transparent h-100" id="summary-panel-card">
+            <% if @summary_panel.nil? %>
+              <span>There is no information on this user yet.</span>
+            <% else %>
+              <%= @summary_panel %>
+            <% end %>
+          </div>
+          <div class="card-footer text-center">
+            <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
+              <% if @summary_panel.nil? %>
+                <%= "Add Pen Profile" %>
+              <% else %>
+                <%= "Edit Pen Profile" %>
+              <% end %>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <%= render 'team_members/users/summary_panel/modal' %>
+  </div>
   <% unless @user.deleted %>
     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
@@ -256,10 +283,9 @@
       </div>
 
       <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
-
     </div>
 
-     <div class="row" id="contact-appointments">
+    <div class="row" id="contact-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="contact-card" class="card h-100">
           <div class="card-header">
