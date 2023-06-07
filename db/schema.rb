@@ -165,12 +165,11 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
+    t.integer "note_id"
     t.boolean "read", default: false
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "note_id"
-    t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -438,7 +437,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
     t.text "summary_panel"
-    t.bigint "team_member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
