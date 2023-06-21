@@ -16,6 +16,8 @@ if ContactPurpose.count.zero?
     ContactPurpose.create!(name: 'Training')
     ContactPurpose.create!(name: 'Utilities')
     ContactPurpose.create!(name: "Women's day")
+    ContactPurpose.create!(name: 'Interpersonal Violence Support')
+    ContactPurpose.create!(name: 'Social Connect (Combating Isolation)')
 
     puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
     @last_time = Time.now
