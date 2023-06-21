@@ -4,7 +4,7 @@ module TeamMembers
     before_action :authenticate_team_member!
     before_action :require_approval
     before_action :require_not_suspended
-    before_action :set_up_two_factor
+    #before_action :set_up_two_factor
 
     def terms
       add_breadcrumb('Terms', nil, 'fas fa-gavel')

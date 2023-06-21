@@ -31,7 +31,7 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender =
     if Rails.env.production?
-      'journey@legaltech.wales'
+      ENV.fetch('FROM_EMAIL')
     else
       'include.journey.demo@legaltech.wales'
     end
