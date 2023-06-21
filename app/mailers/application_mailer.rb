@@ -2,6 +2,6 @@
 class ApplicationMailer < ActionMailer::Base
   helper :mailer
 
-  default from: 'journey@legaltech.wales'
+  default from: ENV.fetch('FROM_EMAIL')
   layout 'mailer'
 end
