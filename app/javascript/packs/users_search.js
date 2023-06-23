@@ -35,5 +35,7 @@ search_input.addEventListener('keyup', e => { if (e.key === 'Enter') search() })
 
 if (url.searchParams.has('query')) search_input.value = url.searchParams.get('query')
 if (url.searchParams.has('tag')) tag_input.value = url.searchParams.get('tag')
-if (url.searchParams.get('assigned')=='true') assigned_input.value = url.searchParams.get('assigned')
-else if(url.searchParams.get('assigned')=='false') assigned_input.checked = false
+if (url.searchParams.get('assigned')=='true') {
+    assigned_input.value = url.searchParams.get('assigned')
+    assigned_input.checked = true
+} else assigned_input.checked = false

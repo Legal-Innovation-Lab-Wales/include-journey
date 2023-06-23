@@ -138,10 +138,10 @@ module TeamMembers
       end
       @users = users_params[:tag].present? ? @users.joins(:user_tags).where('user_tags.tag_id': users_params[:tag]) : @users
       assigned = users_params[:assigned]
-      if assigned.present? && assigned == 'false'
-        @users
-      else
+      if assigned.present? && assigned == 'true'
         @users.joins(:assignments).where('assignments.team_member': current_team_member)
+      else
+        @users
       end
     end
 
