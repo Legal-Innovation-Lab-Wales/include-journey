@@ -72,13 +72,13 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     user_name: 'apikey',
     password: ENV['SENDGRID_API_KEY'],
-    domain: 'include-journey-demo.legaltech.wales',
+    domain: ENV['IJ_DEMO_HOST'],
     address: 'smtp.sendgrid.net',
     port: 587,
     authentication: :plain,
     enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = { host: 'include-journey-demo.legaltech.wales', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: ENV['IJ_DEMO_HOST'], protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
 
   config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
