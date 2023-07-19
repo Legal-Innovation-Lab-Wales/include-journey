@@ -2,6 +2,7 @@
 
 # app/models/upload.rb
 class Upload < ApplicationRecord
+  belongs_to :user
   belongs_to :uploadable, polymorphic: true
   has_many :photos
 

@@ -169,7 +169,6 @@ ActiveRecord::Schema.define(version: 2023_07_19_070625) do
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "note_id"
     t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
@@ -346,11 +345,13 @@ ActiveRecord::Schema.define(version: 2023_07_19_070625) do
     t.string "approved_by"
     t.datetime "approved_at"
     t.string "added_by"
+    t.bigint "user_id", null: false
     t.string "uploadable_type"
     t.bigint "uploadable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uploadable_type", "uploadable_id"], name: "index_uploads_on_uploadable"
+    t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
   create_table "user_achievements", force: :cascade do |t|
@@ -560,6 +561,7 @@ ActiveRecord::Schema.define(version: 2023_07_19_070625) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "uploads", "users"
   add_foreign_key "user_achievements", "achievements"
   add_foreign_key "user_achievements", "users"
   add_foreign_key "user_pins", "team_members"

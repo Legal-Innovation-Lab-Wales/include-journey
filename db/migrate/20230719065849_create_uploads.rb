@@ -6,6 +6,7 @@ class CreateUploads < ActiveRecord::Migration[6.1]
       t.string :approved_by
       t.datetime :approved_at
       t.string :added_by
+      t.references :user, null: false, foreign_key: true
       t.references :uploadable, polymorphic: true, index: true
 
       t.timestamps
