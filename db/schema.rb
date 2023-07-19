@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_02_104612) do
+ActiveRecord::Schema.define(version: 2023_07_19_070625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,14 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "photos", force: :cascade do |t|
+    t.binary "data"
+    t.bigint "upload_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["upload_id"], name: "index_photos_on_upload_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "session_at", null: false
@@ -327,8 +335,22 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.string "otp_backup_codes", array: true
     t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
     t.index ["email"], name: "index_team_members_on_email", unique: true
+    t.index ["id"], name: "index_team_members_on_id", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.text "comment"
+    t.string "status", default: "pending"
+    t.string "approved_by"
+    t.datetime "approved_at"
+    t.string "added_by"
+    t.string "uploadable_type"
+    t.bigint "uploadable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uploadable_type", "uploadable_id"], name: "index_uploads_on_uploadable"
   end
 
   create_table "user_achievements", force: :cascade do |t|
@@ -438,7 +460,6 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
     t.text "summary_panel"
-    t.bigint "team_member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -518,6 +539,7 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
   add_foreign_key "goals", "users"
+  add_foreign_key "messages", "notes"
   add_foreign_key "messages", "team_members"
   add_foreign_key "messages", "users"
   add_foreign_key "metrics_services", "wellbeing_metrics"
@@ -526,6 +548,7 @@ ActiveRecord::Schema.define(version: 2023_06_02_104612) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "photos", "uploads"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"

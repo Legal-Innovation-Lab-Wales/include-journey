@@ -5,8 +5,7 @@ class Upload < ApplicationRecord
   belongs_to :uploadable, polymorphic: true
   has_many :photos
 
-  attributes :status, :string, default: 'pending'
-
+  validates_presence_of :status, :added_by
   validates :status, inclusion: { in: %w[pending approved rejected] }
   validates :added_by, inclusion: { in: %w[user team_member] }
 
