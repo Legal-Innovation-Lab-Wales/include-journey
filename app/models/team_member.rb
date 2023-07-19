@@ -27,6 +27,7 @@ class TeamMember < DeviseRecord
   has_many :contact_logs, foreign_key: :team_member_id, dependent: :delete_all
   has_many :assignments
   has_many :users, through: :assignments
+  has_many :uploads, as: :uploadable
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
