@@ -159,7 +159,6 @@ class User < DeviseRecord
     appointments.order(start: :asc).filter(&:last_month)
   end
 
-  # rubocop:disable Metrics/MethodLength
   def to_csv
     [
       id,
@@ -185,8 +184,6 @@ class User < DeviseRecord
       'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     }
   end
-  # rubocop:enable Metrics/MethodLength
-
 
   def unapprove
     sessions.destroy_all
