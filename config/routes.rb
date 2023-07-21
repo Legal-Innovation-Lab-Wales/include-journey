@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :uploads
   devise_for :users, path: 'users',
                      controllers: { registrations: 'users/registrations',
                                     confirmations: 'users/confirmations',
@@ -57,6 +56,7 @@ Rails.application.routes.draw do
       resources :surveys, only: %i[index show update]
       resources :messages, only: [:index], as: :archive_messages
       get 'main_messages', to: 'messages#main'
+      resources :uploads
     end
     get '/*path', to: redirect('')
   end
@@ -118,6 +118,7 @@ Rails.application.routes.draw do
         end
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
         get 'edit', action: 'edit', on: :member, as: :edit
+        resources :uploads
       end
 
       resources :analytics, only: %i[index] do
