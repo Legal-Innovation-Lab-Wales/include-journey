@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_22_042952) do
+ActiveRecord::Schema.define(version: 2023_07_22_045218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,11 +165,11 @@ ActiveRecord::Schema.define(version: 2023_07_22_042952) do
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
+    t.bigint "note_id", null: false
     t.boolean "read", default: false
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "note_id"
     t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
@@ -336,6 +336,7 @@ ActiveRecord::Schema.define(version: 2023_07_22_042952) do
     t.bigint "upload_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "content_type"
     t.index ["upload_id"], name: "index_upload_files_on_upload_id"
   end
 
