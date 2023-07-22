@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# app/models/photo.rb
-class Photo < ApplicationRecord
+# app/models/upload_file.rb
+class UploadFile < ApplicationRecord
   belongs_to :upload
 
   validates_presence_of :data
