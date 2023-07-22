@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_21_132931) do
+ActiveRecord::Schema.define(version: 2023_07_22_042952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2023_07_21_132931) do
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "note_id"
     t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
@@ -197,14 +198,6 @@ ActiveRecord::Schema.define(version: 2023_07_21_132931) do
     t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
-  end
-
-  create_table "photos", force: :cascade do |t|
-    t.binary "data"
-    t.bigint "upload_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["upload_id"], name: "index_photos_on_upload_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -336,6 +329,14 @@ ActiveRecord::Schema.define(version: 2023_07_21_132931) do
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
+  end
+
+  create_table "upload_files", force: :cascade do |t|
+    t.binary "data"
+    t.bigint "upload_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["upload_id"], name: "index_upload_files_on_upload_id"
   end
 
   create_table "uploads", force: :cascade do |t|
@@ -547,7 +548,6 @@ ActiveRecord::Schema.define(version: 2023_07_21_132931) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
-  add_foreign_key "photos", "uploads"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
@@ -559,6 +559,7 @@ ActiveRecord::Schema.define(version: 2023_07_21_132931) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "upload_files", "uploads"
   add_foreign_key "uploads", "users"
   add_foreign_key "user_achievements", "achievements"
   add_foreign_key "user_achievements", "users"
