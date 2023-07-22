@@ -17,11 +17,11 @@ class Upload < ApplicationRecord
     self.status = 'approved' if uploadable.present? && uploadable.is_a?(TeamMember)
   end
 
-  def grab_photo
-    if photos.first.nil?
+  def grab_upload_file
+    if upload_files.first.nil?
       return '<i class="fas fa-image"></i>'.html_safe
     end
 
-    ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % Base64.encode64(photos.first.data)).html_safe
+    ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % Base64.encode64(upload_files.first.data)).html_safe
   end
 end

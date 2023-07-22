@@ -12,7 +12,7 @@ class UploadFile < ApplicationRecord
     Base64.encode64(data)
   end
 
-  def grab_photo
+  def grab_upload_file
     return nil if data.nil?
 
     ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % encoded_data).html_safe

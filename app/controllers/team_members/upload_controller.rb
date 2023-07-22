@@ -7,7 +7,7 @@ module TeamMembers
 
     def new
       @upload = Upload.new
-      @photo = Photo.new
+      @upload_file = UploadFile.new
     end
 
     def create
@@ -16,9 +16,9 @@ module TeamMembers
         user: user
       )
       @upload.uploadable = current_team_member
-      @photo = new_photo
+      @upload_file = new_upload_file
 
-      if @upload.save! && @photo.save!
+      if @upload.save! && @upload_file.save!
         flash[:success] = 'Upload added successfully!'
       else
         render 'new', status: :unprocessable_entity
@@ -26,15 +26,15 @@ module TeamMembers
     end
 
     def edit
-      @photo = @upload.photos.first_or_initialize
+      @upload_file = @upload.upload_files.first_or_initialize
     end
 
     def update
-      @photo = @upload.photos.first_or_initialize
+      @upload_file = @upload.upload_files.first_or_initialize
       @upload.update(comment: upload_params[comment])
-      @photo.data = upload_params[:image_file].read if upload_params[:image_file]
+      @upload_file.data = upload_params[:image_file].read if upload_params[:image_file]
 
-      if @photo.save! && @upload.save!
+      if @upload_file.save! && @upload.save!
         redirect_to upload_path(@upload)
       else
         render 'edit', status: :unprocessable_entity
@@ -59,15 +59,15 @@ module TeamMembers
       Base64.decode64(insert_file)
     end
 
-    def new_photo
-      photo = Photo.new
-      photo.data = if upload_params[:cached_image]
+    def new_upload_file
+      upload_file = UploadFile.new
+      upload_file.data = if upload_params[:cached_image]
                      encode(upload_params[:cached_image])
                    elsif upload_params[:image_file]
                      upload_params[:image_file].read
                    end
-      photo.upload = @upload
-      photo
+      upload_file.upload = @upload
+      upload_file
     end
   end
 end
