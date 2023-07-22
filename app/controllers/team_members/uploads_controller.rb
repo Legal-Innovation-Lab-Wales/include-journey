@@ -1,6 +1,6 @@
 module TeamMembers
   # app/controllers/team_members/upload_controller.rb
-  class UploadController < ApplicationController
+  class UploadsController < ApplicationController
     def index
       @uploads = Upload.where(user: user)
     end

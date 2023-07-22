@@ -62,8 +62,8 @@
   <% if @user.wellbeing_assessments.count > 1 %>
     <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <% end %>
-  <div>
-    <div class="row col mb-4 mx-auto">
+  <div class="row mb-4 mx-auto">
+    <div class="col-6">
         <div class="card h-100">
           <div class="card-header">
             <h3>Pen Profile</h3>
@@ -86,8 +86,21 @@
           </div>
         </div>
       </div>
-
       <%= render 'team_members/users/summary_panel/modal' %>
+
+      <div class="col-6">
+        <div class="card h-100">
+          <div class="card-header">
+            <h3>Uploads</h3>
+          </div>
+          <div class="card-body bg-transparent h-100" id="summary-panel-card">
+            <p>Add upload stats</p>
+          </div>
+          <div class="card-footer text-center">
+            <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5", target: "_blank" %>
+          </div>
+        </div>
+      </div>
   </div>
   <% unless @user.deleted %>
     <div class="row" id="diary-appointments">

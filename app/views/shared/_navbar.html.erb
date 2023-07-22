@@ -122,7 +122,15 @@
                 <%end%>
               </div>
             <% end %>
-
+            <%= link_to uploads_path, class: "btn btn-light", target: "_blank" do %>
+              <div class="nav-label hide"> My Uploads</div>
+              <div class="notification">
+                <i class="fas fa-upload"></i>
+                <%if true %>
+                  <span class="notification-dot"></span>
+                <%end%>
+              </div>
+            <% end %>
             <%= link_to guide_path, class: "btn btn-info" do %>
               <div class="nav-label hide">Guide</div>
               <i class="fas fa-question-circle"></i>

@@ -1,6 +1,6 @@
 module Users
   # app/controllers/users/upload_controller.rb
-  class UploadController < ApplicationController
+  class UploadsController < ApplicationController
     def index
       @uploads = Upload.where(user: current_user)
     end
