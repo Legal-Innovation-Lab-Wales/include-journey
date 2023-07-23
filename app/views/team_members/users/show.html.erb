@@ -90,14 +90,15 @@
 
       <div class="col-6">
         <div class="card h-100">
-          <div class="card-header">
-            <h3>Uploads</h3>
+          <div class="card-header d-flex">
+            <h3 class="me-auto align-self-center" >Uploads</h3>
+            <%= link_to "Add Upload", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %>
           </div>
           <div class="card-body bg-transparent h-100" id="summary-panel-card">
             <p>Add upload stats</p>
           </div>
           <div class="card-footer text-center">
-            <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5", target: "_blank" %>
+            <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5" %>
           </div>
         </div>
       </div>

@@ -1,11 +1,14 @@
 module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
+    before_action :set_breadcrumbs
+
     def index
       @uploads = Upload.where(user: current_user)
     end
 
     def new
+      add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
       @upload = Upload.new
       @upload_file = UploadFile.new
     end
@@ -64,6 +67,11 @@ module Users
                    end
       upload_file.upload = @upload
       upload_file
+    end
+
+    def set_breadcrumbs
+      path = action_name == 'index' ? nil : uploads_path
+      add_breadcrumb('My Uploads', path, 'fas fa-upload')
     end
   end
 end

@@ -1,11 +1,14 @@
 module TeamMembers
   # app/controllers/team_members/upload_controller.rb
   class UploadsController < ApplicationController
+    before_action :set_breadcrumbs
+
     def index
       @uploads = Upload.where(user: user)
     end
 
     def new
+      add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
       @upload = Upload.new
       @upload_file = UploadFile.new
     end
@@ -68,6 +71,13 @@ module TeamMembers
                    end
       upload_file.upload = @upload
       upload_file
+    end
+
+    def set_breadcrumbs
+      add_breadcrumb('Users', users_path, 'fas fa-user')
+      add_breadcrumb(user.full_name, user_path(user))
+
+      add_breadcrumb('Uploads') unless action_name != 'index'
     end
   end
 end
