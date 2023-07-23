@@ -4,8 +4,10 @@
 class UploadFile < ApplicationRecord
   belongs_to :upload
 
-  validates_presence_of :data, :content_type
+  validates_presence_of :data, :content_type, :name
   validates :content_type, inclusion: { in: %w[application/pdf image/jpeg image/png] }
+  validates_format_of :name, with: Rails.application.config.regex_file_name,
+                             message: Rails.application.config.file_name_error
 
   def encoded_data
     return nil if data.nil?
