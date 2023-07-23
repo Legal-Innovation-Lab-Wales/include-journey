@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_22_045218) do
+ActiveRecord::Schema.define(version: 2023_07_19_070625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -332,11 +332,12 @@ ActiveRecord::Schema.define(version: 2023_07_22_045218) do
   end
 
   create_table "upload_files", force: :cascade do |t|
+    t.string "name"
     t.binary "data"
+    t.string "content_type"
     t.bigint "upload_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_type"
     t.index ["upload_id"], name: "index_upload_files_on_upload_id"
   end
 
