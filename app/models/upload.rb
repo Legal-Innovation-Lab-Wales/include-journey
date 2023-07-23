@@ -6,7 +6,7 @@ class Upload < ApplicationRecord
   belongs_to :uploadable, polymorphic: true
   has_many :upload_files
 
-  validates_presence_of :status, :added_by
+  validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved rejected] }
 
   after_create :approve_if_added_by_team_member
