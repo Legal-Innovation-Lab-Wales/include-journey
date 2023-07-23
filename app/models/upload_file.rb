@@ -4,7 +4,8 @@
 class UploadFile < ApplicationRecord
   belongs_to :upload
 
-  validates_presence_of :data
+  validates_presence_of :data, :content_type
+  validates :content_type, inclusion: { in: %w[application/pdf image/jpeg image/png] }
 
   def encoded_data
     return nil if data.nil?

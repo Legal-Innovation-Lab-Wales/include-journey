@@ -1,0 +1,44 @@
+<%= form_with(model: @upload, url: url) do |form| %>
+    <div class="">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p class="upload_name"></p>
+                <div class="mb-1">
+                    <% if @upload.new_record? || current_user.id == @upload.user_id %>
+                        <div id="file-drag-div" draggable="true">
+                            <div id="file-holder" class="file-display text-center">
+                                <% if @upload_file.data.present? %>
+                                    <%= @upload_file.grab_upload_file %>
+                                <% else %>
+                                    <%= form.label "Upload File", class: 'btn btn-primary', for: 'upload_file' %>
+                                    <p class="my-1"><strong>OR</strong></p>
+                                    <p class="my-0">Drag and Drop File here</p>
+                                <% end %>
+                            </div>
+                        </div>
+                        <%= form.label "Change File", class: @upload_file.data.present? ? 'change-file' : 'd-none change-file', for: 'upload_file' %>
+                        <%= form.file_field :file, class: 'form-control d-none', accept: ' image/png,image/jpeg,application/pdf', id: 'upload_file' %>
+                        <%= form.hidden_field :cached_file, value: @upload_file.encoded_data  %>
+                    
+                        <p id="file-error" class="text-capitalize text-danger"></p>
+                    <% end %>
+                </div>
+                <div class="form-floating mb-3">
+                    <%= form.text_area :comment, class: 'form-control', oninput:'this.style.height = ""; this.style.height = this.scrollHeight + "px"' %>
+                    <%= form.label "Comment" %>
+                </div>
+
+                <div class="text-center mb-3 ">
+                <% if @upload.new_record? %>
+                    <%= form.submit "Submit", class: 'btn btn-primary', data: {turbo: false} %>
+                <% else %>
+                    <%= form.submit "Save", class: 'btn btn-primary me-2' %>
+                    <%= link_to "Cancel", upload_path(@upload), class: 'btn btn-warning'%>
+                <% end %>
+                <div>
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<%= javascript_pack_tag 'uploads' %>

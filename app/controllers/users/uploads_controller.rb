@@ -15,14 +15,17 @@ module Users
 
     def create
       @upload = Upload.new(
-        comment: upload_params[comment],
+        comment: upload_params[:comment],
         user: current_user
       )
       @upload.uploadable = current_user
+
       @upload_file = new_upload_file
+      @upload_file.upload = @upload
 
       if @upload.save! && @upload_file.save!
         flash[:success] = 'Upload added successfully!'
+        redirect_to root_path
       else
         render 'new', status: :unprocessable_entity
       end
@@ -38,7 +41,7 @@ module Users
       @upload_file.data = upload_params[:image_file].read if upload_params[:image_file]
 
       if @upload_file.save! && @upload.save!
-        redirect_to upload_path(@upload)
+        redirect_to root_path #upload_path(@upload)
       else
         render 'edit', status: :unprocessable_entity
       end
@@ -47,7 +50,7 @@ module Users
     private
 
     def upload_params
-      params.require(:upload).permit(:comments, :image_file, :cached_image)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type)
     end
 
     def upload
@@ -60,12 +63,12 @@ module Users
 
     def new_upload_file
       upload_file = UploadFile.new
-      upload_file.data = if upload_params[:cached_image]
-                     encode(upload_params[:cached_image])
-                   elsif upload_params[:image_file]
-                     upload_params[:image_file].read
-                   end
-      upload_file.upload = @upload
+      upload_file.content_type = upload_params[:file].content_type
+      upload_file.data = if upload_params[:cached_file]
+                           encode(upload_params[:cached_file])
+                         elsif upload_params[:file]
+                           upload_params[:file].read
+                         end
       upload_file
     end
 
