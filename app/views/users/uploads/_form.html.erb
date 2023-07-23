@@ -2,7 +2,6 @@
     <div class="">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <p class="upload_name"></p>
                 <div class="mb-1">
                     <% if @upload.new_record? || current_user.id == @upload.user_id %>
                         <div id="file-drag-div" draggable="true">
@@ -22,6 +21,10 @@
                     
                         <p id="file-error" class="text-capitalize text-danger"></p>
                     <% end %>
+                </div>
+                <div class="form-floating mb-3">
+                    <%= form.text_field :name, class: 'form-control', id: 'upload_name' %>
+                    <%= form.label :name, "Name" %>
                 </div>
                 <div class="form-floating mb-3">
                     <%= form.text_area :comment, class: 'form-control', oninput:'this.style.height = ""; this.style.height = this.scrollHeight + "px"' %>

@@ -5,7 +5,7 @@ const file_error = document.getElementById("file-error");
 const drop_div = document.getElementById("file-drag-div");
 const cached_file_input = document.getElementById("upload_cached_file");
 const change_file_button = document.querySelector(".change-file");
-const upload_name_element = document.querySelector(".upload_name");
+const upload_name_element = document.getElementById("upload_name");
 
 // Import default pdf image
 const pdfImage = new Image();
@@ -63,12 +63,9 @@ function displayFile(file) {
 }
 
 function displayFileName(fileName) {
-    if (upload_name_element) {
-        const strongElement = document.createElement("strong");
-        strongElement.textContent = fileName;
-        upload_name_element.innerHTML = ""; // Clear any previous content
-        upload_name_element.appendChild(strongElement);
-    }
+  if (upload_name_element) {
+    upload_name_element.value = fileName;
+  }
 }
 
 function extractFileData(file) {

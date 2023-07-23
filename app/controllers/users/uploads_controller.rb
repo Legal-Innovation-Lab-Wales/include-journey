@@ -50,7 +50,7 @@ module Users
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name)
     end
 
     def upload
@@ -62,14 +62,13 @@ module Users
     end
 
     def new_upload_file
-      upload_file = UploadFile.new
-      upload_file.content_type = upload_params[:file].content_type
-      upload_file.data = if upload_params[:cached_file]
-                           encode(upload_params[:cached_file])
-                         elsif upload_params[:file]
-                           upload_params[:file].read
-                         end
-      upload_file
+      UploadFile.new(name: upload_params[:name],
+                     content_type: upload_params[:file].content_type,
+                     data: if upload_params[:cached_file]
+                             encode(upload_params[:cached_file])
+                           elsif upload_params[:file]
+                             upload_params[:file].read
+                           end)
     end
 
     def set_breadcrumbs
