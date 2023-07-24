@@ -57,7 +57,7 @@ Rails.application.routes.draw do
       resources :messages, only: [:index], as: :archive_messages
       get 'main_messages', to: 'messages#main'
       resources :uploads do
-        get 'download_pdf_file', on: :member
+        get 'download_file', on: :member
       end
     end
     get '/*path', to: redirect('')
@@ -120,7 +120,9 @@ Rails.application.routes.draw do
         end
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
         get 'edit', action: 'edit', on: :member, as: :edit
-        resources :uploads
+        resources :uploads do
+          get 'download_file', on: :member
+        end
       end
 
       resources :analytics, only: %i[index] do

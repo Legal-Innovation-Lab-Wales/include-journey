@@ -2,7 +2,7 @@ module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
-    before_action :upload, only: %i[new create edit update destroy download_pdf_file]
+    before_action :upload, only: %i[new create edit update destroy download_file]
     include Pagination
 
     def new
@@ -45,7 +45,7 @@ module Users
       end
     end
 
-    def download_pdf_file
+    def download_file
       @upload_file = @upload.upload_file
       pdf_blob = @upload_file.data
 
