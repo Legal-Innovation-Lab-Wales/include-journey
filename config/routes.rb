@@ -56,7 +56,9 @@ Rails.application.routes.draw do
       resources :surveys, only: %i[index show update]
       resources :messages, only: [:index], as: :archive_messages
       get 'main_messages', to: 'messages#main'
-      resources :uploads
+      resources :uploads do
+        get 'download_pdf_file', on: :member
+      end
     end
     get '/*path', to: redirect('')
   end

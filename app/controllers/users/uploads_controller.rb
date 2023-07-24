@@ -2,6 +2,7 @@ module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
+    before_action :upload, only: %i[new create edit update destroy download_pdf_file]
     include Pagination
 
     def new
@@ -41,6 +42,22 @@ module Users
         redirect_to root_path #upload_path(@upload)
       else
         render 'edit', status: :unprocessable_entity
+      end
+    end
+
+    def download_pdf_file
+      @upload_file = @upload.upload_file
+      pdf_blob = @upload_file.data
+
+      case @upload_file.content_type
+      when 'application/pdf'
+        send_data pdf_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
+      when 'image/jpeg'
+        send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
+      when 'image/png'
+        send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
+      else
+        flash[:alert] = 'Something went wrong!'
       end
     end
 
