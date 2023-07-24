@@ -1,0 +1,49 @@
+<div class="card" style="width: 18rem;">
+    <div class="file-wrapper">
+        <% if object.grab_upload_file == 'render default pdf image'%>
+            <%= image_tag asset_pack_path('media/images/pdf-image.png')%>       
+        <% else %>
+            <%= object.grab_upload_file %>   
+        <% end%> 
+    </div>  
+    <div class="card-body">
+        <h5 class="card-title text-dark mb-1"><%= object.upload_file.name%></h5><hr>
+        <p class="card-text text-dark"><%=object.comment%></p>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Added on: <%= object.created%></li>
+        <% if !object.been_updated? %>
+            <li class="list-group-item">Updated on: <%= object.last_update%></li>
+        <% end %>
+        <% if object.uploadable_type == 'TeamMember' %>
+            <li class="list-group-item">Added by: <%= TeamMember.find(object.uploadable_id).full_name %></li>
+        <% else  %>
+            <li class="list-group-item">Added by you</li>
+        <% end %>
+        <% if object.status == 'pending' %>
+            <li class="list-group-item">Status: Pending </li>
+        <% elsif object.status == 'approved'%>
+            <li class="list-group-item">Status: Approved </li>
+            <li class="list-group-item">Approved by <%= object.approved_by %> at <%= object.approved_at %></li>
+        <% else %>
+        <li class="list-group-item">Status: Rejected </li>
+        <% end %>
+    </ul>
+    <div class="card-body">
+        <div class="mb-1">
+            <%= link_to '#', class: 'btn btn-secondary' do %>
+            <i class="fas fa-edit"></i> Update Details
+            <% end %>
+        </div>
+        <div class="mb-1">
+            <%= link_to '#', class: 'btn btn-primary' do %>
+            <i class="fas fa-edit"></i> Edit Permissions
+            <% end %>
+        </div>
+        <div class="mb-1">
+            <%= link_to '#', class: 'btn btn-danger w-100 px-2' do %>
+            <i class="fas fa-edit"></i> Delete File
+            <% end %>
+        </div>
+    </div>
+</div>

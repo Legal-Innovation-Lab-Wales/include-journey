@@ -19,6 +19,10 @@ class ApplicationRecord < ActiveRecord::Base
     updated_at.strftime('%d/%m/%Y %I:%M %p')
   end
 
+  def been_updated?
+    created_at == updated_at
+  end
+
   # def failed_validation
   #  return unless errors.present?
 

@@ -12,11 +12,15 @@ class Upload < ApplicationRecord
   after_create :approve_if_added_by_team_member
 
   def grab_upload_file
-    if upload_files.first.nil?
+    if upload_file.nil?
       return '<i class="fas fa-image"></i>'.html_safe
     end
 
-    ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % Base64.encode64(upload_files.first.data)).html_safe
+    if upload_file.content_type == 'application/pdf'
+      'render default pdf image'
+    else
+      ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % Base64.encode64(upload_file.data)).html_safe
+    end
   end
 
   private

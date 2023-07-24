@@ -2,10 +2,7 @@ module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
-
-    def index
-      @uploads = Upload.where(user: current_user)
-    end
+    include Pagination
 
     def new
       add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
@@ -45,6 +42,22 @@ module Users
       else
         render 'edit', status: :unprocessable_entity
       end
+    end
+
+    protected
+
+    def resources
+      @uploads = current_user.uploads.includes(:upload_file)
+    end
+
+    def resources_per_page
+      9
+    end
+
+    def search
+      @uploads = current_user.uploads.joins(:upload_file)
+                             .where('lower(upload_files.name) similar to lower(:query)', wildcard_query)
+                             .order(created_at: :desc)
     end
 
     private
