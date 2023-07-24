@@ -1,4 +1,5 @@
 <%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Uploads', index: 'uploads',
+           stats: render(partial: 'stats'),
            new_btn: render(partial: 'shared/new_btn', locals: { path: new_upload_path, text: 'Add Upload' }) do %>
   <div class="container p-0">
     <div class="row">

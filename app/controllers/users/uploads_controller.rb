@@ -44,6 +44,16 @@ module Users
       end
     end
 
+    def subheading_stats
+      return unless @resources.present?
+
+      @uploads_in_last_30_days = @resources.created_in_last_month.count
+      @image_uploads = @resources.images.count
+      @pdf_uploads = @resources.pdf_files.count
+      @team_member_uploads = @resources.uploaded_by_teammember.count
+      @user_uploads = @resources.uploaded_by_user.count
+    end
+
     protected
 
     def resources

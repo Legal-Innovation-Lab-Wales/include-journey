@@ -11,6 +11,13 @@ class Upload < ApplicationRecord
 
   after_create :approve_if_added_by_team_member
 
+  scope :created_in_last_week, -> { where('uploads.created_at >= ?', 1.week.ago) }
+  scope :created_in_last_month, -> { where('uploads.created_at >= ?', 1.month.ago) }
+  scope :pdf_files, -> { joins(:upload_file).where(upload_files: { content_type: 'application/pdf' }) }
+  scope :images, -> { joins(:upload_file).where.not(upload_files: { content_type: 'application/pdf' }) }
+  scope :uploaded_by_teammember, -> { where(uploadable_type: 'TeamMember') }
+  scope :uploaded_by_user, -> { where.not(uploadable_type: 'TeamMember') }
+
   def grab_upload_file
     if upload_file.nil?
       return '<i class="fas fa-image"></i>'.html_safe
