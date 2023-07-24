@@ -32,22 +32,17 @@
     <div class="card-body">
         <div class="mb-1">
             <%= link_to '#', class: 'btn btn-secondary w-100 mb-1' do %>
-            <i class="fas fa-edit"></i> Update Details
+            <i class="fas fa-edit"></i> Update
             <% end %>
         </div>
         <div class="mb-1">
             <%= link_to download_pdf_file_upload_path(object), target: '_blank', class: 'btn btn-success w-100 mb-1' do %>
-            <i class="fas fa-edit"></i> Download
-            <% end %>
-        </div>
-        <div class="mb-1">
-            <%= link_to '#', class: 'btn btn-primary w-100 mb-1' do %>
-            <i class="fas fa-edit"></i> Edit Permissions
+            <i class="fas fa-download"></i> Download
             <% end %>
         </div>
         <div class="mb-1">
             <%= link_to '#', class: 'btn btn-danger w-100 mb-1' do %>
-            <i class="fas fa-edit"></i> Delete File
+            <i class="fas fa-trash"></i> Delete
             <% end %>
         </div>
     </div>
