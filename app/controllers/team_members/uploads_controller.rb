@@ -3,7 +3,7 @@ module TeamMembers
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
     before_action :user
-    before_action :upload, only: %i[new create edit update destroy download_file]
+    before_action :upload, only: %i[edit update destroy download_file]
     include Pagination
 
     def new
