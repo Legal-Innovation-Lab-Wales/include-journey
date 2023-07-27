@@ -22,6 +22,7 @@ module Users
       @upload_file.upload = @upload
 
       if @upload.save! && @upload_file.save!
+        email_team_members_about_upload(current_user, @upload_file)
         flash[:success] = 'Upload added successfully!'
         redirect_to root_path
       else
@@ -109,6 +110,14 @@ module Users
                            elsif upload_params[:file]
                              upload_params[:file].read
                            end)
+    end
+
+    def email_team_members_about_upload(user, upload_file)
+      team_members = user.team_members
+      return unless team_members.present?
+
+      upload_type = upload_file.content_type == 'application/pdf' ? 'PDF' : 'image'
+      UploadsMailer.new_user_upload(team_members, user, upload_type).deliver_now
     end
 
     def set_breadcrumbs
