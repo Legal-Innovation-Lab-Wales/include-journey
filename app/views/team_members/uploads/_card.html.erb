@@ -12,7 +12,7 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">Added on: <%= object.created%></li>
-        <% if !object.been_updated? %>
+        <% if object.been_updated? %>
             <li class="list-group-item">Updated on: <%= object.last_update%></li>
         <% end %>
         <% if object.uploadable_type == 'TeamMember' && current_team_member && object.uploadable_id == current_team_member.id%>

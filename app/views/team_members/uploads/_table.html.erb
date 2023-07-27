@@ -1,0 +1,26 @@
+<tr>
+    <th class="">
+        <% if object.grab_upload_file == 'render default pdf image'%>
+            <i class="fa fa-file-pdf fa-1.5x"></i> <span class="text-left"><%= object.upload_file.name %></span>       
+        <% else %>
+            <i class="fa fa-image fa-1.5x"></i> <span class="text-left"><%= object.upload_file.name %></span>
+        <% end%> 
+    </th>
+    <td>
+        <% if object.been_updated? %>
+            <%= object.last_update%>
+        <% else%>
+            <%= object.created%>
+        <% end %>
+    </td>
+    <td>
+        <% if object.status == 'pending' %>
+            Pending
+        <% elsif object.status == 'approved'%>
+            Approved
+        <% else %>
+            Rejected
+        <% end %>
+    </td>
+    <td>5 KB</td>
+</tr>

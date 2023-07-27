@@ -20,7 +20,7 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
   def been_updated?
-    created_at == updated_at
+    created_at != updated_at
   end
 
   # def failed_validation
