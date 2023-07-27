@@ -62,48 +62,33 @@
   <% if @user.wellbeing_assessments.count > 1 %>
     <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <% end %>
-  <div class="row mb-4 mx-auto">
-    <div class="col-6">
-        <div class="card h-100">
-          <div class="card-header">
-            <h3>Pen Profile</h3>
-          </div>
-          <div class="card-body bg-transparent h-100" id="summary-panel-card">
-            <% if @summary_panel.nil? %>
-              <span>There is no information on this user yet.</span>
-            <% else %>
-              <%= @summary_panel %>
-            <% end %>
-          </div>
-          <div class="card-footer text-center">
-            <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
-              <% if @summary_panel.nil? %>
-                <%= "Add Pen Profile" %>
-              <% else %>
-                <%= "Edit Pen Profile" %>
-              <% end %>
-            </button>
-          </div>
-        </div>
-      </div>
-      <%= render 'team_members/users/summary_panel/modal' %>
-
-      <div class="col-6">
-        <div class="card h-100">
-          <div class="card-header d-flex">
-            <h3 class="me-auto align-self-center" >Uploads</h3>
-            <%= link_to "Add Upload", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %>
-          </div>
-          <div class="card-body bg-transparent h-100" id="summary-panel-card">
-            <p>Add upload stats</p>
-          </div>
-          <div class="card-footer text-center">
-            <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5" %>
-          </div>
-        </div>
-      </div>
-  </div>
   <% unless @user.deleted %>
+    <div class="row">
+      <div class="col-12 mb-4">
+          <div class="card h-100">
+            <div class="card-header">
+              <h3>Pen Profile</h3>
+            </div>
+            <div class="card-body bg-transparent h-100" id="summary-panel-card">
+              <% if @summary_panel.nil? %>
+                <span>There is no information on this user yet.</span>
+              <% else %>
+                <%= @summary_panel %>
+              <% end %>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
+                <% if @summary_panel.nil? %>
+                  <%= "Add Pen Profile" %>
+                <% else %>
+                  <%= "Edit Pen Profile" %>
+                <% end %>
+              </button>
+            </div>
+          </div>
+        </div>
+        <%= render 'team_members/users/summary_panel/modal' %>
+    </div>
     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="diary-card" class="card h-100">
@@ -333,8 +318,22 @@
         </div>
       </div>
     </div>
-
-    
+    <div class="row">
+      <div class="col-12 mb-4">
+          <div class="card h-100">
+            <div class="card-header d-flex">
+              <h3 class="me-auto align-self-center" >Uploads</h3>
+              <%= link_to "Add Upload", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %>
+            </div>
+            <div class="card-body bg-transparent h-100" id="summary-panel-card">
+              <p>Add upload stats</p>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5" %>
+            </div>
+          </div>
+        </div>
+    </div>
   <% end %>
 </main>
 
