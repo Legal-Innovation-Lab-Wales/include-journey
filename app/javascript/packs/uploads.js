@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const cardView = document.querySelector(".card-view");
 
   viewToggle.addEventListener("click", function() {
-    listView.classList.toggle("display-none");
-    cardView.classList.toggle("display-none");
+    listView.classList.toggle("display-none", !listView.classList.contains("display-none"));
+    cardView.classList.toggle("display-none", !cardView.classList.contains("display-none"));
   });
 });
