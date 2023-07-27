@@ -3,11 +3,12 @@
 # app/models/upload.rb
 class Upload < ApplicationRecord
   belongs_to :user
-  belongs_to :uploadable, polymorphic: true
+  belongs_to :team_member, optional: true
   has_one :upload_file
 
   validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved rejected] }
+  validates :added_by, inclusion: { in: %w[User TeamMember] }
 
   after_create :approve_if_added_by_team_member
 
@@ -15,8 +16,8 @@ class Upload < ApplicationRecord
   scope :created_in_last_month, -> { where('uploads.created_at >= ?', 1.month.ago) }
   scope :pdf_files, -> { joins(:upload_file).where(upload_files: { content_type: 'application/pdf' }) }
   scope :images, -> { joins(:upload_file).where.not(upload_files: { content_type: 'application/pdf' }) }
-  scope :uploaded_by_teammember, -> { where(uploadable_type: 'TeamMember') }
-  scope :uploaded_by_user, -> { where.not(uploadable_type: 'TeamMember') }
+  scope :uploaded_by_teammember, -> { where(added_by: 'TeamMember') }
+  scope :uploaded_by_user, -> { where(added_by: 'User') }
 
   def grab_upload_file
     if upload_file.nil?
@@ -33,6 +34,6 @@ class Upload < ApplicationRecord
   private
 
   def approve_if_added_by_team_member
-    self.status = 'approved' if uploadable.present? && uploadable.is_a?(TeamMember)
+    self.status = 'approved' if added_by == 'TeamMember'
   end
 end

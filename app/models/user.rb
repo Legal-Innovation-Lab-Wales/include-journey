@@ -26,7 +26,6 @@ class User < DeviseRecord
   has_many :diary_entry_permissions, through: :diary_entries
   has_many :team_members, through: :assignments
   has_many :uploads
-  has_many :uploads, as: :uploadable
 
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }

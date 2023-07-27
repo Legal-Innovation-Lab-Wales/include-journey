@@ -14,10 +14,10 @@ module Users
     def create
       @upload = Upload.new(
         comment: upload_params[:comment],
-        user: current_user
+        user: current_user,
+        added_by: 'User',
+        added_by_id: current_user.id
       )
-      @upload.uploadable = current_user
-
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
@@ -74,7 +74,7 @@ module Users
     protected
 
     def resources
-      @uploads = current_user.uploads.includes(:upload_file)
+      @uploads = current_user.uploads.where(added_by: 'User').includes(:upload_file)
     end
 
     def resources_per_page
@@ -82,7 +82,7 @@ module Users
     end
 
     def search
-      @uploads = current_user.uploads.joins(:upload_file)
+      @uploads = current_user.uploads.where(added_by: 'User').joins(:upload_file)
                              .where('lower(upload_files.name) similar to lower(:query)', wildcard_query)
                              .order(created_at: :desc)
     end

@@ -344,14 +344,15 @@ ActiveRecord::Schema.define(version: 2023_07_19_070625) do
   create_table "uploads", force: :cascade do |t|
     t.text "comment"
     t.string "status", default: "pending"
+    t.string "added_by"
+    t.bigint "added_by_id"
     t.string "approved_by"
     t.datetime "approved_at"
     t.bigint "user_id", null: false
-    t.string "uploadable_type"
-    t.bigint "uploadable_id"
+    t.bigint "team_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["uploadable_type", "uploadable_id"], name: "index_uploads_on_uploadable"
+    t.index ["team_member_id"], name: "index_uploads_on_team_member_id"
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 
@@ -562,6 +563,7 @@ ActiveRecord::Schema.define(version: 2023_07_19_070625) do
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
   add_foreign_key "upload_files", "uploads"
+  add_foreign_key "uploads", "team_members"
   add_foreign_key "uploads", "users"
   add_foreign_key "user_achievements", "achievements"
   add_foreign_key "user_achievements", "users"

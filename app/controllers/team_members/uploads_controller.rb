@@ -14,8 +14,9 @@ module TeamMembers
 
     def create
       @upload = Upload.new(comment: upload_params[:comment],
-                           user: @user)
-      @upload.uploadable = current_team_member
+                           user: @user,
+                           added_by: 'TeamMember',
+                           added_by_id: current_team_member.id)
 
       @upload_file = new_upload_file
       @upload_file.upload = @upload
@@ -73,8 +74,7 @@ module TeamMembers
     protected
 
     def resources
-      Upload.where(uploadable_type: 'TeamMember').or(Upload.where(uploadable_type: 'User'))
-            .joins(:upload_file)
+      @user.uploads.includes(:upload_file)
     end
 
     def resources_per_page
@@ -82,9 +82,7 @@ module TeamMembers
     end
 
     def search
-      Upload.where(uploadable_type: 'TeamMember').or(Upload.where(uploadable_type: 'User'))
-            .where(user_id: @user.id).joins(:upload_file)
-            .where(upload_search, wildcard_query).order(created_at: :desc)
+      @user.uploads.where(upload_search, wildcard_query).includes(:upload_file).order(created_at: :desc)
     end
 
     private

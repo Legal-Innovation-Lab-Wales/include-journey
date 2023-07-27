@@ -15,14 +15,14 @@
         <% if object.been_updated? %>
             <li class="list-group-item">Updated on: <%= object.last_update%></li>
         <% end %>
-        <% if object.uploadable_type == 'TeamMember' && current_team_member && object.uploadable_id == current_team_member.id%>
+        <% if object.added_by == 'TeamMember' && current_team_member && object.added_by_id == current_team_member.id%>
             <li class="list-group-item">Added by you</li>
-        <% elsif object.uploadable_type == 'User' && current_user && object.uploadable_id == current_user.id %>
+        <% elsif object.added_by == 'User' && current_user && object.added_by_id == current_user.id %>
             <li class="list-group-item">Added by you</li>
-        <% elsif object.uploadable_type == 'User'  %>
-            <li class="list-group-item">Added by: <%= User.find(object.uploadable_id).full_name %></li>
-        <% elsif object.uploadable_type == 'TeamMember' %>
-            <li class="list-group-item">Added by: <%= TeamMember.find(object.uploadable_id).full_name %></li>
+        <% elsif object.added_by == 'User'  %>
+            <li class="list-group-item">Added by: <%= User.find(object.added_by_id).full_name %></li>
+        <% elsif object.added_by == 'TeamMember' %>
+            <li class="list-group-item">Added by: <%= TeamMember.find(object.added_by_id).full_name %></li>
         <% end %>
         <% if object.status == 'pending' %>
             <li class="list-group-item">Status: Pending </li>
