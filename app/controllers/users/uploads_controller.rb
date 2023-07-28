@@ -24,7 +24,7 @@ module Users
       if @upload.save! && @upload_file.save!
         email_team_members_about_upload(current_user, @upload_file)
         flash[:success] = 'Upload added successfully!'
-        redirect_back(fallback_location: root_path)
+        redirect_to uploads_path
       else
         render 'new', status: :unprocessable_entity
       end
@@ -84,7 +84,7 @@ module Users
     protected
 
     def resources
-      @uploads = current_user.uploads.where(added_by: 'User').includes(:upload_file)
+      @uploads = current_user.uploads.where(added_by: 'User').includes(:upload_file).order(created_at: :desc)
     end
 
     def resources_per_page

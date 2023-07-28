@@ -10,8 +10,6 @@ class Upload < ApplicationRecord
   validates :status, inclusion: { in: %w[pending approved] }
   validates :added_by, inclusion: { in: %w[User TeamMember] }
 
-  after_create :approve_if_added_by_team_member
-
   scope :created_in_last_week, -> { where('uploads.created_at >= ?', 1.week.ago) }
   scope :created_in_last_month, -> { where('uploads.created_at >= ?', 1.month.ago) }
   scope :pdf_files, -> { joins(:upload_file).where(upload_files: { content_type: 'application/pdf' }) }
@@ -33,11 +31,5 @@ class Upload < ApplicationRecord
 
   def size
     '5 KB'
-  end
-
-  private
-
-  def approve_if_added_by_team_member
-    self.status = 'approved' if added_by == 'TeamMember'
   end
 end

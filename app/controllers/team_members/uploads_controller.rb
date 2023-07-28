@@ -16,14 +16,15 @@ module TeamMembers
       @upload = Upload.new(comment: upload_params[:comment],
                            user: @user,
                            added_by: 'TeamMember',
-                           added_by_id: current_team_member.id)
+                           added_by_id: current_team_member.id,
+                           status: 'approved')
 
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
       if @upload.save! && @upload_file.save!
         flash[:success] = 'Upload added successfully!'
-        redirect_back(fallback_location: root_path)
+        redirect_to user_uploads_path(user_id: @user.id)
       else
         render 'new', status: :unprocessable_entity
       end
@@ -103,7 +104,7 @@ module TeamMembers
     protected
 
     def resources
-      @user.uploads.includes(:upload_file)
+      @user.uploads.includes(:upload_file).order(created_at: :desc)
     end
 
     def resources_per_page
