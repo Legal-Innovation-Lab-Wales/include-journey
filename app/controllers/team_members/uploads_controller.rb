@@ -3,7 +3,7 @@ module TeamMembers
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
     before_action :user
-    before_action :upload, only: %i[edit update destroy download_file]
+    before_action :upload, only: %i[show edit update destroy download_file]
     include Pagination
 
     def new
@@ -33,6 +33,13 @@ module TeamMembers
       @upload_file = @upload.upload_files.first_or_initialize
     end
 
+    def show
+      @upload_file = @upload.upload_file
+      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
+      add_breadcrumb(@upload_file.name.to_s, nil, icon)
+    end
+
     def update
       @upload_file = @upload.upload_files.first_or_initialize
       @upload.update(comment: upload_params[comment])
@@ -56,8 +63,6 @@ module TeamMembers
         send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
         send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
-      else
-        flash[:alert] = 'Something went wrong!'
       end
     end
 
@@ -121,7 +126,7 @@ module TeamMembers
       add_breadcrumb('Users', users_path, 'fas fa-user')
       add_breadcrumb(user.full_name, user_path(user))
 
-      add_breadcrumb('Uploads') unless action_name != 'index'
+      add_breadcrumb('Uploads', nil, 'fas fa-upload') unless action_name != 'index'
     end
   end
 end

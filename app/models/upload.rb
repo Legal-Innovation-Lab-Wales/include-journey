@@ -31,6 +31,10 @@ class Upload < ApplicationRecord
     end
   end
 
+  def size
+    '5 KB'
+  end
+
   private
 
   def approve_if_added_by_team_member

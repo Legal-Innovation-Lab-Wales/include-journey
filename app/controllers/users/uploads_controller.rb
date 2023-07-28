@@ -2,7 +2,7 @@ module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
-    before_action :upload, only: %i[edit update destroy download_file]
+    before_action :upload, only: %i[edit update show destroy download_file]
     include Pagination
 
     def new
@@ -34,6 +34,12 @@ module Users
       @upload_file = @upload.upload_files.first_or_initialize
     end
 
+    def show
+      @upload_file = @upload.upload_file
+      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
+      add_breadcrumb(@upload_file.name.to_s, nil, icon)
+    end
+
     def update
       @upload_file = @upload.upload_files.first_or_initialize
       @upload.update(comment: upload_params[comment])
@@ -57,8 +63,6 @@ module Users
         send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
         send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
-      else
-        flash[:alert] = 'Something went wrong!'
       end
     end
 

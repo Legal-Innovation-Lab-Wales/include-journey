@@ -20,4 +20,14 @@ class UploadFile < ApplicationRecord
 
     ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % encoded_data).html_safe
   end
+
+  def file_content_type
+    all_content_types = {
+      'application/pdf' => 'PDF File',
+      'image/jpeg' => 'Image File ( JPEG )',
+      'image/png' => 'Image File ( PNG )'
+    }
+
+    all_content_types[content_type]
+  end
 end

@@ -7,7 +7,9 @@
         <div class="row">
           <% @resources.each do |upload| %>
             <div class="col-12 col-md-4 mb-3 d-flex justify-content-center" >
-              <%= render 'card', object: upload%>
+              <%= link_to upload_path(upload), class: 'upload-link' do %>
+                <%= render 'card', object: upload%>
+              <% end %>
             </div>
           <% end %>
         </div>
