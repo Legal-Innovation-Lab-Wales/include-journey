@@ -23,6 +23,16 @@ class ApplicationRecord < ActiveRecord::Base
     created_at != updated_at
   end
 
+  def format_datetime(time_value, form_required)
+    if form_required == datetime
+      time_value.strftime('%d/%m/%Y %I:%M %p')
+    elsif form_required == date
+      time_value.strftime('%d/%m/%Y')
+    elsif form_required == time
+      time_value..strftime('%I:%M %p')
+    end
+  end
+
   # def failed_validation
   #  return unless errors.present?
 

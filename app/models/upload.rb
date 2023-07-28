@@ -7,7 +7,7 @@ class Upload < ApplicationRecord
   has_one :upload_file
 
   validates_presence_of :status
-  validates :status, inclusion: { in: %w[pending approved rejected] }
+  validates :status, inclusion: { in: %w[pending approved] }
   validates :added_by, inclusion: { in: %w[User TeamMember] }
 
   after_create :approve_if_added_by_team_member

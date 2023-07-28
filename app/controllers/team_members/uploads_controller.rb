@@ -3,7 +3,7 @@ module TeamMembers
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
     before_action :user
-    before_action :upload, only: %i[show edit update destroy download_file]
+    before_action :upload, only: %i[show edit update destroy download_file approve]
     include Pagination
 
     def new
@@ -64,6 +64,25 @@ module TeamMembers
       when 'image/png'
         send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
+    end
+
+    def approve
+      return if @upload.status == 'approved'
+
+      if @upload.update(status: 'approved',
+                        approved_at: Time.now,
+                        approved_by: current_team_member.full_name)
+        flash[:success] = 'Upload has been successfully approved.'
+      else
+        flash[:error] = 'Failed to approve the upload.'
+      end
+      redirect_back(fallback_location: root_path)
+    end
+
+    def destroy
+      # Add logic to record team member that deletes a record.
+      @upload.destroy
+      redirect_to user_uploads_path, notice: 'Upload was successfully deleted!'
     end
 
     def subheading_stats

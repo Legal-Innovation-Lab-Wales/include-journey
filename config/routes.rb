@@ -121,7 +121,10 @@ Rails.application.routes.draw do
         resources :tags, only: %i[create destroy], on: :member, controller: :user_tags
         get 'edit', action: 'edit', on: :member, as: :edit
         resources :uploads do
-          get 'download_file', on: :member
+          member do
+            get 'download_file'
+            get :approve
+          end
         end
       end
 
