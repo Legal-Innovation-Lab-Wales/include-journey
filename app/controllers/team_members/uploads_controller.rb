@@ -80,9 +80,14 @@ module TeamMembers
     end
 
     def destroy
-      # Add logic to record team member that deletes a record.
-      @upload.destroy
-      redirect_to user_uploads_path, notice: 'Upload was successfully deleted!'
+      if params[:reject] == 'true'
+        @upload.update(status: 'rejected')
+        flash[:notice] = 'Upload was rejected successfully!'
+      else
+        @upload.destroy
+        flash[:notice] = 'Upload was successfully deleted!'
+      end
+      redirect_to user_uploads_path
     end
 
     def subheading_stats

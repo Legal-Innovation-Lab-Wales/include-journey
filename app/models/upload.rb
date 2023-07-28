@@ -4,7 +4,7 @@
 class Upload < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
-  has_one :upload_file
+  has_one :upload_file, dependent: :destroy
 
   validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved] }
