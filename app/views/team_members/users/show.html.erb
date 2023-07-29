@@ -326,7 +326,17 @@
               <%= link_to "Add Upload", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %>
             </div>
             <div class="card-body bg-transparent h-100" id="summary-panel-card">
-              <p>Add upload stats</p>
+              <% if @uploads.size.zero? %>
+                <p><%= @user.first_name %> has no uploads at the moment.</p>
+              <% else %>
+                <p><%= @user.first_name %> has <%= pluralize(@uploads.size, 'upload') %>.</p>
+                <p><%= @user.first_name %> has <%= pluralize(@uploads.created_in_last_week.size, 'upload') %> in the last week.</p>
+                <p><%= @user.first_name %> has <%= pluralize(@uploads.created_in_last_month.size, 'upload') %> in the last month.</p>
+                <p><%= @user.first_name %> has <%= pluralize(@uploads.uploaded_by_teammember.size, 'upload') %> uploaded by team members.</p>
+                <p><%= @user.first_name %> uploaded <%= pluralize(@uploads.uploaded_by_user.size, 'upload') %>.</p>
+                <p><%= @user.first_name %> has <%= pluralize(@uploads.pending.size, 'pending upload') %> uploaded by team members.</p>
+                <p><%= "#{@user.first_name}'s" %> uploads consist of <%= pluralize(@uploads.pdf_files.size, 'PDF file') %> and <%= pluralize(@uploads.images.size, 'images') %>.</p>
+              <% end %>
             </div>
             <div class="card-footer text-center">
               <%= link_to "View All Uploads", user_uploads_path(@user), class: "btn btn-success my-2 py-2 px-5" %>

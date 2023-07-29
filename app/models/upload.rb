@@ -16,6 +16,7 @@ class Upload < ApplicationRecord
   scope :images, -> { joins(:upload_file).where.not(upload_files: { content_type: 'application/pdf' }) }
   scope :uploaded_by_teammember, -> { where(added_by: 'TeamMember') }
   scope :uploaded_by_user, -> { where(added_by: 'User') }
+  scope :pending, -> { where(status: 'pending') }
 
   def grab_upload_file
     if upload_file.nil?
