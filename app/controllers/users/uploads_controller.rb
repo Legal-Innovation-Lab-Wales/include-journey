@@ -12,12 +12,8 @@ module Users
     end
 
     def create
-      @upload = Upload.new(
-        comment: upload_params[:comment],
-        user: current_user,
-        added_by: 'User',
-        added_by_id: current_user.id
-      )
+      @upload = Upload.new(comment: upload_params[:comment], visible_to_user: true,
+                           user: current_user, added_by: 'User', added_by_id: current_user.id)
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
@@ -84,7 +80,7 @@ module Users
     protected
 
     def resources
-      @uploads = current_user.uploads.where(added_by: 'User').includes(:upload_file).order(created_at: :desc)
+      @uploads = current_user.uploads.where(added_by: 'User', visible_to_user: true).includes(:upload_file).order(created_at: :desc)
     end
 
     def resources_per_page

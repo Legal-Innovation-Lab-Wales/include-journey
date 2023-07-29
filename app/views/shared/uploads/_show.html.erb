@@ -56,6 +56,12 @@
                 <div id="approved-at" class="form-control"><%=@upload.approved_at || Time.now %></div>
                 <label for="approved-at">Approved At:</label>
             </div>
+            <% if current_team_member %>
+              <div class="form-floating my-2">
+                  <div id="visible-to-user" class="form-control"><%=@upload.visible_to_user ? 'Yes' : 'No'  %></div>
+                  <label for="visible-to-user">Visible To User:</label>
+              </div>
+            <% end %>
 
             <div class="show-button-div "> 
             <% if current_team_member && @upload.added_by == 'User' && @upload.status == 'pending'%>

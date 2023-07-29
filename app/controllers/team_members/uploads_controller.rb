@@ -14,6 +14,7 @@ module TeamMembers
 
     def create
       @upload = Upload.new(comment: upload_params[:comment],
+                           visible_to_user: upload_params[:visible_to_user],
                            user: @user,
                            added_by: 'TeamMember',
                            added_by_id: current_team_member.id,
@@ -118,7 +119,7 @@ module TeamMembers
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
     end
 
     def user
