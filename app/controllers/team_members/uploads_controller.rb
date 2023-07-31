@@ -7,6 +7,7 @@ module TeamMembers
     include Pagination
 
     def new
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
       add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
       @upload = @user.uploads.new
       @upload_file = UploadFile.new
