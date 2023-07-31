@@ -105,7 +105,18 @@ module TeamMembers
     protected
 
     def resources
-      @user.uploads.includes(:upload_file).order(created_at: :desc)
+      @uploads = @user.uploads.joins(:upload_file).order(created_at: :desc)
+
+      filter_params = uploads_filter_params
+
+      @uploads = @uploads.where(added_by: filter_params[:added]) if filter_params[:added].in?(['User', 'TeamMember'])
+      @uploads = @uploads.where(added_by_id: current_team_member.id) if filter_params[:added] == 'You'
+      @uploads = @uploads.where(upload_files: { content_type: 'application/pdf' }) if filter_params[:type] == 'PDF'
+      @uploads = @uploads.where(upload_files: { content_type: ['image/jpeg', 'image/png'] }) if filter_params[:type] == 'Images'
+      @uploads = @uploads.where(visible_to_user: true) if filter_params[:visible] == 'visible'
+      @uploads = @uploads.where(visible_to_user: false) if filter_params[:visible] == 'invisible'
+
+      @uploads
     end
 
     def resources_per_page
@@ -113,13 +124,17 @@ module TeamMembers
     end
 
     def search
-      @user.uploads.where(upload_search, wildcard_query).includes(:upload_file).order(created_at: :desc)
+      resources.where(upload_search, wildcard_query)
     end
 
     private
 
     def upload_params
       params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
+    end
+
+    def uploads_filter_params
+      params.permit(:query, :added, :type, :visible, :user_id)
     end
 
     def user

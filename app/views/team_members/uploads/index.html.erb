@@ -1,5 +1,5 @@
 <%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Uploads', index: 'uploads',
-           stats: render(partial: 'shared/uploads/stats'),
+           stats: render(partial: 'shared/uploads/stats'), search: render(partial: 'shared/uploads/search'),
            new_btn: render(partial: 'shared/new_btn', locals: { path: new_user_upload_path, text: 'Add Upload' }) do %>
   <div class="container p-0">
     <div class="d-flex justify-content-center mb-4">
