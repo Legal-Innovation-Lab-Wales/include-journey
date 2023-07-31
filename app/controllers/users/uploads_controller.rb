@@ -17,6 +17,13 @@ module Users
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
+      max_file_size = 250.megabytes
+      if @upload_file.data.size > max_file_size
+        flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+        render 'new', status: :unprocessable_entity
+        return
+      end
+
       if @upload.save! && @upload_file.save!
         email_team_members_about_upload(current_user, @upload_file)
         flash[:success] = 'Upload added successfully!'

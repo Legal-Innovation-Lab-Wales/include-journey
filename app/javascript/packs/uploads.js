@@ -35,7 +35,7 @@ drop_div.classList.remove('dragging')
 
 // Add function to display error
 function file_error_handler() {
-    file_error.innerHTML = 'Please select a JPEG, PNG or PDF file';
+    file_error.innerHTML = 'Please ensure that your file selection is limited to JPEG, PNG, or PDF formats, with a maximum file size of 250MB.';
     upload_input.value = null; // Clear the file input to allow re-selection
 }
 
@@ -118,6 +118,13 @@ function handleUpload(event) {
 
 async function processFile(file) {
     try {
+      // Check the file size
+      const maxFileSize = 250 * 1024 * 1024;
+      if (file.size > maxFileSize) {
+        file_error_handler();
+        return;
+      }
+      // If the file size is within the limit, continue with processing
       await extractFileData(file);
     } catch (error) {
       file_error_handler();
