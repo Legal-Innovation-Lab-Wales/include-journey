@@ -2,19 +2,47 @@
            stats: render(partial: 'shared/uploads/stats'),
            new_btn: render(partial: 'shared/new_btn', locals: { path: new_upload_path, text: 'Add Upload' }) do %>
   <div class="container p-0">
+    <div class="d-flex justify-content-center mb-4">
+      <button id="view-toggle" type="button" class="btn btn-primary">Switch View</button>
+    </div>
     <div class="row">
-      <div class="col d-flex justify-content-center">
-        <div class="row">
+      <div class="col">
+        <div class="row card-view">
           <% @resources.each do |upload| %>
-            <div class="col-12 col-md-4 mb-3 d-flex justify-content-center" >
+            <div class="col-12 col-md-4 col-lg-3 mb-3 d-flex justify-content-center" >
               <%= link_to upload_path(upload), class: 'upload-link' do %>
-                <%= render 'card', object: upload%>
+                <%= render 'shared/uploads/card', object: upload%>
               <% end %>
             </div>
           <% end %>
         </div>
+
+        <div class="row list-view display-none">
+          <table class="table text-light">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date Modified</th>
+                <th scope="col">Status</th>
+                <th scope="col">Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @resources.each do |upload| %>
+                <div class="col" >
+                  <%= link_to upload_path(upload), class: 'upload-link' do %>
+                    <%= render 'shared/uploads/table', object: upload%>
+                  <% end %>
+                </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
 
 <% end %>
+
+<%= javascript_pack_tag 'uploads' %>

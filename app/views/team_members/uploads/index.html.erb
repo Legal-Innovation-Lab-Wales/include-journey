@@ -11,7 +11,7 @@
           <% @resources.each do |upload| %>
             <div class="col-12 col-md-4 col-lg-3 mb-3 d-flex justify-content-center" >
               <%= link_to user_upload_path(id: upload.id), class: 'upload-link' do %>
-                <%= render 'card', object: upload%>
+                <%= render 'shared/uploads/card', object: upload%>
               <% end %>
             </div>
           <% end %>
@@ -30,7 +30,9 @@
             <tbody>
               <% @resources.each do |upload| %>
                 <div class="col" >
-                  <%= render 'table', object: upload%>
+                  <%= link_to user_upload_path(id: upload.id), class: 'upload-link' do %>
+                    <%= render 'shared/uploads/table', object: upload%>
+                  <% end %>
                 </div>
               <% end %>
             </tbody>

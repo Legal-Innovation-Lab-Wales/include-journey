@@ -9,23 +9,20 @@
     <div class="card-body">
         <h5 class="card-title text-dark mb-1"><%= object.upload_file.name%></h5><hr>
         <ul class="list-group list-group-flush">
-            <% if object.been_updated? %>
-                <li class="list-group-item">Updated on: <%= object.last_update%></li>
-            <% else %>
-                <li class="list-group-item">Added on: <%= object.created%></li>
+            <% if object.added_by == 'TeamMember' && current_team_member && object.added_by_id == current_team_member.id%>
+                <li class="list-group-item">Added by you</li>
+            <% elsif object.added_by == 'User' && current_user && object.added_by_id == current_user.id %>
+                <li class="list-group-item">Added by you</li>
+            <% elsif object.added_by == 'User'  %>
+                <li class="list-group-item">Added by: <%= User.find(object.added_by_id).full_name %></li>
+            <% elsif object.added_by == 'TeamMember' %>
+                <li class="list-group-item">Added by: <%= TeamMember.find(object.added_by_id).full_name %></li>
             <% end %>
             <% if object.status == 'pending' %>
                 <li class="list-group-item">Status: Pending </li>
             <% elsif object.status == 'approved'%>
                 <li class="list-group-item">Status: Approved </li>
-            <% else %>
-            <li class="list-group-item">Status: Rejected </li>
             <% end %>
         </ul>
-        <div class="mb-1">
-            <%= link_to user_upload_path(id: object.id), class: 'btn btn-primary w-100 mb-1' do %>
-            <i class="fas fa-eye"></i> View
-            <% end %>
-        </div>
     </div>
 </div>
