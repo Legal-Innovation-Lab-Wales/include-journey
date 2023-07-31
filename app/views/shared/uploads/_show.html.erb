@@ -15,14 +15,48 @@
                 </div>
             </div>
             <div class="editable-area">
-                <div class="form-floating my-2">
-                    <div id="name" class="form-control"><%= @upload_file.name%></div>
-                    <label for="name">Name:</label>
-                </div>    
-                <div class="form-floating mb-2">
-                    <div id="comment" class="form-control textarea", onclick="this.style.height = ''; this.style.height = this.scrollHeight + 'px';" ><%= @upload.comment%></div>
-                    <label for="comment">Comment:</label>
-                </div> 
+              <% if current_team_member %>
+                <%= form_with(model: @upload, url: user_upload_path(@user, @upload), method: :patch, local: true) do |form| %>
+                    <div class="form-floating my-2">
+                        <%= form.text_field :name, class: "form-control", value: "#{@upload.upload_file.name}"%>
+                        <label for="name">Name:</label>
+                    </div>    
+                    <div class="form-floating mb-2">
+                      <%= form.text_area :comment, class: "form-control textarea", style: "height: auto;", oninput: "this.style.height = (this.scrollHeight > this.clientHeight ? this.scrollHeight : this.clientHeight) + 'px';" %>
+                      <label for="comment">Comment:</label>
+                    </div>
+                    <div class="my-3">
+                        <%= button_tag type: 'submit', class: 'btn btn-secondary w-100' do %>
+                          <i class="fas fa-edit"></i> Update
+                        <% end %>
+                    </div>
+                <% end %>
+              <% elsif current_user && @upload.status == 'pending' %>
+                <%= form_with(model: @upload, url: upload_path(@upload), method: :patch, local: true) do |form| %>
+                    <div class="form-floating my-2">
+                        <%= form.text_field :name, class: "form-control", value: "#{@upload.upload_file.name}" %>
+                        <label for="name">Name:</label>
+                    </div>    
+                    <div class="form-floating mb-2">
+                        <%= form.text_area :comment, class: "form-control textarea" %>
+                        <label for="comment">Comment:</label>
+                    </div> 
+                    <div class="my-3">
+                        <%= button_tag type: 'submit', class: 'btn btn-secondary w-100' do %>
+                          <i class="fas fa-edit"></i> Update
+                        <% end %>
+                    </div>
+                <% end %>
+              <% else %>
+                 <div class="form-floating my-2">
+                        <div id="name" class="form-control"><%= @upload_file.name%></div>
+                        <label for="name">Name:</label>
+                  </div>    
+                  <div class="form-floating mb-2">
+                      <div id="comment" class="form-control textarea", onclick="this.style.height = ''; this.style.height = this.scrollHeight + 'px';" ><%= @upload.comment%></div>
+                      <label for="comment">Comment:</label>
+                  </div> 
+              <%end%>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -81,9 +115,15 @@
               <% if (current_team_member && @upload.added_by_id == current_team_member.id) || (current_user && @upload.added_by_id == current_user.id)%>
               <div class="button-flex-container my-3">
                 <div class="button-flex-item">
-                    <%= link_to '#', class: 'btn btn-secondary w-100 mb-1' do %>
-                    <i class="fas fa-edit"></i> Update
+                  <% if current_user %>
+                      <%= link_to download_file_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
+                      <i class="fas fa-download"></i> Download
+                      <% end %>
+                  <% else %>
+                      <%= link_to download_file_user_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
+                    <i class="fas fa-download"></i> Download
                     <% end %>
+                  <%end%>
                 </div>
                 <div class="button-flex-item">
                 <% if current_user %>
@@ -98,17 +138,6 @@
                 </div>
                </div> 
                <% end %> 
-              <div class="mb-1">
-                <% if current_user %>
-                    <%= link_to download_file_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
-                    <i class="fas fa-download"></i> Download
-                    <% end %>
-                <% else %>
-                    <%= link_to download_file_user_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
-                  <i class="fas fa-download"></i> Download
-                  <% end %>
-                <%end%>
-              </div>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ module TeamMembers
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
     before_action :user
-    before_action :upload, only: %i[show edit update destroy download_file approve]
+    before_action :upload, only: %i[show update destroy download_file approve]
     include Pagination
 
     def new
@@ -38,10 +38,6 @@ module TeamMembers
       end
     end
 
-    def edit
-      @upload_file = @upload.upload_files.first_or_initialize
-    end
-
     def show
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
@@ -50,14 +46,16 @@ module TeamMembers
     end
 
     def update
-      @upload_file = @upload.upload_files.first_or_initialize
-      @upload.update(comment: upload_params[comment])
-      @upload_file.data = upload_params[:image_file].read if upload_params[:image_file]
+      @upload_file = @upload.upload_file
+      @upload.update(comment: upload_params[:comment])
+      @upload_file.update(name: upload_params[:name])
 
-      if @upload_file.save! && @upload.save!
-        redirect_to upload_path(@upload)
+      if @upload_file.save && @upload.save
+        redirect_to user_upload_path(@user, @upload)
+        flash[:success] = 'Upload updated successfully!'
       else
-        render 'edit', status: :unprocessable_entity
+        flash.now[:error] = 'Please use alphanumeric characters only.'
+        render 'show', status: :unprocessable_entity
       end
     end
 

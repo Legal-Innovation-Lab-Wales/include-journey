@@ -2,7 +2,7 @@ module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
-    before_action :upload, only: %i[edit update show destroy download_file]
+    before_action :upload, only: %i[update show destroy download_file]
     include Pagination
 
     def new
@@ -33,10 +33,6 @@ module Users
       end
     end
 
-    def edit
-      @upload_file = @upload.upload_files.first_or_initialize
-    end
-
     def show
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
@@ -44,14 +40,21 @@ module Users
     end
 
     def update
-      @upload_file = @upload.upload_files.first_or_initialize
-      @upload.update(comment: upload_params[comment])
-      @upload_file.data = upload_params[:image_file].read if upload_params[:image_file]
-
-      if @upload_file.save! && @upload.save!
-        redirect_to root_path #upload_path(@upload)
+      if @upload.status == 'approved'
+        flash[:success] = 'You cannot update an approved upload.'
+        redirect_to upload_path(@upload)
       else
-        render 'edit', status: :unprocessable_entity
+        @upload_file = @upload.upload_file
+        @upload.update(comment: upload_params[:comment])
+        @upload_file.update(name: upload_params[:name])
+
+        if @upload_file.save && @upload.save
+          flash[:success] = 'Upload updated successfully!'
+          redirect_to upload_path(@upload)
+        else
+          flash[:error] = 'Please use alphanumeric characters only.'
+          render 'show', status: :unprocessable_entity
+        end
       end
     end
 
