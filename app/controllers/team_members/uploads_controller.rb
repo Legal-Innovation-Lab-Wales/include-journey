@@ -141,7 +141,7 @@ module TeamMembers
     end
 
     def uploads_filter_params
-      params.permit(:query, :added, :type, :visible, :user_id)
+      params.permit(:query, :added, :type, :visible, :user_id, :page)
     end
 
     def user
