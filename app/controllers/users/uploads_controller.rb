@@ -90,17 +90,15 @@ module Users
     protected
 
     def resources
-      @uploads = current_user.uploads.where(added_by: 'User', visible_to_user: true).includes(:upload_file).order(created_at: :desc)
+      current_user.uploads.where(visible_to_user: true).joins(:upload_file).order(created_at: :desc)
     end
 
     def resources_per_page
-      9
+      12
     end
 
     def search
-      @uploads = current_user.uploads.where(added_by: 'User').joins(:upload_file)
-                             .where('lower(upload_files.name) similar to lower(:query)', wildcard_query)
-                             .order(created_at: :desc)
+      resources.where('lower(upload_files.name) similar to lower(:query)', wildcard_query)
     end
 
     private

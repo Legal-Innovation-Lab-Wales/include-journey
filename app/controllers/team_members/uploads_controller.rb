@@ -126,7 +126,7 @@ module TeamMembers
     end
 
     def resources_per_page
-      9
+      12
     end
 
     def search

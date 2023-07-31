@@ -32,9 +32,9 @@ class Upload < ApplicationRecord
 
   def file_size
     if upload_file.data.size < 1.megabyte
-      "#{upload_file.data.size / 1024} KB"
+      "#{format('%.2f', upload_file.data.size / 1024.0)} KB"
     else
-      "#{upload_file.data.size / 1_048_576.0} MB"
+      "#{format('%.2f', upload_file.data.size / 1_048_576.0)} MB"
     end
   end
 end
