@@ -134,7 +134,11 @@ module Users
     end
 
     def set_breadcrumbs
-      path = action_name == 'index' ? nil : uploads_path
+      path = if session.key?(:custom_view)
+               action_name == 'index' ? nil : uploads_path(view: :list)
+             else
+               action_name == 'index' ? nil : uploads_path
+             end
       add_breadcrumb('My Uploads', path, 'fas fa-upload')
     end
   end

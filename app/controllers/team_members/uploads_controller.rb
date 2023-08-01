@@ -7,7 +7,8 @@ module TeamMembers
     include Pagination
 
     def new
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload') unless session.key?(:custom_view)
       add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
       @upload = @user.uploads.new
       @upload_file = UploadFile.new
@@ -42,7 +43,8 @@ module TeamMembers
     def show
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
+      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload') unless session.key?(:custom_view)
       add_breadcrumb(@upload_file.name.to_s, nil, icon)
     end
 

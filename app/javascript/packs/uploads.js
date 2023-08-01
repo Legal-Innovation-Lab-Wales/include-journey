@@ -132,15 +132,3 @@ async function processFile(file) {
   }
 
 upload_input?.addEventListener("change", handleUpload);
-
-// For switching between list and card view
-document.addEventListener("DOMContentLoaded", function() {
-  const viewToggle = document.getElementById("view-toggle");
-  const listView = document.querySelector(".list-view");
-  const cardView = document.querySelector(".card-view");
-
-  viewToggle.addEventListener("click", function() {
-    listView.classList.toggle("display-none", !listView.classList.contains("display-none"));
-    cardView.classList.toggle("display-none", !cardView.classList.contains("display-none"));
-  });
-});
