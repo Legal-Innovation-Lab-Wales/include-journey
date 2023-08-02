@@ -78,16 +78,36 @@
                   <label for="date-modified">Date Modified:</label>
               </div> 
             <% end %>
+            <% if (@upload.added_by == 'User' && current_user && @upload.added_by_id == current_user.id) ||
+                  (@upload.added_by == 'TeamMember' && current_team_member && @upload.added_by_id == current_team_member.id)%>
+              <div class="form-floating my-2">
+                  <div id="added-by" class="form-control">You</div>
+                  <label for="added-by">Added By:</label>
+              </div>
+            <% elsif @upload.added_by == 'TeamMember' %>
+              <div class="form-floating my-2">
+                  <div id="added-by" class="form-control"><%= TeamMember.find(@upload.added_by_id).full_name %></div>
+                  <label for="added-by">Added By:</label>
+              </div>
+            <% elsif @upload.added_by == 'User' %>
+              <div class="form-floating my-2">
+                  <div id="added-by" class="form-control"><%= User.find(@upload.added_by_id).full_name %></div>
+                  <label for="added-by">Added By:</label>
+              </div>
+            <% end %>
+            <% if current_team_member && @upload.approved_by == current_team_member.full_name %> 
+              <div class="form-floating my-2">
+                  <div id="approved-by" class="form-control"> You </div>
+                  <label for="approved-by">Approved By:</label>
+              </div>    
+            <% else %>
+              <div class="form-floating my-2">
+                  <div id="approved-by" class="form-control"><%=@upload.approved_by || 'Not Yet Approved'%></div>
+                  <label for="approved-by">Approved By:</label>
+              </div> 
+            <% end %>
             <div class="form-floating my-2">
-                <div id="added-by" class="form-control"><%= @upload.added_by%></div>
-                <label for="added-by">Added By:</label>
-            </div>    
-            <div class="form-floating my-2">
-                <div id="approved-by" class="form-control"><%=@upload.approved_by || 'Nil'%></div>
-                <label for="approved-by">Approved By:</label>
-            </div> 
-            <div class="form-floating my-2">
-                <div id="approved-at" class="form-control"><%=@upload.approved_at || Time.now %></div>
+                <div id="approved-at" class="form-control"><%= @upload.approved_date %></div>
                 <label for="approved-at">Approved At:</label>
             </div>
             <% if current_team_member %>
@@ -113,31 +133,31 @@
               </div>
              <% end %> 
               <% if (current_team_member && @upload.added_by_id == current_team_member.id) || (current_user && @upload.added_by_id == current_user.id)%>
-              <div class="button-flex-container my-3">
-                <div class="button-flex-item">
-                  <% if current_user %>
-                      <%= link_to download_file_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
+                <div class="button-flex-container my-3">
+                  <div class="button-flex-item">
+                    <% if current_user %>
+                        <%= link_to download_file_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
+                        <i class="fas fa-download"></i> Download
+                        <% end %>
+                    <% else %>
+                        <%= link_to download_file_user_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
                       <i class="fas fa-download"></i> Download
                       <% end %>
+                    <%end%>
+                  </div>
+                  <div class="button-flex-item">
+                  <% if current_user %>
+                      <%= button_to upload_path(@upload), class: 'btn btn-danger w-100 mb-1', method: :delete, data: { confirm: "Are you sure you want to delete this upload?" } do %>
+                      <i class="fas fa-trash"></i> Delete
+                      <% end %>
                   <% else %>
-                      <%= link_to download_file_user_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
-                    <i class="fas fa-download"></i> Download
-                    <% end %>
-                  <%end%>
-                </div>
-                <div class="button-flex-item">
-                <% if current_user %>
-                    <%= button_to upload_path(@upload), class: 'btn btn-danger w-100 mb-1', method: :delete, data: { confirm: "Are you sure you want to delete this upload?" } do %>
-                    <i class="fas fa-trash"></i> Delete
-                    <% end %>
-                <% else %>
-                    <%= button_to user_upload_path(id: @upload.id, user_id: @user.id), class: 'btn btn-danger w-100 mb-1', method: :delete, data: { confirm: "Are you sure you want to delete this upload?" } do %>
-                    <i class="fas fa-trash"></i> Delete
-                    <% end %>
-                <% end %>
-                </div>
-               </div> 
-               <% end %> 
+                      <%= button_to user_upload_path(id: @upload.id, user_id: @user.id), class: 'btn btn-danger w-100 mb-1', method: :delete, data: { confirm: "Are you sure you want to delete this upload?" } do %>
+                      <i class="fas fa-trash"></i> Delete
+                      <% end %>
+                  <% end %>
+                  </div>
+                </div> 
+              <% end %> 
             </div>
           </div>
         </div>

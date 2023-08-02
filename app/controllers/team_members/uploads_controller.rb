@@ -5,10 +5,14 @@ module TeamMembers
     before_action :user
     before_action :upload, only: %i[show update destroy download_file approve]
     include Pagination
+    include UploadsHelper
 
     def new
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload') unless session.key?(:custom_view)
+      if session.key?(:custom_view)
+        add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload')
+      else
+        add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
+      end
       add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
       @upload = @user.uploads.new
       @upload_file = UploadFile.new
@@ -34,7 +38,7 @@ module TeamMembers
 
       if @upload.save! && @upload_file.save!
         flash[:success] = 'Upload added successfully!'
-        redirect_to user_uploads_path(user_id: @user.id)
+        redirect_to correct_uploads_path
       else
         render 'new', status: :unprocessable_entity
       end

@@ -4,6 +4,7 @@ module Users
     before_action :set_breadcrumbs
     before_action :upload, only: %i[update show destroy download_file]
     include Pagination
+    include UploadsHelper
 
     def new
       add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
@@ -27,7 +28,7 @@ module Users
       if @upload.save! && @upload_file.save!
         email_team_members_about_upload(current_user, @upload_file)
         flash[:success] = 'Upload added successfully!'
-        redirect_to uploads_path
+        redirect_to correct_uploads_path
       else
         render 'new', status: :unprocessable_entity
       end
