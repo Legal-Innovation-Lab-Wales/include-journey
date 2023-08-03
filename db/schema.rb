@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_29_035946) do
+ActiveRecord::Schema.define(version: 2023_08_03_111932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,6 +331,23 @@ ActiveRecord::Schema.define(version: 2023_07_29_035946) do
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
   end
 
+  create_table "upload_activity_logs", force: :cascade do |t|
+    t.string "activity_type"
+    t.datetime "activity_time"
+    t.integer "create_count", default: 0
+    t.integer "view_count", default: 0
+    t.integer "modify_count", default: 0
+    t.integer "download_count", default: 0
+    t.integer "approve_count", default: 0
+    t.integer "reject_count", default: 0
+    t.bigint "team_members_id", null: false
+    t.bigint "uploads_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_members_id"], name: "index_upload_activity_logs_on_team_members_id"
+    t.index ["uploads_id"], name: "index_upload_activity_logs_on_uploads_id"
+  end
+
   create_table "upload_files", force: :cascade do |t|
     t.string "name"
     t.binary "data"
@@ -563,6 +580,8 @@ ActiveRecord::Schema.define(version: 2023_07_29_035946) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "upload_activity_logs", "team_members", column: "team_members_id"
+  add_foreign_key "upload_activity_logs", "uploads", column: "uploads_id"
   add_foreign_key "upload_files", "uploads"
   add_foreign_key "uploads", "team_members"
   add_foreign_key "uploads", "users"
