@@ -5,4 +5,22 @@ class UploadActivityLog < ApplicationRecord
 
   validates_presence_of :activity_type, :activity_time
   validates :activity_type, inclusion: { in: %w[created viewed modified downloaded approved rejected] }
+
+  scope :created_in_last_week, -> { where(activity_type: 'created').where('activity_time >= ?', 1.week.ago) }
+  scope :created_in_last_month, -> { where(activity_type: 'created').where('activity_time >= ?', 1.month.ago) }
+
+  scope :viewed_in_last_week, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.week.ago) }
+  scope :viewed_in_last_month, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.month.ago) }
+
+  scope :modified_in_last_week, -> { where(activity_type: 'modified').where('activity_time >= ?', 1.week.ago) }
+  scope :modified_in_last_month, -> { where(activity_type: 'modified').where('activity_time >= ?', 1.month.ago) }
+
+  scope :downloaded_in_last_week, -> { where(activity_type: 'downloaded').where('activity_time >= ?', 1.week.ago) }
+  scope :downloaded_in_last_month, -> { where(activity_type: 'downloaded').where('activity_time >= ?', 1.month.ago) }
+
+  scope :approved_in_last_week, -> { where(activity_type: 'approved').where('activity_time >= ?', 1.week.ago) }
+  scope :approved_in_last_month, -> { where(activity_type: 'approved').where('activity_time >= ?', 1.month.ago) }
+
+  scope :rejected_in_last_week, -> { where(activity_type: 'rejected').where('activity_time >= ?', 1.week.ago) }
+  scope :rejected_in_last_month, -> { where(activity_type: 'rejected').where('activity_time >= ?', 1.month.ago) }
 end
