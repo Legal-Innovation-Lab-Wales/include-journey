@@ -10,6 +10,8 @@ class Upload < ApplicationRecord
   validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved] }
   validates :added_by, inclusion: { in: %w[User TeamMember] }
+  validates_format_of :comment, with: Rails.application.config.regex_text_field,
+                                message: Rails.application.config.text_field_error
 
   scope :created_in_last_week, -> { where('uploads.created_at >= ?', 1.week.ago) }
   scope :created_in_last_month, -> { where('uploads.created_at >= ?', 1.month.ago) }
