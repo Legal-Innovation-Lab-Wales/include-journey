@@ -5,6 +5,7 @@ class Upload < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
   has_one :upload_file, dependent: :destroy
+  has_many :upload_activity_logs
 
   validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved] }
