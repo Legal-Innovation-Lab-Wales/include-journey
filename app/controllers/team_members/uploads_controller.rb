@@ -36,7 +36,8 @@ module TeamMembers
         return
       end
 
-      if @upload.save! && @upload_file.save!
+      if @upload.save && @upload_file.save
+        log_uploads_activity('created')
         flash[:success] = 'Upload added successfully!'
         redirect_to correct_uploads_path
       else
@@ -45,6 +46,7 @@ module TeamMembers
     end
 
     def show
+      log_uploads_activity('viewed')
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
       add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
@@ -58,6 +60,7 @@ module TeamMembers
       @upload_file.update(name: upload_params[:name])
 
       if @upload_file.save && @upload.save
+        log_uploads_activity('modified')
         redirect_to user_upload_path(@user, @upload)
         flash[:success] = 'Upload updated successfully!'
       else
@@ -78,6 +81,7 @@ module TeamMembers
       when 'image/png'
         send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
+      log_uploads_activity('downloaded')
     end
 
     def approve
@@ -87,6 +91,7 @@ module TeamMembers
                         approved_at: Time.now,
                         approved_by: current_team_member.full_name)
         flash[:success] = 'Upload has been successfully approved.'
+        log_uploads_activity('approved')
       else
         flash[:error] = 'Failed to approve the upload.'
       end
@@ -94,14 +99,16 @@ module TeamMembers
     end
 
     def destroy
-      if params[:reject] == 'true'
-        @upload.update(status: 'rejected')
-        flash[:notice] = 'Upload was rejected successfully!'
+      action = params[:reject] == 'true' ? 'rejected' : 'deleted'
+
+      if @upload.destroy
+        log_uploads_activity(action) if action == 'rejected'
+        flash[:notice] = "Upload was #{action} successfully!"
+        redirect_to user_uploads_path
       else
-        @upload.destroy
-        flash[:notice] = 'Upload was successfully deleted!'
+        flash[:error] = 'Failed to delete the upload, please try again!'
+        redirect_to @upload
       end
-      redirect_to user_uploads_path
     end
 
     def subheading_stats
@@ -173,6 +180,41 @@ module TeamMembers
 
     def upload_search
       'lower(upload_files.name) similar to lower(:query)'
+    end
+
+    def log_uploads_activity(activity_type)
+      valid_activity_types = %w[created viewed modified downloaded approved rejected]
+
+      unless valid_activity_types.include?(activity_type)
+        raise ArgumentError, "Invalid activity_type. Expected one of: #{valid_activity_types.join(', ')}"
+      end
+
+      upload_activity_log = current_team_member.upload_activity_logs.find_or_create_by!(upload: @upload)
+      case activity_type
+      when 'created'
+        upload_activity_log.increment(:create_count)
+      when 'viewed'
+        upload_activity_log.increment(:view_count)
+      when 'modified'
+        upload_activity_log.increment(:modify_count)
+      when 'downloaded'
+        upload_activity_log.increment(:download_count)
+      when 'approved'
+        upload_activity_log.increment(:approve_count)
+      when 'rejected'
+        upload_activity_log.increment(:reject_count)
+      end
+
+      upload_activity_log.activity_type = activity_type
+      upload_activity_log.activity_time = Time.now
+
+      if upload_activity_log.save
+        flash[:success] = "Upload activity logged: #{activity_type.capitalize}"
+      else
+        flash[:alert] = 'Failed to log upload activity'
+      end
+
+      redirect_back(fallback_location: authenticated_team_member_root_path)
     end
 
     def set_breadcrumbs
