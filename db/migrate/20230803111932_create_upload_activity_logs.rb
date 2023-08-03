@@ -9,8 +9,8 @@ class CreateUploadActivityLogs < ActiveRecord::Migration[6.1]
       t.integer :download_count, default: 0
       t.integer :approve_count, default: 0
       t.integer :reject_count, default: 0
-      t.references :team_members, null: false, foreign_key: true
-      t.references :uploads, null: false, foreign_key: true
+      t.references :team_member, null: false, foreign_key: true
+      t.references :upload, null: false, foreign_key: true
 
       t.timestamps
     end

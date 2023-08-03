@@ -7,6 +7,7 @@ class CreateUploads < ActiveRecord::Migration[6.1]
       t.bigint :added_by_id
       t.string :approved_by
       t.datetime :approved_at
+      t.boolean :visible_to_user, default: true
       t.references :user, null: false, foreign_key: true
       t.references :team_member, foreign_key: true, index: true, optional: true
 
