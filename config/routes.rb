@@ -91,6 +91,7 @@ Rails.application.routes.draw do
         resources :contact_logs, on: :member do
           get 'recent', action: :recent, on: :collection
         end
+        resources :upload_activity_logs, only: :index, on: :member
       end
 
       resources :approvals do
