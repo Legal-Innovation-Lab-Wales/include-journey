@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_03_124918) do
+ActiveRecord::Schema.define(version: 2023_08_03_111932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -334,18 +334,11 @@ ActiveRecord::Schema.define(version: 2023_08_03_124918) do
   create_table "upload_activity_logs", force: :cascade do |t|
     t.string "activity_type"
     t.datetime "activity_time"
-    t.integer "create_count", default: 0
-    t.integer "view_count", default: 0
-    t.integer "modify_count", default: 0
-    t.integer "download_count", default: 0
-    t.integer "approve_count", default: 0
-    t.integer "reject_count", default: 0
+    t.integer "activity_count", default: 0
     t.bigint "team_member_id", null: false
     t.bigint "upload_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["team_member_id"], name: "index_upload_activity_logs_on_team_member_id"
-    t.index ["upload_id"], name: "index_upload_activity_logs_on_upload_id"
   end
 
   create_table "upload_files", force: :cascade do |t|
@@ -365,11 +358,11 @@ ActiveRecord::Schema.define(version: 2023_08_03_124918) do
     t.bigint "added_by_id"
     t.string "approved_by"
     t.datetime "approved_at"
+    t.boolean "visible_to_user", default: true
     t.bigint "user_id", null: false
     t.bigint "team_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "visible_to_user", default: true
     t.index ["team_member_id"], name: "index_uploads_on_team_member_id"
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
@@ -580,8 +573,6 @@ ActiveRecord::Schema.define(version: 2023_08_03_124918) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
-  add_foreign_key "upload_activity_logs", "team_members"
-  add_foreign_key "upload_activity_logs", "uploads"
   add_foreign_key "upload_files", "uploads"
   add_foreign_key "uploads", "team_members"
   add_foreign_key "uploads", "users"
