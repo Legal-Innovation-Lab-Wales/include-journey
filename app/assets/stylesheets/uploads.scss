@@ -48,29 +48,6 @@
         }
     }
 
-    .chips{
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        .chip{
-            background-color: $info;
-            border-radius: 10px;
-            margin-right: 5px;
-            margin-top: 5px;
-            padding: 6px;
-            min-width: 90px;
-            font-size: small;
-            color: $color-secondary-2-0;
-            display: inline-flex;
-            justify-content: space-between;
-            align-items: center;
-            span{
-                font-size: 18px;
-                cursor: pointer;
-            }
-        }
-    }
-
     .form-floating {
 
         label {
@@ -114,7 +91,4 @@
     color: darkblue;
     }
 
-    .display-none {
-        display: none
-    }
 }
