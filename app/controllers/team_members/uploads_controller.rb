@@ -37,7 +37,6 @@ module TeamMembers
       end
 
       if @upload.save && @upload_file.save
-        log_uploads_activity('created')
         flash[:success] = 'Upload added successfully!'
         redirect_to correct_uploads_path
       else
@@ -72,6 +71,7 @@ module TeamMembers
     def download_file
       @upload_file = @upload.upload_file
       pdf_blob = @upload_file.data
+      log_uploads_activity('downloaded') if @upload.added_by == 'User'
 
       case @upload_file.content_type
       when 'application/pdf'
@@ -81,7 +81,6 @@ module TeamMembers
       when 'image/png'
         send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
-      log_uploads_activity('downloaded')
     end
 
     def approve
@@ -100,9 +99,9 @@ module TeamMembers
 
     def destroy
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
+      log_uploads_activity(action) if action == 'rejected'
 
       if @upload.destroy
-        log_uploads_activity(action) if action == 'rejected'
         flash[:notice] = "Upload was #{action} successfully!"
         redirect_to user_uploads_path
       else
@@ -153,7 +152,7 @@ module TeamMembers
     end
 
     def uploads_filter_params
-      params.permit(:query, :added, :type, :visible, :user_id, :page)
+      params.permit(:query, :added, :type, :visible, :user_id, :page, :id)
     end
 
     def user
@@ -183,38 +182,16 @@ module TeamMembers
     end
 
     def log_uploads_activity(activity_type)
-      valid_activity_types = %w[created viewed modified downloaded approved rejected]
+      upload_activity_log = current_team_member.upload_activity_logs.find_or_initialize_by(upload_id: uploads_filter_params[:id],
+                                                                                           activity_type: activity_type)
 
-      unless valid_activity_types.include?(activity_type)
-        raise ArgumentError, "Invalid activity_type. Expected one of: #{valid_activity_types.join(', ')}"
+      if upload_activity_log.new_record?
+        upload_activity_log.activity_type = activity_type
+        upload_activity_log.activity_time = Time.now
       end
 
-      upload_activity_log = current_team_member.upload_activity_logs.find_or_create_by!(upload: @upload)
-      case activity_type
-      when 'created'
-        upload_activity_log.increment(:create_count)
-      when 'viewed'
-        upload_activity_log.increment(:view_count)
-      when 'modified'
-        upload_activity_log.increment(:modify_count)
-      when 'downloaded'
-        upload_activity_log.increment(:download_count)
-      when 'approved'
-        upload_activity_log.increment(:approve_count)
-      when 'rejected'
-        upload_activity_log.increment(:reject_count)
-      end
-
-      upload_activity_log.activity_type = activity_type
-      upload_activity_log.activity_time = Time.now
-
-      if upload_activity_log.save
-        flash[:success] = "Upload activity logged: #{activity_type.capitalize}"
-      else
-        flash[:alert] = 'Failed to log upload activity'
-      end
-
-      redirect_back(fallback_location: authenticated_team_member_root_path)
+      upload_activity_log.activity_count += 1
+      upload_activity_log.save!
     end
 
     def set_breadcrumbs

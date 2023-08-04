@@ -1,14 +1,11 @@
 # app/models/upload_activity_log.rb
 class UploadActivityLog < ApplicationRecord
-  belongs_to :team_members
-  belongs_to :uploads
+  belongs_to :team_member
+  belongs_to :upload
 
   validates_presence_of :activity_type, :activity_time
-  validates :activity_type, inclusion: { in: %w[created viewed modified downloaded approved rejected] }
-
-  scope :created_in_last_week, -> { where(activity_type: 'created').where('activity_time >= ?', 1.week.ago) }
-  scope :created_in_last_month, -> { where(activity_type: 'created').where('activity_time >= ?', 1.month.ago) }
-
+  validates :activity_type, inclusion: { in: %w[viewed modified downloaded approved rejected] }
+  
   scope :viewed_in_last_week, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.week.ago) }
   scope :viewed_in_last_month, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.month.ago) }
 
