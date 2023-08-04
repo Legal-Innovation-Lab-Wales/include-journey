@@ -45,7 +45,7 @@ module TeamMembers
     end
 
     def show
-      log_uploads_activity('viewed')
+      log_uploads_activity('viewed') if @upload.added_by == 'User'
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
       add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
@@ -59,7 +59,7 @@ module TeamMembers
       @upload_file.update(name: upload_params[:name])
 
       if @upload_file.save && @upload.save
-        log_uploads_activity('modified')
+        log_uploads_activity('modified') if @upload.added_by == 'User'
         redirect_to user_upload_path(@user, @upload)
         flash[:success] = 'Upload updated successfully!'
       else
@@ -90,7 +90,7 @@ module TeamMembers
                         approved_at: Time.now,
                         approved_by: current_team_member.full_name)
         flash[:success] = 'Upload has been successfully approved.'
-        log_uploads_activity('approved')
+        log_uploads_activity('approved') if @upload.added_by == 'User'
       else
         flash[:error] = 'Failed to approve the upload.'
       end
@@ -99,7 +99,7 @@ module TeamMembers
 
     def destroy
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
-      log_uploads_activity(action) if action == 'rejected'
+      log_uploads_activity(action) if action == 'rejected' && @upload.added_by == 'User'
 
       if @upload.destroy
         flash[:notice] = "Upload was #{action} successfully!"

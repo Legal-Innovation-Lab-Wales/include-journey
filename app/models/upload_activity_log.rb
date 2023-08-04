@@ -20,4 +20,8 @@ class UploadActivityLog < ApplicationRecord
 
   scope :rejected_in_last_week, -> { where(activity_type: 'rejected').where('activity_time >= ?', 1.week.ago) }
   scope :rejected_in_last_month, -> { where(activity_type: 'rejected').where('activity_time >= ?', 1.month.ago) }
+
+  def datetime_format_activity
+    activity_time.strftime('%d/%m/%Y %I:%M %p')
+  end
 end
