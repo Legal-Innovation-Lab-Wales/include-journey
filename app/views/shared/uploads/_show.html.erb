@@ -25,6 +25,12 @@
                       <%= form.text_area :comment, class: "form-control textarea", style: "height: auto;", oninput: "this.style.height = (this.scrollHeight > this.clientHeight ? this.scrollHeight : this.clientHeight) + 'px';" %>
                       <label for="comment">Comment:</label>
                     </div>
+                    <div class="form-check form-switch d-flex justify-content-between px-0 pb-3 <%="d-none" if current_user %>">
+                        <%= form.label :visible_to_user, class: 'form-check-label text-light' do %>
+                            Allow user to see this note?
+                        <% end %>
+                        <%= form.check_box :visible_to_user, class: 'form-check-input', id: 'visible-to-user', checked: @upload.visible_to_user%>
+                    </div>
                     <div class="my-3">
                         <%= button_tag type: 'submit', class: 'btn btn-secondary w-100' do %>
                           <i class="fas fa-edit"></i> Update

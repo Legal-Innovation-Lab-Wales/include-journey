@@ -55,7 +55,7 @@ module TeamMembers
 
     def update
       @upload_file = @upload.upload_file
-      @upload.update(comment: upload_params[:comment])
+      @upload.update(comment: upload_params[:comment], visible_to_user: upload_params[:visible_to_user])
       @upload_file.update(name: upload_params[:name])
 
       if @upload_file.save && @upload.save
@@ -148,7 +148,7 @@ module TeamMembers
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
     end
 
     def uploads_filter_params
