@@ -8,14 +8,19 @@ module TeamMembers
     protected
 
     def resources
-      @team_member.upload_activity_logs.includes(:upload)
-                  .joins(:upload)
+      @upload_activity_logs = @team_member.upload_activity_logs.includes(upload: %i[user upload_file])
+                                          .joins(upload: %i[user upload_file]).order(created_at: :desc)
+
+      filter_params = upload_activity_logs_filter_params
+      if filter_params[:activity_type].in?(%w[viewed modified downloaded approved])
+        @upload_activity_logs = @upload_activity_logs.where(activity_type: filter_params[:activity_type])
+      end
+
+      @upload_activity_logs
     end
 
     def search
-      @team_member.upload_activity_logs.includes(:upload)
-                  .joins(:upload)
-                  .where(user_search, wildcard_query)
+      resources.where(user_search, wildcard_query).or(resources.where(upload_file_name_search, wildcard_query))
     end
 
     def subheading_stats
@@ -33,8 +38,16 @@ module TeamMembers
 
     private
 
+    def upload_activity_logs_filter_params
+      params.permit(:query, :activity_type, :team_member_id, :page, :id, :on)
+    end
+
     def team_member
       @team_member = TeamMember.includes(:upload_activity_logs).find(params[:team_member_id])
+    end
+
+    def upload_file_name_search
+      'lower(upload_files.name) similar to lower(:query)'
     end
 
     def set_breadcrumbs

@@ -5,7 +5,7 @@ class UploadActivityLog < ApplicationRecord
 
   validates_presence_of :activity_type, :activity_time
   validates :activity_type, inclusion: { in: %w[viewed modified downloaded approved rejected] }
-  
+
   scope :viewed_in_last_week, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.week.ago) }
   scope :viewed_in_last_month, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.month.ago) }
 

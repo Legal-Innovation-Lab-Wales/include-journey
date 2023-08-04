@@ -148,7 +148,7 @@ module TeamMembers
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible)
     end
 
     def uploads_filter_params

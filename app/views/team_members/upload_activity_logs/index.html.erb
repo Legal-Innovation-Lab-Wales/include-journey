@@ -1,5 +1,6 @@
 <%= render 'layouts/searchable', class_list: 'team-members upload-activity-logs',
-           header: "#{@team_member.full_name}",
+           header: "#{@team_member.full_name}", 
+           search: render(partial: 'shared/upload_activity_logs/search'),
            subheader: "upload activity logs (#{@count})",
            index: 'team_member_upload_activity_logs', stats: render(partial: 'stats') do %>
   <div class="container p-0">
