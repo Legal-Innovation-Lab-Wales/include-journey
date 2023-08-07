@@ -70,19 +70,17 @@
           </div>
           <div class="card-body bg-transparent h-100" id="summary-panel-card">
             <% if @summary_panel.nil? %>
-              <span>There is no information on this user yet.</span>
+              <span>This user has not provided any information yet.</span>
             <% else %>
               <%= @summary_panel %>
             <% end %>
           </div>
           <div class="card-footer text-center">
-            <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
-              <% if @summary_panel.nil? %>
-                <%= "Add Pen Profile" %>
-              <% else %>
-                <%= "Edit Pen Profile" %>
-              <% end %>
-            </button>
+            <% if !@summary_panel.nil? %>
+              <button class="btn btn-success my-2 py-2 px-5" type="button" data-bs-toggle="modal" data-bs-target="#summary-panel-modal">
+                  <%= "Edit Pen Profile" %>
+              </button>
+            <% end %>  
           </div>
         </div>
       </div>
