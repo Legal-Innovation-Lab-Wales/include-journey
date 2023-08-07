@@ -127,7 +127,7 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.text_area :summary_panel, class: 'form-control custom-textarea'%>
+                <%= form.text_area :summary_panel, class: 'form-control custom-textarea', value: @user.summary_panel %>
                 <%= form.label :summary_panel, 'Pen Profile' %>
               </div>
             </div>
