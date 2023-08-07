@@ -3,16 +3,14 @@
     <div class="modal-content">
         <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
             <div class="modal-header border-0">
-                <% if @summary_panel.nil? %>
-                    <h5 class="modal-title text-black-50">Add Pen Profile</h5>
-                <% else %>
+                <% if !@summary_panel.nil? %>
                     <h5 class="modal-title text-black-50">Edit Pen Profile</h5>
                 <% end %>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body border-0">
                 <div class="input-group mb-3">
-                    <%= f.text_area :summary_panel, class: 'form-control', rows: '8', placeholder: 'Add information on user', aria: { label: 'Add Pen Profile on user' }, required: 'true' %>
+                    <%= f.text_area :summary_panel, class: 'form-control', rows: '8', placeholder: 'Edit information on user', aria: { label: "Edit User's Pen Profile" }, required: 'true' %>
                 </div>
                 <p class="actual-error-message" >
                     <% @user.errors[:summary_panel].each do |err| %>
