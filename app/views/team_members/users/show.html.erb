@@ -333,9 +333,9 @@
                 <p><%= @user.first_name %> has <%= pluralize(@uploads.created_in_last_week.size, 'upload') %> in the last week.</p>
                 <p><%= @user.first_name %> has <%= pluralize(@uploads.created_in_last_month.size, 'upload') %> in the last month.</p>
                 <p><%= @user.first_name %> has <%= pluralize(@uploads.uploaded_by_teammember.size, 'upload') %> added by team members.</p>
-                <p><%= @user.first_name %> uploaded <%= pluralize(@uploads.uploaded_by_user.size, 'upload') %>.</p>
+                <p><%= @user.first_name %> added <%= pluralize(@uploads.uploaded_by_user.size, 'upload') %> by themselves.</p>
                 <p><%= @user.first_name %> has <%= pluralize(@uploads.pending.size, 'pending upload') %>.</p>
-                <p><%= "#{@user.first_name}'s" %> uploads consist of <%= pluralize(@uploads.pdf_files.size, 'PDF file') %> and <%= pluralize(@uploads.images.size, 'images') %>.</p>
+                <p><%= "#{@user.first_name}'s" %> uploads consist of <%= pluralize(@uploads.pdf_files.size, 'PDF file') %> and <%= pluralize(@uploads.images.size, 'image') %>.</p>
               <% end %>
             </div>
             <div class="card-footer text-center">
