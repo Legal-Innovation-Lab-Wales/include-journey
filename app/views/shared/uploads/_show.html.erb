@@ -33,7 +33,7 @@
                           <%= form.check_box :visible_to_user, class: 'form-check-input', id: 'visible-to-user', checked: @upload.visible_to_user%>
                       </div>
                     <% end %>
-                    <div class="my-3">
+                    <div>
                         <%= button_tag type: 'submit', class: 'btn btn-secondary w-100' do %>
                           <i class="fas fa-edit"></i> Update
                         <% end %>
@@ -49,7 +49,7 @@
                         <%= form.text_area :comment, class: "form-control textarea" %>
                         <label for="comment">Comment:</label>
                     </div> 
-                    <div class="my-3">
+                    <div>
                         <%= button_tag type: 'submit', class: 'btn btn-secondary w-100' do %>
                           <i class="fas fa-edit"></i> Update
                         <% end %>
