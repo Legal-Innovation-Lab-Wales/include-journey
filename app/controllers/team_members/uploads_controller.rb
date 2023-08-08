@@ -24,7 +24,9 @@ module TeamMembers
                            user: @user,
                            added_by: 'TeamMember',
                            added_by_id: current_team_member.id,
-                           status: 'approved')
+                           status: 'approved',
+                           approved_by: current_team_member.full_name,
+                           approved_at: Time.now)
 
       @upload_file = new_upload_file
       @upload_file.upload = @upload
