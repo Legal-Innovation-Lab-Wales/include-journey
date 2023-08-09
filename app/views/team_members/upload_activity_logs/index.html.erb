@@ -19,18 +19,30 @@
           <tbody>
           <% @resources.each do |upload_activity_log| %>
             <tr>
-              <td><%= upload_activity_log.upload.user.full_name %></td>
-              <td><%= upload_activity_log.upload.upload_file.name %></td>
-               <td><%= upload_activity_log.upload.created %></td>
-              <td><%= upload_activity_log.activity_type %></td>
-              <td><%= upload_activity_log.datetime_format_activity %></td>
-              <td><%= upload_activity_log.activity_count %></td>
-              <td>
-                <%= link_to user_upload_path(id: upload_activity_log.upload, user_id: upload_activity_log.upload.user) do %>
-                  <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
-                     title="View Upload"></i>
-                <% end %>
-              </td>
+              <% if !upload_activity_log.upload.nil? %>
+                <td><%= upload_activity_log.upload.user.full_name %></td>
+                <td><%= upload_activity_log.upload.upload_file.name %></td>
+                <td><%= upload_activity_log.upload.created %></td>
+                <td><%= upload_activity_log.activity_type.capitalize %></td>
+                <td><%= upload_activity_log.datetime_format_activity %></td>
+                <td><%= upload_activity_log.activity_count %></td>
+                <td>
+                  <%= link_to user_upload_path(id: upload_activity_log.upload, user_id: upload_activity_log.upload.user) do %>
+                    <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
+                      title="View Upload"></i>
+                  <% end %>
+                </td>
+              <% else %>
+                <td><%= upload_activity_log.user_full_name %></td>
+                <td><%= upload_activity_log.upload_file_name %></td>
+                <td><%= upload_activity_log.file_created_date.strftime('%d/%m/%Y %I:%M %p') %></td>
+                <td><%= upload_activity_log.activity_type.capitalize %></td>
+                <td><%= upload_activity_log.datetime_format_activity %></td>
+                <td><%= upload_activity_log.activity_count %></td>
+                <td>
+                  Deleted
+                </td>
+              <% end %>
             </tr>
           <% end %>
           </tbody>

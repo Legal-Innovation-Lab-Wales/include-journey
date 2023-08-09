@@ -8,11 +8,12 @@ module TeamMembers
     protected
 
     def resources
-      @upload_activity_logs = @team_member.upload_activity_logs.includes(upload: %i[user upload_file])
-                                          .joins(upload: %i[user upload_file]).order(created_at: :desc)
-
+      @upload_activity_logs = @team_member.upload_activity_logs
       filter_params = upload_activity_logs_filter_params
-      if filter_params[:activity_type].in?(%w[viewed modified downloaded approved])
+      if filter_params[:activity_type].in?(%w[viewed modified downloaded approved rejected])
+        @upload_activity_logs = @upload_activity_logs.includes(upload: %i[user upload_file]).joins(upload: %i[user upload_file])
+                                                     .order(created_at: :desc).where(activity_type: filter_params[:activity_type])
+      elsif filter_params[:activity_type].in?(%w[rejected])
         @upload_activity_logs = @upload_activity_logs.where(activity_type: filter_params[:activity_type])
       end
 
@@ -39,7 +40,7 @@ module TeamMembers
     private
 
     def upload_activity_logs_filter_params
-      params.permit(:query, :activity_type, :team_member_id, :page, :id, :on)
+      params.permit(:query, :activity_type, :team_member_id, :page, :id, :on, :limit)
     end
 
     def team_member
