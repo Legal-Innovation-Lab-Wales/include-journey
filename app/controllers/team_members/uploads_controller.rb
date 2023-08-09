@@ -38,7 +38,7 @@ module TeamMembers
         return
       end
 
-      if @upload.save && @upload_file.save
+      if @upload.save! && @upload_file.save!
         flash[:success] = 'Upload added successfully!'
         redirect_to correct_uploads_path
       else
@@ -101,7 +101,11 @@ module TeamMembers
 
     def destroy
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
-      log_uploads_activity(action) if action == 'rejected' && @upload.added_by == 'User'
+
+      if action == 'rejected' && @upload.added_by == 'User'
+        log_uploads_activity(action)
+        update_upload_activity_logs_before_delete
+      end
 
       if @upload.destroy
         flash[:notice] = "Upload was #{action} successfully!"
@@ -148,6 +152,19 @@ module TeamMembers
     end
 
     private
+
+    def update_upload_activity_logs_before_delete
+      upload = Upload.includes(%i[user upload_file]).joins(%i[user upload_file]).find(params[:id])
+      user_full_name = upload.user.full_name
+      upload_file_name = upload.upload_file.name
+      file_created_date = upload.created_at
+
+      upload.upload_activity_logs.each do |ual|
+        ual.update!(user_full_name: user_full_name,
+                    upload_file_name: upload_file_name,
+                    file_created_date: file_created_date)
+      end
+    end
 
     def upload_params
       params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
