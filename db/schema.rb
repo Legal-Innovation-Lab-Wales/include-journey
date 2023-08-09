@@ -337,6 +337,9 @@ ActiveRecord::Schema.define(version: 2023_08_03_111932) do
     t.integer "activity_count", default: 0
     t.bigint "team_member_id", null: false
     t.bigint "upload_id", null: false
+    t.string "user_full_name"
+    t.string "upload_file_name"
+    t.datetime "file_created_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
