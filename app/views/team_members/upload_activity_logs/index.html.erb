@@ -1,7 +1,7 @@
 <%= render 'layouts/searchable', class_list: 'team-members upload-activity-logs',
            header: "#{@team_member.full_name}", 
            search: render(partial: 'shared/upload_activity_logs/search'),
-           subheader: "upload activity logs (#{@count})",
+           subheader: "user files activity logs (#{@count})",
            index: 'team_member_upload_activity_logs', stats: render(partial: 'stats') do %>
   <div class="container p-0">
     <div class="row">
@@ -9,12 +9,12 @@
         <table class="table table-dark table-striped">
           <thead>
             <th scope="col">User</th>
-            <th scope="col">Upload Name</th>
+            <th scope="col">File Name</th>
             <th scope="col">Published At</th>
             <th scope="col">Activity Type</th>
             <th scope="col">Latest Activity Time</th>
             <th scope="col">Count</th>
-            <th scope="col">Upload</th>
+            <th scope="col">File</th>
           </thead>
           <tbody>
           <% @resources.each do |upload_activity_log| %>
