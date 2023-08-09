@@ -7,7 +7,7 @@ module Users
     include UploadsHelper
 
     def new
-      add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
+      add_breadcrumb('Upload File', nil, 'fas fa-upload')
       @upload = Upload.new
       @upload_file = UploadFile.new
     end
@@ -140,7 +140,7 @@ module Users
              else
                action_name == 'index' ? nil : uploads_path
              end
-      add_breadcrumb('My Uploads', path, 'fas fa-upload')
+      add_breadcrumb('My Files', path, 'fas fa-file')
     end
   end
 end
