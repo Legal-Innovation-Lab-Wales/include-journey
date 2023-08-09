@@ -58,7 +58,7 @@ Rails.application.configure do
 
   config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
   config.regex_name = %r{\A[a-zA-Z0-9'\-._()/ ]*\z}
-  config.regex_file_name = /\A[a-zA-Z0-9\s_-]+(\.(jpg|jpeg|png|pdf))?\z/i
+  config.regex_file_name = /\A[a-zA-Z0-9\s_()-]+(\.(jpg|jpeg|png|pdf))?\z/i
   config.regex_telephone = /\A[0-9+]*\z/
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
   config.regex_email = URI::MailTo::EMAIL_REGEXP
