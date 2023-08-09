@@ -9,11 +9,11 @@ module TeamMembers
 
     def new
       if session.key?(:custom_view)
-        add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload')
+        add_breadcrumb('Files', user_uploads_path(user_id: user.id, view: :list), 'fas fa-file')
       else
-        add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload')
+        add_breadcrumb('Files', user_uploads_path(user_id: user.id), 'fas fa-file')
       end
-      add_breadcrumb('New Upload', nil, 'fas fa-plus-circle')
+      add_breadcrumb('Upload File', nil, 'fas fa-upload')
       @upload = @user.uploads.new
       @upload_file = UploadFile.new
     end
@@ -50,8 +50,8 @@ module TeamMembers
       log_uploads_activity('viewed') if @upload.added_by == 'User'
       @upload_file = @upload.upload_file
       icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id, view: :list), 'fas fa-upload') if session.key?(:custom_view)
-      add_breadcrumb('Uploads', user_uploads_path(user_id: user.id), 'fas fa-upload') unless session.key?(:custom_view)
+      add_breadcrumb('Files', user_uploads_path(user_id: user.id, view: :list), 'fas fa-file') if session.key?(:custom_view)
+      add_breadcrumb('Files', user_uploads_path(user_id: user.id), 'fas fa-file') unless session.key?(:custom_view)
       add_breadcrumb(@upload_file.name.to_s, nil, icon)
     end
 
@@ -200,7 +200,7 @@ module TeamMembers
       add_breadcrumb('Users', users_path, 'fas fa-user')
       add_breadcrumb(user.full_name, user_path(user))
 
-      add_breadcrumb('Uploads', nil, 'fas fa-upload') unless action_name != 'index'
+      add_breadcrumb('Files', nil, 'fas fa-file') unless action_name != 'index'
     end
   end
 end

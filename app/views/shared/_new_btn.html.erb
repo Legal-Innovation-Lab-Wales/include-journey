@@ -1,5 +1,11 @@
 <div class="col" style="text-align: centre">
-  <%= link_to path, class: 'btn btn-success' do %>
-    <i class="fas fa-plus-circle"></i> <%= text %>
+  <% if controller_name == 'uploads' %>
+    <%= link_to path, class: 'btn btn-success' do %>
+      <i class="fas fa-upload"></i> <%= text %>
+    <% end %>
+  <% else %>  
+    <%= link_to path, class: 'btn btn-success' do %>
+      <i class="fas fa-plus-circle"></i> <%= text %>
+    <% end %>
   <% end %>
 </div>

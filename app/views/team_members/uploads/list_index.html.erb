@@ -1,6 +1,6 @@
-<%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Uploads', index: 'user_uploads',
-           stats: render(partial: 'shared/uploads/stats'),
-           new_btn: render(partial: 'shared/new_btn', locals: { path: new_user_upload_path, text: 'Add Upload' }) do %>
+<%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Files', index: 'user_uploads',
+           stats: render(partial: 'shared/uploads/stats'), search: render(partial: 'shared/uploads/search'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_user_upload_path, text: 'Upload File' }) do %>
   <div class="container p-0">
     <div class="d-flex justify-content-start mb-4">
       <%= link_to user_uploads_path(@user) do %>
