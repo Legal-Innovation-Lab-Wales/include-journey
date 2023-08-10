@@ -25,7 +25,9 @@ class User < DeviseRecord
   has_many :diary_entry_permissions
   has_many :diary_entry_permissions, through: :diary_entries
   has_many :team_members, through: :assignments
-  
+  has_many :uploads
+  has_many :upload_activity_logs, through: :uploads
+
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
   before_update :mail_suspended_user, if: -> { suspended_changed? }
@@ -158,7 +160,6 @@ class User < DeviseRecord
     appointments.order(start: :asc).filter(&:last_month)
   end
 
-  # rubocop:disable Metrics/MethodLength
   def to_csv
     [
       id,
@@ -184,8 +185,6 @@ class User < DeviseRecord
       'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     }
   end
-  # rubocop:enable Metrics/MethodLength
-
 
   def unapprove
     sessions.destroy_all

@@ -1,0 +1,11 @@
+<% @team_members.each do |team_member| %>
+      <p>Dear <%= team_member.full_name %>,</p>
+        <p><%=@user.full_name.titleize%> uploaded a new <%=@upload_type%> file.</p>
+        <p>
+          Click the button below to login and approve or reject the upload.
+        </p>
+
+        <div class="btn-container">
+        <%= link_to 'Login', @url %>
+        </div>
+<% end %>

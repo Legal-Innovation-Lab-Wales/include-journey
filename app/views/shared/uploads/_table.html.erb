@@ -1,0 +1,36 @@
+<tr>
+    <td>
+        <%= link_to correct_upload_path(object), class: 'upload-link' do %>
+            <% if object.grab_upload_file == 'render default pdf image'%>
+                <i class="fa fa-file-pdf fa-1.5x"></i> <span class="text-left"><%= object.upload_file.name %></span>       
+            <% else %>
+                <i class="fa fa-image fa-1.5x"></i> <span class="text-left"><%= object.upload_file.name %></span>
+            <% end%> 
+        <% end %>
+    </td>
+    <td>
+        <%= link_to correct_upload_path(object), class: 'upload-link' do %>
+            <% if object.been_updated? %>
+                <%= object.last_update%>
+            <% else%>
+                <%= object.created%>
+            <% end %>
+        <% end %>
+    </td>
+    <td>
+        <%= link_to correct_upload_path(object), class: 'upload-link' do %>
+            <% if object.status == 'pending' %>
+                Pending
+            <% elsif object.status == 'approved'%>
+                Approved
+            <% else %>
+                Rejected
+            <% end %>
+        <% end %>
+    </td>
+    <td>
+        <%= link_to correct_upload_path(object), class: 'upload-link' do %>
+            <%= object.file_size%>
+        <% end %>
+    </td>
+</tr>

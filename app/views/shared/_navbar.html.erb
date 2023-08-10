@@ -74,9 +74,9 @@
               <i class="fas fa-tasks"></i>
               <div class="nav-label hide">My Goals</div>
             <% end %>
-            <%= link_to edit_user_registration_path, class: 'btn btn-nav' do %>
-              <i class="fas fa-user-edit"></i>
-              <div class="nav-label hide">My Profile</div>
+            <%= link_to correct_uploads_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-file"></i>
+              <div class="nav-label hide">My Files</div>
             <% end %>
             <%= link_to surveys_path, class: 'btn btn-nav' do %>
               <i class="fas fa-comments"></i>
@@ -113,7 +113,11 @@
             <% end %>
           <% end %>
           <% if current_user %>
-            <%= link_to main_messages_path, class: "btn btn-success" do %>
+            <%= link_to edit_user_registration_path, class: "btn btn-success" do %>
+              <div class="nav-label hide"> My Profile</div>
+              <i class="fas fa-user-edit"></i>
+            <% end %>
+            <%= link_to main_messages_path, class: "btn btn-light" do %>
               <div class="nav-label hide"> My Messages</div>
               <div class="notification">
                 <i class="fas fa-envelope"></i>
@@ -122,7 +126,6 @@
                 <%end%>
               </div>
             <% end %>
-
             <%= link_to guide_path, class: "btn btn-info" do %>
               <div class="nav-label hide">Guide</div>
               <i class="fas fa-question-circle"></i>

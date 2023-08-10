@@ -1,0 +1,94 @@
+// Place all the styles related to the upload controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "variables";
+
+.uploads {
+    .file-wrapper{
+        img{
+            width: 150px !important;
+            height: 150px !important;
+        }
+        i.fas{
+            font-size: 150px;
+        }
+    }
+    .show-file-wrapper{
+        img{
+            max-width: 100% !important;
+        }
+        i.fas{
+            font-size: 150px;
+        }
+    }
+    .editable-area .form-control.textarea {
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    .upload-link {
+        text-decoration: none;
+    }
+    .show-button-div {
+        .button-flex-container {
+            display: flex;
+            gap: 10px;
+            .button-flex-item {
+                width: 50%;
+            }
+        }
+    }
+
+    .file-display{
+        i.fas{
+            font-size: 350px;
+        }
+        img{
+            max-height: 380px !important;
+        }
+    }
+
+    .form-floating {
+
+        label {
+            opacity: 0.65;
+            transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+        }
+        input{
+        background-color: $white;
+        border-radius: 0.2rem;
+        box-shadow: none;
+        height: calc(3.5rem + 2px);
+        padding: 1.625rem 2rem 0.625rem 0.625rem;
+        }
+    }
+
+    #file-drag-div{
+        border: 1px dashed white;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        overflow: hidden;
+        
+        &.dragging {
+        opacity: 0.5; /* Opacity for the dragged state */
+        }
+        
+        &.dragging * {
+        pointer-events: none; /* Disable pointer events for all inner elements */
+        }
+    }
+
+    .change-file {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    }
+
+    .change-file:hover {
+    color: darkblue;
+    }
+
+}

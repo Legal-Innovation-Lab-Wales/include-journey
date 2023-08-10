@@ -14,7 +14,7 @@ module TeamMembers
 
     # GET /team_members/:id
     def show
-      add_breadcrumb(team_member.full_name)
+      add_breadcrumb(team_member.full_name, nil, 'fas fa-user')
       render 'show'
     end
 

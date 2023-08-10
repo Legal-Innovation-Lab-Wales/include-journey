@@ -157,13 +157,13 @@ module TeamMembers
       # if none use team member recent logs
       path = action_name == 'recent' ? nil : @user ? recent_user_contact_logs_path(@user) : recent_contact_logs_path
       if @user
-        add_breadcrumb('Users', users_path, 'fas fa-user')
-        add_breadcrumb(@user.full_name, @user)
+        add_breadcrumb('Users', users_path, 'fas fa-users')
+        add_breadcrumb(@user.full_name, @user, 'fas fa-user')
         add_breadcrumb('Contact logs', path, 'fas fa-clipboard-list')
       elsif @team_member
         path = action_name == 'recent' ? nil : recent_team_member_contact_logs_path(@team_member)
-        add_breadcrumb('Team Members', team_members_path, 'fas fa-user')
-        add_breadcrumb(@team_member.full_name, @team_member)
+        add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
+        add_breadcrumb(@team_member.full_name, @team_member, 'fas fa-user')
         add_breadcrumb('Contact logs', path, 'fas fa-clipboard-list')
       else
         add_breadcrumb('My Contact logs', path, 'fas fa-clipboard-list')

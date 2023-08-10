@@ -1,0 +1,16 @@
+<div class="subheading">
+  <p><%= @team_member.first_name %> has viewed <%= pluralize(@viewed_in_last_week, 'unique user file') %>
+  in the last week and <%= pluralize(@viewed_in_last_month, 'unique user file') %> in the last month.</p>
+
+  <p><%= @team_member.first_name %> has modified <%= pluralize(@modified_in_last_week, 'unique user file') %>
+  in the last week and <%= pluralize(@modified_in_last_month, 'unique user file') %> in the last month.</p>
+
+  <p><%= @team_member.first_name %> has downloaded <%= pluralize(@downloaded_in_last_week, 'unique user file') %>
+  in the last week and <%= pluralize(@downloaded_in_last_month, 'unique user file') %> in the last month.</p>
+
+  <p><%= @team_member.first_name %> has approved <%= pluralize(@approved_in_last_week, 'unique user file') %>
+  in the last week and <%= pluralize(@approved_in_last_month, 'unique user file') %> in the last month.</p>
+
+  <p><%= @team_member.first_name %> has rejected <%= pluralize(@rejected_in_last_week, 'unique user file') %>
+  in the last week and <%= pluralize(@rejected_in_last_month, 'unique user file') %> in the last month.</p>
+</div>
