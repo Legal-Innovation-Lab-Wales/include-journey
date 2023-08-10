@@ -119,8 +119,16 @@
           <div class="row">
             <div class="col-md">
               <div class="form-floating">
-                <%= form.text_area :disabilities, class: 'form-control', placeholder: 'Disabilities' %>
+                <%= form.text_area :disabilities, class: 'form-control' %>
                 <%= form.label :disabilities %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= form.text_area :summary_panel, class: 'form-control custom-textarea', value: @user.summary_panel %>
+                <%= form.label :summary_panel, 'Pen Profile' %>
               </div>
             </div>
           </div>
