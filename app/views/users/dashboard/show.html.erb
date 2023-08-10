@@ -27,7 +27,7 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: goals_path, icon: 'fa-tasks',
                      large_text: 'My Goals', text: 'Goals' %>
-          <%= render 'shared/dashboard_btn', path: correct_uploads_path, icon: 'fa-file',
+          <%= render 'shared/dashboard_btn', path: current_user_visible_uploads.count.zero? ? new_upload_path : correct_uploads_path, icon: 'fa-file',
                      large_text: 'My Files', text: 'Files' %>
           <%= render 'shared/dashboard_btn', path: surveys_path, icon: 'fa-comments',
                      large_text: 'My Voice', text: 'Voice' %>
