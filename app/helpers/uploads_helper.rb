@@ -17,4 +17,8 @@ module UploadsHelper
       session.key?(:custom_view) ? user_uploads_path(@user, view: :list) : user_uploads_path(@user)
     end
   end
+
+  def current_user_visible_uploads
+    current_user.uploads.where(visible_to_user: true)
+  end
 end
