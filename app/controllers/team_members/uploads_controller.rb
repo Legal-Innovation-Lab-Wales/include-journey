@@ -32,8 +32,13 @@ module TeamMembers
       @upload_file.upload = @upload
 
       max_file_size = 5.megabytes
+      total_max_file_size = 250.megabytes
       if @upload_file.data.size > max_file_size
-        flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+        flash[:error] = 'File size exceeds the maximum limit of 5MB.'
+        render 'new', status: :unprocessable_entity
+        return
+      elsif current_team_member.total_upload_size >= total_max_file_size
+        flash[:error] = 'Total file size exceeds the maximum limit of 250MB.'
         render 'new', status: :unprocessable_entity
         return
       end
