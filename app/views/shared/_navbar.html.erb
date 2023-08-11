@@ -93,6 +93,15 @@
               <i class="fas fa-check"></i>
               <div class="nav-label hide">Approvals</div>
             <% end %>
+            <%= link_to notifications_path, class: "btn btn-success" do %>
+              <div class="nav-label hide"> My Notifications</div>
+              <div class="notification">
+                <i class="fas fa-bell"></i>
+                <%if alert_user_of_notifications? %>
+                  <span class="notification-dot"></span>
+                <%end%>
+              </div>
+            <%end%>
             <% if current_team_member.admin? %>
               <%= link_to team_members_path, class: "btn btn-info" do %>
                 <div class="nav-label hide">Team Members</div>

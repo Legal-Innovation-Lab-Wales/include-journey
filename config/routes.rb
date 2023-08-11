@@ -156,6 +156,7 @@ Rails.application.routes.draw do
           resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
         end
       end
+      resources :notifications
     end
     get '/*path', to: redirect('')
   end

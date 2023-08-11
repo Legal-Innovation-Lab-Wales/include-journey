@@ -88,3 +88,4 @@ gem 'recaptcha'
 # For setting up two factor authentication
 gem 'devise-two-factor'
 gem 'rqrcode'
+gem 'clockwork'
