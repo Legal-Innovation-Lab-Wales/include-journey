@@ -39,6 +39,7 @@ module TeamMembers
       end
 
       if @upload.save! && @upload_file.save!
+        current_team_member.increment!(:total_upload_size, @upload_file.data.size)
         flash[:success] = 'Upload added successfully!'
         redirect_to correct_uploads_path
       else
@@ -100,14 +101,12 @@ module TeamMembers
     end
 
     def destroy
+      return unless @upload.added_by_id == current_team_member.id
+
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
-
-      if action == 'rejected' && @upload.added_by == 'User'
-        log_uploads_activity(action)
-        update_upload_activity_logs_before_delete
-      end
-
+      handle_delete_upload_log(action)
       if @upload.destroy
+        decrease_total_upload_size(action, current_team_member, @user, @upload_file.data.size)
         flash[:notice] = "Upload was #{action} successfully!"
         redirect_to user_uploads_path
       else
@@ -211,6 +210,21 @@ module TeamMembers
 
       upload_activity_log.activity_count += 1
       upload_activity_log.save!
+    end
+
+    def decrease_total_upload_size(action, team_member, user, size)
+      if action == 'deleted'
+        team_member.decrement!(:total_upload_size, size)
+      else
+        user.decrement!(:total_upload_size, size)
+      end
+    end
+
+    def handle_delete_upload_log(action)
+      return unless action == 'rejected'
+
+      log_uploads_activity(action)
+      update_upload_activity_logs_before_delete
     end
 
     def set_breadcrumbs
