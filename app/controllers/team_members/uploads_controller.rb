@@ -37,7 +37,7 @@ module TeamMembers
         flash[:error] = 'File size exceeds the maximum limit of 5MB.'
         render 'new', status: :unprocessable_entity
         return
-      elsif current_team_member.total_upload_size >= total_max_file_size
+      elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
         flash[:error] = 'Total file size exceeds the maximum limit of 250MB.'
         render 'new', status: :unprocessable_entity
         return
@@ -106,12 +106,10 @@ module TeamMembers
     end
 
     def destroy
-      return unless @upload.added_by_id == current_team_member.id
-
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
       handle_delete_upload_log(action)
       if @upload.destroy
-        decrease_total_upload_size(action, current_team_member, @user, @upload_file.data.size)
+        decrease_total_upload_size(action, current_team_member, @user, @upload.upload_file.data.size)
         flash[:notice] = "Upload was #{action} successfully!"
         redirect_to user_uploads_path
       else

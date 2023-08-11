@@ -18,15 +18,21 @@ module Users
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
-      max_file_size = 250.megabytes
+      max_file_size = 5.megabytes
+      total_max_file_size = 250.megabytes
       if @upload_file.data.size > max_file_size
         flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+        render 'new', status: :unprocessable_entity
+        return
+      elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
+        flash[:error] = 'Total file size exceeds the maximum limit of 250MB.'
         render 'new', status: :unprocessable_entity
         return
       end
 
       if @upload.save! && @upload_file.save!
         email_team_members_about_upload(current_user, @upload_file)
+        current_user.increment!(:total_upload_size, @upload_file.data.size)
         flash[:success] = 'Upload added successfully!'
         redirect_to correct_uploads_path
       else
@@ -60,8 +66,12 @@ module Users
     end
 
     def destroy
-      @upload.destroy
-      redirect_to uploads_path, notice: 'Upload was successfully deleted.'
+      if @upload.destroy
+        current_user.decrement!(:total_upload_size, @upload.upload_file.data.size)
+        redirect_to uploads_path, notice: 'Upload was successfully deleted.'
+      else
+        redirect_to @upload, alert: 'Something went wrong, file could not be deleted!'
+      end
     end
 
     def download_file
