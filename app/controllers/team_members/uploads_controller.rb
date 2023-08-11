@@ -31,7 +31,7 @@ module TeamMembers
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
-      max_file_size = 250.megabytes
+      max_file_size = 5.megabytes
       if @upload_file.data.size > max_file_size
         flash[:error] = 'File size exceeds the maximum limit of 250MB.'
         render 'new', status: :unprocessable_entity
