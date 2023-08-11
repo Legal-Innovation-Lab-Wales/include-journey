@@ -1,0 +1,32 @@
+<p class="mb-0">
+  <% if current_user %>
+    <%= "You" %> 
+  <% else %>
+    <%= @user.first_name%>
+  <% end %>
+  has a total of <%= "#{pluralize(@count, 'file')}" %>, with
+  <%= @uploads_in_last_30_days %> added in the last 30 days. </p>
+  <p class="mb-0">
+  <% if current_user %>
+    <%= "Your" %> 
+  <% else %>
+    <%= @user.first_name%>
+  <% end %>
+  files consist of  <%= "#{pluralize(@image_uploads, 'image')}" %> and <%= "#{pluralize(@pdf_uploads, 'PDF document')}" %>.</p>
+  <p class="mb-0">
+  <% if current_user %>
+    <%= "You" %> 
+  <% else %>
+    <%= @user.first_name%>
+  <% end %>
+  uploaded <%= "#{pluralize(@user_uploads, 'file')}" %> while team members uploaded <%= "#{pluralize(@team_member_uploads, 'file')}" %> 
+</p>
+<p>
+  Click the 'Add File' button if you want to add a new file or you can view 
+   <% if current_user %>
+    <%= "your" %> 
+  <% else %>
+    <%= "#{@user.first_name}'s"%>
+  <% end %>
+   previous files.
+</p>

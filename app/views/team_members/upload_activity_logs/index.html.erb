@@ -1,0 +1,54 @@
+<%= render 'layouts/searchable', class_list: 'team-members upload-activity-logs',
+           header: "#{@team_member.full_name}", 
+           search: render(partial: 'shared/upload_activity_logs/search'),
+           subheader: "user files activity logs (#{@count})",
+           index: 'team_member_upload_activity_logs', stats: render(partial: 'stats') do %>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col">
+        <table class="table table-dark table-striped">
+          <thead>
+            <th scope="col">User</th>
+            <th scope="col">File Name</th>
+            <th scope="col">Published At</th>
+            <th scope="col">Activity Type</th>
+            <th scope="col">Latest Activity Time</th>
+            <th scope="col">Count</th>
+            <th scope="col">File</th>
+          </thead>
+          <tbody>
+          <% @resources.each do |upload_activity_log| %>
+            <tr>
+              <% if !upload_activity_log.upload.nil? %>
+                <td><%= upload_activity_log.upload.user.full_name %></td>
+                <td><%= upload_activity_log.upload.upload_file.name %></td>
+                <td><%= upload_activity_log.upload.created %></td>
+                <td><%= upload_activity_log.activity_type.capitalize %></td>
+                <td><%= upload_activity_log.datetime_format_activity %></td>
+                <td><%= upload_activity_log.activity_count %></td>
+                <td>
+                  <%= link_to user_upload_path(id: upload_activity_log.upload, user_id: upload_activity_log.upload.user) do %>
+                    <i class="fas fa-external-link-alt ms-2" data-toggle="tooltip" data-placement="bottom"
+                      title="View Upload"></i>
+                  <% end %>
+                </td>
+              <% else %>
+                <td><%= upload_activity_log.user_full_name %></td>
+                <td><%= upload_activity_log.upload_file_name %></td>
+                <td><%= upload_activity_log.file_created_date.strftime('%d/%m/%Y %I:%M %p') %></td>
+                <td><%= upload_activity_log.activity_type.capitalize %></td>
+                <td><%= upload_activity_log.datetime_format_activity %></td>
+                <td><%= upload_activity_log.activity_count %></td>
+                <td>
+                  Deleted
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>
+

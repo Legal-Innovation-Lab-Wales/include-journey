@@ -64,8 +64,8 @@ module TeamMembers
 
       def set_breadcrumbs
         add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
-        add_breadcrumb(team_member.full_name, team_member_path(team_member))
-        add_breadcrumb('Assign Users', nil, 'fas fa-user')
+        add_breadcrumb(team_member.full_name, team_member_path(team_member), 'fas fa-user')
+        add_breadcrumb('Assign Users', nil, 'fas fa-check')
       end
     end
   end

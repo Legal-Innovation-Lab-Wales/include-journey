@@ -19,6 +19,18 @@ class ApplicationRecord < ActiveRecord::Base
     updated_at.strftime('%d/%m/%Y %I:%M %p')
   end
 
+  def been_updated?
+    created_at != updated_at
+  end
+
+  def approved_date
+    if approved_at.nil?
+      'Not Yet Approved'
+    else
+      approved_at.strftime('%d/%m/%Y %I:%M %p')
+    end
+  end
+
   # def failed_validation
   #  return unless errors.present?
 

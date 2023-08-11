@@ -340,6 +340,45 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
     t.index ["unlock_token"], name: "index_team_members_on_unlock_token", unique: true
   end
 
+  create_table "upload_activity_logs", force: :cascade do |t|
+    t.string "activity_type"
+    t.datetime "activity_time"
+    t.integer "activity_count", default: 0
+    t.bigint "team_member_id", null: false
+    t.bigint "upload_id", null: false
+    t.string "user_full_name"
+    t.string "upload_file_name"
+    t.datetime "file_created_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "upload_files", force: :cascade do |t|
+    t.string "name"
+    t.binary "data"
+    t.string "content_type"
+    t.bigint "upload_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["upload_id"], name: "index_upload_files_on_upload_id"
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.text "comment"
+    t.string "status", default: "pending"
+    t.string "added_by"
+    t.bigint "added_by_id"
+    t.string "approved_by"
+    t.datetime "approved_at"
+    t.boolean "visible_to_user", default: true
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_uploads_on_team_member_id"
+    t.index ["user_id"], name: "index_uploads_on_user_id"
+  end
+
   create_table "user_achievements", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "achievement_id", null: false
@@ -547,6 +586,9 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "upload_files", "uploads"
+  add_foreign_key "uploads", "team_members"
+  add_foreign_key "uploads", "users"
   add_foreign_key "user_achievements", "achievements"
   add_foreign_key "user_achievements", "users"
   add_foreign_key "user_pins", "team_members"

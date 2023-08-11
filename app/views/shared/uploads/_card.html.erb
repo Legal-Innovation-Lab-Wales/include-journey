@@ -1,0 +1,28 @@
+<div class="card" style="width: 18rem;">
+    <div class="file-wrapper">
+        <% if object.grab_upload_file == 'render default pdf image'%>
+            <%= image_tag asset_pack_path('media/images/pdf-image.png')%>       
+        <% else %>
+            <%= object.grab_upload_file %>   
+        <% end%> 
+    </div>  
+    <div class="card-body">
+        <h5 class="card-title text-dark mb-1"><%= object.upload_file.name%></h5><hr>
+        <ul class="list-group list-group-flush">
+            <% if object.added_by == 'TeamMember' && current_team_member && object.added_by_id == current_team_member.id%>
+                <li class="list-group-item">Added by you</li>
+            <% elsif object.added_by == 'User' && current_user && object.added_by_id == current_user.id %>
+                <li class="list-group-item">Added by you</li>
+            <% elsif object.added_by == 'User'  %>
+                <li class="list-group-item">Added by: <%= User.find(object.added_by_id).full_name %></li>
+            <% elsif object.added_by == 'TeamMember' %>
+                <li class="list-group-item">Added by: <%= TeamMember.find(object.added_by_id).full_name %></li>
+            <% end %>
+            <% if object.status == 'pending' %>
+                <li class="list-group-item">Status: Pending </li>
+            <% elsif object.status == 'approved'%>
+                <li class="list-group-item">Status: Approved </li>
+            <% end %>
+        </ul>
+    </div>
+</div>

@@ -6,7 +6,7 @@ module Pagination
   end
 
   def self.permitted_params
-    %i[page query tag assigned type radius postcode limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
+    %i[view page query tag assigned type radius postcode limit sort direction viewed feeling on user_id team_member_id survey_id section_id comment_section_id]
   end
 
   protected
@@ -14,6 +14,7 @@ module Pagination
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def pagination
     @page = pagination_params[:page].present? ? pagination_params[:page].to_i : 1
+    @view = pagination_params[:view] if pagination_params[:view].present?
     @query = pagination_params[:query]
     @direction = %w[asc desc].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'desc'
     @resources_per_page = resources_per_page
@@ -27,7 +28,21 @@ module Pagination
     else
       @resources = @resources.offset(offset).limit(@limit)
     end
-    @resources.present? ? render('index') : redirect
+    render_custom_view
+  end
+
+  def render_custom_view
+    if @resources.present?
+      if @view.present?
+        session[:custom_view] = @view
+        render "#{@view}_index"
+      else
+        session.delete(:custom_view) if session.key?(:custom_view)
+        render 'index'
+      end
+    else
+      redirect
+    end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 

@@ -26,6 +26,7 @@ module TeamMembers
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
       @contact_logs = ContactLog.where('user_id': @user.id)
       @summary_panel = @user.summary_panel
+      @uploads = @user.uploads
 
       has_goal_permissions
 

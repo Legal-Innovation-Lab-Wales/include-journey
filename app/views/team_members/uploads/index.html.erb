@@ -1,0 +1,24 @@
+<%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Files', index: 'user_uploads',
+           stats: render(partial: 'shared/uploads/stats'), search: render(partial: 'shared/uploads/search'),
+           new_btn: render(partial: 'shared/new_btn', locals: { path: new_user_upload_path, text: 'Upload File'}) do %>
+  <div class="container p-0">
+    <div class="d-flex justify-content-start  mb-4">
+      <%= link_to user_uploads_path(@user, view: 'list') do %>
+        <i class="fas fa-list fa-2x"></i>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="row card-view">
+          <% @resources.each do |upload| %>
+            <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-center" >
+              <%= link_to user_upload_path(id: upload.id), class: 'upload-link' do %>
+                <%= render 'shared/uploads/card', object: upload%>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
