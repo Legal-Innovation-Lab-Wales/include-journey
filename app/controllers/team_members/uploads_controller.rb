@@ -38,16 +38,18 @@ module TeamMembers
         render 'new', status: :unprocessable_entity
         return
       elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
-        flash[:error] = 'Total file size exceeds the maximum limit of 250MB.'
+        flash[:error] = 'Your individual file usage has gone beyond the allocated limit of 250MB.
+                         It\'s recommended to create space by removing older files.'
         render 'new', status: :unprocessable_entity
         return
       end
 
-      if @upload.save! && @upload_file.save!
+      if @upload.save && @upload_file.save
         current_team_member.increment!(:total_upload_size, @upload_file.data.size)
-        flash[:success] = 'Upload added successfully!'
+        flash[:success] = 'File added successfully!'
         redirect_to correct_uploads_path
       else
+        flash[:error] = 'An issue occurred. Please try uploading the file again to resolve it'
         render 'new', status: :unprocessable_entity
       end
     end
@@ -69,9 +71,9 @@ module TeamMembers
       if @upload_file.save && @upload.save
         log_uploads_activity('modified') if @upload.added_by == 'User'
         redirect_to user_upload_path(@user, @upload)
-        flash[:success] = 'Upload updated successfully!'
+        flash[:success] = 'File updated successfully!'
       else
-        flash.now[:error] = 'Please use alphanumeric characters only.'
+        flash[:error] = 'Please use alphanumeric characters only.'
         render 'show', status: :unprocessable_entity
       end
     end
@@ -189,13 +191,15 @@ module TeamMembers
     end
 
     def new_upload_file
-      UploadFile.new(name: upload_params[:name],
-                     content_type: upload_params[:file].content_type,
-                     data: if upload_params[:cached_file]
-                             encode(upload_params[:cached_file])
-                           elsif upload_params[:file]
-                             upload_params[:file].read
-                           end)
+      UploadFile.new(
+        name: upload_params[:name],
+        content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
+        data: if upload_params[:cached_file]
+                encode(upload_params[:cached_file])
+              elsif upload_params[:file]
+                upload_params[:file].read
+              end
+      )
     end
 
     def upload_search

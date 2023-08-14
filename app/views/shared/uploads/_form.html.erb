@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="mb-1">
-                    <% if @upload.new_record? || current_user.id == @upload.user_id %>
+                    <% if @upload.new_record? || current_user&.id == @upload.added_by_id || current_team_member&.id == @upload.added_by_id %>
                         <div id="file-drag-div" draggable="true">
                             <div id="file-holder" class="file-display text-center">
                                 <% if @upload_file.data.present? %>
@@ -22,13 +22,23 @@
                         <p id="file-error" class="text-capitalize text-danger"></p>
                     <% end %>
                 </div>
-                <div class="form-floating mb-3">
-                    <%= form.text_field :name, class: 'form-control', id: 'upload_name' %>
-                    <%= form.label :name, "Name" %>
+                <div id="form-name-section" class="mb-3">
+                    <div class="form-floating">
+                        <%= form.text_field :name, class: 'form-control', id: 'upload_name' %>
+                        <%= form.label :name, "Name" %>
+                    </div>
+                    <% if @upload_file.errors[:name].any? %>
+                        <p class="text-danger"><%= @upload_file.errors[:name].join(', ') %></p>
+                    <% end %>
                 </div>
-                <div class="form-floating mb-3">
-                    <%= form.text_area :comment, class: 'form-control', oninput:'this.style.height = ""; this.style.height = this.scrollHeight + "px"' %>
-                    <%= form.label "Comment" %>
+                <div id="form-comment-section" class="mb-3">
+                    <div class="form-floating">
+                        <%= form.text_area :comment, class: 'form-control', oninput:'this.style.height = ""; this.style.height = this.scrollHeight + "px"' %>
+                        <%= form.label "Comment" %>
+                    </div>
+                    <% if @upload.errors[:comment].any? %>
+                        <p class="text-danger"><%= @upload.errors[:comment].join(', ') %></p>
+                    <% end %>
                 </div>
                 <div class="form-check form-switch d-flex justify-content-between px-0 pb-3 <%="d-none" if current_user %>">
                     <%= form.label :visible_to_user, class: 'form-check-label text-light' do %>
@@ -38,12 +48,7 @@
                 </div>
 
                 <div class="text-center mb-3 ">
-                <% if @upload.new_record? %>
                     <%= form.submit "Submit", class: 'btn btn-primary', data: {turbo: false} %>
-                <% else %>
-                    <%= form.submit "Save", class: 'btn btn-primary me-2' %>
-                    <%= link_to "Cancel", upload_path(@upload), class: 'btn btn-warning'%>
-                <% end %>
                 <div>
             </div>
         </div>
