@@ -8,7 +8,7 @@ module Clockwork
     puts "Running #{job}"
   end
 
-  every(6.months, 'team_members_notifications') do
+  every(1.day, 'team_members_notifications') do
     Notification.create_for_all_teammembers
   end
 end

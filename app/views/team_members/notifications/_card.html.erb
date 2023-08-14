@@ -1,7 +1,10 @@
 <div class="card my-2 note-card">
     <div class="card-body ">
         <span>
-            <%= simple_format(message.message) %>
+            <%= message.message %> 
+            <% if message.user %> 
+                <%= link_to message.user.full_name, user_path(message.user), class: "text-dark"  %>
+            <% end %>
         </span>
     </div>
 </div>
