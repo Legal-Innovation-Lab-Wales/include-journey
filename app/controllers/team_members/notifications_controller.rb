@@ -2,10 +2,16 @@ module TeamMembers
   # app/controllers/team_members/notifications_controller.rb
   class NotificationsController < AdminApplicationController
     before_action :set_breadcrumbs
-    after_action :update_notifications_to_read
-    
+
     def index
       @notifications = current_team_member.notifications.where(viewed: false)
+    end
+
+    def update
+      notification = Notification.where(id: params[:id])
+      notification.update(viewed: true)
+
+      redirect_to notifications_path
     end
 
     private
