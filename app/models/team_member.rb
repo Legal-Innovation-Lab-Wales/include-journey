@@ -27,6 +27,7 @@ class TeamMember < DeviseRecord
   has_many :contact_logs, foreign_key: :team_member_id, dependent: :delete_all
   has_many :assignments
   has_many :users, through: :assignments
+  has_many :notifications
   has_many :uploads
   has_many :upload_activity_logs
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_03_111932) do
+ActiveRecord::Schema.define(version: 2023_08_09_164456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -165,11 +165,12 @@ ActiveRecord::Schema.define(version: 2023_08_03_111932) do
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
-    t.integer "note_id"
+    t.bigint "note_id", null: false
     t.boolean "read", default: false
     t.string "message_status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["note_id"], name: "index_messages_on_note_id"
     t.index ["team_member_id"], name: "index_messages_on_team_member_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -197,6 +198,17 @@ ActiveRecord::Schema.define(version: 2023_08_03_111932) do
     t.index ["replacing_id"], name: "index_notes_on_replacing_id"
     t.index ["team_member_id"], name: "index_notes_on_team_member_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id"
+    t.text "message"
+    t.boolean "viewed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -564,6 +576,8 @@ ActiveRecord::Schema.define(version: 2023_08_03_111932) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "notifications", "team_members"
+  add_foreign_key "notifications", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
