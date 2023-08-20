@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_17_223656) do
+ActiveRecord::Schema.define(version: 2023_08_11_145917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -482,74 +482,6 @@ ActiveRecord::Schema.define(version: 2023_08_17_223656) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  end
-
-  create_table "wallich_journey_users", id: false, force: :cascade do |t|
-    t.bigint "id"
-    t.string "email"
-    t.string "encrypted_password"
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count"
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
-    t.integer "failed_attempts"
-    t.string "unlock_token"
-    t.datetime "locked_at"
-    t.string "first_name"
-    t.string "last_name"
-    t.bigint "mobile_number"
-    t.boolean "terms"
-    t.datetime "deleted_at"
-    t.datetime "date_of_birth"
-    t.text "disabilities"
-    t.string "ethnic_group"
-    t.string "religion"
-    t.string "sex"
-    t.string "gender_identity"
-    t.string "pronouns"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
-    t.date "enrolled_at"
-    t.string "local_authority"
-    t.boolean "deleted"
-    t.date "last_session_at"
-    t.integer "sessions_streak"
-    t.integer "sessions_count"
-    t.integer "sessions_this_month_count"
-    t.date "last_wellbeing_assessment_at"
-    t.integer "wellbeing_assessments_count"
-    t.integer "wellbeing_assessments_this_month_count"
-    t.date "last_diary_entry_at"
-    t.integer "diary_entries_count"
-    t.integer "diary_entries_this_month_count"
-    t.date "last_goal_achieved_at"
-    t.integer "goals_achieved_count"
-    t.integer "goals_achieved_this_month_count"
-    t.integer "bronze_achievements_count"
-    t.integer "silver_achievements_count"
-    t.integer "gold_achievements_count"
-    t.boolean "notifications_enabled"
-    t.boolean "approved"
-    t.datetime "approved_at"
-    t.boolean "suspended"
-    t.datetime "suspended_at"
-    t.integer "total_upload_size"
-    t.string "preferred_name"
-    t.string "address"
-    t.string "occupational_therapist_scores", default: [], array: true
-    t.datetime "occupational_therapist_scores_created_at"
-    t.text "old_occupational_therapist_scores", default: [], array: true
-    t.string "old_occupational_therapist_scores_creation_dates", default: [], array: true
-    t.datetime "referral"
-    t.datetime "mam"
-    t.datetime "support_started"
-    t.text "brief_physical_description"
-    t.datetime "support_ended"
-    t.datetime "next_review"
   end
 
   create_table "wba_scores", force: :cascade do |t|
