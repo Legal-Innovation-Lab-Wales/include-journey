@@ -70,16 +70,16 @@ module TeamMembers
 
     def download_file
       @upload_file = @upload.upload_file
-      pdf_blob = @upload_file.data
+      file_blob = @upload_file.data
       log_uploads_activity('downloaded') if @upload.added_by == 'User'
 
       case @upload_file.content_type
       when 'application/pdf'
-        send_data pdf_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
       when 'image/jpeg'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
     end
 
