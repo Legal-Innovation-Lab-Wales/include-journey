@@ -1,6 +1,7 @@
 class Notification < ApplicationRecord
   belongs_to :team_member
   belongs_to :user
+  belongs_to :upload, optional: true
 
 
   def self.create_for_all_teammembers

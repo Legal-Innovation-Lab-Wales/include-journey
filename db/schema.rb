@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_11_145917) do
+ActiveRecord::Schema.define(version: 2023_08_21_124617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,7 +207,9 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.boolean "viewed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "upload_id"
     t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
+    t.index ["upload_id"], name: "index_notifications_on_upload_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -579,6 +581,7 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "notifications", "team_members"
+  add_foreign_key "notifications", "uploads"
   add_foreign_key "notifications", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
