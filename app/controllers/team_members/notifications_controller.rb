@@ -4,7 +4,7 @@ module TeamMembers
     before_action :set_breadcrumbs
 
     def index
-      @notifications = current_team_member.notifications.where(viewed: false)
+      @notifications = current_team_member.notifications.where(viewed: false, upload_id: nil)
     end
 
     def update
