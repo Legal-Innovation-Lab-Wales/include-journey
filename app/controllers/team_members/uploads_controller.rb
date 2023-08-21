@@ -19,37 +19,27 @@ module TeamMembers
     end
 
     def create
-      @upload = Upload.new(comment: upload_params[:comment],
-                           visible_to_user: upload_params[:visible_to_user],
-                           user: @user,
-                           added_by: 'TeamMember',
-                           added_by_id: current_team_member.id,
-                           status: 'approved',
-                           approved_by: current_team_member.full_name,
-                           approved_at: Time.now)
-
+      @upload = new_upload
       @upload_file = new_upload_file
       @upload_file.upload = @upload
+      @upload_notification = new_upload_notification if upload_params[:visible_to_user] == 1
+      @upload_notification.upload = @upload if upload_params[:visible_to_user] == 1
 
-      max_file_size = 5.megabytes
-      total_max_file_size = 250.megabytes
-      if @upload_file.data.size > max_file_size
-        flash[:error] = 'File size exceeds the maximum limit of 5MB.'
-        render 'new', status: :unprocessable_entity
-        return
-      elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
-        flash[:error] = 'Your individual file usage has gone beyond the allocated limit of 250MB.
-                         It\'s recommended to create space by removing older files.'
-        render 'new', status: :unprocessable_entity
-        return
-      end
-
-      if @upload.save && @upload_file.save
-        current_team_member.increment!(:total_upload_size, @upload_file.data.size)
-        flash[:success] = 'File added successfully!'
-        redirect_to correct_uploads_path
+      if check_file_size == 'pass check'
+        puts "ANSWER:  #{@upload_notification}"
+        puts upload_params[:visible_to_user]
+        if @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+          handle_successful_upload_creation
+        else
+          handle_failed_upload_creation
+        end
       else
-        flash[:error] = 'An issue occurred. Please try uploading the file again to resolve it'
+        flash[:error] = if check_file_size == 'exceeds individual file size'
+                          'File size exceeds the maximum limit of 5MB'
+                        else
+                          'Your overall file usage has gone beyond the allocated limit of 250MB per person.
+                           It\'s recommended to create space by removing older files.'
+                        end
         render 'new', status: :unprocessable_entity
       end
     end
@@ -190,6 +180,19 @@ module TeamMembers
       Base64.decode64(insert_file)
     end
 
+    def new_upload
+      Upload.new(
+        comment: upload_params[:comment],
+        visible_to_user: upload_params[:visible_to_user],
+        user: @user,
+        added_by: 'TeamMember',
+        added_by_id: current_team_member.id,
+        status: 'approved',
+        approved_by: current_team_member.full_name,
+        approved_at: Time.now
+      )
+    end
+
     def new_upload_file
       UploadFile.new(
         name: upload_params[:name],
@@ -200,6 +203,37 @@ module TeamMembers
                 upload_params[:file].read
               end
       )
+    end
+
+    def new_upload_notification
+      Notification.new(
+        user: @user,
+        team_member: current_team_member,
+        message: "#{current_team_member.full_name} added a new upload for you"
+      )
+    end
+
+    def check_file_size
+      max_file_size = 5.megabytes
+      total_max_file_size = 250.megabytes
+      if @upload_file.data.size > max_file_size
+        'exceeds individual file size'
+      elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
+        'exceeds total file size per person'
+      else
+        'pass check'
+      end
+    end
+
+    def handle_successful_upload_creation
+      current_team_member.increment!(:total_upload_size, @upload_file.data.size)
+      flash[:success] = 'File added successfully!'
+      redirect_to correct_uploads_path
+    end
+
+    def handle_failed_upload_creation
+      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+      render 'new', status: :unprocessable_entity
     end
 
     def upload_search
