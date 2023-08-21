@@ -200,6 +200,17 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "team_member_id", null: false
+    t.bigint "user_id"
+    t.text "message"
+    t.boolean "viewed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "session_at", null: false
@@ -567,6 +578,8 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "notifications", "team_members"
+  add_foreign_key "notifications", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
