@@ -217,8 +217,8 @@ module TeamMembers
     end
 
     def check_file_size
-      max_file_size = 5.megabytes
-      total_max_file_size = 250.megabytes
+      max_file_size = ENV['MAX_FILE_SIZE']
+      total_max_file_size = ENV['TOTAL_MAX_FILE_SIZE']
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
