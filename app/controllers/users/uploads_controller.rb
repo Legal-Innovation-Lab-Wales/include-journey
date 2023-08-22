@@ -13,32 +13,23 @@ module Users
     end
 
     def create
-      @upload = Upload.new(comment: upload_params[:comment], visible_to_user: true,
-                           user: current_user, added_by: 'User', added_by_id: current_user.id)
+      @upload = new_upload
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
-      max_file_size = 5.megabytes
-      total_max_file_size = 250.megabytes
-      if @upload_file.data.size > max_file_size
-        flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+      if check_file_size == 'exceeds individual file size'
+        flash[:error] = 'File size exceeds the maximum limit of 5MB'
         render 'new', status: :unprocessable_entity
-        return
-      elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
-        flash[:error] = 'Your individual file usage has gone beyond the allocated limit of 250MB.
+      elsif check_file_size == 'exceeds total file size per person'
+        flash[:error] = 'Your overall file usage has gone beyond the allocated limit of 250MB per person.
                          It\'s recommended to create space by removing older files.'
         render 'new', status: :unprocessable_entity
-        return
-      end
-
-      if @upload.save && @upload_file.save
+      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
         email_team_members_about_upload(current_user, @upload_file)
         current_user.increment!(:total_upload_size, @upload_file.data.size)
-        flash[:success] = 'File added successfully!'
-        redirect_to correct_uploads_path
+        handle_successful_upload_creation
       else
-        flash[:error] = 'An issue occurred. Please try uploading the file again to resolve it'
-        render 'new', status: :unprocessable_entity
+        handle_failed_upload_creation
       end
     end
 
@@ -78,15 +69,15 @@ module Users
 
     def download_file
       @upload_file = @upload.upload_file
-      pdf_blob = @upload_file.data
+      file_blob = @upload_file.data
 
       case @upload_file.content_type
       when 'application/pdf'
-        send_data pdf_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
       when 'image/jpeg'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
     end
 
@@ -128,15 +119,32 @@ module Users
       Base64.decode64(insert_file)
     end
 
-    def new_upload_file
-      UploadFile.new(
-        name: upload_params[:name],
+    def new_upload
+      Upload.new(
+        comment: upload_params[:comment],
+        visible_to_user: true,
+        user: current_user,
+        added_by: 'User',
+        added_by_id: current_user.id
+      )
+    end
+
+    def new_upload_file_resources
+      {
         content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
         data: if upload_params[:cached_file]
                 encode(upload_params[:cached_file])
               elsif upload_params[:file]
                 upload_params[:file].read
               end
+      }
+    end
+
+    def new_upload_file
+      UploadFile.new(
+        name: upload_params[:name],
+        content_type: new_upload_file_resources[:content_type],
+        data: new_upload_file_resources[:data]
       )
     end
 
@@ -146,6 +154,28 @@ module Users
 
       upload_type = upload_file.content_type == 'application/pdf' ? 'PDF' : 'image'
       UploadsMailer.new_user_upload(team_members, user, upload_type).deliver_now
+    end
+
+    def handle_successful_upload_creation
+      flash[:success] = 'File added successfully!'
+      redirect_to correct_uploads_path
+    end
+
+    def handle_failed_upload_creation
+      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+      render 'new', status: :unprocessable_entity
+    end
+
+    def check_file_size
+      max_file_size = 5.megabytes
+      total_max_file_size = 250.megabytes
+      if @upload_file.data.size > max_file_size
+        'exceeds individual file size'
+      elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
+        'exceeds total file size per person'
+      else
+        'pass check'
+      end
     end
 
     def set_breadcrumbs

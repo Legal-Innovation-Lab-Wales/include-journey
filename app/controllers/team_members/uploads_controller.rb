@@ -25,22 +25,18 @@ module TeamMembers
       @upload_notification = new_upload_notification if upload_params[:visible_to_user] == 1
       @upload_notification.upload = @upload if upload_params[:visible_to_user] == 1
 
-      if check_file_size == 'pass check'
-        puts "ANSWER:  #{@upload_notification}"
-        puts upload_params[:visible_to_user]
-        if @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
-          handle_successful_upload_creation
-        else
-          handle_failed_upload_creation
-        end
-      else
-        flash[:error] = if check_file_size == 'exceeds individual file size'
-                          'File size exceeds the maximum limit of 5MB'
-                        else
-                          'Your overall file usage has gone beyond the allocated limit of 250MB per person.
-                           It\'s recommended to create space by removing older files.'
-                        end
+      if check_file_size == 'exceeds individual file size'
+        flash[:error] = 'File size exceeds the maximum limit of 5MB'
         render 'new', status: :unprocessable_entity
+      elsif check_file_size == 'exceeds total file size per person'
+        flash[:error] = 'Your overall file usage has gone beyond the allocated limit of 250MB per person.
+                         It\'s recommended to create space by removing older files.'
+        render 'new', status: :unprocessable_entity
+      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+        current_team_member.increment!(:total_upload_size, @upload_file.data.size)
+        handle_successful_upload_creation
+      else
+        handle_failed_upload_creation
       end
     end
 
@@ -193,15 +189,22 @@ module TeamMembers
       )
     end
 
-    def new_upload_file
-      UploadFile.new(
-        name: upload_params[:name],
+    def new_upload_file_resources
+      {
         content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
         data: if upload_params[:cached_file]
                 encode(upload_params[:cached_file])
               elsif upload_params[:file]
                 upload_params[:file].read
               end
+      }
+    end
+
+    def new_upload_file
+      UploadFile.new(
+        name: upload_params[:name],
+        content_type: new_upload_file_resources[:content_type],
+        data: new_upload_file_resources[:data]
       )
     end
 
@@ -226,7 +229,6 @@ module TeamMembers
     end
 
     def handle_successful_upload_creation
-      current_team_member.increment!(:total_upload_size, @upload_file.data.size)
       flash[:success] = 'File added successfully!'
       redirect_to correct_uploads_path
     end
