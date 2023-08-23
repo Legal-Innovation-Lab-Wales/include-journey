@@ -85,10 +85,10 @@ module TeamMembers
       if @upload.update(status: 'approved',
                         approved_at: Time.now,
                         approved_by: current_team_member.full_name)
-        flash[:success] = 'Upload has been successfully approved.'
+        flash[:success] = 'File has been successfully approved.'
         log_uploads_activity('approved') if @upload.added_by == 'User'
       else
-        flash[:error] = 'Failed to approve the upload.'
+        flash[:error] = 'Failed to approve the file.'
       end
       redirect_back(fallback_location: root_path)
     end
@@ -98,10 +98,15 @@ module TeamMembers
       handle_delete_upload_log(action)
       if @upload.destroy
         decrease_total_upload_size(action, current_team_member, @user, @upload.upload_file.data.size)
-        flash[:notice] = "Upload was #{action} successfully!"
-        redirect_to user_uploads_path
+        if Upload.where(user: user).count.zero?#
+          flash[:notice] = "File was #{action} successfully!"
+          redirect_to new_user_upload_path
+        else
+          flash[:notice] = "File was #{action} successfully! This user has no files."
+          redirect_to user_uploads_path
+        end
       else
-        flash[:error] = 'Failed to delete the upload, please try again!'
+        flash[:error] = 'Failed to delete the file, please try again!'
         redirect_to @upload
       end
     end
@@ -217,8 +222,8 @@ module TeamMembers
     end
 
     def check_file_size
-      max_file_size = ENV['MAX_FILE_SIZE']
-      total_max_file_size = ENV['TOTAL_MAX_FILE_SIZE']
+      max_file_size = eval(ENV['MAX_FILE_SIZE'])
+      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size

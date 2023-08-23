@@ -61,7 +61,12 @@ module Users
     def destroy
       if @upload.destroy
         current_user.decrement!(:total_upload_size, @upload.upload_file.data.size)
-        redirect_to uploads_path, notice: 'Upload was successfully deleted.'
+        if Upload.where(user: current_user).count.zero?
+          flash[:error] = 'You have no files to see.'
+          redirect_to new_upload_path
+        else
+          redirect_to uploads_path, notice: 'File was successfully deleted.'
+        end
       else
         redirect_to @upload, alert: 'Something went wrong, file could not be deleted!'
       end
@@ -108,7 +113,7 @@ module Users
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
     end
 
     def upload
@@ -167,8 +172,8 @@ module Users
     end
 
     def check_file_size
-      max_file_size = ENV['MAX_FILE_SIZE']
-      total_max_file_size = ENV['TOTAL_MAX_FILE_SIZE']
+      max_file_size = eval(ENV['MAX_FILE_SIZE'])
+      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
