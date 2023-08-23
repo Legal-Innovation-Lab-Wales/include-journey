@@ -201,7 +201,7 @@ ActiveRecord::Schema.define(version: 2023_08_21_124617) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "team_member_id", null: false
+    t.bigint "team_member_id"
     t.bigint "user_id"
     t.text "message"
     t.boolean "viewed", default: false
