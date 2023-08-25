@@ -18,11 +18,11 @@ module Users
       @upload_file.upload = @upload
 
       if check_file_size == 'exceeds individual file size'
-        flash[:error] = 'File size exceeds the maximum limit of 5MB'
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
         render 'new', status: :unprocessable_entity
       elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = 'Your overall file usage has gone beyond the allocated limit of 250MB per person.
-                         It\'s recommended to create space by removing older files.'
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
+                         It\'s recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
       elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
         email_team_members_about_upload(current_user, @upload_file)
