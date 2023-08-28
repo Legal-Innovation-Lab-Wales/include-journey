@@ -1,0 +1,2 @@
+class ReferredFrom < ApplicationRecord
+end

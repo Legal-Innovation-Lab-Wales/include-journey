@@ -1,0 +1,2 @@
+class HousingProvider < ApplicationRecord
+end

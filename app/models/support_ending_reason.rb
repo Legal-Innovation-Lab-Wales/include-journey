@@ -1,0 +1,2 @@
+class SupportEndingReason < ApplicationRecord
+end
