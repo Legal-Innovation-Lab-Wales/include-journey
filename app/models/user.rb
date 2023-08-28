@@ -29,8 +29,9 @@ class User < DeviseRecord
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
 
-  # Wallich Journey Specific Association 
+  # Wallich Journey Specific Association
   # Wallich Journey is a tenant
+  has_one :emergency_contact
   belongs_to :accommodation_type, optional: true
   belongs_to :housing_provider, optional: true
   belongs_to :support_ending_reason, optional: true
