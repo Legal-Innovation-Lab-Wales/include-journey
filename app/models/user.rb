@@ -7,6 +7,7 @@ class User < DeviseRecord
         #  :confirmable,
          :lockable, :timeoutable, :trackable
 
+  # General Association for all tenants
   has_many :notes, foreign_key: :user_id, dependent: :delete_all
   has_many :messages, foreign_key: :user_id, dependent: :destroy
   has_many :contacts, foreign_key: :user_id, dependent: :delete_all
@@ -27,6 +28,15 @@ class User < DeviseRecord
   has_many :team_members, through: :assignments
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
+
+  # Wallich Journey Specific Association 
+  # Wallich Journey is a tenant
+  belongs_to :accommodation_type, optional: true
+  belongs_to :housing_provider, optional: true
+  belongs_to :support_ending_reason, optional: true
+  belongs_to :referred_from, optional: true
+  belongs_to :priority, optional: true
+  belongs_to :local_authority, optional: true
 
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }
