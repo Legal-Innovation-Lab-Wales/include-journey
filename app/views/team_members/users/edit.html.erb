@@ -273,7 +273,7 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :referral_date, class: 'form-control', value: @user.referral_date %>
+                        <%= f.date_field :referral_date, class: 'form-control', value: (@user.referral_date.strftime('%Y-%m-%d') if !@user.referral_date.nil?) %>
                         <%= f.label :referral_date do %>
                           Referral Date
                         <% end %>
@@ -281,7 +281,7 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :mam_date, class: 'form-control', value: @user.mam_date %>
+                        <%= f.date_field :mam_date, class: 'form-control', value: (@user.mam_date.strftime('%Y-%m-%d') if !@user.mam_date.nil?) %>
                         <%= f.label :mam_date do %>
                           MAM Date
                         <% end %>
@@ -311,7 +311,7 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :enrolled_at, class: 'form-control', value: @user.enrolled_at %>
+                        <%= f.date_field :enrolled_at, class: 'form-control', value: (@user.enrolled_at.strftime('%Y-%m-%d') if !@user.enrolled_at.nil?) %>
                         <%= f.label :enrolled_at do %>
                           Enrolled Date
                         <% end %>
@@ -319,9 +319,9 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :support_started_date, class: 'form-control', value: @user.support_started_date %>
+                        <%= f.date_field :support_started_date, class: 'form-control', value: (@user.support_started_date.strftime('%Y-%m-%d') if !@user.support_started_date.nil?) %>
                         <%= f.label :support_started_date do %>
-                          MAM Date
+                          Support Started Date
                         <% end %>
                       </div>
                     </div>
@@ -358,7 +358,7 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :support_ended_date, class: 'form-control', value: @user.support_ended_date %>
+                        <%= f.date_field :support_ended_date, class: 'form-control', value: (@user.support_ended_date.strftime('%Y-%m-%d') if !@user.support_ended_date.nil?) %>
                         <%= f.label :support_ended_date do %>
                           Support Ended Date
                         <% end %>
@@ -366,7 +366,7 @@
                     </div>
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.date_field :next_review_date, class: 'form-control', value: @user.next_review_date %>
+                        <%= f.date_field :next_review_date, class: 'form-control', value: (@user.next_review_date.strftime('%Y-%m-%d') if !@user.next_review_date.nil?) %>
                         <%= f.label :next_review_date do %>
                           Next Review Date
                         <% end %>
