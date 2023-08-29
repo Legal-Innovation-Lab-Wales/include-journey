@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_28_120048) do
+ActiveRecord::Schema.define(version: 2023_08_29_155706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -545,6 +545,12 @@ ActiveRecord::Schema.define(version: 2023_08_28_120048) do
     t.bigint "priority_id"
     t.bigint "local_authority_id"
     t.string "address"
+    t.datetime "referral_date"
+    t.datetime "mam_date"
+    t.datetime "support_started_date"
+    t.text "brief_physical_description"
+    t.datetime "support_ended_date"
+    t.datetime "next_review_date"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
