@@ -78,3 +78,4 @@ puts("#{pretty_print_name('Reasons Ending Support')}\t#{SupportEndingReason.coun
 puts("#{pretty_print_name('Referred Froms')}\t#{ReferredFrom.count}")
 puts("#{pretty_print_name('Priorities')}\t#{Priority.count}")
 puts("#{pretty_print_name('Local Authorities')}\t#{LocalAuthority.count}")
+puts("#{pretty_print_name('Emergency Contacts')}\t#{EmergencyContact.count}")

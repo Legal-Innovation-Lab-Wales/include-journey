@@ -537,13 +537,14 @@ ActiveRecord::Schema.define(version: 2023_08_28_120048) do
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
     t.text "summary_panel"
+    t.integer "total_upload_size", default: 0
     t.bigint "accommodation_type_id"
     t.bigint "housing_provider_id"
     t.bigint "support_ending_reason_id"
     t.bigint "referred_from_id"
     t.bigint "priority_id"
     t.bigint "local_authority_id"
-    t.integer "total_upload_size", default: 0
+    t.string "address"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
