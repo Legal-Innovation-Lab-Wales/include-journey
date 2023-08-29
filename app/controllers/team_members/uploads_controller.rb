@@ -19,30 +19,24 @@ module TeamMembers
     end
 
     def create
-      @upload = Upload.new(comment: upload_params[:comment],
-                           visible_to_user: upload_params[:visible_to_user],
-                           user: @user,
-                           added_by: 'TeamMember',
-                           added_by_id: current_team_member.id,
-                           status: 'approved',
-                           approved_by: current_team_member.full_name,
-                           approved_at: Time.now)
-
+      @upload = new_upload
       @upload_file = new_upload_file
       @upload_file.upload = @upload
+      @upload_notification = new_upload_notification if upload_params[:visible_to_user] == 1
+      @upload_notification.upload = @upload if upload_params[:visible_to_user] == 1
 
-      max_file_size = 250.megabytes
-      if @upload_file.data.size > max_file_size
-        flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+      if check_file_size == 'exceeds individual file size'
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
         render 'new', status: :unprocessable_entity
-        return
-      end
-
-      if @upload.save! && @upload_file.save!
-        flash[:success] = 'Upload added successfully!'
-        redirect_to correct_uploads_path
+      elsif check_file_size == 'exceeds total file size per person'
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
+                         It\'s recommended to create space by removing older files."
+        render 'new', status: :unprocessable_entity
+      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+        current_team_member.increment!(:total_upload_size, @upload_file.data.size)
+        handle_successful_upload_creation
       else
-        render 'new', status: :unprocessable_entity
+        handle_failed_upload_creation
       end
     end
 
@@ -63,25 +57,25 @@ module TeamMembers
       if @upload_file.save && @upload.save
         log_uploads_activity('modified') if @upload.added_by == 'User'
         redirect_to user_upload_path(@user, @upload)
-        flash[:success] = 'Upload updated successfully!'
+        flash[:success] = 'File updated successfully!'
       else
-        flash.now[:error] = 'Please use alphanumeric characters only.'
+        flash[:error] = 'Please use alphanumeric characters only.'
         render 'show', status: :unprocessable_entity
       end
     end
 
     def download_file
       @upload_file = @upload.upload_file
-      pdf_blob = @upload_file.data
+      file_blob = @upload_file.data
       log_uploads_activity('downloaded') if @upload.added_by == 'User'
 
       case @upload_file.content_type
       when 'application/pdf'
-        send_data pdf_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
       when 'image/jpeg'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
     end
 
@@ -91,27 +85,28 @@ module TeamMembers
       if @upload.update(status: 'approved',
                         approved_at: Time.now,
                         approved_by: current_team_member.full_name)
-        flash[:success] = 'Upload has been successfully approved.'
+        flash[:success] = 'File has been successfully approved.'
         log_uploads_activity('approved') if @upload.added_by == 'User'
       else
-        flash[:error] = 'Failed to approve the upload.'
+        flash[:error] = 'Failed to approve the file.'
       end
       redirect_back(fallback_location: root_path)
     end
 
     def destroy
       action = params[:reject] == 'true' ? 'rejected' : 'deleted'
-
-      if action == 'rejected' && @upload.added_by == 'User'
-        log_uploads_activity(action)
-        update_upload_activity_logs_before_delete
-      end
-
+      handle_delete_upload_log(action)
       if @upload.destroy
-        flash[:notice] = "Upload was #{action} successfully!"
-        redirect_to user_uploads_path
+        decrease_total_upload_size(action, current_team_member, @user, @upload.upload_file.data.size)
+        if Upload.where(user: user).count.zero?#
+          flash[:notice] = "File was #{action} successfully!"
+          redirect_to new_user_upload_path
+        else
+          flash[:notice] = "File was #{action} successfully! This user has no files."
+          redirect_to user_uploads_path
+        end
       else
-        flash[:error] = 'Failed to delete the upload, please try again!'
+        flash[:error] = 'Failed to delete the file, please try again!'
         redirect_to @upload
       end
     end
@@ -186,14 +181,66 @@ module TeamMembers
       Base64.decode64(insert_file)
     end
 
+    def new_upload
+      Upload.new(
+        comment: upload_params[:comment],
+        visible_to_user: upload_params[:visible_to_user],
+        user: @user,
+        added_by: 'TeamMember',
+        added_by_id: current_team_member.id,
+        status: 'approved',
+        approved_by: current_team_member.full_name,
+        approved_at: Time.now
+      )
+    end
+
+    def new_upload_file_resources
+      {
+        content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
+        data: if upload_params[:cached_file]
+                encode(upload_params[:cached_file])
+              elsif upload_params[:file]
+                upload_params[:file].read
+              end
+      }
+    end
+
     def new_upload_file
-      UploadFile.new(name: upload_params[:name],
-                     content_type: upload_params[:file].content_type,
-                     data: if upload_params[:cached_file]
-                             encode(upload_params[:cached_file])
-                           elsif upload_params[:file]
-                             upload_params[:file].read
-                           end)
+      UploadFile.new(
+        name: upload_params[:name],
+        content_type: new_upload_file_resources[:content_type],
+        data: new_upload_file_resources[:data]
+      )
+    end
+
+    def new_upload_notification
+      Notification.new(
+        user: @user,
+        team_member: current_team_member,
+        message: "#{current_team_member.full_name} added a new upload for you"
+      )
+    end
+
+    def check_file_size
+      max_file_size = eval(ENV['MAX_FILE_SIZE'])
+      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
+      if @upload_file.data.size > max_file_size
+        'exceeds individual file size'
+      elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
+        'exceeds total file size per person'
+      else
+        'pass check'
+      end
+    end
+
+    def handle_successful_upload_creation
+      flash[:success] = 'File added successfully!'
+      redirect_to correct_uploads_path
+    end
+
+    def handle_failed_upload_creation
+      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+      render 'new', status: :unprocessable_entity
     end
 
     def upload_search
@@ -211,6 +258,21 @@ module TeamMembers
 
       upload_activity_log.activity_count += 1
       upload_activity_log.save!
+    end
+
+    def decrease_total_upload_size(action, team_member, user, size)
+      if action == 'deleted'
+        team_member.decrement!(:total_upload_size, size)
+      else
+        user.decrement!(:total_upload_size, size)
+      end
+    end
+
+    def handle_delete_upload_log(action)
+      return unless action == 'rejected'
+
+      log_uploads_activity(action)
+      update_upload_activity_logs_before_delete
     end
 
     def set_breadcrumbs

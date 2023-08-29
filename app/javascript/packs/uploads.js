@@ -119,7 +119,7 @@ function handleUpload(event) {
 async function processFile(file) {
     try {
       // Check the file size
-      const maxFileSize = 250 * 1024 * 1024;
+      const maxFileSize = 5 * 1024 * 1024;
       if (file.size > maxFileSize) {
         file_error_handler();
         return;

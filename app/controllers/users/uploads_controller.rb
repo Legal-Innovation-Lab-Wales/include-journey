@@ -13,24 +13,23 @@ module Users
     end
 
     def create
-      @upload = Upload.new(comment: upload_params[:comment], visible_to_user: true,
-                           user: current_user, added_by: 'User', added_by_id: current_user.id)
+      @upload = new_upload
       @upload_file = new_upload_file
       @upload_file.upload = @upload
 
-      max_file_size = 250.megabytes
-      if @upload_file.data.size > max_file_size
-        flash[:error] = 'File size exceeds the maximum limit of 250MB.'
+      if check_file_size == 'exceeds individual file size'
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
         render 'new', status: :unprocessable_entity
-        return
-      end
-
-      if @upload.save! && @upload_file.save!
+      elsif check_file_size == 'exceeds total file size per person'
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
+                         It\'s recommended to create space by removing older files."
+        render 'new', status: :unprocessable_entity
+      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
         email_team_members_about_upload(current_user, @upload_file)
-        flash[:success] = 'Upload added successfully!'
-        redirect_to correct_uploads_path
+        current_user.increment!(:total_upload_size, @upload_file.data.size)
+        handle_successful_upload_creation
       else
-        render 'new', status: :unprocessable_entity
+        handle_failed_upload_creation
       end
     end
 
@@ -50,7 +49,7 @@ module Users
         @upload_file.update(name: upload_params[:name])
 
         if @upload_file.save && @upload.save
-          flash[:success] = 'Upload updated successfully!'
+          flash[:success] = 'File updated successfully!'
           redirect_to upload_path(@upload)
         else
           flash[:error] = 'Please use alphanumeric characters only.'
@@ -60,21 +59,30 @@ module Users
     end
 
     def destroy
-      @upload.destroy
-      redirect_to uploads_path, notice: 'Upload was successfully deleted.'
+      if @upload.destroy
+        current_user.decrement!(:total_upload_size, @upload.upload_file.data.size)
+        if Upload.where(user: current_user).count.zero?
+          flash[:error] = 'You have no files to see.'
+          redirect_to new_upload_path
+        else
+          redirect_to uploads_path, notice: 'File was successfully deleted.'
+        end
+      else
+        redirect_to @upload, alert: 'Something went wrong, file could not be deleted!'
+      end
     end
 
     def download_file
       @upload_file = @upload.upload_file
-      pdf_blob = @upload_file.data
+      file_blob = @upload_file.data
 
       case @upload_file.content_type
       when 'application/pdf'
-        send_data pdf_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
       when 'image/jpeg'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
       when 'image/png'
-        send_data pdf_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
+        send_data file_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
       end
     end
 
@@ -105,7 +113,7 @@ module Users
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
     end
 
     def upload
@@ -116,14 +124,33 @@ module Users
       Base64.decode64(insert_file)
     end
 
+    def new_upload
+      Upload.new(
+        comment: upload_params[:comment],
+        visible_to_user: true,
+        user: current_user,
+        added_by: 'User',
+        added_by_id: current_user.id
+      )
+    end
+
+    def new_upload_file_resources
+      {
+        content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
+        data: if upload_params[:cached_file]
+                encode(upload_params[:cached_file])
+              elsif upload_params[:file]
+                upload_params[:file].read
+              end
+      }
+    end
+
     def new_upload_file
-      UploadFile.new(name: upload_params[:name],
-                     content_type: upload_params[:file].content_type,
-                     data: if upload_params[:cached_file]
-                             encode(upload_params[:cached_file])
-                           elsif upload_params[:file]
-                             upload_params[:file].read
-                           end)
+      UploadFile.new(
+        name: upload_params[:name],
+        content_type: new_upload_file_resources[:content_type],
+        data: new_upload_file_resources[:data]
+      )
     end
 
     def email_team_members_about_upload(user, upload_file)
@@ -132,6 +159,28 @@ module Users
 
       upload_type = upload_file.content_type == 'application/pdf' ? 'PDF' : 'image'
       UploadsMailer.new_user_upload(team_members, user, upload_type).deliver_now
+    end
+
+    def handle_successful_upload_creation
+      flash[:success] = 'File added successfully!'
+      redirect_to correct_uploads_path
+    end
+
+    def handle_failed_upload_creation
+      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+      render 'new', status: :unprocessable_entity
+    end
+
+    def check_file_size
+      max_file_size = eval(ENV['MAX_FILE_SIZE'])
+      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
+      if @upload_file.data.size > max_file_size
+        'exceeds individual file size'
+      elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
+        'exceeds total file size per person'
+      else
+        'pass check'
+      end
     end
 
     def set_breadcrumbs

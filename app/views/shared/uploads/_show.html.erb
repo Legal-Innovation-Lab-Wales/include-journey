@@ -167,7 +167,7 @@
                 </div> 
               <% elsif (current_team_member && @upload.added_by == 'User') %> 
                 <div class="button-flex-item">
-                  <%= link_to download_file_user_upload_path(@upload), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
+                  <%= link_to download_file_user_upload_path(id: @upload.id, user_id: @user.id), target: '_blank', class: 'btn btn-primary w-100 mb-1' do %>
                     <i class="fas fa-download"></i> Download
                   <% end %>
                 </div>

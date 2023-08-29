@@ -102,6 +102,7 @@ class User < DeviseRecord
   validates :sex, inclusion: { in: SEX_OPTIONS }
   validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
   validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
+  validates :total_upload_size, numericality: { greater_than_or_equal_to: 0 }
 
   def dob
     date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''

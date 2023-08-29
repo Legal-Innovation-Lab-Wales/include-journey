@@ -6,10 +6,12 @@ class Upload < ApplicationRecord
   belongs_to :team_member, optional: true
   has_one :upload_file, dependent: :destroy
   has_many :upload_activity_logs
+  has_one :notification
 
   validates_presence_of :status
   validates :status, inclusion: { in: %w[pending approved] }
   validates :added_by, inclusion: { in: %w[User TeamMember] }
+  validates_associated :upload_file
   validates_format_of :comment, with: Rails.application.config.regex_text_field,
                                 message: Rails.application.config.text_field_error
 

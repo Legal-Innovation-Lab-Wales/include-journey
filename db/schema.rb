@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_09_164456) do
+ActiveRecord::Schema.define(version: 2023_08_21_124617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,13 +201,15 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "team_member_id", null: false
+    t.bigint "team_member_id"
     t.bigint "user_id"
     t.text "message"
     t.boolean "viewed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "upload_id"
     t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
+    t.index ["upload_id"], name: "index_notifications_on_upload_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -336,6 +338,7 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.string "otp_backup_codes", array: true
+    t.integer "total_upload_size", default: 0
     t.index ["confirmation_token"], name: "index_team_members_on_confirmation_token", unique: true
     t.index ["email"], name: "index_team_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_team_members_on_reset_password_token", unique: true
@@ -488,6 +491,7 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
     t.text "summary_panel"
+    t.integer "total_upload_size", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -577,6 +581,7 @@ ActiveRecord::Schema.define(version: 2023_08_09_164456) do
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
   add_foreign_key "notifications", "team_members"
+  add_foreign_key "notifications", "uploads"
   add_foreign_key "notifications", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
