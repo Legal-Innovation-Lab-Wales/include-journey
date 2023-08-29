@@ -111,5 +111,6 @@ unless TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk').present?
   team_member.save!
 end
 
-puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
 @last_time = Time.now
+puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
+# @last_time = Time.now
