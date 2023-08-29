@@ -241,11 +241,15 @@ module TeamMembers
     end
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex, 
+      params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex,
                                    :gender_identity, :religion, :ethnic_group, :disabilities,
                                    :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
-                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel)
+                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel,
+                                   :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
+                                   :brief_physical_description, :priority_id, :local_authority_id,
+                                   :support_ended_date, :next_review_date, :support_ending_reason_id,
+                                   :referred_from_id, :support_started_date, :address)
     end
 
     def users_params
