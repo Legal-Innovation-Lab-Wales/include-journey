@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_11_145917) do
+ActiveRecord::Schema.define(version: 2023_08_28_120048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accommodation_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "achievements", force: :cascade do |t|
     t.string "name", null: false
@@ -131,6 +137,16 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.index ["team_member_id"], name: "index_diary_entry_view_logs_on_team_member_id"
   end
 
+  create_table "emergency_contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "relationship"
+    t.bigint "number"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_emergency_contacts_on_user_id"
+  end
+
   create_table "goal_permissions", force: :cascade do |t|
     t.boolean "short_term", default: false
     t.boolean "long_term", default: false
@@ -160,6 +176,18 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["goal_type_id"], name: "index_goals_on_goal_type_id"
     t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "housing_providers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "local_authorities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "messages", force: :cascade do |t|
@@ -200,12 +228,43 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "team_member_id"
+    t.bigint "user_id"
+    t.text "message"
+    t.boolean "viewed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "upload_id"
+    t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
+    t.index ["upload_id"], name: "index_notifications_on_upload_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "priorities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "referred_froms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "session_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "support_ending_reasons", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "survey_answers", force: :cascade do |t|
@@ -478,9 +537,21 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
     t.boolean "suspended", default: false
     t.datetime "suspended_at"
     t.text "summary_panel"
+    t.bigint "accommodation_type_id"
+    t.bigint "housing_provider_id"
+    t.bigint "support_ending_reason_id"
+    t.bigint "referred_from_id"
+    t.bigint "priority_id"
+    t.bigint "local_authority_id"
     t.integer "total_upload_size", default: 0
+    t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
+    t.index ["local_authority_id"], name: "index_users_on_local_authority_id"
+    t.index ["priority_id"], name: "index_users_on_priority_id"
+    t.index ["referred_from_id"], name: "index_users_on_referred_from_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["support_ending_reason_id"], name: "index_users_on_support_ending_reason_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -554,6 +625,7 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
   add_foreign_key "diary_entry_permissions", "team_members"
   add_foreign_key "diary_entry_view_logs", "diary_entries"
   add_foreign_key "diary_entry_view_logs", "team_members"
+  add_foreign_key "emergency_contacts", "users"
   add_foreign_key "goal_permissions", "team_members"
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
@@ -567,6 +639,9 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
   add_foreign_key "notes", "notes", column: "replacing_id"
   add_foreign_key "notes", "team_members"
   add_foreign_key "notes", "users"
+  add_foreign_key "notifications", "team_members"
+  add_foreign_key "notifications", "uploads"
+  add_foreign_key "notifications", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
@@ -587,6 +662,12 @@ ActiveRecord::Schema.define(version: 2023_08_11_145917) do
   add_foreign_key "user_pins", "users"
   add_foreign_key "user_profile_view_logs", "team_members"
   add_foreign_key "user_profile_view_logs", "users"
+  add_foreign_key "users", "accommodation_types"
+  add_foreign_key "users", "housing_providers"
+  add_foreign_key "users", "local_authorities"
+  add_foreign_key "users", "priorities"
+  add_foreign_key "users", "referred_froms"
+  add_foreign_key "users", "support_ending_reasons"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"
