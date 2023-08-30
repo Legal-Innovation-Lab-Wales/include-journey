@@ -100,6 +100,14 @@
               </div>
             </div>
           </div>
+          <div class="row <%= 'd-none' if ENV['ORGANISATION_NAME'] == 'include-journey' %>">
+            <div class="col-md">
+              <div class="form-floating">
+                <%= form.text_field :address, class: 'form-control', value: resource.address %>
+                <%= form.label :address %>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md">
               <div class="form-floating">

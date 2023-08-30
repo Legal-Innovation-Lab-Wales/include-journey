@@ -21,7 +21,8 @@ module Users
     private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :mobile_number, :terms, :email, :password, :password_confirmation, :summary_panel)
+      params.require(:user).permit(:first_name, :last_name, :mobile_number, :terms, :email, :password,
+                                   :password_confirmation, :summary_panel, :address)
     end
 
     def check_captcha
