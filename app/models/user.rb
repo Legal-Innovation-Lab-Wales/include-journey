@@ -30,7 +30,6 @@ class User < DeviseRecord
   has_many :upload_activity_logs, through: :uploads
 
   # Wallich Journey Specific Association
-  # Wallich Journey is a tenant
   has_one :emergency_contact
   belongs_to :accommodation_type, optional: true
   belongs_to :housing_provider, optional: true
@@ -106,6 +105,7 @@ class User < DeviseRecord
   validates_format_of :email, with: Rails.application.config.regex_email
   validates_format_of :disabilities, with: Rails.application.config.regex_text_field
   validates_format_of :summary_panel, with: Rails.application.config.regex_text_field
+  validates_format_of :address, with: Rails.application.config.regex_text_field
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
   validates :ethnic_group, inclusion: { in: ETHNICITY_OPTIONS }
