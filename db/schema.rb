@@ -554,7 +554,7 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.bigint "occupational_therapist_scores", default: [], array: true
     t.datetime "occupational_therapist_scores_date"
     t.bigint "old_occupational_therapist_scores", default: [], array: true
-    t.bigint "old_occupational_therapist_scores_dates", default: [], array: true
+    t.datetime "old_occupational_therapist_scores_dates", default: [], array: true
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"

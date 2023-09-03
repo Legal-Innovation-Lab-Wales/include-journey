@@ -88,10 +88,25 @@ module TeamMembers
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
       else
-        @user.update(user_params)
+        if user_params[:first_occupational_therapist_score].present? && user_params[:second_occupational_therapist_score].present?
+          ot_scores = user_params.extract!(:first_occupational_therapist_score, :second_occupational_therapist_score)
+          update_occupational_therapist_scores(ot_scores)
+        end
+        @user.update(user_params.except(:first_occupational_therapist_score, :second_occupational_therapist_score))
       end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
+    end
+
+    def update_occupational_therapist_scores(ot_scores)
+      scores = [ot_scores[:first_occupational_therapist_score],
+                ot_scores[:second_occupational_therapist_score]]
+      unless @user.occupational_therapist_scores == []
+        @user.old_occupational_therapist_scores.push(@user.occupational_therapist_scores)
+        @user.old_occupational_therapist_scores_dates.push(@user.occupational_therapist_scores_date)
+        @user.save!
+      end
+      @user.update(occupational_therapist_scores: scores, occupational_therapist_scores_date: Time.now)
     end
 
     def suspend
@@ -249,7 +264,8 @@ module TeamMembers
                                    :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
                                    :brief_physical_description, :priority_id, :local_authority_id,
                                    :support_ended_date, :next_review_date, :support_ending_reason_id,
-                                   :referred_from_id, :support_started_date, :address)
+                                   :referred_from_id, :support_started_date, :address,
+                                   :first_occupational_therapist_score, :second_occupational_therapist_score)
     end
 
     def users_params
