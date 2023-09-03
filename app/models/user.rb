@@ -37,7 +37,7 @@ class User < DeviseRecord
   belongs_to :support_ending_reason, optional: true
   belongs_to :referred_from, optional: true
   belongs_to :priority, optional: true
-  belongs_to :local_authority, optional: true
+  belongs_to :wallich_local_authority, optional: true
 
   before_update :verify_achievements
   before_update :mail_approved_user, if: -> { approved_changed? && approved? }

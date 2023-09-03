@@ -184,12 +184,6 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "local_authorities", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "team_member_id", null: false
@@ -543,7 +537,7 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.bigint "support_ending_reason_id"
     t.bigint "referred_from_id"
     t.bigint "priority_id"
-    t.bigint "local_authority_id"
+    t.bigint "wallich_local_authority_id"
     t.string "address"
     t.datetime "referral_date"
     t.datetime "mam_date"
@@ -558,12 +552,18 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
-    t.index ["local_authority_id"], name: "index_users_on_local_authority_id"
     t.index ["priority_id"], name: "index_users_on_priority_id"
     t.index ["referred_from_id"], name: "index_users_on_referred_from_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["support_ending_reason_id"], name: "index_users_on_support_ending_reason_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+    t.index ["wallich_local_authority_id"], name: "index_users_on_wallich_local_authority_id"
+  end
+
+  create_table "wallich_local_authorities", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "wba_scores", force: :cascade do |t|
@@ -675,10 +675,10 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
   add_foreign_key "user_profile_view_logs", "users"
   add_foreign_key "users", "accommodation_types"
   add_foreign_key "users", "housing_providers"
-  add_foreign_key "users", "local_authorities"
   add_foreign_key "users", "priorities"
   add_foreign_key "users", "referred_froms"
   add_foreign_key "users", "support_ending_reasons"
+  add_foreign_key "users", "wallich_local_authorities"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
   add_foreign_key "wellbeing_assessments", "team_members"
