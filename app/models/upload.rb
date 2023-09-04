@@ -4,6 +4,7 @@
 class Upload < ApplicationRecord
   belongs_to :user
   belongs_to :team_member, optional: true
+  belongs_to :parent_folder, class_name: 'Folder', optional: true
   has_one :upload_file, dependent: :destroy
   has_many :upload_activity_logs
   has_one :notification
