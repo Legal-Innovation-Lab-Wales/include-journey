@@ -1,9 +1,9 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
-  class FolderController < ApplicationController
+  class FoldersController < ApplicationController
     def index
       @top_folders = Folder.where(parent_folder: nil)
-      @top_uploads = Uploads.where(parent_folder: nil)
+      @top_uploads = Upload.where(parent_folder: nil)
     end
 
     private

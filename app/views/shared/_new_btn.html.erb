@@ -3,6 +3,9 @@
     <%= link_to path, class: 'btn btn-success' do %>
       <i class="fas fa-upload"></i> <%= text %>
     <% end %>
+    <%= link_to folders_path, class: 'btn btn-primary' do %>
+      <i class="fas fa-folder"></i> <%= "My Folders" %>
+    <% end %>
   <% else %>  
     <%= link_to path, class: 'btn btn-success' do %>
       <i class="fas fa-plus-circle"></i> <%= text %>
