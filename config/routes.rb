@@ -167,6 +167,7 @@ Rails.application.routes.draw do
         end
       end
       resources :notifications
+      resources :folders
     end
     get '/*path', to: redirect('')
   end
