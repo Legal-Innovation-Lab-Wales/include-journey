@@ -127,6 +127,7 @@ Rails.application.routes.draw do
             get :approve
           end
         end
+        resources :folders
       end
 
       resources :analytics, only: %i[index] do
@@ -167,7 +168,6 @@ Rails.application.routes.draw do
         end
       end
       resources :notifications
-      resources :folders
     end
     get '/*path', to: redirect('')
   end
