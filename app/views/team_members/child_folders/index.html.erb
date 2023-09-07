@@ -7,7 +7,7 @@
         <div class="row card-view">
           <% @resources.each do |folder| %>
             <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-center" >
-              <%= link_to user_folder_children_path(folder_id: folder.id), class: 'upload-link' do %>
+              <%= link_to user_folder_children_path, class: 'upload-link' do %>
                 <%= folder.name%>
               <% end %>
             </div>
