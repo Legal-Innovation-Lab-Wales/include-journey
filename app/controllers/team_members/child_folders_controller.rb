@@ -1,8 +1,8 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class ChildFoldersController < ApplicationController
+    before_action :parent_folder
     before_action :set_breadcrumbs
-    before_action :parent_folder, only: :index
     include Pagination
 
     def index
@@ -44,9 +44,9 @@ module TeamMembers
       add_breadcrumb('Users', users_path, 'fas fa-users')
       add_breadcrumb(user.full_name, user_path(user), 'fas fa-user')
       add_breadcrumb('Files', user_uploads_path, 'fas fa-file')
-      add_breadcrumb('My Folders', nil, 'fas fa-folder') unless action_name != 'index'
+      add_breadcrumb('My Folders', user_folders_path, 'fas fa-folder') unless action_name != 'index'
 
-      add_breadcrumb('My Folders', nil, 'fas fa-folder') unless action_name != 'index'
+      add_breadcrumb(@parent_folder.name, nil, 'fas fa-folder') unless action_name != 'index'
     end
   end
 end
