@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class ChildFoldersController < ApplicationController
     before_action :set_breadcrumbs
+    before_action :parent_folder, only: :index
     include Pagination
 
     def index
@@ -10,7 +11,7 @@ module TeamMembers
     protected
 
     def resources
-      Folder.where.not(parent_folder: nil)
+      Folder.where(parent_folder_id: @parent_folder.id)
     end
 
     def resources_per_page
