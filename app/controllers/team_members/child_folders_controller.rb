@@ -24,16 +24,20 @@ module TeamMembers
 
     private
 
+    def child_folder_params
+      params.permit(:query, :user_id, :folder_id)
+    end
+
     def child_folder
-      @folder = Folder.find(params[:id])
+      @folder = Folder.find(child_folder_params[:id])
     end
 
     def parent_folder
-      @parent_folder = Folder.find(params[:folder_id])
+      @parent_folder = Folder.find(child_folder_params[:folder_id])
     end
 
     def user
-      @user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.find(child_folder_params[:user_id])
     end
 
     def child_folder_search
