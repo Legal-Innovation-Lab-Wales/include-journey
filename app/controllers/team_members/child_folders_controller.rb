@@ -11,7 +11,7 @@ module TeamMembers
     protected
 
     def resources
-      Folder.where(parent_folder_id: @parent_folder.id)
+      current_team_member.folders.where(parent_folder_id: @parent_folder.id)
     end
 
     def resources_per_page

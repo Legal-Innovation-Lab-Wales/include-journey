@@ -4,15 +4,10 @@ module TeamMembers
     before_action :set_breadcrumbs
     include Pagination
 
-    def index
-      @top_folders = Folder.where(parent_folder: nil)
-      @top_uploads = Upload.where(parent_folder: nil)
-    end
-
     protected
 
     def resources
-      Folder.where(parent_folder: nil)
+      current_team_member.folders.where(parent_folder: nil)
     end
 
     def resources_per_page
