@@ -150,9 +150,11 @@ ActiveRecord::Schema.define(version: 2023_09_04_120446) do
   create_table "folders", force: :cascade do |t|
     t.string "name"
     t.bigint "parent_folder_id"
+    t.bigint "team_member_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+    t.index ["team_member_id"], name: "index_folders_on_team_member_id"
   end
 
   create_table "goal_permissions", force: :cascade do |t|
@@ -648,6 +650,7 @@ ActiveRecord::Schema.define(version: 2023_09_04_120446) do
   add_foreign_key "diary_entry_view_logs", "team_members"
   add_foreign_key "emergency_contacts", "users"
   add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "folders", "team_members"
   add_foreign_key "goal_permissions", "team_members"
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"

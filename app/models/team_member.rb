@@ -30,6 +30,7 @@ class TeamMember < DeviseRecord
   has_many :notifications
   has_many :uploads
   has_many :upload_activity_logs
+  has_many :folders
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
