@@ -127,9 +127,9 @@ Rails.application.routes.draw do
             get :approve
           end
         end
-        resources :folders, only: %i[index new create update destroy], as: :folders do
-          #resources :child_folders, only: %i[show create update destroy], as: :children
+        resources :folders, only: %i[index create update destroy], as: :folders do
           get 'children', to: 'child_folders#index', as: 'children'
+          post 'children', to: 'child_folders#create', as: 'create_child'
         end
       end
 

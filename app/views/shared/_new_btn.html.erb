@@ -6,6 +6,10 @@
     <%= link_to user_folders_path, class: 'btn btn-primary' do %>
       <i class="fas fa-folder"></i> <%= "My Folders" %>
     <% end %>
+  <% elsif controller_name == 'folders' || 'child_folders' %>
+    <button class="btn btn-success my-2 py-2 px-3" type="button" data-bs-toggle="modal" data-bs-target="#folder-modal">
+      <i class="fas fa-plus-circle"></i> Create Folder
+    </button>
   <% else %>  
     <%= link_to path, class: 'btn btn-success' do %>
       <i class="fas fa-plus-circle"></i> <%= text %>

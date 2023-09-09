@@ -1,17 +1,28 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class ChildFoldersController < ApplicationController
-    before_action :current_folder
+    before_action :current_parent_folder
     before_action :set_breadcrumbs
+    before_action :new_child_folder, only: %i[index]
+    before_action :child_folder_params, only: %i[create update]
     include Pagination
 
-    def index;
+    def create
+      @child_folder = new_child_folder
+      @child_folder.name = child_folder_params[:name]
+      @child_folder.parent_folder_id = child_folders_params[:folder_id]
+      if @child_folder.save
+        redirect_to user_folder_children_path(@user), flash: { notice: 'Successfully created folder!' }
+      else
+        redirect_to user_folder_children_path(@user), flash: { error: 'Folder not created. Please only use standard
+                                                                characters and punctuation' }
+      end
     end
 
     protected
 
     def resources
-      current_team_member.folders.where(parent_folder_id: @current_folder.id)
+      current_team_member.folders.where(parent_folder_id: @current_parent_folder.id)
     end
 
     def resources_per_page
@@ -25,19 +36,27 @@ module TeamMembers
     private
 
     def child_folder_params
-      params.permit(:query, :user_id, :folder_id)
+      params.require(:folder).permit(:name)
     end
 
-    def current_folder
-      @current_folder = Folder.find(child_folder_params[:folder_id])
+    def child_folders_params
+      params.permit(:query, :limit, :user_id, :folder_id, :folder, :commit, :authenticity_token)
+    end
+
+    def current_parent_folder
+      @current_parent_folder = Folder.find(child_folders_params[:folder_id])
     end
 
     def user
-      @user = User.find(child_folder_params[:user_id])
+      @user = User.find(child_folders_params[:user_id])
     end
 
     def child_folder_search
       'lower(name) similar to lower(:query)'
+    end
+
+    def new_child_folder
+      @new_child_folder = current_team_member.folders.new
     end
 
     def set_breadcrumbs
@@ -59,8 +78,8 @@ module TeamMembers
     end
 
     def store_folder_tree
-      folder_arr = [@current_folder]
-      child_folder = @current_folder
+      folder_arr = [@current_parent_folder]
+      child_folder = @current_parent_folder
       until child_folder.parent_folder_id.nil?
         parent_folder = find_folder(child_folder.parent_folder_id)
         folder_arr.unshift(parent_folder)

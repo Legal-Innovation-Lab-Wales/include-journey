@@ -2,7 +2,20 @@ module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class FoldersController < ApplicationController
     before_action :set_breadcrumbs
+    before_action :new_folder, only: %i[index]
+    before_action :folder_params, only: %i[create update]
     include Pagination
+
+    def create
+      @folder = new_folder
+      @folder.name = folder_params[:name]
+      if @folder.save
+        redirect_to user_folders_path(@user), flash: { notice: 'Successfully created folder!' }
+      else
+        redirect_to user_folders_path(@user), flash: { error: 'Folder not created. Please only use standard
+                                                                characters and punctuation' }
+      end
+    end
 
     protected
 
@@ -20,6 +33,10 @@ module TeamMembers
 
     private
 
+    def folder_params
+      params.require(:folder).permit(:name)
+    end
+
     def folder
       @folder = Folder.find(params[:id])
     end
@@ -30,6 +47,10 @@ module TeamMembers
 
     def folder_search
       'lower(name) similar to lower(:query)'
+    end
+
+    def new_folder
+      @new_folder = current_team_member.folders.new
     end
 
     def set_breadcrumbs

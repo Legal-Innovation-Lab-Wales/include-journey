@@ -1,6 +1,7 @@
-<%= render 'layouts/searchable', class_list: 'user uploads', header: 'My Folders', index: 'user_folders',
+<%= render 'layouts/searchable', class_list: 'user folders', header: 'My Folders', index: 'user_folders',
            stats: render(partial: 'shared/folders/stats'), 
-           new_btn: render(partial: 'shared/new_btn', locals: { path: new_user_folder_path, text: 'Create Folder'}) do %>
+           new_btn: render(partial: 'shared/new_btn') do %>
+  <%= render 'shared/folders/modal', folder: @new_folder, action: "create", controller: "folders" %>
   <div class="container p-0">
     <div class="row">
       <div class="col">
