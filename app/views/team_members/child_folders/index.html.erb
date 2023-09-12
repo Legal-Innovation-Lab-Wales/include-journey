@@ -6,11 +6,19 @@
     <div class="row">
       <div class="col">
         <div class="row card-view">
-          <% @resources.each do |folder| %>
+          <% @resources.each do |child_folder| %>
             <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-center" >
-              <%= link_to user_folder_children_path(folder_id: folder.id), class: 'upload-link' do %>
-                <%= folder.name%>
-              <% end %>
+              <div class="dropdown">
+                <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" id="childFolderDropdownMenu" aria-expanded="false">
+                  <%= child_folder.name%>
+                </button>
+                <ul class="dropdown-menu" id="childFolderDropdownMenu" aria-labelledby="childFolderDropdownMenu">
+                  <li><%= link_to "Open", user_folder_children_path(folder_id: child_folder.id), tabindex: "-1", class: "dropdown-item" %></li>
+                  <li><%= render 'shared/folders/dropdown_modal', folder: @new_child_folder, action: 'create_sub_folder', url: user_folder_create_child_path(folder_id: child_folder.id) %> </li>
+                  <li><a class="dropdown-item" tabindex="-1" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" tabindex="-1" href="#">Something else here</a></li>
+                </ul>
+              </div>
             </div>
           <% end %>
         </div>

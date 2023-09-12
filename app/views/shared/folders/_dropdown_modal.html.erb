@@ -1,0 +1,24 @@
+<a class="dropdown-item" href="#">
+    Create Sub Folder
+</a>
+
+<div class="dropdown-menu dropdown-submenu p-4" aria-labelledby="createFolderDropdownMenu">
+    <p class='text-center'><strong> Create Sub Folder</strong></p>
+    <%= form_for folder, url: url do |form| %>
+        <div class="form-group">
+            <div class="form-floating mb-3">  
+                <%= form.label :name, 'Folder Name:'%>
+                <%= form.text_field :name, class: 'form-control text', aria: { label: 'Folder Name:' }, required: 'true' %>
+            </div>
+        </div>
+
+        <div class="d-flex w-100">
+            <div class="w-50 px-2">
+                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Cancel</button>
+            </div>
+            <div class="w-50 px-2">
+                <%= form.submit "#{action}".titleize, class: 'btn btn-success w-100', id: 'submit' %>
+            </div>
+        </div>
+    <% end %>
+</div>

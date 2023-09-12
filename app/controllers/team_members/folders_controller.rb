@@ -37,6 +37,10 @@ module TeamMembers
       params.require(:folder).permit(:name)
     end
 
+    def folders_params
+      params.permit(:name, :current_folder_id)
+    end
+
     def folder
       @folder = Folder.find(params[:id])
     end
