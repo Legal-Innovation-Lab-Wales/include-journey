@@ -111,5 +111,21 @@ unless TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk').present?
   team_member.save!
 end
 
-puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
+unless TeamMember.find_by_email('amarafinbarrs123@gmail.com').present?
+  team_member = TeamMember.new(
+    first_name: 'Amara',
+    last_name: 'Finbarrs-Ezema',
+    email: 'amarafinbarrs123@gmail.com',
+    mobile_number: '07572416675',
+    admin: false,
+    approved: true,
+    terms: true,
+    suspended: false,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
 @last_time = Time.now
+puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
