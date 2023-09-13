@@ -89,7 +89,7 @@
       <div class="navbar-right-buttons">
         <div class="navbar-items">
           <% if current_team_member %>
-            <%= link_to notifications_path, class: "btn btn-success" do %>
+            <%= link_to notifications_path, class: "btn btn-light" do %>
               <div class="nav-label hide"> My Notifications</div>
               <div class="notification">
                 <i class="fas fa-bell"></i>
@@ -99,7 +99,7 @@
               </div>
             <%end%>
             <% if current_team_member.admin? %>
-              <%= link_to approvals_path, class: 'btn btn-info' do %>
+              <%= link_to approvals_path, class: 'btn btn-secondary' do %>
                 <i class="fas fa-check"></i>
                 <div class="nav-label hide">Approvals</div>
               <% end %>
