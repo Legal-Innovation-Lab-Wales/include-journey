@@ -125,15 +125,15 @@ module TeamMembers
     def resources
       case @sort
       when 'average'
-        @users = User.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
+        @users = team_member_users.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
       when 'first_name'
         # switch direction for alphabet sort
         @direction_flipped = @direction == 'desc' ? 'asc' : 'desc'
-        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
+        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction_flipped, "last_name": @direction_flipped })
       else
-        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
+        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction })
       end
@@ -168,6 +168,14 @@ module TeamMembers
 
     private
 
+    def team_member_users
+      if current_team_member.admin?
+        User.all
+      else
+        current_team_member.users
+      end
+    end
+
     def log_view
       view_log = current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
       view_log.increment_view_count
@@ -177,7 +185,7 @@ module TeamMembers
     end
 
     def user
-      @user = User.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @user = team_member_users.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end
