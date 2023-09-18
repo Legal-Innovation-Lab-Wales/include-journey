@@ -6,12 +6,6 @@ module TeamMembers
     include Pagination
 
     def index
-      puts "ANSWER!!!"
-      puts current_team_member.admin
-      unless current_team_member.admin
-        return redirect_back(fallback_location: root_path), flash: { error: 'You are not allowed to do that!'}
-      end
-
       render 'index'
     end
 
