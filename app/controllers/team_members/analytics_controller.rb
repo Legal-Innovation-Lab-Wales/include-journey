@@ -121,13 +121,28 @@ module TeamMembers
       @resource = params['ethnicity'].present? ? @resource.joins(:user).where(build_query('users', 'ethnic_group', params['ethnicity'], @ethnic_groups)) : @resource
       @resource = params['religion'].present? ? @resource.joins(:user).where(build_query('users', 'religion', params['religion'], @religions)) : @resource
       @resource = params['age'].present? ? @resource.joins(:user).where(build_age_query(params['age'], @ages)) : @resource
-      return unless params['tag'].present?
+      @resource = params['tag'].present? ? apply_filter_helper_for_tag(@resource) : @resource
+      return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
 
-      tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
-      users = User.all.joins(:user_tags).merge(tags)
-      @resource = @resource.joins(:user).merge(users).order_by('Date')
+      values = [@accommodation_types, @housing_providers, @support_ending_reasons, @referred_froms, @priorities, @local_authorities]
+      %w[accommodation_type housing_provider reason_support_ended referred_from priority local_authority].each_with_index do |key, index|
+        @resource = params[key].present? ? apply_filter_helper(@resource, key, values[index]) : @resources
+      end
     end
     # rubocop:enable Metrics/LineLength
+
+    def apply_filter_helper_for_tag(resource)
+      tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
+      users = User.all.joins(:user_tags).merge(tags)
+      resource.joins(:user).merge(users).order_by('Date')
+    end
+
+    def apply_filter_helper(resource, name, values)
+      model = name.split('_').map(&:capitalize).join.constantize.all
+      filtered_model = model.where(build_query(name.pluralize, name, params[name], values))
+      users = User.all.joins(name.to_sym).merge(filtered_model)
+      resource.joims(:user).merge(users)
+    end
 
     def find_filters
       @ages = ['Under 22', '23-30', '31-36', '37-45', '46-55', '56-69', '70 and Over']
@@ -137,6 +152,14 @@ module TeamMembers
       @religions = User.distinct.pluck(:religion).reject!(&:nil?)
       @team_member_emails = TeamMember.distinct.pluck(:email)
       @tags = Tag.distinct.pluck(:tag)
+      return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+      @accommodation_types = AccommodationType.distinct.pluck(:name)
+      @housing_providers = HousingProvider.distinct.pluck(:name)
+      @support_ending_reasons = SupportEndingReason.distinct.pluck(:name)
+      @referred_froms = ReferredFrom.distinct.pluck(:name)
+      @local_authorities = WallichLocalAuthority.distinct.pluck(:name)
+      @priorities = Priority.distinct.pluck(:name)
     end
 
     def age_filter(field, age_range)
