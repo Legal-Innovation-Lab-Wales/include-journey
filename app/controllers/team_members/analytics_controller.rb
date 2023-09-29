@@ -125,23 +125,26 @@ module TeamMembers
       return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
 
       values = [@accommodation_types, @housing_providers, @support_ending_reasons, @referred_froms, @priorities, @local_authorities]
-      %w[accommodation_type housing_provider reason_support_ended referred_from priority local_authority].each_with_index do |key, index|
-        @resource = params[key].present? ? apply_filter_helper(@resource, key, values[index]) : @resources
+      %w[accommodation-type housing-provider support-ending-reason referred-from priority local-authority].each_with_index do |key, index|
+        @resource = params[key].present? ? apply_filter_helper(@resource, key, values[index]) : @resource
       end
+
+      @resource
     end
     # rubocop:enable Metrics/LineLength
 
     def apply_filter_helper_for_tag(resource)
       tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
       users = User.all.joins(:user_tags).merge(tags)
-      resource.joins(:user).merge(users).order_by('Date')
+      resource.joins(:user).merge(users)
     end
 
     def apply_filter_helper(resource, name, values)
-      model = name.split('_').map(&:capitalize).join.constantize.all
-      filtered_model = model.where(build_query(name.pluralize, name, params[name], values))
-      users = User.all.joins(name.to_sym).merge(filtered_model)
-      resource.joims(:user).merge(users)
+      model = name.split('-').map(&:capitalize).join.constantize.all
+      modified_name = name.gsub('-', '_')
+      filtered_model = model.joins(:user).where(build_query(modified_name.pluralize, 'name', params[name], values))
+      users = User.all.joins(modified_name.to_sym).merge(filtered_model)
+      resource.joins(:user).merge(users)
     end
 
     def find_filters
