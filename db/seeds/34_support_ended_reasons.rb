@@ -21,8 +21,11 @@ if SupportEndingReason.count.zero?
   SupportEndingReason.create!(name: 'Has requested for support to end')
   SupportEndingReason.create!(name: 'Deceased')
 
+  User.all.each do |user|
+    user.support_ending_reason = SupportEndingReason.all.sample
+    user.save!
+  end
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
-else
-  SupportEndingReason.delete_all
 end

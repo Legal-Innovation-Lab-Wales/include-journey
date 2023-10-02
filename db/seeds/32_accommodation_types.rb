@@ -26,6 +26,11 @@ if AccommodationType.count.zero?
   AccommodationType.create!(name: '55+ accommodation / sheltered living')
   AccommodationType.create!(name: 'Living with Parents / family')
 
+  User.all.each do |user|
+    user.accommodation_type = AccommodationType.all.sample
+    user.save!
+  end
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

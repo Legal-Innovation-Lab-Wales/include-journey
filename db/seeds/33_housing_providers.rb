@@ -18,6 +18,11 @@ if HousingProvider.count.zero?
   HousingProvider.create!(name: 'Owner occupier')
   HousingProvider.create!(name: 'PRS')
 
+  User.all.each do |user|
+    user.housing_provider = HousingProvider.all.sample
+    user.save!
+  end
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

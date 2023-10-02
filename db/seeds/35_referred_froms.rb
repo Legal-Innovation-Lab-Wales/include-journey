@@ -18,6 +18,11 @@ if ReferredFrom.count.zero?
   ReferredFrom.create!(name: 'Owner occupier')
   ReferredFrom.create!(name: 'PRS')
 
+  User.all.each do |user|
+    user.referred_from = ReferredFrom.all.sample
+    user.save!
+  end
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end

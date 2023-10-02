@@ -5,6 +5,11 @@ if WallichLocalAuthority.count.zero?
   WallichLocalAuthority.create!(name: 'NPT')
   WallichLocalAuthority.create!(name: 'Other')
 
+  User.all.each do |user|
+    user.wallich_local_authority = WallichLocalAuthority.all.sample
+    user.save!
+  end
+
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
 end
