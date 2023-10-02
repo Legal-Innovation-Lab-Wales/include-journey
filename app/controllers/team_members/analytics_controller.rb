@@ -13,15 +13,17 @@ module TeamMembers
 
     def csv_headers
       if params[:data] == 'Wellbeing Assessments'
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
-         'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers +
+          ['Team Member ID', 'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
-        ['ID', 'Creation Date','Notes','Start Date','End Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type','Contact Color', 'Contact Purpose']
+        ['ID', 'Creation Date', 'Notes', 'Start Date', 'End Date', 'User ID', 'User Name',
+         'User Date Of Birth', 'User Sex', 'User Gender Identity', 'User Ethnic Group',
+         'User Disabilities', 'User Tags'] + wallich_specific_headers +
+          ['Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type', 'Contact Color', 'Contact Purpose']
       else
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Feeling', 'Entry']
+        ['ID', 'Date', 'Feeling', 'Entry', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers
       end
     end
 
@@ -42,6 +44,13 @@ module TeamMembers
     end
 
     private
+
+    def wallich_specific_headers
+      return [] unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+      ['User Accommodation Type', 'User Housing Provider', 'Reason For Ending Support',
+       'Referred From', 'User Priority', 'User Local Authority']
+    end
 
     def update_resource
       base_resources

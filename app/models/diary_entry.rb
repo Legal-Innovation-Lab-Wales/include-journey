@@ -29,7 +29,7 @@ class DiaryEntry < PermissionRecord
   end
 
   def to_csv
-    [id, created] + user.to_csv + [feeling, entry]
+    [id, created, feeling, entry] + user.to_csv
   end
 
   def json
