@@ -94,15 +94,63 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="col p-0">
-                    <div class="form-floating mb-0">
-                      <%= f.text_field :disabilities, class: 'form-control' %>
-                      <%= f.label :disabilities %>
+                <% if ENV['ORGANISATION_NAME'] == 'include-journey' %>
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_field :disabilities, class: 'form-control' %>
+                        <%= f.label :disabilities %>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <% elsif ENV['ORGANISATION_NAME'] == 'wallich-journey'%>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :disabilities, class: 'form-control' %>
+                        <%= f.label :disabilities %>
+                      </div>
+                    </div>
+
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :emergency_contact_name, class: 'form-control', value: @user.emergency_contact.name if !@user.emergency_contact.nil? %>
+                        <%= f.label :emergency_contact_name do %>
+                          Emergency Contact's Name
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :emergency_contact_relationship, class: 'form-control', value: @user.emergency_contact.relationship if !@user.emergency_contact.nil? %>
+                        <%= f.label :emergency_contact_relationship do %>
+                          Emergency Contact's Relationship
+                        <% end %>
+                      </div>
+                    </div>
+
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :emergency_contact_number, class: 'form-control', value: @user.emergency_contact.number if !@user.emergency_contact.nil? %>
+                        <%= f.label :emergency_contact_number do %>
+                          Emergency Contact's Number
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_field :address, class: 'form-control' %>
+                        <%= f.label :address %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
               </div>
             </div>
 
@@ -110,120 +158,266 @@
 
             <div class="col-lg">
               <div class="container">
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.text_field :nomis_id, class: 'form-control', placeholder: 'NOMIS ID' %>
-                      <%= f.label :nomis_id do %>
-                        NOMIS ID
-                      <% end %>
+                <% if ENV['ORGANISATION_NAME'] == 'include-journey' %>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :nomis_id, class: 'form-control', placeholder: 'NOMIS ID' %>
+                        <%= f.label :nomis_id do %>
+                          NOMIS ID
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.text_field :pnc_no, class: 'form-control', placeholder: 'PNC No.' %>
-                      <%= f.label :pnc_no do %>
-                        PNC No.
-                      <% end %>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :pnc_no, class: 'form-control', placeholder: 'PNC No.' %>
+                        <%= f.label :pnc_no do %>
+                          PNC No.
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :delius_no, class: 'form-control', placeholder: 'DELIUS No.' %>
+                        <%= f.label :delius_no do %>
+                          DELIUS No.
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.text_field :delius_no, class: 'form-control', placeholder: 'DELIUS No.' %>
-                      <%= f.label :delius_no do %>
-                        DELIUS No.
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.date_field :enrolled_at, class: 'form-control' %>
-                      <%= f.label :enrolled_at %>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :enrolled_at, class: 'form-control' %>
+                        <%= f.label :enrolled_at %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :intervened_at, class: 'form-control' %>
+                        <%= f.label :intervened_at do %>
+                          Began Receiving Intervention
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.date_field :intervened_at, class: 'form-control' %>
-                      <%= f.label :intervened_at do %>
-                        Began Receiving Intervention
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col p-0">
-                    <div class="form-floating">
-                      <%= f.text_field :release_establishment, class: 'form-control',
-                                       placeholder: 'Establishment Released From' %>
-                      <%= f.label :release_establishment do %>
-                        Establishment Released From
-                      <% end %>
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_field :release_establishment, class: 'form-control',
+                                        placeholder: 'Establishment Released From' %>
+                        <%= f.label :release_establishment do %>
+                          Establishment Released From
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.text_field :probation_area, class: 'form-control', placeholder: 'Probation Area' %>
-                      <%= f.label :probation_area %>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :probation_area, class: 'form-control', placeholder: 'Probation Area' %>
+                        <%= f.label :probation_area %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.text_field :local_authority, class: 'form-control', placeholder: 'Local Authority' %>
+                        <%= f.label :local_authority %>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.text_field :local_authority, class: 'form-control', placeholder: 'Local Authority' %>
-                      <%= f.label :local_authority %>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.date_field :pilot_completed_at, class: 'form-control', placeholder: 'Completed Pilot' %>
-                      <%= f.label :pilot_completed_at do %>
-                        Completed Pilot
-                      <% end %>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :pilot_completed_at, class: 'form-control', placeholder: 'Completed Pilot' %>
+                        <%= f.label :pilot_completed_at do %>
+                          Completed Pilot
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :pilot_withdrawn_at, class: 'form-control', placeholder: 'Withdrawn' %>
+                        <%= f.label :pilot_withdrawn_at do %>
+                          Withdrawn
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md">
-                    <div class="form-floating">
-                      <%= f.date_field :pilot_withdrawn_at, class: 'form-control', placeholder: 'Withdrawn' %>
-                      <%= f.label :pilot_withdrawn_at do %>
-                        Withdrawn
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col p-0">
-                    <div class="form-floating">
-                      <%= f.text_field :withdrawn_reason, class: 'form-control', placeholder: 'Reason For Withdrawal' %>
-                      <%= f.label :withdrawn_reason do %>
-                        Reason For Withdrawal
-                      <% end %>
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_field :withdrawn_reason, class: 'form-control', placeholder: 'Reason For Withdrawal' %>
+                        <%= f.label :withdrawn_reason do %>
+                          Reason For Withdrawal
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col p-0">
-                    <div class="form-floating">
-                      <%= f.text_field :index_offence, class: 'form-control', placeholder: 'Index Offence' %>
-                      <%= f.label :index_offence do %>
-                        Index Offence
-                      <% end %>
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_field :index_offence, class: 'form-control', placeholder: 'Index Offence' %>
+                        <%= f.label :index_offence do %>
+                          Index Offence
+                        <% end %>
+                      </div>
                     </div>
                   </div>
-                </div>
+
+                <% elsif ENV['ORGANISATION_NAME'] == 'wallich-journey'%> 
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :referral_date, class: 'form-control', value: (@user.referral_date.strftime('%Y-%m-%d') if !@user.referral_date.nil?) %>
+                        <%= f.label :referral_date do %>
+                          Referral Date
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :mam_date, class: 'form-control', value: (@user.mam_date.strftime('%Y-%m-%d') if !@user.mam_date.nil?) %>
+                        <%= f.label :mam_date do %>
+                          MAM Date
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :accommodation_type_id, AccommodationType.all, :id, :name, { selected: @user.accommodation_type_id }, { class: 'form-select' }  %>
+                        <%= f.label :accommodation_type_id do %>
+                          Accommodation Type
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :housing_provider_id, HousingProvider.all, :id, :name, { selected: @user.housing_provider_id }, { class: 'form-select' }  %>
+                        <%= f.label :housing_provider_id do %>
+                          Housing Provider
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :enrolled_at, class: 'form-control', value: (@user.enrolled_at.strftime('%Y-%m-%d') if !@user.enrolled_at.nil?) %>
+                        <%= f.label :enrolled_at do %>
+                          Enrolled Date
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :support_started_date, class: 'form-control', value: (@user.support_started_date.strftime('%Y-%m-%d') if !@user.support_started_date.nil?) %>
+                        <%= f.label :support_started_date do %>
+                          Support Started Date
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col p-0">
+                      <div class="form-floating">
+                        <%= f.text_area :brief_physical_description, class: 'form-control', placeholder: 'Brief Physical Description', value: @user.brief_physical_description %>
+                        <%= f.label :brief_physical_description do %>
+                          Brief Physical Description
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :priority_id, Priority.all, :id, :name, { selected: @user.priority_id }, { class: 'form-select' }  %>
+                        <%= f.label :priority_id %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :wallich_local_authority_id, WallichLocalAuthority.all, :id, :name, { selected: @user.wallich_local_authority_id }, { class: 'form-select' }  %>
+                        <%= f.label :wallich_local_authority_id do %>
+                          Local Authority
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :support_ended_date, class: 'form-control', value: (@user.support_ended_date.strftime('%Y-%m-%d') if !@user.support_ended_date.nil?) %>
+                        <%= f.label :support_ended_date do %>
+                          Support Ended Date
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.date_field :next_review_date, class: 'form-control', value: (@user.next_review_date.strftime('%Y-%m-%d') if !@user.next_review_date.nil?) %>
+                        <%= f.label :next_review_date do %>
+                          Next Review Date
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :support_ending_reason_id, SupportEndingReason.all, :id, :name, { selected: @user.support_ending_reason_id }, { class: 'form-select' }  %>
+                        <%= f.label :support_ending_reason_id do %>
+                          Reason Support Ended
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.collection_select :referred_from_id, ReferredFrom.all, :id, :name, { selected: @user.referred_from_id }, { class: 'form-select' }  %>
+                        <%= f.label :referred_from_id do %>
+                          Referred From
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.number_field :first_occupational_therapist_score, class: 'form-control' %>
+                        <%= f.label :first_occupational_therapist_score do %>
+                          Occupational Therapist Score 1
+                        <% end %>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-floating">
+                        <%= f.number_field :second_occupational_therapist_score, class: 'form-control' %>
+                        <%= f.label :second_occupational_therapist_score do %>
+                          Occupational Therapist Score 2
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+
               </div>
             </div>
           </div>

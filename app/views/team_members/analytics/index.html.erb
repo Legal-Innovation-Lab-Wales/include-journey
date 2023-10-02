@@ -14,6 +14,15 @@
             <%= render 'filter_selection', form: f, filter_name: 'Ethnicity', options: @ethnic_groups %>
             <%= render 'filter_selection', form: f, filter_name: 'Religion', options: @religions %>
             <%= render 'filter_selection', form: f, filter_name: 'Tag', options: @tags %>
+
+            <% if ENV['ORGANISATION_NAME'] == 'wallich-journey' %>
+              <%= render 'filter_selection', form: f, filter_name: 'Accommodation Type', options: @accommodation_types %>
+              <%= render 'filter_selection', form: f, filter_name: 'Housing Provider', options: @housing_providers %>
+              <%= render 'filter_selection', form: f, filter_name: 'Support Ending Reason', actual_name: 'Reason For Ending Support', options: @support_ending_reasons %>
+              <%= render 'filter_selection', form: f, filter_name: 'Referred From', options: @referred_froms %>
+              <%= render 'filter_selection', form: f, filter_name: 'Wallich Local Authority', actual_name: 'Local Authority', options: @local_authorities %>
+              <%= render 'filter_selection', form: f, filter_name: 'Priority', options: @priorities %>
+            <% end %>
           </div>
         </div>
       </div>
