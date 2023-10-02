@@ -172,7 +172,7 @@ class User < DeviseRecord
   end
 
   def to_csv
-    [
+    csv_data = [
       id,
       full_name,
       dob,
@@ -182,10 +182,21 @@ class User < DeviseRecord
       disabilities,
       user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     ]
+
+    if ENV['ORGANISATION_NAME'] == 'wallich-journey'
+      csv_data << accommodation_type.name
+      csv_data << housing_provider.name
+      csv_data << support_ending_reason.name
+      csv_data << referred_from.name
+      csv_data << priority.name
+      csv_data << wallich_local_authority.name
+    end
+
+    csv_data
   end
 
   def json
-    {
+    data = {
       'ID': id,
       'Name': full_name,
       'Date Of Birth': dob,
@@ -195,6 +206,17 @@ class User < DeviseRecord
       'Disabilities': disabilities,
       'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
     }
+
+    if ENV['ORGANISATION_NAME'] == 'wallich-journey'
+      data['Accommodation Types'] = accommodation_type.name
+      data['Housing Providers'] = housing_provider.name
+      data['Reasons For Ending Support'] = support_ending_reason.name
+      data['Referred From'] = referred_from.name
+      data['Priorities'] = priority.name
+      data['Local Authority'] = wallich_local_authority.name
+    end
+
+    data
   end
 
   def unapprove
