@@ -2,6 +2,7 @@ module TeamMembers
   # app/controllers/team_members/approvals_controller.rb
   class ApprovalsController < TeamMembersApplicationController
     before_action :set_breadcrumbs
+    before_action :redirect_back_unless_admin
     include Pagination
 
     def index
@@ -66,6 +67,15 @@ module TeamMembers
 
     def set_breadcrumbs
       add_breadcrumb('Approvals', nil, 'fas fa-check')
+    end
+
+    private
+
+    def redirect_back_unless_admin
+      return if current_team_member.admin?
+
+      flash[:error] = 'You are not allowed to do that!'
+      redirect_back(fallback_location: root_path)
     end
   end
 end

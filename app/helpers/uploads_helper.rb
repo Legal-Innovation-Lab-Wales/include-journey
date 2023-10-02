@@ -21,4 +21,8 @@ module UploadsHelper
   def current_user_visible_uploads
     current_user.uploads.where(visible_to_user: true)
   end
+
+  def bytes_to_megabytes(bytes)
+    (bytes.to_f / 1_048_576).round(2) # Convert bytes to MB and round to two decimal places
+  end
 end

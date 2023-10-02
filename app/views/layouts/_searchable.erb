@@ -30,6 +30,14 @@
           </div>
         <% end %>
 
+        <div class="my-2">
+          <% if params[:controller]  == 'users/uploads' %>
+            You have used <%= bytes_to_megabytes(current_user.total_upload_size)%>MB out of 250MB.
+          <% elsif params[:controller]  == 'team_members/uploads'%>
+            You have used <%= bytes_to_megabytes(current_team_member.total_upload_size)%>MB out of 250MB.
+          <% end %>
+        </div>
+
         <hr />
 
         <div class="row pb-3">

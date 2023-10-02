@@ -27,6 +27,7 @@ class TeamMember < DeviseRecord
   has_many :contact_logs, foreign_key: :team_member_id, dependent: :delete_all
   has_many :assignments
   has_many :users, through: :assignments
+  has_many :notifications
   has_many :uploads
   has_many :upload_activity_logs
 
@@ -38,6 +39,7 @@ class TeamMember < DeviseRecord
   validates_presence_of :first_name, :last_name, :mobile_number, :email, :terms
   validates :email, uniqueness: { case_sensitive: false }
   validates :terms, acceptance: true
+  validates :total_upload_size, numericality: { greater_than_or_equal_to: 0 }
   validates_format_of :first_name, :last_name, with: Rails.application.config.regex_name,
                                                message: Rails.application.config.name_error
   validates_format_of :mobile_number, with: Rails.application.config.regex_telephone,
