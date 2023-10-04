@@ -102,6 +102,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[index show update destroy] do
         get 'create', action: 'new', on: :collection, as: :new
         post 'create', action: 'create', on: :collection, as: :create
+        patch 'reset_user_password', action: 'reset_user_password', on: :member, as: :reset_password
         put 'pin', action: 'pin', on: :member, as: :pin
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement

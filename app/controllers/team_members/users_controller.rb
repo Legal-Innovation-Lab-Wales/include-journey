@@ -7,9 +7,9 @@ module TeamMembers
     include Pagination
 
     before_action :user, except: %i[index new create]
-    before_action :goal_permissions, except: %i[index new create]
-    before_action :user_pin, except: %i[show index wba_history new create]
-    before_action :wallich_protcted, only: %i[new create]
+    before_action :goal_permissions, except: %i[index new create reset_user_password]
+    before_action :user_pin, except: %i[show index wba_history new create reset_user_password]
+    before_action :wallich_protected, only: %i[new create reset_user_password]
 
     # GET /users/:id
     def show
@@ -125,8 +125,7 @@ module TeamMembers
     end
     
     def create
-      characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
-      password = Array.new(6) { characters.sample }.join
+      password = random_password_generator
       
       @user = User.create(
         email: user_params[:email],
@@ -134,13 +133,14 @@ module TeamMembers
         last_name: user_params[:last_name],
         mobile_number: user_params[:mobile_number],
         date_of_birth: user_params[:date_of_birth],
-        email: user_params[:email],
         religion: user_params[:religion],
         disabilities: user_params[:disabilities],
         address: user_params[:address],
         pronouns: user_params[:pronouns],
-        terms: true
-        )
+        terms: true,
+        created_by: current_team_member,
+      )
+
       @user.password = password
       if !@user.validate
         add_breadcrumb("Add User")
@@ -150,9 +150,17 @@ module TeamMembers
       @user.save!
       @user.assign_team_member(current_team_member.id)
       flash[:success] = 'User successfully created' 
+      AdminMailer.created_user_email(current_team_member, @user, password, false).deliver_now
       redirect_to users_path
     end
 
+    def reset_user_password
+      password = random_password_generator
+      @user.password = password
+      @user.save!
+      AdminMailer.created_user_email(current_team_member, @user, password, true).deliver_now
+      redirect_back(fallback_location: user_path(@user), flash: { success: 'Reset password successful' })
+    end
     protected
     def goal_permissions
       @user.goal_permissions.where(team_member_id: current_team_member.id)
@@ -320,10 +328,15 @@ module TeamMembers
       add_breadcrumb('Users', path, 'fas fa-user')
     end
 
-    def wallich_protcted
+    def wallich_protected
       if ENV['ORGANISATION_NAME'] != 'wallich-journey'
         redirect_back(fallback_location: authenticated_team_member_root_path)
       end
+    end
+
+    def random_password_generator
+      characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+      Array.new(6) { characters.sample }.join
     end
   end
 end
