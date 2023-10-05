@@ -1,2 +1,12 @@
-<h1 class="text-light mx-5">Notifications</h1>
+<main class="notification user container p-0">
+    <section class="notification-icons">
+        <div class='d-flex'>
+            <%=render 'notification_icon', favicon: 'fa-envelope', text: 'Messages', path: main_messages_path%>
+            <%=render 'notification_icon', favicon: 'fa-file', text: 'Files', path: correct_uploads_path%>
+        </div>
+    </section>
+    <section class="notification-info">
+    
+    </section>
+</main>
 
