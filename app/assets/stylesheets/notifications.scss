@@ -8,4 +8,24 @@
         justify-content: center;
         align-items: center;
     }
+
+    .notification {
+        text-decoration: none;
+        width: 20px;
+        position: relative;
+        display: inline;
+        border-radius: 2px;
+      }
+    
+      .notification-dot {
+        height: 15px;
+        width: 15px;
+        background: red;
+        border-radius: 50%;
+        border: 1px solid white;
+        display: inline-block;
+        position: absolute;
+        top: -15px;
+        left: 20px;
+      }
 }
