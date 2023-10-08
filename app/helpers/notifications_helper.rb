@@ -21,6 +21,6 @@ module NotificationsHelper
   end
 
   def new_uploads_for_user?
-    current_user.notifications.where.not(upload: nil, viewed: false).count.positive?
+    current_user.notifications.where.not(upload: nil, viewed: true).count.positive?
   end
 end
