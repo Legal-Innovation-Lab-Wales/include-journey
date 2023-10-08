@@ -24,7 +24,7 @@ module Users
         flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
                          It\'s recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
-      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+      elsif @upload.save && @upload_file.save
         email_team_members_about_upload(current_user, @upload_file)
         current_user.increment!(:total_upload_size, @upload_file.data.size)
         handle_successful_upload_creation
