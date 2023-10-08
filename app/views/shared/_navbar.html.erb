@@ -126,11 +126,11 @@
               <div class="nav-label hide"> My Profile</div>
               <i class="fas fa-user-edit"></i>
             <% end %>
-            <%= link_to main_messages_path, class: "btn btn-light" do %>
-              <div class="nav-label hide"> My Messages</div>
+            <%= link_to notifications_path, class: "btn btn-light" do %>
+              <div class="nav-label hide"> My Notifications</div>
               <div class="notification">
-                <i class="fas fa-envelope"></i>
-                <%if alert_user_of_messages?%>
+                <i class="fas fa-bell"></i>
+                <%if alert_user_of_notification?%>
                   <span class="notification-dot"></span>
                 <%end%>
               </div>
