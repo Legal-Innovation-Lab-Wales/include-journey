@@ -17,7 +17,7 @@ module TeamMembers
     private
 
     def update_notifications_to_read
-      return unless current_team_member.notifications.where(viewed: false).present?
+      return unless current_team_member.notifications.where(viewed: false, upload: nil).present?
 
       current_team_member.notifications.each do |notification|
         notification.update!(viewed: true)
