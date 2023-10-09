@@ -19,7 +19,12 @@ module NotificationsHelper
   # Predicate method to be used in view
   # Alerts users of new file uploads by team_members
   def new_uploads_for_user?
-    user_uploads_notification_count.positive?
+    unviewed_user_uploads_notification_count.positive?
+  end
+
+  # Do user upload notifications exist?
+  def user_upload_notification_exist?
+    user_upload_notification.count.positive?
   end
 
   private
@@ -27,7 +32,7 @@ module NotificationsHelper
   # ALL UPLOAD NOTIFICATION METHODS
   # All notification associated with the current user and uploads(files)
   def user_upload_notification
-    current_user.notifications.where.not(upload: nil)
+    current_user.notifications.where.not(upload: nil).order(created_at: :desc)
   end
 
   # All the upload notifications that user has not seen
@@ -35,8 +40,13 @@ module NotificationsHelper
     user_upload_notification.where(viewed: false)
   end
 
+  # All the viewed upload notification that user has seen
+  def viewed_user_upload_notification
+    user_upload_notification.where(viewed: true)
+  end
+
   # Unseen notification count
-  def user_uploads_notification_count
+  def unviewed_user_uploads_notification_count
     unviewed_user_upload_notification.count
   end
 

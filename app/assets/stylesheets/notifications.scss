@@ -29,23 +29,25 @@
     left: 20px;
   }
 
+  .notification-info {
+    background-color: $dark-grey;
+  }
+
   .notification-info-heading {
     padding-right: 15px;
   }
 
-  .notification-info {
-    max-height: 200px;
+  .notification-info-body {
+    max-height: 400px;
     overflow-y: auto;
-    max-width: 50%;
-    
-    /* Override Bootstrap's container class for smaller screens */
-    @media (max-width: 576px) {
-      max-width: 100%; /* Make it full width for smaller screens */
-    }
 
     .notification-link {
       text-decoration: none;
       word-wrap: break-word;
+    }
+
+    .viewed {
+      color: white;
     }
   }
 
