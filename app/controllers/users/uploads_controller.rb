@@ -1,11 +1,13 @@
 module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
-    before_action :set_breadcrumbs
-    before_action :upload, only: %i[update show destroy download_file]
-    after_action :update_upload_notifications_to_viewed
     include Pagination
     include UploadsHelper
+    include NotificationsHelper
+
+    before_action :set_breadcrumbs
+    before_action :upload, only: %i[update show destroy download_file]
+    after_action :update_user_upload_notification_to_viewed, only: :show
 
     def new
       add_breadcrumb('Upload File', nil, 'fas fa-upload')
@@ -184,14 +186,11 @@ module Users
       end
     end
 
-    def update_upload_notifications_to_viewed
-      return unless current_user.notifications.where.not(upload: nil).where(viewed: false).present?
+    def update_user_upload_notification_to_viewed
+      user_upload_notification = current_user.uploads.find(@upload.id).notification
+      return unless user_upload_notification && user_upload_notification.viewed == false
 
-      current_user.notifications.where.not(viewed: true, upload: nil).each do |notification|
-        notification.update!(viewed: true)
-        puts 'ANSWER'
-        puts notification.viewed
-      end
+      user_upload_notification.update!(viewed: true)
     end
 
     def set_breadcrumbs
