@@ -3,6 +3,7 @@ module Users
   class UploadsController < ApplicationController
     before_action :set_breadcrumbs
     before_action :upload, only: %i[update show destroy download_file]
+    after_action :update_upload_notifications_to_viewed
     include Pagination
     include UploadsHelper
 
@@ -180,6 +181,16 @@ module Users
         'exceeds total file size per person'
       else
         'pass check'
+      end
+    end
+
+    def update_upload_notifications_to_viewed
+      return unless current_user.notifications.where.not(upload: nil).where(viewed: false).present?
+
+      current_user.notifications.where.not(viewed: true, upload: nil).each do |notification|
+        notification.update!(viewed: true)
+        puts 'ANSWER'
+        puts notification.viewed
       end
     end
 

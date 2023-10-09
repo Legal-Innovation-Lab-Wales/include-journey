@@ -1,31 +1,50 @@
 @import "variables";
 
 .notification {
-    .btn {
-        width: 7rem;
-        height: 5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  .btn {
+    width: 7rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .notification {
+    text-decoration: none;
+    width: 20px;
+    position: relative;
+    display: inline;
+    border-radius: 2px;
+  }
+  
+  .notification-dot {
+    height: 15px;
+    width: 15px;
+    background: red;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: inline-block;
+    position: absolute;
+    top: -15px;
+    left: 20px;
+  }
+
+  .notification-info {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 15px; 
+    max-width: 50%; /* Set the maximum width to 50% of the page */
+    padding: 0 15px; /* Add some padding for spacing */
+
+    /* Override Bootstrap's container class for smaller screens */
+    @media (max-width: 576px) {
+      max-width: 100%; /* Make it full width for smaller screens */
     }
 
-    .notification {
-        text-decoration: none;
-        width: 20px;
-        position: relative;
-        display: inline;
-        border-radius: 2px;
-      }
-    
-      .notification-dot {
-        height: 15px;
-        width: 15px;
-        background: red;
-        border-radius: 50%;
-        border: 1px solid white;
-        display: inline-block;
-        position: absolute;
-        top: -15px;
-        left: 20px;
-      }
+    .notification-link {
+      text-decoration: none;
+      word-wrap: break-word;
+    }
+  }
+
 }
