@@ -70,12 +70,6 @@ module TeamMembers
                             .order(created_at: :desc)
     end
 
-    def csv_headers
-      ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
-       'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
-       'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
-    end
-
     def base_path
       'wellbeing-assessments'
     end

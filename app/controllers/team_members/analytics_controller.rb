@@ -13,15 +13,17 @@ module TeamMembers
 
     def csv_headers
       if params[:data] == 'Wellbeing Assessments'
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID',
-         'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers +
+          ['Team Member ID', 'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
-        ['ID', 'Creation Date','Notes','Start Date','End Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type','Contact Color', 'Contact Purpose']
+        ['ID', 'Creation Date', 'Notes', 'Start Date', 'End Date', 'User ID', 'User Name',
+         'User Date Of Birth', 'User Sex', 'User Gender Identity', 'User Ethnic Group',
+         'User Disabilities', 'User Tags'] + wallich_specific_headers +
+          ['Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type', 'Contact Color', 'Contact Purpose']
       else
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Release Date', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags', 'Feeling', 'Entry']
+        ['ID', 'Date', 'Feeling', 'Entry', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers
       end
     end
 
@@ -42,6 +44,13 @@ module TeamMembers
     end
 
     private
+
+    def wallich_specific_headers
+      return [] unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+      ['User Accommodation Type', 'User Housing Provider', 'Reason For Ending Support',
+       'Referred From', 'User Priority', 'User Local Authority']
+    end
 
     def update_resource
       base_resources
@@ -121,13 +130,31 @@ module TeamMembers
       @resource = params['ethnicity'].present? ? @resource.joins(:user).where(build_query('users', 'ethnic_group', params['ethnicity'], @ethnic_groups)) : @resource
       @resource = params['religion'].present? ? @resource.joins(:user).where(build_query('users', 'religion', params['religion'], @religions)) : @resource
       @resource = params['age'].present? ? @resource.joins(:user).where(build_age_query(params['age'], @ages)) : @resource
-      return unless params['tag'].present?
+      @resource = params['tag'].present? ? apply_filter_helper_for_tag(@resource) : @resource
+      return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
 
-      tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
-      users = User.all.joins(:user_tags).merge(tags)
-      @resource = @resource.joins(:user).merge(users).order_by('Date')
+      values = [@accommodation_types, @housing_providers, @support_ending_reasons, @referred_froms, @priorities, @local_authorities]
+      %w[accommodation-type housing-provider support-ending-reason referred-from priority local-authority].each_with_index do |key, index|
+        @resource = params[key].present? ? apply_filter_helper(@resource, key, values[index]) : @resource
+      end
+
+      @resource
     end
     # rubocop:enable Metrics/LineLength
+
+    def apply_filter_helper_for_tag(resource)
+      tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
+      users = User.all.joins(:user_tags).merge(tags)
+      resource.joins(:user).merge(users)
+    end
+
+    def apply_filter_helper(resource, name, values)
+      model = name.split('-').map(&:capitalize).join.constantize.all
+      modified_name = name.gsub('-', '_')
+      filtered_model = model.joins(:user).where(build_query(modified_name.pluralize, 'name', params[name], values))
+      users = User.all.joins(modified_name.to_sym).merge(filtered_model)
+      resource.joins(:user).merge(users)
+    end
 
     def find_filters
       @ages = ['Under 22', '23-30', '31-36', '37-45', '46-55', '56-69', '70 and Over']
@@ -137,6 +164,14 @@ module TeamMembers
       @religions = User.distinct.pluck(:religion).reject!(&:nil?)
       @team_member_emails = TeamMember.distinct.pluck(:email)
       @tags = Tag.distinct.pluck(:tag)
+      return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+      @accommodation_types = AccommodationType.distinct.pluck(:name)
+      @housing_providers = HousingProvider.distinct.pluck(:name)
+      @support_ending_reasons = SupportEndingReason.distinct.pluck(:name)
+      @referred_froms = ReferredFrom.distinct.pluck(:name)
+      @local_authorities = WallichLocalAuthority.distinct.pluck(:name)
+      @priorities = Priority.distinct.pluck(:name)
     end
 
     def age_filter(field, age_range)

@@ -88,10 +88,25 @@ module TeamMembers
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
       else
-        @user.update(user_params)
+        if user_params[:first_occupational_therapist_score].present? && user_params[:second_occupational_therapist_score].present?
+          ot_scores = user_params.extract!(:first_occupational_therapist_score, :second_occupational_therapist_score)
+          update_occupational_therapist_scores(ot_scores)
+        end
+        @user.update(user_params.except(:first_occupational_therapist_score, :second_occupational_therapist_score))
       end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
+    end
+
+    def update_occupational_therapist_scores(ot_scores)
+      scores = [ot_scores[:first_occupational_therapist_score],
+                ot_scores[:second_occupational_therapist_score]]
+      unless @user.occupational_therapist_scores == []
+        @user.old_occupational_therapist_scores.push(@user.occupational_therapist_scores)
+        @user.old_occupational_therapist_scores_dates.push(@user.occupational_therapist_scores_date)
+        @user.save!
+      end
+      @user.update(occupational_therapist_scores: scores, occupational_therapist_scores_date: Time.now)
     end
 
     def suspend
@@ -125,15 +140,15 @@ module TeamMembers
     def resources
       case @sort
       when 'average'
-        @users = User.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
+        @users = team_member_users.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
       when 'first_name'
         # switch direction for alphabet sort
         @direction_flipped = @direction == 'desc' ? 'asc' : 'desc'
-        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
+        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction_flipped, "last_name": @direction_flipped })
       else
-        @users = User.approved.includes(:wellbeing_assessments, :user_tags)
+        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
                      .where.not(id: @pinned_users)
                      .order({ "#{@sort}": @direction })
       end
@@ -168,6 +183,14 @@ module TeamMembers
 
     private
 
+    def team_member_users
+      if current_team_member.admin?
+        User.all
+      else
+        current_team_member.users
+      end
+    end
+
     def log_view
       view_log = current_team_member.user_profile_view_logs.find_or_create_by!(user: @user)
       view_log.increment_view_count
@@ -177,7 +200,7 @@ module TeamMembers
     end
 
     def user
-      @user = User.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @user = team_member_users.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
     end
@@ -241,11 +264,16 @@ module TeamMembers
     end
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex, 
+      params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex,
                                    :gender_identity, :religion, :ethnic_group, :disabilities,
                                    :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
                                    :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
-                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel)
+                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel,
+                                   :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
+                                   :brief_physical_description, :priority_id, :local_authority_id,
+                                   :support_ended_date, :next_review_date, :support_ending_reason_id,
+                                   :referred_from_id, :support_started_date, :address,
+                                   :first_occupational_therapist_score, :second_occupational_therapist_score)
     end
 
     def users_params
