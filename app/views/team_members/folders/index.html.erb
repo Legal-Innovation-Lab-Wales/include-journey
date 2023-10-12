@@ -9,14 +9,15 @@
           <% @resources.each do |folder| %>
             <div class="col-12 col-md-6 col-lg-4 mb-3 d-flex justify-content-center" >
               <div class="dropdown">
-                <button class="btn btn-primary" type="button" id="folderDropdownMenu-<%=folder.id%>" data-bs-toggle="dropdown" aria-expanded="false">
-                  <%= folder.name%>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="folderDropdownMenu-<%=folder.id%>">
-                  <li><%= link_to "Open", user_folder_children_path(folder_id: folder.id), tabindex: "-1", class: "dropdown-item" %></li>
-                  <li><%= render 'shared/folders/dropdown_modal', folder: @new_folder, action: 'create_sub_folder', url: user_folder_create_child_path(folder_id: folder.id) %> </li>
-                  <li><a class="dropdown-item" tabindex="-1" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" tabindex="-1" href="#">Something else here</a></li>
+                <%= link_to folder.name , folder_children_path(folder_id: folder.id),class: "btn btn-primary context-buttons",  id:folder.id %>
+                <ul class="dropdown-menu" aria-labelledby="<%=folder.id%>" data-dropdown-id="folderDropdownMenu-<%=folder.id%>">
+                  <li><%= link_to "Open", folder_children_path(folder_id: folder.id), tabindex: "-1", class: "dropdown-item" %></li>
+                  <li><%= render 'shared/folders/dropdown_modal', folder: @new_folder, action: 'create_sub_folder', url: folder_create_child_path(folder_id: folder.id) %> </li>
+                  <li><%= render 'shared/folders/dropdown_modal', folder: folder, action: 'edit_sub_folder', url: folder_update_path(folder_id: folder.id) %> </li>
+                  <li><%= link_to('Delete', folder_delete_path(folder), class: 'dropdown-item', method: :delete, data: {confirm: 'Are you sure you want to delete this folder?'}) %></li>
+                   <li><span class="dropdown-item" tabindex="-1" >Last modified: <%= folder.updated_at.strftime('%d/%m/%Y') %></span></li>
+                  <li><span class="dropdown-item" tabindex="-1" >Created At: <%= folder.created_at.strftime('%d/%m/%Y') %></span></li>
+                  <li><a class="dropdown-item" tabindex="-1" href="#"><%= 250 - bytes_to_megabytes(current_team_member.total_upload_size)%>MB remaining of 250MB.</a></li>
                 </ul>
               </div>
             </div>
@@ -26,3 +27,4 @@
     </div>
   </div>
 <% end %>
+<%= javascript_pack_tag 'folder' %>

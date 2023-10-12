@@ -1,7 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class ChildFoldersController < ApplicationController
-    before_action :current_parent_folder
+    before_action :current_parent_folder, except: %i[delete]
     before_action :set_breadcrumbs
     before_action :new_child_folder, only: %i[index]
     before_action :child_folder_params, only: %i[create update]
@@ -12,13 +12,25 @@ module TeamMembers
       @child_folder.name = child_folder_params[:name]
       @child_folder.parent_folder_id = child_folders_params[:folder_id]
       if @child_folder.save
-        redirect_to user_folder_children_path(@user), flash: { notice: 'Successfully created folder!' }
+        redirect_to folder_children_path, flash: { notice: 'Successfully created folder!' }
       else
-        redirect_to user_folder_children_path(@user), flash: { error: 'Folder not created. Please only use standard
+        redirect_to folder_children_path, flash: { error: 'Folder not created. Please only use standard
                                                                 characters and punctuation' }
       end
     end
 
+    def destroy
+      folder = Folder.find(params[:folder_id])
+      parent = folder.parent_folder
+    
+      destroyed = folder.destroy!
+
+      has_siblings = parent && parent.child_folders.length > 0
+      path = has_siblings ? folder_children_path(parent) : folders_path
+
+      redirect_to path, flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
+    end
+    
     protected
 
     def resources
@@ -47,9 +59,6 @@ module TeamMembers
       @current_parent_folder = Folder.find(child_folders_params[:folder_id])
     end
 
-    def user
-      @user = User.find(child_folders_params[:user_id])
-    end
 
     def child_folder_search
       'lower(name) similar to lower(:query)'
@@ -60,15 +69,13 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      add_breadcrumb('Users', users_path, 'fas fa-users')
-      add_breadcrumb(user.full_name, user_path(user), 'fas fa-user')
-      add_breadcrumb('Files', user_uploads_path, 'fas fa-file')
-      add_breadcrumb('My Folders', user_folders_path, 'fas fa-folder') unless action_name != 'index'
+      add_breadcrumb('My Profile', team_member_path(current_team_member), 'fas fa-user-edit')
+      add_breadcrumb('My Folders', folders_path, 'fas fa-folder') unless action_name != 'index'
       store_folder_tree.each do |folder|
         if folder == store_folder_tree[-1]
           add_breadcrumb(folder.name, nil, 'fas fa-folder')
         else
-          add_breadcrumb(folder.name, user_folder_children_path(folder_id: folder.id), 'fas fa-folder')
+          add_breadcrumb(folder.name, folder_children_path(folder_id: folder.id), 'fas fa-folder')
         end
       end
     end

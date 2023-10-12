@@ -10,13 +10,34 @@ module TeamMembers
       @folder = new_folder
       @folder.name = folder_params[:name]
       if @folder.save
-        redirect_to user_folders_path(@user), flash: { notice: 'Successfully created folder!' }
+        redirect_to folders_path, flash: { notice: 'Successfully created folder!' }
       else
-        redirect_to user_folders_path(@user), flash: { error: 'Folder not created. Please only use standard
+        redirect_to folders_path, flash: { error: 'Folder not created. Please only use standard
                                                                 characters and punctuation' }
       end
     end
 
+
+    def update
+      folder = Folder.find(params[:folder_id])
+      updated = false
+      if folder.update(name: folder_params[:name])
+        updated = true
+      end
+      
+      redirect_back(fallback_location: folders_path	,
+        flash: { "#{updated ? 'success' : 'error'}": "#{updated ? 'Success' : 'An error occured'}" })
+
+    end
+
+    def destroy
+      folder = Folder.find(params[:folder_id])
+      destroyed = folder.destroy!
+      
+      redirect_back(fallback_location: folders_path,
+                    flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" })
+  
+    end
     protected
 
     def resources
@@ -45,10 +66,6 @@ module TeamMembers
       @folder = Folder.find(params[:id])
     end
 
-    def user
-      @user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
-    end
-
     def folder_search
       'lower(name) similar to lower(:query)'
     end
@@ -58,10 +75,7 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      add_breadcrumb('Users', users_path, 'fas fa-users')
-      add_breadcrumb(user.full_name, user_path(user), 'fas fa-user')
-      add_breadcrumb('Files', user_uploads_path, 'fas fa-file')
-
+      add_breadcrumb('My Profile', team_member_path(current_team_member), 'fas fa-user-edit')
       add_breadcrumb('My Folders', nil, 'fas fa-folder') unless action_name != 'index'
     end
   end

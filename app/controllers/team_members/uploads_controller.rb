@@ -124,6 +124,8 @@ module TeamMembers
     protected
 
     def resources
+      @new_folder = Folder.new
+      @has_folders = current_team_member.folders.where(parent_folder: nil).length > 0
       @uploads = @user.uploads.joins(:upload_file).order(created_at: :desc)
 
       filter_params = uploads_filter_params

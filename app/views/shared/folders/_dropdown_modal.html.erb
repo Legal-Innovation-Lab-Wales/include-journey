@@ -1,10 +1,11 @@
+<% title_text = action === "create_sub_folder" ? "Create Sub Folder" : "Edit Folder"%>
 <a class="dropdown-item" href="#">
-    Create Sub Folder
+    <%= title_text %>
 </a>
 
 <div class="dropdown-menu dropdown-submenu p-4" aria-labelledby="createFolderDropdownMenu">
-    <p class='text-center'><strong> Create Sub Folder</strong></p>
-    <%= form_for folder, url: url do |form| %>
+    <p class='text-center'><strong> <%= title_text %> </strong></p>
+    <%= form_for folder, url: url, method: action === "create_sub_folder" ? :post : :put do |form| %>
         <div class="form-group">
             <div class="form-floating mb-3">  
                 <%= form.label :name, 'Folder Name:'%>
