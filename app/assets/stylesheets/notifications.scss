@@ -1,0 +1,54 @@
+@import "variables";
+
+.notification {
+  .btn {
+    width: 7rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .notification {
+    text-decoration: none;
+    width: 20px;
+    position: relative;
+    display: inline;
+    border-radius: 2px;
+  }
+  
+  .notification-dot {
+    height: 15px;
+    width: 15px;
+    background: red;
+    border-radius: 50%;
+    border: 1px solid white;
+    display: inline-block;
+    position: absolute;
+    top: -15px;
+    left: 20px;
+  }
+
+  .notification-info {
+    background-color: $dark-grey;
+  }
+
+  .notification-info-heading {
+    padding-right: 15px;
+  }
+
+  .notification-info-body {
+    max-height: 400px;
+    overflow-y: auto;
+
+    .notification-link {
+      text-decoration: none;
+      word-wrap: break-word;
+    }
+
+    .viewed {
+      color: white;
+    }
+  }
+
+}

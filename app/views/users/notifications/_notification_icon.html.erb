@@ -1,0 +1,13 @@
+<div class="p-2">
+    <%= link_to path, class:'btn btn-primary' do %>
+        <div class="btn-content">
+            <div class="notification">
+                <i class="fas <%=favicon%> fa-2x"></i>
+                <% if method %>
+                  <span class="notification-dot"></span>
+                <% end %>
+            </div>
+            <div><%=text%></div>
+        </div>
+    <% end %>
+</div>

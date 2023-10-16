@@ -20,23 +20,14 @@ module TeamMembers
 
     def create
       @upload = new_upload
-      @upload_file = new_upload_file
-      @upload_file.upload = @upload
-      @upload_notification = new_upload_notification if upload_params[:visible_to_user] == 1
-      @upload_notification.upload = @upload if upload_params[:visible_to_user] == 1
-
-      if check_file_size == 'exceeds individual file size'
-        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
-        render 'new', status: :unprocessable_entity
-      elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
-                         It\'s recommended to create space by removing older files."
-        render 'new', status: :unprocessable_entity
-      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+      @upload_file = new_upload_file(@upload)
+      handle_check_file_size_result
+      if @upload.save && @upload_file.save
+        create_upload_notification(@upload) if upload_params[:visible_to_user] == '1'
         current_team_member.increment!(:total_upload_size, @upload_file.data.size)
-        handle_successful_upload_creation
+        handle_successful_upload('create')
       else
-        handle_failed_upload_creation
+        handle_failed_upload('create')
       end
     end
 
@@ -56,11 +47,9 @@ module TeamMembers
 
       if @upload_file.save && @upload.save
         log_uploads_activity('modified') if @upload.added_by == 'User'
-        redirect_to user_upload_path(@user, @upload)
-        flash[:success] = 'File updated successfully!'
+        handle_succesful_upload('update')
       else
-        flash[:error] = 'Please use alphanumeric characters only.'
-        render 'show', status: :unprocessable_entity
+        handle_failed_upload('update')
       end
     end
 
@@ -98,13 +87,7 @@ module TeamMembers
       handle_delete_upload_log(action)
       if @upload.destroy
         decrease_total_upload_size(action, current_team_member, @user, @upload.upload_file.data.size)
-        if Upload.where(user: user).count.zero?#
-          flash[:notice] = "File was #{action} successfully!"
-          redirect_to new_user_upload_path
-        else
-          flash[:notice] = "File was #{action} successfully! This user has no files."
-          redirect_to user_uploads_path
-        end
+        handle_destroyed_upload(action)
       else
         flash[:error] = 'Failed to delete the file, please try again!'
         redirect_to @upload
@@ -207,20 +190,53 @@ module TeamMembers
       }
     end
 
-    def new_upload_file
+    def new_upload_file(upload)
       UploadFile.new(
         name: upload_params[:name],
+        upload: upload,
         content_type: new_upload_file_resources[:content_type],
         data: new_upload_file_resources[:data]
       )
     end
 
-    def new_upload_notification
-      Notification.new(
+    def create_upload_notification(upload)
+      Notification.create!(
         user: @user,
         team_member: current_team_member,
+        upload: upload,
         message: "#{current_team_member.full_name} added a new upload for you"
       )
+    end
+
+    def handle_successful_upload(action)
+      if action == 'create'
+        flash[:success] = 'File added successfully!'
+        redirect_to correct_uploads_path
+      elsif action == 'update'
+        redirect_to user_upload_path(@user, @upload)
+        flash[:success] = 'File updated successfully!'
+      end
+    end
+
+    def handle_failed_upload(action)
+      if action == 'create'
+        flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+        render 'new', status: :unprocessable_entity
+      elsif action == 'update'
+        flash[:error] = 'Please use alphanumeric characters only.'
+        render 'show', status: :unprocessable_entity
+      end
+    end
+
+    def handle_check_file_size_result
+      if check_file_size == 'exceeds individual file size'
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
+        render 'new', status: :unprocessable_entity
+      elsif check_file_size == 'exceeds total file size per person'
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
+                         It\'s recommended to create space by removing older files."
+        render 'new', status: :unprocessable_entity
+      end
     end
 
     def check_file_size
@@ -235,14 +251,14 @@ module TeamMembers
       end
     end
 
-    def handle_successful_upload_creation
-      flash[:success] = 'File added successfully!'
-      redirect_to correct_uploads_path
-    end
-
-    def handle_failed_upload_creation
-      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
-      render 'new', status: :unprocessable_entity
+    def handle_destroyed_upload(action)
+      if Upload.where(user: user).count.zero?
+        flash[:notice] = "File was #{action} successfully!  This user has no files."
+        redirect_to new_user_upload_path
+      else
+        flash[:notice] = "File was #{action} successfully!"
+        redirect_to user_uploads_path
+      end
     end
 
     def upload_search

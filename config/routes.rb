@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       resources :uploads, only: %i[index new show create update destroy] do
         get 'download_file', on: :member
       end
+      resources :notifications, only: %i[index]
     end
     get '/*path', to: redirect('')
   end
