@@ -1,0 +1,46 @@
+<main class="notification user container p-0">
+    <div class="row">
+        <section class="notification-icons">
+            <div class='d-flex'>
+                <%=render 'notification_icon', favicon: 'fa-envelope', text: 'Messages', path: main_messages_path, method: new_messages_for_user?%>
+                <%=render 'notification_icon', favicon: 'fa-file', text: 'Files', path: correct_uploads_path, method: new_uploads_for_user?%>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <section class="notification-info text-start py-2 col-lg-5 col-md-12 col-sm-12">
+            <h2 class="notification-info-heading">Files</h2>
+            <div class="notification-info-body">
+            <% if user_upload_notification_exist? %>
+                <% user_upload_notification.each do |notification|%>
+                <hr/>
+                <p class="mt-3 px-3">
+                    <% if notification.viewed == false %>
+                        <%= link_to correct_upload_path(notification.upload), class:"notification-link" do %>
+                            <i class="fas fa-file"></i>
+                            <span class="px-2"><%= notification.message%> on <%=notification.created%></span>
+                        <% end %>
+                    <% else %>
+                        <%= link_to correct_upload_path(notification.upload), class:"notification-link viewed" do %>
+                            <i class="fas fa-file"></i>
+                            <span class="px-2"><%= notification.message%> on <%=notification.created%></span>
+                        <% end %>
+                    <% end %>
+                </p>
+                <%end%>
+            <% else%>
+                <hr/>
+                </p>No file notification to show. Click the file button above to view all file.</p>
+            <% end%>
+            </div>
+        </section>
+        <section class="notification-info text-start col-lg-5 col-md-12 col-sm-12">
+            <h2 class="notification-info-heading">Messages</h2>
+            <div class="notification-info-body">
+                <hr/>
+                <p class="mt-3 px-3">Click the messages button to view all the messages both new and archived.</p>
+            </div>
+        </section>
+    </div>
+</main>
+

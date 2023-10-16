@@ -28,6 +28,7 @@ class User < DeviseRecord
   has_many :team_members, through: :assignments
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
+  has_many :notifications
 
   # Wallich Journey Specific Association
   has_one :emergency_contact
