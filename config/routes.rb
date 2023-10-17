@@ -167,7 +167,11 @@ Rails.application.routes.draw do
           resources :survey_responses, only: %i[index show], param: :response_id, as: :survey_response
         end
       end
-      resources :notifications
+      resources :notifications do
+        member do
+          put 'edit_notification_frequency', to: 'notifications#update_notification_frequency'
+        end
+      end
     end
     get '/*path', to: redirect('')
   end
