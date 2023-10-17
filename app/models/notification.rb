@@ -33,10 +33,10 @@ class Notification < ApplicationRecord
   end
 
   def self.notification_frequency(team_member)
-    accommodation_status_freqency = team_member.team_member_notification_frequency.accommodation_status.to_i
-    wellbeing_assessment_frequency = team_member.team_member_notification_frequency.wellbeing_assessment.to_i
-    { accommodation_status: accommodation_status_freqency.months.ago.to_date,
-      wellbeing_assessment: wellbeing_assessment_frequency.months.ago.to_date }
+    accommodation_status_freqency = team_member.team_member_notification_frequency.accommodation_status
+    wellbeing_assessment_frequency = team_member.team_member_notification_frequency.wellbeing_assessment
+    { accommodation_status: convert_to_duration(accommodation_status_freqency).ago.to_date,
+      wellbeing_assessment: convert_to_duration(wellbeing_assessment_frequency).ago.to_date }
   end
 
   def self.notification_message
@@ -44,5 +44,16 @@ class Notification < ApplicationRecord
       accommodation_status: 'Please check the accommodation status for:',
       wellbeing_assessment: 'Please perform wellbeing assessment for:'
     }
+  end
+
+  def self.convert_to_duration(duration)
+    quantity, unit = duration.split(' ')
+    quantity = quantity.to_i
+    unit = unit.singularize
+    unit_to_method = { 'second' => :seconds, 'minute' => :minutes, 'hour' => :hours,
+                       'day' => :days, 'week' => :weeks, 'month' => :months, 'year' => :years }
+
+    duration_method = unit_to_method[unit] || :seconds
+    quantity.send(duration_method)
   end
 end
