@@ -26,11 +26,11 @@ module TeamMembers
       destroyed = folder.destroy!
 
       has_siblings = parent && parent.child_folders.length > 0
-      path = has_siblings ? folder_children_path(parent) : folders_path
+      path = has_siblings ? folder_children_path(parent) : has_folders ? folders_path : users_path
 
       redirect_to path, flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
     end
-    
+
     protected
 
     def resources
@@ -95,5 +95,9 @@ module TeamMembers
 
       folder_arr
     end
+  end
+
+  def has_folders
+    current_team_member.folders.where(parent_folder: nil).length > 0
   end
 end

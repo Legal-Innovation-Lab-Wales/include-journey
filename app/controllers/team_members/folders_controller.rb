@@ -25,7 +25,7 @@ module TeamMembers
         updated = true
       end
       
-      redirect_back(fallback_location: folders_path	,
+      redirect_back(fallback_location: has_folders ? folders_path : users_path	,
         flash: { "#{updated ? 'success' : 'error'}": "#{updated ? 'Success' : 'An error occured'}" })
 
     end
@@ -34,9 +34,7 @@ module TeamMembers
       folder = Folder.find(params[:folder_id])
       destroyed = folder.destroy!
       
-      redirect_back(fallback_location: folders_path,
-                    flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" })
-  
+      redirect_to has_folders ? folders_path : users_path, flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
     end
     protected
 
@@ -72,6 +70,10 @@ module TeamMembers
 
     def new_folder
       @new_folder = current_team_member.folders.new
+    end
+
+    def has_folders
+      current_team_member.folders.where(parent_folder: nil).length > 0
     end
 
     def set_breadcrumbs
