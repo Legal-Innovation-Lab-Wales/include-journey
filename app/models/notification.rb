@@ -1,7 +1,25 @@
+# app/models/notification.rb
 class Notification < ApplicationRecord
   belongs_to :team_member, optional: true
   belongs_to :user, optional: true
   belongs_to :upload, optional: true
+
+  CHECKUP_TYPES = [
+    'accommodation_status',
+    'wellbeing_assessment',
+    nil
+  ].freeze
+
+  TIME_UNITS = [
+    'seconds',
+    'minutes',
+    'hours',
+    'days',
+    'weeks',
+    'months',
+    'years',
+    nil
+  ].freeze
 
   def self.create_for_all_teammembers
     TeamMember.find_each do |team_member|
