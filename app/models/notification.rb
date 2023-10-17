@@ -12,21 +12,37 @@ class Notification < ApplicationRecord
   end
 
   def self.create_user_notification(team_member, user)
-    if user.created_at.to_date == 6.months.ago.to_date || should_create_notification?(user)
-      Notification.create!(
-        team_member: team_member,
-        message: 'Please check the accommodation status for:',
-        user: user
-      )
+    notification_types = %i[accommodation_status wellbeing_assessment]
+    notification_types.each do |type|
+      frequency = notification_frequency(team_member)[type]
+      next unless user.created_at.to_date == frequency || should_create_notification?(user, type, frequency)
+
+      Notification.create!(team_member: team_member,
+                           message: notification_message[type],
+                           user: user)
     end
   end
 
-  def self.should_create_notification?(user)
+  def self.should_create_notification?(user, type, frequency)
     user_notifications = Notification.where(
       user_id: user.id,
-      message: 'Please check the accommodation status for:'
+      message: notification_message[type]
     )
 
-    user.created_at.to_date < 6.months.ago.to_date && (user_notifications.empty? || user_notifications.last.created_at.to_date == 6.months.ago.to_date)
+    user.created_at.to_date < frequency && (user_notifications.empty? || user_notifications.last.created_at.to_date == frequency)
+  end
+
+  def self.notification_frequency(team_member)
+    accommodation_status_freqency = team_member.team_member_notification_frequency.accommodation_status.to_i
+    wellbeing_assessment_frequency = team_member.team_member_notification_frequency.wellbeing_assessment.to_i
+    { accommodation_status: accommodation_status_freqency.months.ago.to_date,
+      wellbeing_assessment: wellbeing_assessment_frequency.months.ago.to_date }
+  end
+
+  def self.notification_message
+    {
+      accommodation_status: 'Please check the accommodation status for:',
+      wellbeing_assessment: 'Please perform wellbeing assessment for:'
+    }
   end
 end
