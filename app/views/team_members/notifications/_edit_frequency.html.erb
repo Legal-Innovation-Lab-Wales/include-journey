@@ -1,0 +1,22 @@
+<div class="col-12 col-md-7">
+    <div class="form-container">
+        <%= form_with(url: edit_notification_frequency_path, method: :put) do |form| %>
+            <div class="field">
+                <%= form.label :check_up_type, 'Check-up Type' %>
+                <%= form.select :check_up_type, ['accommodation_status', 'wellbeing_assessment'] %>
+            </div>
+
+            <div class="field">
+                <%= form.label :frequency, 'Frequency' %>
+                <%= form.number_field :frequency, min: 1 %>
+            </div>
+
+            <div class="field">
+                <%= form.label :time_unit, 'Time Unit' %>
+                <%= form.select :time_unit, ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months', 'years'] %>
+            </div>
+
+            <%= form.submit 'Update' %>
+        <% end %>
+    </div>
+</div>
