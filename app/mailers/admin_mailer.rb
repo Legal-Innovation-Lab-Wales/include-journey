@@ -15,4 +15,12 @@ class AdminMailer < ApplicationMailer
     @user = user
     mail(to: @user.email, subject: 'Wellbeing Assessment Reminder!')
   end
+
+  def created_user_email(team_member, user, password, is_reset)
+    @team_member = team_member
+    @user = user
+    @password = password
+    @is_reset = is_reset
+    mail(to: @team_member.email, subject: "New User Created")
+  end
 end

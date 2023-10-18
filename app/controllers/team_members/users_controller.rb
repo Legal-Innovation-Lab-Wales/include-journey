@@ -6,9 +6,10 @@ module TeamMembers
     before_action :check_admin, only: %i[suspend destroy]
     include Pagination
 
-    before_action :user, except: :index
-    before_action :goal_permissions, except: :index
-    before_action :user_pin, except: %i[show index wba_history]
+    before_action :user, except: %i[index new create]
+    before_action :goal_permissions, except: %i[index new create reset_user_password]
+    before_action :user_pin, except: %i[show index wba_history new create reset_user_password]
+    before_action :wallich_protected, only: %i[new create reset_user_password]
 
     # GET /users/:id
     def show
@@ -118,6 +119,48 @@ module TeamMembers
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
     end
 
+    def new
+      add_breadcrumb("Add User")
+      @user = User.new
+    end
+    
+    def create
+      password = random_password_generator
+      
+      @user = User.create(
+        email: user_params[:email],
+        first_name: user_params[:first_name],
+        last_name: user_params[:last_name],
+        mobile_number: user_params[:mobile_number],
+        date_of_birth: user_params[:date_of_birth],
+        religion: user_params[:religion],
+        disabilities: user_params[:disabilities],
+        address: user_params[:address],
+        pronouns: user_params[:pronouns],
+        terms: true,
+        created_by: current_team_member,
+      )
+
+      @user.password = password
+      if !@user.validate
+        add_breadcrumb("Add User")
+        return render 'new', status: :unprocessable_entity
+      end 
+      @user.approved = true
+      @user.save!
+      @user.assign_team_member(current_team_member.id)
+      flash[:success] = 'User successfully created' 
+      AdminMailer.created_user_email(current_team_member, @user, password, false).deliver_now
+      redirect_to users_path
+    end
+
+    def reset_user_password
+      password = random_password_generator
+      @user.password = password
+      @user.save!
+      AdminMailer.created_user_email(current_team_member, @user, password, true).deliver_now
+      redirect_back(fallback_location: user_path(@user), flash: { success: 'Reset password successful' })
+    end
     protected
     def goal_permissions
       @user.goal_permissions.where(team_member_id: current_team_member.id)
@@ -283,6 +326,17 @@ module TeamMembers
     def set_breadcrumbs
       path = action_name == 'index' ? nil : users_path
       add_breadcrumb('Users', path, 'fas fa-user')
+    end
+
+    def wallich_protected
+      if ENV['ORGANISATION_NAME'] != 'wallich-journey'
+        redirect_back(fallback_location: authenticated_team_member_root_path)
+      end
+    end
+
+    def random_password_generator
+      characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+      Array.new(6) { characters.sample }.join
     end
   end
 end
