@@ -9,7 +9,7 @@ module TeamMembers
     before_action :user, except: %i[index new create]
     before_action :goal_permissions, except: %i[index new create]
     before_action :user_pin, except: %i[show index wba_history new create]
-    before_action :wallich_protcted, only: %i[new create]
+    before_action :wallich_protected, only: %i[new create]
 
     # GET /users/:id
     def show
@@ -320,7 +320,7 @@ module TeamMembers
       add_breadcrumb('Users', path, 'fas fa-user')
     end
 
-    def wallich_protcted
+    def wallich_protected
       if ENV['ORGANISATION_NAME'] != 'wallich-journey'
         redirect_back(fallback_location: authenticated_team_member_root_path)
       end
