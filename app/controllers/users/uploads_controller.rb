@@ -1,10 +1,13 @@
 module Users
   # app/controllers/users/upload_controller.rb
   class UploadsController < ApplicationController
-    before_action :set_breadcrumbs
-    before_action :upload, only: %i[update show destroy download_file]
     include Pagination
     include UploadsHelper
+    include NotificationsHelper
+
+    before_action :set_breadcrumbs
+    before_action :upload, only: %i[update show destroy download_file]
+    after_action :update_user_upload_notification_to_viewed, only: :show
 
     def new
       add_breadcrumb('Upload File', nil, 'fas fa-upload')
@@ -24,7 +27,7 @@ module Users
         flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
                          It\'s recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
-      elsif @upload.save && @upload_file.save && (@upload_notification.nil? || @upload_notification.save)
+      elsif @upload.save && @upload_file.save
         email_team_members_about_upload(current_user, @upload_file)
         current_user.increment!(:total_upload_size, @upload_file.data.size)
         handle_successful_upload_creation
@@ -181,6 +184,13 @@ module Users
       else
         'pass check'
       end
+    end
+
+    def update_user_upload_notification_to_viewed
+      user_upload_notification = current_user.uploads.find(@upload.id).notification
+      return unless user_upload_notification && user_upload_notification.viewed == false
+
+      user_upload_notification.update!(viewed: true)
     end
 
     def set_breadcrumbs
