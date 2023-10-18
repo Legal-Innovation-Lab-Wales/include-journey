@@ -168,6 +168,7 @@ Rails.application.routes.draw do
         end
       end
       resources :notifications
+      put 'edit_notification_frequency', to: 'notifications#update_notification_frequency', as: :edit_notification_frequency
     end
     get '/*path', to: redirect('')
   end

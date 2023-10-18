@@ -1,0 +1,41 @@
+<div class="col-12 col-md-7 my-5">
+    <div class="container">
+        <h3 class='text-white'>Notification Settings</h3>
+        <%= form_with(url: edit_notification_frequency_path, method: :put) do |form| %>
+            <div class="row mt-3">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <%= form.select :check_up_type, Notification::CHECKUP_TYPES[0..Notification::CHECKUP_TYPES.count-2], {}, class: 'form-control'%>
+                        <%= form.label :check_up_type, 'Check-up Type'%>
+                    </div>
+                </div>
+            </div>
+
+           <div class="row mt-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <%= form.number_field :frequency, min: 1, value: 1, class: 'form-control' %>
+                        <%= form.label :frequency, 'Frequency' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <%= form.select :time_unit, Notification::TIME_UNITS[0..Notification::TIME_UNITS.count-2], {}, class: 'form-control'%>
+                        <%= form.label :time_unit, 'Time Unit' %>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <%= form.submit 'Update', class: 'btn btn-primary w-100' %>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
