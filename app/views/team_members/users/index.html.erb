@@ -1,5 +1,5 @@
 <%= render 'layouts/searchable', class_list: 'team-members users', header: 'Users', index: 'users',
-           stats: render(partial: 'stats'), search: render(partial: 'shared/users/search') do %>
+           new_btn: ENV['ORGANISATION_NAME'] == 'wallich-journey' ? render(partial: 'shared/new_btn', locals: { path: new_users_path, text: 'New User' }) : nil ,stats: render(partial: 'stats'), search: render(partial: 'shared/users/search') do %>
   <%= render 'sort_bar' %>
   <div class="container p-0">
     <% unless @query.present? || @pinned_users.count.zero? %>
