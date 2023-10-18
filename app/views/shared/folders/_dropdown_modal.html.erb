@@ -18,7 +18,7 @@
                 <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Cancel</button>
             </div>
             <div class="w-50 px-2">
-                <%= form.submit "#{action}".titleize, class: 'btn btn-success w-100', id: 'submit' %>
+                <%= form.submit action === "create_sub_folder" ? "Submit" : "Save", class: 'btn btn-success w-100', id: 'submit' %>
             </div>
         </div>
     <% end %>
