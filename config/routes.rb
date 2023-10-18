@@ -101,6 +101,8 @@ Rails.application.routes.draw do
         end
       end
       resources :users, only: %i[index show update destroy] do
+        get 'create', action: 'new', on: :collection, as: :new
+        post 'create', action: 'create', on: :collection, as: :create
         put 'pin', action: 'pin', on: :member, as: :pin
         put 'increment', action: 'increment', on: :member, as: :increment
         put 'decrement', action: 'decrement', on: :member, as: :decrement
@@ -176,6 +178,7 @@ Rails.application.routes.draw do
         end
       end
       resources :notifications
+      put 'edit_notification_frequency', to: 'notifications#update_notification_frequency', as: :edit_notification_frequency
     end
     get '/*path', to: redirect('')
   end

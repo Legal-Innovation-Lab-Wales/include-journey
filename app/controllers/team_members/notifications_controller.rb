@@ -14,6 +14,13 @@ module TeamMembers
       redirect_to notifications_path
     end
 
+    def update_notification_frequency
+      team_member_notification_frequency = current_team_member.team_member_notification_frequency
+      attribute_to_update = params[:check_up_type].to_sym
+      team_member_notification_frequency.update!(attribute_to_update => "#{params[:frequency]} #{params[:time_unit]}")
+      redirect_to notifications_path, notice: 'Notification frequency updated successfully.'
+    end
+
     private
 
     def update_notifications_to_read

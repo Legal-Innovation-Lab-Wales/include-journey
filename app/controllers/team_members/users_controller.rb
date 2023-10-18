@@ -6,9 +6,10 @@ module TeamMembers
     before_action :check_admin, only: %i[suspend destroy]
     include Pagination
 
-    before_action :user, except: :index
-    before_action :goal_permissions, except: :index
-    before_action :user_pin, except: %i[show index wba_history]
+    before_action :user, except: %i[index new create]
+    before_action :goal_permissions, except: %i[index new create]
+    before_action :user_pin, except: %i[show index wba_history new create]
+    before_action :wallich_protected, only: %i[new create]
 
     # GET /users/:id
     def show
@@ -117,6 +118,40 @@ module TeamMembers
       user.save!
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
+    end
+
+    def new
+      add_breadcrumb("Add User")
+      @user = User.new
+    end
+    
+    def create
+      characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
+      password = Array.new(6) { characters.sample }.join
+      
+      @user = User.create(
+        email: user_params[:email],
+        first_name: user_params[:first_name],
+        last_name: user_params[:last_name],
+        mobile_number: user_params[:mobile_number],
+        date_of_birth: user_params[:date_of_birth],
+        email: user_params[:email],
+        religion: user_params[:religion],
+        disabilities: user_params[:disabilities],
+        address: user_params[:address],
+        pronouns: user_params[:pronouns],
+        terms: true
+        )
+      @user.password = password
+      if !@user.validate
+        add_breadcrumb("Add User")
+        return render 'new', status: :unprocessable_entity
+      end 
+      @user.approved = true
+      @user.save!
+      @user.assign_team_member(current_team_member.id)
+      flash[:success] = 'User successfully created' 
+      redirect_to users_path
     end
 
     protected
@@ -284,6 +319,12 @@ module TeamMembers
     def set_breadcrumbs
       path = action_name == 'index' ? nil : users_path
       add_breadcrumb('Users', path, 'fas fa-user')
+    end
+
+    def wallich_protected
+      if ENV['ORGANISATION_NAME'] != 'wallich-journey'
+        redirect_back(fallback_location: authenticated_team_member_root_path)
+      end
     end
   end
 end
