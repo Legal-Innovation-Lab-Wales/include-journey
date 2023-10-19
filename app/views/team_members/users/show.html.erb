@@ -89,22 +89,9 @@
         </div>
         <%= render 'team_members/users/summary_panel/modal' %>
     </div>
-    <div class="row">
-      <div class="col-12 mb-4">
-          <div class="card h-100">
-            <div class="card-header d-flex">
-              <h3 class="me-auto align-self-center" >Occupational Therapist Scores</h3>
-            </div>
-            <div class="card-body bg-transparent h-100" id="summary-panel-card">
-              <% if @user.occupational_therapist_scores.nil? %>
-                <p><%= @user.first_name %> currently has no occupational therapist scores.</p>
-              <% else %>
-                <p>Insert scores here</p>
-              <% end %>
-            </div>
-          </div>
-        </div>
-    </div>
+
+    <%= render 'occupational_therapist_score_section', user: @user %>
+    
     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="diary-card" class="card h-100">
