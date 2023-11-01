@@ -115,6 +115,7 @@ class User < DeviseRecord
   validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
   validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
   validates :total_upload_size, numericality: { greater_than_or_equal_to: 0 }
+  validate :validate_occupational_therapist_scores
 
   def dob
     date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''
@@ -288,5 +289,18 @@ class User < DeviseRecord
     skip_email_changed_notification!
     update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: Faker::Number.leading_zero_number(digits: 11),
            nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
+  end
+
+  def validate_occupational_therapist_scores
+    return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+    if occupational_therapist_scores.nil? || occupational_therapist_scores.length != 2
+      errors.add(:occupational_therapist_scores, 'should contain exactly two elements')
+      return
+    end
+
+    unless occupational_therapist_scores.all? { |score| score.is_a?(Integer) && score.positive? }
+      errors.add(:occupational_therapist_scores, 'should contain only positive integers')
+    end
   end
 end
