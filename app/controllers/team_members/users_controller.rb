@@ -88,26 +88,24 @@ module TeamMembers
     def update
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
+      elsif ENV['ORGANISATION_NAME'] == 'wallich-journey' && user_params[:first_occupational_therapist_score].present?
+        ot_scores = [user_params[:first_occupational_therapist_score],
+                     user_params[:second_occupational_therapist_score]]
+        update_occupational_therapist_scores(ot_scores)
       else
-        if user_params[:first_occupational_therapist_score].present? && user_params[:second_occupational_therapist_score].present?
-          ot_scores = user_params.extract!(:first_occupational_therapist_score, :second_occupational_therapist_score)
-          update_occupational_therapist_scores(ot_scores)
-        end
-        @user.update(user_params.except(:first_occupational_therapist_score, :second_occupational_therapist_score))
+        @user.update(user_params)
       end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
     end
 
     def update_occupational_therapist_scores(ot_scores)
-      scores = [ot_scores[:first_occupational_therapist_score],
-                ot_scores[:second_occupational_therapist_score]]
       unless @user.occupational_therapist_scores == []
         @user.old_occupational_therapist_scores.push(@user.occupational_therapist_scores)
         @user.old_occupational_therapist_scores_dates.push(@user.occupational_therapist_scores_date)
         @user.save!
       end
-      @user.update(occupational_therapist_scores: scores, occupational_therapist_scores_date: Time.now)
+      @user.update(occupational_therapist_scores: ot_scores, occupational_therapist_scores_date: Time.now)
     end
 
     def suspend
@@ -123,11 +121,11 @@ module TeamMembers
       add_breadcrumb("Add User")
       @user = User.new
     end
-    
+
     def create
       characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
       password = Array.new(6) { characters.sample }.join
-      
+
       @user = User.create(
         email: user_params[:email],
         first_name: user_params[:first_name],
