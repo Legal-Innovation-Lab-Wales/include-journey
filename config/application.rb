@@ -10,6 +10,7 @@ module MyJourney
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.exceptions_app = self.routes
 
     config.time_zone = 'London'
 
