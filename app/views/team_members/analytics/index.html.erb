@@ -30,20 +30,28 @@
       <div class="col-12">
         <div class="row pb-3">
           <div class="search input-group">
-            <span class="input-group-text">
-                <i class="fas fa-database"></i>
-            </span>
-            <div class="form-floating me-2">
-              <%= f.label 'Data', class: "form-label" %>
-              <%= f.select "data", ['Diary Entries', 'Wellbeing Assessments', 'Contact Logs'], :selected => params[:data] %>
+            <div class="d-flex pb-2">
+              <span class="input-group-text">
+                  <i class="fas fa-database"></i>
+              </span>
+              <div class="form-floating me-2">
+                <%= f.label 'Data', class: "form-label" %>
+                <%= f.select "data", ['Diary Entries', 'Wellbeing Assessments', 'Contact Logs'], :selected => params[:data] %>
+              </div>
             </div>
-            <span class="input-group-text">
-                <i class="fas fa-chart-pie"></i>
-            </span>
-            <div class="form-floating me-2">
-              <%= f.label 'Display', class: "form-label" %>
-              <%= f.select "display", ['Pie Chart', 'Bar Chart', 'Line Chart'], :selected => params[:display] %>
+            <div class="d-flex pb-2">
+              <span class="input-group-text">
+                  <i class="fas fa-chart-pie"></i>
+              </span>
+              <div class="form-floating me-2">
+                <%= f.label 'Display', class: "form-label" %>
+                <%= f.select "display", ['Pie Chart', 'Bar Chart', 'Line Chart'], :selected => params[:display] %>
+              </div>
             </div>
+            <div class="d-flex pb-2">
+              <span class="input-group-text">
+                  <i class="fas fa-user"></i>
+              </span>
               <div id="member-parent" class="form-floating" data-admin="<%= current_team_member.admin %>">
                 <% if params[:data] === "Contact Logs"%>
                   <%= f.label 'Created By', class: "form-label" %>
@@ -52,6 +60,7 @@
                 <% end %>
                 <%= f.select "member", ['All'] + @team_member_emails, :selected => params[:member] %>
               </div>
+            </div>
             <div class="form-floating">
               <%= f.label 'Author', class: "form-label" %>
               <%= f.select "author", ['Anyone', 'Staff', 'User'] + @team_member_emails, :selected => params[:author], class: 'test'%>
