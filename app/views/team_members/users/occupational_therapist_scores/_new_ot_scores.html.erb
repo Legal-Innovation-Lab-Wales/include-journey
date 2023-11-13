@@ -1,6 +1,6 @@
 <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
     <tr>
-        <th scope="row"><%= user.old_occupational_therapist_scores.count + get_index %></th>
+        <th scope="row"><%= user.old_occupational_therapist_scores.count + (get_index+1)%></th>
         <td><%= f.submit 'Save New Scores', class: 'btn btn-primary' %></td>
         <td class="form-floating">
             <%= f.number_field :first_occupational_therapist_score, class: 'form-control w-50 m-auto', required: 'true' %>
