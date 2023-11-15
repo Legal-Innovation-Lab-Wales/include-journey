@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         get 'download_file', on: :member
       end
       resources :notifications, only: %i[index]
+      match '/500', to: 'errors#internal_server_error', via: :all
     end
     get '/*path', to: redirect('')
   end
@@ -178,6 +179,7 @@ Rails.application.routes.draw do
       end
       resources :notifications
       put 'edit_notification_frequency', to: 'notifications#update_notification_frequency', as: :edit_notification_frequency
+      match '/500', to: 'errors#internal_server_error', via: :all
     end
     get '/*path', to: redirect('')
   end
