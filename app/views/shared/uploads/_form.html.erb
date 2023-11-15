@@ -40,13 +40,22 @@
                         <p class="text-danger"><%= @upload.errors[:comment].join(', ') %></p>
                     <% end %>
                 </div>
-                <div class="form-check form-switch d-flex justify-content-between px-0 pb-3 <%="d-none" if current_user %>">
-                    <%= form.label :visible_to_user, class: 'form-check-label text-light' do %>
-                        Allow user to see this file?
-                    <% end %>
-                    <%= form.check_box :visible_to_user, class: 'form-check-input', id: 'visible-to-user', checked: true%>
-                </div>
-
+                <% if !current_user %>
+                    <div id="form-name-section" class="mb-3">
+                        <div class="form-floating">
+                            <%= form.collection_select(:parent_folder_id, current_team_member.folders.all, :id, :name, { prompt: "Select a Folder to save file in" }, { class: 'form-select' }) %>
+                            <%= form.label :parent_folder_id do %>
+                              Folder to save in
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class="form-check form-switch d-flex justify-content-between px-0 pb-3">
+                        <%= form.label :visible_to_user, class: 'form-check-label text-light' do %>
+                            Allow user to see this file?
+                        <% end %>
+                        <%= form.check_box :visible_to_user, class: 'form-check-input', id: 'visible-to-user', checked: true%>
+                    </div>
+                <% end %>
                 <div class="text-center mb-3 ">
                     <%= form.submit "Submit", class: 'btn btn-primary', data: {turbo: false} %>
                 <div>

@@ -42,12 +42,12 @@ module TeamMembers
 
     def update
       @upload_file = @upload.upload_file
-      @upload.update(comment: upload_params[:comment], visible_to_user: upload_params[:visible_to_user])
+      @upload.update(comment: upload_params[:comment], visible_to_user: upload_params[:visible_to_user], parent_folder_id: upload_params[:parent_folder_id])
       @upload_file.update(name: upload_params[:name])
 
       if @upload_file.save && @upload.save
         log_uploads_activity('modified') if @upload.added_by == 'User'
-        handle_succesful_upload('update')
+        handle_successful_upload('update')
       else
         handle_failed_upload('update')
       end
@@ -147,7 +147,7 @@ module TeamMembers
     end
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
+      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user, :parent_folder_id)
     end
 
     def uploads_filter_params
@@ -171,6 +171,7 @@ module TeamMembers
         comment: upload_params[:comment],
         visible_to_user: upload_params[:visible_to_user],
         user: @user,
+        parent_folder_id: upload_params[:parent_folder_id],
         added_by: 'TeamMember',
         added_by_id: current_team_member.id,
         status: 'approved',

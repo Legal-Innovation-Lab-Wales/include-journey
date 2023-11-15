@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class FoldersController < ApplicationController
+    before_action :set_user
     before_action :set_breadcrumbs
     before_action :new_folder, only: %i[index]
     before_action :folder_params, only: %i[create update]
@@ -9,10 +10,11 @@ module TeamMembers
     def create
       @folder = new_folder
       @folder.name = folder_params[:name]
+      @folder.user_id = params[:user_id]
       if @folder.save
-        redirect_to folders_path, flash: { notice: 'Successfully created folder!' }
+        redirect_to user_folders_path(@user), flash: { notice: 'Successfully created folder!' }
       else
-        redirect_to folders_path, flash: { error: 'Folder not created. Please only use standard
+        redirect_to user_folders_path(@user), flash: { error: 'Folder not created. Please only use standard
                                                                 characters and punctuation' }
       end
     end
@@ -25,7 +27,7 @@ module TeamMembers
         updated = true
       end
       
-      redirect_back(fallback_location: has_folders ? folders_path : users_path	,
+      redirect_back(fallback_location: has_folders ? user_folders_path(@user) : user_path(@user)	,
         flash: { "#{updated ? 'success' : 'error'}": "#{updated ? 'Success' : 'An error occured'}" })
 
     end
@@ -34,12 +36,14 @@ module TeamMembers
       folder = Folder.find(params[:folder_id])
       destroyed = folder.destroy!
       
-      redirect_to has_folders ? folders_path : users_path, flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
+      redirect_to has_folders ? user_folders_path(@user) : user_path(@user), flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
     end
     protected
 
     def resources
-      current_team_member.folders.where(parent_folder: nil)
+      folders = current_team_member.folders.where(parent_folder: nil, user_id: @user.id)
+      uploads = Upload.joins(:upload_file).where(parent_folder_id: nil, user_id: @user.id)
+      folders + uploads
     end
 
     def resources_per_page
@@ -73,12 +77,20 @@ module TeamMembers
     end
 
     def has_folders
-      current_team_member.folders.where(parent_folder: nil).length > 0
+      uploads = Upload.where(user_id: @user.id)
+      folders = current_team_member.folders.where(parent_folder: nil)
+      total_array = uploads + folders
+
+      total_array.length > 0
+    end
+
+    def set_user
+      @user = User.find(params[:user_id])
     end
 
     def set_breadcrumbs
-      add_breadcrumb('My Profile', team_member_path(current_team_member), 'fas fa-user-edit')
-      add_breadcrumb('My Folders', nil, 'fas fa-folder') unless action_name != 'index'
+      add_breadcrumb("#{@user.full_name}", user_path(@user), 'fas fa-user-edit')
+      add_breadcrumb('Folders', nil, 'fas fa-folder') unless action_name != 'index'
     end
   end
 end
