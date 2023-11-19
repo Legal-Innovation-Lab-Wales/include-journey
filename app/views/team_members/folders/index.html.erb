@@ -1,4 +1,4 @@
-<%= render 'layouts/searchable', class_list: 'user folders', header: 'My Folders', index: 'user_folders',
+<%= render 'layouts/searchable', class_list: 'user folders', header: 'Folders', index: 'user_folders',
            stats: render(partial: 'shared/folders/stats'), 
            new_btn: render(partial: 'shared/new_btn') do %>
   <%= render 'shared/folders/modal', url: nil, folder: @new_folder, action: "create", controller: "folders" %>
@@ -21,8 +21,10 @@
                   <tr class="context-buttons cursor-pointer" id=<%= folder.id %>>
                   <% if folder.respond_to?(:name) %>
                     <td>  
-                      <i class="fas fa-folder me-2"></i>
-                      <%= folder.name %>
+                      <%= link_to user_folder_children_path(@user, folder) do %>
+                        <i class="fas fa-folder me-2"></i>
+                        <%= folder.name %>
+                      <% end %>
                     </td>
                     <td>  
                       <%= folder.user ? folder.user.full_name : 'N/A' %>

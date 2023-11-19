@@ -94,7 +94,7 @@ module TeamMembers
 
     def set_breadcrumbs
       add_breadcrumb("#{@user.full_name}", user_path(@user), 'fas fa-user-edit')
-      add_breadcrumb('My Folders', user_folders_path(@user), 'fas fa-folder') unless action_name != 'index'
+      add_breadcrumb('Folders', user_folders_path(@user), 'fas fa-folder') unless action_name != 'index'
       store_folder_tree.each do |folder|
         if !folder
           return
