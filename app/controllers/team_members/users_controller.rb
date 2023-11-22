@@ -89,9 +89,13 @@ module TeamMembers
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
       elsif ENV['ORGANISATION_NAME'] == 'wallich-journey' && user_params[:first_occupational_therapist_score].present?
-        ot_scores = [user_params[:first_occupational_therapist_score],
-                     user_params[:second_occupational_therapist_score]]
-        update_occupational_therapist_scores(ot_scores)
+        if ot_scores_validated?
+          ot_scores = [user_params[:first_occupational_therapist_score].to_i,
+                       user_params[:second_occupational_therapist_score].to_i]
+          update_occupational_therapist_scores(ot_scores)
+        else
+          return redirect_to user_path(@user), flash: { error: 'Occupational therapist scores must be integers and positive values.' }
+        end
       else
         @user.update(user_params)
       end
@@ -132,7 +136,6 @@ module TeamMembers
         last_name: user_params[:last_name],
         mobile_number: user_params[:mobile_number],
         date_of_birth: user_params[:date_of_birth],
-        email: user_params[:email],
         religion: user_params[:religion],
         disabilities: user_params[:disabilities],
         address: user_params[:address],
@@ -311,6 +314,14 @@ module TeamMembers
 
     def users_params
       params.permit(:sort, :direction, :tag, :query, :page, :assigned)
+    end
+
+    def ot_scores_validated?
+      ot_score1 = user_params[:first_occupational_therapist_score].to_i
+      ot_score2 = user_params[:second_occupational_therapist_score].to_i
+      ot_score1_validated = ot_score1.is_a?(Integer) && ot_score1.positive?
+      ot_score2_validated = ot_score2.is_a?(Integer) && ot_score2.positive?
+      ot_score1_validated && ot_score2_validated
     end
 
     def set_breadcrumbs

@@ -3,7 +3,7 @@
         <th scope="row"><%= user.old_occupational_therapist_scores.count + (get_index+1)%></th>
         <td><%= f.submit 'Save New Scores', class: 'btn btn-primary' %></td>
         <td class="form-floating">
-            <%= f.number_field :first_occupational_therapist_score, class: 'form-control w-50 m-auto', required: 'true' %>
+            <%= f.number_field :first_occupational_therapist_score, class: 'form-control w-50 m-auto', required: 'true', min: 1 %>
             <% if @user.errors[:first_occupational_therapist_score].present? %>
                 <p class="actual-error-message" >
                     <% @user.errors[:first_occupational_therapist_score].each do |err| %>
@@ -13,7 +13,7 @@
             <% end %>
         </td>
         <td class="form-floating">
-            <%= f.number_field :second_occupational_therapist_score, class: 'form-control w-50 m-auto', required: 'true' %>
+            <%= f.number_field :second_occupational_therapist_score, class: 'form-control w-50 m-auto', required: 'true', min: 1 %>
             <% if @user.errors[:second_occupational_therapist_score].present? %>
                 <p class="actual-error-message" >
                     <% @user.errors[:second_occupational_therapist_score].each do |err| %>
