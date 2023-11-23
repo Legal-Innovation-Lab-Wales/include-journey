@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_30_215816) do
+ActiveRecord::Schema.define(version: 2023_11_07_202154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,18 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_emergency_contacts_on_user_id"
+  end
+
+  create_table "folders", force: :cascade do |t|
+    t.string "name"
+    t.bigint "parent_folder_id"
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+    t.index ["team_member_id"], name: "index_folders_on_team_member_id"
+    t.index ["user_id"], name: "index_folders_on_user_id"
   end
 
   create_table "goal_permissions", force: :cascade do |t|
@@ -345,6 +357,15 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.index ["team_member_id"], name: "index_tags_on_team_member_id"
   end
 
+  create_table "team_member_notification_frequencies", force: :cascade do |t|
+    t.string "accommodation_status", default: "6 months"
+    t.string "wellbeing_assessment", default: "3 months"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "team_member_id", null: false
+    t.index ["team_member_id"], name: "index_team_member_notification_frequencies_on_team_member_id"
+  end
+
   create_table "team_members", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -420,6 +441,8 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.bigint "team_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "parent_folder_id"
+    t.index ["parent_folder_id"], name: "index_uploads_on_parent_folder_id"
     t.index ["team_member_id"], name: "index_uploads_on_team_member_id"
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
@@ -549,7 +572,9 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
     t.datetime "occupational_therapist_scores_date"
     t.bigint "old_occupational_therapist_scores", default: [], array: true
     t.datetime "old_occupational_therapist_scores_dates", default: [], array: true
+    t.bigint "created_by_id"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
+    t.index ["created_by_id"], name: "index_users_on_created_by_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
     t.index ["priority_id"], name: "index_users_on_priority_id"
@@ -637,6 +662,9 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
   add_foreign_key "diary_entry_view_logs", "diary_entries"
   add_foreign_key "diary_entry_view_logs", "team_members"
   add_foreign_key "emergency_contacts", "users"
+  add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "folders", "team_members"
+  add_foreign_key "folders", "users"
   add_foreign_key "goal_permissions", "team_members"
   add_foreign_key "goal_permissions", "users"
   add_foreign_key "goals", "goal_types"
@@ -664,7 +692,9 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
   add_foreign_key "survey_responses", "users"
   add_foreign_key "survey_sections", "surveys"
   add_foreign_key "surveys", "team_members"
+  add_foreign_key "team_member_notification_frequencies", "team_members"
   add_foreign_key "upload_files", "uploads"
+  add_foreign_key "uploads", "folders", column: "parent_folder_id"
   add_foreign_key "uploads", "team_members"
   add_foreign_key "uploads", "users"
   add_foreign_key "user_achievements", "achievements"
@@ -678,6 +708,7 @@ ActiveRecord::Schema.define(version: 2023_08_30_215816) do
   add_foreign_key "users", "priorities"
   add_foreign_key "users", "referred_froms"
   add_foreign_key "users", "support_ending_reasons"
+  add_foreign_key "users", "team_members", column: "created_by_id"
   add_foreign_key "users", "wallich_local_authorities"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"
