@@ -29,6 +29,7 @@ class User < DeviseRecord
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
   has_many :notifications
+  has_many :occupational_therapist_scores
 
   # Wallich Journey Specific Association
   has_one :emergency_contact

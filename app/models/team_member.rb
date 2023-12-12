@@ -31,6 +31,7 @@ class TeamMember < DeviseRecord
   has_many :uploads
   has_many :upload_activity_logs
   has_one :team_member_notification_frequency
+  has_may :occupational_therapist_scores
 
   scope :approved, -> { where(approved: true) }
   scope :unapproved, -> { where(approved: false) }
