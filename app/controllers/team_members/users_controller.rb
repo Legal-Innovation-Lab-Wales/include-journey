@@ -88,28 +88,11 @@ module TeamMembers
     def update
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
-      elsif ENV['ORGANISATION_NAME'] == 'wallich-journey' && user_params[:first_occupational_therapist_score].present?
-        if ot_scores_validated?
-          ot_scores = [user_params[:first_occupational_therapist_score].to_i,
-                       user_params[:second_occupational_therapist_score].to_i]
-          update_occupational_therapist_scores(ot_scores)
-        else
-          return redirect_to user_path(@user), flash: { error: 'Occupational therapist scores must be integers and positive values.' }
-        end
       else
         @user.update(user_params)
       end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
-    end
-
-    def update_occupational_therapist_scores(ot_scores)
-      unless @user.occupational_therapist_scores == []
-        @user.old_occupational_therapist_scores.push(@user.occupational_therapist_scores)
-        @user.old_occupational_therapist_scores_dates.push(@user.occupational_therapist_scores_date)
-        @user.save!
-      end
-      @user.update(occupational_therapist_scores: ot_scores, occupational_therapist_scores_date: Time.now)
     end
 
     def suspend
@@ -308,20 +291,11 @@ module TeamMembers
                                    :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
                                    :brief_physical_description, :priority_id, :local_authority_id,
                                    :support_ended_date, :next_review_date, :support_ending_reason_id,
-                                   :referred_from_id, :support_started_date, :address,
-                                   :first_occupational_therapist_score, :second_occupational_therapist_score)
+                                   :referred_from_id, :support_started_date, :address)
     end
 
     def users_params
       params.permit(:sort, :direction, :tag, :query, :page, :assigned)
-    end
-
-    def ot_scores_validated?
-      ot_score1 = user_params[:first_occupational_therapist_score].to_i
-      ot_score2 = user_params[:second_occupational_therapist_score].to_i
-      ot_score1_validated = ot_score1.is_a?(Integer) && ot_score1.positive?
-      ot_score2_validated = ot_score2.is_a?(Integer) && ot_score2.positive?
-      ot_score1_validated && ot_score2_validated
     end
 
     def set_breadcrumbs

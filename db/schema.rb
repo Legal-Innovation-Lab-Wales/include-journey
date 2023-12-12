@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_12_012525) do
+ActiveRecord::Schema.define(version: 2023_12_12_030859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -587,10 +587,6 @@ ActiveRecord::Schema.define(version: 2023_12_12_012525) do
     t.text "brief_physical_description"
     t.datetime "support_ended_date"
     t.datetime "next_review_date"
-    t.bigint "occupational_therapist_scores", default: [], array: true
-    t.datetime "occupational_therapist_scores_date"
-    t.bigint "old_occupational_therapist_scores", default: [], array: true
-    t.datetime "old_occupational_therapist_scores_dates", default: [], array: true
     t.bigint "created_by_id"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["created_by_id"], name: "index_users_on_created_by_id"
