@@ -1,0 +1,2 @@
+class OccupationalTherapistScore < ApplicationRecord
+end
