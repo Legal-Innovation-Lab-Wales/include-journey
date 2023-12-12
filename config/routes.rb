@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         get 'download_file', on: :member
       end
       resources :notifications, only: %i[index]
+      resources :occupation_therapist_scores, only: %i[index show new destroy]
     end
     get '/*path', to: redirect('')
   end
