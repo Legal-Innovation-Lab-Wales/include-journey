@@ -127,5 +127,21 @@ unless TeamMember.find_by_email('amarafinbarrs123@gmail.com').present?
   team_member.save!
 end
 
+unless TeamMember.find_by_email('admin@myjourney.app').present?
+  team_member = TeamMember.new(
+    first_name: 'Admin',
+    last_name: 'Account',
+    email: 'admin@myjourney.app',
+    mobile_number: '07572675416',
+    admin: false,
+    approved: true,
+    terms: true,
+    suspended: false,
+    password: 'password'
+  )
+  team_member.skip_confirmation!
+  team_member.save!
+end
+
 @last_time = Time.now
 puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
