@@ -15,6 +15,8 @@ class CreateOccupationalTherapistScores < ActiveRecord::Migration[6.1]
       t.string :community_life_recreation_leisure_and_play
       t.string :participation_restriction
       t.string :distress_or_wellbeing
+      t.references :user, foreign_key: true
+      t.references :team_member, foreign_key: true
 
       t.timestamps
     end

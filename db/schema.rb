@@ -262,8 +262,12 @@ ActiveRecord::Schema.define(version: 2023_12_12_030859) do
     t.string "community_life_recreation_leisure_and_play"
     t.string "participation_restriction"
     t.string "distress_or_wellbeing"
+    t.bigint "user_id"
+    t.bigint "team_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_occupational_therapist_scores_on_team_member_id"
+    t.index ["user_id"], name: "index_occupational_therapist_scores_on_user_id"
   end
 
   create_table "priorities", force: :cascade do |t|
@@ -696,6 +700,8 @@ ActiveRecord::Schema.define(version: 2023_12_12_030859) do
   add_foreign_key "notifications", "team_members"
   add_foreign_key "notifications", "uploads"
   add_foreign_key "notifications", "users"
+  add_foreign_key "occupational_therapist_scores", "team_members"
+  add_foreign_key "occupational_therapist_scores", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"
