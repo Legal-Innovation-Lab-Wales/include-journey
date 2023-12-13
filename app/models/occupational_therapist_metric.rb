@@ -1,0 +1,2 @@
+class OccupationalTherapistMetric < ApplicationRecord
+end
