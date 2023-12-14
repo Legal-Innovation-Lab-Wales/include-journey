@@ -130,7 +130,7 @@ Rails.application.routes.draw do
             get :approve
           end
         end
-        resources :occupation_therapist_scores, only: %i[index show new destroy]
+        resources :occupation_therapist_assessments, only: %i[index new create]
       end
 
       resources :analytics, only: %i[index] do

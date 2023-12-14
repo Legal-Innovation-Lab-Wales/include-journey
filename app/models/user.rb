@@ -29,7 +29,7 @@ class User < DeviseRecord
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
   has_many :notifications
-  has_many :occupational_therapist_scores
+  has_many :occupational_therapist_assessments
 
   # Wallich Journey Specific Association
   has_one :emergency_contact
@@ -140,6 +140,26 @@ class User < DeviseRecord
 
     history
   end
+
+  def last_occupational_therapist_assessment
+    occupational_therapist_assessments.includes(:ota_entries).last
+  end
+
+  # def wellbeing_assessment_today
+  #   wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
+  # end
+
+  # def wellbeing_assessment_history
+  #   history = { labels: [], datasets: [] }
+
+  #   wba_scores.includes(:wellbeing_metric)
+  #             .joins(:wellbeing_metric)
+  #             .order(created_at: :desc).each { |score| score.add_to_history(history) }
+
+  #   wellbeing_assessments.order(created_at: :desc).each { |score| score.add_to_history(history) }
+
+  #   history
+  # end
 
   def mail_admin
     UserMailer.approved(self).deliver_now

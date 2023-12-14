@@ -1,0 +1,2 @@
+class TeamMembers::OccupationTherapistAssessmentsController < ApplicationController
+end

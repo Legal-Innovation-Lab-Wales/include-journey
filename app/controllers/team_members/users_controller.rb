@@ -17,6 +17,7 @@ module TeamMembers
       log_view
       user_location
       wellbeing_assessment
+      occupational_therapist_assessment
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order('dated DESC')
       @diary_entries = current_team_member.diary_entries.where(user: @user).includes(:diary_entry_view_logs)
@@ -238,6 +239,12 @@ module TeamMembers
 
     def wellbeing_assessment
       @wellbeing_assessment = @user.last_wellbeing_assessment
+    rescue ActiveRecord::RecordNotFound
+      session notice: 'No wellbeing assessment could be found'
+    end
+
+    def occupational_therapist_assessment
+      @occupational_therapist_assessment = @user.last_occupational_therapist_assessment.ota_entries
     rescue ActiveRecord::RecordNotFound
       session notice: 'No wellbeing assessment could be found'
     end
