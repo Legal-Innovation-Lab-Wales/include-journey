@@ -1,0 +1,27 @@
+<% if @user.present? %>
+  <%= render 'layouts/searchable', class_list: 'team-members occupational-therapist-assessments', header: "#{@user.full_name}",
+             subheader: "occupational therapist assessments", index: 'user_occupational_therapist_assessments', search: render('search'), stats: render('stats')  do %>
+    <div id="card-view" class="container p-0">
+      <div class="row">
+        <% @resources.each do |ot_assessment| %>
+          <%= render 'card', assessment: ot_assessment%>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <%= render 'layouts/searchable', class_list: 'team-members occupational-therapist-assessments',
+             header: "#{@team_member.present? ? @team_member.full_name : 'All'} Occupational Therapist Assessments",
+             index: @team_member.present? ? 'team_member_wellbeing_assessments' : 'wellbeing_assessments',
+             stats: render('stats_non_user') do %>
+    <div class="container p-0">
+      <div class="row">
+        <% @resources.each do |ot_assessment| %>
+          <%= render 'card', assessment: ot_assessment %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<%= javascript_pack_tag 'wellbeing_assessment_chart' %>
