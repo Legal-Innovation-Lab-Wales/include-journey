@@ -7,6 +7,14 @@ module TeamMembers
 
     def index; end
 
+    def show
+      add_breadcrumb('Occupational Therapist Assessments', occupational_therapist_assessments_path, 'fas fa-list')
+      add_breadcrumb('This Occupational Therapist Assessment')
+      @occupational_therapist_assessment = OccupationalTherapistAssessment.includes(:user, :team_member).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+
+      render 'show'
+    end
+
     protected
 
     def resources
