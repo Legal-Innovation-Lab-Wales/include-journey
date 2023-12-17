@@ -244,7 +244,7 @@ module TeamMembers
     end
 
     def occupational_therapist_assessment
-      @occupational_therapist_assessment = @user.last_occupational_therapist_assessment.ota_entries
+      @occupational_therapist_assessment = @user.last_occupational_therapist_assessment
     rescue ActiveRecord::RecordNotFound
       session notice: 'No wellbeing assessment could be found'
     end
