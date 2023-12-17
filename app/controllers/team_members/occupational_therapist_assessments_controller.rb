@@ -33,11 +33,11 @@ module TeamMembers
     def occupational_therapist_assessments
       @occupational_therapist_assessments =
         if @team_member.present?
-          @team_member.occupational_therapist_assessments.joins(:user).where({"user.deleted": false}).includes(:user, :ota_entry)
+          @team_member.occupational_therapist_assessments.joins(:user).where({"user.deleted": false}).includes(:user, :ota_entries)
         elsif @user.present?
           @user.occupational_therapist_assessments.includes(:team_member, :ota_entries)
         else
-          OccupationalTherapistAssessment.joins(:user).where({"user.deleted": false}).includes(:user, :team_member, :ota_entry)
+          OccupationalTherapistAssessment.joins(:user).where({"user.deleted": false}).includes(:user, :team_member, :ota_entries)
         end
     end
 
