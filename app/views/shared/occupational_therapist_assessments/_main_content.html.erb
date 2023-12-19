@@ -1,7 +1,41 @@
-<div class="col-12 p-0">
-    <div class="container p-0 p-md-3"> 
-        <!--New Occupational Therapist Assessment Form-->
-
+<div class="col-12 p-0 text-start">
+  <div class="p-0 p-3">
+ <!--New Occupational Therapist Assessment Form-->
+    <% if local_assigns[:metrics].present? %>
+      <%= form_with model: local_assigns[:assessment], url: local_assigns[:path], method: :post do |form| %>
+        <% local_assigns[:metrics].each do |ot_metric| %>
+          <div class="row my-3">
+            <div class="col-12 col-md-4 col-lg-6">
+              <%= form.label "ot_metric_#{ot_metric.id}"  do %>
+                <%= ot_metric.name %>
+              <% end %>
+            </div>
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex">
+                <% local_assigns[:scores].each do |score| %>
+                  <div class="form-check mx-3 mb-3">
+                    <%= form.radio_button "ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input' %>
+                    <%= form.label "ot_metric_#{ot_metric.id}_#{score.id}", score.value, class: 'form-check-label' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <p class="actual-error-message" >
+          <% local_assigns[:assessment].errors.each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
+        <div class="row submit-btn">
+          <div class="col">
+            <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
+          </div>
+        </div>
+      <% end %>
+    <!-- Occupational Therapist Assessment Present => Show/Index View -->
+    <% elsif local_assigns[:assessment].present? %>
+     
        <% local_assigns[:assessment].ota_entries.includes(:occupational_therapist_metric, :occupational_therapist_score).each_with_index do |entry, index| %>
         <div class="row">
             <div class="col-10">
@@ -13,5 +47,6 @@
             </div>
         </div>
         <% end %>
-    </div>
+    <% end %>
+  </div>
 </div>
