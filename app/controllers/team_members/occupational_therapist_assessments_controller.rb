@@ -7,8 +7,8 @@ module TeamMembers
 
     before_action :occupational_therapist_metrics, only: %i[new create]
     before_action :occupational_therapist_scores, only: :new
-    before_action :ota_params, only: :create
-    after_action :ota_scores, only: :create
+    before_action :ensure_ota_present, only: :ota_params
+    rescue_from ActionController::ParameterMissing, with: :handle_missing_ota_assessment
 
     def index; end
 
@@ -31,13 +31,22 @@ module TeamMembers
     end
 
     def create
-      # fail
-      if (@occupational_therapist_assessment = current_team_member.occupational_therapist_assessments.create!(user: @user))
-        redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
-      else
-        redirect_to authenticated_team_member_root_path,
-                    error: "Occupational therapist assessment could not be created: #{@occupational_therapist_assessment.errors}"
+      @occupational_therapist_assessment = current_team_member.occupational_therapist_assessments.new(user: @user)
+      @occupational_therapist_metrics.each do |metric|
+        value = ota_params["ot_metric_#{metric.id}"]
+        if value.nil?
+          flash[:error] = 'You submitted an incomplete form!'
+          return redirect_to new_user_occupational_therapist_assessment_path(@user), error: "Occupational therapist assessment could not be created: #{@occupational_therapist_assessment.errors}"
+        else
+          @occupational_therapist_assessment.ota_entries.new(
+            occupational_therapist_metric: ot_metric(metric.name),
+            occupational_therapist_score: ot_score(value)
+          )
+        end
       end
+      @occupational_therapist_assessment.save!
+      flash[:success] = 'Occupational Therapist Assessment Successful!'
+      redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
     end
 
     protected
@@ -106,15 +115,9 @@ module TeamMembers
       OccupationalTherapistScore.find_by(value: value)
     end
 
-    def ota_scores
-      puts 'ANSWER'
-      @occupational_therapist_metrics.each do |metric|
-        value = ota_params["ot_metric_#{metric.id}"]
-        @occupational_therapist_assessment.ota_entries.create!(
-          occupational_therapist_metric: ot_metric(metric.name),
-          occupational_therapist_score: ot_score(value)
-        )
-      end
+    def handle_missing_ota_assessment
+      flash[:error] = 'You submitted an empty form!'
+      redirect_to new_user_occupational_therapist_assessment_path(@user)
     end
   end
 end
