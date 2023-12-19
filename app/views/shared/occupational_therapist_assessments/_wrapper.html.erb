@@ -1,11 +1,11 @@
 <div class="container p-0">
     <div class="row align-items-center" style="padding-left: 0 !important;">
         <% if local_assigns[:heading].present? %>
-            <h3><%= local_assigns[:heading] %></h3>
+            <h3 class="card-header mb-2"><%= local_assigns[:heading] %></h3>
         <% end %>
 
         <% if local_assigns[:show_timestamp].present? || local_assigns[:show_author].present? %>
-            <div class="metadata mb-3">
+            <div class="metadata mb-2">
                 <small>
                 <% if local_assigns[:assessment].team_member.present? %>
                     <i class="fas fa-user-plus"></i> <%= local_assigns[:assessment].team_member.full_name %>
