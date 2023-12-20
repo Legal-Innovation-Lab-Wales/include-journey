@@ -136,7 +136,6 @@ module TeamMembers
         else
           WellbeingAssessment.joins(:user).where({"user.deleted": false}).includes(:user, :team_member, wba_scores: :wellbeing_metric)
         end
-
     end
 
     def wellbeing_assessment_today

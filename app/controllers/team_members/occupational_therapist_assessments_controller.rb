@@ -131,5 +131,14 @@ module TeamMembers
       end
       add_breadcrumb('Occupational Therapist Assessments', nil, 'fas fa-list')
     end
+
+    def subheading_stats
+      @count_in_last_week = @resources.where('occupational_therapist_assessments.created_at >= ?', 1.week.ago).size
+      @count_in_last_month = @resources.where('occupational_therapist_assessments.created_at >= ?', 1.month.ago).size
+      return unless @user
+
+      @count_by_team_member = @resources.count { |ota| ota.team_member_id.present? }
+      @count_by_user = @resources.count { |ota| ota.team_member_id.nil? }
+    end
   end
 end
