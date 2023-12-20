@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/occupational_therapist_assessments_controller.rb
   class OccupationalTherapistAssessmentsController < ApplicationController
+    before_action :index_breadcrumbs, only: :index
     before_action :user
     before_action :team_member, :occupational_therapist_assessments, only: :index
     include Pagination
@@ -118,6 +119,17 @@ module TeamMembers
     def handle_missing_ota_assessment
       flash[:error] = 'You submitted an empty form!'
       redirect_to new_user_occupational_therapist_assessment_path(@user)
+    end
+
+    def index_breadcrumbs
+      if user
+        add_breadcrumb('Users', users_path, 'fas fa-user')
+        add_breadcrumb(user.full_name, user_path(user), 'fas fa-user')
+      elsif team_member
+        add_breadcrumb('Team Members', team_members_path, 'fas fa-users')
+        add_breadcrumb(team_member.full_name, team_member_path(team_member), 'fas fa-user')
+      end
+      add_breadcrumb('Occupational Therapist Assessments', nil, 'fas fa-list')
     end
   end
 end
