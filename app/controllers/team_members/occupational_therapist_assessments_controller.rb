@@ -1,6 +1,7 @@
 module TeamMembers
   # app/controllers/team_members/occupational_therapist_assessments_controller.rb
   class OccupationalTherapistAssessmentsController < ApplicationController
+    before_action :check_organization
     before_action :index_breadcrumbs, only: :index
     before_action :user
     before_action :team_member, :occupational_therapist_assessments, only: :index
@@ -139,6 +140,13 @@ module TeamMembers
 
       @count_by_team_member = @resources.count { |ota| ota.team_member_id.present? }
       @count_by_user = @resources.count { |ota| ota.team_member_id.nil? }
+    end
+
+    def check_organization
+      return if ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
+      flash[:error] = 'Sorry, you can\'t access that.'
+      redirect_to root_path
     end
   end
 end
