@@ -30,6 +30,7 @@ class TeamMember < DeviseRecord
   has_many :notifications
   has_many :uploads
   has_many :upload_activity_logs
+  has_many :folders
   has_one :team_member_notification_frequency
   has_many :occupational_therapist_assessments
 

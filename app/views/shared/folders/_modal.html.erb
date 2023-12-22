@@ -1,0 +1,28 @@
+<div class="modal fade" id="folder-modal" tabindex="-1" role="dialog" aria-labelledby="folder-modal" aria-hidden="true">
+  <div class="modal-dialog modal-md col-12" role="document">
+        <div class="modal-content">
+        <%= form_for folder, url: (url.present? ? url : { controller: controller, action: action }) do |form| %>
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-black-50"><%= "#{action} folder".titleize %></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body border-0">
+                <div class="form-floating mb-3">  
+                    <%= form.text_field :name, class: 'form-control text', aria: { label: 'Folder Name:' }, required: 'true' %>
+                    <%= form.label :name, 'Folder Name:'%>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex w-100">
+                    <div class="w-50 px-2">
+                        <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="w-50 px-2">
+                        <%= form.submit "#{action}".titleize, class: 'btn btn-success w-100', id: 'submit'%>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+  </div>
+</div>

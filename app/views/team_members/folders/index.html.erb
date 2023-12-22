@@ -1,0 +1,89 @@
+<%= render 'layouts/searchable', class_list: 'user folders', header: 'Folders', index: 'user_folders',
+           stats: render(partial: 'shared/folders/stats'), 
+           new_btn: render(partial: 'shared/new_btn') do %>
+  <%= render 'shared/folders/modal', url: nil, folder: @new_folder, action: "create", controller: "folders" %>
+  <div class="container p-0">
+    <div class="row">
+      <div class="col">
+        <div class="row card-view">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>User</th>
+                <th>Team Member</th>
+                <th>Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @resources.each do |folder| %>
+                  <tr class="context-buttons cursor-pointer" id=<%= folder.id %>>
+                  <% if folder.respond_to?(:name) %>
+                    <td>  
+                      <%= link_to user_folder_children_path(@user, folder) do %>
+                        <i class="fas fa-folder me-2"></i>
+                        <%= folder.name %>
+                      <% end %>
+                    </td>
+                    <td>  
+                      <%= folder.user ? folder.user.full_name : 'N/A' %>
+                    </td>
+                    <td>  
+                      <%= folder.team_member.full_name %>
+                    </td>
+                    <td>  
+                      Folder
+                    </td>
+                    <td>  
+                      <%= link_to "Open" , user_folder_children_path(@user, folder), class: "d-inline text-decoration-underline" %>
+                      <span class="context-button-actions" id="<%= folder.id %>">
+                        ...
+                      </span>
+                    </td>
+                    <div class="dropdown">
+                      <ul class="dropdown-menu" aria-labelledby="<%=folder.id%>" data-dropdown-id="folderDropdownMenu-<%=folder.id%>">
+                        <li><%= link_to "Open", user_folder_children_path(@user, folder), tabindex: "-1", class: "dropdown-item" %></li>
+                        <li><%= render 'shared/folders/dropdown_modal', folder: @new_folder, action: 'create_sub_folder', url: user_folder_create_child_path(@user, folder) %> </li>
+                        <li><%= render 'shared/folders/dropdown_modal', folder: folder, action: 'edit_sub_folder', url: user_folder_update_path(@user, folder) %> </li>
+                        <li><%= link_to('Delete', user_folder_delete_path(@user, folder), class: 'dropdown-item', method: :delete, data: {confirm: 'Are you sure you want to delete this folder?'}) %></li>
+                        <li>
+                          <%= render 'shared/folders/properties_modal', 
+                                  title_text: 'Properties', 
+                                  data: {
+                                    "Last modified" => folder.updated_at.strftime('%d/%m/%Y'),
+                                    "Created At" => folder.created_at.strftime('%d/%m/%Y'),
+                                    "Storage" => "#{250 - bytes_to_megabytes(current_team_member.total_upload_size)} MB remaining of 250MB."
+                                  }
+                          %>
+                        </li>
+                      </ul>
+                    </div>
+                  <% else %>
+                    <td>  
+                      <i class="fas fa-file me-2"></i>
+                      <%= folder.upload_file.name %>
+                    </td>
+                    <td>  
+                      <%= folder.user ? folder.user.full_name : 'N/A' %>
+                    </td>
+                    <td>  
+                      <%= folder.team_member ? folder.team_member.full_name : 'N/A' %>
+                    </td>
+                    <td>  
+                      File
+                    </td>
+                    <td>
+                      <%= link_to "View" , user_upload_path(folder.user, folder), class: "d-inline text-decoration-underline" %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= javascript_pack_tag 'folder' %>

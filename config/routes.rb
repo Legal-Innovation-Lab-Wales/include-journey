@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         get 'download_file', on: :member
       end
       resources :notifications, only: %i[index]
+      match '/500', to: 'errors#internal_server_error', via: :all
     end
     get '/*path', to: redirect('')
   end
@@ -131,6 +132,13 @@ Rails.application.routes.draw do
             get :approve
           end
         end
+        resources :folders, only: %i[index create update destroy], as: :folders do
+          get 'children', to: 'child_folders#index', as: 'children'
+          post 'children', to: 'child_folders#create', as: 'create_child'
+          delete 'children', to: 'child_folders#destroy', as: 'delete_child'
+          delete '', to: 'folders#destroy', as: 'delete'
+          put '', to: 'folders#update', as: 'update'
+        end
         resources :occupational_therapist_assessments, only: %i[index new create]
       end
 
@@ -174,6 +182,7 @@ Rails.application.routes.draw do
       end
       resources :notifications
       put 'edit_notification_frequency', to: 'notifications#update_notification_frequency', as: :edit_notification_frequency
+      match '/500', to: 'errors#internal_server_error', via: :all
     end
     get '/*path', to: redirect('')
   end

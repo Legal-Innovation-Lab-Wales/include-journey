@@ -29,8 +29,9 @@ module TeamMembers
       @contact_logs = ContactLog.where('user_id': @user.id)
       @summary_panel = @user.summary_panel
       @uploads = @user.uploads
-
+      @new_folder = Folder.new
       has_goal_permissions
+      @has_folders = current_team_member.folders.where(parent_folder: nil).length > 0
 
       render 'show'
     end

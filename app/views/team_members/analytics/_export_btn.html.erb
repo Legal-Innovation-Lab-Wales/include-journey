@@ -1,6 +1,8 @@
+ <div class="mb-2"> 
   <%= link_to export_analytics_path(format: file_format, data: params[:data], age: params[:age], sex: params[:sex],
                                     pronoun: params[:pronoun], ethnicity: params[:ethnicity], religion: params[:religion],
                                     member: params[:member], author: params[:author], date_from: params[:date_from],
                                     date_to: params[:date_to]), class: 'btn btn-primary' do %>
     Export As <%= file_format.upcase %> <i class="fas <%= file_format_icon %>"></i>
   <% end %>
+</div>

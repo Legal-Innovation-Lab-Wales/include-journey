@@ -1,0 +1,11 @@
+<a class="dropdown-item" href="#">
+    <%= title_text %>
+</a>
+
+<ul class="dropdown-menu dropdown-submenu  p-4">
+     <% data.each do |attr_name, attr_value| %>
+         <li>
+             <%= attr_name %>: <small class="text-muted"><%= attr_value %></small>
+         </li>
+     <% end %>
+</ul>
