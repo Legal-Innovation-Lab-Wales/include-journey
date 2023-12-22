@@ -14,6 +14,6 @@ class CreateOtaEntries < ActiveRecord::Migration[6.1]
   private
 
   def should_run_migration?
-    ENV['ORGANISATION_NAME'] = 'wallich-journey'
+    ENV['ORGANISATION_NAME'] == 'wallich-journey'
   end
 end
