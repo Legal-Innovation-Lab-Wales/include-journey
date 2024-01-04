@@ -191,12 +191,12 @@ class User < DeviseRecord
     ]
 
     if ENV['ORGANISATION_NAME'] == 'wallich-journey'
-      csv_data << accommodation_type.name&.presence || ''
-      csv_data << housing_provider.name&.presence || ''
-      csv_data << support_ending_reason.name&.presence || ''
-      csv_data << referred_from.name&.presence || ''
-      csv_data << priority.name&.presence || ''
-      csv_data << wallich_local_authority.name&.presence || ''
+      csv_data << accommodation_type&.name.presence || ''
+      csv_data << housing_provider&.name.presence || ''
+      csv_data << support_ending_reason&.name.presence || ''
+      csv_data << referred_from&.name.presence || ''
+      csv_data << priority&.name.presence || ''
+      csv_data << wallich_local_authority&.name.presence || ''
     end
 
     csv_data
@@ -215,13 +215,12 @@ class User < DeviseRecord
     }
 
     if ENV['ORGANISATION_NAME'] == 'wallich-journey'
-      data['Accommodation Types'] = accommodation_type.name&.presence || ''
-      data['Housing Providers'] = housing_provider.name&.presence || ''
-      data['Reasons For Ending Support'] = support_ending_reason.name&.presence || ''
-      data['Referred From'] = referred_from.name&.presence || ''
-      data['Priorities'] = priority.name&.presence || ''
-      data['Local Authority'] = wallich_local_authority.name&.presence || ''
-
+      data['Accommodation Types'] = accommodation_type&.name.presence || ''
+      data['Housing Providers'] = housing_provider&.name.presence || ''
+      data['Reasons For Ending Support'] = support_ending_reason&.name.presence || ''
+      data['Referred From'] = referred_from&.name.presence || ''
+      data['Priorities'] = priority&.name.presence || ''
+      data['Local Authority'] = wallich_local_authority&.name.presence || ''
     end
 
     data
