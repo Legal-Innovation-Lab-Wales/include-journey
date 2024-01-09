@@ -5,11 +5,11 @@ module TeamMembers
     before_action :index_breadcrumbs, only: :index
     before_action :user
     before_action :team_member, :occupational_therapist_assessments, only: :index
-    include Pagination
-
     before_action :occupational_therapist_metrics, only: %i[new create]
-    before_action :occupational_therapist_scores, only: :new
+    before_action :occupational_therapist_scores, only: %i[new create]
     before_action :ensure_ota_present, only: :ota_params
+    before_action :ota_metric_values_in_params, only: %i[new create]
+    include Pagination
     rescue_from ActionController::ParameterMissing, with: :handle_missing_ota_assessment
 
     def index; end
@@ -25,7 +25,7 @@ module TeamMembers
     def new
       add_breadcrumb('Users', users_path, 'fas fa-user')
       add_breadcrumb(user.full_name, user_path(user))
-      add_breadcrumb('New Occupatioanl Therapist Assessment', nil, 'fas fa-plus-circle')
+      add_breadcrumb('New Occupational Therapist Assessment', nil, 'fas fa-plus-circle')
 
       @occupational_therapist_assessment = OccupationalTherapistAssessment.new
 
@@ -34,11 +34,14 @@ module TeamMembers
 
     def create
       @occupational_therapist_assessment = current_team_member.occupational_therapist_assessments.new(user: @user)
+
+      # Initialize an array to store validation errors
+      errors = []
+
       @occupational_therapist_metrics.each do |metric|
         value = ota_params["ot_metric_#{metric.id}"]
         if value.nil?
-          flash[:error] = 'You submitted an incomplete form!'
-          return redirect_to new_user_occupational_therapist_assessment_path(@user), error: "Occupational therapist assessment could not be created: #{@occupational_therapist_assessment.errors}"
+          errors << "Occupational therapist assessment could not be created: #{@occupational_therapist_assessment.errors}"
         else
           @occupational_therapist_assessment.ota_entries.new(
             occupational_therapist_metric: ot_metric(metric.name),
@@ -46,9 +49,22 @@ module TeamMembers
           )
         end
       end
-      @occupational_therapist_assessment.save!
-      flash[:success] = 'Occupational Therapist Assessment Successful!'
-      redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
+
+      if errors.any?
+        # If there are errors, render the form with validation errors
+        flash[:error] = 'You submitted an incomplete form!'
+        render :new, status: :unprocessable_entity
+      else
+        # If no errors, try to save the assessment
+        if @occupational_therapist_assessment.save
+          flash[:success] = 'Occupational Therapist Assessment Successful!'
+          redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
+        else
+          # If there are errors during save, render the form with errors
+          flash[:error] = 'Occupational therapist assessment could not be created.'
+          render :new, status: :unprocessable_entity
+        end
+      end
     end
 
     protected
@@ -107,6 +123,12 @@ module TeamMembers
 
     def ota_params
       params.require(:occupational_therapist_assessment).permit(@occupational_therapist_metrics.map { |metric| "ot_metric_#{metric.id}" })
+    end
+
+    def ota_metric_values_in_params
+      (1..occupational_therapist_metrics.count).each do |i|
+        instance_variable_set("@ot_metric_#{i}_value", params.dig(:occupational_therapist_assessment, "ot_metric_#{i}"))
+      end
     end
 
     def ot_metric(name)

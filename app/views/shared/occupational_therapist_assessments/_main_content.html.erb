@@ -14,7 +14,12 @@
               <div class="d-flex">
                 <% local_assigns[:scores].each do |score| %>
                   <div class="form-check mx-3 mb-3">
-                    <%= form.radio_button "ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input' %>
+                    <% metric_value = instance_variable_get("@ot_metric_#{ot_metric.id}_value") %>
+                    <% if metric_value.present? %>
+                      <%= form.radio_button("ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input', checked: (metric_value == score.value)) %>
+                    <% else %>
+                      <%= form.radio_button("ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input') %>
+                    <% end %>
                     <%= form.label "ot_metric_#{ot_metric.id}_#{score.id}", score.value, class: 'form-check-label' %>
                   </div>
                 <% end %>

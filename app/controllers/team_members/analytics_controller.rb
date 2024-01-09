@@ -11,6 +11,7 @@ module TeamMembers
       'analytics'
     end
 
+    # Add headers to the exported excel report
     def csv_headers
       if params[:data] == 'Wellbeing Assessments'
         ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
