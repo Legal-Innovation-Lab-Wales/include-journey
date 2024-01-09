@@ -78,8 +78,7 @@ module TeamMembers
     end
 
     def search
-      @occupational_therapist_assessments.joins(:user)
-                                         .where(user_search, wildcard_query)
+      @occupational_therapist_assessments.where(user_search, wildcard_query)
                                          .order(created_at: :desc)
     end
 
@@ -93,11 +92,11 @@ module TeamMembers
     def occupational_therapist_assessments
       @occupational_therapist_assessments =
         if @team_member.present?
-          @team_member.occupational_therapist_assessments.joins(:user).where({"user.deleted": false}).includes(:user, :ota_entries)
+          @team_member.occupational_therapist_assessments.joins(:user).where({"users.deleted": false}).includes(:user, :ota_entries)
         elsif @user.present?
           @user.occupational_therapist_assessments.includes(:team_member, :ota_entries)
         else
-          OccupationalTherapistAssessment.joins(:user).where({"user.deleted": false}).includes(:user, :team_member, :ota_entries)
+          OccupationalTherapistAssessment.joins(:user).where({"users.deleted": false}).includes(:user, :team_member, :ota_entries)
         end
     end
 
