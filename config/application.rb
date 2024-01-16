@@ -22,6 +22,16 @@ module MyJourney
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Generator Configuration
+    config.generators do |g|
+      g.stylesheets     false  # Skip generating stylesheets
+      g.javascripts     false  # Skip generating JavaScript files
+      g.helper          false  # Skip generating helper files
+      g.test_framework  false  # Skip generating test files
+      g.assets          false  # Skip generating asset files (stylesheets and JavaScript)
+      g.jbuilder        false  # Skip generating Jbuilder views
+    end
+
     # Version of assets, change this if you want to expire all assets
     config.assets.version = '1.0'
 

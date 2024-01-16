@@ -1,8 +1,8 @@
 <main class="container team-members team_member">
-    <section class="row">
+  <section class="row">
     <div class="col mb-3">
       <h2><%= @team_member.full_name %> </h2>
-      <div class="container header-buttons">
+      <div class="header-buttons">
         <div class="row">
           <%= link_to team_member_user_profile_view_logs_path(@team_member), class: 'col-md-3 d-flex align-items-center btn' do %>
             <div class="container">
@@ -76,6 +76,20 @@
                 <div class="col">User File Activity Logs</div>
               </div>
             </div>
+          <% end %>
+          <% if wallich? %>
+            <%= link_to team_member_occupational_therapist_assessments_path(@team_member), class: 'col-md-3 d-flex align-items-center btn' do %>
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <i class="mb-1 fas fa-list"></i>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">Occupational Therapist Assessments</div>
+                </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

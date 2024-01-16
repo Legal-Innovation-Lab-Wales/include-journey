@@ -114,7 +114,7 @@
 
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.text_field :emergency_contact_name, class: 'form-control', value: @user.emergency_contact.name if !@user.emergency_contact.nil? %>
+                        <%= f.text_field :emergency_contact_name, class: 'form-control', value: (@user.emergency_contact.name if !@user.emergency_contact.nil?) %>
                         <%= f.label :emergency_contact_name do %>
                           Emergency Contact's Name
                         <% end %>
@@ -125,7 +125,7 @@
                   <div class="row">
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.text_field :emergency_contact_relationship, class: 'form-control', value: @user.emergency_contact.relationship if !@user.emergency_contact.nil? %>
+                        <%= f.text_field :emergency_contact_relationship, class: 'form-control', value: (@user.emergency_contact.relationship if !@user.emergency_contact.nil?) %>
                         <%= f.label :emergency_contact_relationship do %>
                           Emergency Contact's Relationship
                         <% end %>
@@ -134,7 +134,7 @@
 
                     <div class="col-md">
                       <div class="form-floating">
-                        <%= f.text_field :emergency_contact_number, class: 'form-control', value: @user.emergency_contact.number if !@user.emergency_contact.nil? %>
+                        <%= f.text_field :emergency_contact_number, class: 'form-control', value: (@user.emergency_contact.number if !@user.emergency_contact.nil?) %>
                         <%= f.label :emergency_contact_number do %>
                           Emergency Contact's Number
                         <% end %>
@@ -394,24 +394,6 @@
                         <%= f.collection_select :referred_from_id, ReferredFrom.all, :id, :name, { selected: @user.referred_from_id }, { class: 'form-select' }  %>
                         <%= f.label :referred_from_id do %>
                           Referred From
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md">
-                      <div class="form-floating">
-                        <%= f.number_field :first_occupational_therapist_score, class: 'form-control' %>
-                        <%= f.label :first_occupational_therapist_score do %>
-                          Occupational Therapist Score 1
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="col-md">
-                      <div class="form-floating">
-                        <%= f.number_field :second_occupational_therapist_score, class: 'form-control' %>
-                        <%= f.label :second_occupational_therapist_score do %>
-                          Occupational Therapist Score 2
                         <% end %>
                       </div>
                     </div>

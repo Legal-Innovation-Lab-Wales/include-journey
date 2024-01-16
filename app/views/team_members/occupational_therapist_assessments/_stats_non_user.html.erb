@@ -1,0 +1,5 @@
+<div class="subheading">
+  <p>There <%= @count > 1 ? 'are' : 'is' %> a total of <%= pluralize(@count, 'occupational therapist assessment', 'occupational therapist assessments') %>.</p>
+  <p><%= pluralize(@count_in_last_week, 'has', 'have') %> been completed in the last week
+    and <%= @count_in_last_month %> in the last month.</p>
+</div>

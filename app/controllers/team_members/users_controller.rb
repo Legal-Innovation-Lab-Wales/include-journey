@@ -17,6 +17,7 @@ module TeamMembers
       log_view
       user_location
       wellbeing_assessment
+      occupational_therapist_assessment
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order('dated DESC')
       @diary_entries = current_team_member.diary_entries.where(user: @user).includes(:diary_entry_view_logs)
@@ -90,25 +91,10 @@ module TeamMembers
       if user_params[:summary_panel].present?
         @user.update(summary_panel: user_params[:summary_panel])
       else
-        if user_params[:first_occupational_therapist_score].present? && user_params[:second_occupational_therapist_score].present?
-          ot_scores = user_params.extract!(:first_occupational_therapist_score, :second_occupational_therapist_score)
-          update_occupational_therapist_scores(ot_scores)
-        end
-        @user.update(user_params.except(:first_occupational_therapist_score, :second_occupational_therapist_score))
+        @user.update(user_params)
       end
 
       redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
-    end
-
-    def update_occupational_therapist_scores(ot_scores)
-      scores = [ot_scores[:first_occupational_therapist_score],
-                ot_scores[:second_occupational_therapist_score]]
-      unless @user.occupational_therapist_scores == []
-        @user.old_occupational_therapist_scores.push(@user.occupational_therapist_scores)
-        @user.old_occupational_therapist_scores_dates.push(@user.occupational_therapist_scores_date)
-        @user.save!
-      end
-      @user.update(occupational_therapist_scores: scores, occupational_therapist_scores_date: Time.now)
     end
 
     def suspend
@@ -124,18 +110,17 @@ module TeamMembers
       add_breadcrumb("Add User")
       @user = User.new
     end
-    
+
     def create
       characters = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
       password = Array.new(6) { characters.sample }.join
-      
+
       @user = User.create(
         email: user_params[:email],
         first_name: user_params[:first_name],
         last_name: user_params[:last_name],
         mobile_number: user_params[:mobile_number],
         date_of_birth: user_params[:date_of_birth],
-        email: user_params[:email],
         religion: user_params[:religion],
         disabilities: user_params[:disabilities],
         address: user_params[:address],
@@ -259,6 +244,12 @@ module TeamMembers
       session notice: 'No wellbeing assessment could be found'
     end
 
+    def occupational_therapist_assessment
+      @occupational_therapist_assessment = @user.last_occupational_therapist_assessment
+    rescue ActiveRecord::RecordNotFound
+      session notice: 'No wellbeing assessment could be found'
+    end
+
     def message(message)
       "#{@user.full_name} #{message}"
     end
@@ -308,8 +299,7 @@ module TeamMembers
                                    :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
                                    :brief_physical_description, :priority_id, :local_authority_id,
                                    :support_ended_date, :next_review_date, :support_ending_reason_id,
-                                   :referred_from_id, :support_started_date, :address,
-                                   :first_occupational_therapist_score, :second_occupational_therapist_score)
+                                   :referred_from_id, :support_started_date, :address)
     end
 
     def users_params

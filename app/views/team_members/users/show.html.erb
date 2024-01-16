@@ -89,6 +89,35 @@
         </div>
         <%= render 'team_members/users/summary_panel/modal' %>
     </div>
+
+    <% if ENV['ORGANISATION_NAME'] == 'wallich-journey'%>
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <% if @occupational_therapist_assessment.present? %>
+                    <%= render 'shared/occupational_therapist_assessments/wrapper',
+                              heading: "Latest Occupational Therapist Assessment",
+                              show_timestamp: true, show_author: true,
+                              assessment: @occupational_therapist_assessment%>
+                  <% end %>
+                  <div class="text-center mt-2">
+                    <%= link_to 'New Occupational Therapist Assessment', new_user_occupational_therapist_assessment_path(@user), class: "btn btn-success py-2 px-3 my-2" %>
+                    <% if @user.occupational_therapist_assessments.any? %>
+                        <%= link_to "View All Occupational Therapist Assessments", user_occupational_therapist_assessments_path(@user), class: "btn btn-primary py-2 px-3" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+    
     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="diary-card" class="card h-100">

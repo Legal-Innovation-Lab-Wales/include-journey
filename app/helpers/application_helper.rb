@@ -33,4 +33,8 @@ module ApplicationHelper
   def get_unit(value, unit)
     (value.positive? ? "#{value}#{unit} " : '').to_s
   end
+
+  def wallich?
+    ENV['ORGANISATION_NAME'] == 'wallich-journey'
+  end
 end

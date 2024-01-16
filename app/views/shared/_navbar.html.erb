@@ -17,6 +17,10 @@
               <i class="fas fa-chart-line"></i>
               <div class="nav-label hide">Analytics</div>
             <% end %>
+            <%= link_to recent_contact_logs_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-clipboard-list"></i>
+              <div class="nav-label hide">Contact Logs</div>
+            <% end %>
             <%= link_to diary_entries_path, class: 'btn btn-nav' do %>
               <i class="fas fa-book-open"></i>
               <div class="nav-label hide">Diary Entries</div>
@@ -28,6 +32,16 @@
             <%= link_to wellbeing_services_path, class: 'btn btn-nav' do %>
               <i class="fas fa-tools"></i>
               <div class="nav-label hide">Wellbeing Management</div>
+            <% end %>
+            <% if wallich?%>
+              <%= link_to occupational_therapist_assessments_path, class: 'btn btn-nav' do %>
+                <i class="fas fa-list"></i>
+                <div class="nav-label hide">Occupational Therapist Assessment</div>
+              <% end %>
+            <% end %>
+            <%= link_to edit_team_member_registration_path, class: 'btn btn-nav' do %>
+              <i class="fas fa-user-edit"></i>
+              <div class="nav-label hide">Edit Profile</div>
             <% end %>
             <%= link_to affirmations_path, class: 'btn btn-nav' do %>
               <i class="fas fa-smile"></i>
@@ -107,10 +121,6 @@
                 <div class="nav-label hide">Team Members</div>
                 <i class="fas fa-users"></i>
               <% end %>
-            <% end %>
-            <%= link_to edit_team_member_registration_path, class: "btn btn-success" do %>
-              <div class="nav-label hide">Edit Profile</div>
-              <i class="fas fa-user-edit"></i>
             <% end %>
             <div class= "btn btn-danger", id= "report">
               <div class="nav-label hide">Report Issue</div>

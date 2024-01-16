@@ -1,0 +1,20 @@
+<div class="col-12 col-md-12 mb-3">
+  <div class="card">
+    <div class="card-header">
+      <span>
+        <%= link_to user_path(assessment.user) do %>
+          <%= assessment.user.full_name %> <i class="fas fa-external-link-alt"></i>
+        <% end %>
+      </span>
+      <span>
+        <%= time_ago_in_words(assessment.created) %> ago
+      </span>
+    </div>
+
+    <a href='<%= occupational_therapist_assessment_path(assessment) %>'>
+      <div class="card-body">
+        <%= render 'shared/occupational_therapist_assessments/wrapper', assessment: assessment, show_author: true, show_timestamp: true %>
+      </div>
+    </a>
+  </div>
+</div>

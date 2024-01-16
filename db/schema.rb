@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_07_202154) do
+ActiveRecord::Schema.define(version: 2023_12_13_230105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,38 @@ ActiveRecord::Schema.define(version: 2023_11_07_202154) do
     t.index ["team_member_id"], name: "index_notifications_on_team_member_id"
     t.index ["upload_id"], name: "index_notifications_on_upload_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "occupational_therapist_assessments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "team_member_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["team_member_id"], name: "index_occupational_therapist_assessments_on_team_member_id"
+    t.index ["user_id"], name: "index_occupational_therapist_assessments_on_user_id"
+  end
+
+  create_table "occupational_therapist_metrics", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "occupational_therapist_scores", force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "ota_entries", force: :cascade do |t|
+    t.bigint "occupational_therapist_assessment_id", null: false
+    t.bigint "occupational_therapist_metric_id", null: false
+    t.bigint "occupational_therapist_score_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["occupational_therapist_assessment_id"], name: "index_ota_entries_on_occupational_therapist_assessment_id"
+    t.index ["occupational_therapist_metric_id"], name: "index_ota_entries_on_occupational_therapist_metric_id"
+    t.index ["occupational_therapist_score_id"], name: "index_ota_entries_on_occupational_therapist_score_id"
   end
 
   create_table "priorities", force: :cascade do |t|
@@ -568,10 +600,6 @@ ActiveRecord::Schema.define(version: 2023_11_07_202154) do
     t.text "brief_physical_description"
     t.datetime "support_ended_date"
     t.datetime "next_review_date"
-    t.bigint "occupational_therapist_scores", default: [], array: true
-    t.datetime "occupational_therapist_scores_date"
-    t.bigint "old_occupational_therapist_scores", default: [], array: true
-    t.datetime "old_occupational_therapist_scores_dates", default: [], array: true
     t.bigint "created_by_id"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
     t.index ["created_by_id"], name: "index_users_on_created_by_id"
@@ -681,6 +709,11 @@ ActiveRecord::Schema.define(version: 2023_11_07_202154) do
   add_foreign_key "notifications", "team_members"
   add_foreign_key "notifications", "uploads"
   add_foreign_key "notifications", "users"
+  add_foreign_key "occupational_therapist_assessments", "team_members"
+  add_foreign_key "occupational_therapist_assessments", "users"
+  add_foreign_key "ota_entries", "occupational_therapist_assessments"
+  add_foreign_key "ota_entries", "occupational_therapist_metrics"
+  add_foreign_key "ota_entries", "occupational_therapist_scores"
   add_foreign_key "sessions", "users"
   add_foreign_key "survey_answers", "survey_questions"
   add_foreign_key "survey_answers", "survey_responses"

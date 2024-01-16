@@ -1,0 +1,9 @@
+<main class="container team-members occupational-therapist-assessments new mb-5">
+    <section class="row pb-0" id="wellbeing">
+    <div class="col">
+      <%= render 'shared/occupational_therapist_assessments/wrapper', height: '300',
+                 assessment: @occupational_therapist_assessment, metrics: @occupational_therapist_metrics, 
+                 scores: @occupational_therapist_scores, path: user_occupational_therapist_assessments_path(@user)%>
+    </div>
+  </section>
+</main>

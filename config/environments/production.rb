@@ -69,20 +69,34 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Send Mail with Sendgrid
-  config.action_mailer.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'journey.include-uk.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
-  config.action_mailer.default_url_options = { host: 'journey.include-uk.com', protocol: 'https' }
-  config.action_mailer.delivery_method = :smtp
+  if ENV['ORGANISATION_NAME'] == 'include-journey'
+    config.action_mailer.smtp_settings = {
+      user_name: 'apikey',
+      password: ENV['SENDGRID_API_KEY'],
+      domain: 'journey.include-uk.com',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+    config.action_mailer.default_url_options = { host: 'journey.include-uk.com', protocol: 'https' }
+    config.action_mailer.delivery_method = :smtp
+  elsif ENV['ORGANISATION_NAME'] == 'wallich-journey'
+    config.action_mailer.smtp_settings = {
+      user_name: 'apikey',
+      password: ENV['SENDGRID_API_KEY'],
+      domain: 'wallich-journey.legaltech.wales',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+    config.action_mailer.default_url_options = { host: 'wallich-journey.legaltech.wales', protocol: 'https' }
+    config.action_mailer.delivery_method = :smtp
+  end
 
   config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
-  config.regex_name = %r{\A[a-zA-Z0-9'\-._()/ ]*\z}
+  config.regex_name = %r{\A[a-zA-Z0-9'\-._()/, ]*\z}
   config.regex_file_name = /\A[a-zA-Z0-9\s_()-]+(\.(jpg|jpeg|png|pdf))?\z/i
   config.regex_telephone = /\A[0-9+]*\z/
   config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}

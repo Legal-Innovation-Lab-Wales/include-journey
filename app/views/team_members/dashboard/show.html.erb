@@ -7,6 +7,7 @@
           <%= render 'shared/dashboard_btn', path: users_path, icon: 'fa-user', text: 'Users' %>
           <%= render 'shared/dashboard_btn', path: analytics_path, icon: 'fa-chart-line', text: 'Analytics' %>
           <%= render 'shared/dashboard_btn', path: recent_contact_logs_path, icon: 'fa-clipboard-list', text: 'Contact Logs' %>
+          <%= render 'shared/dashboard_btn', path: edit_team_member_registration_path, icon: 'fa-user-edit', text: 'Edit Profile' %>
         </div>
         <div class="row">
           <%= render 'shared/dashboard_btn', path: diary_entries_path, icon: 'fa-book-open',
@@ -15,6 +16,8 @@
                      text: 'Wellbeing Assessments' %>
           <%= render 'shared/dashboard_btn', path: wellbeing_services_path, icon: 'fa-tools',
                      text: 'Wellbeing Management' %>
+          <%= render 'shared/dashboard_btn', path: occupational_therapist_assessments_path, icon: 'fa-list', 
+                     text: 'Occupational Therapist Assessment' if wallich? %>
         </div>
         <div class="row">
           <%= render 'shared/dashboard_btn', path: affirmations_path, icon: 'fa-smile', text: 'Daily Affirmations' %>

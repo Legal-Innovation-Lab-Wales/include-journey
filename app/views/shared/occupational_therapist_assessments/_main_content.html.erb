@@ -1,0 +1,57 @@
+<div class="col-12 p-0 text-start">
+  <div class="p-0 p-3">
+ <!--New Occupational Therapist Assessment Form-->
+    <% if local_assigns[:metrics].present? %>
+      <%= form_with model: local_assigns[:assessment], url: local_assigns[:path], method: :post do |form| %>
+        <% local_assigns[:metrics].each do |ot_metric| %>
+          <div class="row my-3">
+            <div class="col-12 col-md-4 col-lg-6">
+              <%= form.label "ot_metric_#{ot_metric.id}"  do %>
+                <%= ot_metric.name %>
+              <% end %>
+            </div>
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="d-flex">
+                <% local_assigns[:scores].each do |score| %>
+                  <div class="form-check mx-3 mb-3">
+                    <% metric_value = instance_variable_get("@ot_metric_#{ot_metric.id}_value") %>
+                    <% if metric_value.present? %>
+                      <%= form.radio_button("ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input', checked: (metric_value == score.value)) %>
+                    <% else %>
+                      <%= form.radio_button("ot_metric_#{ot_metric.id}", score.value, class: 'form-check-input') %>
+                    <% end %>
+                    <%= form.label "ot_metric_#{ot_metric.id}_#{score.id}", score.value, class: 'form-check-label' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <p class="actual-error-message" >
+          <% local_assigns[:assessment].errors.each do |err| %>
+            <%= err %>
+          <% end %>
+        </p>
+        <div class="row submit-btn">
+          <div class="col">
+            <%= form.submit 'Submit', class: 'btn btn-primary mt-2' %>
+          </div>
+        </div>
+      <% end %>
+    <!-- Occupational Therapist Assessment Present => Show/Index View -->
+    <% elsif local_assigns[:assessment].present? %>
+     
+       <% local_assigns[:assessment].ota_entries.includes(:occupational_therapist_metric, :occupational_therapist_score).each_with_index do |entry, index| %>
+        <div class="row mb-3">
+            <div class="col-10">
+            <%= entry.occupational_therapist_metric.name %>
+            </div>
+
+            <div class="col-2 text-center">
+            <%= entry.occupational_therapist_score.value %>
+            </div>
+        </div>
+        <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<main class="container team-members occupational-therapist-assessments show">
+  <section class="row" id="wellbeing">
+    <div class="col">
+      <%= render 'shared/occupational_therapist_assessments/wrapper', height: '245', show_timestamp: true,
+                 chart_heading: "#{@occupational_therapist_assessment.user.full_name}'s Occupational Therapist Score",
+                 assessment: @occupational_therapist_assessment%>
+    </div>
+  </section>
+    <section class="row">
+        <div class="col next-btn">
+          <%= link_to user_path(@occupational_therapist_assessment.user), class: 'btn btn-primary' do %>
+            View Profile <i class="fas fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+    </section>
+</main>

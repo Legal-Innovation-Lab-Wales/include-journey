@@ -90,6 +90,7 @@ Rails.application.routes.draw do
         resources :wellbeing_assessments, only: :index, on: :member do
           get 'export', on: :collection
         end
+        resources :occupational_therapist_assessments, only: :index
         resources :contact_logs, on: :member do
           get 'recent', action: :recent, on: :collection
         end
@@ -138,6 +139,7 @@ Rails.application.routes.draw do
           delete '', to: 'folders#destroy', as: 'delete'
           put '', to: 'folders#update', as: 'update'
         end
+        resources :occupational_therapist_assessments, only: %i[index new create]
       end
 
       resources :analytics, only: %i[index] do
@@ -147,6 +149,7 @@ Rails.application.routes.draw do
       resources :wellbeing_assessments, only: %i[show index] do
         get 'export', on: :collection
       end
+      resources :occupational_therapist_assessments, only: %i[index show]
       resources :contact_logs do
         get 'recent', action: :recent, on: :collection
       end
