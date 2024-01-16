@@ -46,15 +46,27 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   # Send Mail with Sendgrid
-  config.action_mailer.smtp_settings = {
-    user_name: 'apikey',
-    password: ENV['SENDGRID_API_KEY'],
-    domain: 'include-journey-demo.legaltech.wales',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  if ENV['ORGANISATION_NAME'] == 'include-journey'
+    config.action_mailer.smtp_settings = {
+      user_name: 'apikey',
+      password: ENV['SENDGRID_API_KEY'],
+      domain: 'include-journey-demo.legaltech.wales',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  elsif ENV['ORGANISATION_NAME'] == 'wallich-journey'
+    config.action_mailer.smtp_settings = {
+      user_name: 'apikey',
+      password: ENV['SENDGRID_API_KEY'],
+      domain: 'wallich-journey-demo.legaltech.wales',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  end
 
   config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
   config.regex_name = %r{\A[a-zA-Z0-9'\-._()/, ]*\z}
