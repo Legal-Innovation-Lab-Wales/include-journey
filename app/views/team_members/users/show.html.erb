@@ -33,6 +33,8 @@
       </p>
     </div>
   </div>
+
+  <!--Last Wellbeing Assessment-->
   <div class="row mb-4">
     <div class="col">
       <div class="card">
@@ -59,9 +61,14 @@
       </div>
     </div>
   </div>
+
+  <!--Last Wellbeing Line Chart-->
   <% if @user.wellbeing_assessments.count > 1 %>
     <%= render 'wellbeing_history_chart', chart_heading: "#{@user.full_name}'s Wellbeing History" %>
   <% end %>
+
+  <!--User's Pen Profile-->
+  <!--This is called summary panel in the code, client changed the name last minute-->
   <% unless @user.deleted %>
     <div class="row">
       <div class="col-12 mb-4">
@@ -90,34 +97,7 @@
         <%= render 'team_members/users/summary_panel/modal' %>
     </div>
 
-    <% if ENV['ORGANISATION_NAME'] == 'wallich-journey'%>
-      <div class="row">
-        <div class="col-12 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <% if @occupational_therapist_assessment.present? %>
-                    <%= render 'shared/occupational_therapist_assessments/wrapper',
-                              heading: "Latest Occupational Therapist Assessment",
-                              show_timestamp: true, show_author: true,
-                              assessment: @occupational_therapist_assessment%>
-                  <% end %>
-                  <div class="text-center mt-2">
-                    <%= link_to 'New Occupational Therapist Assessment', new_user_occupational_therapist_assessment_path(@user), class: "btn btn-success py-2 px-3 my-2" %>
-                    <% if @user.occupational_therapist_assessments.any? %>
-                        <%= link_to "View All Occupational Therapist Assessments", user_occupational_therapist_assessments_path(@user), class: "btn btn-primary py-2 px-3" %>
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    <% end %>
-    
+    <!--Summary of User's Diary Entries-->
     <div class="row" id="diary-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="diary-card" class="card h-100">
@@ -174,6 +154,7 @@
         </div>
       </div>
 
+      <!--Historical & Upcoming Record of User's Appointments with TeamMembers-->
       <div class="col-12 col-lg-6 mb-4">
         <div class="card h-100">
           <div class="card-header d-flex">
@@ -251,6 +232,7 @@
       </div>
     </div>
 
+    <!--User's Tag(s)-->
     <div class="row mb-4" id="tags-notes">
       <div id="tags" class="col-12 col-lg-6 mb-3 mb-lg-0">
         <div class="card tags h-100">
@@ -283,9 +265,11 @@
           </div>
         </div>
       </div>
-
       <%= javascript_pack_tag 'tags' %>
 
+      <!--User's Notes-->
+      <!--These notes are written by team members which can be made visible to user or hidden from them-->
+      <!--User receives a notification when team members create a note that is visible to the user-->
       <div class="col-12 col-lg-6">
         <div class="card h-100">
           <div class="card-header">
@@ -309,10 +293,10 @@
           </div>
         </div>
       </div>
-
       <%= render 'team_members/notes/modal', note: @note, action: "create", controller: "notes", user_id: params[:id] %>
     </div>
 
+    <!-- User's Contact Logs -->
     <div class="row" id="contact-appointments">
       <div class="col-12 col-lg-6 mb-4">
         <div id="contact-card" class="card h-100">
@@ -347,6 +331,8 @@
         </div>
       </div>
     </div>
+
+    <!--User's Files and Folders-->
     <div class="row">
       <div class="col-12 mb-4">
           <div class="card h-100">
@@ -362,8 +348,6 @@
                 </button>
                 <%= render 'shared/folders/modal', folder: @new_folder, url: user_folders_path(@user) ,action: "create", controller: "folders" %>
               <% end %>
-              <!-- <%= link_to "Add Folder", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %> -->
-
               <%= link_to "Add File", new_user_upload_path(@user), class: "btn btn-primary py-2 px-3" %>
             </div>
             <div class="card-body bg-transparent h-100" id="summary-panel-card">
@@ -385,6 +369,35 @@
           </div>
         </div>
     </div>
+
+    <!-- User's Latest Occupational Therapist Score -->
+    <% if ENV['ORGANISATION_NAME'] == 'wallich-journey'%>
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <% if @occupational_therapist_assessment.present? %>
+                    <%= render 'shared/occupational_therapist_assessments/wrapper',
+                              heading: "Latest Occupational Therapist Assessment",
+                              show_timestamp: true, show_author: true,
+                              assessment: @occupational_therapist_assessment%>
+                  <% end %>
+                  <div class="text-center mt-2">
+                    <%= link_to 'New Occupational Therapist Assessment', new_user_occupational_therapist_assessment_path(@user), class: "btn btn-success py-2 px-3 my-2" %>
+                    <% if @user.occupational_therapist_assessments.any? %>
+                        <%= link_to "View All Occupational Therapist Assessments", user_occupational_therapist_assessments_path(@user), class: "btn btn-primary py-2 px-3" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
   <% end %>
 </main>
 
