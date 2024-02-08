@@ -29,9 +29,10 @@ class User < DeviseRecord
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
   has_many :notifications
-  has_many :occupational_therapist_assessments
 
   # Wallich Journey Specific Association
+  has_many :occupational_therapist_assessments
+  has_many :ota_entries, through: :occupational_therapist_assessments
   has_one :emergency_contact
   belongs_to :accommodation_type, optional: true
   belongs_to :housing_provider, optional: true
@@ -143,6 +144,21 @@ class User < DeviseRecord
 
   def last_occupational_therapist_assessment
     occupational_therapist_assessments.includes(:ota_entries).last
+  end
+
+  def occupational_therapist_assessment_history
+    history = { labels: [], datasets: [] }
+
+    ota_entries.includes(:occupational_therapist_metric, :occupational_therapist_score)
+               .joins(:occupational_therapist_metric, :occupational_therapist_score)
+               .order(created_at: :desc).each { |entry| entry.add_to_history(history) }
+
+    number_of_labels = history[:datasets].count
+    puts number_of_labels
+    puts history[:datasets].pluck(:label)
+    puts 'ANSWER HERE!'
+
+    history
   end
 
   def mail_admin

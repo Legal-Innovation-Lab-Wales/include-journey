@@ -1,6 +1,6 @@
 @import "variables";
 
-#wellbeing-history-chart-wrapper {
+#wellbeing-history-chart-wrapper, #occupational-therapist-history-chart-wrapper {
   min-height: 30vh;
   margin: 0 0 1.5rem 0;
   border-radius: 0.25rem;
@@ -28,7 +28,7 @@
     font-family: $heading-font;
   }
 
-  #wellbeing-history-chart-carousel {
+  #wellbeing-history-chart-carousel, #occupational-therapist-history-chart-carousel{
     padding-bottom: 2rem;
 
     .form-select {

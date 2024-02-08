@@ -115,6 +115,7 @@ Rails.application.routes.draw do
 
         resources :notes, only: %i[create update show]
         get 'wba_history', action: 'wba_history', on: :member
+        get 'ota_history', action: 'ota_history', on: :member
         resources :wellbeing_assessments, only: %i[new create index], on: :member do
           get 'export', on: :collection
         end

@@ -79,10 +79,17 @@ module TeamMembers
       end
     end
 
+    # GET /users/:user_id/ota_history
+    def ota_history
+      respond_to do |format|
+        format.json { render json: @user.occupational_therapist_assessment_history.as_json, status: :ok }
+      end
+    end
+
     # GET /users/:user_id/edit
     def edit
       add_breadcrumb(user.full_name, user_path(user))
-      add_breadcrumb("Edit Details", nil, 'fas fa-edit')
+      add_breadcrumb('Edit Details', nil, 'fas fa-edit')
       render 'edit'
     end
 

@@ -1,0 +1,24 @@
+<section class="row" id="occupational-therapist-history-chart-wrapper">
+  <div class="col">
+    <h3><%= chart_heading %></h3>
+    <div class="mobile-hint">
+      <h5 class="pt-5 px-3">The occupational therapist history chart doesn't work very well on mobile so we've disabled it. Please view this on a larger screen.</h5>
+    </div>
+    <div id="occupational-therapist-history-chart-carousel" class="carousel slide carousel-dark mobile-hide" data-bs-interval="false"
+      data-scale="<%= OccupationalTherapistScore.order(id: :asc).select(:value).to_json %>">..
+      <select class="form-select mx-auto" aria-label="Select Occupational Therapist Metric"></select>
+      <div class="carousel-inner"></div>
+      <div class="carousel-indicators"></div>
+      <button class="carousel-control-prev hidden" type="button" data-bs-target="#occupational-therapist-history-chart-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next hidden" type="button" data-bs-target="#occupational-therapist-history-chart-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<%= javascript_pack_tag 'occupational_therapist_history_chart' %>

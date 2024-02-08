@@ -22,7 +22,7 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
   end
 
   # Create Occupational Therapist Score
-  scores = ['1', '2', '3', '4', '5', 'N/A']
+  scores = ['N/A', '1', '2', '3', '4', '5']
 
   scores.each do |score|
     OccupationalTherapistScore.create!(value: score)
@@ -30,6 +30,9 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
 
   # Search for a specific user
   user = User.find_by_email('ij-test-user-10@purpleriver.dev')
+
+  # Initial time
+  time = Date.current
 
   # Method for created OccupationalTherapistAssessment
   10.times do
@@ -48,9 +51,12 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
       OtaEntry.create!(
         occupational_therapist_assessment: ota,
         occupational_therapist_metric: metric,
-        occupational_therapist_score: score
+        occupational_therapist_score: score,
+        created_at: time
       )
+      time -= 2.day
     end
+    time -= 12.days
   end
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
