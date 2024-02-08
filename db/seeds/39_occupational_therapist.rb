@@ -28,37 +28,41 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
     OccupationalTherapistScore.create!(value: score)
   end
 
-  # Search for a specific user
-  user = User.find_by_email('ij-test-user-10@purpleriver.dev')
+  # Loop through all users
+  User.all.each do |user|
+    # Initial time
+    time = Date.current
 
-  # Initial time
-  time = Date.current
+    # Method for created OccupationalTherapistAssessment
+    10.times do
+      # randomly selected team member
+      team_member = user.team_members.all.sample
 
-  # Method for created OccupationalTherapistAssessment
-  10.times do
-    # randomly selected team member
-    team_member = user.team_members.all.sample
-
-    ota = OccupationalTherapistAssessment.create!(
-      team_member: team_member,
-      user: user
-    )
-
-    # Create associated OtaEntries (AssessmentEntries) with a random metric and score
-    OccupationalTherapistMetric.all.each do |metric|
-      score = OccupationalTherapistScore.all.sample
-
-      OtaEntry.create!(
-        occupational_therapist_assessment: ota,
-        occupational_therapist_metric: metric,
-        occupational_therapist_score: score,
-        created_at: time
+      ota = OccupationalTherapistAssessment.create!(
+        team_member: team_member || TeamMember.where(admin: true).sample,
+        user: user
       )
-      time -= 2.day
+
+      # Create associated OtaEntries (AssessmentEntries) with a random metric and score
+      OccupationalTherapistMetric.all.each do |metric|
+        score = OccupationalTherapistScore.all.sample
+
+        OtaEntry.create!(
+          occupational_therapist_assessment: ota,
+          occupational_therapist_metric: metric,
+          occupational_therapist_score: score,
+          created_at: time
+        )
+      end
+      time -= 5.day
     end
-    time -= 12.days
   end
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
   @last_time = Time.now
+else
+  OtaEntry.destroy_all
+  OccupationalTherapistAssessment.destroy_all
+  OccupationalTherapistMetric.destroy_all
+  OccupationalTherapistScore.destroy_all
 end
