@@ -396,13 +396,12 @@
           </div>
         </div>
       </div>
-    <% end %>
 
       <!--Occupational Therapist History Line Chart-->
-  <% if @user.occupational_therapist_assessments.count > 1 %>
-    <%= render 'occupational_therapist_history_chart', chart_heading: "#{@user.full_name}'s Occupational Therapist History" %>
-  <% end %>
-
+      <% if @user.occupational_therapist_assessments.count > 1 %>
+        <%= render 'occupational_therapist_history_chart', chart_heading: "#{@user.full_name}'s Occupational Therapist History" %>
+      <% end %>
+    <% end %>
   <% end %>
 </main>
 
