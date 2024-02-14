@@ -17,7 +17,7 @@ module TeamMembers
       log_view
       user_location
       wellbeing_assessment
-      occupational_therapist_assessment
+      occupational_therapist_assessment if ENV['ORGANISATION_NAME'] == 'wallich-journey'
       @note = Note.new
       @user_notes = @user.notes.includes(:team_member, :replaced_by).order('dated DESC')
       @diary_entries = current_team_member.diary_entries.where(user: @user).includes(:diary_entry_view_logs)

@@ -142,6 +142,8 @@ class User < DeviseRecord
   end
 
   def last_occupational_therapist_assessment
+    return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
     occupational_therapist_assessments.includes(:ota_entries).last
   end
 
