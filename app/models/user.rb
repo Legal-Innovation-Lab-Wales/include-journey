@@ -143,10 +143,14 @@ class User < DeviseRecord
   end
 
   def last_occupational_therapist_assessment
+    return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
     occupational_therapist_assessments.includes(:ota_entries).last
   end
 
   def occupational_therapist_assessment_history
+    return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
+
     history = { labels: [], datasets: [] }
 
     ota_entries.includes(:occupational_therapist_metric, :occupational_therapist_score)
@@ -154,10 +158,6 @@ class User < DeviseRecord
                .order(created_at: :desc).each { |entry| entry.add_to_history(history) }
 
     number_of_labels = history[:datasets].count
-    puts number_of_labels
-    puts history[:datasets].pluck(:label)
-    puts 'ANSWER HERE!'
-
     history
   end
 
