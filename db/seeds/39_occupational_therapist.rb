@@ -31,6 +31,10 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
   # Search for a specific user
   user = User.find_by_email('ij-test-user-10@purpleriver.dev')
 
+  # Ensure the user has at least one team member assigned
+  team_member = TeamMember.find_by_email('admin@myjourney.app')
+  user.assign_team_member(team_member.id)
+
   # Method for created OccupationalTherapistAssessment
   10.times do
     # randomly selected team member
