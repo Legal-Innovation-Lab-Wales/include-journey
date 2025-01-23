@@ -77,6 +77,7 @@ group :test do
   gem 'webdrivers'
   # Association and Validation Matchers
   gem 'shoulda-matchers', '~> 3.1'
+  gem "assert_valid", "~> 0.1.0"
   # For cleaning test database
   gem 'database_cleaner-active_record'
 end

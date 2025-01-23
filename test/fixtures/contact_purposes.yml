@@ -1,0 +1,55 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one_to_one:
+  name: One-to-one
+
+benefits:
+  name: Benefits
+
+computer_use:
+  name: Computer use
+
+education:
+  name: Education
+
+emotional_support:
+  name: Emotional support
+
+employment:
+  name: Employment
+
+food:
+  name: Food
+
+food_bank:
+  name: Food bank
+
+housing:
+  name: Housing
+
+mental_health:
+  name: Mental health
+
+money:
+  name: Money
+
+phone_use:
+  name: Phone use
+
+physical_health:
+  name: Physical health
+
+training:
+  name: Training
+
+utilities:
+  name: Utilities
+
+womens_day:
+  name: Women's day
+
+interpersonal_violence_support:
+  name: Interpersonal Violence Support
+
+social_connect:
+  name: Social Connect (Combating Isolation)

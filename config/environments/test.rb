@@ -57,4 +57,23 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
+  config.regex_name = %r{\A[a-zA-Z0-9'\-._()/, ]*\z}
+  config.regex_file_name = /\A[a-zA-Z0-9\s_()-]+(\.(jpg|jpeg|png|pdf))?\z/i
+  config.regex_telephone = /\A[0-9+]*\z/
+  config.regex_website = %r{\A[a-zA-Z0-9'\-._()/#: ]*\z}
+  config.regex_email = URI::MailTo::EMAIL_REGEXP
+  config.regex_datetime = /\A[a-zA-Z0-9+\-.:() ]*\z/
+  config.regex_postcode = /\A[a-zA-Z0-9 ]*\z/
+
+  config.text_field_error = 'Please only use standard characters and punctuation'
+  config.name_error = 'Please only use alphanumeric characters'
+  config.file_name_error = 'Please only use alphanumeric characters, spaces, underscores, and hyphens. 
+                            Supported formats are JPEG, PNG, and PDF.'
+  config.telephone_error = 'Please enter a valid telephone number'
+  config.website_error = 'Please enter a valid website address'
+  config.email_error = 'Please enter a valid email address'
+  config.datetime_error = 'Please select a valid date'
+  config.postcode_error = 'Please enter a valid postcode'
 end
