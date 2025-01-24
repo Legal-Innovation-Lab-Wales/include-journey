@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+drop_in:
+  name: Drop in
+  color: '#e66043'
+
+scheduled:
+  name: Scheduled 1:1
+  color: '#eb7945'
+
+telephone:
+  name: Telephone call
+  color: '#ee904b'
+
+email:
+  name: Email
+  color: '#F0A656'
+
+other:
+  name: Other
+  color: '#DFC54C'
+
+app_support:
+  name: Support using the app
+  color: '9933FFE6'

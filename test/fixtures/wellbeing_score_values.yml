@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Absymal
+  color: '#E04444'
+
+two:
+  name: Dreadful
+  color: '#e66043'
+
+three:
+  name: Rubbish
+  color: '#eb7945'
+
+four:
+  name: Bad
+  color: '#ee904b'
+
+five:
+  name: Mediocre
+  color: '#F0A656'
+
+six:
+  name: Fine
+  color: '#DFC54C'
+
+seven:
+  name: Good
+  color: '#c1c041'
+
+eight:
+  name: Great
+  color: '#a2ba3a'
+
+nine:
+  name: Superb
+  color: '#82b438'
+
+ten:
+  name: Perfect
+  color: '#5DAD3A'

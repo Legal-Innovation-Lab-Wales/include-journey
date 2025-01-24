@@ -1,0 +1,49 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+bro_myrddin:
+  name: Bro Myrddin
+
+coastal:
+  name: Coastal housing
+
+fha:
+  name: FHA
+
+gouledy:
+  name: Gouledy
+
+hafan:
+  name: Hafan
+
+hafod:
+  name: Hafod
+
+linc:
+  name: Linc cymru
+
+npt:
+  name: Local Authority NPT
+
+swansea:
+  name: Local authority Swansea
+
+melin:
+  name: Melin Homes
+
+pobl:
+  name: POBL
+
+wallich:
+  name: Wallich
+
+plattform:
+  name: Plattform
+
+tai_tarian:
+  name: Tai Tarian
+
+owner_occupier:
+  name: Owner occupier
+
+prs:
+  name: PRS

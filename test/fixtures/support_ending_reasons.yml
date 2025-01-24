@@ -1,0 +1,58 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+hospital:
+  name: Entered a long stay hospital or hospice
+
+mental_health_unit:
+  name: Entered a mental health unit
+
+detox:
+  name: Entered a residential detox facility
+
+prison:
+  name: Entered prison/ YOL
+
+health_stabilised:
+  name: Health needs have stabilised
+
+care_home:
+  name: Moved into a care home
+
+long_term_housing:
+  name: Moved into a long term supported housing
+
+short_term_housing:
+  name: Moved into a short term supported housing
+
+sheltered:
+  name: Moved into Sheltered/Extra Care
+
+rented_accommodation:
+  name: Moved into Sustainable rented accommodation
+
+moved_planned:
+  name: Moved out of area (Planned)
+
+moved_unplanned:
+  name: Moved out of area (Unplanned)
+
+non_engagement:
+  name: Non engagement with support
+
+transferred_reduced_support:
+  name: Transferred to other agency for reduced support
+
+transferred_increased_support:
+  name: Transferred to other agency for increased support
+
+end_of_intervention:
+  name: End of planned intervention (positive)
+
+housing_needs_met:
+  name: Housing related support needs have been met
+
+requested:
+  name: Has requested for support to end
+
+deceased:
+  name: Deceased
