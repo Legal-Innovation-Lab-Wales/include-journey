@@ -1,0 +1,73 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+with_friends:
+  name: Living with friends
+
+local_authority:
+  name: Local authority General needs tenancy
+
+mobile_home:
+  name: Mobile home / Caravan
+
+owner_occupation:
+  name: Owner occupation
+
+prison:
+  name: Prison
+
+private_rental:
+  name: Private sector rental
+
+care_home:
+  name: Residential care home
+
+rough_sleeping:
+  name: Rough Sleeping
+
+sofa_surfing:
+  name: Sofa Surfing
+
+short_term_temporary:
+  name: Short term Temporary accommodation
+
+bed_and_breakfast:
+  name: Bed and Breakfast
+
+emergency_beds:
+  name: Emergency Beds
+
+public_transport:
+  name: Sleeping on public transport
+
+supported_housing_short_term:
+  name: Supported Housing ( Short Term)
+
+supported_housing_long_term:
+  name: Supported Housing ( Long Term)
+
+tied_to_employment:
+  name: Tied Housing to employments
+
+womens_refuge:
+  name: Womans Refuge
+
+other_temporary:
+  name: Other Temporary accommodation
+
+did_not_disclose:
+  name: Client did not wish to disclose
+
+approved_premises:
+  name: Approved Premises /Probation hostel
+
+childrens_home:
+  name: "Children's home / foster care."
+
+housing_association:
+  name: Housing association tenancy
+
+sheltered_living:
+  name: 55+ accommodation / sheltered living
+
+with_family:
+  name: Living with Parents / family

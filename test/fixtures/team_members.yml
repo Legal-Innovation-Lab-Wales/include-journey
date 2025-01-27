@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alan:
+  first_name: Alan
+  last_name: Baker
+  email: alan.baker@example.com
+  mobile_number: 07887 665544
+  encrypted_password: <%= Devise::Encryptor.digest(TeamMember, 'pass1234') %>
+  admin: true
+
+barbara:
+  first_name: Barbara
+  last_name: Saunders
+  email: b.saunders@example.com
+  mobile_number: 07555 113355
+  encrypted_password: <%= Devise::Encryptor.digest(TeamMember, 'pass1234') %>
