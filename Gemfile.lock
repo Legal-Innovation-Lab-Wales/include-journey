@@ -65,16 +65,15 @@ GEM
     assert_valid (0.1.0)
     attr_encrypted (4.0.0)
       encryptor (~> 3.0.0)
-    autoprefixer-rails (10.4.13.0)
+    autoprefixer-rails (10.4.19.0)
       execjs (~> 2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
-    bootstrap (5.0.2)
+    bootstrap (5.3.3)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.9.2, < 3)
-      sassc-rails (>= 2.0.0)
+      popper_js (>= 2.11.8, < 3)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.39.1)
@@ -118,7 +117,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     encryptor (3.0.0)
     erubi (1.12.0)
-    execjs (2.8.1)
+    execjs (2.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -180,7 +179,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.3)
-    popper_js (2.11.7)
+    popper_js (2.11.8)
     premailer (1.21.0)
       addressable
       css_parser (>= 1.12.0)
@@ -196,7 +195,7 @@ GEM
     rack (2.2.7)
     rack-mini-profiler (2.3.4)
       rack (>= 1.2.0)
-    rack-proxy (0.7.6)
+    rack-proxy (0.7.7)
       rack
     rack-test (2.1.0)
       rack (>= 1.3)
@@ -280,7 +279,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_range (3.0.0)
+    semantic_range (3.1.0)
     sendgrid-ruby (6.6.2)
       ruby_http_client (~> 3.4)
     shoulda-matchers (3.1.3)
@@ -316,7 +315,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
-    webpacker (5.4.4)
+    webpacker (6.0.0.rc.6)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -337,7 +336,7 @@ PLATFORMS
 DEPENDENCIES
   assert_valid (~> 0.1.0)
   bootsnap (>= 1.4.4)
-  bootstrap (~> 5.0.0.beta2)
+  bootstrap (~> 5.3.3)
   byebug
   capybara (>= 3.26)
   chartkick
@@ -373,7 +372,7 @@ DEPENDENCIES
   uri (= 0.10.0)
   web-console (>= 4.1.0)
   webdrivers
-  webpacker (~> 5.0)
+  webpacker (= 6.0.0.rc.6)
   whenever
 
 RUBY VERSION
