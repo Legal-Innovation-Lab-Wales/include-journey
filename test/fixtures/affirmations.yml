@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  text: You are awesome!
+  scheduled_date: 2020-01-01
+  team_member: alan
+
+two:
+  text: Everything is great!
+  scheduled_date: 2020-01-05
+  team_member: barbara
