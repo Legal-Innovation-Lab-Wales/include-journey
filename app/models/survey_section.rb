@@ -36,6 +36,10 @@ class SurveySection < ApplicationRecord
     answer_labels.split(';').map(&:strip)
   end
 
+  def can_add_question?
+    answer_labels.present?
+  end
+
   private
 
   def must_have_two_to_six_answer_labels

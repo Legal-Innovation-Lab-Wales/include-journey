@@ -5,6 +5,11 @@ module TeamMembers
 
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_questions
     def create
+      unless @survey_section.can_add_question?
+        redirect_back(fallback_location: edit_survey_path(@survey), flash: { error: 'Cannot add question to this section' })
+        return
+      end
+
       @survey_question = @survey_section.survey_questions.create!(order: @survey_section.next_question)
 
       redirect_to edit_survey_path(@survey, anchor: "question[#{@survey_question.id}]")

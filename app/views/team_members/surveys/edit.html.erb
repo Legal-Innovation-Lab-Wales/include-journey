@@ -95,6 +95,7 @@
               </div>
             <% end %>
           <% end %>
+          <% if section.can_add_question? %>
           <div class="row add-btn">
             <div class="col">
               <%= link_to survey_question_index_path(@survey, section), method: :post,
@@ -103,6 +104,7 @@
               <% end %>
             </div>
           </div>
+          <% end %>
           <% section.survey_comment_sections.order(order: :asc).each do |comment_section| %>
             <div class="row comment-section" draggable="true" id="comment-section[<%= comment_section.id %>]"
                  data-resource-id="<%= comment_section.id %>" data-type="comment_section">
