@@ -4,8 +4,8 @@ class SurveySection < ApplicationRecord
   has_many :survey_questions, dependent: :destroy
   has_many :survey_comment_sections, dependent: :destroy
 
-  LIKERT_5_ANSWER_LABELS = 'Strongly Disagree; Disagree; Neither Agree Nor Disagree; Agree; Strongly Agree; Not Applicable'
   YES_NO_ANSWER_LABELS = 'Yes; No'
+  LIKERT_5_ANSWER_LABELS = 'Strongly Disagree; Disagree; Neither Agree Nor Disagree; Agree; Strongly Agree; Not Applicable'
 
   ANSWER_LABELS_OPTIONS = [
     YES_NO_ANSWER_LABELS,

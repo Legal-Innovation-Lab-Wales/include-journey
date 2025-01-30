@@ -3,9 +3,11 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
     headers = {'Content-Type': 'application/json', 'X-CSRF-Token': csrf_tokens.length > 0 ? csrf_tokens[0].content : ''},
     survey_fields = document.querySelectorAll('input[name^=survey]'),
     section_headings = document.querySelectorAll('input[name^=section]'),
+    section_answer_labels = document.querySelectorAll('select[name^=answer_labels]'),
     questions = document.querySelectorAll('input[name^=question]'),
     comment_sections = document.querySelectorAll('input[name^=comment_section]'),
-    section_id = e => e.target.closest('.survey-section').dataset.id,
+    get_section = e => e.target.closest('.survey-section'),
+    section_id = e => get_section(e).dataset.id,
     update_survey_fields = () => {
         const survey_data = [...survey_fields].map(field => [field.dataset.name, field.value]),
             body = JSON.stringify({ survey: Object.fromEntries(new Map(survey_data)) })
@@ -19,6 +21,15 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
             method: 'put', headers: headers, body: JSON.stringify({ survey_section: { heading: e.target.value } })
         })
             .then(response => { if (!response.ok) throw 'Survey Section label could not be updated!' })
+            .catch(error => alert(error))
+    },
+    update_answer_labels = e => {
+        get_section(e).querySelectorAll('.add-question-btn')[0].hidden = !e.target.value
+
+        fetch(`${survey_url}/survey_sections/${section_id(e)}`, {
+            method: 'put', headers: headers, body: JSON.stringify({ survey_section: { answer_labels: e.target.value || null } })
+        })
+            .then(response => { if (!response.ok) throw 'Survey Section answer labels could not be updated!' })
             .catch(error => alert(error))
     },
     update_question = e => {
@@ -38,5 +49,6 @@ const csrf_tokens = document.getElementsByName('csrf-token'),
 
 survey_fields.forEach(survey_field => survey_field.addEventListener('change', update_survey_fields))
 section_headings.forEach(section_heading => section_heading.addEventListener('change', update_survey_heading))
+section_answer_labels.forEach(answer_labels => answer_labels.addEventListener('change', update_answer_labels))
 questions.forEach(question => question.addEventListener('change', update_question))
 comment_sections.forEach(comment_section => comment_section.addEventListener('change', update_comment_section))

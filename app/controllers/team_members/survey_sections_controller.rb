@@ -42,7 +42,7 @@ module TeamMembers
     end
 
     def section_params
-      params.require(:survey_section).permit(:heading)
+      params.require(:survey_section).permit(:heading, :answer_labels)
     end
 
     def reorder_params
