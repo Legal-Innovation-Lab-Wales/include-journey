@@ -60,11 +60,13 @@
                                  placeholder: 'Section Heading' %>
             </div>
           </div>
-          <% unless section.survey_questions.count.zero? %>
+
+          <% answer_labels = section.answer_labels_array %>
+          <% unless answer_labels.empty? %>
             <div class="row table-header">
               <div class="col-12 col-lg-6"></div>
-              <% 6.times do |index| %>
-                <div class="col-2 col-lg-1"><div class="header-text"><%= survey_option(index) %></div></div>
+              <% answer_labels.each do |label| %>
+                <div class="col-2 col-lg-1"><div class="header-text"><%= label %></div></div>
               <% end %>
             </div>
 
@@ -76,10 +78,10 @@
                   <%= text_field_tag "question[#{question.id}]", question.question, placeholder: 'Question',
                                      class: 'form-control form-control-sm', data: { id: question.id } %>
                 </div>
-                <% 6.times do |index| %>
+                <% answer_labels.each.with_index do |label, index| %>
                   <div class="col-2 col-lg-1">
                     <label>
-                      <div class="label"><%= survey_option(index) %></div>
+                      <div class="label"><%= label %></div>
                       <%= radio_button_tag "question[#{question.id}]", index, false, class: 'form-check-input',
                                            data: { id: question.id } %>
                     </label>
