@@ -1,5 +1,5 @@
 if Achievement.count.zero?
-  print "#{pretty_print_name('Achievments')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Achievements')}\tStart: #{pretty_print(Time.now - @start_time)}"
 
   # All time achievements
   Achievement.create!(
