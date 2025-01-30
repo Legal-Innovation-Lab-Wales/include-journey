@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_13_230105) do
+ActiveRecord::Schema.define(version: 2025_01_29_162225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -367,6 +367,7 @@ ActiveRecord::Schema.define(version: 2023_12_13_230105) do
     t.bigint "survey_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "answer_labels"
     t.index ["survey_id"], name: "index_survey_sections_on_survey_id"
   end
 
@@ -600,9 +601,7 @@ ActiveRecord::Schema.define(version: 2023_12_13_230105) do
     t.text "brief_physical_description"
     t.datetime "support_ended_date"
     t.datetime "next_review_date"
-    t.bigint "created_by_id"
     t.index ["accommodation_type_id"], name: "index_users_on_accommodation_type_id"
-    t.index ["created_by_id"], name: "index_users_on_created_by_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["housing_provider_id"], name: "index_users_on_housing_provider_id"
     t.index ["priority_id"], name: "index_users_on_priority_id"
@@ -741,7 +740,6 @@ ActiveRecord::Schema.define(version: 2023_12_13_230105) do
   add_foreign_key "users", "priorities"
   add_foreign_key "users", "referred_froms"
   add_foreign_key "users", "support_ending_reasons"
-  add_foreign_key "users", "team_members", column: "created_by_id"
   add_foreign_key "users", "wallich_local_authorities"
   add_foreign_key "wba_scores", "wellbeing_assessments"
   add_foreign_key "wba_scores", "wellbeing_metrics"

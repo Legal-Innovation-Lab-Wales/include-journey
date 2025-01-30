@@ -3,7 +3,7 @@ survey = Survey.first
 if survey.survey_sections.count.zero?
   print "#{pretty_print_name('Survey Section 1')}\tStart: #{pretty_print(Time.now - @start_time)}"
 
-  section1 = survey.survey_sections.create!(order: 1, heading: 'Please tell us how the hub makes you feel...')
+  section1 = survey.survey_sections.create!(order: 1, heading: 'Please tell us how the hub makes you feel...', answer_labels: SurveySection::LIKERT_5_ANSWER_LABELS)
 
   section1.survey_questions.create!(order: 1, question: 'I feel I am treated fairly by staff at the Hub')
   section1.survey_questions.create!(order: 2, question: 'I feel listened to at the Hub')
