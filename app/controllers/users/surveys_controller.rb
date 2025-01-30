@@ -54,8 +54,8 @@ module Users
       return unless params[:question].present?
 
       params[:question].each do |question|
-        answer = SurveyAnswer.find_or_create_by!(survey_response: @survey_response,
-                                                 survey_question: SurveyQuestion.find(question[0]))
+        answer = SurveyAnswer.find_or_create_by(survey_response: @survey_response,
+                                                survey_question: SurveyQuestion.find(question[0]))
         unless answer.update(answer: question[1])
           @errors = true
         end
@@ -66,8 +66,8 @@ module Users
       return unless params[:comment_section].present?
 
       params[:comment_section].each do |comment_section|
-        comment = SurveyComment.find_or_create_by!(survey_response: @survey_response,
-                                                   survey_comment_section: SurveyCommentSection.find(comment_section[0]))
+        comment = SurveyComment.find_or_create_by(survey_response: @survey_response,
+                                                  survey_comment_section: SurveyCommentSection.find(comment_section[0]))
         unless comment.update(text: comment_section[1])
           @errors = true
         end
