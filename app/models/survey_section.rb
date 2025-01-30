@@ -6,10 +6,12 @@ class SurveySection < ApplicationRecord
 
   YES_NO_ANSWER_LABELS = 'Yes; No'
   LIKERT_5_ANSWER_LABELS = 'Strongly Disagree; Disagree; Neither Agree Nor Disagree; Agree; Strongly Agree; Not Applicable'
+  ALWAYS_NEVER_LABELS = 'None of the time; Rarely; Some of the time; Often; All of the time; Not Applicable'
 
   ANSWER_LABELS_OPTIONS = [
     YES_NO_ANSWER_LABELS,
     LIKERT_5_ANSWER_LABELS,
+    ALWAYS_NEVER_LABELS,
   ]
 
   validates_presence_of :survey_id
