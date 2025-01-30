@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+onboarding:
+  name: Onboarding Survey
+  start_date: 2020-01-01
+  end_date: 2021-01-01
+  team_member: barbara
