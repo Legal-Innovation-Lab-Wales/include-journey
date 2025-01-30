@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_01_29_162225) do
+ActiveRecord::Schema.define(version: 2025_01_30_150129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(version: 2025_01_29_162225) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_question_id"], name: "index_survey_answers_on_survey_question_id"
-    t.index ["survey_response_id"], name: "index_survey_answers_on_survey_response_id"
+    t.index ["survey_response_id", "survey_question_id"], name: "index_survey_answers_on_response_and_question", unique: true
   end
 
   create_table "survey_comment_sections", force: :cascade do |t|
@@ -332,7 +332,7 @@ ActiveRecord::Schema.define(version: 2025_01_29_162225) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["survey_comment_section_id"], name: "index_survey_comments_on_survey_comment_section_id"
-    t.index ["survey_response_id"], name: "index_survey_comments_on_survey_response_id"
+    t.index ["survey_response_id", "survey_comment_section_id"], name: "index_survey_comments_on_response_and_section", unique: true
   end
 
   create_table "survey_questions", force: :cascade do |t|
