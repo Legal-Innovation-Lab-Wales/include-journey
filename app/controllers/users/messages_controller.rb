@@ -6,7 +6,10 @@ module Users
     include Pagination
 
     def main
-      @new_messages = current_user.notes.joins(:message).order('dated DESC', 'created_at DESC').where(visible_to_user: true, replaced_by: nil)
+      @new_messages = current_user.notes
+        .joins(:message)
+        .where(visible_to_user: true, replaced_by: nil)
+        .order('dated DESC', 'created_at DESC')
       @read_messages = []
       @new_messages.each do |message|
         if message.created >= 1.month.ago
@@ -20,8 +23,11 @@ module Users
     protected
 
     def resources
-      current_user.notes.past.joins(:message).order('dated DESC', 'notes.created_at DESC')
-                  .where(visible_to_user: true, replaced_by: nil)
+      current_user.notes
+        .past
+        .joins(:message)
+        .where(visible_to_user: true, replaced_by: nil)
+        .order('dated DESC', 'notes.created_at DESC')
     end
 
     def resources_per_page

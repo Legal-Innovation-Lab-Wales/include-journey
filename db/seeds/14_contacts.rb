@@ -8,7 +8,7 @@ if Contact.count.zero?
         name: name,
         number: Faker::Number.leading_zero_number(digits: 11),
         email: Faker::Internet.email(name: name, separators: '-'),
-        description: Faker::Job.position
+        description: Faker::Job.position,
       )
     end
   end

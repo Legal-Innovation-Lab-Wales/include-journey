@@ -8,7 +8,7 @@ if Achievement.count.zero?
     entities: 'sessions',
     bronze_count: 100,
     silver_count: 250,
-    gold_count: 500
+    gold_count: 500,
   )
 
   Achievement.create!(
@@ -17,7 +17,7 @@ if Achievement.count.zero?
     entities: 'wellbeing_assessments',
     bronze_count: 100,
     silver_count: 250,
-    gold_count: 500
+    gold_count: 500,
   )
 
   Achievement.create!(
@@ -26,7 +26,7 @@ if Achievement.count.zero?
     entities: 'diary_entries',
     bronze_count: 100,
     silver_count: 250,
-    gold_count: 500
+    gold_count: 500,
   )
 
   Achievement.create!(
@@ -35,7 +35,7 @@ if Achievement.count.zero?
     entities: 'goals_achieved',
     bronze_count: 100,
     silver_count: 250,
-    gold_count: 500
+    gold_count: 500,
   )
 
   # Monthly Achievements | see: scheduler.rake
@@ -52,7 +52,7 @@ if Achievement.count.zero?
     ends_at: end_date,
     bronze_count: 10,
     silver_count: 20,
-    gold_count: count
+    gold_count: count,
   )
 
   Achievement.create!(
@@ -63,7 +63,7 @@ if Achievement.count.zero?
     ends_at: end_date,
     bronze_count: 10,
     silver_count: 20,
-    gold_count: count
+    gold_count: count,
   )
 
   Achievement.create!(
@@ -74,7 +74,7 @@ if Achievement.count.zero?
     ends_at: end_date,
     bronze_count: 10,
     silver_count: 20,
-    gold_count: count
+    gold_count: count,
   )
 
   Achievement.create!(
@@ -85,7 +85,7 @@ if Achievement.count.zero?
     ends_at: end_date,
     bronze_count: 10,
     silver_count: 20,
-    gold_count: count
+    gold_count: count,
   )
 
   puts "\tDuration: #{pretty_print(Time.now - @start_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"

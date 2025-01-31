@@ -2,12 +2,10 @@
 class AccommodationType < ApplicationRecord
   has_one :user
 
-  validates_presence_of :name
+  validates :name, presence: true
 
   def json
-    {
-      'name': name
-    }
+    {name: name}
   end
 
   def to_csv

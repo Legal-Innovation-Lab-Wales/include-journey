@@ -6,7 +6,9 @@ class Folder < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :team_member
 
-  validates_presence_of :name
-  validates_format_of :name, with: Rails.application.config.regex_name,
-                             message: Rails.application.config.name_error
+  validates :name, presence: true
+  validates :name, format: {
+    with: Rails.application.config.regex_name,
+    message: Rails.application.config.name_error,
+  }
 end

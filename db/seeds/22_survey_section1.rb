@@ -3,7 +3,11 @@ survey = Survey.first
 if survey.survey_sections.count.zero?
   print "#{pretty_print_name('Survey Section 1')}\tStart: #{pretty_print(Time.now - @start_time)}"
 
-  section1 = survey.survey_sections.create!(order: 1, heading: 'Please tell us how the hub makes you feel...', answer_labels: SurveySection::LIKERT_5_ANSWER_LABELS)
+  section1 = survey.survey_sections.create!(
+    order: 1,
+    heading: 'Please tell us how the hub makes you feel...',
+    answer_labels: SurveySection::LIKERT_5_ANSWER_LABELS,
+  )
 
   section1.survey_questions.create!(order: 1, question: 'I feel I am treated fairly by staff at the Hub')
   section1.survey_questions.create!(order: 2, question: 'I feel listened to at the Hub')
@@ -35,9 +39,10 @@ if survey.survey_sections.count.zero?
   section1.survey_questions.create!(order: 28, question: 'I feel listened to at the Hub')
   section1.survey_questions.create!(order: 29, question: 'I feel connected with others at the Hub')
   section1.survey_questions.create!(order: 30, question: 'I feel included at the Hub')
+  
   section1.survey_comment_sections.create!(
     order: 31,
-    label: 'We appreciate your feedback if there is anything you would to add, please add your comments here:'
+    label: 'We appreciate your feedback if there is anything you would to add, please add your comments here:',
   )
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"

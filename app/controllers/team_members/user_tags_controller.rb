@@ -13,30 +13,36 @@ module TeamMembers
     # POST /users/:user_id/tags
     def create
       @user_tag = UserTag.create!(team_member: current_team_member, user: @user, tag: @tag)
-      redirect_back(fallback_location: user_path(@user),
-                    flash: { success: "Tag (#{@user_tag.tag.tag}) added to #{@user.full_name}" })
+      redirect_back(
+        fallback_location: user_path(@user),
+        flash: {success: "Tag (#{@user_tag.tag.tag}) added to #{@user.full_name}"},
+      )
     end
 
     # DELETE /users/:user_id/tags/:id
     def destroy
       @user_tag.destroy!
-      redirect_back(fallback_location: user_path(@user),
-                    flash: { success: "Tag (#{@user_tag.tag.tag}) removed from #{@user.full_name}" })
+      redirect_back(
+        fallback_location: user_path(@user),
+        flash: {success: "Tag (#{@user_tag.tag.tag}) removed from #{@user.full_name}"},
+      )
     end
 
     protected
 
     def resources
-      @resources = @tag.user_tags.includes(:team_member, :user)
-                       .order(sort)
+      @resources = @tag.user_tags
+        .includes(:team_member, :user)
+        .order(sort)
     end
 
     def search
-      search_query = ActiveRecord::Base::sanitize_sql_for_conditions("#{team_member_search} or #{user_search}")
-      @resources = @tag.user_tags.includes(:team_member, :user)
-                       .joins(:team_member)
-                       .where(search_query, wildcard_query)
-                       .order(sort)
+      search_query = ActiveRecord::Base.sanitize_sql_for_conditions("#{team_member_search} or #{user_search}")
+      @resources = @tag.user_tags
+        .includes(:team_member, :user)
+        .joins(:team_member)
+        .where(search_query, wildcard_query)
+        .order(sort)
     end
 
     def subheading_stats
@@ -46,7 +52,7 @@ module TeamMembers
 
     def sort
       @sort = 'tagged_on'
-      { 'created_at': @direction }
+      {created_at: @direction}
     end
 
     private
@@ -55,7 +61,10 @@ module TeamMembers
       if user_tag_params[:new_tag].present?
         new_tag_name = user_tag_params[:new_tag].downcase.titleize
         existing_tag = Tag.where(tag: new_tag_name).present?
-        redirect_back(fallback_location: tags_path, notice: 'That tag already exists') and return if existing_tag
+        if existing_tag
+          redirect_back(fallback_location: tags_path, notice: 'That tag already exists')
+          return
+        end
 
         @tag = Tag.new(tag: new_tag_name, team_member: current_team_member)
         if @tag.save
@@ -69,24 +78,27 @@ module TeamMembers
     end
 
     def error_redirect
-      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please only use standard
-        characters and punctuation' }
+      redirect_to(
+        user_path(@user),
+        flash: {error: 'Something went wrong. Please only use standard characters and punctuation'},
+      )
     end
 
     def selected_tag
-      @tag = Tag.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:tag_id]))
+      @tag = Tag.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:tag_id]))
     end
 
     def user
-      @user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def user_tag
-      @user_tag = @user.user_tags.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @user_tag = @user.user_tags.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     end
 
     def user_tag_params
-      params.require(:user_tag).permit(:tag, :new_tag)
+      params.require(:user_tag)
+        .permit(:tag, :new_tag)
     end
 
     def set_breadcrumbs

@@ -23,7 +23,10 @@ module TeamMembers
     def destroy
       @survey_comment_section.destroy!
 
-      redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'Comment Section removed' })
+      redirect_back(
+        fallback_location: edit_survey_path(@survey),
+        flash: {success: 'Comment Section removed'},
+      )
     end
 
     private
@@ -37,8 +40,10 @@ module TeamMembers
 
       return if @survey_sections.find(comment_section_params[:section_id]).present?
 
-      redirect_back(fallback_location: edit_survey_path(@survey),
-                    flash: { error: 'Survey Section does not belong to this Survey' })
+      redirect_back(
+        fallback_location: edit_survey_path(@survey),
+        flash: {error: 'Survey Section does not belong to this Survey'},
+      )
     end
   end
 end

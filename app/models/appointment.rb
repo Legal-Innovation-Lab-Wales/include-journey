@@ -4,20 +4,24 @@ class Appointment < ApplicationRecord
   belongs_to :team_member, optional: true
 
   # Input validation
-  validates_presence_of :where, :who_with, :what, :start, :end
-  validates_format_of :where, :who_with, :what, with: Rails.application.config.regex_name,
-                                                message: Rails.application.config.name_error
-  validates_format_of :start, :end, with: Rails.application.config.regex_datetime,
-                                    message: Rails.application.config.datetime_error
+  validates :where, :who_with, :what, :start, :end, presence: true
+  validates :where, :who_with, :what, format: {
+    with: Rails.application.config.regex_name,
+    message: Rails.application.config.name_error,
+  }
+  validates :start, :end, format: {
+    with: Rails.application.config.regex_datetime,
+    message: Rails.application.config.datetime_error,
+  }
 
   scope :future, -> { where('start >= ?', Time.now) }
   scope :past, -> { where('start <= ?', Time.now) }
   scope :last_week, -> { where('start >= ?', 1.week.ago) }
   scope :last_month, -> { where('start >= ?', 1.month.ago) }
   scope :next_week, -> { where('start <= ?', 1.week.from_now) }
-  scope :next_fortnight, -> { where('start <= ?', 2.week.from_now) }
+  scope :next_fortnight, -> { where('start <= ?', 2.weeks.from_now) }
   scope :user_created, -> { where('team_member_id is null') }
-  scope :team_member_created, -> { where('team_member_id is not null') }
+  scope :team_member_created, -> { where.not(team_member_id: nil) }
 
   def time_on_date
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
@@ -62,5 +66,4 @@ class Appointment < ApplicationRecord
   def last_month
     start >= DateTime.now - 1.month
   end
-
 end

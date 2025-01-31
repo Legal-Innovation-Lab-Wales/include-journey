@@ -6,28 +6,29 @@ module Pagination
   end
 
   def self.permitted_params
-    %i[view page query tag assigned type radius postcode limit sort direction viewed feeling on user_id team_member_id 
+    %i[view page query tag assigned type radius postcode limit sort direction viewed feeling on user_id team_member_id
        survey_id section_id comment_section_id folder_id]
   end
 
   protected
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def pagination
     @page = pagination_params[:page].present? ? pagination_params[:page].to_i : 1
     @view = pagination_params[:view] if pagination_params[:view].present?
     @query = pagination_params[:query]
-    @direction = %w[asc desc].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'desc'
+    @direction = ['asc', 'desc'].include?(pagination_params[:direction]) ? pagination_params[:direction] : 'desc'
     @resources_per_page = resources_per_page
     @resources = @query.present? ? search : resources
     @count = @resources.count
     @limit = limit
     subheading_stats
     @last_page = (@count.to_f / @limit).ceil
-    if resources.kind_of?(Array) #Different methods based on array or activeobject array
-      @resources = @resources[offset, @limit]
+    @resources = if resources.is_a?(Array)
+      # Array
+      @resources[offset, @limit]
     else
-      @resources = @resources.offset(offset).limit(@limit)
+      # ActiveObject array
+      @resources.offset(offset).limit(@limit)
     end
     render_custom_view
   end
@@ -45,7 +46,6 @@ module Pagination
       redirect
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def limit
     if pagination_params[:limit].present?
@@ -74,8 +74,8 @@ module Pagination
   end
 
   def wildcard_query
-    @query = ActiveRecord::Base::sanitize_sql_like(@query)
-    { query: "%#{@query.split.join('%|%')}%" }
+    @query = ActiveRecord::Base.sanitize_sql_like(@query)
+    {query: "%#{@query.split.join('%|%')}%"}
   end
 
   def pagination_params

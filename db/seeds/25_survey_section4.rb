@@ -8,7 +8,7 @@ if survey.survey_sections.count < 4
   section4.survey_comment_sections.create!(order: 1, label: 'Please add any feedback about Include Journey:')
   section4.survey_comment_sections.create!(
     order: 2,
-    label: 'Please add any feedback about other services you have received:'
+    label: 'Please add any feedback about other services you have received:',
   )
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"

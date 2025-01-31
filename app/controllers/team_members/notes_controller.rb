@@ -6,17 +6,6 @@ module TeamMembers
     before_action :team_member_note, only: %i[edit update]
     before_action :note_params, only: %i[create update]
 
-    # POST /notes
-    def create
-      @note = create_note
-      if @note.save
-        create_message(@note, @user, 'created') if visible_note?
-        redirect_to user_path(@user), flash: { notice: 'Successfully added note!' }
-      else
-        error_redirect
-      end
-    end
-
     # GET /notes/:id
     def show
       add_breadcrumb('Users', users_path, 'fas fa-user')
@@ -30,6 +19,20 @@ module TeamMembers
       end
     end
 
+    # POST /notes
+    def create
+      @note = create_note
+      if @note.save
+        create_message(@note, @user, 'created') if visible_note?
+        redirect_to(
+          user_path(@user),
+          flash: {notice: 'Successfully added note!'},
+        )
+      else
+        error_redirect
+      end
+    end
+
     # PUT /notes/:id/update
     def update
       nothing_to_update_redirect and return unless @note.changes?(note_params)
@@ -40,7 +43,10 @@ module TeamMembers
       end
       update_message(@note, @new_note, user)
 
-      redirect_to user_note_path(@user, @new_note), flash: { success: 'Successfully updated note!' }
+      redirect_to(
+        user_note_path(@user, @new_note),
+        flash: {success: 'Successfully updated note!'},
+      )
     rescue ActiveRecord::RecordInvalid
       error_redirect
     end
@@ -53,14 +59,17 @@ module TeamMembers
     private
 
     def create_message(note, user, status)
-      Message.create!(user_id: user.id,
-                      team_member_id: current_team_member.id,
-                      note_id: note.id,
-                      message_status: status)
+      Message.create!(
+        user_id: user.id,
+        team_member_id: current_team_member.id,
+        note_id: note.id,
+        message_status: status,
+      )
     end
 
     def update_message(old_note, new_note, user)
-      Message.find_by(note_id: old_note.id).destroy if Message.find_by(note_id: old_note.id).present?
+      message = Message.find_by(note_id: old_note.id)
+      message&.destroy
       return unless visible_note?
 
       create_message(new_note, user, 'updated')
@@ -80,34 +89,38 @@ module TeamMembers
     end
 
     def error_redirect
-      redirect_to user_path(@user), flash: { error: 'Something went wrong. Please only use standard
-                                                    characters and punctuation' }
+      redirect_to(
+        user_path(@user),
+        flash: {error: 'Something went wrong. Please only use standard characters and punctuation'},
+      )
     end
 
     def create_note(replacing: nil)
-      current_team_member.notes.new(content: note_params[:content],
-                                    visible_to_user: note_params[:visible_to_user],
-                                    dated: note_params[:dated],
-                                    user: @user,
-                                    replacing: replacing)
+      current_team_member.notes.new(
+        content: note_params[:content],
+        visible_to_user: note_params[:visible_to_user],
+        dated: note_params[:dated],
+        user: @user,
+        replacing: replacing,
+      )
     end
 
     def user
-      @user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
+      redirect_back(fallback_location: users_path, flash: {error: 'User not found'})
     end
 
     def team_member_note
-      @note = current_team_member.notes.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @note = current_team_member.notes.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: users_path, flash: { error: 'Note not found' })
+      redirect_back(fallback_location: users_path, flash: {error: 'Note not found'})
     end
 
     def note
-      @note = Note.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @note = Note.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: users_path, flash: { error: 'Note not found' })
+      redirect_back(fallback_location: users_path, flash: {error: 'Note not found'})
     end
 
     def note_params

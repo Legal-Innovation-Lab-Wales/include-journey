@@ -28,9 +28,9 @@ def pretty_print(value)
   end
 end
 
-puts ('-' * DOTTED_LINE_LENGTH).to_s
+puts('-' * DOTTED_LINE_LENGTH)
 puts 'Running Seeds'
-Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each { |seed| load seed }
+Dir[Rails.root.join('db/seeds/*.rb').to_s].sort.each { |seed| load seed }
 
 unless User.find_by_email('john.smith@me.com').present?
   user = User.new(
@@ -39,12 +39,12 @@ unless User.find_by_email('john.smith@me.com').present?
     email: 'john.smith@me.com',
     mobile_number: Faker::Number.leading_zero_number(digits: 11),
     terms: true,
-    password: 'password'
+    password: 'password',
   )
   user.save!
 end
 
-puts ('-' * DOTTED_LINE_LENGTH).to_s
+puts('-' * DOTTED_LINE_LENGTH)
 puts 'Counts'
 puts("#{pretty_print_name('Team Members')}\t#{TeamMember.count}")
 puts("#{pretty_print_name('Users')}\t#{User.count}")

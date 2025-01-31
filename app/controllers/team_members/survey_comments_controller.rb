@@ -14,21 +14,21 @@ module TeamMembers
 
     def resources
       @survey_comment_section.survey_comments
-                             .includes(:user)
-                             .order(sort)
+        .includes(:user)
+        .order(sort)
     end
 
     def search
       @survey_comment_section.survey_comments
-                             .includes(:user)
-                             .joins(:user)
-                             .where(comment_search, wildcard_query)
-                             .order(sort)
+        .includes(:user)
+        .joins(:user)
+        .where(comment_search, wildcard_query)
+        .order(sort)
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'created_at'
-      { "#{@sort}": @direction }
+      @sort = pagination_params[:sort].presence || 'created_at'
+      {@sort => @direction}
     end
 
     private

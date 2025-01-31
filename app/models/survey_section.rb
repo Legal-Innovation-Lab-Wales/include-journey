@@ -14,12 +14,14 @@ class SurveySection < ApplicationRecord
     ALWAYS_NEVER_LABELS,
   ]
 
-  validates_presence_of :survey_id
-  validates_format_of :heading, with: Rails.application.config.regex_text_field,
-                                message: Rails.application.config.text_field_error
+  validates :survey_id, presence: true
+  validates :heading, format: {
+    with: Rails.application.config.regex_text_field,
+    message: Rails.application.config.text_field_error,
+  }
 
   validate :must_have_two_to_six_answer_labels
-  
+
   def next_question
     return 1 unless survey_questions.present?
 
@@ -46,7 +48,7 @@ class SurveySection < ApplicationRecord
 
   def must_have_two_to_six_answer_labels
     return if answer_labels.nil?
-    
+
     labels = answer_labels_array
 
     if labels.length < 2

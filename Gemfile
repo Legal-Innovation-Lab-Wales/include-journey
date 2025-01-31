@@ -29,16 +29,16 @@ gem 'sendgrid-ruby'
 gem 'bootstrap', '~> 5.3.3'
 gem 'chartkick'
 gem 'font-awesome-sass', '~> 5.15.1'
-gem 'whenever'
+gem 'geocoder'
 gem 'premailer-rails'
 gem 'rest-client'
-gem 'geocoder'
+gem 'whenever'
 
 # Remove warning message when running rails s
-gem "net-http"
-gem "net-smtp"
-gem "net-imap"
-gem "uri", "0.10.0"
+gem 'net-http'
+gem 'net-imap'
+gem 'net-smtp'
+gem 'uri', '0.10.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -76,17 +76,17 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   # Association and Validation Matchers
+  gem 'assert_valid', '~> 0.1.0'
   gem 'shoulda-matchers', '~> 3.1'
-  gem "assert_valid", "~> 0.1.0"
   # For cleaning test database
   gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'recaptcha'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # For setting up two factor authentication
+gem 'clockwork'
 gem 'devise-two-factor'
 gem 'rqrcode'
-gem 'clockwork'

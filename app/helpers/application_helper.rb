@@ -1,8 +1,7 @@
 # app/helpers/application_helper.rb
 module ApplicationHelper
-
   def dashboard_controller?
-    controller_name == "dashboard"
+    controller_name == 'dashboard'
   end
 
   def alert_class_for(flash_type)
@@ -11,7 +10,7 @@ module ApplicationHelper
       error: 'alert-danger',
       alert: 'alert-warning',
       notice: 'alert-info',
-      congratulations: 'alert-success'
+      congratulations: 'alert-success',
     }[flash_type.to_sym] || flash_type.to_s
   end
 
@@ -22,7 +21,7 @@ module ApplicationHelper
     hours = ((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).floor
     minutes = ((difference % (1000 * 60 * 60)) / (1000 * 60)).floor
     seconds = ((difference % (1000 * 60)) / 1000).floor
-    seconds = seconds >= 0 ? seconds : 0
+    seconds = [0, seconds].max
 
     "#{get_unit(days, 'd')}#{get_unit(hours, 'h')}#{get_unit(minutes, 'm')}#{seconds}s"
   end

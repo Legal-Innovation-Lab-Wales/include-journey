@@ -9,7 +9,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -25,7 +25,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -41,7 +41,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -57,7 +57,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -73,7 +73,7 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -89,7 +89,7 @@ unless TeamMember.find_by_email('t.b.sheerhardwick@swansea.ac.uk').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -105,7 +105,7 @@ unless TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -121,7 +121,7 @@ unless TeamMember.find_by_email('amarafinbarrs123@gmail.com').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!
@@ -137,7 +137,7 @@ unless TeamMember.find_by_email('admin@myjourney.app').present?
     approved: true,
     terms: true,
     suspended: false,
-    password: 'password'
+    password: 'password',
   )
   team_member.skip_confirmation!
   team_member.save!

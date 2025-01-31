@@ -6,11 +6,15 @@ module TeamMembers
     # POST /surveys/:survey_id/survey_sections/:section_id/survey_questions
     def create
       unless @survey_section.can_add_question?
-        redirect_back(fallback_location: edit_survey_path(@survey), flash: { error: 'Cannot add question to this section' })
+        redirect_back(
+          fallback_location: edit_survey_path(@survey),
+          flash: {error: 'Cannot add question to this section'},
+        )
         return
       end
 
-      @survey_question = @survey_section.survey_questions.create!(order: @survey_section.next_question)
+      @survey_question = @survey_section.survey_questions
+        .create!(order: @survey_section.next_question)
 
       redirect_to edit_survey_path(@survey, anchor: "question[#{@survey_question.id}]")
     end
@@ -28,7 +32,10 @@ module TeamMembers
     def destroy
       @survey_question.destroy!
 
-      redirect_back(fallback_location: edit_survey_path(@survey), flash: { success: 'Question removed' })
+      redirect_back(
+        fallback_location: edit_survey_path(@survey),
+        flash: {success: 'Question removed'},
+      )
     end
 
     private
@@ -42,8 +49,10 @@ module TeamMembers
 
       return if @survey_sections.find(question_params[:section_id]).present?
 
-      redirect_back(fallback_location: edit_survey_path(@survey),
-                    flash: { error: 'Survey Section does not belong to this Survey' })
+      redirect_back(
+        fallback_location: edit_survey_path(@survey),
+        flash: {error: 'Survey Section does not belong to this Survey'},
+      )
     end
   end
 end

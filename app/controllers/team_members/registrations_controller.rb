@@ -26,7 +26,8 @@ module TeamMembers
     end
 
     def team_member_params
-      params.require(:team_member).permit(:first_name, :last_name, :mobile_number, :terms, :email, :password, :password_confirmation)
+      params.require(:team_member)
+        .permit(:first_name, :last_name, :mobile_number, :terms, :email, :password, :password_confirmation)
     end
 
     def check_captcha
@@ -34,14 +35,14 @@ module TeamMembers
 
       self.resource = resource_class.new team_member_params
       resource.validate
-      respond_with_navigational(resource) {
+      respond_with_navigational(resource) do
         # delete default recaptcha error
         flash.delete(:recaptcha_error)
         # add custom recaptcha error
         flash[:error] = 'reCAPTCHA verification failed, please try again'
         flash.discard(:error)
         render :new
-      }
+      end
     end
 
     def set_up_two_factor

@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :users, path: 'users',
-                     controllers: { registrations: 'users/registrations',
-                                    confirmations: 'users/confirmations',
-                                    sessions: 'users/sessions',
-                                    passwords: 'users/passwords',
-                                    unlocks: 'users/unlocks' }
-  devise_for :team_members, path: 'team_members',
-                            controllers: { registrations: 'team_members/registrations',
-                                           confirmations: 'team_members/confirmations',
-                                           sessions: 'team_members/sessions',
-                                           passwords: 'team_members/passwords',
-                                           unlocks: 'team_members/unlocks' }
+  devise_for(:users, path: 'users', controllers: {
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
+    sessions: 'users/sessions',
+    passwords: 'users/passwords',
+    unlocks: 'users/unlocks',
+  })
+  devise_for(:team_members, path: 'team_members', controllers: {
+    registrations: 'team_members/registrations',
+    confirmations: 'team_members/confirmations',
+    sessions: 'team_members/sessions',
+    passwords: 'team_members/passwords',
+    unlocks: 'team_members/unlocks',
+  })
 
   get 'guide', to: 'guides#index'
   get 'guide_diary', to: 'guides#diary'
@@ -169,8 +171,18 @@ Rails.application.routes.draw do
           resources :survey_sections, only: %i[create update destroy], param: :section_id, as: :survey_section do
             member do
               put '/reorder', action: 'reorder'
-              resources :survey_questions, only: %i[create update destroy], param: :question_id, as: :survey_question
-              resources :survey_comment_sections, only: %i[create update destroy], param: :comment_section_id, as: :survey_comment_section do
+              resources(
+                :survey_questions,
+                only: %i[create update destroy],
+                param: :question_id,
+                as: :survey_question,
+              )
+              resources(
+                :survey_comment_sections,
+                only: %i[create update destroy],
+                param: :comment_section_id,
+                as: :survey_comment_section,
+              ) do
                 member do
                   resources :survey_comments, only: :index, as: :survey_comments
                 end
@@ -181,7 +193,11 @@ Rails.application.routes.draw do
         end
       end
       resources :notifications
-      put 'edit_notification_frequency', to: 'notifications#update_notification_frequency', as: :edit_notification_frequency
+      put(
+        'edit_notification_frequency',
+        to: 'notifications#update_notification_frequency',
+        as: :edit_notification_frequency,
+      )
       match '/500', to: 'errors#internal_server_error', via: :all
     end
     get '/*path', to: redirect('')

@@ -10,13 +10,13 @@ if UserTag.count.zero?
         tag: first_tag,
         user: user,
         team_member_id: rand(1..TeamMember.count),
-        created_at: first_tag.created_at + rand(1..7).days
+        created_at: first_tag.created_at + rand(1..7).days,
       )
       UserTag.create!(
         tag: second_tag,
         user: user,
         team_member_id: rand(1..TeamMember.count),
-        created_at: second_tag.created_at + rand(1..7).days
+        created_at: second_tag.created_at + rand(1..7).days,
       )
     else
       tag = Tag.find(rand(1..Tag.count))
@@ -24,7 +24,7 @@ if UserTag.count.zero?
         tag: tag,
         user: user,
         team_member_id: rand(1..TeamMember.count),
-        created_at: tag.created_at + rand(1..7).days
+        created_at: tag.created_at + rand(1..7).days,
       )
     end
   end

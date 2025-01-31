@@ -7,7 +7,7 @@ if WellbeingService.count.zero?
     website: 'https://include-uk.com',
     contact_number: '01792814792',
     address: '2 Humphrey Street, Swansea',
-    postcode: 'SA1 6BG'
+    postcode: 'SA1 6BG',
   )
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
@@ -16,7 +16,7 @@ if WellbeingService.count.zero?
     website: 'https://www.samaritans.org',
     contact_number: '01792814792',
     address: '2 Humphrey Street, Swansea',
-    postcode: 'SA1 6BH'
+    postcode: 'SA1 6BH',
   )
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
@@ -25,7 +25,7 @@ if WellbeingService.count.zero?
     website: 'https://www.mind.org.uk',
     contact_number: '01792814792',
     address: '66 St. Helens Road, Swansea',
-    postcode: 'SA1 4BE'
+    postcode: 'SA1 4BE',
   )
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
@@ -34,7 +34,7 @@ if WellbeingService.count.zero?
     website: 'https://www.shelter.org.uk',
     contact_number: '01792814792',
     address: '25 Walter Road, Swansea',
-    postcode: 'SA1 5NN'
+    postcode: 'SA1 5NN',
   )
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
@@ -52,7 +52,7 @@ if WellbeingService.count.zero?
     website: 'https://www.trusselltrust.org/get-help/find-a-foodbank',
     contact_number: '01792814792',
     address: '2 Humphrey Street, Swansea',
-    postcode: 'SA1 3BG'
+    postcode: 'SA1 3BG',
   )
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"

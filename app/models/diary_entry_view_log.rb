@@ -7,7 +7,7 @@ class DiaryEntryViewLog < ApplicationRecord
   scope :viewed_in_last_week, -> { where('diary_entry_view_logs.updated_at >= ?', 1.week.ago) }
   scope :viewed_in_last_month, -> { where('diary_entry_view_logs.updated_at >= ?', 1.month.ago) }
 
-  validates_presence_of :team_member_id, :diary_entry_id
+  validates :team_member_id, :diary_entry_id, presence: true
 
   def increment_view_count
     self.view_count += 1

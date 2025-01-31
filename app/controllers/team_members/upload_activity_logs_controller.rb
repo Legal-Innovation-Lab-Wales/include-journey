@@ -10,18 +10,21 @@ module TeamMembers
     def resources
       @upload_activity_logs = @team_member.upload_activity_logs
       filter_params = upload_activity_logs_filter_params
-      if filter_params[:activity_type].in?(%w[viewed modified downloaded approved rejected])
-        @upload_activity_logs = @upload_activity_logs.includes(upload: %i[user upload_file]).joins(upload: %i[user upload_file])
-                                                     .order(created_at: :desc).where(activity_type: filter_params[:activity_type])
-      elsif filter_params[:activity_type].in?(%w[rejected])
-        @upload_activity_logs = @upload_activity_logs.where(activity_type: filter_params[:activity_type])
+      @upload_activity_logs = if filter_params[:activity_type].in?(['viewed', 'modified', 'downloaded', 'approved', 'rejected'])
+        @upload_activity_logs.includes(upload: [:user, :upload_file])
+          .joins(upload: [:user, :upload_file])
+          .order(created_at: :desc)
+          .where(activity_type: filter_params[:activity_type])
+      elsif filter_params[:activity_type].in?(['rejected'])
+        @upload_activity_logs.where(activity_type: filter_params[:activity_type])
       end
 
       @upload_activity_logs
     end
 
     def search
-      resources.where(user_search, wildcard_query).or(resources.where(upload_file_name_search, wildcard_query))
+      resources.where(user_search, wildcard_query)
+        .or(resources.where(upload_file_name_search, wildcard_query))
     end
 
     def subheading_stats
@@ -44,7 +47,8 @@ module TeamMembers
     end
 
     def team_member
-      @team_member = TeamMember.includes(:upload_activity_logs).find(params[:team_member_id])
+      @team_member = TeamMember.includes(:upload_activity_logs)
+        .find(params[:team_member_id])
     end
 
     def upload_file_name_search

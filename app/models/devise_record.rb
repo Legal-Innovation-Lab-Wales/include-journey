@@ -14,7 +14,7 @@ class DeviseRecord < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def full_name_with_email 
+  def full_name_with_email
     "#{full_name} (#{email})"
   end
 end

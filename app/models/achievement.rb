@@ -10,7 +10,7 @@ class Achievement < ApplicationRecord
   scope :for, ->(entities) { where(entities: entities).first }
   scope :available, -> { all_time.merge(this_month) }
 
-  validates_presence_of :name, :description, :entities, :bronze_count, :silver_count, :gold_count
+  validates :name, :description, :entities, :bronze_count, :silver_count, :gold_count, presence: true
 
   def check(user)
     count = starts_at.present? ? user["#{entities}_this_month_count"] : user["#{entities}_count"]
@@ -21,10 +21,10 @@ class Achievement < ApplicationRecord
 
     return if achievement.gold_achieved
 
-    %w[bronze silver gold].each do |medal|
+    ['bronze', 'silver', 'gold'].each do |medal|
       next if achievement["#{medal}_achieved"] || count < self["#{medal}_count"]
 
-      achievement.update!({ "#{medal}_achieved": true })
+      achievement.update!({"#{medal}_achieved": true})
     end
   end
 end

@@ -9,16 +9,16 @@ module TeamMembers
 
     def resources
       @team_member.user_profile_view_logs
-                  .includes(:user)
-                  .order(sort)
+        .includes(:user)
+        .order(sort)
     end
 
     def search
       @team_member.user_profile_view_logs
-                  .includes(:user)
-                  .joins(:user)
-                  .where(user_search, wildcard_query)
-                  .order(sort)
+        .includes(:user)
+        .joins(:user)
+        .where(user_search, wildcard_query)
+        .order(sort)
     end
 
     def subheading_stats
@@ -27,8 +27,9 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
-      { "#{@sort == 'first_viewed_at' ? 'created_at' : 'updated_at'}": @direction }
+      @sort = pagination_params[:sort].presence || 'last_viewed_at'
+      sort_column = @sort == 'first_viewed_at' ? 'created_at' : 'updated_at'
+      {sort_column => @direction}
     end
 
     private

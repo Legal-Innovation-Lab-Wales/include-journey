@@ -11,37 +11,27 @@ module TeamMembers
 
     # GET /affirmations
     def index
-      @affirmations = Affirmation.includes(:team_member).upcoming.order({ "#{@sort}": @direction })
+      @affirmations = Affirmation.includes(:team_member)
+        .upcoming
+        .order(@sort => @direction)
 
       render 'index'
     end
 
     # GET /affirmations/new
     def new
-      add_breadcrumb('New Affirmation',nil, 'fas fa-plus-circle')
-      text = session[:affirmation_text].present? ? session[:affirmation_text] : ''
+      add_breadcrumb('New Affirmation', nil, 'fas fa-plus-circle')
+      text = session[:affirmation_text] || ''
       latest = Affirmation.order(scheduled_date: :desc).first
-      date = latest.present? && latest.scheduled_date > Date.today ? latest.scheduled_date + 1.days : Date.today
+      date = if latest.present? && latest.scheduled_date > Date.today 
+        latest.scheduled_date + 1.day
+      else
+        Date.today
+      end
 
       @affirmation = Affirmation.new(text: text, scheduled_date: date)
 
       render 'new'
-    end
-
-    # POST /affirmations
-    def create
-      @affirmation = Affirmation.new(
-        text: affirmation_params[:text],
-        scheduled_date: affirmation_params[:scheduled_date],
-        team_member: current_team_member
-      )
-
-      if @affirmation.save
-        success('created')
-      else
-        add_breadcrumb('New Affirmation',nil, 'fas fa-plus-circle')
-        render 'new'
-      end
     end
 
     # GET /affirmations/:id/edit
@@ -50,12 +40,28 @@ module TeamMembers
       render 'edit'
     end
 
+    # POST /affirmations
+    def create
+      @affirmation = Affirmation.new(
+        text: affirmation_params[:text],
+        scheduled_date: affirmation_params[:scheduled_date],
+        team_member: current_team_member,
+      )
+
+      if @affirmation.save
+        success('created')
+      else
+        add_breadcrumb('New Affirmation', nil, 'fas fa-plus-circle')
+        render 'new'
+      end
+    end
+
     # PUT /affirmations/:id
     def update
       if @affirmation.update(
         text: affirmation_params[:text],
         scheduled_date: affirmation_params[:scheduled_date],
-        team_member: current_team_member
+        team_member: current_team_member,
       )
         success('created')
       else
@@ -72,7 +78,11 @@ module TeamMembers
     end
 
     def direction
-      @direction = %w[asc desc].include?(affirmations_params[:direction]) ? affirmations_params[:direction] : 'asc'
+      @direction = if ['asc', 'desc'].include?(affirmations_params[:direction])
+        affirmations_params[:direction]
+      else
+        'asc'
+      end
     end
 
     def sort
@@ -82,10 +92,12 @@ module TeamMembers
     private
 
     def affirmation
-      @affirmation = Affirmation.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @affirmation = Affirmation.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: affirmations_path,
-                    flash: { error: 'Daily Affirmation not found' })
+      redirect_back(
+        fallback_location: affirmations_path,
+        flash: {error: 'Daily Affirmation not found'},
+      )
     end
 
     def affirmation_params
@@ -93,7 +105,10 @@ module TeamMembers
     end
 
     def success(action)
-      redirect_to affirmations_path, flash: { success: "Daily Affirmation was successfully #{action}" }
+      redirect_to(
+        affirmations_path,
+        flash: {success: "Daily Affirmation was successfully #{action}"},
+      )
     end
 
     def update_unique_check
@@ -115,7 +130,7 @@ module TeamMembers
     def error(action)
       date = Date.parse(affirmation_params[:scheduled_date]).strftime('%d/%m/%Y')
 
-      { error: "Daily Affirmation not #{action}d: an affirmation already exists for #{date}" }
+      {error: "Daily Affirmation not #{action}d: an affirmation already exists for #{date}"}
     end
 
     def clear_session_data

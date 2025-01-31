@@ -4,7 +4,7 @@ class Message < ApplicationRecord
   belongs_to :team_member
   belongs_to :note
 
-  validates_presence_of :user_id, :team_member_id, :note_id
+  validates :user_id, :team_member_id, :note_id, presence: true
 
   def read?
     self[:read]

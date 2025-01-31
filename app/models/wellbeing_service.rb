@@ -7,19 +7,31 @@ class WellbeingService < ApplicationRecord
 
   before_save :fetch_long_and_lat
 
-  validates_presence_of :name, :website
-  validates_format_of :name, with: Rails.application.config.regex_name,
-                             message: Rails.application.config.name_error
-  validates_format_of :description, with: Rails.application.config.regex_text_field,
-                                    message: Rails.application.config.text_field_error
-  validates_format_of :website, with: Rails.application.config.regex_website,
-                                message: Rails.application.config.website_error
-  validates_format_of :contact_number, with: Rails.application.config.regex_telephone,
-                                       message: Rails.application.config.telephone_error
-  validates_format_of :postcode, with: Rails.application.config.regex_postcode,
-                                 message: Rails.application.config.postcode_error
-  validates_format_of :address, with: Rails.application.config.regex_text_field,
-                                message: Rails.application.config.text_field_error
+  validates :name, :website, presence: true
+  validates :name, format: {
+    with: Rails.application.config.regex_name,
+    message: Rails.application.config.name_error,
+  }
+  validates :description, format: {
+    with: Rails.application.config.regex_text_field,
+    message: Rails.application.config.text_field_error,
+  }
+  validates :website, format: {
+    with: Rails.application.config.regex_website,
+    message: Rails.application.config.website_error,
+  }
+  validates :contact_number, format: {
+    with: Rails.application.config.regex_telephone,
+    message: Rails.application.config.telephone_error,
+  }
+  validates :postcode, format: {
+    with: Rails.application.config.regex_postcode,
+    message: Rails.application.config.postcode_error,
+  }
+  validates :address, format: {
+    with: Rails.application.config.regex_text_field,
+    message: Rails.application.config.text_field_error,
+  }
 
   attr_accessor :distance
 
@@ -44,7 +56,7 @@ class WellbeingService < ApplicationRecord
   end
 
   def recommend?
-    self.recommend
+    recommend
   end
 
   private
@@ -62,15 +74,15 @@ class WellbeingService < ApplicationRecord
   end
 
   def get_codes(code)
-    RestClient.get("#{ENV['POSTCODE_API']}#{code}") { |response, request, result, &block|
+    RestClient.get("#{ENV.fetch('POSTCODE_API')}#{code}") do |response, _request, _result|
       case response.code
       when 200...300
         JSON.parse response
       else
         postcode_error
       end
-    }
-  rescue
+    end
+  rescue StandardError
     postcode_error
   end
 

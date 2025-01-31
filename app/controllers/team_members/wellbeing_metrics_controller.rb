@@ -11,19 +11,21 @@ module TeamMembers
 
     # PUT /wellbeing_metrics/:id
     def update
-      @wellbeing_metric = WellbeingMetric.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @wellbeing_metric = WellbeingMetric.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
 
-      if @wellbeing_metric.update(wellbeing_metric_params)
-        redirect_to wellbeing_metrics_path, flash: { success: 'Wellbeing metric updated' }
+      flash = if @wellbeing_metric.update(wellbeing_metric_params)
+        {success: 'Wellbeing metric updated'}
       else
-        redirect_to wellbeing_metrics_path, flash: { error: 'Wellbeing metric could not be updated. Please use only characters A-Z & 0-9' }
+        {error: 'Wellbeing metric could not be updated. Please use only characters A-Z & 0-9'}
       end
-    end
+      redirect_to(wellbeing_metrics_path, flash: flash)
+  end
 
     private
 
     def wellbeing_metric_params
-      params.require(:wellbeing_metric).permit(:name, :category)
+      params.require(:wellbeing_metric)
+        .permit(:name, :category)
     end
 
     def set_breadcrumbs

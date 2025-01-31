@@ -12,6 +12,11 @@ module TeamMembers
       current_team_member.generate_two_factor_secret_if_missing!
     end
 
+    def edit
+      @backup_codes = current_team_member.generate_otp_backup_codes!
+      current_team_member.save!
+    end
+
     def create
       unless current_team_member.valid_password?(enable_2fa_params[:password])
         flash.now[:alert] = 'Incorrect password'
@@ -20,16 +25,14 @@ module TeamMembers
 
       if current_team_member.validate_and_consume_otp!(enable_2fa_params[:code])
         current_team_member.enable_two_factor!
-        redirect_to edit_two_factor_settings_path, notice: 'Successfully enabled two factor authentication, please make note of your backup codes.'
+        redirect_to(
+          edit_two_factor_settings_path,
+          notice: 'Successfully enabled two factor authentication, please make note of your backup codes.',
+        )
       else
         flash.now[:alert] = 'Incorrect Code'
         render :new
       end
-    end
-
-    def edit
-      @backup_codes = current_team_member.generate_otp_backup_codes!
-      current_team_member.save!
     end
 
     def destroy

@@ -5,8 +5,8 @@ if DiaryEntry.count.zero?
       DiaryEntry.create!(
         user: user,
         entry: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
-        feeling: %w[🥳 😊 😔 😠 💩 😐].sample,
-        created_at: Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now)
+        feeling: ['🥳', '😊', '😔', '😠', '💩', '😐'].sample,
+        created_at: Faker::Time.between(from: DateTime.now - 1.year, to: DateTime.now),
       )
     end
   end

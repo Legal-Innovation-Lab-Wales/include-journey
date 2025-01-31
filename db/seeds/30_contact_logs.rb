@@ -11,10 +11,9 @@ if ContactLog.count.zero?
         contact_purpose: ContactPurpose.where(id: rand(1..ContactPurpose.all.size)).first,
         notes: note,
         start: app_time,
-        end: app_time + rand(10..120).minutes
+        end: app_time + rand(10..120).minutes,
       )
     end
-
   end
 
   puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"

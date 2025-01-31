@@ -14,17 +14,25 @@ module TeamMembers
     # Add headers to the exported excel report
     def csv_headers
       if params[:data] == 'Wellbeing Assessments'
-        ['ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers +
-          ['Team Member ID', 'Team Member Name'] + WellbeingMetric.all.order(:id).map(&:name)
+        [
+          'ID', 'Date', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags',
+        ] + wallich_specific_headers + [
+          'Team Member ID', 'Team Member Name',
+        ] + WellbeingMetric.all.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
-        ['ID', 'Creation Date', 'Notes', 'Start Date', 'End Date', 'User ID', 'User Name',
-         'User Date Of Birth', 'User Sex', 'User Gender Identity', 'User Ethnic Group',
-         'User Disabilities', 'User Tags'] + wallich_specific_headers +
-          ['Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type', 'Contact Color', 'Contact Purpose']
+        [
+          'ID', 'Creation Date', 'Notes', 'Start Date', 'End Date', 'User ID', 'User Name',
+          'User Date Of Birth', 'User Sex', 'User Gender Identity', 'User Ethnic Group',
+          'User Disabilities', 'User Tags',
+        ] + wallich_specific_headers + [
+          'Team Member ID', 'Team Member Name', 'Contact Type ID', 'Contact Type', 'Contact Color', 'Contact Purpose',
+        ]
       else
-        ['ID', 'Date', 'Feeling', 'Entry', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
-         'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags'] + wallich_specific_headers
+        [
+          'ID', 'Date', 'Feeling', 'Entry', 'User ID', 'User Name', 'User Date Of Birth', 'User Sex',
+          'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags',
+        ] + wallich_specific_headers
       end
     end
 
@@ -49,43 +57,43 @@ module TeamMembers
     def wallich_specific_headers
       return [] unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
 
-      ['User Accommodation Type', 'User Housing Provider', 'Reason For Ending Support',
-       'Referred From', 'User Priority', 'User Local Authority']
+      [
+        'User Accommodation Type', 'User Housing Provider', 'Reason For Ending Support',
+        'Referred From', 'User Priority', 'User Local Authority',
+      ]
     end
 
     def update_resource
       base_resources
 
-      case params[:data]
+      table = case params[:data]
       when 'Wellbeing Assessments'
-        table = 'wellbeing_assessments'
+        'wellbeing_assessments'
       when 'Contact Logs'
-        table = 'contact_logs'
+        'contact_logs'
       else
-        table = 'diary_entries'
+        'diary_entries'
       end
 
-      if table == 'contact_logs'
-        @resource = @resource
-                    .where("#{table}.start > ?", convert_date(params['date_from'], true))
-                    .where("#{table}.start < ?", convert_date(params['date_to'], false))
+      @resource = if table == 'contact_logs'
+        @resource
+          .where("#{table}.start > ?", convert_date(params['date_from'], true))
+          .where("#{table}.start < ?", convert_date(params['date_to'], false))
       else
-        @resource = @resource
-                    .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
-                    .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
+        @resource
+          .where("#{table}.created_at > ?", convert_date(params['date_from'], true))
+          .where("#{table}.created_at < ?", convert_date(params['date_to'], false))
       end
       apply_filters
       @resource = table == 'contact_logs' ? @resource.sort_by(&:start) : @resource.sort_by(&:created_at)
       @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
       @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
-      if params[:display] == 'Line Chart' && params[:data] == 'Wellbeing Assessments'
-        @colours = WellbeingMetric.all.pluck(:colour)
-      end
+      return unless params[:display] == 'Line Chart' && params[:data] == 'Wellbeing Assessments'
+
+      @colours = WellbeingMetric.all.pluck(:colour)
     end
 
-    # rubocop:disable Metrics/LineLength
-    # rubocop:disable Metrics/AbcSize
     def base_resources
       case params[:data]
       when 'Wellbeing Assessments'
@@ -98,50 +106,74 @@ module TeamMembers
     end
 
     def wellbeing_data
-      if params[:author] != 'Anyone'
-        if params[:author] == 'User'
-          @resource = WellbeingAssessment.all.where(team_member_id: nil)
-        else
-          @resource = params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).wellbeing_assessments
-        end
+      @resource = case params[:author]
+      when 'Anyone'
+        WellbeingAssessment.all
+      when 'User'
+        WellbeingAssessment.all.where(team_member_id: nil)
       else
-        @resource = WellbeingAssessment.all
+        params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).wellbeing_assessments
       end
     end
 
     def diary_data
-      if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).diary_entries : DiaryEntry.all
+      @resource = if current_team_member.admin?
+        params[:member] == 'All' ? DiaryEntry.all : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).diary_entries
       else
-        @resource = current_team_member.diary_entries
+        current_team_member.diary_entries
       end
     end
 
     def contact_log_data
-      if current_team_member.admin?
-        @resource = params[:member] != 'All' ? TeamMember.find_by(email: ActiveRecord::Base::sanitize_sql_for_conditions(params[:member])).contact_logs : ContactLog.all
+      @resource = if current_team_member.admin?
+        params[:member] == 'All' ? ContactLog.all : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).contact_logs
       else
-        @resource = current_team_member.contact_logs
+        current_team_member.contact_logs
       end
     end
 
     def apply_filters
-      @resource = params['sex'].present? ? @resource.joins(:user).where(build_query('users', 'sex', params['sex'], @sexes)) : @resource
-      @resource = params['pronoun'].present? ? @resource.joins(:user).where(build_query('users', 'pronouns', params['pronoun'], @pronouns)) : @resource
-      @resource = params['ethnicity'].present? ? @resource.joins(:user).where(build_query('users', 'ethnic_group', params['ethnicity'], @ethnic_groups)) : @resource
-      @resource = params['religion'].present? ? @resource.joins(:user).where(build_query('users', 'religion', params['religion'], @religions)) : @resource
-      @resource = params['age'].present? ? @resource.joins(:user).where(build_age_query(params['age'], @ages)) : @resource
-      @resource = params['tag'].present? ? apply_filter_helper_for_tag(@resource) : @resource
+      if params['sex'].present?
+        @resource = @resource
+          .joins(:user)
+          .where(build_query('users', 'sex', params['sex'], @sexes))
+      end
+      if params['pronoun'].present?
+        @resource = @resource.joins(:user)
+          .where(build_query('users', 'pronouns', params['pronoun'], @pronouns))
+      end
+      if params['ethnicity'].present?
+        @resource = @resource.joins(:user)
+          .where(build_query('users', 'ethnic_group', params['ethnicity'], @ethnic_groups))
+      end
+      if params['religion'].present?
+        @resource = @resource.joins(:user)
+          .where(build_query('users', 'religion', params['religion'], @religions))
+      end
+      if params['age'].present?
+        @resource = @resource.joins(:user)
+          .where(build_age_query(params['age'], @ages))
+      end
+      if params['tag'].present?
+        @resource = apply_filter_helper_for_tag(@resource)
+      end
       return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'
 
-      values = [@accommodation_types, @housing_providers, @support_ending_reasons, @referred_froms, @priorities, @local_authorities]
-      %w[accommodation-type housing-provider support-ending-reason referred-from priority local-authority].each_with_index do |key, index|
-        @resource = params[key].present? ? apply_filter_helper(@resource, key, values[index]) : @resource
+      values = [
+        @accommodation_types, @housing_providers, @support_ending_reasons, @referred_froms, @priorities,
+        @local_authorities,
+      ]
+      [
+        'accommodation-type', 'housing-provider', 'support-ending-reason', 'referred-from', 'priority',
+        'local-authority',
+      ].each_with_index do |key, index|
+        if params[key].present?
+          @resource = apply_filter_helper(@resource, key, values[index])
+        end
       end
 
       @resource
     end
-    # rubocop:enable Metrics/LineLength
 
     def apply_filter_helper_for_tag(resource)
       tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
@@ -183,7 +215,6 @@ module TeamMembers
 
       "#{field} < '#{ages[0]}' AND #{field} > '#{ages[1]}'"
     end
-    # rubocop: enable Metrics/AbcSize
 
     def build_query(table, attribute, parameters, values)
       res = ''
@@ -208,14 +239,19 @@ module TeamMembers
     end
 
     def numeric?(string)
-      true if Float(string) rescue false
+      Float(string)
+      true
+    rescue StandardError
+      false
     end
 
     def convert_date(date, use_earliest_date)
-      if date != '' && !date.nil?
+      if date.present?
         date.to_datetime
+      elsif use_earliest_date
+        Time.at(0).to_datetime
       else
-        use_earliest_date ? Time.at(0).to_datetime : Date.today
+        Date.today
       end
     end
 

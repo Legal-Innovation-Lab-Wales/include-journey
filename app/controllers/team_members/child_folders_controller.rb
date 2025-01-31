@@ -13,31 +13,53 @@ module TeamMembers
       @child_folder.name = child_folder_params[:name]
       @child_folder.parent_folder_id = child_folders_params[:folder_id]
       @child_folder.user_id = current_parent_folder.user_id
-      if @child_folder.save
-        redirect_to user_folder_children_path(@user, current_parent_folder), flash: { notice: 'Successfully created folder!' }
+      flash = if @child_folder.save
+        {notice: 'Successfully created folder!'}
       else
-        redirect_to user_folder_children_path(@user, current_parent_folder), flash: { error: 'Folder not created. Please only use standard
-                                                                characters and punctuation' }
+        {error: 'Folder not created. Please only use standard characters and punctuation'}
       end
+      redirect_to(
+        user_folder_children_path(@user, current_parent_folder),
+        flash: flash,
+      )
     end
 
     def destroy
       folder = Folder.find(params[:folder_id])
       parent = folder.parent_folder
-    
+
       destroyed = folder.destroy!
 
-      has_siblings = parent && parent.child_folders.length > 0 && Upload.where(user_id: @user.id, parent_folder_id: parent.id)
-      path = has_siblings ? user_folder_children_path(@user, parent) : has_folders(parent) ? user_folders_path(@user) : user_path(@user)
+      has_siblings = (
+        parent
+        && parent.child_folders.length > 0
+        && Upload.where(user_id: @user.id, parent_folder_id: parent.id).any?
+      )
+      path = if has_siblings
+        user_folder_children_path(@user, parent)
+      elsif has_folders(parent)
+        user_folders_path(@user)
+      else
+        user_path(@user)
+      end
 
-      redirect_to path, flash: { "#{destroyed ? 'success' : 'error'}": "#{destroyed ? 'Success' : 'An error occured'}" }
+      flash = if destroyed
+        {success: 'Success'}
+      else
+        {error: 'An error occured'}
+      end
+
+      redirect_to(path, flash: flash)
     end
 
     protected
 
     def resources
-      folders = Folder.where(parent_folder_id: @current_parent_folder.id)
-      uploads = Upload.joins(:upload_file).where(parent_folder_id: @current_parent_folder.id)
+      parent_id = @current_parent_folder.id
+      folders = Folder.where(parent_folder_id: parent_id)
+      uploads = Upload.joins(:upload_file)
+        .where(parent_folder_id: parent_id)
+      
       folders + uploads
     end
 
@@ -48,22 +70,21 @@ module TeamMembers
     def search
       resource_ids = resources.map(&:id)
 
-      folder_results = Folder.where(id: resource_ids).where(child_folder_search, wildcard_query)
-      
+      folder_results = Folder.where(id: resource_ids)
+        .where(child_folder_search, wildcard_query)
+
       upload_results = Upload.joins(:upload_file)
-                            .where(id: resource_ids)
-                            .where(child_folder_search, wildcard_query)
-    
+        .where(id: resource_ids)
+        .where(child_folder_search, wildcard_query)
+
       folder_results + upload_results
     end
-
 
     def has_folders(parent)
       uploads = Upload.where(user_id: @user.id, parent_folder_id: parent.id)
       folders = current_team_member.folders.where(parent_folder_id: parent.id, user_id: @user.id)
-      total_array = uploads + folders
-    
-      total_array.length > 0
+
+      uploads.any? || folders.any?
     end
 
     private
@@ -80,7 +101,6 @@ module TeamMembers
       @current_parent_folder = Folder.find(child_folders_params[:folder_id])
     end
 
-
     def child_folder_search
       'lower(name) similar to lower(:query)'
     end
@@ -88,6 +108,7 @@ module TeamMembers
     def new_child_folder
       @new_child_folder = current_team_member.folders.new
     end
+
     def set_user
       @user = User.find(params[:user_id])
     end
@@ -122,5 +143,4 @@ module TeamMembers
       folder_arr
     end
   end
-
 end

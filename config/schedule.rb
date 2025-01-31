@@ -22,7 +22,7 @@
 set :output, 'log/cron.log'
 set :env_path, '"$HOME/.rbenv/shims":"$HOME/.rbenv/bin"'
 
-job_type :rbenv_rails, %q{ cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rails :task --silent :output }
+job_type :rbenv_rails, 'cd :path && PATH=:env_path:"$PATH" RAILS_ENV=:environment bin/rails :task --silent :output'
 
 every 1.day, at: '10:00 am' do
   rbenv_rails 'users:delete'

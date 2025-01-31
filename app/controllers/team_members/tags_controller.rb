@@ -13,13 +13,18 @@ module TeamMembers
 
       @tag = Tag.new(
         tag: tag_input,
-        team_member: current_team_member
+        team_member: current_team_member,
       )
       if @tag.save
-        redirect_back(fallback_location: tags_path, flash: { success: 'Tag created' })
+        redirect_back(
+          fallback_location: tags_path,
+          flash: {success: 'Tag created'},
+        )
       else
-        redirect_back(fallback_location: tags_path, flash:
-          { alert: 'Failed to save: Please only use standard characters and punctuation' })
+        redirect_back(
+          fallback_location: tags_path,
+          flash: {alert: 'Failed to save: Please only use standard characters and punctuation'},
+        )
       end
     end
 
@@ -27,15 +32,15 @@ module TeamMembers
 
     def resources
       @resources = Tag.includes(:team_member, :user_tags)
-                      .all
-                      .order(sort)
+        .all
+        .order(sort)
     end
 
     def search
       @resources = Tag.includes(:team_member, :user_tags)
-                      .joins(:team_member)
-                      .where("#{team_member_search} or #{tags_search}", wildcard_query)
-                      .order(sort)
+        .joins(:team_member)
+        .where("#{team_member_search} or #{tags_search}", wildcard_query)
+        .order(sort)
     end
 
     def subheading_stats
@@ -47,7 +52,7 @@ module TeamMembers
 
     def sort
       @sort = 'created_at'
-      { "#{@sort}": @direction }
+      {@sort => @direction}
     end
 
     private

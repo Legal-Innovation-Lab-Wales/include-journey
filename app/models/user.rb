@@ -4,24 +4,24 @@ class User < DeviseRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-        #  :confirmable,
+         # :confirmable,
          :lockable, :timeoutable, :trackable
 
   # General Association for all tenants
-  has_many :notes, foreign_key: :user_id, dependent: :delete_all
-  has_many :messages, foreign_key: :user_id, dependent: :destroy
-  has_many :contacts, foreign_key: :user_id, dependent: :delete_all
-  has_many :wellbeing_assessments, foreign_key: :user_id
+  has_many :notes, dependent: :delete_all
+  has_many :messages, dependent: :destroy
+  has_many :contacts, dependent: :delete_all
+  has_many :wellbeing_assessments
   has_many :wba_scores, through: :wellbeing_assessments
-  has_many :diary_entries, foreign_key: :user_id, dependent: :destroy
-  has_many :goal_permissions, foreign_key: :user_id, dependent: :destroy
-  has_many :appointments, foreign_key: :user_id, dependent: :delete_all
-  has_many :goals, foreign_key: :user_id, dependent: :delete_all
-  has_many :user_profile_view_logs, foreign_key: :user_id, dependent: :delete_all
-  has_many :user_tags, foreign_key: :user_id, dependent: :delete_all
-  has_many :survey_responses, foreign_key: :user_id
-  has_many :sessions, foreign_key: :user_id, dependent: :delete_all
-  has_many :user_achievements, foreign_key: :user_id, dependent: :delete_all
+  has_many :diary_entries, dependent: :destroy
+  has_many :goal_permissions, dependent: :destroy
+  has_many :appointments, dependent: :delete_all
+  has_many :goals, dependent: :delete_all
+  has_many :user_profile_view_logs, dependent: :delete_all
+  has_many :user_tags, dependent: :delete_all
+  has_many :survey_responses
+  has_many :sessions, dependent: :delete_all
+  has_many :user_achievements, dependent: :delete_all
   has_many :assignments
   has_many :diary_entry_permissions
   has_many :diary_entry_permissions, through: :diary_entries
@@ -51,8 +51,11 @@ class User < DeviseRecord
   scope :deleted, -> { where(deleted: true) }
   scope :approved, -> { where({approved: true, deleted: false}) }
   scope :last_assessed_today, lambda {
-    where(':start <= last_assessed_at and last_assessed_at <= :end',
-          { start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day })
+    # TODO: column 'last_assessed_at' does not exist
+    where(
+      ':start <= last_assessed_at and last_assessed_at <= :end',
+      {start: Time.zone.now.beginning_of_day, end: Time.zone.now.end_of_day},
+    )
   }
   scope :not_assessed_today, -> { where.not(id: last_assessed_today) }
   scope :last_wellbeing, lambda {
@@ -75,7 +78,7 @@ class User < DeviseRecord
     'Sikh',
     'Any other religion',
     'Prefer not to say',
-    nil
+    nil,
   ].freeze
   ETHNICITY_OPTIONS = [
     '',
@@ -97,25 +100,25 @@ class User < DeviseRecord
     'White: British/English/Welsh/Scottish/Northern Irish',
     'White: Gypsy/Irish Traveller/Romany',
     'Other Ethnic Group',
-    nil
+    nil,
   ].freeze
 
-  validates_presence_of :terms, :first_name, :last_name, :email
-  validates_format_of :first_name, with: Rails.application.config.regex_name
-  validates_format_of :last_name, with: Rails.application.config.regex_name
-  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone
-  validates_format_of :email, with: Rails.application.config.regex_email
-  validates_format_of :disabilities, with: Rails.application.config.regex_text_field
-  validates_format_of :summary_panel, with: Rails.application.config.regex_text_field
-  validates_format_of :address, with: Rails.application.config.regex_text_field
-  validates :email, uniqueness: { case_sensitive: false }
+  validates :terms, :first_name, :last_name, :email, presence: true
+  validates :first_name, format: {with: Rails.application.config.regex_name}
+  validates :last_name, format: {with: Rails.application.config.regex_name}
+  validates :mobile_number, format: {with: Rails.application.config.regex_telephone}
+  validates :email, format: {with: Rails.application.config.regex_email}
+  validates :disabilities, format: {with: Rails.application.config.regex_text_field}
+  validates :summary_panel, format: {with: Rails.application.config.regex_text_field}
+  validates :address, format: {with: Rails.application.config.regex_text_field}
+  validates :email, uniqueness: {case_sensitive: false}
   validates :terms, acceptance: true
-  validates :ethnic_group, inclusion: { in: ETHNICITY_OPTIONS }
-  validates :religion, inclusion: { in: RELIGION_OPTIONS }
-  validates :sex, inclusion: { in: SEX_OPTIONS }
-  validates :gender_identity, inclusion: { in: GENDER_IDENTITY_OPTIONS }
-  validates :pronouns, inclusion: { in: PRONOUN_OPTIONS }
-  validates :total_upload_size, numericality: { greater_than_or_equal_to: 0 }
+  validates :ethnic_group, inclusion: {in: ETHNICITY_OPTIONS}
+  validates :religion, inclusion: {in: RELIGION_OPTIONS}
+  validates :sex, inclusion: {in: SEX_OPTIONS}
+  validates :gender_identity, inclusion: {in: GENDER_IDENTITY_OPTIONS}
+  validates :pronouns, inclusion: {in: PRONOUN_OPTIONS}
+  validates :total_upload_size, numericality: {greater_than_or_equal_to: 0}
 
   def dob
     date_of_birth.present? ? date_of_birth.strftime('%d/%m/%Y') : ''
@@ -126,17 +129,22 @@ class User < DeviseRecord
   end
 
   def wellbeing_assessment_today
-    wellbeing_assessments.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(:id).last
+    wellbeing_assessments.where(created_at: Time.zone.now.all_day)
+      .order(:id)
+      .last
   end
 
   def wellbeing_assessment_history
-    history = { labels: [], datasets: [] }
+    history = {labels: [], datasets: []}
 
     wba_scores.includes(:wellbeing_metric)
-              .joins(:wellbeing_metric)
-              .order(created_at: :desc).each { |score| score.add_to_history(history) }
+      .joins(:wellbeing_metric)
+      .order(created_at: :desc)
+      .each { |score| score.add_to_history(history) }
 
-    wellbeing_assessments.order(created_at: :desc).each { |score| score.add_to_history(history) }
+    wellbeing_assessments
+      .order(created_at: :desc)
+      .each { |score| score.add_to_history(history) }
 
     history
   end
@@ -189,16 +197,16 @@ class User < DeviseRecord
       gender_identity,
       ethnic_group,
       disabilities,
-      user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
+      user_tags.map { |user_tag| user_tag.tag.tag }.join(', '),
     ]
 
     if ENV['ORGANISATION_NAME'] == 'wallich-journey'
-      csv_data << accommodation_type&.name.presence || ''
-      csv_data << housing_provider&.name.presence || ''
-      csv_data << support_ending_reason&.name.presence || ''
-      csv_data << referred_from&.name.presence || ''
-      csv_data << priority&.name.presence || ''
-      csv_data << wallich_local_authority&.name.presence || ''
+      (csv_data << accommodation_type&.name.presence) || ''
+      (csv_data << housing_provider&.name.presence) || ''
+      (csv_data << support_ending_reason&.name.presence) || ''
+      (csv_data << referred_from&.name.presence) || ''
+      (csv_data << priority&.name.presence) || ''
+      (csv_data << wallich_local_authority&.name.presence) || ''
     end
 
     csv_data
@@ -206,14 +214,14 @@ class User < DeviseRecord
 
   def json
     data = {
-      'ID': id,
-      'Name': full_name,
+      ID: id,
+      Name: full_name,
       'Date Of Birth': dob,
-      'Sex': sex,
+      Sex: sex,
       'Gender Identity': gender_identity,
       'Ethnic Group': ethnic_group,
-      'Disabilities': disabilities,
-      'Tags': user_tags.map { |user_tag| user_tag.tag.tag }.join(', ')
+      Disabilities: disabilities,
+      Tags: user_tags.map { |user_tag| user_tag.tag.tag }.join(', '),
     }
 
     if ENV['ORGANISATION_NAME'] == 'wallich-journey'
@@ -231,7 +239,7 @@ class User < DeviseRecord
   def unapprove
     sessions.destroy_all
     mail_rejected_user
-    self.delete
+    delete
   end
 
   def destroy
@@ -242,7 +250,7 @@ class User < DeviseRecord
   end
 
   def verify_achievements
-    %w[sessions wellbeing_assessments diary_entries goals_achieved].each do |entities|
+    ['sessions', 'wellbeing_assessments', 'diary_entries', 'goals_achieved'].each do |entities|
       Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
 
       if Achievement.this_month.for(entities).present? && changed.include?("#{entities}_this_month_count")
@@ -252,8 +260,8 @@ class User < DeviseRecord
   end
 
   def reset_monthly_counts
-    %w[sessions wellbeing_assessments diary_entries goals_achieved].each do |entities|
-      update!({ "#{entities}_this_month_count": 0 })
+    ['sessions', 'wellbeing_assessments', 'diary_entries', 'goals_achieved'].each do |entities|
+      update!({"#{entities}_this_month_count": 0})
     end
   end
 
@@ -263,16 +271,16 @@ class User < DeviseRecord
 
   def remove_goal_permissions(team_member_id)
     permission = goal_permissions.where(team_member_id: team_member_id)
-    if permission
-      permission.destroy_all
-    end
+    return unless permission
+
+    permission.destroy_all
   end
 
   def remove_diary_entry_permissions(team_member_id)
     permission = diary_entry_permissions.where(team_member_id: team_member_id)
-    if permission
-      permission.destroy_all
-    end
+    return unless permission
+
+    permission.destroy_all
   end
 
   def remove_team_member(team_member_id)
@@ -285,6 +293,7 @@ class User < DeviseRecord
 
   def assign_team_member(team_member_id)
     return if assigned_team_member(team_member_id)
+
     assignments.create!(team_member_id: team_member_id)
   end
 
@@ -292,7 +301,15 @@ class User < DeviseRecord
 
   def anonymize
     skip_email_changed_notification!
-    update(first_name: 'Deleted', last_name: 'User', email: "deleted-user-#{id}@fake-email.com", mobile_number: Faker::Number.leading_zero_number(digits: 11),
-           nomis_id: nil, pnc_no: nil, delius_no: nil, deleted: true)
+    update(
+      first_name: 'Deleted',
+      last_name: 'User',
+      email: "deleted-user-#{id}@fake-email.com",
+      mobile_number: Faker::Number.leading_zero_number(digits: 11),
+      nomis_id: nil,
+      pnc_no: nil,
+      delius_no: nil,
+      deleted: true,
+    )
   end
 end

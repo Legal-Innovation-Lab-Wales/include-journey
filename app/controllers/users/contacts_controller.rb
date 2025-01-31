@@ -13,6 +13,12 @@ module Users
       render 'new'
     end
 
+    # GET /contacts/:id/edit
+    def edit
+      add_breadcrumb('Edit Contact', nil, 'fas fa-edit')
+      render 'edit'
+    end
+
     # POST /contacts
     def create
       @contact = Contact.new(
@@ -20,26 +26,20 @@ module Users
         name: contact_params[:name],
         description: contact_params[:description],
         number: contact_params[:number],
-        email: contact_params[:email]
+        email: contact_params[:email],
       )
       if @contact.save
-        redirect_to contacts_path, flash: { success: 'Contact created' }
+        redirect_to contacts_path, flash: {success: 'Contact created'}
       else
         add_breadcrumb('New Contact', nil, 'fas fa-plus-circle')
         render 'new'
       end
     end
 
-    # GET /contacts/:id/edit
-    def edit
-      add_breadcrumb('Edit Contact', nil, 'fas fa-edit')
-      render 'edit'
-    end
-
     # PUT /contacts/:id
     def update
       if @contact.update(contact_params)
-        redirect_to contacts_path, flash: { success: 'Contact updated' }
+        redirect_to contacts_path, flash: {success: 'Contact updated'}
       else
         add_breadcrumb('Edit Contact', nil, 'fas fa-edit')
         render 'edit'
@@ -49,9 +49,15 @@ module Users
     # DELETE /contacts/:id
     def destroy
       if @contact.destroy!
-        redirect_to current_user.contacts.count.zero? ? authenticated_user_root_path : contacts_path, flash: { success: 'Contact removed' }
+        redirect_to(
+          current_user.contacts.count.zero? ? authenticated_user_root_path : contacts_path,
+          flash: {success: 'Contact removed'},
+        )
       else
-        redirect_to edit_contact_path, flash: { error: 'Error removing contact' }
+        redirect_to(
+          edit_contact_path,
+          flash: {error: 'Error removing contact'},
+        )
       end
     end
 
@@ -62,7 +68,8 @@ module Users
     end
 
     def resources
-      current_user.contacts.order(updated_at: :desc)
+      current_user.contacts
+        .order(updated_at: :desc)
     end
 
     def resources_per_page
@@ -70,15 +77,21 @@ module Users
     end
 
     def search
-      current_user.contacts.where(contact_search, wildcard_query).order(updated_at: :desc)
+      current_user.contacts
+        .where(contact_search, wildcard_query)
+        .order(updated_at: :desc)
     end
 
     private
 
     def contact
-      @contact = current_user.contacts.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @contact = current_user.contacts
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: contacts_path, flash: { error: 'That contact does not exist' })
+      redirect_back(
+        fallback_location: contacts_path,
+        flash: {error: 'That contact does not exist'},
+      )
     end
 
     def contact_params
@@ -86,9 +99,10 @@ module Users
     end
 
     def set_breadcrumbs
-      path = nil
-      if action_name != 'index' && resources.present?
-        path = contacts_path
+      path = if action_name != 'index' && resources.present?
+        contacts_path
+      else
+        nil
       end
       add_breadcrumb('My Contacts', path, 'fas fa-address-book')
     end

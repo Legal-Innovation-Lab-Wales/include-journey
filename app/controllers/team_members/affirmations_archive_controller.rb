@@ -13,25 +13,25 @@ module TeamMembers
 
     def resources
       Affirmation.includes(:team_member)
-                 .archived
-                 .order(sort)
+        .archived
+        .order(sort)
     end
 
     def search
       Affirmation.includes(:team_member)
-                 .where(affirmations_archive_search, query_terms)
-                 .order(sort)
+        .where(affirmations_archive_search, query_terms)
+        .order(sort)
     end
 
     def sort
       @sort = 'scheduled_date'
-      { "#{@sort}": @direction }
+      {@sort => @direction}
     end
 
     private
 
     def query_terms
-      wildcard_query.merge({ today: Date.today })
+      wildcard_query.merge({today: Date.today})
     end
 
     def affirmations_archive_search

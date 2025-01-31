@@ -8,23 +8,23 @@ class TeamMember < DeviseRecord
          # options for two factor authentication
          :two_factor_authenticatable, :two_factor_backupable,
          otp_backup_code_length: 10, otp_number_of_backup_codes: 10,
-         otp_secret_encryption_key: ENV['MFA_OTP_SECRET_KEY']
+         otp_secret_encryption_key: ENV.fetch('MFA_OTP_SECRET_KEY')
 
-  has_many :notes, foreign_key: :team_member_id
-  has_many :messages, foreign_key: :team_member_id, dependent: :destroy
-  has_many :wellbeing_metrics, foreign_key: :team_member_id
-  has_many :wellbeing_assessments, foreign_key: :team_member_id
-  has_many :diary_entry_permissions, foreign_key: :team_member_id
-  has_many :diary_entry_view_logs, foreign_key: :team_member_id
+  has_many :notes
+  has_many :messages, dependent: :destroy
+  has_many :wellbeing_metrics
+  has_many :wellbeing_assessments
+  has_many :diary_entry_permissions
+  has_many :diary_entry_view_logs
   has_many :viewed_diary_entries, through: :diary_entry_view_logs, source: :diary_entry
   has_many :diary_entries, through: :diary_entry_permissions
-  has_many :user_profile_view_logs, foreign_key: :team_member_id
-  has_many :user_pins, foreign_key: :team_member_id
+  has_many :user_profile_view_logs
+  has_many :user_pins
   has_many :pinned_users, through: :user_pins, source: :user
   has_many :wellbeing_services
-  has_many :created_tags, foreign_key: :team_member_id, class_name: 'Tag'
+  has_many :created_tags, class_name: 'Tag'
   has_many :assigned_tags, through: :user_tags, source: :tag
-  has_many :contact_logs, foreign_key: :team_member_id, dependent: :delete_all
+  has_many :contact_logs, dependent: :delete_all
   has_many :assignments
   has_many :users, through: :assignments
   has_many :notifications
@@ -39,16 +39,22 @@ class TeamMember < DeviseRecord
   scope :admins, -> { where(admin: true) }
 
   # validations
-  validates_presence_of :first_name, :last_name, :mobile_number, :email, :terms
-  validates :email, uniqueness: { case_sensitive: false }
+  validates :first_name, :last_name, :mobile_number, :email, :terms, presence: true
+  validates :email, uniqueness: {case_sensitive: false}
   validates :terms, acceptance: true
-  validates :total_upload_size, numericality: { greater_than_or_equal_to: 0 }
-  validates_format_of :first_name, :last_name, with: Rails.application.config.regex_name,
-                                               message: Rails.application.config.name_error
-  validates_format_of :mobile_number, with: Rails.application.config.regex_telephone,
-                                      message: Rails.application.config.telephone_error
-  validates_format_of :email, with: Rails.application.config.regex_email,
-                              message: Rails.application.config.email_error
+  validates :total_upload_size, numericality: {greater_than_or_equal_to: 0}
+  validates :first_name, :last_name, format: {
+    with: Rails.application.config.regex_name,
+    message: Rails.application.config.name_error,
+  }
+  validates :mobile_number, format: {
+    with: Rails.application.config.regex_telephone,
+    message: Rails.application.config.telephone_error,
+  }
+  validates :email, format: {
+    with: Rails.application.config.regex_email,
+    message: Rails.application.config.email_error,
+  }
 
   def unread_diary_entries(user)
     (diary_entries.where(user: user) - viewed_diary_entries.where(user: user)).count
@@ -60,8 +66,8 @@ class TeamMember < DeviseRecord
 
   def json
     {
-      'ID': id,
-      'Name': full_name
+      ID: id,
+      Name: full_name,
     }
   end
 
@@ -80,7 +86,7 @@ class TeamMember < DeviseRecord
 
   # URI for OTP two-factor QR code
   def two_factor_qr_code_uri
-    issuer = ENV['MFA_ISSUER_NAME']
+    issuer = ENV.fetch('MFA_ISSUER_NAME')
     label = [issuer, email].join(':')
 
     otp_provisioning_uri(label, issuer: issuer)
@@ -96,7 +102,7 @@ class TeamMember < DeviseRecord
     update!(
       otp_required_for_login: false,
       otp_secret: nil,
-      otp_backup_codes: nil
+      otp_backup_codes: nil,
     )
   end
 

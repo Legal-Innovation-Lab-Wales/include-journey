@@ -5,11 +5,11 @@ module Users
     def index
       add_breadcrumb('My Journey', nil, 'fas fa-road')
       @all_time_achievements = Achievement.includes(:user_achievements)
-                                          .all_time
-                                          .order(created_at: :asc)
+        .all_time
+        .order(created_at: :asc)
       @available_monthly_achievements = Achievement.includes(:user_achievements)
-                                                   .this_month
-                                                   .order(created_at: :asc)
+        .this_month
+        .order(created_at: :asc)
 
       render 'index'
     end

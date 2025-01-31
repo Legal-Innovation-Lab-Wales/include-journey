@@ -24,7 +24,7 @@ module Users
       @team_members.each do |team_member|
         next if permissions_params["team_member_#{team_member.id}"].to_i.zero?
 
-        @model.permissions.create!({ team_member: team_member })
+        @model.permissions.create!(team_member: team_member)
       end
 
       redirect_to path, success: 'Sharing permissions for team members successfully set'
@@ -37,11 +37,15 @@ module Users
     end
 
     def last_permissions
-      @last_permissions = @second_to_last.permissions.collect { |permission| { id: permission.team_member_id } }
+      @last_permissions = @second_to_last.permissions.collect do |permission|
+        {id: permission.team_member_id}
+      end
     end
 
     def current_permissions
-      @current_permissions = @model.permissions.collect { |permission| { id: permission.team_member_id } }
+      @current_permissions = @model.permissions.collect do |permission|
+        {id: permission.team_member_id}
+      end
     end
 
     def model
@@ -49,7 +53,8 @@ module Users
     end
 
     def permissions_params
-      params.require(@model.class.model_name.singular).permit(@team_members.map { |t_m| "team_member_#{t_m.id}" })
+      params.require(@model.class.model_name.singular)
+        .permit(@team_members.map { |t_m| "team_member_#{t_m.id}" })
     end
 
     def second_to_last
@@ -57,7 +62,8 @@ module Users
     end
 
     def team_members
-      @team_members = current_user.team_members.order(:created_at)
+      @team_members = current_user.team_members
+        .order(:created_at)
     end
   end
 end

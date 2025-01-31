@@ -20,19 +20,19 @@ module TeamMembers
 
     def resources
       @responses.includes(:user)
-                .order(sort)
+        .order(sort)
     end
 
     def search
       @responses.includes(:user)
-                .joins(:user)
-                .where(user_search, wildcard_query)
-                .order(sort)
+        .joins(:user)
+        .where(user_search, wildcard_query)
+        .order(sort)
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'submitted_at'
-      { "#{@sort}": @direction }
+      @sort = pagination_params[:sort].presence || 'submitted_at'
+      {@sort => @direction}
     end
 
     def set_breadcrumbs

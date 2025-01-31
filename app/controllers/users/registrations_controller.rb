@@ -21,8 +21,11 @@ module Users
     private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :mobile_number, :terms, :email, :password,
-                                   :password_confirmation, :summary_panel, :address)
+      params.require(:user)
+        .permit(
+          :first_name, :last_name, :mobile_number, :terms, :email, :password,
+          :password_confirmation, :summary_panel, :address,
+        )
     end
 
     def check_captcha
@@ -30,16 +33,15 @@ module Users
 
       self.resource = resource_class.new user_params
       resource.validate
-      respond_with_navigational(resource) {
+      respond_with_navigational(resource) do
         # delete default recaptcha error
         flash.delete(:recaptcha_error)
         # add custom recaptcha error
         flash[:error] = 'reCAPTCHA verification failed, please try again'
         flash.discard(:error)
         render :new
-      }
+      end
     end
-
 
     def send_new_user_email
       return unless @user.created_at? || Time.now - User.second_to_last.created_at < 6.hours

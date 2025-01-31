@@ -14,9 +14,9 @@ module TeamMembers
       user.approved = true
       user.save
 
-      redirect_to approvals_path, flash: { success: 'User Approved' }
+      redirect_to approvals_path, flash: {success: 'User Approved'}
     rescue ActiveRecord::RecordNotFound
-      redirect_to approvals_path, flash: { error: 'User not Found' }
+      redirect_to approvals_path, flash: {error: 'User not Found'}
     end
 
     def new
@@ -25,7 +25,10 @@ module TeamMembers
 
     def bulk_action
       unless params[:user_ids]
-        return redirect_to approvals_path, flash: { error: 'No users selected' }
+        return redirect_to(
+          approvals_path,
+          flash: { error: 'No users selected' },
+        )
       end
 
       is_approve = params[:status] == '1'
@@ -42,9 +45,15 @@ module TeamMembers
         end
       end
 
-      redirect_to user_data.count.zero? ? root_path : approvals_path, flash: { success: "#{is_approve ? 'Approvals' : 'Rejections' } Successful" }
+      redirect_to(
+        user_data.count.zero? ? root_path : approvals_path,
+        flash: {success: "#{is_approve ? 'Approvals' : 'Rejections'} Successful"},
+      )
     rescue ActiveRecord::RecordNotFound
-      redirect_to approvals_path, flash: { error: 'No users selected' }
+      redirect_to(
+        approvals_path,
+        flash: {error: 'No users selected'},
+      )
     end
 
     protected

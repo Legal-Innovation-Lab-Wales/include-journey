@@ -5,7 +5,7 @@ class WellbeingAssessment < ApplicationRecord
 
   after_create :update_cache
 
-  has_many :wba_scores, foreign_key: :wellbeing_assessment_id, dependent: :delete_all
+  has_many :wba_scores, dependent: :delete_all
 
   def today?
     created_at.today?
@@ -17,37 +17,44 @@ class WellbeingAssessment < ApplicationRecord
     if existing_dataset.present?
       existing_dataset[:data] << point
     else
-      history[:datasets].push({ label: 'Average', data: [point] })
+      history[:datasets].push({label: 'Average', data: [point]})
     end
   end
 
   def point
-    { x: created_at, y: average }
+    {x: created_at, y: average}
   end
 
-  # rubocop:disable Metrics/AbcSize
   def to_csv
-    [id, created] + user.to_csv + (team_member.present? ? team_member.to_csv : [nil, nil]) + wba_scores.order(:wellbeing_metric_id).map(&:value)
+    [id, created] + user.to_csv + (if team_member.present?
+      team_member.to_csv
+    else
+      [nil,
+        nil,]
+    end) + wba_scores.order(:wellbeing_metric_id).map(&:value)
   end
 
   def json
     {
-      'ID': id,
-      'Date': created
+      ID: id,
+      Date: created,
     }
       .merge(user.json.transform_keys { |key| "User #{key}" })
       .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
       .merge({
-               'Scores': wba_scores.order(:wellbeing_metric_id).map { |score| { "#{score.wellbeing_metric.name}": score.value } }
-             })
+        Scores: wba_scores.order(:wellbeing_metric_id).map do |score|
+          {"#{score.wellbeing_metric.name}": score.value}
+        end,
+      })
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 
   def update_cache
-    user.update!(last_wellbeing_assessment_at: Date.today,
-                 wellbeing_assessments_count: user.wellbeing_assessments_count + 1,
-                 wellbeing_assessments_this_month_count: user.wellbeing_assessments_this_month_count + 1)
+    user.update!(
+      last_wellbeing_assessment_at: Date.today,
+      wellbeing_assessments_count: user.wellbeing_assessments_count + 1,
+      wellbeing_assessments_this_month_count: user.wellbeing_assessments_this_month_count + 1,
+    )
   end
 end

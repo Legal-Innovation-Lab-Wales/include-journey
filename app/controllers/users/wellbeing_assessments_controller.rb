@@ -29,8 +29,10 @@ module Users
       if (@wellbeing_assessment = current_user.wellbeing_assessments.create!)
         redirect_to wellbeing_assessment_path(@wellbeing_assessment)
       else
-        redirect_to authenticated_user_root_path,
-                    error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}"
+        redirect_to(
+          authenticated_user_root_path,
+          error: "Wellbeing assessment could not be created: #{@wellbeing_assessment.errors}",
+        )
       end
     end
 
@@ -47,16 +49,20 @@ module Users
 
       return unless wellbeing_assessment_today.present?
 
-      redirect_to wellbeing_assessment_path(wellbeing_assessment_today),
-                  notice: 'The below wellbeing assessment was completed today'
+      redirect_to(
+        wellbeing_assessment_path(wellbeing_assessment_today),
+        notice: 'The below wellbeing assessment was completed today',
+      )
     end
 
     def wba_scores
       total = 0.0
       @wellbeing_metrics.each do |metric|
         value = wba_params["wellbeing_metric_#{metric.id}"]
-        @wellbeing_assessment.wba_scores.create!({ wellbeing_metric: metric,
-                                                   value: value })
+        @wellbeing_assessment.wba_scores.create!(
+          wellbeing_metric: metric,
+          value: value,
+        )
         total += value.to_f
       end
       @wellbeing_assessment.update!(average: total / @wellbeing_metrics.count)
@@ -64,7 +70,7 @@ module Users
 
     def last_scores
       @last_scores = @last_wellbeing_assessment.wba_scores.collect do |wba_score|
-        { id: wba_score.wellbeing_metric_id, value: wba_score.value }
+        {id: wba_score.wellbeing_metric_id, value: wba_score.value}
       end
     end
 
@@ -73,7 +79,9 @@ module Users
     end
 
     def wellbeing_assessment
-      @wellbeing_assessment = current_user.wellbeing_assessments.includes(:wba_scores).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @wellbeing_assessment = current_user.wellbeing_assessments
+        .includes(:wba_scores)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
       redirect_to new_wellbeing_assessment_path, error: 'No such wellbeing assessment could be found'
     end

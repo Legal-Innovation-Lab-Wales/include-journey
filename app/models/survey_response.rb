@@ -5,9 +5,9 @@ class SurveyResponse < ApplicationRecord
   has_many :survey_answers, dependent: :destroy
   has_many :survey_comments, dependent: :destroy
 
-  validates_presence_of :survey_id, :user_id
+  validates :survey_id, :user_id, presence: true
 
-  scope :submitted, -> { where('submitted_at is not null') }
+  scope :submitted, -> { where.not(submitted_at: nil) }
 
   def submitted?
     submitted_at.present?
@@ -23,7 +23,11 @@ class SurveyResponse < ApplicationRecord
     answered = survey_answers.count
     total = survey.survey_questions.count
 
-    { answered: answered, total: total, percentage: ((answered.to_f / total) * 100) }
+    {
+      answered: answered,
+      total: total,
+      percentage: (answered.to_f / total) * 100,
+    }
   end
 
   def answer?(question, answer)

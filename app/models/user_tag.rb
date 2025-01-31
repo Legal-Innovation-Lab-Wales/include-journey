@@ -6,5 +6,5 @@ class UserTag < ApplicationRecord
   scope :created_in_last_week, -> { where('user_tags.created_at >= ?', 7.days.ago) }
   scope :created_in_last_month, -> { where('user_tags.created_at >= ?', 1.month.ago) }
 
-  validates_presence_of :tag_id, :user_id, :team_member_id
+  validates :tag_id, :user_id, :team_member_id, presence: true
 end

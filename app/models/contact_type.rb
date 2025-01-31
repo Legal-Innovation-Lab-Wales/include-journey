@@ -1,12 +1,12 @@
 # app/models/contact_type.rb
 class ContactType < ApplicationRecord
-  validates_presence_of :name
+  validates :name, presence: true
 
   def json
     {
-      'id': id,
-      'name': name,
-      'color': color
+      id: id,
+      name: name,
+      color: color,
     }
   end
 

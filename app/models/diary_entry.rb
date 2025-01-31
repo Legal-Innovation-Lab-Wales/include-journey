@@ -1,11 +1,10 @@
 # app/models/diary_entry.rb
 class DiaryEntry < PermissionRecord
   belongs_to :user
-  validates_format_of :entry, with: Rails.application.config.regex_text_field,
-                              message: Rails.application.config.text_field_error
-  
-  has_many :diary_entry_permissions, foreign_key: :diary_entry_id, dependent: :delete_all
-  has_many :diary_entry_view_logs, foreign_key: :diary_entry_id, dependent: :delete_all
+  validates :entry, format: {with: Rails.application.config.regex_text_field, message: Rails.application.config.text_field_error}
+
+  has_many :diary_entry_permissions, dependent: :delete_all
+  has_many :diary_entry_view_logs, dependent: :delete_all
 
   after_create :update_cache
 
@@ -19,10 +18,10 @@ class DiaryEntry < PermissionRecord
     '😠',
     '💩',
     '🥳',
-    '😊'
+    '😊',
   ].freeze
 
-  validates :feeling, inclusion: { in: FEELING_OPTIONS, message: 'Please select a valid feeling from the list' }
+  validates :feeling, inclusion: {in: FEELING_OPTIONS, message: 'Please select a valid feeling from the list'}
 
   def permissions
     diary_entry_permissions
@@ -34,10 +33,10 @@ class DiaryEntry < PermissionRecord
 
   def json
     {
-      'ID': id,
-      'Date': created,
-      'Feeling': feeling,
-      'Entry': entry
+      ID: id,
+      Date: created,
+      Feeling: feeling,
+      Entry: entry,
     }
       .merge(user.json.transform_keys { |key| "User #{key}" })
   end
@@ -45,8 +44,10 @@ class DiaryEntry < PermissionRecord
   private
 
   def update_cache
-    user.update!(last_diary_entry_at: Date.today,
-                 diary_entries_count: user.diary_entries_count + 1,
-                 diary_entries_this_month_count: user.diary_entries_this_month_count + 1)
+    user.update!(
+      last_diary_entry_at: Date.today,
+      diary_entries_count: user.diary_entries_count + 1,
+      diary_entries_this_month_count: user.diary_entries_this_month_count + 1,
+    )
   end
 end

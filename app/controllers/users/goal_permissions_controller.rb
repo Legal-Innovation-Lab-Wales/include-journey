@@ -3,7 +3,7 @@ module Users
     before_action :team_members, :permissions, :can_add, :set_breadcrumbs
 
     def index
-      @type = !params[:type] ? 'short' : params[:type]
+      @type = params[:type] || 'short'
       add_breadcrumb("Manage #{@type} term permissions", nil, 'fas fa-lock')
       @default_permission = false
     end
@@ -23,34 +23,52 @@ module Users
         permission.update!(instance_obj)
       end
 
-      redirect_to goals_path, flash: { success: 'Permissions Shared successfully' }
+      redirect_to(
+        goals_path,
+        flash: {success: 'Permissions Shared successfully'},
+      )
     end
 
     def destroy
-      permission = @model.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:goal_permission_id]))
+      permission = @model.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:goal_permission_id]))
 
       permission.destroy!
 
-      redirect_to goal_permissions_path(current_user), flash: { success: 'Permission successfully revoked' }
+      redirect_to(
+        goal_permissions_path(current_user),
+        flash: {success: 'Permission successfully revoked'},
+      )
     end
 
     protected
 
     def model
-      @model = params[:type] == 'long' ? current_user.goal_permissions.long_term : current_user.goal_permissions.short_term
+      @model = if params[:type] == 'long'
+        current_user.goal_permissions.long_term
+      else
+        current_user.goal_permissions.short_term
+      end
     end
 
     def permissions_params
-      params.require(:goal_permission).permit(:goal_type, :type, team_members.map { |t_m| "team_member_#{t_m.id}" })
+      params.require(:goal_permission)
+        .permit(:goal_type, :type, team_members.map { |t_m| "team_member_#{t_m.id}" })
     end
 
     def permissions
-      model_collection = params[:type] == 'long' ? @model.long_term : @model.short_term
-      @permissions = model_collection.collect { |permission|
+      model_collection = if params[:type] == 'long'
+        @model.long_term
+      else
+        @model.short_term
+      end
+
+      @permissions = model_collection.collect do |permission|
         {
-          id: permission.team_member_id, short_term: permission.short_term, long_term: permission.long_term
+          id: permission.team_member_id,
+          short_term: permission.short_term,
+          long_term: permission.long_term,
         }
-      }
+      end
     end
 
     def can_add
@@ -58,7 +76,8 @@ module Users
     end
 
     def team_members
-      @team_members = current_user.team_members.order(:created_at)
+      @team_members = current_user.team_members
+        .order(:created_at)
     end
 
     def set_breadcrumbs

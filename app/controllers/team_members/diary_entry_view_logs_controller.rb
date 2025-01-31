@@ -8,16 +8,18 @@ module TeamMembers
     protected
 
     def resources
-      @team_member.diary_entry_view_logs.includes(:user, :diary_entry)
-                  .joins(:diary_entry)
-                  .order(sort)
+      @team_member.diary_entry_view_logs
+        .includes(:user, :diary_entry)
+        .joins(:diary_entry)
+        .order(sort)
     end
 
     def search
-      @team_member.diary_entry_view_logs.includes(:user, :diary_entry)
-                  .joins(:diary_entry)
-                  .where(user_search, wildcard_query)
-                  .order(sort)
+      @team_member.diary_entry_view_logs
+        .includes(:user, :diary_entry)
+        .joins(:diary_entry)
+        .where(user_search, wildcard_query)
+        .order(sort)
     end
 
     def subheading_stats
@@ -26,8 +28,8 @@ module TeamMembers
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'last_viewed_at'
-      { "#{sort_param}": @direction }
+      @sort = pagination_params[:sort].presence || 'last_viewed_at'
+      {"#{sort_param}": @direction}
     end
 
     private
@@ -44,7 +46,8 @@ module TeamMembers
     end
 
     def team_member
-      @team_member = TeamMember.includes(:diary_entry_view_logs).find(params[:team_member_id])
+      @team_member = TeamMember.includes(:diary_entry_view_logs)
+        .find(params[:team_member_id])
     end
 
     def set_breadcrumbs

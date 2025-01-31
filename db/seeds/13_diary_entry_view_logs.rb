@@ -1,6 +1,6 @@
 if DiaryEntryViewLog.count.zero?
   print "#{pretty_print_name('Diary View Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
-  DiaryEntry.all.each do |diary_entry, index|
+  DiaryEntry.all.each do |diary_entry|
     # Create View Log for every 7th diary entry
     next unless (diary_entry.id % 7).zero?
 
@@ -14,7 +14,7 @@ if DiaryEntryViewLog.count.zero?
         diary_entry: diary_entry,
         created_at: created_at,
         updated_at: updated_at,
-        view_count: view_count
+        view_count: view_count,
       )
     end
   end

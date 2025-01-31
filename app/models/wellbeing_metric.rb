@@ -7,6 +7,6 @@ class WellbeingMetric < ApplicationRecord
   has_many :metrics_services
   has_many :wellbeing_services, through: :metrics_services
 
-  validates_presence_of :name, :category, :icon, :colour
-  validates_format_of :name, :category, with: Rails.application.config.regex_name
+  validates :name, :category, :icon, :colour, presence: true
+  validates :name, :category, format: {with: Rails.application.config.regex_name}
 end

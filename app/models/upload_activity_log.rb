@@ -3,8 +3,10 @@ class UploadActivityLog < ApplicationRecord
   belongs_to :team_member
   belongs_to :upload
 
-  validates_presence_of :activity_type, :activity_time
-  validates :activity_type, inclusion: { in: %w[viewed modified downloaded approved rejected] }
+  ACTIVITY_TYPES = ['viewed', 'modified', 'downloaded', 'approved', 'rejected'].freeze
+
+  validates :activity_type, :activity_time, presence: true
+  validates :activity_type, inclusion: {in: ACTIVITY_TYPES}
 
   scope :viewed_in_last_week, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.week.ago) }
   scope :viewed_in_last_month, -> { where(activity_type: 'viewed').where('activity_time >= ?', 1.month.ago) }

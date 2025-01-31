@@ -7,12 +7,26 @@ module TeamMembers
     include Pagination
     include UploadsHelper
 
-    def new
-      if session.key?(:custom_view)
-        add_breadcrumb('Files', user_uploads_path(user_id: user.id, view: :list), 'fas fa-file')
+    def show
+      log_uploads_activity('viewed') if @upload.added_by == 'User'
+      @upload_file = @upload.upload_file
+      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
+      files_path = if session.key?(:custom_view)
+        user_uploads_path(user_id: user.id, view: :list)
       else
-        add_breadcrumb('Files', user_uploads_path(user_id: user.id), 'fas fa-file')
+        user_uploads_path(user_id: user.id)
       end
+      add_breadcrumb('Files', files_path, 'fas fa-file')
+      add_breadcrumb(@upload_file.name.to_s, nil, icon)
+    end
+
+    def new
+      files_path = if session.key?(:custom_view)
+        user_uploads_path(user_id: user.id, view: :list)
+      else
+        user_uploads_path(user_id: user.id)
+      end
+      add_breadcrumb('Files', files_path, 'fas fa-file')
       add_breadcrumb('Upload File', nil, 'fas fa-upload')
       @upload = @user.uploads.new
       @upload_file = UploadFile.new
@@ -31,18 +45,13 @@ module TeamMembers
       end
     end
 
-    def show
-      log_uploads_activity('viewed') if @upload.added_by == 'User'
-      @upload_file = @upload.upload_file
-      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
-      add_breadcrumb('Files', user_uploads_path(user_id: user.id, view: :list), 'fas fa-file') if session.key?(:custom_view)
-      add_breadcrumb('Files', user_uploads_path(user_id: user.id), 'fas fa-file') unless session.key?(:custom_view)
-      add_breadcrumb(@upload_file.name.to_s, nil, icon)
-    end
-
     def update
       @upload_file = @upload.upload_file
-      @upload.update(comment: upload_params[:comment], visible_to_user: upload_params[:visible_to_user], parent_folder_id: upload_params[:parent_folder_id])
+      @upload.update(
+        comment: upload_params[:comment],
+        visible_to_user: upload_params[:visible_to_user],
+        parent_folder_id: upload_params[:parent_folder_id],
+      )
       @upload_file.update(name: upload_params[:name])
 
       if @upload_file.save && @upload.save
@@ -71,9 +80,12 @@ module TeamMembers
     def approve
       return if @upload.status == 'approved'
 
-      if @upload.update(status: 'approved',
-                        approved_at: Time.now,
-                        approved_by: current_team_member.full_name)
+      result = @upload.update(
+        status: 'approved',
+        approved_at: Time.now,
+        approved_by: current_team_member.full_name,
+      )
+      if result
         flash[:success] = 'File has been successfully approved.'
         log_uploads_activity('approved') if @upload.added_by == 'User'
       else
@@ -113,12 +125,21 @@ module TeamMembers
 
       filter_params = uploads_filter_params
 
-      @uploads = @uploads.where(added_by: filter_params[:added]) if filter_params[:added].in?(['User', 'TeamMember'])
-      @uploads = @uploads.where(added_by_id: current_team_member.id) if filter_params[:added] == 'You'
-      @uploads = @uploads.where(upload_files: { content_type: 'application/pdf' }) if filter_params[:type] == 'PDF'
-      @uploads = @uploads.where(upload_files: { content_type: ['image/jpeg', 'image/png'] }) if filter_params[:type] == 'Images'
-      @uploads = @uploads.where(visible_to_user: true) if filter_params[:visible] == 'visible'
-      @uploads = @uploads.where(visible_to_user: false) if filter_params[:visible] == 'invisible'
+      if filter_params[:added].in?(['User', 'TeamMember'])
+        @uploads = @uploads.where(added_by: filter_params[:added])
+      elsif filter_params[:added] == 'You'
+        @uploads = @uploads.where(added_by_id: current_team_member.id)
+      end
+      if filter_params[:type] == 'PDF'
+        @uploads = @uploads.where(upload_files: {content_type: 'application/pdf'})
+      elsif filter_params[:type] == 'Images'
+        @uploads = @uploads.where(upload_files: {content_type: ['image/jpeg', 'image/png']})
+      end
+      if filter_params[:visible] == 'visible'
+        @uploads = @uploads.where(visible_to_user: true)
+      elsif filter_params[:visible] == 'invisible'
+        @uploads = @uploads.where(visible_to_user: false)
+      end
 
       @uploads
     end
@@ -140,14 +161,17 @@ module TeamMembers
       file_created_date = upload.created_at
 
       upload.upload_activity_logs.each do |ual|
-        ual.update!(user_full_name: user_full_name,
-                    upload_file_name: upload_file_name,
-                    file_created_date: file_created_date)
+        ual.update!(
+          user_full_name: user_full_name,
+          upload_file_name: upload_file_name,
+          file_created_date: file_created_date,
+        )
       end
     end
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user, :parent_folder_id)
+      params.require(:upload)
+        .permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user, :parent_folder_id)
     end
 
     def uploads_filter_params
@@ -155,7 +179,8 @@ module TeamMembers
     end
 
     def user
-      @user = User.includes(:uploads).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.includes(:uploads)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def upload
@@ -176,19 +201,19 @@ module TeamMembers
         added_by_id: current_team_member.id,
         status: 'approved',
         approved_by: current_team_member.full_name,
-        approved_at: Time.now
+        approved_at: Time.now,
       )
     end
 
     def new_upload_file_resources
-      {
-        content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
-        data: if upload_params[:cached_file]
-                encode(upload_params[:cached_file])
-              elsif upload_params[:file]
-                upload_params[:file].read
-              end
-      }
+      content_type = upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil
+      data = if upload_params[:cached_file]
+        encode(upload_params[:cached_file])
+      elsif upload_params[:file]
+        upload_params[:file].read
+      end
+
+      {content_type: content_type, data: data}
     end
 
     def new_upload_file(upload)
@@ -196,7 +221,7 @@ module TeamMembers
         name: upload_params[:name],
         upload: upload,
         content_type: new_upload_file_resources[:content_type],
-        data: new_upload_file_resources[:data]
+        data: new_upload_file_resources[:data],
       )
     end
 
@@ -205,7 +230,7 @@ module TeamMembers
         user: @user,
         team_member: current_team_member,
         upload: upload,
-        message: "#{current_team_member.full_name} added a new upload for you"
+        message: "#{current_team_member.full_name} added a new upload for you",
       )
     end
 
@@ -231,18 +256,18 @@ module TeamMembers
 
     def handle_check_file_size_result
       if check_file_size == 'exceeds individual file size'
-        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV.fetch('MAX_FILE_SIZE'))}"
         render 'new', status: :unprocessable_entity
       elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
-                         It\'s recommended to create space by removing older files."
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))} per person.
+                         It's recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
       end
     end
 
     def check_file_size
-      max_file_size = eval(ENV['MAX_FILE_SIZE'])
-      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
+      max_file_size = eval(ENV.fetch('MAX_FILE_SIZE'))
+      total_max_file_size = eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
@@ -267,8 +292,8 @@ module TeamMembers
     end
 
     def log_uploads_activity(activity_type)
-      upload_activity_log = current_team_member.upload_activity_logs.find_or_initialize_by(upload_id: uploads_filter_params[:id],
-                                                                                           activity_type: activity_type)
+      upload_activity_log = current_team_member.upload_activity_logs
+        .find_or_initialize_by(upload_id: uploads_filter_params[:id], activity_type: activity_type)
 
       if upload_activity_log.new_record?
         upload_activity_log.activity_type = activity_type

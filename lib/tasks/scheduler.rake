@@ -6,10 +6,11 @@ namespace :users do
 
   desc 'This task is used to send users email reminders'
   task send_reminder_email: :environment do
-    User.not_assessed_today.each | user |
+    User.not_assessed_today.each |user| do
       if user.notifications_enabled
         AdminMailer.reminder_email(user).deliver_now
       end
+    end
   end
 end
 
@@ -29,7 +30,7 @@ namespace :achievements do
       ends_at: end_date,
       bronze_count: 10,
       silver_count: 20,
-      gold_count: count
+      gold_count: count,
     )
 
     Achievement.create!(
@@ -40,7 +41,7 @@ namespace :achievements do
       ends_at: end_date,
       bronze_count: 10,
       silver_count: 20,
-      gold_count: count
+      gold_count: count,
     )
 
     Achievement.create!(
@@ -51,7 +52,7 @@ namespace :achievements do
       ends_at: end_date,
       bronze_count: 10,
       silver_count: 20,
-      gold_count: count
+      gold_count: count,
     )
 
     Achievement.create!(
@@ -62,7 +63,7 @@ namespace :achievements do
       ends_at: end_date,
       bronze_count: 10,
       silver_count: 20,
-      gold_count: count
+      gold_count: count,
     )
   end
 

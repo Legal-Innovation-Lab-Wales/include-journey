@@ -17,31 +17,35 @@ module TeamMembers
     protected
 
     def resources
+      resources = current_team_member.diary_entries
+        .includes(:user, :diary_entry_view_logs)
+      
       if diary_entry_params[:feeling].present? || diary_entry_params[:viewed].present?
-        current_team_member.diary_entries.includes(:user, :diary_entry_view_logs)
-                           .joins(:user)
-                           .where(diary_entry_search(''), query_terms({}))
-                           .order(created_at: :desc)
-      else
-        current_team_member.diary_entries.includes(:user, :diary_entry_view_logs)
-                           .order(created_at: :desc)
+        resources = resources.joins(:user)
+          .where(diary_entry_search(''), query_terms({}))
       end
+      resources.order(created_at: :desc)
     end
 
     def search
-      current_team_member.diary_entries.includes(:user, :diary_entry_view_logs)
-                         .joins(:user)
-                         .where(diary_entry_search("(#{user_search})"), query_terms(wildcard_query))
-                         .order(created_at: :desc)
+      current_team_member.diary_entries
+        .includes(:user, :diary_entry_view_logs)
+        .joins(:user)
+        .where(diary_entry_search("(#{user_search})"), query_terms(wildcard_query))
+        .order(created_at: :desc)
     end
 
     private
 
     def diary_entry
-      @diary_entry = current_team_member.diary_entries.includes(:user).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @diary_entry = current_team_member.diary_entries
+        .includes(:user)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: diary_entries_path,
-                    alert: "That diary entry doesn't exist or you do not have permission to view it")
+      redirect_back(
+        fallback_location: diary_entries_path,
+        alert: "That diary entry doesn't exist or you do not have permission to view it",
+      )
     end
 
     def log_view
@@ -62,8 +66,11 @@ module TeamMembers
     end
 
     def query_terms(query)
-      query = query.merge({ feeling: diary_entry_params[:feeling] }) if diary_entry_params[:feeling].present?
-      query
+      if diary_entry_params[:feeling].present?
+        query.merge({feeling: diary_entry_params[:feeling]})
+      else
+        query
+      end
     end
 
     def diary_entry_search(search)

@@ -16,7 +16,7 @@ if Config::SURVEY_RESPONSES
         SurveyComment.create!(
           text: Faker::Movies::HitchhikersGuideToTheGalaxy.quote,
           survey_comment_section: comment_section,
-          survey_response: response
+          survey_response: response,
         )
       end
     end

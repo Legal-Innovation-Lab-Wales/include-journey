@@ -12,7 +12,7 @@ if UserProfileViewLog.count.zero?
         user: user,
         created_at: created_at,
         updated_at: updated_at,
-        view_count: view_count
+        view_count: view_count,
       )
     end
   end

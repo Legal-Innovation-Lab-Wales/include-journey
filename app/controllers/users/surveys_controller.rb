@@ -33,29 +33,37 @@ module Users
         add_breadcrumb(@survey.name, nil, 'fas fa-clipboard-list')
         flash.now[:alert] = 'Failed to save: Please only use standard characters and punctuation'
         render 'show', status: :unprocessable_entity
-      else
-        if params[:partial].present? && params[:partial] == true
-          respond_to { |format| format.json { render json: @survey_response.as_json, status: :ok } }
-        else
-          mark_submitted
+      elsif params[:partial].present? && params[:partial] == 'true'
+        respond_to do |format|
+          format.json { render json: @survey_response.as_json, status: :ok }
         end
+      else
+        mark_submitted
       end
     end
 
     private
 
     def survey
-      @survey = Survey.includes(:survey_sections).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
-      @survey_sections = @survey.survey_sections.includes(:survey_questions, :survey_comment_sections).order(order: :asc)
-      @survey_response = SurveyResponse.find_or_create_by!(user: current_user, survey: @survey)
+      @survey = Survey.includes(:survey_sections)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @survey_sections = @survey.survey_sections
+        .includes(:survey_questions, :survey_comment_sections)
+        .order(order: :asc)
+      @survey_response = SurveyResponse.find_or_create_by!(
+        user: current_user,
+        survey: @survey,
+      )
     end
 
     def update_answers
       return unless params[:question].present?
 
       params[:question].each do |question|
-        answer = SurveyAnswer.find_or_create_by(survey_response: @survey_response,
-                                                survey_question: SurveyQuestion.find(question[0]))
+        answer = SurveyAnswer.find_or_create_by(
+          survey_response: @survey_response,
+          survey_question: SurveyQuestion.find(question[0]),
+        )
         unless answer.update(answer: question[1])
           @errors = true
         end
@@ -66,8 +74,10 @@ module Users
       return unless params[:comment_section].present?
 
       params[:comment_section].each do |comment_section|
-        comment = SurveyComment.find_or_create_by(survey_response: @survey_response,
-                                                  survey_comment_section: SurveyCommentSection.find(comment_section[0]))
+        comment = SurveyComment.find_or_create_by(
+          survey_response: @survey_response,
+          survey_comment_section: SurveyCommentSection.find(comment_section[0]),
+        )
         unless comment.update(text: comment_section[1])
           @errors = true
         end
@@ -85,8 +95,10 @@ module Users
     def mark_submitted
       @survey_response.update(submitted_at: DateTime.now)
 
-      redirect_to authenticated_user_root_path,
-                  flash: { success: "Thank You! (#{@survey.name}) was successfully submitted." }
+      redirect_to(
+        authenticated_user_root_path,
+        flash: {success: "Thank You! (#{@survey.name}) was successfully submitted."},
+      )
     end
 
     def set_breadcrumbs

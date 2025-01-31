@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -16,13 +16,13 @@ Rails.application.configure do
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+  if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      'Cache-Control' => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -38,7 +38,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
 
   config.action_mailer.delivery_method = :smtp
 
@@ -49,26 +49,26 @@ Rails.application.configure do
   if ENV['ORGANISATION_NAME'] == 'include-journey'
     config.action_mailer.smtp_settings = {
       user_name: 'apikey',
-      password: ENV['SENDGRID_API_KEY'],
+      password: ENV.fetch('SENDGRID_API_KEY'),
       domain: 'include-journey-demo.legaltech.wales',
       address: 'smtp.sendgrid.net',
       port: 587,
       authentication: :plain,
-      enable_starttls_auto: true
+      enable_starttls_auto: true,
     }
   elsif ENV['ORGANISATION_NAME'] == 'wallich-journey'
     config.action_mailer.smtp_settings = {
       user_name: 'apikey',
-      password: ENV['SENDGRID_API_KEY'],
+      password: ENV.fetch('SENDGRID_API_KEY'),
       domain: 'wallich-journey-demo.legaltech.wales',
       address: 'smtp.sendgrid.net',
       port: 587,
       authentication: :plain,
-      enable_starttls_auto: true
+      enable_starttls_auto: true,
     }
   end
 
-  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@\n–:— ]*\z}
+  config.regex_text_field = %r{\A[a-zA-Z0-9_!?,"'’+\-.()\r\n/&@–:— ]*\z}
   config.regex_name = %r{\A[a-zA-Z0-9'\-._()/, ]*\z}
   config.regex_file_name = /\A[a-zA-Z0-9\s_()-]+(\.(jpg|jpeg|png|pdf))?\z/i
   config.regex_telephone = /\A[0-9+]*\z/
@@ -79,7 +79,7 @@ Rails.application.configure do
 
   config.text_field_error = 'Please only use standard characters and punctuation'
   config.name_error = 'Please only use alphanumeric characters'
-  config.file_name_error = 'Please only use alphanumeric characters, spaces, underscores, and hyphens. 
+  config.file_name_error = 'Please only use alphanumeric characters, spaces, underscores, and hyphens.
                             Supported formats are JPEG, PNG, and PDF.'
   config.telephone_error = 'Please enter a valid telephone number'
   config.website_error = 'Please enter a valid website address'

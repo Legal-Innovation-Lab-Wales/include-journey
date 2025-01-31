@@ -17,7 +17,9 @@ module TeamMembers
     def show
       add_breadcrumb('Occupational Therapist Assessments', occupational_therapist_assessments_path, 'fas fa-list')
       add_breadcrumb('This Occupational Therapist Assessment')
-      @occupational_therapist_assessment = OccupationalTherapistAssessment.includes(:user, :team_member).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @occupational_therapist_assessment = OccupationalTherapistAssessment
+        .includes(:user, :team_member)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
 
       render 'show'
     end
@@ -45,7 +47,7 @@ module TeamMembers
         else
           @occupational_therapist_assessment.ota_entries.new(
             occupational_therapist_metric: ot_metric(metric.name),
-            occupational_therapist_score: ot_score(value)
+            occupational_therapist_score: ot_score(value),
           )
         end
       end
@@ -54,16 +56,14 @@ module TeamMembers
         # If there are errors, render the form with validation errors
         flash[:error] = 'You submitted an incomplete form!'
         render :new, status: :unprocessable_entity
-      else
+      elsif @occupational_therapist_assessment.save
         # If no errors, try to save the assessment
-        if @occupational_therapist_assessment.save
-          flash[:success] = 'Occupational Therapist Assessment Successful!'
-          redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
-        else
-          # If there are errors during save, render the form with errors
-          flash[:error] = 'Occupational therapist assessment could not be created.'
-          render :new, status: :unprocessable_entity
-        end
+        flash[:success] = 'Occupational Therapist Assessment Successful!'
+        redirect_to occupational_therapist_assessment_path(@occupational_therapist_assessment)
+      else
+        # If there are errors during save, render the form with errors
+        flash[:error] = 'Occupational therapist assessment could not be created.'
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -79,54 +79,73 @@ module TeamMembers
 
     def search
       @occupational_therapist_assessments.where(user_search, wildcard_query)
-                                         .order(created_at: :desc)
+        .order(created_at: :desc)
     end
 
     private
 
     def occupational_therapist_assessment
-      @occupational_therapist_assessment = OccupationTherapistAssessment.includes(:user, :team_member)
-                                                                        .find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @occupational_therapist_assessment = OccupationTherapistAssessment
+        .includes(:user, :team_member)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     end
 
     def occupational_therapist_assessments
       @occupational_therapist_assessments =
         if @team_member.present?
-          @team_member.occupational_therapist_assessments.joins(:user).where({"users.deleted": false}).includes(:user, :ota_entries)
+          @team_member.occupational_therapist_assessments
+            .joins(:user)
+            .where({'users.deleted': false})
+            .includes(:user, :ota_entries)
         elsif @user.present?
-          @user.occupational_therapist_assessments.includes(:team_member, :ota_entries)
+          @user.occupational_therapist_assessments
+            .includes(:team_member, :ota_entries)
         else
-          OccupationalTherapistAssessment.joins(:user).where({"users.deleted": false}).includes(:user, :team_member, :ota_entries)
+          OccupationalTherapistAssessment
+            .joins(:user)
+            .where({'users.deleted': false})
+            .includes(:user, :team_member, :ota_entries)
         end
     end
 
     def occupational_therapist_metrics
-      @occupational_therapist_metrics = OccupationalTherapistMetric.all.order(:created_at)
+      @occupational_therapist_metrics = OccupationalTherapistMetric.all
+        .order(:created_at)
     end
 
     def occupational_therapist_scores
-      @occupational_therapist_scores = OccupationalTherapistScore.all.order(:created_at)
+      @occupational_therapist_scores = OccupationalTherapistScore.all
+        .order(:created_at)
     end
 
     def user
       return unless params[:user_id].present?
 
-      @user = User.includes(:occupational_therapist_assessments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.includes(:occupational_therapist_assessments)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def team_member
       return unless params[:team_member_id].present?
 
-      @team_member = TeamMember.includes(:occupational_therapist_assessments).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:team_member_id]))
+      @team_member = TeamMember.includes(:occupational_therapist_assessments)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id]))
     end
 
     def ota_params
-      params.require(:occupational_therapist_assessment).permit(@occupational_therapist_metrics.map { |metric| "ot_metric_#{metric.id}" })
+      metric_keys = @occupational_therapist_metrics.map do |metric|
+        "ot_metric_#{metric.id}"
+      end
+      params.require(:occupational_therapist_assessment)
+        .permit(metric_keys)
     end
 
     def ota_metric_values_in_params
       (1..occupational_therapist_metrics.count).each do |i|
-        instance_variable_set("@ot_metric_#{i}_value", params.dig(:occupational_therapist_assessment, "ot_metric_#{i}"))
+        instance_variable_set(
+          "@ot_metric_#{i}_value",
+          params.dig(:occupational_therapist_assessment, "ot_metric_#{i}"),
+        )
       end
     end
 
@@ -155,12 +174,17 @@ module TeamMembers
     end
 
     def subheading_stats
-      @count_in_last_week = @resources.where('occupational_therapist_assessments.created_at >= ?', 1.week.ago).size
-      @count_in_last_month = @resources.where('occupational_therapist_assessments.created_at >= ?', 1.month.ago).size
-      return unless @user
-
-      @count_by_team_member = @resources.count { |ota| ota.team_member_id.present? }
-      @count_by_user = @resources.count { |ota| ota.team_member_id.nil? }
+      @count_in_last_week = @resources
+        .where('occupational_therapist_assessments.created_at >= ?', 1.week.ago)
+        .size
+      @count_in_last_month = @resources
+        .where('occupational_therapist_assessments.created_at >= ?', 1.month.ago)
+        .size
+      
+      if @user
+        @count_by_team_member = @resources.count { |ota| ota.team_member_id.present? }
+        @count_by_user = @resources.count { |ota| ota.team_member_id.nil? }
+      end
     end
 
     def check_organization

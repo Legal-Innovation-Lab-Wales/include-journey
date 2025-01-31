@@ -11,17 +11,19 @@ module TeamMembers
     # PUT /wellbeing_score_values/:id
     def update
       @score_values = WellbeingScoreValue.find(params[:id])
-      if @score_values.update(wellbeing_score_params)
-        redirect_to wellbeing_score_values_path, flash: { success: "Wellbeing Score values updated"}
+      flash = if @score_values.update(wellbeing_score_params)
+        {success: 'Wellbeing Score values updated'}
       else
-        redirect_to wellbeing_score_values_path, flash: { error: "Wellbeing score values not updated. Please only use characters A-Z"}
+        {error: 'Wellbeing score values not updated. Please only use characters A-Z'}
       end
+      redirect_to(wellbeing_score_values_path, flash: flash)
     end
 
     private
 
     def wellbeing_score_params
-      params.require(:wellbeing_score_value).permit(:name)
+      params.require(:wellbeing_score_value)
+        .permit(:name)
     end
 
     def set_breadcrumbs

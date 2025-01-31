@@ -13,28 +13,6 @@ module Users
       render 'upcoming'
     end
 
-    # POST /appointments
-    def create
-
-      @appointment = Appointment.new(
-        where: appointment_params[:where], 
-        who_with: appointment_params[:who_with], 
-        what: appointment_params[:what], 
-        start: appointment_params[:start],
-        end: appointment_params[:end],
-        user: current_user
-      )
-
-      if @appointment.save
-        session.delete(:appointment_params)
-        redirect_to upcoming_appointments_path, flash: { success: 'Appointment created' }
-      else
-        add_breadcrumb('New Appointment', nil, 'fas fa-plus circle')
-        render 'new'
-      end
-
-    end
-
     # GET /appointments/new
     def new
       add_breadcrumb('New Appointment', nil, 'fas fa-plus-circle')
@@ -49,10 +27,36 @@ module Users
       render 'edit'
     end
 
+    # POST /appointments
+    def create
+      @appointment = Appointment.new(
+        where: appointment_params[:where],
+        who_with: appointment_params[:who_with],
+        what: appointment_params[:what],
+        start: appointment_params[:start],
+        end: appointment_params[:end],
+        user: current_user,
+      )
+
+      if @appointment.save
+        session.delete(:appointment_params)
+        redirect_to(
+          upcoming_appointments_path,
+          flash: {success: 'Appointment created'},
+        )
+      else
+        add_breadcrumb('New Appointment', nil, 'fas fa-plus circle')
+        render 'new'
+      end
+    end
+
     # PUT /appointments/:id
     def update
       if @appointment.update(appointment_params)
-        redirect_to upcoming_appointments_path, flash: { success: 'Appointment updated' }
+        redirect_to(
+          upcoming_appointments_path,
+          flash: {success: 'Appointment updated'},
+        )
       else
         add_breadcrumb('Edit Appointment', nil, 'fas fa-edit')
         render 'edit'
@@ -62,16 +66,25 @@ module Users
     # DELETE /appointments/:id
     def destroy
       if @appointment.destroy!
-        redirect_to upcoming_appointments_path, flash: { success: 'Appointment deleted' }
+        redirect_to(
+          upcoming_appointments_path,
+          flash: {success: 'Appointment deleted'},
+        )
       else
-        redirect_to upcoming_appointments_path(@appointment),
-                    flash: { error: 'Appointment could not be deleted. Please try again.' }
+        redirect_to(
+          upcoming_appointments_path(@appointment),
+          flash: {error: 'Appointment could not be deleted. Please try again.'},
+        )
       end
     end
 
     # PUT /appointment/:id
     def toggle_attended
-      @appointment.update(attended: !@appointment.attended?) ? success(@appointment.attended?) : failure
+      if @appointment.update(attended: !@appointment.attended?)
+        success(@appointment.attended?)
+      else
+        failure
+      end
     end
 
     protected
@@ -93,7 +106,10 @@ module Users
     def appointment
       @appointment = current_user.appointments.where('team_member_id is null').find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to appointments_path, flash: { error: 'No such appointment could be found' }
+      redirect_to(
+        appointments_path,
+        flash: {error: 'No such appointment could be found'},
+      )
     end
 
     def appointment_search
@@ -111,12 +127,18 @@ module Users
     end
 
     def failure
-      redirect_to appointments_path, flash: { error: "#{@appointment.id} attended status could not be changed" }
+      redirect_to(
+        appointments_path,
+        flash: {error: "#{@appointment.id} attended status could not be changed"},
+      )
     end
 
     def success(status)
-      redirect_back(fallback_location: appointments_path,
-                    flash: { success: "#{status ? 'Congrats! ' : ''}Appointment has been marked as #{status ? 'now' : 'no longer'} attended" })
+      message = "#{status ? 'Congrats! ' : ''}Appointment has been marked as #{status ? 'now' : 'no longer'} attended"
+      redirect_back(
+        fallback_location: appointments_path,
+        flash: {success: message},
+      )
     end
 
     def validate_dates
@@ -127,7 +149,10 @@ module Users
 
       session[:appointment_params] = appointment_params
 
-      redirect_back(fallback_location: new_appointment_path, flash: { error: 'End date cannot be before start date' })
+      redirect_back(
+        fallback_location: new_appointment_path,
+        flash: {error: 'End date cannot be before start date'},
+      )
     end
 
     def subheading_stats

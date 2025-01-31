@@ -7,7 +7,7 @@ class Notification < ApplicationRecord
   CHECKUP_TYPES = [
     'accommodation_status',
     'wellbeing_assessment',
-    nil
+    nil,
   ].freeze
 
   TIME_UNITS = [
@@ -18,7 +18,7 @@ class Notification < ApplicationRecord
     'weeks',
     'months',
     'years',
-    nil
+    nil,
   ].freeze
 
   def self.create_for_all_teammembers
@@ -35,16 +35,18 @@ class Notification < ApplicationRecord
       frequency = notification_frequency(team_member)[type]
       next unless user.created_at.to_date == frequency || should_create_notification?(user, type, frequency)
 
-      Notification.create!(team_member: team_member,
-                           message: notification_message[type],
-                           user: user)
+      Notification.create!(
+        team_member: team_member,
+        message: notification_message[type],
+        user: user,
+      )
     end
   end
 
   def self.should_create_notification?(user, type, frequency)
     user_notifications = Notification.where(
       user_id: user.id,
-      message: notification_message[type]
+      message: notification_message[type],
     )
 
     user.created_at.to_date < frequency && (user_notifications.empty? || user_notifications.last.created_at.to_date == frequency)
@@ -53,14 +55,16 @@ class Notification < ApplicationRecord
   def self.notification_frequency(team_member)
     accommodation_status_freqency = team_member.team_member_notification_frequency.accommodation_status
     wellbeing_assessment_frequency = team_member.team_member_notification_frequency.wellbeing_assessment
-    { accommodation_status: convert_to_duration(accommodation_status_freqency).ago.to_date,
-      wellbeing_assessment: convert_to_duration(wellbeing_assessment_frequency).ago.to_date }
+    {
+      accommodation_status: convert_to_duration(accommodation_status_freqency).ago.to_date,
+      wellbeing_assessment: convert_to_duration(wellbeing_assessment_frequency).ago.to_date,
+    }
   end
 
   def self.notification_message
     {
       accommodation_status: 'Please check the accommodation status for:',
-      wellbeing_assessment: 'Please perform wellbeing assessment for:'
+      wellbeing_assessment: 'Please perform wellbeing assessment for:',
     }
   end
 
@@ -68,8 +72,15 @@ class Notification < ApplicationRecord
     quantity, unit = duration.split(' ')
     quantity = quantity.to_i
     unit = unit.singularize
-    unit_to_method = { 'second' => :seconds, 'minute' => :minutes, 'hour' => :hours,
-                       'day' => :days, 'week' => :weeks, 'month' => :months, 'year' => :years }
+    unit_to_method = {
+      'second' => :seconds,
+      'minute' => :minutes,
+      'hour' => :hours,
+      'day' => :days,
+      'week' => :weeks,
+      'month' => :months,
+      'year' => :years,
+    }
 
     duration_method = unit_to_method[unit] || :seconds
     quantity.send(duration_method)

@@ -5,7 +5,9 @@ class SurveyCommentSection < ApplicationRecord
 
   scope :invalid, -> { where.not("label <> ''") }
 
-  validates_presence_of :survey_section_id, :order, :total
-  validates_format_of :label, with: Rails.application.config.regex_text_field,
-                              message: Rails.application.config.text_field_error
+  validates :survey_section_id, :order, :total, presence: true
+  validates :label, format: {
+    with: Rails.application.config.regex_text_field,
+    message: Rails.application.config.text_field_error,
+  }
 end

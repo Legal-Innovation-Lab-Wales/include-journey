@@ -16,53 +16,59 @@ module Users
 
     # POST /goals
     def create
-
       @goal = Goal.new(
         user: current_user,
         goal: goal_params[:goal],
-        goal_type_id: goal_params[:goal_type_id] ? goal_params[:goal_type_id] : GoalType.first.id,
-        short_term: goal_params[:short_term]
+        goal_type_id: goal_params[:goal_type_id] || GoalType.first.id,
+        short_term: goal_params[:short_term],
       )
 
-      if @goal.save
-        redirect_to goals_path, flash: { success: 'Goal added' }
+      flash = if @goal.save
+        {success: 'Goal added'}
       else
-        redirect_to goals_path, flash: { error: Rails.application.config.text_field_error }
+        {error: Rails.application.config.text_field_error}
       end
-
+      redirect_to goals_path, flash: flash
     end
 
     # PUT /goals/:id/achieve
     def achieve
       if @goal.update!(achieved_on: Time.now)
-        redirect_to @goal.archived ? goals_archive_index_path : goals_path, flash: { congratulations: 'Well done!' }
+        redirect_to(
+          @goal.archived ? goals_archive_index_path : goals_path,
+          flash: {congratulations: 'Well done!'},
+        )
       else
-        redirect_to goals_path, flash: { error: 'Goal could not be marked as achieved. Please try again.' }
+        redirect_to(
+          goals_path,
+          flash: {error: 'Goal could not be marked as achieved. Please try again.'},
+        )
       end
     end
 
     # PUT /goals/:id/archive
     def archive
-      if @goal.update!(archived: !@goal.archived)
-        redirect_to goals_path, flash: { success: "Goal has been #{@goal.archived ? '' : 'un'}archived" }
+      flash = if @goal.update!(archived: !@goal.archived)
+        {success: "Goal has been #{@goal.archived ? '' : 'un'}archived"}
       else
-        redirect_to goals_path, flash: { error: 'Goal could not be archived' }
+        {error: 'Goal could not be archived'}
       end
+      redirect_to goals_path, flash: flash
     end
 
     # DELETE /goals/:id
     def destroy
       @goal.destroy
 
-      redirect_to goals_path, flash: { success: 'Goal has been deleted' }
+      redirect_to goals_path, flash: {success: 'Goal has been deleted'}
     end
 
     private
 
     def goal
-      @goal = current_user.goals.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @goal = current_user.goals.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_to goals_path, flash: { error: 'No such goal' }
+      redirect_to goals_path, flash: {error: 'No such goal'}
     end
 
     def goal_params

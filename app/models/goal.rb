@@ -10,8 +10,8 @@ class Goal < ApplicationRecord
   scope :archived, -> { where(archived: true) }
   scope :unarchived, -> { where(archived: false) }
 
-  validates_presence_of :user_id, :goal, :goal_type
-  validates_format_of :goal, with: Rails.application.config.regex_text_field
+  validates :user_id, :goal, :goal_type, presence: true
+  validates :goal, format: {with: Rails.application.config.regex_text_field}
 
   def achieved?
     achieved_on.present?
@@ -26,8 +26,10 @@ class Goal < ApplicationRecord
   private
 
   def update_cache
-    user.update!(last_goal_achieved_at: Date.today,
-                 goals_achieved_count: user.goals_achieved_count + 1,
-                 goals_achieved_this_month_count: user.goals_achieved_this_month_count + 1)
+    user.update!(
+      last_goal_achieved_at: Date.today,
+      goals_achieved_count: user.goals_achieved_count + 1,
+      goals_achieved_this_month_count: user.goals_achieved_this_month_count + 1,
+    )
   end
 end

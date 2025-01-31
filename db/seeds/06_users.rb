@@ -12,7 +12,7 @@ if User.count.zero?
       mobile_number: Faker::Number.leading_zero_number(digits: 11),
       terms: true,
       password: 'test1234',
-      current_sign_in_at: rand(1..100).days.ago
+      current_sign_in_at: rand(1..100).days.ago,
     )
     user.save!
   end

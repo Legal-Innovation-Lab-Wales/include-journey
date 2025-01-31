@@ -19,19 +19,26 @@ module TeamMembers
       wellbeing_assessment
       occupational_therapist_assessment if ENV['ORGANISATION_NAME'] == 'wallich-journey'
       @note = Note.new
-      @user_notes = @user.notes.includes(:team_member, :replaced_by).order('dated DESC')
-      @diary_entries = current_team_member.diary_entries.where(user: @user).includes(:diary_entry_view_logs)
+      @user_notes = @user.notes
+        .includes(:team_member, :replaced_by)
+        .order('dated DESC')
+      @diary_entries = current_team_member.diary_entries
+        .where(user: @user)
+        .includes(:diary_entry_view_logs)
       @unread_diary_entries = current_team_member.unread_diary_entries(@user)
       @appointments = @user.future_appointments.first(5) + @user.past_appointments.last(5)
-      @user_tags = @user.user_tags.order({ 'created_at': :desc })
+      @user_tags = @user.user_tags
+        .order(created_at: :desc)
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
       @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
-      @contact_logs = ContactLog.where('user_id': @user.id)
+      @contact_logs = ContactLog.where(user_id: @user.id)
       @summary_panel = @user.summary_panel
       @uploads = @user.uploads
       @new_folder = Folder.new
       has_goal_permissions
-      @has_folders = current_team_member.folders.where(parent_folder: nil).length > 0
+      @has_folders = current_team_member.folders
+        .where(parent_folder: nil)
+        .any?
 
       render 'show'
     end
@@ -40,75 +47,25 @@ module TeamMembers
     def pin
       verify_pin
       maximum = current_team_member.user_pins.maximum(:order)
-      @user_pin = current_team_member.user_pins.create!({ user: @user, order: maximum.present? ? maximum.next : 1 })
+      @user_pin = current_team_member.user_pins
+        .create!(user: @user, order: maximum.present? ? maximum.next : 1)
 
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    notice: @user_pin ? message('has been pinned') : message('could not be pinned'))
+      redirect_back(
+        fallback_location: authenticated_team_member_root_path,
+        notice: @user_pin ? message('has been pinned') : message('could not be pinned'),
+      )
     end
 
-    # DELETE /users/:id/pin
-    def destroy
-      name = @user.full_name
-      @user.destroy!
-      redirect_to users_path, flash: { success: "#{name} was successfully deleted." }
-    end
-
-    # PUT /users/:id/unpin
-    def unpin
-      verify_unpin
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    notice: @user_pin.destroy! ? message('has been unpinned') : message('could not be unpinned'))
-    end
-
-    # PUT /users/:id/increment
-    def increment
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    notice: @user_pin.increment ? message('pin successfully moved') : message('pin could not be moved'))
-    end
-
-    # PUT /users/:id/decrement
-    def decrement
-      redirect_back(fallback_location: authenticated_team_member_root_path,
-                    notice: @user_pin.decrement ? message('pin successfully moved') : message('pin could not be moved'))
-    end
-
-    # GET /users/:user_id/wba_history
-    def wba_history
-      respond_to do |format|
-        format.json { render json: @user.wellbeing_assessment_history.as_json, status: :ok }
-      end
+    def new
+      add_breadcrumb('Add User')
+      @user = User.new
     end
 
     # GET /users/:user_id/edit
     def edit
       add_breadcrumb(user.full_name, user_path(user))
-      add_breadcrumb("Edit Details", nil, 'fas fa-edit')
+      add_breadcrumb('Edit Details', nil, 'fas fa-edit')
       render 'edit'
-    end
-
-    # PUT /users/:user_id
-    def update
-      if user_params[:summary_panel].present?
-        @user.update(summary_panel: user_params[:summary_panel])
-      else
-        @user.update(user_params)
-      end
-
-      redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully updated." }
-    end
-
-    def suspend
-      user = User.find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
-      user.suspended_at = user.suspended ? nil : DateTime.now
-      user.suspended = !user.suspended
-      user.save!
-
-      redirect_to user_path(@user), flash: { success: "#{@user.full_name} was successfully #{user.suspended ? "suspended" : "reinstated"}." }
-    end
-
-    def new
-      add_breadcrumb("Add User")
-      @user = User.new
     end
 
     def create
@@ -125,29 +82,111 @@ module TeamMembers
         disabilities: user_params[:disabilities],
         address: user_params[:address],
         pronouns: user_params[:pronouns],
-        terms: true
-        )
+        terms: true,
+      )
       @user.password = password
-      if !@user.validate
-        add_breadcrumb("Add User")
+      unless @user.validate
+        add_breadcrumb('Add User')
         return render 'new', status: :unprocessable_entity
-      end 
+      end
       @user.approved = true
       @user.save!
       @user.assign_team_member(current_team_member.id)
-      flash[:success] = 'User successfully created' 
+      flash[:success] = 'User successfully created'
       redirect_to users_path
     end
 
+    # PUT /users/:user_id
+    def update
+      if user_params[:summary_panel].present?
+        @user.update(summary_panel: user_params[:summary_panel])
+      else
+        @user.update(user_params)
+      end
+
+      redirect_to(
+        user_path(@user),
+        flash: {success: "#{@user.full_name} was successfully updated."},
+      )
+    end
+
+    # DELETE /users/:id/pin
+    def destroy
+      name = @user.full_name
+      @user.destroy!
+      redirect_to users_path, flash: {success: "#{name} was successfully deleted."}
+    end
+
+    # PUT /users/:id/unpin
+    def unpin
+      verify_unpin
+      notice = message(if @user_pin.destroy!
+        'has been unpinned'
+      else
+        'could not be unpinned'
+      end)
+
+      redirect_back(
+        fallback_location: authenticated_team_member_root_path,
+        notice: notice,
+      )
+    end
+
+    # PUT /users/:id/increment
+    def increment
+      notice = message(if @user_pin.increment
+        'pin successfully moved'
+      else
+        'pin could not be moved'
+      end)
+
+      redirect_back(
+        fallback_location: authenticated_team_member_root_path,
+        notice: notice,
+      )
+    end
+
+    # PUT /users/:id/decrement
+    def decrement
+      notice = message(if @user_pin.decrement
+        'pin successfully moved'
+      else
+        'pin could not be moved'
+      end)
+
+      redirect_back(
+        fallback_location: authenticated_team_member_root_path,
+        notice: notice,
+      )
+    end
+
+    # GET /users/:user_id/wba_history
+    def wba_history
+      respond_to do |format|
+        format.json { render json: @user.wellbeing_assessment_history.as_json, status: :ok }
+      end
+    end
+
+    def suspend
+      user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      user.suspended_at = user.suspended ? nil : DateTime.now
+      user.suspended = !user.suspended
+      user.save!
+
+      redirect_to(
+        user_path(@user),
+        flash: {success: "#{@user.full_name} was successfully #{user.suspended ? 'suspended' : 'reinstated'}."},
+      )
+    end
+
     protected
+
     def goal_permissions
       @user.goal_permissions.where(team_member_id: current_team_member.id)
     end
 
     def has_goal_permissions
-      if goal_permissions.length < 1
-        return false
-      end
+      return false if goal_permissions.length < 1
 
       permission = goal_permissions.first
       @goals = user.goals.where(archived: false)
@@ -155,31 +194,40 @@ module TeamMembers
       @has_long_term_permissions = permission.long_term
 
       @has_user_goals_permission = @has_long_term_permissions || @has_short_term_permissions
-      return @has_user_goals_permission
+      @has_user_goals_permission
     end
 
     def resources
-      case @sort
+      @users = case @sort
       when 'average'
-        @users = team_member_users.approved.last_wellbeing.where.not(id: @pinned_users).order("#{@sort}": @direction)
+        team_member_users.approved
+          .last_wellbeing
+          .where.not(id: @pinned_users)
+          .order(@sort => @direction)
       when 'first_name'
         # switch direction for alphabet sort
         @direction_flipped = @direction == 'desc' ? 'asc' : 'desc'
-        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
-                     .where.not(id: @pinned_users)
-                     .order({ "#{@sort}": @direction_flipped, "last_name": @direction_flipped })
+        team_member_users.approved
+          .includes(:wellbeing_assessments, :user_tags)
+          .where.not(id: @pinned_users)
+          .order(@sort => @direction_flipped, last_name: @direction_flipped)
       else
-        @users = team_member_users.approved.includes(:wellbeing_assessments, :user_tags)
-                     .where.not(id: @pinned_users)
-                     .order({ "#{@sort}": @direction })
+        team_member_users.approved
+          .includes(:wellbeing_assessments, :user_tags)
+          .where.not(id: @pinned_users)
+          .order(@sort => @direction)
       end
-      @users = users_params[:tag].present? ? @users.joins(:user_tags).where('user_tags.tag_id': users_params[:tag]) : @users
-      assigned = users_params[:assigned]
-      if assigned.present? && assigned == 'true'
-        @users.joins(:assignments).where('assignments.team_member': current_team_member)
-      else
-        @users
+
+      if users_params[:tag].present?
+        @users = @users.joins(:user_tags)
+          .where('user_tags.tag_id': users_params[:tag])
       end
+      if users_params[:assigned] == 'true'
+        @users = @users.joins(:assignments)
+          .where('assignments.team_member': current_team_member)
+      end
+
+      @users
     end
 
     def resources_per_page
@@ -195,11 +243,15 @@ module TeamMembers
     end
 
     def sort
-      @sort = users_params[:sort] ? users_params[:sort] : 'created_at'
+      @sort = users_params[:sort] || 'created_at'
     end
 
     def direction
-      @direction = %w[asc desc].include?(users_params[:direction]) ? users_params[:direction] : 'asc'
+      @direction = if ['asc', 'desc'].include?(users_params[:direction])
+        users_params[:direction]
+      else
+        'asc'
+      end
     end
 
     private
@@ -221,15 +273,23 @@ module TeamMembers
     end
 
     def user
-      @user = team_member_users.includes(:notes).find(ActiveRecord::Base::sanitize_sql_for_conditions(params[:id]))
+      @user = team_member_users.includes(:notes)
+        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
     rescue ActiveRecord::RecordNotFound
-      redirect_back(fallback_location: users_path, flash: { error: 'User not found' })
+      redirect_back(
+        fallback_location: users_path,
+        flash: {error: 'User not found'},
+      )
     end
 
     def user_location
-      return @location = { 'city' => 'unknown' } if invalid_ip
+      return @location = {'city' => 'unknown'} if invalid_ip
 
-      @location = Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}" )).body) } rescue { 'city' => 'unknown' }
+      @location = begin
+        Timeout.timeout(5) { JSON.parse(Net::HTTP.get_response(URI("http://ip-api.com/json/#{@user.current_sign_in_ip}")).body) }
+      rescue StandardError
+        {'city' => 'unknown'}
+      end
     end
 
     def invalid_ip
@@ -275,7 +335,10 @@ module TeamMembers
     def verify_unpin
       return if @user_pin.present?
 
-      redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is not currently pinned'))
+      redirect_back(
+        fallback_location: authenticated_team_member_root_path,
+        alert: message('is not currently pinned'),
+      )
     end
 
     def subheading_stats
@@ -291,15 +354,18 @@ module TeamMembers
     end
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex,
-                                   :gender_identity, :religion, :ethnic_group, :disabilities,
-                                   :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
-                                   :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
-                                   :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel,
-                                   :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
-                                   :brief_physical_description, :priority_id, :local_authority_id,
-                                   :support_ended_date, :next_review_date, :support_ending_reason_id,
-                                   :referred_from_id, :support_started_date, :address)
+      params.require(:user)
+        .permit(
+          :first_name, :last_name, :pronouns, :date_of_birth, :email, :mobile_number, :sex,
+          :gender_identity, :religion, :ethnic_group, :disabilities,
+          :nomis_id, :pnc_no, :delius_no, :enrolled_at, :intervened_at,
+          :release_establishment, :probation_area, :local_authority, :pilot_completed_at,
+          :pilot_withdrawn_at, :withdrawn, :withdrawn_reason, :index_offence, :summary_panel,
+          :referral_date, :mam_date, :accommodation_type_id, :housing_provider_id,
+          :brief_physical_description, :priority_id, :local_authority_id,
+          :support_ended_date, :next_review_date, :support_ending_reason_id,
+          :referred_from_id, :support_started_date, :address,
+        )
     end
 
     def users_params
@@ -312,9 +378,9 @@ module TeamMembers
     end
 
     def wallich_protected
-      if ENV['ORGANISATION_NAME'] != 'wallich-journey'
-        redirect_back(fallback_location: authenticated_team_member_root_path)
-      end
+      return unless ENV['ORGANISATION_NAME'] != 'wallich-journey'
+
+      redirect_back(fallback_location: authenticated_team_member_root_path)
     end
   end
 end

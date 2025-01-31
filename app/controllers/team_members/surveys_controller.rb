@@ -10,6 +10,12 @@ module TeamMembers
       render 'index'
     end
 
+    # GET /surveys/:survey_id
+    def show
+      add_breadcrumb(@survey.name)
+      render 'show'
+    end
+
     # GET /surveys/new
     def new
       add_breadcrumb('New Survey', nil, 'fas fa-plus-circle')
@@ -18,40 +24,37 @@ module TeamMembers
       render 'new'
     end
 
-    # POST /surveys
-    def create
-      @survey = Survey.new(
-        name: survey_params[:name],
-        start_date: survey_params[:start_date],
-        end_date: survey_params[:end_date], 
-        team_member: current_team_member
-      )
-      if @survey.save
-        redirect_to surveys_path, flash: { success: "#{@survey.name} was successfully created." }
-      else
-        add_breadcrumb('New Survey', nil, 'fas fa-plus-circle')
-        render 'new'
-      end
-    end
-
-    # GET /surveys/:survey_id
-    def show
-      add_breadcrumb(@survey.name)
-      render 'show'
-    end
-
     # GET /surveys/:survey_id/edit
     def edit
       add_breadcrumb("Edit #{@survey.name}", nil, 'fas fa-edit')
       render 'edit'
     end
 
+    # POST /surveys
+    def create
+      @survey = Survey.new(
+        name: survey_params[:name],
+        start_date: survey_params[:start_date],
+        end_date: survey_params[:end_date],
+        team_member: current_team_member,
+      )
+      if @survey.save
+        redirect_to(
+          surveys_path,
+          flash: {success: "#{@survey.name} was successfully created."},
+        )
+      else
+        add_breadcrumb('New Survey', nil, 'fas fa-plus-circle')
+        render 'new'
+      end
+    end
+
     # PUT /surveys/:survey_id
     def update
       @survey.update!(survey_params)
 
-        respond_to do |format|
-          format.json { render json: @survey.as_json, status: :ok }
+      respond_to do |format|
+        format.json { render json: @survey.as_json, status: :ok }
       end
     end
 
@@ -81,34 +84,38 @@ module TeamMembers
     def destroy
       @survey.destroy!
 
-      redirect_to surveys_path, flash: { success: 'Survey removed' }
+      redirect_to surveys_path, flash: {success: 'Survey removed'}
     end
 
     protected
 
     def resources
-      @surveys = Survey.includes(:team_member,
-                                 :survey_sections,
-                                 :survey_questions,
-                                 :survey_comment_sections,
-                                 :survey_responses)
-                       .order(sort)
+      @surveys = Survey.includes(
+        :team_member,
+        :survey_sections,
+        :survey_questions,
+        :survey_comment_sections,
+        :survey_responses,
+      )
+        .order(sort)
     end
 
     def search
-      @surveys = Survey.includes(:team_member,
-                                 :survey_sections,
-                                 :survey_questions,
-                                 :survey_comment_sections,
-                                 :survey_responses)
-                       .joins(:team_member)
-                       .where(survey_search, wildcard_query)
-                       .order(sort)
+      @surveys = Survey.includes(
+        :team_member,
+        :survey_sections,
+        :survey_questions,
+        :survey_comment_sections,
+        :survey_responses,
+      )
+        .joins(:team_member)
+        .where(survey_search, wildcard_query)
+        .order(sort)
     end
 
     def sort
-      @sort = pagination_params[:sort].present? ? pagination_params[:sort] : 'end_date'
-      { "#{@sort}": @direction }
+      @sort = pagination_params[:sort].presence || 'end_date'
+      {@sort => @direction}
     end
 
     private
@@ -118,11 +125,13 @@ module TeamMembers
     end
 
     def survey_params
-      params.require(:survey).permit(:name, :start_date, :end_date)
+      params.require(:survey)
+        .permit(:name, :start_date, :end_date)
     end
 
     def reorder_params
-      params.require(:survey).permit(sections: [])
+      params.require(:survey)
+        .permit(sections: [])
     end
 
     def valid_survey?

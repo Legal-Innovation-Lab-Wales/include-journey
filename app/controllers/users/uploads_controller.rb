@@ -9,6 +9,12 @@ module Users
     before_action :upload, only: %i[update show destroy download_file]
     after_action :update_user_upload_notification_to_viewed, only: :show
 
+    def show
+      @upload_file = @upload.upload_file
+      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
+      add_breadcrumb(@upload_file.name.to_s, nil, icon)
+    end
+
     def new
       add_breadcrumb('Upload File', nil, 'fas fa-upload')
       @upload = Upload.new
@@ -21,11 +27,11 @@ module Users
       @upload_file.upload = @upload
 
       if check_file_size == 'exceeds individual file size'
-        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV['MAX_FILE_SIZE'])}"
+        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV.fetch('MAX_FILE_SIZE'))}"
         render 'new', status: :unprocessable_entity
       elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV['TOTAL_MAX_FILE_SIZE'])} per person.
-                         It\'s recommended to create space by removing older files."
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))} per person.
+                         It's recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
       elsif @upload.save && @upload_file.save
         email_team_members_about_upload(current_user, @upload_file)
@@ -34,12 +40,6 @@ module Users
       else
         handle_failed_upload_creation
       end
-    end
-
-    def show
-      @upload_file = @upload.upload_file
-      icon = @upload_file.content_type == 'application/pdf' ? 'fas fa-file-pdf' : 'fas fa-image'
-      add_breadcrumb(@upload_file.name.to_s, nil, icon)
     end
 
     def update
@@ -133,26 +133,30 @@ module Users
         visible_to_user: true,
         user: current_user,
         added_by: 'User',
-        added_by_id: current_user.id
+        added_by_id: current_user.id,
       )
     end
 
     def new_upload_file_resources
-      {
-        content_type: upload_params[:file].respond_to?(:content_type) ? upload_params[:file].content_type : nil,
-        data: if upload_params[:cached_file]
-                encode(upload_params[:cached_file])
-              elsif upload_params[:file]
-                upload_params[:file].read
-              end
-      }
+      content_type = if upload_params[:file].respond_to?(:content_type)
+        upload_params[:file].content_type
+      else
+        nil
+      end
+      data = if upload_params[:cached_file]
+        encode(upload_params[:cached_file])
+      elsif upload_params[:file]
+        upload_params[:file].read
+      end
+
+      {content_type: content_type, data: data}
     end
 
     def new_upload_file
       UploadFile.new(
         name: upload_params[:name],
         content_type: new_upload_file_resources[:content_type],
-        data: new_upload_file_resources[:data]
+        data: new_upload_file_resources[:data],
       )
     end
 
@@ -175,8 +179,8 @@ module Users
     end
 
     def check_file_size
-      max_file_size = eval(ENV['MAX_FILE_SIZE'])
-      total_max_file_size = eval(ENV['TOTAL_MAX_FILE_SIZE'])
+      max_file_size = eval(ENV.fetch('MAX_FILE_SIZE'))
+      total_max_file_size = eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size
@@ -194,11 +198,13 @@ module Users
     end
 
     def set_breadcrumbs
-      path = if session.key?(:custom_view)
-               action_name == 'index' ? nil : uploads_path(view: :list)
-             else
-               action_name == 'index' ? nil : uploads_path
-             end
+      path = if action_name == 'index'
+        nil
+      elsif session.key?(:custom_view)
+        uploads_path(view: :list)
+      else
+        uploads_path
+      end
       add_breadcrumb('My Files', path, 'fas fa-file')
     end
   end

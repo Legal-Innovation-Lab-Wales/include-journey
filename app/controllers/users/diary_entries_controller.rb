@@ -17,17 +17,18 @@ module Users
       @diary_entry = DiaryEntry.new(
         entry: diary_entry_params[:entry],
         feeling: diary_entry_params[:feeling],
-        user: current_user
+        user: current_user,
       )
 
       if @diary_entry.save
-        redirect_to new_diary_entry_permission_path(@diary_entry), 
-        flash: { success: 'New diary entry added' }
+        redirect_to(
+          new_diary_entry_permission_path(@diary_entry),
+          flash: {success: 'New diary entry added'},
+        )
       else
         add_breadcrumb('New Entry', nil, 'fas fa-plus-circle')
         render 'new'
       end
-
     end
 
     protected
@@ -42,8 +43,8 @@ module Users
 
     def search
       current_user.diary_entries
-                  .where('lower(entry) similar to lower(:query)', wildcard_query)
-                  .order(created_at: :desc)
+        .where('lower(entry) similar to lower(:query)', wildcard_query)
+        .order(created_at: :desc)
     end
 
     def subheading_stats
@@ -60,9 +61,10 @@ module Users
     end
 
     def set_breadcrumbs
-      path = nil
-      if action_name != 'index' && resources.present?
-        path = diary_entries_path
+      path = if action_name != 'index' && resources.present?
+        diary_entries_path
+      else
+        nil
       end
       add_breadcrumb('My Diary', path, 'fas fa-book')
     end

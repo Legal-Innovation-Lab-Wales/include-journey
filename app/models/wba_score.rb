@@ -10,11 +10,11 @@ class WbaScore < ApplicationRecord
     if existing_dataset.present?
       existing_dataset[:data] << point
     else
-      history[:datasets].push({ label: wellbeing_metric.name, data: [point] })
+      history[:datasets].push({label: wellbeing_metric.name, data: [point]})
     end
   end
 
   def point
-    { x: created_at, y: value }
+    {x: created_at, y: value}
   end
 end

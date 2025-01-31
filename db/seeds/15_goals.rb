@@ -7,7 +7,7 @@ if Goal.count.zero?
         goal: Faker::Hipster.sentences(number: 1)[0],
         goal_type: GoalType.find((index % 3) + 1),
         short_term: index.even?,
-        achieved_on: index < 4 ? Time.now : nil
+        achieved_on: index < 4 ? Time.now : nil,
       )
     end
   end

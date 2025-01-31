@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -10,7 +10,7 @@ module MyJourney
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    config.exceptions_app = self.routes
+    config.exceptions_app = routes
 
     config.time_zone = 'London'
 
@@ -36,7 +36,7 @@ module MyJourney
     config.assets.version = '1.0'
 
     config.before_configuration do
-      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      env_file = Rails.root.join('config/local_env.yml').to_s
       if File.exist?(env_file)
         YAML.safe_load(File.open(env_file)).each do |key, value|
           ENV[key.to_s] = value

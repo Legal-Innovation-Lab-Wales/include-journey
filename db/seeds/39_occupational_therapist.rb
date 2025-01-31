@@ -14,7 +14,7 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
     'Domestic Life - Managing Resources',
     'Interpersonal Interactions And Relationships',
     'Work, Employment And Education',
-    'Community Life, Recreation, Leisure And Play'
+    'Community Life, Recreation, Leisure And Play',
   ]
 
   metrics.each do |metric|
@@ -42,7 +42,7 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
 
     ota = OccupationalTherapistAssessment.create!(
       team_member: team_member,
-      user: user
+      user: user,
     )
 
     # Create associated OtaEntries (AssessmentEntries) with a random metric and score
@@ -52,7 +52,7 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
       OtaEntry.create!(
         occupational_therapist_assessment: ota,
         occupational_therapist_metric: metric,
-        occupational_therapist_score: score
+        occupational_therapist_score: score,
       )
     end
   end

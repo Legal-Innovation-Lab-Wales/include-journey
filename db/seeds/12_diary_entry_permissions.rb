@@ -5,7 +5,7 @@ if DiaryEntryPermission.count.zero?
       DiaryEntryPermission.create!(
         team_member: team_member,
         diary_entry: diary_entry,
-        created_at: diary_entry.created_at
+        created_at: diary_entry.created_at,
       )
     end
   end
