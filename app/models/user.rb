@@ -49,7 +49,7 @@ class User < DeviseRecord
   scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
   scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
   scope :deleted, -> { where(deleted: true) }
-  scope :approved, -> { where({approved: true, deleted: false}) }
+  scope :approved, -> { where(approved: true, deleted: false) }
   scope :last_assessed_today, lambda {
     # TODO: column 'last_assessed_at' does not exist
     where(
@@ -261,7 +261,7 @@ class User < DeviseRecord
 
   def reset_monthly_counts
     ['sessions', 'wellbeing_assessments', 'diary_entries', 'goals_achieved'].each do |entities|
-      update!({"#{entities}_this_month_count": 0})
+      update!("#{entities}_this_month_count" => 0)
     end
   end
 

@@ -137,14 +137,14 @@ module TeamMembers
         if @team_member.present?
           @team_member.wellbeing_assessments
             .joins(:user)
-            .where({'user.deleted': false})
+            .where('user.deleted' => false)
             .includes(:user, wba_scores: :wellbeing_metric)
         elsif @user.present?
           @user.wellbeing_assessments
             .includes(:team_member, wba_scores: :wellbeing_metric)
         else
           WellbeingAssessment.joins(:user)
-            .where({'user.deleted': false})
+            .where('user.deleted' => false)
             .includes(:user, :team_member, wba_scores: :wellbeing_metric)
         end
     end

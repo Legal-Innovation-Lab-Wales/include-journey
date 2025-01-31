@@ -24,7 +24,7 @@ class Achievement < ApplicationRecord
     ['bronze', 'silver', 'gold'].each do |medal|
       next if achievement["#{medal}_achieved"] || count < self["#{medal}_count"]
 
-      achievement.update!({"#{medal}_achieved": true})
+      achievement.update!("#{medal}_achieved" => true)
     end
   end
 end

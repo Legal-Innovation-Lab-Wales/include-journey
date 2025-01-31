@@ -67,7 +67,7 @@ module TeamMembers
 
     def query_terms(query)
       if diary_entry_params[:feeling].present?
-        query.merge({feeling: diary_entry_params[:feeling]})
+        query.merge(feeling: diary_entry_params[:feeling])
       else
         query
       end

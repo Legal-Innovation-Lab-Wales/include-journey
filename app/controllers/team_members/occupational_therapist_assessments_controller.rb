@@ -95,7 +95,7 @@ module TeamMembers
         if @team_member.present?
           @team_member.occupational_therapist_assessments
             .joins(:user)
-            .where({'users.deleted': false})
+            .where('users.deleted' => false)
             .includes(:user, :ota_entries)
         elsif @user.present?
           @user.occupational_therapist_assessments
@@ -103,7 +103,7 @@ module TeamMembers
         else
           OccupationalTherapistAssessment
             .joins(:user)
-            .where({'users.deleted': false})
+            .where('users.deleted' => false)
             .includes(:user, :team_member, :ota_entries)
         end
     end

@@ -6,7 +6,7 @@ class Survey < ApplicationRecord
   has_many :survey_questions, through: :survey_sections
   has_many :survey_comment_sections, through: :survey_sections
 
-  scope :available, -> { where('start_date <= :now and end_date >= :now and active = true', {now: DateTime.now}) }
+  scope :available, -> { where('start_date <= :now and end_date >= :now and active = true', now: DateTime.now) }
 
   validates :name, :start_date, :end_date, presence: true
   validates :name, format: {

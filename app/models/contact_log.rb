@@ -56,17 +56,26 @@ class ContactLog < ApplicationRecord
   end
 
   def json
-    {
+    obj = {
       ID: id,
       'Creation Date': created,
       Notes: notes,
       'Start Date': "#{start_date} #{start_time}",
       'End Date': "#{end_date} #{end_time}",
     }
-      .merge(user.json.transform_keys { |key| "User #{key}" })
-      .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
-      .merge(contact_type.present? ? contact_type.json.transform_keys { |key| "contact_type_#{key}" } : {})
-      .merge(contact_purpose.present? ? contact_purpose.json.transform_keys { |key| "contact_purpose_#{key}" } : {})
+    
+    obj = obj.merge(user.json.transform_keys { |key| "User #{key}" })
+    if team_member.present?
+      obj = obj.merge(team_member.json.transform_keys { |key| "Team Member #{key}" })
+    end
+    if contact_type.present?
+      obj = obj.merge(contact_type.json.transform_keys { |key| "contact_type_#{key}" })
+    end
+    if contact_purpose.present?
+      obj = obj.merge(contact_purpose.json.transform_keys { |key| "contact_purpose_#{key}" })
+    end
+
+    obj
   end
 
   def to_csv

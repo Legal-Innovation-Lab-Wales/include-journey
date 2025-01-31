@@ -31,7 +31,7 @@ module TeamMembers
     private
 
     def query_terms
-      wildcard_query.merge({today: Date.today})
+      wildcard_query.merge(today: Date.today)
     end
 
     def affirmations_archive_search

@@ -35,17 +35,17 @@ class WellbeingAssessment < ApplicationRecord
   end
 
   def json
-    {
+    obj = {
       ID: id,
       Date: created,
     }
-      .merge(user.json.transform_keys { |key| "User #{key}" })
-      .merge(team_member.present? ? team_member.json.transform_keys { |key| "Team Member #{key}" } : {})
-      .merge({
-        Scores: wba_scores.order(:wellbeing_metric_id).map do |score|
-          {"#{score.wellbeing_metric.name}": score.value}
-        end,
-      })
+    
+    obj = obj.merge(user.json.transform_keys { |key| "User #{key}" })
+    if team_member.present?
+      obj = obj.merge(team_member.json.transform_keys { |key| "Team Member #{key}" })
+    end
+    obj[:Scores] = wba_scores.order(:wellbeing_metric_id)
+      .map { |score| {"#{score.wellbeing_metric.name}": score.value} })
   end
 
   private
