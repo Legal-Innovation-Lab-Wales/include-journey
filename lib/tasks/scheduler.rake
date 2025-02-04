@@ -6,7 +6,7 @@ namespace :users do
 
   desc 'This task is used to send users email reminders'
   task send_reminder_email: :environment do
-    User.not_assessed_today.each |user| do
+    User.not_assessed_today.each do |user|
       if user.notifications_enabled
         AdminMailer.reminder_email(user).deliver_now
       end
