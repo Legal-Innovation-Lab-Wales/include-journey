@@ -53,7 +53,7 @@ module TeamMembers
 
     private
 
-    def fail(type)
+    def failure(type)
       redirect_to(
         team_members_path,
         flash: {error: "#{@team_member.first_name} #{type} status could not be changed"},
