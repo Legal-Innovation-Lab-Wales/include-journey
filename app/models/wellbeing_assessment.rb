@@ -44,8 +44,12 @@ class WellbeingAssessment < ApplicationRecord
     if team_member.present?
       obj = obj.merge(team_member.json.transform_keys { |key| "Team Member #{key}" })
     end
-    obj[:Scores] = wba_scores.order(:wellbeing_metric_id)
-      .map { |score| {"#{score.wellbeing_metric.name}": score.value} })
+
+    obj[:Scores] = wba_scores
+      .order(:wellbeing_metric_id)
+      .to_h { |score| [score.wellbeing_metric.name, score.value] }
+    
+    obj
   end
 
   private
