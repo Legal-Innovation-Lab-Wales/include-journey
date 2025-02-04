@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/concerns/pagination.rb
 module Pagination
   extend ActiveSupport::Concern

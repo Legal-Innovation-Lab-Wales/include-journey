@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210225225120_create_user_pins.rb
 class CreateUserPins < ActiveRecord::Migration[6.1]
   def change

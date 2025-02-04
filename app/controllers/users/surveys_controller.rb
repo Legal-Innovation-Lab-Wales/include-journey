@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/surveys_controller.rb
   class SurveysController < UsersApplicationController

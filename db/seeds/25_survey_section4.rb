@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 survey = Survey.first
 
 if survey.survey_sections.count < 4

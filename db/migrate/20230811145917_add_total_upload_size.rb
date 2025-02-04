@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTotalUploadSize < ActiveRecord::Migration[6.1]
   def change
     add_column :users, :total_upload_size, :integer, default: 0

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/notifications_helper.rb
 module NotificationsHelper
   def alert_team_member_of_notifications?

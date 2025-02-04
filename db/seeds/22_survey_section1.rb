@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 survey = Survey.first
 
 if survey.survey_sections.count.zero?
@@ -39,7 +41,7 @@ if survey.survey_sections.count.zero?
   section1.survey_questions.create!(order: 28, question: 'I feel listened to at the Hub')
   section1.survey_questions.create!(order: 29, question: 'I feel connected with others at the Hub')
   section1.survey_questions.create!(order: 30, question: 'I feel included at the Hub')
-  
+
   section1.survey_comment_sections.create!(
     order: 31,
     label: 'We appreciate your feedback if there is anything you would to add, please add your comments here:',

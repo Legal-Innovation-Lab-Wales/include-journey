@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/survey_section.rb
 class SurveySection < ApplicationRecord
   belongs_to :survey

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210407142951_create_metrics_services.rb
 class CreateMetricsServices < ActiveRecord::Migration[6.1]
   def change

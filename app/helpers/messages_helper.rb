@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/messages_helper.rb
 module MessagesHelper
   def alert_user_of_messages?

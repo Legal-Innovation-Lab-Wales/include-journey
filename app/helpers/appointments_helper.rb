@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/appointments_helper.rb
 module AppointmentsHelper
   def datepicker_input(form, field)
@@ -5,7 +7,7 @@ module AppointmentsHelper
     data = {
       provide: 'datepicker',
       'date-format' => 'yyyy-mm-dd',
-      'date-autoclose' => 'true'
+      'date-autoclose' => 'true',
     }
     content_tag :td, data: data do
       form.text_field field, class: 'form-control', placeholder: 'YYYY-MM-DD'

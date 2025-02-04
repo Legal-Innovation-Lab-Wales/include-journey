@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Message.count.zero?
   print "#{pretty_print_name('Message')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

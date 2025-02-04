@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Affirmation.count.zero?
   print "#{pretty_print_name('Affirmations')}\tStart: #{pretty_print(Time.now - @start_time)}"
   Config::UPCOMING_AFFIRMATIONS.times.each do |index|

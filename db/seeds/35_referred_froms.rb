@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ReferredFrom.count.zero?
   print "#{pretty_print_name('Referred From')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

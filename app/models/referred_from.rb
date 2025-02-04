@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/referred_from.rb
 class ReferredFrom < ApplicationRecord
   has_one :user

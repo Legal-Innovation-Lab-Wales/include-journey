@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::ErrorsController < ApplicationController
   def internal_server_error
     add_breadcrumb('Error Page', nil, 'fas fa-thumbs-down')

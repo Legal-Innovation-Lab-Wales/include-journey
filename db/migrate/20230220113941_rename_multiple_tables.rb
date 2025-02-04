@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20230220113941_rename_multiple_tables.rb
 class RenameMultipleTables < ActiveRecord::Migration[6.1]
   def change

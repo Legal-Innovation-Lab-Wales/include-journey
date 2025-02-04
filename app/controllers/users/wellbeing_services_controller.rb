@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/wellbeing_services_controller.rb
   class WellbeingServicesController < UsersApplicationController

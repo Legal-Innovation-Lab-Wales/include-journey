@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/journey_controller.rb
   class JourneyController < UsersApplicationController

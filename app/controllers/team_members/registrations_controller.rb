@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/registrations_controller.rb
   class RegistrationsController < Devise::RegistrationsController

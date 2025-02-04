@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'controllers/controller_test'
 
 class PagesControllerTest < ControllerTest

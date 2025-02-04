@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUploadActivityLogs < ActiveRecord::Migration[6.1]
   def change
     create_table :upload_activity_logs do |t|

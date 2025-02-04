@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Achievement.count.zero?
   print "#{pretty_print_name('Achievements')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

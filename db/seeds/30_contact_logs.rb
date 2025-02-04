@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ContactLog.count.zero?
   print "#{pretty_print_name('Contact Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
   TeamMember.all.each do |team_member|

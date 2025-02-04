@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/appointment.rb
 class Appointment < ApplicationRecord
   belongs_to :user

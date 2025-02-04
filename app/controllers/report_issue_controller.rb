@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/report_issue_controller.rb
 class ReportIssueController < ApplicationController
   def send_report

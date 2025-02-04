@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/upload_controller.rb
   class UploadsController < ApplicationController

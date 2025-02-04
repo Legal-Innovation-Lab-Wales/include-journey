@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/diary_entries_controller.rb
   class DiaryEntriesController < TeamMembersApplicationController
@@ -19,7 +21,7 @@ module TeamMembers
     def resources
       resources = current_team_member.diary_entries
         .includes(:user, :diary_entry_view_logs)
-      
+
       if diary_entry_params[:feeling].present? || diary_entry_params[:viewed].present?
         resources = resources.joins(:user)
           .where(diary_entry_search(''), query_terms({}))

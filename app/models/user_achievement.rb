@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/user_achievement.rb
 class UserAchievement < ApplicationRecord
   belongs_to :user

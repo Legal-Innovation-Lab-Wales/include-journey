@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/affirmations_controller.rb
   class AffirmationsController < TeamMembersApplicationController
@@ -23,7 +25,7 @@ module TeamMembers
       add_breadcrumb('New Affirmation', nil, 'fas fa-plus-circle')
       text = session[:affirmation_text] || ''
       latest = Affirmation.order(scheduled_date: :desc).first
-      date = if latest.present? && latest.scheduled_date > Date.today 
+      date = if latest.present? && latest.scheduled_date > Date.today
         latest.scheduled_date + 1.day
       else
         Date.today

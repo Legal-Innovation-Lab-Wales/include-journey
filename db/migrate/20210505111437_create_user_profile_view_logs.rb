@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210505111437_create_user_profile_view_logs.rb
 class CreateUserProfileViewLogs < ActiveRecord::Migration[6.1]
   def change

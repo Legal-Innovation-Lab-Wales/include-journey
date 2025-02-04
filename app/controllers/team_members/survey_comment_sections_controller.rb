@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/survey_comment_sections_controller.rb
   class SurveyCommentSectionsController < SurveyApplicationController

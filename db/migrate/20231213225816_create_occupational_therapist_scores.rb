@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOccupationalTherapistScores < ActiveRecord::Migration[6.1]
   def change
     return unless should_run_migration?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if GoalType.count.zero?
   print "#{pretty_print_name('Goal Types')}\tStart: #{pretty_print(Time.now - @start_time)}"
   GoalType.create!(name: 'Aspiration', emoji: '💪')

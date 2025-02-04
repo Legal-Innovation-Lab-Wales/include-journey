@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNewReferencesToUser < ActiveRecord::Migration[6.1]
   def change
     add_reference :users, :accommodation_type, foreign_key: true, null: true

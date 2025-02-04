@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if WellbeingMetric.count.zero?
   print "#{pretty_print_name('Wellbeing Metrics')}\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingMetric.create!(

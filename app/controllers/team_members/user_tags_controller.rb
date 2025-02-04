@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/user_tags_controller.rb
   class UserTagsController < TeamMembersApplicationController

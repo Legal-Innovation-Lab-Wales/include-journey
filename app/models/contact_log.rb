@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/model/contact_log.rb
 class ContactLog < ApplicationRecord
   belongs_to :team_member
@@ -63,7 +65,7 @@ class ContactLog < ApplicationRecord
       'Start Date': "#{start_date} #{start_time}",
       'End Date': "#{end_date} #{end_time}",
     }
-    
+
     obj = obj.merge(user.json.transform_keys { |key| "User #{key}" })
     if team_member.present?
       obj = obj.merge(team_member.json.transform_keys { |key| "Team Member #{key}" })
@@ -84,7 +86,7 @@ class ContactLog < ApplicationRecord
       created,
       notes,
       "#{start_date} #{start_time}",
-     "#{end_date} #{end_time}",
+      "#{end_date} #{end_time}",
     ] + user.to_csv + (if team_member.present?
       team_member.to_csv
     else

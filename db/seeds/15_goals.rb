@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Goal.count.zero?
   print "#{pretty_print_name('Goals')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|

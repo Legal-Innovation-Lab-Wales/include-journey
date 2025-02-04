@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104766_create_achievements.rb
 class CreateAchievements < ActiveRecord::Migration[6.1]
   # rubocop:disable Metrics/MethodLength

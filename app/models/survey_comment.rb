@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/survey_comment.rb
 class SurveyComment < ApplicationRecord
   belongs_to :survey_comment_section

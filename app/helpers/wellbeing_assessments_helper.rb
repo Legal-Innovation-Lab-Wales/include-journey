@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/wellbeing_assessments_helper.rb
 module WellbeingAssessmentsHelper
   def last_score(last_scores, wellbeing_metric_id)

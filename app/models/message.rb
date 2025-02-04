@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/message.rb
 class Message < ApplicationRecord
   belongs_to :user

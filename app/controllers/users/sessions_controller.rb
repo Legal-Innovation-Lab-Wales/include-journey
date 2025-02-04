@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/sessions_controller.rb
   class SessionsController < Devise::SessionsController

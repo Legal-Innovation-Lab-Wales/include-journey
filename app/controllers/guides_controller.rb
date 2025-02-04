@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/users/dashboard_controller.rb
 class GuidesController < ApplicationController
   before_action :set_breadcrumbs

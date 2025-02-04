@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateWellbeingMetrics < ActiveRecord::Migration[6.1]
   def change
     create_table :wellbeing_metrics do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/wba_self.rb
 class WellbeingAssessment < ApplicationRecord
   belongs_to :user, counter_cache: true

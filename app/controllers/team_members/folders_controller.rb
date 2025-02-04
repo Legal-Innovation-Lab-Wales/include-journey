@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class FoldersController < ApplicationController
@@ -55,7 +57,7 @@ module TeamMembers
         .where(parent_folder: nil, user_id: @user.id)
       uploads = Upload.joins(:upload_file)
         .where(parent_folder_id: nil, user_id: @user.id)
-      
+
       folders + uploads
     end
 
@@ -92,7 +94,7 @@ module TeamMembers
     def has_folders
       uploads = Upload.where(user_id: @user.id)
       folders = current_team_member.folders.where(parent_folder: nil)
-      
+
       uploads.any? || folders.any?
     end
 

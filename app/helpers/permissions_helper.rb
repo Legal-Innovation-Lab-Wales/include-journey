@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/permissions_helper.rb
 module PermissionsHelper
   def has_permission(default, permissions, team_member_id)

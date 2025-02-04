@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/accommodation_type.rb
 class AccommodationType < ApplicationRecord
   has_one :user

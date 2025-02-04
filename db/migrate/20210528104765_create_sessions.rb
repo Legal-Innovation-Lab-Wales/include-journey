@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104765_create_sessions.rb
 class CreateSessions < ActiveRecord::Migration[6.1]
   def change

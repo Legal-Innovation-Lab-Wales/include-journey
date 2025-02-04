@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if WellbeingService.count.zero?
   print "#{pretty_print_name('Wellbeing Services')}\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingService.create!(

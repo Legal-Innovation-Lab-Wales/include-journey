@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210225225117_create_journal_entries.rb
 class CreateJournalEntries < ActiveRecord::Migration[6.1]
   def change

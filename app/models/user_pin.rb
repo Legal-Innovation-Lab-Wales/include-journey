@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/user_pin.rb
 class UserPin < ApplicationRecord
   before_destroy :update_order

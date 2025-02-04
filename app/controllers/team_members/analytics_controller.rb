@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/analytics_controller.rb
   class AnalyticsController < TeamMembersApplicationController

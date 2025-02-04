@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/mailers/uploads_mailer.rb
 class UploadsMailer < ApplicationMailer
   def new_user_upload(team_members, user, upload_type)

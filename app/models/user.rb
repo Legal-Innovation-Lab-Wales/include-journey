@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/user.rb
 class User < DeviseRecord
   # Include default devise modules. Others available are:
@@ -201,12 +203,12 @@ class User < DeviseRecord
     ]
 
     if ENV['ORGANISATION_NAME'] == 'wallich-journey'
-      (csv_data << accommodation_type&.name.presence) || ''
-      (csv_data << housing_provider&.name.presence) || ''
-      (csv_data << support_ending_reason&.name.presence) || ''
-      (csv_data << referred_from&.name.presence) || ''
-      (csv_data << priority&.name.presence) || ''
-      (csv_data << wallich_local_authority&.name.presence) || ''
+      csv_data << (accommodation_type&.name.presence || '')
+      csv_data << (housing_provider&.name.presence || '')
+      csv_data << (support_ending_reason&.name.presence || '')
+      csv_data << (referred_from&.name.presence || '')
+      csv_data << (priority&.name.presence || '')
+      csv_data << (wallich_local_authority&.name.presence || '')
     end
 
     csv_data

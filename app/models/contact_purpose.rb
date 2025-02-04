@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/contact_purpose.rb
 class ContactPurpose < ApplicationRecord
   validates :name, presence: true

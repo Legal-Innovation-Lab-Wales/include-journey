@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/wellbeing_metric.rb
 class WellbeingMetric < ApplicationRecord
   belongs_to :team_member

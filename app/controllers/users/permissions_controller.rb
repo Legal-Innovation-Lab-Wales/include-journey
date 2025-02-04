@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/permissions_controller.rb
   class PermissionsController < UsersApplicationController

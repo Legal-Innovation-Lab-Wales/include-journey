@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTeamMemberNotificationFrequency < ActiveRecord::Migration[6.1]
   def change
     create_table :team_member_notification_frequencies do |t|

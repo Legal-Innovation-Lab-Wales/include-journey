@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # lib/clock.rb
 require 'clockwork'
 require_relative '../config/boot'

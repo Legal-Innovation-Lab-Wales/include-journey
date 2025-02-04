@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ContactType.count.zero?
   print "#{pretty_print_name('Contact Types')}\tStart: #{pretty_print(Time.now - @start_time)}"
   ContactType.create!(name: 'Drop in', color: '#e66043')

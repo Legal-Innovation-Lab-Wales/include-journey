@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/surveys_helper.rb
 module SurveysHelper
   def answer_pct(question, answer)

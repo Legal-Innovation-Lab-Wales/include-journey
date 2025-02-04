@@ -15,6 +15,9 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
 Layout/BlockAlignment:
   EnforcedStyleAlignWith: start_of_block
 

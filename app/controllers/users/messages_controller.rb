@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/messages_controller.rb
   class MessagesController < UsersApplicationController

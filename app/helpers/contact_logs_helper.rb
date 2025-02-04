@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/contact_logs_helper.rb
 module ContactLogsHelper
   def datepicker_input(form, field)

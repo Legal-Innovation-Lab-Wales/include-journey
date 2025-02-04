@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if MetricsService.count.zero?
   print "#{pretty_print_name('Metrics Services')}\tStart: #{pretty_print(Time.now - @start_time)}"
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 5) # Include --> Behaviour

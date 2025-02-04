@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/mailers/admin_mailer.rb
 class AdminMailer < ApplicationMailer
   def new_team_member_email(team_member, admin, unapproved_count, is_user = false)

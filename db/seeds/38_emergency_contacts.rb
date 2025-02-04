@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if EmergencyContact.count.zero?
   print "#{pretty_print_name('Emergency Contacts')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

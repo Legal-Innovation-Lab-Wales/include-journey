@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/goal.rb
 class Goal < ApplicationRecord
   belongs_to :user

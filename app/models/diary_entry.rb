@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/diary_entry.rb
 class DiaryEntry < PermissionRecord
   belongs_to :user

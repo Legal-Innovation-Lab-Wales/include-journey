@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Survey.count.zero?
   print "#{pretty_print_name('Survey')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

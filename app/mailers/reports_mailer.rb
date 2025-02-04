@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/mailers/reports_mailer.rb
 class ReportsMailer < ApplicationMailer
   def report_issue_email(email)

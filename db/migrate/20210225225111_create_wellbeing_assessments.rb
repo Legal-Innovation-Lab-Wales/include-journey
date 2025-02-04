@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/db/migrate/20210225225111_create_wellbeing_assessments.rb
 class CreateWellbeingAssessments < ActiveRecord::Migration[6.1]
   def change

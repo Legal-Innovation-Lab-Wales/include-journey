@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/users_application_controller.rb
   class UsersApplicationController < ApplicationController

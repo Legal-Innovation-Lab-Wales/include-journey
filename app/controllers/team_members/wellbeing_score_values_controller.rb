@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/wellbeing_score_values_controller.rb
   class WellbeingScoreValuesController < TeamMembersApplicationController

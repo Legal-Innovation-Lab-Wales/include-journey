@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104757_add_deleted_field.rb
 class AddDeletedField < ActiveRecord::Migration[6.1]
   def change

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/concerns/authenticate_with_otp_two_factor.rb
 module AuthenticateWithOtpTwoFactor
   extend ActiveSupport::Concern

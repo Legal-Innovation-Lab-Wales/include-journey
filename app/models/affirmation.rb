@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/affirmation.rb
 class Affirmation < ApplicationRecord
   belongs_to :team_member
@@ -7,7 +9,7 @@ class Affirmation < ApplicationRecord
   }
   validates :scheduled_date, format: {
     with: Rails.application.config.regex_datetime,
-    message: Rails.application.config.datetime_error
+    message: Rails.application.config.datetime_error,
   }
 
   scope :archived, -> { where('scheduled_date < ?', Date.today) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/mailers/admin_mailer.rb
 class UserMailer < ApplicationMailer
   def approved(user)

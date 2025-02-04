@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class GoalPermissionsController < PermissionsController
     before_action :team_members, :permissions, :can_add, :set_breadcrumbs

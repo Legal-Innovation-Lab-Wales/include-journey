@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/devise_record.rb
 class DeviseRecord < ApplicationRecord
   self.abstract_class = true

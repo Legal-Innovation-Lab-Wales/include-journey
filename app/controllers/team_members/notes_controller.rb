@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/notes_controller.rb
   class NotesController < TeamMembersApplicationController

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Config::SURVEY_RESPONSES
   print "#{pretty_print_name('Survey Responses')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

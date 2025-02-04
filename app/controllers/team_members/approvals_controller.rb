@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/approvals_controller.rb
   class ApprovalsController < TeamMembersApplicationController
@@ -27,7 +29,7 @@ module TeamMembers
       unless params[:user_ids]
         return redirect_to(
           approvals_path,
-          flash: { error: 'No users selected' },
+          flash: {error: 'No users selected'},
         )
       end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/ota_entry.rb
 
 # This is a wallich-specific model file

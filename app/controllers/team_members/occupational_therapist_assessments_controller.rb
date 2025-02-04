@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/occupational_therapist_assessments_controller.rb
   class OccupationalTherapistAssessmentsController < ApplicationController
@@ -180,7 +182,7 @@ module TeamMembers
       @count_in_last_month = @resources
         .where('occupational_therapist_assessments.created_at >= ?', 1.month.ago)
         .size
-      
+
       if @user
         @count_by_team_member = @resources.count { |ota| ota.team_member_id.present? }
         @count_by_user = @resources.count { |ota| ota.team_member_id.nil? }

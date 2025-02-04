@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104767_create_user_achievements.rb
 class CreateUserAchievements < ActiveRecord::Migration[6.1]
   def change

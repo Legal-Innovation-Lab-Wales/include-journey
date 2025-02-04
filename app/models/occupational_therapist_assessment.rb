@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/occupational_therapist_assessment.rb
 
 # This is a wallich-specific model file

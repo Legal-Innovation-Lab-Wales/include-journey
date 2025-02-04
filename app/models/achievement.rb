@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/achievement.rb
 class Achievement < ApplicationRecord
   has_many :user_achievements

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/diary_entry_permission.rb
 class DiaryEntryPermission < ApplicationRecord
   belongs_to :diary_entry

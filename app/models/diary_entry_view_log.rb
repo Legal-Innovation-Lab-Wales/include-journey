@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/diary_entry_view_log.rb
 class DiaryEntryViewLog < ApplicationRecord
   belongs_to :team_member

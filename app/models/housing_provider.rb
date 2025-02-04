@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/housing_provider.rb
 class HousingProvider < ApplicationRecord
   has_one :user

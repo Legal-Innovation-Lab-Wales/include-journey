@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/model/breadcrumb.rb
 class Breadcrumb
   attr_reader :name, :path, :icon

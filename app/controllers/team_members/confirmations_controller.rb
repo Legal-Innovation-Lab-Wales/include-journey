@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/confirmations_controller.rb
   class ConfirmationsController < Devise::ConfirmationsController

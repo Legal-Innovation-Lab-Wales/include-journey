@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/timestamp_remove_occupational_therapist_related_columns_from_users.rb
 class RemoveOccupationalTherapistRelatedColumnsFromUsers < ActiveRecord::Migration[6.1]
   def change

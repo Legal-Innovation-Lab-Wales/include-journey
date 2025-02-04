@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/note.rb
 class Note < ApplicationRecord
   belongs_to :team_member

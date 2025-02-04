@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if DiaryEntryPermission.count.zero?
   print "#{pretty_print_name('Diary Permissions')}\tStart: #{pretty_print(Time.now - @start_time)}"
   DiaryEntry.all.each do |diary_entry|

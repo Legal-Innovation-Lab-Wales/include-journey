@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/wba_score.rb
 class WbaScore < ApplicationRecord
   belongs_to :wellbeing_assessment

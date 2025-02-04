@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAccommodationType < ActiveRecord::Migration[6.1]
   def change
     create_table :accommodation_types do |t|

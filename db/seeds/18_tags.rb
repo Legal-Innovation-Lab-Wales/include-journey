@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Tag.count.zero?
   print "#{pretty_print_name('Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
   Tag.create!(tag: 'DV Victim', team_member_id: rand(1..TeamMember.count), created_at: rand(1..30).days.ago)

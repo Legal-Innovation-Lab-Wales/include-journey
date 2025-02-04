@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210505111439_create_user_tags.rb
 class CreateUserTags < ActiveRecord::Migration[6.1]
   def change

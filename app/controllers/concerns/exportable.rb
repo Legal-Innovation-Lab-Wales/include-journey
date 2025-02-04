@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/concerns/exportable.rb
 module Exportable
   extend ActiveSupport::Concern

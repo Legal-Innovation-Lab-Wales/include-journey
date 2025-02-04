@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/contact_logs_controller.rb
   class ContactLogsController < TeamMembersApplicationController
@@ -122,7 +124,7 @@ module TeamMembers
         current_team_member.contact_logs
       end
       resources.where(contact_log_search, wildcard_query)
-       .order(start: :desc)
+        .order(start: :desc)
     end
 
     private

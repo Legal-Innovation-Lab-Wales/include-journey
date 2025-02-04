@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeamMemberReferencesToTeamMemberNotificationFrequency < ActiveRecord::Migration[6.1]
   def change
     add_reference :team_member_notification_frequencies, :team_member, null: false, foreign_key: true

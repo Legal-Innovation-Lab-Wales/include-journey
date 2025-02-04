@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/session.rb
 class Session < ApplicationRecord
   belongs_to :user

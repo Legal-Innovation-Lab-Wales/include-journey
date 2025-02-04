@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/goals_controller.rb
   class GoalsController < UsersApplicationController

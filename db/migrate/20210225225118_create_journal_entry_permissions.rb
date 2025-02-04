@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210225225118_create_journal_entry_permissions.rb
 class CreateJournalEntryPermissions < ActiveRecord::Migration[6.1]
   def change

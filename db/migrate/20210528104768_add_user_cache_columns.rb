@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104768_add_user_cache_columns.rb
 class AddUserCacheColumns < ActiveRecord::Migration[6.1]
   # rubocop:disable Metrics/MethodLength

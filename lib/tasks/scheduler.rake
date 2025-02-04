@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :users do
   desc 'This task is used to delete user accounts'
   task delete: :environment do

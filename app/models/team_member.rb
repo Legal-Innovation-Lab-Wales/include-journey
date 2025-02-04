@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/team_member.rb
 class TeamMember < DeviseRecord
   # Include default devise modules. Others available are:

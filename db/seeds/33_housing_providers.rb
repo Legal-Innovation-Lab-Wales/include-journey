@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if HousingProvider.count.zero?
   print "#{pretty_print_name('Housing Providers')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

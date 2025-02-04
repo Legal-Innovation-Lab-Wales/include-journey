@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/achievements_helper.rb
 module AchievementsHelper
   def progress(user, achievement, monthly)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/survey.rb
 class Survey < ApplicationRecord
   belongs_to :team_member

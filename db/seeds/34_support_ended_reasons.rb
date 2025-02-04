@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if SupportEndingReason.count.zero?
   print "#{pretty_print_name('Reasons For Ending Support')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

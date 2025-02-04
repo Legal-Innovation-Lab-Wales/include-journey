@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/coming_soon_controller.rb
   class ComingSoonController < UsersApplicationController

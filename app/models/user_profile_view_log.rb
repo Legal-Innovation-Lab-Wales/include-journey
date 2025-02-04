@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/user_profile_view_log.rb
 class UserProfileViewLog < ApplicationRecord
   belongs_to :team_member

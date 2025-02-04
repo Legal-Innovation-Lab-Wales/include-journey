@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104756_add_user_fields.rb
 class AddUserFields < ActiveRecord::Migration[6.1]
   # rubocop:disable Metrics/MethodLength

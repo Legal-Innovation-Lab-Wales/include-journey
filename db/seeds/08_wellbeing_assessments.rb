@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if WellbeingAssessment.count.zero?
   print "#{pretty_print_name('Wellbeing Assessments')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|

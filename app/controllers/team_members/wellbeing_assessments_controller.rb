@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/wellbeing_assessments_controller.rb
   class WellbeingAssessmentsController < TeamMembersApplicationController
@@ -26,7 +28,7 @@ module TeamMembers
     def show
       add_breadcrumb('Wellbeing Assessments', wellbeing_assessments_path, 'fas fa-heart')
       add_breadcrumb('This Wellbeing Assessment')
-      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member,)
+      @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member)
         .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
 
       render 'show'

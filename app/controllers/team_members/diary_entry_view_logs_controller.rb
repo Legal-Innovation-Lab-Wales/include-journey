@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/diary_entry_view_logs_controller.rb
   class DiaryEntryViewLogsController < AdminApplicationController

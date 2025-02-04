@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if UserTag.count.zero?
   print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
   User.all.each do |user|

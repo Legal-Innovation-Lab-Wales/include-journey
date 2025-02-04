@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, :sign_out_notice, if: :devise_controller?

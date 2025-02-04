@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateWallichLocalAuthority < ActiveRecord::Migration[6.1]
   def change
     create_table :wallich_local_authorities do |t|

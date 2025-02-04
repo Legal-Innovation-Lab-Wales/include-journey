@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if AccommodationType.count.zero?
   print "#{pretty_print_name('Accommodation Types')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

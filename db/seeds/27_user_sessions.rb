@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Session.count.zero?
   print "#{pretty_print_name('Sessions')}\tStart: #{pretty_print(Time.now - @start_time)}"
 

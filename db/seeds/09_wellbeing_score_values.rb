@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if WellbeingScoreValue.count.zero?
   print "#{pretty_print_name('Score Values')}\tStart: #{pretty_print(Time.now - @start_time)}"
   WellbeingScoreValue.create!(

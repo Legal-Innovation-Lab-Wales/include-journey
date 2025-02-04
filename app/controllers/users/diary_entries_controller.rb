@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/diary_entries_controller.rb
   class DiaryEntriesController < UsersApplicationController

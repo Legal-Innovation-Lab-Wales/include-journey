@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/dashboard_controller.rb
   class DashboardController < TeamMembersApplicationController

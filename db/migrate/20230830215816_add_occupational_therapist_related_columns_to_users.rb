@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOccupationalTherapistRelatedColumnsToUsers < ActiveRecord::Migration[6.1]
   def change
     add_column :users, :occupational_therapist_scores, :bigint, array: true, default: []

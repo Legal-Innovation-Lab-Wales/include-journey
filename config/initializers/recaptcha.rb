@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # reCAPTCHA configuration
 Recaptcha.configure do |config|
   config.site_key = ENV.fetch('RECAPTCHA_SITE_KEY')

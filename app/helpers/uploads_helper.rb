@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/helpers/uploads_helper.rb
 module UploadsHelper
   # upload show link

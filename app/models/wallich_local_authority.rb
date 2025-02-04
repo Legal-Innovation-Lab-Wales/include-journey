@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/local_authority_for_wallich.rb
 class WallichLocalAuthority < ApplicationRecord
   has_one :user

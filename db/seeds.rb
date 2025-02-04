@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 begin
   require_relative 'config' # config file not in load path - require_relative searches current file location for config
 rescue LoadError

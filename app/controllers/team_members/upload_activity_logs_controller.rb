@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/upload_activity_logs_controller.rb
   class UploadActivityLogsController < ApplicationController
@@ -9,14 +11,15 @@ module TeamMembers
 
     def resources
       @upload_activity_logs = @team_member.upload_activity_logs
-      filter_params = upload_activity_logs_filter_params
-      @upload_activity_logs = if filter_params[:activity_type].in?(['viewed', 'modified', 'downloaded', 'approved', 'rejected'])
+      activity_type = params[:activity_type]
+      # TODO: 'rejected' appears in both of these conditions
+      @upload_activity_logs = if activity_type.in?(['viewed', 'modified', 'downloaded', 'approved', 'rejected'])
         @upload_activity_logs.includes(upload: [:user, :upload_file])
           .joins(upload: [:user, :upload_file])
           .order(created_at: :desc)
-          .where(activity_type: filter_params[:activity_type])
-      elsif filter_params[:activity_type].in?(['rejected'])
-        @upload_activity_logs.where(activity_type: filter_params[:activity_type])
+          .where(activity_type: activity_type)
+      elsif activity_type.in?(['rejected'])
+        @upload_activity_logs.where(activity_type: activity_type)
       end
 
       @upload_activity_logs

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/concerns/accessible.rb
 module Accessible
   extend ActiveSupport::Concern

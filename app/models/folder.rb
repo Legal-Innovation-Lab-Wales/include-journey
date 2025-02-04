@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/folder.rb
 class Folder < ApplicationRecord
   has_many :child_folders, class_name: 'Folder', foreign_key: 'parent_folder_id', dependent: :destroy

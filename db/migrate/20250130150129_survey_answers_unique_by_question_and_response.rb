@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SurveyAnswersUniqueByQuestionAndResponse < ActiveRecord::Migration[6.1]
   def change
     remove_index :survey_answers, [:survey_response_id]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDeviseTwoFactorToTeamMembers < ActiveRecord::Migration[6.1]
   def change
     add_column :team_members, :encrypted_otp_secret, :string

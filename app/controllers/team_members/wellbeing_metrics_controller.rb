@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/wellbeing_metrics_controller.rb
   class WellbeingMetricsController < TeamMembersApplicationController
@@ -19,7 +21,7 @@ module TeamMembers
         {error: 'Wellbeing metric could not be updated. Please use only characters A-Z & 0-9'}
       end
       redirect_to(wellbeing_metrics_path, flash: flash)
-  end
+    end
 
     private
 

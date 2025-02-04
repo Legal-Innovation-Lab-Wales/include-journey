@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210528104760_create_survey_questions.rb
 class CreateSurveyQuestions < ActiveRecord::Migration[6.1]
   def change

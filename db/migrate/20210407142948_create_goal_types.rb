@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # db/migrate/20210407142948_create_goal_types.rb
 class CreateGoalTypes < ActiveRecord::Migration[6.1]
   def change

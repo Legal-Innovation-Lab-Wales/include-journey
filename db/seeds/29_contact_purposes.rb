@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ContactPurpose.count.zero?
   print "#{pretty_print_name('Contact Purposes')}\tStart: #{pretty_print(Time.now - @start_time)}"
   ContactPurpose.create!(name: 'One-to-one')

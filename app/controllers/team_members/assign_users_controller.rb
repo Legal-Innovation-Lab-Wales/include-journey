@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TeamMembers
   # app/controllers/team_members/assign_users_controller.rb
   class AssignUsersController < TeamMembersApplicationController

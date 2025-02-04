@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   # app/controllers/users/diary_entry_permission_controller.rb
   class DiaryEntryPermissionsController < PermissionsController
