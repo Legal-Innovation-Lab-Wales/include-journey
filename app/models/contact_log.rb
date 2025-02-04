@@ -16,10 +16,10 @@ class ContactLog < ApplicationRecord
     with: Rails.application.config.regex_datetime,
     message: Rails.application.config.datetime_error,
   }
-  scope :recent, -> { where('start >= ?', 1.month.ago) }
-  scope :past, -> { where('start < ?', 1.month.ago) }
-  scope :last_week, -> { where('start >= ?', 1.week.ago) }
-  scope :last_month, -> { where('start >= ?', 1.month.ago) }
+  scope :recent, -> { where(start: 1.month.ago..) }
+  scope :past, -> { where(start: ...1.month.ago) }
+  scope :last_week, -> { where(start: 1.week.ago..) }
+  scope :last_month, -> { where(start: 1.month.ago..) }
 
   def time_on_date
     start.strftime("%I:%M%p on %a #{start.day.ordinalize} %B")
@@ -30,25 +30,25 @@ class ContactLog < ApplicationRecord
   end
 
   def start_date
-    return Date.today unless start.present?
+    return Date.today if start.nil?
 
     start.strftime('%Y-%m-%d')
   end
 
   def start_time
-    return '12:00' unless start.present?
+    return '12:00' if start.nil?
 
     start.strftime('%H:%M')
   end
 
   def end_date
-    return Date.today unless self.end.present?
+    return Date.today if self.end.nil?
 
     self.end.strftime('%Y-%m-%d')
   end
 
   def end_time
-    return '12:00' unless self.end.present?
+    return '12:00' if self.end.nil?
 
     self.end.strftime('%H:%M')
   end

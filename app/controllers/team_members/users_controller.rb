@@ -329,7 +329,7 @@ module TeamMembers
     end
 
     def verify_pin
-      return unless @user_pin.present?
+      return if @user_pin.blank?
 
       redirect_back(fallback_location: authenticated_team_member_root_path, alert: message('is already pinned'))
     end

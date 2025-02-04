@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 print "#{pretty_print_name('Team Members')}\tStart: #{pretty_print(Time.now - @start_time)}"
-unless TeamMember.find_by_email('philr@purpleriver.dev').present?
+if TeamMember.find_by(email: 'philr@purpleriver.dev').blank?
   team_member = TeamMember.new(
     first_name: 'Phil',
     last_name: 'Reynolds',
@@ -17,7 +17,7 @@ unless TeamMember.find_by_email('philr@purpleriver.dev').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
+if TeamMember.find_by(email: 'a.j.wing@swansea.ac.uk').blank?
   team_member = TeamMember.new(
     first_name: 'Alex',
     last_name: 'Wing',
@@ -33,7 +33,7 @@ unless TeamMember.find_by_email('a.j.wing@swansea.ac.uk').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
+if TeamMember.find_by(email: 'ieuan.skinner@swansea.ac.uk').blank?
   team_member = TeamMember.new(
     first_name: 'Ieuan',
     last_name: 'Skinner',
@@ -49,7 +49,7 @@ unless TeamMember.find_by_email('ieuan.skinner@swansea.ac.uk').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('benmharrison@me.com').present?
+if TeamMember.find_by(email: 'benmharrison@me.com').blank?
   team_member = TeamMember.new(
     first_name: 'Ben',
     last_name: 'Harrison',
@@ -65,7 +65,7 @@ unless TeamMember.find_by_email('benmharrison@me.com').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
+if TeamMember.find_by(email: 'g.d.andrews@swansea.ac.uk').blank?
   team_member = TeamMember.new(
     first_name: 'Gareth',
     last_name: 'Andrews',
@@ -81,7 +81,7 @@ unless TeamMember.find_by_email('g.d.andrews@swansea.ac.uk').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('t.b.sheerhardwick@swansea.ac.uk').present?
+if TeamMember.find_by(email: 't.b.sheerhardwick@swansea.ac.uk').blank?
   team_member = TeamMember.new(
     first_name: 'Tobias',
     last_name: 'Sheer Hardwick',
@@ -97,7 +97,7 @@ unless TeamMember.find_by_email('t.b.sheerhardwick@swansea.ac.uk').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk').present?
+if TeamMember.find_by(email: 'a.a.finbarrs-ezema@swansea.ac.uk').blank?
   team_member = TeamMember.new(
     first_name: 'Amara',
     last_name: 'Finbarrs-Ezema',
@@ -113,7 +113,7 @@ unless TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('amarafinbarrs123@gmail.com').present?
+if TeamMember.find_by(email: 'amarafinbarrs123@gmail.com').blank?
   team_member = TeamMember.new(
     first_name: 'Amara',
     last_name: 'Finbarrs-Ezema',
@@ -129,7 +129,7 @@ unless TeamMember.find_by_email('amarafinbarrs123@gmail.com').present?
   team_member.save!
 end
 
-unless TeamMember.find_by_email('admin@myjourney.app').present?
+if TeamMember.find_by(email: 'admin@myjourney.app').blank?
   team_member = TeamMember.new(
     first_name: 'Admin',
     last_name: 'Account',

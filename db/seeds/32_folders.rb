@@ -3,7 +3,7 @@
 if Folder.count.zero?
   print "#{pretty_print_name('Folders')}\tStart: #{pretty_print(Time.now - @start_time)}"
 
-  team_member = TeamMember.find_by_email('a.a.finbarrs-ezema@swansea.ac.uk')
+  team_member = TeamMember.find_by(email: 'a.a.finbarrs-ezema@swansea.ac.uk')
   30.times do
     top_folder = Folder.create!(
       name: Faker::Name.first_name,

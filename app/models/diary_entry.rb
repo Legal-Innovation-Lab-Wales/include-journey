@@ -10,8 +10,8 @@ class DiaryEntry < PermissionRecord
 
   after_create :update_cache
 
-  scope :created_in_last_week, -> { where('diary_entries.created_at >= ?', 1.week.ago) }
-  scope :created_in_last_month, -> { where('diary_entries.created_at >= ?', 1.month.ago) }
+  scope :created_in_last_week, -> { where(diary_entries: {created_at: 1.week.ago..}) }
+  scope :created_in_last_month, -> { where(diary_entries: {created_at: 1.month.ago..}) }
 
   # <!-- 🥳,☺️,😔,😠,💩,😐 -->
   FEELING_OPTIONS = [

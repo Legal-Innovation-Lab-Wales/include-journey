@@ -26,7 +26,7 @@ class SurveyAnswer < ApplicationRecord
   end
 
   def decrement_answer_count
-    return unless answer_was.present?
+    return if answer_was.blank?
 
     survey_question.update!("answer#{answer_was}" => survey_question["answer#{answer_was}"] - 1)
   end

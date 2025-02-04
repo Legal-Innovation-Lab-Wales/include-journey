@@ -22,7 +22,7 @@ class Note < ApplicationRecord
 
   def chain(array)
     array << self
-    return unless replacing.present?
+    return if replacing.blank?
 
     replacing.chain(array)
   end

@@ -82,7 +82,7 @@ module TeamMembers
     def last_scores
       last_wellbeing_assessment = @user.last_wellbeing_assessment
 
-      return unless last_wellbeing_assessment.present?
+      return if last_wellbeing_assessment.blank?
 
       @last_scores = last_wellbeing_assessment.wba_scores.collect do |wba_score|
         {id: wba_score.wellbeing_metric_id, value: wba_score.value}
@@ -94,14 +94,14 @@ module TeamMembers
     end
 
     def team_member
-      return unless params[:team_member_id].present?
+      return if params[:team_member_id].blank?
 
       @team_member = TeamMember.includes(:wellbeing_assessments)
         .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id]))
     end
 
     def user
-      return unless params[:user_id].present?
+      return if params[:user_id].blank?
 
       @user = User.includes(:wellbeing_assessments)
         .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
@@ -124,7 +124,7 @@ module TeamMembers
     end
 
     def wba_values
-      return unless @user.present?
+      return if @user.blank?
 
       @wba_values = [''] + WellbeingScoreValue.order(id: :asc).pluck(:name)
     end
@@ -154,7 +154,7 @@ module TeamMembers
     def wellbeing_assessment_today
       wellbeing_assessment_today = @user.wellbeing_assessment_today
 
-      return unless wellbeing_assessment_today.present?
+      return if wellbeing_assessment_today.blank?
 
       redirect_to(
         wellbeing_assessment_path(wellbeing_assessment_today),
@@ -167,8 +167,8 @@ module TeamMembers
     end
 
     def subheading_stats
-      @count_in_last_week = @resources.where('wellbeing_assessments.created_at >= ?', 1.week.ago).size
-      @count_in_last_month = @resources.where('wellbeing_assessments.created_at >= ?', 1.month.ago).size
+      @count_in_last_week = @resources.where(wellbeing_assessments: {created_at: 1.week.ago..}).size
+      @count_in_last_month = @resources.where(wellbeing_assessments: {created_at: 1.month.ago..}).size
       return unless @user
 
       @count_by_team_member = @resources.count { |wba| wba.team_member_id.present? }

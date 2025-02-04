@@ -92,7 +92,7 @@ module Users
     end
 
     def subheading_stats
-      return unless @resources.present?
+      return if @resources.blank?
 
       @uploads_in_last_30_days = @resources.created_in_last_month.count
       @image_uploads = @resources.images.count
@@ -164,7 +164,7 @@ module Users
 
     def email_team_members_about_upload(user, upload_file)
       team_members = user.team_members
-      return unless team_members.present?
+      return if team_members.blank?
 
       upload_type = upload_file.content_type == 'application/pdf' ? 'PDF' : 'image'
       UploadsMailer.new_user_upload(team_members, user, upload_type).deliver_now

@@ -121,14 +121,14 @@ module TeamMembers
     end
 
     def user
-      return unless params[:user_id].present?
+      return if params[:user_id].blank?
 
       @user = User.includes(:occupational_therapist_assessments)
         .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
     end
 
     def team_member
-      return unless params[:team_member_id].present?
+      return if params[:team_member_id].blank?
 
       @team_member = TeamMember.includes(:occupational_therapist_assessments)
         .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id]))
@@ -177,10 +177,10 @@ module TeamMembers
 
     def subheading_stats
       @count_in_last_week = @resources
-        .where('occupational_therapist_assessments.created_at >= ?', 1.week.ago)
+        .where(occupational_therapist_assessments: {created_at: 1.week.ago..})
         .size
       @count_in_last_month = @resources
-        .where('occupational_therapist_assessments.created_at >= ?', 1.month.ago)
+        .where(occupational_therapist_assessments: {created_at: 1.month.ago..})
         .size
 
       if @user

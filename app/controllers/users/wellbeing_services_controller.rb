@@ -62,7 +62,7 @@ module Users
         else
           @error = 'Could not retrieve postcode information, please include a complete postcode'
         end
-      elsif !params[:postcode].present? && params[:radius].present?
+      elsif params[:postcode].blank? && params[:radius].present?
         @error = 'Full postcode required with radius'
       elsif params[:postcode].present?
         @wellbeing_services = @wellbeing_services.where(

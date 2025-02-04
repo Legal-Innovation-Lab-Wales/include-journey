@@ -109,7 +109,7 @@ module TeamMembers
     end
 
     def subheading_stats
-      return unless @resources.present?
+      return if @resources.blank?
 
       @uploads_in_last_30_days = @resources.created_in_last_month.count
       @image_uploads = @resources.images.count

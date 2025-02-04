@@ -16,7 +16,7 @@ ActionView::Base.field_error_proc = proc do |html_tag, instance|
       .gsub('_', ' ')
 
     error_message = error_messages[value.to_sym][0]
-    error_message = 'is invalid' unless error_message.present?
+    error_message = 'is invalid' if error_message.blank?
 
     html = <<~HTML
       #{fragment}#{' '}

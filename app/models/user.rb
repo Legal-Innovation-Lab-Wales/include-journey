@@ -48,8 +48,8 @@ class User < DeviseRecord
   before_update :mail_deleted_user, if: -> { deleted_changed? && deleted? }
 
   scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
-  scope :active_last_week, -> { where('current_sign_in_at >= ?', 1.week.ago) }
-  scope :active_last_month, -> { where('current_sign_in_at >= ?', 1.month.ago) }
+  scope :active_last_week, -> { where(current_sign_in_at: 1.week.ago..) }
+  scope :active_last_month, -> { where(current_sign_in_at: 1.month.ago..) }
   scope :deleted, -> { where(deleted: true) }
   scope :approved, -> { where(approved: true, deleted: false) }
   scope :last_assessed_today, lambda {

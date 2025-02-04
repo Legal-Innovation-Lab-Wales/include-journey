@@ -33,17 +33,17 @@ class SurveyResponse < ApplicationRecord
   end
 
   def answer?(question, answer)
-    return unless survey_answers.present?
+    return if survey_answers.none?
 
     survey_answer = survey_answers.find_by(survey_question: question)
 
-    return unless survey_answer.present?
+    return if survey_answer.blank?
 
     survey_answer.answer == answer
   end
 
   def comment(comment_section)
-    return '' unless survey_comments.present?
+    return '' if survey_comments.none?
 
     comment = survey_comments.find_by(survey_comment_section: comment_section)
 

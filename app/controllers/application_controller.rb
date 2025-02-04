@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def deletion
-    return unless current_user.deleted_at.present?
+    return if current_user.deleted_at.nil?
 
     if current_user.deleted_at <= DateTime.now
       current_user.destroy!
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def sign_out_notice
-    return unless session[:sign_out_notice].present?
+    return if session[:sign_out_notice].blank?
 
     flash.now[:alert] = session[:sign_out_notice]
     session.delete(:sign_out_notice)
@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_suspended
-    return unless current_user && current_user.suspended?
+    return unless current_user&.suspended?
 
     sign_out_and_redirect(current_user)
     session[:sign_out_notice] = 'Your account is suspended.'

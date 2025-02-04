@@ -43,7 +43,7 @@ module Users
     private
 
     def update_messages_to_read
-      return unless current_user.messages.where(read: false).present?
+      return if current_user.messages.where(read: false).blank?
 
       current_user.messages.each do |message|
         message.update!(read: true)

@@ -16,13 +16,13 @@ class Appointment < ApplicationRecord
     message: Rails.application.config.datetime_error,
   }
 
-  scope :future, -> { where('start >= ?', Time.now) }
-  scope :past, -> { where('start <= ?', Time.now) }
-  scope :last_week, -> { where('start >= ?', 1.week.ago) }
-  scope :last_month, -> { where('start >= ?', 1.month.ago) }
-  scope :next_week, -> { where('start <= ?', 1.week.from_now) }
-  scope :next_fortnight, -> { where('start <= ?', 2.weeks.from_now) }
-  scope :user_created, -> { where('team_member_id is null') }
+  scope :future, -> { where(start: Time.now..) }
+  scope :past, -> { where(start: ..Time.now) }
+  scope :last_week, -> { where(start: 1.week.ago..) }
+  scope :last_month, -> { where(start: 1.month.ago..) }
+  scope :next_week, -> { where(start: ..1.week.from_now) }
+  scope :next_fortnight, -> { where(start: ..2.weeks.from_now) }
+  scope :user_created, -> { where(team_member_id: nil) }
   scope :team_member_created, -> { where.not(team_member_id: nil) }
 
   def time_on_date
@@ -34,25 +34,25 @@ class Appointment < ApplicationRecord
   end
 
   def start_date
-    return Date.tomorrow unless start.present?
+    return Date.tomorrow if start.nil?
 
     start.strftime('%Y-%m-%d')
   end
 
   def start_time
-    return '12:00' unless start.present?
+    return '12:00' if start.nil?
 
     start.strftime('%H:%M')
   end
 
   def end_date
-    return Date.tomorrow unless self.end.present?
+    return Date.tomorrow if self.end.nil?
 
     self.end.strftime('%Y-%m-%d')
   end
 
   def end_time
-    return '12:00' unless self.end.present?
+    return '12:00' if self.end.nil?
 
     self.end.strftime('%H:%M')
   end

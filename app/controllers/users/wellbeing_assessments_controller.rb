@@ -49,7 +49,7 @@ module Users
     def wellbeing_assessment_today?
       wellbeing_assessment_today = current_user.wellbeing_assessment_today
 
-      return unless wellbeing_assessment_today.present?
+      return if wellbeing_assessment_today.blank?
 
       redirect_to(
         wellbeing_assessment_path(wellbeing_assessment_today),

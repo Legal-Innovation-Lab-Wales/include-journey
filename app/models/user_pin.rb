@@ -11,7 +11,7 @@ class UserPin < ApplicationRecord
   def decrement
     previous_pin = UserPin.where('team_member_id = ? and user_pins.order = ?', team_member_id, order - 1)
 
-    return unless previous_pin.present?
+    return if previous_pin.blank?
 
     previous_pin.update(order: order)
     update!(order: order - 1)
@@ -20,7 +20,7 @@ class UserPin < ApplicationRecord
   def increment
     next_pin = UserPin.where('team_member_id = ? and user_pins.order = ?', team_member_id, order + 1)
 
-    return unless next_pin.present?
+    return if next_pin.blank?
 
     next_pin.update(order: order)
     update!(order: order + 1)

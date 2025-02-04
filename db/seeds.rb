@@ -34,7 +34,7 @@ puts('-' * DOTTED_LINE_LENGTH)
 puts 'Running Seeds'
 Dir[Rails.root.join('db/seeds/*.rb').to_s].sort.each { |seed| load seed }
 
-unless User.find_by_email('john.smith@me.com').present?
+if User.find_by(email: 'john.smith@me.com').blank?
   user = User.new(
     first_name: 'John',
     last_name: 'Smith',

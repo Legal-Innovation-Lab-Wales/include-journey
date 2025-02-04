@@ -59,7 +59,7 @@ module Users
     end
 
     def update_answers
-      return unless params[:question].present?
+      return if params[:question].blank?
 
       params[:question].each do |question|
         answer = SurveyAnswer.find_or_create_by(
@@ -73,7 +73,7 @@ module Users
     end
 
     def update_comments
-      return unless params[:comment_section].present?
+      return if params[:comment_section].blank?
 
       params[:comment_section].each do |comment_section|
         comment = SurveyComment.find_or_create_by(
@@ -91,7 +91,7 @@ module Users
 
       response = @survey_responses.where(survey_id: @surveys.first.id)
 
-      !response.present? || !response.first.submitted?
+      response.blank? || !response.first.submitted?
     end
 
     def mark_submitted

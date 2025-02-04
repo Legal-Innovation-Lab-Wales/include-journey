@@ -16,8 +16,8 @@ class Upload < ApplicationRecord
   validates :comment, format: {with: Rails.application.config.regex_text_field,
                                message: Rails.application.config.text_field_error,}
 
-  scope :created_in_last_week, -> { where('uploads.created_at >= ?', 1.week.ago) }
-  scope :created_in_last_month, -> { where('uploads.created_at >= ?', 1.month.ago) }
+  scope :created_in_last_week, -> { where(uploads: {created_at: 1.week.ago..}) }
+  scope :created_in_last_month, -> { where(uploads: {created_at: 1.month.ago..}) }
   scope :pdf_files, -> { joins(:upload_file).where(upload_files: {content_type: 'application/pdf'}) }
   scope :images, -> { joins(:upload_file).where.not(upload_files: {content_type: 'application/pdf'}) }
   scope :uploaded_by_teammember, -> { where(added_by: 'TeamMember') }

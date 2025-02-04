@@ -29,7 +29,7 @@ class Survey < ApplicationRecord
   end
 
   def next_section
-    return 1 unless survey_sections.present?
+    return 1 if survey_sections.none?
 
     survey_sections.order(order: :desc).first.order + 1
   end

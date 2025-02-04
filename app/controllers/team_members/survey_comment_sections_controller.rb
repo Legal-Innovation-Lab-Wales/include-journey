@@ -38,7 +38,7 @@ module TeamMembers
     end
 
     def verify_section
-      return unless comment_section_params[:section_id].present?
+      return if comment_section_params[:section_id].blank?
 
       return if @survey_sections.find(comment_section_params[:section_id]).present?
 

@@ -116,13 +116,22 @@ module TeamMembers
     def update_unique_check
       date = affirmation_params[:scheduled_date]
 
-      return unless Affirmation.where('id != ? and scheduled_date = ?', @affirmation.id, date).present?
+      # TODO: just use a validator
+      is_duplicate = Affirmation
+        .where(scheduled_date: date)
+        .where.not(id: @affirmation.id)
+        .any?
 
-      redirect_back(fallback_location: affirmation_path(@affirmation), flash: error('update'))
+      if is_duplicate
+        redirect_back(
+          fallback_location: affirmation_path(@affirmation),
+          flash: error('update'),
+        )
+      end
     end
 
     def create_unique_check
-      return unless Affirmation.where('scheduled_date = ?', affirmation_params[:scheduled_date]).present?
+      return if Affirmation.where(scheduled_date: affirmation_params[:scheduled_date]).blank?
 
       session[:affirmation_text] = affirmation_params[:text]
 

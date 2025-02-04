@@ -25,13 +25,13 @@ class SurveySection < ApplicationRecord
   validate :must_have_two_to_six_answer_labels
 
   def next_question
-    return 1 unless survey_questions.present?
+    return 1 if survey_questions.none?
 
     survey_questions.order(order: :desc).first.order + 1
   end
 
   def next_comment_section
-    return 1 unless survey_comment_sections.present?
+    return 1 if survey_comment_sections.none?
 
     survey_comment_sections.order(order: :desc).first.order + 1
   end
