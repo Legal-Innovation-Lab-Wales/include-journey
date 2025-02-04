@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.8'
+ruby '3.3.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4.4'
@@ -25,6 +25,16 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 # User SendGrid for emails
 gem 'sendgrid-ruby'
+
+# Fix for missing ActiveSupport::LoggerThreadSafeLevel::Logger
+# See https://stackoverflow.com/questions/79360526
+# Will not be needed for Rails 7.1+
+gem 'concurrent-ruby', '1.3.4'
+
+# Fix deprecation warnings from ActiveSupport 6.1.4.7
+gem 'bigdecimal'
+gem 'drb'
+gem 'mutex_m'
 
 gem 'bootstrap', '~> 5.3.3'
 gem 'chartkick'
@@ -72,9 +82,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+  gem 'selenium-webdriver', '~> 4.28'
   # Association and Validation Matchers
   gem 'assert_valid', '~> 0.1.0'
   gem 'shoulda-matchers', '~> 3.1'
