@@ -38,9 +38,9 @@ familiar_face_jan:
   name: Familiar Face January
   description: This achievement demonstrates your commitment to using the Include Journey platform.
   entities: sessions
-  bronze_count: 100
-  silver_count: 250
-  gold_count: 500
+  bronze_count: 10
+  silver_count: 20
+  gold_count: 31
   starts_at: 2020-01-01
   ends_at: 2020-01-31
 
@@ -48,9 +48,9 @@ wellbeing_warrior_jan:
   name: Wellbeing Warrior January
   description: This achievement demonstrates your commitment to tracking your wellbeing.
   entities: wellbeing_assessments
-  bronze_count: 100
-  silver_count: 250
-  gold_count: 500
+  bronze_count: 10
+  silver_count: 20
+  gold_count: 31
   starts_at: 2020-01-01
   ends_at: 2020-01-31
 
@@ -58,9 +58,9 @@ diary_journeyman_jan:
   name: Diary Journeyman January
   description: This achievement demonstrates your commitment to keeping a regular diary.
   entities: diary_entries
-  bronze_count: 100
-  silver_count: 250
-  gold_count: 500
+  bronze_count: 10
+  silver_count: 20
+  gold_count: 31
   starts_at: 2020-01-01
   ends_at: 2020-01-31
 
@@ -68,8 +68,8 @@ goal_getter_jan:
   name: Goal Getter January
   description: This achievement demonstrates your commitment to reaching your goals.
   entities: goals_achieved
-  bronze_count: 100
-  silver_count: 250
-  gold_count: 500
+  bronze_count: 10
+  silver_count: 20
+  gold_count: 31
   starts_at: 2020-01-01
   ends_at: 2020-01-31

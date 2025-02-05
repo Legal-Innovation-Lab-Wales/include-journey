@@ -6,6 +6,7 @@ alice:
   email: alice.jones@example.com
   mobile_number: 07223 445566
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
+  terms: true
 
 bob:
   first_name: Bob
@@ -13,3 +14,4 @@ bob:
   email: bob.smith@example.com
   mobile_number: 07998 776655
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
+  terms: true
