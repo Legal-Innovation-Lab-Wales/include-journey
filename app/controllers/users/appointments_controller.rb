@@ -147,7 +147,7 @@ module Users
       start_date = Time.zone.parse(appointment_params[:start])
       end_date = Time.zone.parse(appointment_params[:end])
 
-      return if (end_date.after? start_date) || (start_date === end_date)
+      return if end_date >= start_date
 
       session[:appointment_params] = appointment_params
 
