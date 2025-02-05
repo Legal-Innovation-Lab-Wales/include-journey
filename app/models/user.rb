@@ -25,6 +25,7 @@ class User < DeviseRecord
   has_many :sessions, dependent: :delete_all
   has_many :user_achievements, dependent: :delete_all
   has_many :assignments
+  has_many :contact_logs
   has_many :diary_entry_permissions
   has_many :diary_entry_permissions, through: :diary_entries
   has_many :team_members, through: :assignments
