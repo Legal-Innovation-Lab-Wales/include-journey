@@ -6,7 +6,7 @@ if Config::SURVEY_RESPONSES
   survey = Survey.includes(:survey_sections).first
   survey_sections = survey.survey_sections.includes(:survey_questions, :survey_comment_sections)
 
-  User.all.each do |user|
+  User.find_each do |user|
     response = SurveyResponse.create!(user: user, survey: survey)
 
     survey_sections.each do |survey_section|

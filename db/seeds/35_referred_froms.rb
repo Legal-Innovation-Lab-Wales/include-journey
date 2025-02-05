@@ -20,7 +20,7 @@ if ReferredFrom.count.zero?
   ReferredFrom.create!(name: 'Owner occupier')
   ReferredFrom.create!(name: 'PRS')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.referred_from = ReferredFrom.all.sample
     user.save!
   end

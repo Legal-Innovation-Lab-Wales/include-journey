@@ -29,8 +29,9 @@ class UserPin < ApplicationRecord
   private
 
   def update_order
-    UserPin.all.where('team_member_id = ? and user_pins.order > ?', team_member_id, order).each do |pin|
-      pin.update!(order: pin.order - 1)
-    end
+    UserPin.where(team_member_id: team_member_id, order: order..)
+      .find_each do |pin|
+        pin.update!(order: pin.order - 1)
+      end
   end
 end

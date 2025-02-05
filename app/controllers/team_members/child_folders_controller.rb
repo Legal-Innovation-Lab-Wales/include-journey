@@ -30,11 +30,9 @@ module TeamMembers
 
       destroyed = folder.destroy!
 
-      has_siblings = (
-        parent
-        && parent.child_folders.length > 0
-        && Upload.where(user_id: @user.id, parent_folder_id: parent.id).any?
-      )
+      has_siblings = parent&.child_folders&.any? &&
+        Upload.where(user_id: @user.id, parent_folder_id: parent.id).any?
+
       path = if has_siblings
         user_folder_children_path(@user, parent)
       elsif has_folders(parent)

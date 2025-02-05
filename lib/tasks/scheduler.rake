@@ -72,7 +72,7 @@ namespace :achievements do
   desc 'This task is used to reset the users monthly counts'
   task reset_monthly_counts: :environment do
     User.skip_callback(:update, :before, :verify_achievements, raise: false)
-    User.all.each(&:reset_monthly_counts)
+    User.find_each(&:reset_monthly_counts)
     User.set_callback(:update, :before, :verify_achievements)
   end
 end

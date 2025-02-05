@@ -2,7 +2,7 @@
 
 if UserTag.count.zero?
   print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.current - @start_time)}"
-  User.all.each do |user|
+  User.find_each do |user|
     if user.id.even?
       half = (Tag.count / 2).floor
       first_tag = Tag.find(rand(1...half))

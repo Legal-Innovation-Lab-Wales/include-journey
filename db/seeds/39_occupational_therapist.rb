@@ -48,7 +48,7 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
     )
 
     # Create associated OtaEntries (AssessmentEntries) with a random metric and score
-    OccupationalTherapistMetric.all.each do |metric|
+    OccupationalTherapistMetric.find_each do |metric|
       score = OccupationalTherapistScore.all.sample
 
       OtaEntry.create!(

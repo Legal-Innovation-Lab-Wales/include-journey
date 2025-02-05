@@ -34,7 +34,6 @@ module TeamMembers
 
     def resources
       @resources = Tag.includes(:team_member, :user_tags)
-        .all
         .order(sort)
     end
 

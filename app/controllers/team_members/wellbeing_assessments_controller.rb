@@ -163,7 +163,7 @@ module TeamMembers
     end
 
     def wellbeing_metrics
-      @wellbeing_metrics = WellbeingMetric.all.order(:created_at)
+      @wellbeing_metrics = WellbeingMetric.order(:created_at)
     end
 
     def subheading_stats

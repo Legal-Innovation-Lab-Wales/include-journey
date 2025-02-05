@@ -6,7 +6,7 @@ module TeamMembers
     before_action :set_breadcrumbs
     # GET /wellbeing_score_values
     def index
-      @score_values = WellbeingScoreValue.all.order(:id)
+      @score_values = WellbeingScoreValue.order(:id)
       render 'index'
     end
 

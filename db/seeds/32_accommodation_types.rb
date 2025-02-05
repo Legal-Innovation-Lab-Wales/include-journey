@@ -28,7 +28,7 @@ if AccommodationType.count.zero?
   AccommodationType.create!(name: '55+ accommodation / sheltered living')
   AccommodationType.create!(name: 'Living with Parents / family')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.accommodation_type = AccommodationType.all.sample
     user.save!
   end

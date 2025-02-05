@@ -23,7 +23,7 @@ if SupportEndingReason.count.zero?
   SupportEndingReason.create!(name: 'Has requested for support to end')
   SupportEndingReason.create!(name: 'Deceased')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.support_ending_reason = SupportEndingReason.all.sample
     user.save!
   end

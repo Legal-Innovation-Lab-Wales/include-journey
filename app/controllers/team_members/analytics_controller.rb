@@ -21,7 +21,7 @@ module TeamMembers
           'User Gender Identity', 'User Ethnic Group', 'User Disabilities', 'User Tags',
         ] + wallich_specific_headers + [
           'Team Member ID', 'Team Member Name',
-        ] + WellbeingMetric.all.order(:id).map(&:name)
+        ] + WellbeingMetric.order(:id).map(&:name)
       elsif params[:data] == 'Contact Logs'
         [
           'ID', 'Creation Date', 'Notes', 'Start Date', 'End Date', 'User ID', 'User Name',
@@ -88,12 +88,12 @@ module TeamMembers
       end
       apply_filters
       @resource = table == 'contact_logs' ? @resource.sort_by(&:start) : @resource.sort_by(&:created_at)
-      @scores = params[:data] === 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
+      @scores = params[:data] == 'Contact Logs' ? ContactType.all : WellbeingScoreValue.order(id: :asc)
       @labels = @scores.pluck(:name)
       @colours = @scores.pluck(:color)
       return unless params[:display] == 'Line Chart' && params[:data] == 'Wellbeing Assessments'
 
-      @colours = WellbeingMetric.all.pluck(:colour)
+      @colours = WellbeingMetric.pluck(:colour)
     end
 
     def base_resources
@@ -112,9 +112,11 @@ module TeamMembers
       when 'Anyone'
         WellbeingAssessment.all
       when 'User'
-        WellbeingAssessment.all.where(team_member_id: nil)
+        WellbeingAssessment.where(team_member_id: nil)
+      when 'Staff'
+        WellbeingAssessment.where.not(team_member_id: nil)
       else
-        params[:author] == 'Staff' ? WellbeingAssessment.all.where.not(team_member_id: nil) : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).wellbeing_assessments
+        TeamMember.find_by(email: params[:member]).wellbeing_assessments
       end
     end
 
@@ -178,8 +180,8 @@ module TeamMembers
     end
 
     def apply_filter_helper_for_tag(resource)
-      tags = UserTag.all.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
-      users = User.all.joins(:user_tags).merge(tags)
+      tags = UserTag.joins(:tag).where(build_query('tags', 'tag', params['tag'], @tags))
+      users = User.joins(:user_tags).merge(tags)
       resource.joins(:user).merge(users)
     end
 
@@ -187,7 +189,7 @@ module TeamMembers
       model = name.split('-').map(&:capitalize).join.constantize.all
       modified_name = name.gsub('-', '_')
       filtered_model = model.joins(:user).where(build_query(modified_name.pluralize, 'name', params[name], values))
-      users = User.all.joins(modified_name.to_sym).merge(filtered_model)
+      users = User.joins(modified_name.to_sym).merge(filtered_model)
       resource.joins(:user).merge(users)
     end
 

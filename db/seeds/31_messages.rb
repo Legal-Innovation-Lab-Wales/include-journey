@@ -3,7 +3,7 @@
 if Message.count.zero?
   print "#{pretty_print_name('Message')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
-  Note.where(visible_to_user: true, replacing: nil).each do |note|
+  Note.where(visible_to_user: true, replacing: nil).find_each do |note|
     message = Message.new(
       team_member_id: note.team_member.id,
       user_id: note.user.id,

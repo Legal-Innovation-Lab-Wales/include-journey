@@ -20,7 +20,7 @@ if HousingProvider.count.zero?
   HousingProvider.create!(name: 'Owner occupier')
   HousingProvider.create!(name: 'PRS')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.housing_provider = HousingProvider.all.sample
     user.save!
   end

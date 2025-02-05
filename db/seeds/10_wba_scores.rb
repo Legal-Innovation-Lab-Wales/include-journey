@@ -2,11 +2,11 @@
 
 if WbaScore.count.zero?
   print "#{pretty_print_name('WBA Scores')}\tStart: #{pretty_print(Time.current - @start_time)}"
-  User.all.each do |user|
+  User.find_each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)
     wellbeing_assessments.each_with_index do |wellbeing_assessment, index|
       total = 0
-      WellbeingMetric.all.each do |wellbeing_metric|
+      WellbeingMetric.find_each do |wellbeing_metric|
         score_value = if index.positive?
           # Users wba_score for a given metric will only increment by +/- 1
           score = wellbeing_assessments[index - 1].wba_scores

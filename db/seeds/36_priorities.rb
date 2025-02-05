@@ -7,7 +7,7 @@ if Priority.count.zero?
   Priority.create!(name: 'Medium')
   Priority.create!(name: 'High')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.priority = Priority.all.sample
     user.save!
   end

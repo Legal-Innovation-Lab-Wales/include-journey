@@ -2,7 +2,7 @@
 
 if WellbeingAssessment.count.zero?
   print "#{pretty_print_name('Wellbeing Assessments')}\tStart: #{pretty_print(Time.current - @start_time)}"
-  User.all.each do |user|
+  User.find_each do |user|
     Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER.times do |index|
       created_at_value = Time.current - (Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER - (index + 1))
       wellbeing_assessment = WellbeingAssessment.create!(user: user, created_at: created_at_value)

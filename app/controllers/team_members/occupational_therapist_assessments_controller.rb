@@ -111,13 +111,11 @@ module TeamMembers
     end
 
     def occupational_therapist_metrics
-      @occupational_therapist_metrics = OccupationalTherapistMetric.all
-        .order(:created_at)
+      @occupational_therapist_metrics = OccupationalTherapistMetric.order(:created_at)
     end
 
     def occupational_therapist_scores
-      @occupational_therapist_scores = OccupationalTherapistScore.all
-        .order(:created_at)
+      @occupational_therapist_scores = OccupationalTherapistScore.order(:created_at)
     end
 
     def user

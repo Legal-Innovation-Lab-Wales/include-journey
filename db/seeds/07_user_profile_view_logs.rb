@@ -3,8 +3,8 @@
 if UserProfileViewLog.count.zero?
   print "#{pretty_print_name('User Profile View Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
   # Create a view log of every user for every team member
-  User.all.each do |user|
-    TeamMember.all.each do |team_member|
+  User.find_each do |user|
+    TeamMember.find_each do |team_member|
       created_at = rand(1..100).days.ago
       view_count = rand(1..10)
       updated_at = view_count == 1 ? created_at : Faker::Time.between(from: created_at, to: Time.current)

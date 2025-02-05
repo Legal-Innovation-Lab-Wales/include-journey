@@ -33,6 +33,9 @@ Layout/MultilineAssignmentLayout:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 

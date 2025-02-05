@@ -2,7 +2,7 @@
 
 if ContactLog.count.zero?
   print "#{pretty_print_name('Contact Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
-  TeamMember.all.each do |team_member|
+  TeamMember.find_each do |team_member|
     Config::CONTACT_LOGS_FOR_EACH_TEAM_MEMBER.times do
       app_time = Faker::Time.between(from: Time.current, to: DateTime.yesterday - 60.days)
       note = Faker::Quotes::Shakespeare.hamlet_quote.gsub! ';', ':'

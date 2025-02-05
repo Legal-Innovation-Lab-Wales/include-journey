@@ -7,7 +7,7 @@ if WallichLocalAuthority.count.zero?
   WallichLocalAuthority.create!(name: 'NPT')
   WallichLocalAuthority.create!(name: 'Other')
 
-  User.all.each do |user|
+  User.find_each do |user|
     user.wallich_local_authority = WallichLocalAuthority.all.sample
     user.save!
   end
