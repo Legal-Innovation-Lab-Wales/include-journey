@@ -27,6 +27,7 @@ class TeamMember < DeviseRecord
   has_many :created_tags, class_name: 'Tag'
   has_many :assigned_tags, through: :user_tags, source: :tag
   has_many :contact_logs, dependent: :delete_all
+  has_many :appointments
   has_many :assignments
   has_many :users, through: :assignments
   has_many :notifications

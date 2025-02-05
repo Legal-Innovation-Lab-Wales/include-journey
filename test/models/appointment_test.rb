@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class AppointmentTest < ActiveSupport::TestCase
-  fixtures :team_members, :users
+  fixtures :team_members, :users, :appointments
 
   def setup
     super
@@ -52,5 +52,13 @@ class AppointmentTest < ActiveSupport::TestCase
     assert_equal @start, appointment.start
     assert_equal @end, appointment.end
     assert_nil appointment.team_member
+  end
+
+  test 'appointments should load by associated user' do
+    assert_equal appointments(:one, :two), @user.appointments.all
+  end
+
+  test 'appointments should load by associated team member' do
+    assert_equal [appointments(:two)], @team_member.appointments.all
   end
 end
