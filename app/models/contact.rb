@@ -17,7 +17,7 @@ class Contact < ApplicationRecord
     with: Rails.application.config.regex_telephone,
     message: Rails.application.config.telephone_error,
   }
-  validates :email, format: {
+  validates :email, if: -> { email.present? }, format: {
     with: Rails.application.config.regex_email,
     message: Rails.application.config.email_error,
   }
