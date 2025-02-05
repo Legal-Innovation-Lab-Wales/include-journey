@@ -94,7 +94,7 @@ module TeamMembers
     private
 
     def affirmation
-      @affirmation = Affirmation.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @affirmation = Affirmation.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: affirmations_path,

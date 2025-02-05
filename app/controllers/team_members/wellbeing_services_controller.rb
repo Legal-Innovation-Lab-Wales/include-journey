@@ -103,7 +103,7 @@ module TeamMembers
 
     def wellbeing_service
       @wellbeing_service = WellbeingService.includes(:wellbeing_metrics)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to(
         wellbeing_services_path,

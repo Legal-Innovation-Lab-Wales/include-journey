@@ -39,11 +39,10 @@ module TeamMembers
     end
 
     def search
-      search_query = ActiveRecord::Base.sanitize_sql_for_conditions("#{team_member_search} or #{user_search}")
       @resources = @tag.user_tags
         .includes(:team_member, :user)
         .joins(:team_member)
-        .where(search_query, wildcard_query)
+        .where("#{team_member_search} or #{user_search}", wildcard_query)
         .order(sort)
     end
 
@@ -87,15 +86,15 @@ module TeamMembers
     end
 
     def selected_tag
-      @tag = Tag.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:tag_id]))
+      @tag = Tag.find(params[:tag_id])
     end
 
     def user
-      @user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.find(params[:user_id])
     end
 
     def user_tag
-      @user_tag = @user.user_tags.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @user_tag = @user.user_tags.find(params[:id])
     end
 
     def user_tag_params

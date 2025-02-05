@@ -42,7 +42,7 @@ module TeamMembers
     def diary_entry
       @diary_entry = current_team_member.diary_entries
         .includes(:user)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: diary_entries_path,

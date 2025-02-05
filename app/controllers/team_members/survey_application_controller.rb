@@ -21,7 +21,7 @@ module TeamMembers
 
     def survey
       @survey = Survey.includes(:survey_sections, :survey_responses)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:survey_id]))
+        .find(params[:survey_id])
       @survey_sections = @survey.survey_sections
         .includes(:survey_questions, :survey_comment_sections)
         .order(order: :asc)
@@ -35,7 +35,7 @@ module TeamMembers
     end
 
     def survey_response
-      @survey_response = @responses.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:response_id]))
+      @survey_response = @responses.find(params[:response_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: survey_path(@survey),
@@ -44,7 +44,7 @@ module TeamMembers
     end
 
     def survey_section
-      @survey_section = @survey_sections.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:section_id]))
+      @survey_section = @survey_sections.find(params[:section_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: edit_survey_path(@survey),
@@ -53,7 +53,7 @@ module TeamMembers
     end
 
     def survey_question
-      @survey_question = @survey_section.survey_questions.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:question_id]))
+      @survey_question = @survey_section.survey_questions.find(params[:question_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: edit_survey_path(@survey),
@@ -62,7 +62,7 @@ module TeamMembers
     end
 
     def survey_comment_section
-      @survey_comment_section = @survey_section.survey_comment_sections.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:comment_section_id]))
+      @survey_comment_section = @survey_section.survey_comment_sections.find(params[:comment_section_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: edit_survey_path(@survey),

@@ -121,18 +121,24 @@ module TeamMembers
     end
 
     def diary_data
-      @resource = if current_team_member.admin?
-        params[:member] == 'All' ? DiaryEntry.all : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).diary_entries
-      else
+      @resource = if !current_team_member.admin?
         current_team_member.diary_entries
+      elsif params[:member] == 'All'
+        DiaryEntry.all
+      else
+        TeamMember.find_by(email: params[:member])
+          .diary_entries
       end
     end
 
     def contact_log_data
-      @resource = if current_team_member.admin?
-        params[:member] == 'All' ? ContactLog.all : TeamMember.find_by(email: ActiveRecord::Base.sanitize_sql_for_conditions(params[:member])).contact_logs
-      else
+      @resource = if !current_team_member.admin?
         current_team_member.contact_logs
+      elsif params[:member] == 'All'
+        ContactLog.all
+      else
+        TeamMember.find_by(email: params[:member])
+          .contact_logs
       end
     end
 

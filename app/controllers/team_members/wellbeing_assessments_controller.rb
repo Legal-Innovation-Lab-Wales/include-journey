@@ -29,7 +29,7 @@ module TeamMembers
       add_breadcrumb('Wellbeing Assessments', wellbeing_assessments_path, 'fas fa-heart')
       add_breadcrumb('This Wellbeing Assessment')
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
 
       render 'show'
     end
@@ -100,14 +100,14 @@ module TeamMembers
       return if params[:team_member_id].blank?
 
       @team_member = TeamMember.includes(:wellbeing_assessments)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id]))
+        .find(params[:team_member_id])
     end
 
     def user
       return if params[:user_id].blank?
 
       @user = User.includes(:wellbeing_assessments)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
+        .find(params[:user_id])
     end
 
     def wba_params
@@ -134,7 +134,7 @@ module TeamMembers
 
     def wellbeing_assessment
       @wellbeing_assessment = WellbeingAssessment.includes(:user, :team_member)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     end
 
     def wellbeing_assessments

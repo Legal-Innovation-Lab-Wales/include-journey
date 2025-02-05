@@ -182,7 +182,7 @@ module TeamMembers
 
     def user
       @user = User.includes(:uploads)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
+        .find(params[:user_id])
     end
 
     def upload

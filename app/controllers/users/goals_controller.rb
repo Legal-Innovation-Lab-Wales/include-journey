@@ -68,7 +68,7 @@ module Users
     private
 
     def goal
-      @goal = current_user.goals.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @goal = current_user.goals.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to goals_path, flash: {error: 'No such goal'}
     end

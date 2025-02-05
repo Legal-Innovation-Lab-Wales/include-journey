@@ -88,7 +88,7 @@ module Users
 
     def contact
       @contact = current_user.contacts
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: contacts_path,

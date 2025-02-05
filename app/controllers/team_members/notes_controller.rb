@@ -108,19 +108,19 @@ module TeamMembers
     end
 
     def user
-      @user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
+      @user = User.find(params[:user_id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: {error: 'User not found'})
     end
 
     def team_member_note
-      @note = current_team_member.notes.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @note = current_team_member.notes.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: {error: 'Note not found'})
     end
 
     def note
-      @note = Note.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @note = Note.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(fallback_location: users_path, flash: {error: 'Note not found'})
     end

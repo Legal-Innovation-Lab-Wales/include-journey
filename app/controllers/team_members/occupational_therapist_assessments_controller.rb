@@ -21,7 +21,7 @@ module TeamMembers
       add_breadcrumb('This Occupational Therapist Assessment')
       @occupational_therapist_assessment = OccupationalTherapistAssessment
         .includes(:user, :team_member)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
 
       render 'show'
     end
@@ -89,7 +89,7 @@ module TeamMembers
     def occupational_therapist_assessment
       @occupational_therapist_assessment = OccupationTherapistAssessment
         .includes(:user, :team_member)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     end
 
     def occupational_therapist_assessments
@@ -122,14 +122,14 @@ module TeamMembers
       return if params[:user_id].blank?
 
       @user = User.includes(:occupational_therapist_assessments)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id]))
+        .find(params[:user_id])
     end
 
     def team_member
       return if params[:team_member_id].blank?
 
       @team_member = TeamMember.includes(:occupational_therapist_assessments)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id]))
+        .find(params[:team_member_id])
     end
 
     def ota_params

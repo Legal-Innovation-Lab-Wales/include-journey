@@ -70,7 +70,7 @@ module TeamMembers
     end
 
     def team_member
-      @team_member = TeamMember.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      @team_member = TeamMember.find(params[:id])
     end
 
     def set_breadcrumbs

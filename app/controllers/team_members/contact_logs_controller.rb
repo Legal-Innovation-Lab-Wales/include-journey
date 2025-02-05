@@ -204,12 +204,12 @@ module TeamMembers
 
     def get_user
       if params[:user_id].present?
-        @user = User.where(id: ActiveRecord::Base.sanitize_sql_for_conditions(params[:user_id])).first
+        @user = User.find_by(id: params[:user_id])
         return if @user.present?
 
         redirect_to authenticated_team_member_root_path
       elsif params[:team_member_id].present?
-        @team_member = TeamMember.where(id: ActiveRecord::Base.sanitize_sql_for_conditions(params[:team_member_id])).first
+        @team_member = TeamMember.find_by(id: params[:team_member_id])
         return if @team_member.present?
 
         redirect_to authenticated_team_member_root_path

@@ -48,7 +48,7 @@ module Users
 
     def survey
       @survey = Survey.includes(:survey_sections)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
       @survey_sections = @survey.survey_sections
         .includes(:survey_questions, :survey_comment_sections)
         .order(order: :asc)

@@ -123,9 +123,9 @@ module TeamMembers
     def unpin
       verify_unpin
       notice = message(if @user_pin.destroy!
-        'has been unpinned'
-      else
-        'could not be unpinned'
+                 'has been unpinned'
+               else
+                 'could not be unpinned'
       end)
 
       redirect_back(
@@ -137,9 +137,9 @@ module TeamMembers
     # PUT /users/:id/increment
     def increment
       notice = message(if @user_pin.increment
-        'pin successfully moved'
-      else
-        'pin could not be moved'
+                 'pin successfully moved'
+               else
+                 'pin could not be moved'
       end)
 
       redirect_back(
@@ -151,9 +151,9 @@ module TeamMembers
     # PUT /users/:id/decrement
     def decrement
       notice = message(if @user_pin.decrement
-        'pin successfully moved'
-      else
-        'pin could not be moved'
+                 'pin successfully moved'
+               else
+                 'pin could not be moved'
       end)
 
       redirect_back(
@@ -170,7 +170,7 @@ module TeamMembers
     end
 
     def suspend
-      user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+      user = User.find(params[:id])
       user.suspended_at = user.suspended ? nil : Time.current
       user.suspended = !user.suspended
       user.save!
@@ -276,7 +276,7 @@ module TeamMembers
 
     def user
       @user = team_member_users.includes(:notes)
-        .find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_back(
         fallback_location: users_path,
