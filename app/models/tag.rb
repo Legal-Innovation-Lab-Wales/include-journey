@@ -10,7 +10,7 @@ class Tag < ApplicationRecord
   scope :tagged_in_last_week, -> { joins(:user_tags).where(user_tags: {created_at: 7.days.ago..}) }
   scope :tagged_in_last_month, -> { joins(:user_tags).where(user_tags: {created_at: 1.month.ago..}) }
 
-  validates :tag, :team_member_id, presence: true
+  validates :tag, presence: true
   validates :tag, format: {
     with: Rails.application.config.regex_name,
     message: Rails.application.config.name_error,

@@ -15,7 +15,7 @@ class Affirmation < ApplicationRecord
   scope :archived, -> { where(scheduled_date: ...Date.current) }
   scope :upcoming, -> { where(scheduled_date: Date.current..) }
 
-  validates :text, :scheduled_date, :team_member_id, presence: true
+  validates :text, :scheduled_date, presence: true
 
   def date
     scheduled_date.strftime('%d/%m/%Y')

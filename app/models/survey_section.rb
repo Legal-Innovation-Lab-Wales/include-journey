@@ -16,7 +16,6 @@ class SurveySection < ApplicationRecord
     ALWAYS_NEVER_LABELS,
   ]
 
-  validates :survey_id, presence: true
   validates :heading, format: {
     with: Rails.application.config.regex_text_field,
     message: Rails.application.config.text_field_error,

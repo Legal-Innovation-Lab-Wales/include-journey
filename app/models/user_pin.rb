@@ -6,7 +6,7 @@ class UserPin < ApplicationRecord
   belongs_to :team_member
   belongs_to :user
 
-  validates :team_member_id, :user_id, :order, presence: true
+  validates :order, presence: true
 
   def decrement
     previous_pin = UserPin.where('team_member_id = ? and user_pins.order = ?', team_member_id, order - 1)

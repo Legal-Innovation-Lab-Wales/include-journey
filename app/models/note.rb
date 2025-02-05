@@ -8,7 +8,7 @@ class Note < ApplicationRecord
   belongs_to :replacing, class_name: 'Note', optional: true
   has_one :message, dependent: :destroy
 
-  validates :team_member_id, :user_id, :content, :dated, presence: true
+  validates :content, :dated, presence: true
   validates :content, format: {
     with: Rails.application.config.regex_text_field,
     message: Rails.application.config.text_field_error,

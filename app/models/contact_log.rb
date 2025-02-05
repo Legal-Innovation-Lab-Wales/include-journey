@@ -7,7 +7,7 @@ class ContactLog < ApplicationRecord
   belongs_to :contact_type
   belongs_to :contact_purpose
 
-  validates :contact_type, :user, :start, :end, presence: true
+  validates :start, :end, presence: true
   validates :notes, format: {
     with: Rails.application.config.regex_text_field,
     message: Rails.application.config.text_field_error,

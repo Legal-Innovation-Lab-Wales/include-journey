@@ -10,7 +10,6 @@ class SurveyAnswer < ApplicationRecord
   after_update :increment_answer_count
   before_destroy :decrement_answer_count, :decrement_total
 
-  validates :survey_question_id, :survey_response_id, presence: true
   validates :answer, numericality: {only_integer: true, in: 0..5}
 
   def increment_total

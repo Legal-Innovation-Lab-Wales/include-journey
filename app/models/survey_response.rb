@@ -7,8 +7,6 @@ class SurveyResponse < ApplicationRecord
   has_many :survey_answers, dependent: :destroy
   has_many :survey_comments, dependent: :destroy
 
-  validates :survey_id, :user_id, presence: true
-
   scope :submitted, -> { where.not(submitted_at: nil) }
 
   def submitted?

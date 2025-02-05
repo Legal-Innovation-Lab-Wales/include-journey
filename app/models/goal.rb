@@ -12,7 +12,7 @@ class Goal < ApplicationRecord
   scope :archived, -> { where(archived: true) }
   scope :unarchived, -> { where(archived: false) }
 
-  validates :user_id, :goal, :goal_type, presence: true
+  validates :goal, presence: true
   validates :goal, format: {with: Rails.application.config.regex_text_field}
 
   def achieved?

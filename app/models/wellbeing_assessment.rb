@@ -31,8 +31,7 @@ class WellbeingAssessment < ApplicationRecord
     [id, created] + user.to_csv + (if team_member.present?
       team_member.to_csv
     else
-      [nil,
-        nil,]
+      [nil, nil]
     end) + wba_scores.order(:wellbeing_metric_id).map(&:value)
   end
 
@@ -41,7 +40,7 @@ class WellbeingAssessment < ApplicationRecord
       ID: id,
       Date: created,
     }
-    
+
     obj = obj.merge(user.json.transform_keys { |key| "User #{key}" })
     if team_member.present?
       obj = obj.merge(team_member.json.transform_keys { |key| "Team Member #{key}" })

@@ -7,8 +7,6 @@ class UserAchievement < ApplicationRecord
 
   before_update :update_cache
 
-  validates :user_id, :achievement_id, presence: true
-
   private
 
   def update_cache

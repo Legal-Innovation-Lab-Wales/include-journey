@@ -4,7 +4,7 @@ class Contact < ApplicationRecord
   belongs_to :user
 
   # Add input validations
-  validates :user_id, :name, :description, presence: true
+  validates :name, :description, presence: true
   validates :name, format: {
     with: Rails.application.config.regex_name,
     message: Rails.application.config.name_error,
