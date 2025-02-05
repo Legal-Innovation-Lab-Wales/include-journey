@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if WellbeingScoreValue.count.zero?
-  print "#{pretty_print_name('Score Values')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Score Values')}\tStart: #{pretty_print(Time.current - @start_time)}"
   WellbeingScoreValue.create!(
     name: 'Absymal',
     color: '#E04444',
@@ -43,6 +43,6 @@ if WellbeingScoreValue.count.zero?
     color: '#5DAD3A',
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 if ContactLog.count.zero?
-  print "#{pretty_print_name('Contact Logs')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Contact Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
   TeamMember.all.each do |team_member|
     Config::CONTACT_LOGS_FOR_EACH_TEAM_MEMBER.times do
-      app_time = Faker::Time.between(from: DateTime.now, to: DateTime.yesterday - 60.days)
+      app_time = Faker::Time.between(from: Time.current, to: DateTime.yesterday - 60.days)
       note = Faker::Quotes::Shakespeare.hamlet_quote.gsub! ';', ':'
       ContactLog.create!(
         team_member: team_member,
@@ -18,6 +18,6 @@ if ContactLog.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

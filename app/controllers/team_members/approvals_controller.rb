@@ -40,7 +40,7 @@ module TeamMembers
       @selected_users.each do |user|
         if is_approve
           user.approved = true
-          user.approved_at = DateTime.now
+          user.approved_at = Time.current
           user.save!
         else
           user.unapprove

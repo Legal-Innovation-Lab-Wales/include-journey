@@ -212,7 +212,7 @@ module TeamMembers
     def age_filter(field, age_range)
       age_range = age_range.gsub('and Over', '-200').gsub('Under', '?-')
       ages = age_range.split('-', 2)
-      ages[0] = numeric?(ages[0]) ? ages[0].to_i.years.ago : Date.today
+      ages[0] = numeric?(ages[0]) ? ages[0].to_i.years.ago : Date.current
       ages[1] = numeric?(ages[1]) ? ages[1].to_i.years.ago : 200.years.ago
 
       "#{field} < '#{ages[0]}' AND #{field} > '#{ages[1]}'"
@@ -251,17 +251,17 @@ module TeamMembers
       if date.present?
         date.to_datetime
       elsif use_earliest_date
-        Time.at(0).to_datetime
+        Time.zone.at(0).to_datetime
       else
-        Date.today
+        Time.current
       end
     end
 
     def initialize_params
       params['data'] = 'Diary Entries'
       params['display'] = 'Pie Chart'
-      params['date_to'] = Date.today
-      params['date_from'] = Date.today - 1.month
+      params['date_to'] = Date.current
+      params['date_from'] = Date.current - 1.month
       params['member'] = current_team_member.email
     end
 

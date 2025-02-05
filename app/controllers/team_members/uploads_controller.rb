@@ -84,7 +84,7 @@ module TeamMembers
 
       result = @upload.update(
         status: 'approved',
-        approved_at: Time.now,
+        approved_at: Time.current,
         approved_by: current_team_member.full_name,
       )
       if result
@@ -203,7 +203,7 @@ module TeamMembers
         added_by_id: current_team_member.id,
         status: 'approved',
         approved_by: current_team_member.full_name,
-        approved_at: Time.now,
+        approved_at: Time.current,
       )
     end
 
@@ -299,7 +299,7 @@ module TeamMembers
 
       if upload_activity_log.new_record?
         upload_activity_log.activity_type = activity_type
-        upload_activity_log.activity_time = Time.now
+        upload_activity_log.activity_time = Time.current
       end
 
       upload_activity_log.activity_count += 1

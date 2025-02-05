@@ -11,7 +11,7 @@ module Users
 
     # DELETE /users
     def destroy
-      current_user.update!(deleted_at: Time.now + 30.days)
+      current_user.update!(deleted_at: 30.days.from_now)
 
       redirect_back(fallback_location: authenticated_user_root_path)
     end
@@ -46,7 +46,7 @@ module Users
     end
 
     def send_new_user_email
-      return unless @user.created_at? || Time.now - User.second_to_last.created_at < 6.hours
+      return unless @user.created_at? || Time.current - User.second_to_last.created_at < 6.hours
 
       unapproved_count = User.where(approved: false).count
       TeamMember.admins.each do |admin|

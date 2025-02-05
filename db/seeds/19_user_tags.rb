@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if UserTag.count.zero?
-  print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.all.each do |user|
     if user.id.even?
       half = (Tag.count / 2).floor
@@ -31,6 +31,6 @@ if UserTag.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

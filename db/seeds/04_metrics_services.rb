@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if MetricsService.count.zero?
-  print "#{pretty_print_name('Metrics Services')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Metrics Services')}\tStart: #{pretty_print(Time.current - @start_time)}"
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 5) # Include --> Behaviour
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 6) # Include --> Addiction
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 7) # Include --> Relationships
@@ -17,6 +17,6 @@ if MetricsService.count.zero?
   MetricsService.create!(wellbeing_service_id: 5, wellbeing_metric_id: 1) # Citizens Advice --> Employment/Education/Training
   MetricsService.create!(wellbeing_service_id: 6, wellbeing_metric_id: 11) # Food Banks --> Food
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

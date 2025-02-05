@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if ReferredFrom.count.zero?
-  print "#{pretty_print_name('Referred From')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Referred From')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   ReferredFrom.create!(name: 'Bro Myrddin')
   ReferredFrom.create!(name: 'Coastal housing')
@@ -25,6 +25,6 @@ if ReferredFrom.count.zero?
     user.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

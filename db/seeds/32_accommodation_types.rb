@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if AccommodationType.count.zero?
-  print "#{pretty_print_name('Accommodation Types')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Accommodation Types')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   AccommodationType.create!(name: 'Living with friends')
   AccommodationType.create!(name: 'Local authority General needs tenancy')
@@ -33,6 +33,6 @@ if AccommodationType.count.zero?
     user.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

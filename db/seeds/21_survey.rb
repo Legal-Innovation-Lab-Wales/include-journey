@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Survey.count.zero?
-  print "#{pretty_print_name('Survey')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Survey')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   Survey.create!(
     name: 'HUB Survey 2021',
@@ -11,6 +11,6 @@ if Survey.count.zero?
     team_member_id: rand(1..TeamMember.count),
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

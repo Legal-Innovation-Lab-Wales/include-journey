@@ -80,7 +80,7 @@ module TeamMembers
 
     def past_appointment_query
       query = wildcard_query
-      query[:start] = Time.now
+      query[:start] = Time.current
       query
     end
 

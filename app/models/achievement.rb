@@ -7,7 +7,7 @@ class Achievement < ApplicationRecord
 
   scope :all_time, -> { where(starts_at: nil) }
   scope :this_month, lambda {
-    where('starts_at = ? and ends_at = ?', Date.today.at_beginning_of_month, Date.today.at_end_of_month)
+    where('starts_at = ? and ends_at = ?', Date.current.at_beginning_of_month, Date.current.at_end_of_month)
   }
   scope :for, ->(entities) { where(entities: entities).first }
   scope :available, -> { all_time.merge(this_month) }

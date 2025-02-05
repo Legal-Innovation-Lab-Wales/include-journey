@@ -1,7 +1,7 @@
 <div class="deletion-date d-flex justify-content-center align-items-center" data-deletion-date="<%= deletion_date %>">
   <p>
     <span class="line">Your account has been scheduled to be deleted in
-      (<span class="timer"><%= time_between(DateTime.now.to_f * 1000, deletion_date) %></span>).</span>
+      (<span class="timer"><%= time_between(Time.current.to_f * 1000, deletion_date) %></span>).</span>
     <span class="line">If you would like to keep your account please
       <%= link_to 'Click Here', cancel_deletion_path, method: :put, class: 'btn btn-primary mt-2 mt-sm-0' %>.</span>
   </p>

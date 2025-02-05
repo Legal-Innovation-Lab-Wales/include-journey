@@ -15,7 +15,7 @@ module TeamMembers
     private
 
     def send_new_team_member_email
-      return unless @team_member.created_at? || Time.now - TeamMember.second_to_last.created_at < 6.hours
+      return unless @team_member.created_at? || Time.current - TeamMember.second_to_last.created_at < 6.hours
 
       unapproved_count = TeamMember.unapproved.count
       TeamMember.admins.each do |admin|

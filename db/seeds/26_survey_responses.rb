@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Config::SURVEY_RESPONSES
-  print "#{pretty_print_name('Survey Responses')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Survey Responses')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   survey = Survey.includes(:survey_sections).first
   survey_sections = survey.survey_sections.includes(:survey_questions, :survey_comment_sections)
@@ -23,9 +23,9 @@ if Config::SURVEY_RESPONSES
       end
     end
 
-    response.update!(submitted_at: DateTime.now)
+    response.update!(submitted_at: Time.current)
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

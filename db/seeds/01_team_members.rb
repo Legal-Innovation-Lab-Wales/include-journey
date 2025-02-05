@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-print "#{pretty_print_name('Team Members')}\tStart: #{pretty_print(Time.now - @start_time)}"
+print "#{pretty_print_name('Team Members')}\tStart: #{pretty_print(Time.current - @start_time)}"
 if TeamMember.find_by(email: 'philr@purpleriver.dev').blank?
   team_member = TeamMember.new(
     first_name: 'Phil',
@@ -145,5 +145,5 @@ if TeamMember.find_by(email: 'admin@myjourney.app').blank?
   team_member.save!
 end
 
-@last_time = Time.now
-puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
+@last_time = Time.current
+puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"

@@ -12,8 +12,8 @@ class Affirmation < ApplicationRecord
     message: Rails.application.config.datetime_error,
   }
 
-  scope :archived, -> { where(scheduled_date: ...Date.today) }
-  scope :upcoming, -> { where(scheduled_date: Date.today..) }
+  scope :archived, -> { where(scheduled_date: ...Date.current) }
+  scope :upcoming, -> { where(scheduled_date: Date.current..) }
 
   validates :text, :scheduled_date, :team_member_id, presence: true
 

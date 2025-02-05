@@ -19,10 +19,10 @@ end
 namespace :achievements do
   desc 'This task is used to create the achievement records for the current month'
   task create_monthly: :environment do
-    start_date = Date.today.at_beginning_of_month
-    end_date = Date.today.at_end_of_month
+    start_date = Date.current.at_beginning_of_month
+    end_date = Date.current.at_end_of_month
     count = end_date.day
-    month = Date.today.strftime('%B %Y')
+    month = Date.current.strftime('%B %Y')
 
     Achievement.create!(
       name: "Familiar Face #{month}",

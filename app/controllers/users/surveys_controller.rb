@@ -95,7 +95,7 @@ module Users
     end
 
     def mark_submitted
-      @survey_response.update(submitted_at: DateTime.now)
+      @survey_response.update(submitted_at: Time.current)
 
       redirect_to(
         authenticated_user_root_path,

@@ -166,8 +166,8 @@ module TeamMembers
     end
 
     def validate_dates
-      start_date = DateTime.parse(contact_log_params[:start])
-      end_date = DateTime.parse(contact_log_params[:end])
+      start_date = Time.zone.parse(contact_log_params[:start])
+      end_date = Time.zone.parse(contact_log_params[:end])
 
       return if (end_date.after? start_date) || (start_date == end_date)
 

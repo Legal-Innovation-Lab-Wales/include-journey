@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Contact.count.zero?
-  print "#{pretty_print_name('Contacts')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Contacts')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.all.each do |user|
     Config::CONTACTS_FOR_EACH_USER.times do
       name = Faker::Name.name
@@ -15,6 +15,6 @@ if Contact.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

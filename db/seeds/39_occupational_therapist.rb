@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'wallich-journey'
-  print "#{pretty_print_name('Occupational Therapist Assessment')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Occupational Therapist Assessment')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   # Create Occupational Therapist Metric
   metrics = [
@@ -59,6 +59,6 @@ if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'w
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

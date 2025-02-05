@@ -3,7 +3,7 @@
 survey = Survey.first
 
 if survey.survey_sections.count.zero?
-  print "#{pretty_print_name('Survey Section 1')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Survey Section 1')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   section1 = survey.survey_sections.create!(
     order: 1,
@@ -47,6 +47,6 @@ if survey.survey_sections.count.zero?
     label: 'We appreciate your feedback if there is anything you would to add, please add your comments here:',
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

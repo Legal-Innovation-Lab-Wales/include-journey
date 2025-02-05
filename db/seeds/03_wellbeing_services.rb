@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if WellbeingService.count.zero?
-  print "#{pretty_print_name('Wellbeing Services')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Wellbeing Services')}\tStart: #{pretty_print(Time.current - @start_time)}"
   WellbeingService.create!(
     team_member_id: rand(1..TeamMember.count),
     name: 'Include UK',
@@ -57,6 +57,6 @@ if WellbeingService.count.zero?
     postcode: 'SA1 3BG',
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

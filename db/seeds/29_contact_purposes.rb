@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if ContactPurpose.count.zero?
-  print "#{pretty_print_name('Contact Purposes')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Contact Purposes')}\tStart: #{pretty_print(Time.current - @start_time)}"
   ContactPurpose.create!(name: 'One-to-one')
   ContactPurpose.create!(name: 'Benefits')
   ContactPurpose.create!(name: 'Computer use')
@@ -21,6 +21,6 @@ if ContactPurpose.count.zero?
   ContactPurpose.create!(name: 'Interpersonal Violence Support')
   ContactPurpose.create!(name: 'Social Connect (Combating Isolation)')
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

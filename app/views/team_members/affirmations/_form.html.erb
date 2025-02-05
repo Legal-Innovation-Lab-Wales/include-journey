@@ -16,7 +16,7 @@
                 <% end %>
               </p>
               <div class="form-floating">
-                <%= f.date_field :scheduled_date, min: Date.today, class: 'form-control', required: true %>
+                <%= f.date_field :scheduled_date, min: Date.current, class: 'form-control', required: true %>
                 <%= f.label :scheduled_date %>
               </div>
               <p class="actual-error-message" >

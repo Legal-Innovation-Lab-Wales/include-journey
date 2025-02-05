@@ -50,7 +50,7 @@ class WellbeingAssessment < ApplicationRecord
     obj[:Scores] = wba_scores
       .order(:wellbeing_metric_id)
       .to_h { |score| [score.wellbeing_metric.name, score.value] }
-    
+
     obj
   end
 
@@ -58,7 +58,7 @@ class WellbeingAssessment < ApplicationRecord
 
   def update_cache
     user.update!(
-      last_wellbeing_assessment_at: Date.today,
+      last_wellbeing_assessment_at: Date.current,
       wellbeing_assessments_count: user.wellbeing_assessments_count + 1,
       wellbeing_assessments_this_month_count: user.wellbeing_assessments_this_month_count + 1,
     )

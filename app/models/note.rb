@@ -46,11 +46,11 @@ class Note < ApplicationRecord
   end
 
   def date
-    dated.present? ? dated.strftime('%Y-%m-%d') : Date.today.strftime('%Y-%m-%d')
+    dated.present? ? dated.strftime('%Y-%m-%d') : Date.current.strftime('%Y-%m-%d')
   end
 
   def time
-    dated.present? ? dated.strftime('%H:%M') : Time.now.strftime('%H:%M')
+    dated.present? ? dated.strftime('%H:%M') : Time.current.strftime('%H:%M')
   end
 
   def dated?

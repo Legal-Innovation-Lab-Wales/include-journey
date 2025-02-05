@@ -10,7 +10,7 @@ end
 
 require 'faker'
 
-@start_time = Time.now
+@start_time = Time.current
 
 MAX_NAME_LENGTH = 22
 MAX_TIME_LENGTH = 6

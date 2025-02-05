@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if WallichLocalAuthority.count.zero?
-  print "#{pretty_print_name('Local Authorities')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Local Authorities')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   WallichLocalAuthority.create!(name: 'Swan')
   WallichLocalAuthority.create!(name: 'NPT')
@@ -12,6 +12,6 @@ if WallichLocalAuthority.count.zero?
     user.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

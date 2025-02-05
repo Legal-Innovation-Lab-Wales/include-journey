@@ -53,7 +53,7 @@ module Users
       return if @resources.blank?
 
       @entries_in_last_30_days = @resources.where(created_at: 30.days.ago..).count
-      @days_since_last_entry = (Time.now.to_date - @resources.first.created_at.to_date).to_i
+      @days_since_last_entry = (Time.current.to_date - @resources.first.created_at.to_date).to_i
     end
 
     private

@@ -120,7 +120,7 @@ module Users
 
     def past_appointment_query
       query = wildcard_query
-      query[:start] = Time.now
+      query[:start] = Time.current
       query
     end
 
@@ -144,8 +144,8 @@ module Users
     end
 
     def validate_dates
-      start_date = DateTime.parse(appointment_params[:start])
-      end_date = DateTime.parse(appointment_params[:end])
+      start_date = Time.zone.parse(appointment_params[:start])
+      end_date = Time.zone.parse(appointment_params[:end])
 
       return if (end_date.after? start_date) || (start_date === end_date)
 

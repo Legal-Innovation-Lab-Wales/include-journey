@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def deletion
     return if current_user.deleted_at.nil?
 
-    if current_user.deleted_at <= DateTime.now
+    if current_user.deleted_at <= Time.current
       current_user.destroy!
       sign_out_and_redirect(current_user)
     else
@@ -39,9 +39,9 @@ class ApplicationController < ActionController::Base
   end
 
   def create_session
-    return if current_user.last_session_at == Date.today
+    return if current_user.last_session_at == Date.current
 
-    current_user.sessions.create!(session_at: Date.today)
+    current_user.sessions.create!(session_at: Date.current)
   end
 
   def sign_out_notice

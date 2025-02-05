@@ -40,7 +40,7 @@ module Exportable
   end
 
   def filename(type)
-    "#{base_path}-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.#{type}"
+    "#{base_path}-#{Time.current.strftime('%Y-%m-%d-%H-%M-%S')}.#{type}"
   end
 
   def exportable_params

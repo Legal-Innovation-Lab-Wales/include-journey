@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Achievement.count.zero?
-  print "#{pretty_print_name('Achievements')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Achievements')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   # All time achievements
   Achievement.create!(
@@ -41,10 +41,10 @@ if Achievement.count.zero?
   )
 
   # Monthly Achievements | see: scheduler.rake
-  start_date = Date.today.at_beginning_of_month
-  end_date = Date.today.at_end_of_month
+  start_date = Date.current.at_beginning_of_month
+  end_date = Date.current.at_end_of_month
   count = end_date.day
-  month = Date.today.strftime('%B %Y')
+  month = Date.current.strftime('%B %Y')
 
   Achievement.create!(
     name: "Familiar Face #{month}",
@@ -90,6 +90,6 @@ if Achievement.count.zero?
     gold_count: count,
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @start_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @start_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

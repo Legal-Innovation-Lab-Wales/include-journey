@@ -3,7 +3,7 @@
 survey = Survey.first
 
 if survey.survey_sections.count < 4
-  print "#{pretty_print_name('Survey Section 4')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Survey Section 4')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   section4 = survey.survey_sections.create!(order: 4)
 
@@ -13,6 +13,6 @@ if survey.survey_sections.count < 4
     label: 'Please add any feedback about other services you have received:',
   )
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

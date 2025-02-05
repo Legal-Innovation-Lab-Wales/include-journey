@@ -5,9 +5,9 @@ class User < DeviseRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         # :confirmable,
-         :lockable, :timeoutable, :trackable
+    :recoverable, :rememberable, :validatable,
+    # :confirmable,
+    :lockable, :timeoutable, :trackable
 
   # General Association for all tenants
   has_many :notes, dependent: :delete_all
@@ -47,7 +47,7 @@ class User < DeviseRecord
   before_update :mail_suspended_user, if: -> { suspended_changed? }
   before_update :mail_deleted_user, if: -> { deleted_changed? && deleted? }
 
-  scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.now) }
+  scope :can_be_deleted, -> { where('deleted_at is not null and deleted_at <= ?', Time.current) }
   scope :active_last_week, -> { where(current_sign_in_at: 1.week.ago..) }
   scope :active_last_month, -> { where(current_sign_in_at: 1.month.ago..) }
   scope :deleted, -> { where(deleted: true) }

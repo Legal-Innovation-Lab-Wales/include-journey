@@ -32,7 +32,7 @@ module TeamMembers
       @user_tags = @user.user_tags
         .order(created_at: :desc)
       @tags = Tag.where.not(id: @user_tags.map { |user_tag| user_tag.tag.id })
-      @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: DateTime.now)
+      @new_user_tag = UserTag.new(team_member: current_team_member, user: @user, created_at: Time.current)
       @contact_logs = ContactLog.where(user_id: @user.id)
       @summary_panel = @user.summary_panel
       @uploads = @user.uploads
@@ -171,7 +171,7 @@ module TeamMembers
 
     def suspend
       user = User.find(ActiveRecord::Base.sanitize_sql_for_conditions(params[:id]))
-      user.suspended_at = user.suspended ? nil : DateTime.now
+      user.suspended_at = user.suspended ? nil : Time.current
       user.suspended = !user.suspended
       user.save!
 

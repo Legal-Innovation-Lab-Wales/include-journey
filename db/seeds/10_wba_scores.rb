@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if WbaScore.count.zero?
-  print "#{pretty_print_name('WBA Scores')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('WBA Scores')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.all.each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)
     wellbeing_assessments.each_with_index do |wellbeing_assessment, index|
@@ -31,6 +31,6 @@ if WbaScore.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

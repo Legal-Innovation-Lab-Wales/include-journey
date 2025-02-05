@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if User.count.zero?
-  print "#{pretty_print_name('Users')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Users')}\tStart: #{pretty_print(Time.current - @start_time)}"
   user_counter = 0
 
   Config::TOTAL_USER_COUNT.times do
@@ -19,6 +19,6 @@ if User.count.zero?
     user.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

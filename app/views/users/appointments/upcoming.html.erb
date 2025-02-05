@@ -13,7 +13,7 @@
             <div class="card mt-3 text-al">
               <div class="card-header">
                 <span>
-                  In <%= distance_of_time_in_words(Time.now, appointments[1].first.start) %> on <%= appointments[1].first.date %> you have <%= appointments[1].count %> appointments
+                  In <%= distance_of_time_in_words(Time.current, appointments[1].first.start) %> on <%= appointments[1].first.date %> you have <%= appointments[1].count %> appointments
                 </span>
               </div>
               <% appointments[1].each do |appointment| %>

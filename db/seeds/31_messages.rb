@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Message.count.zero?
-  print "#{pretty_print_name('Message')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Message')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   Note.where(visible_to_user: true, replacing: nil).each do |note|
     message = Message.new(
@@ -14,6 +14,6 @@ if Message.count.zero?
     message.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

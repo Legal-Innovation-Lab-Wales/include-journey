@@ -16,7 +16,6 @@ module ApplicationHelper
     }[flash_type.to_sym] || flash_type.to_s
   end
 
-  # rubocop:disable Metrics/AbcSize
   def time_between(from, to)
     difference = to - from
     days = (difference / (1000 * 60 * 60 * 24)).floor
@@ -27,7 +26,6 @@ module ApplicationHelper
 
     "#{get_unit(days, 'd')}#{get_unit(hours, 'h')}#{get_unit(minutes, 'm')}#{seconds}s"
   end
-  # rubocop:enable Metrics/AbcSize
 
   private
 

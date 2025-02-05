@@ -16,8 +16,8 @@ class Appointment < ApplicationRecord
     message: Rails.application.config.datetime_error,
   }
 
-  scope :future, -> { where(start: Time.now..) }
-  scope :past, -> { where(start: ..Time.now) }
+  scope :future, -> { where(start: Time.current..) }
+  scope :past, -> { where(start: ..Time.current) }
   scope :last_week, -> { where(start: 1.week.ago..) }
   scope :last_month, -> { where(start: 1.month.ago..) }
   scope :next_week, -> { where(start: ..1.week.from_now) }
@@ -58,14 +58,14 @@ class Appointment < ApplicationRecord
   end
 
   def past
-    start <= DateTime.now
+    start <= Time.current
   end
 
   def future
-    start >= DateTime.now
+    start >= Time.current
   end
 
   def last_month
-    start >= DateTime.now - 1.month
+    start >= 1.month.ago
   end
 end

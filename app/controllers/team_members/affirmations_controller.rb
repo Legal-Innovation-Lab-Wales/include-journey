@@ -25,10 +25,10 @@ module TeamMembers
       add_breadcrumb('New Affirmation', nil, 'fas fa-plus-circle')
       text = session[:affirmation_text] || ''
       latest = Affirmation.order(scheduled_date: :desc).first
-      date = if latest.present? && latest.scheduled_date > Date.today
+      date = if latest.present? && latest.scheduled_date > Date.current
         latest.scheduled_date + 1.day
       else
-        Date.today
+        Date.current
       end
 
       @affirmation = Affirmation.new(text: text, scheduled_date: date)

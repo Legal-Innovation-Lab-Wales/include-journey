@@ -3,7 +3,7 @@
 survey = Survey.first
 
 if survey.survey_sections.count < 2
-  print "#{pretty_print_name('Survey Section 2')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Survey Section 2')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   section2 = survey.survey_sections.create!(
     order: 2,
@@ -23,6 +23,6 @@ if survey.survey_sections.count < 2
   section2.survey_questions.create!(order: 10, question: 'I feel isolated')
   section2.survey_questions.create!(order: 11, question: "Friends and family don't involve me in their plans")
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

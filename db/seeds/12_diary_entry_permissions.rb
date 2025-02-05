@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if DiaryEntryPermission.count.zero?
-  print "#{pretty_print_name('Diary Permissions')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Diary Permissions')}\tStart: #{pretty_print(Time.current - @start_time)}"
   DiaryEntry.all.each do |diary_entry|
     TeamMember.all.each do |team_member|
       DiaryEntryPermission.create!(
@@ -12,6 +12,6 @@ if DiaryEntryPermission.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

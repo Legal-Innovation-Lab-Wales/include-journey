@@ -30,7 +30,7 @@ class ContactLog < ApplicationRecord
   end
 
   def start_date
-    return Date.today if start.nil?
+    return Date.current if start.nil?
 
     start.strftime('%Y-%m-%d')
   end
@@ -42,7 +42,7 @@ class ContactLog < ApplicationRecord
   end
 
   def end_date
-    return Date.today if self.end.nil?
+    return Date.current if self.end.nil?
 
     self.end.strftime('%Y-%m-%d')
   end
@@ -54,7 +54,7 @@ class ContactLog < ApplicationRecord
   end
 
   def last_month
-    start >= DateTime.now - 1.month
+    start >= 1.month.ago
   end
 
   def json

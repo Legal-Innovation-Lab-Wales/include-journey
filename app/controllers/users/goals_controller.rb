@@ -35,7 +35,7 @@ module Users
 
     # PUT /goals/:id/achieve
     def achieve
-      if @goal.update!(achieved_on: Time.now)
+      if @goal.update!(achieved_on: Time.current)
         redirect_to(
           @goal.archived ? goals_archive_index_path : goals_path,
           flash: {congratulations: 'Well done!'},

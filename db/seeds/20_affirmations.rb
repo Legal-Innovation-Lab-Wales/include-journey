@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Affirmation.count.zero?
-  print "#{pretty_print_name('Affirmations')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Affirmations')}\tStart: #{pretty_print(Time.current - @start_time)}"
   Config::UPCOMING_AFFIRMATIONS.times.each do |index|
     text = if index < (Config::UPCOMING_AFFIRMATIONS / 3)
       Faker::Quotes::Shakespeare.hamlet_quote
@@ -13,7 +13,7 @@ if Affirmation.count.zero?
     text.gsub! ';', ':'
     Affirmation.create!(
       text: text,
-      scheduled_date: Date.today + index.days,
+      scheduled_date: Date.current + index.days,
       team_member: TeamMember.find(rand(1..TeamMember.count)),
     )
   end
@@ -31,11 +31,11 @@ if Affirmation.count.zero?
     text.gsub! ';', ':'
     Affirmation.create!(
       text: text,
-      scheduled_date: Date.today - (index.days + 1),
+      scheduled_date: Date.current - (index.days + 1),
       team_member: TeamMember.find(rand(1..TeamMember.count)),
     )
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

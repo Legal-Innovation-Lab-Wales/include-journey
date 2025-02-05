@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if Folder.count.zero?
-  print "#{pretty_print_name('Folders')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Folders')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   team_member = TeamMember.find_by(email: 'a.a.finbarrs-ezema@swansea.ac.uk')
   30.times do
@@ -25,6 +25,6 @@ if Folder.count.zero?
     end
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

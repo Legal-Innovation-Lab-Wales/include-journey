@@ -51,7 +51,7 @@
   <div class="row date-time-fields">
     <div class="col-8 form-floating">
       <input class="form-control" autocomplete="when" placeholder="when" value="<%= contact_log.start_date %>"
-             max="<%= Date.today %>" type="date" id="contact_log_start_when">
+             max="<%= Date.current %>" type="date" id="contact_log_start_when">
       <label for="contact_log_start_when">Start</label>
     </div>
 
@@ -73,7 +73,7 @@
   <div class="row date-time-fields">
     <div class="col-8 form-floating">
       <input class="form-control" autocomplete="when" placeholder="when" value="<%= contact_log.end_date %>"
-             max="<%= Date.today %>" type="date" id="contact_log_end_when">
+             max="<%= Date.current %>" type="date" id="contact_log_end_when">
       <label for="contact_log_end_when">End</label>
     </div>
 

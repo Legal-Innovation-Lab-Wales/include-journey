@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 if EmergencyContact.count.zero?
-  print "#{pretty_print_name('Emergency Contacts')}\tStart: #{pretty_print(Time.now - @start_time)}"
+  print "#{pretty_print_name('Emergency Contacts')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   User.all.each do |user|
     emergency_contact = EmergencyContact.new(
@@ -13,6 +13,6 @@ if EmergencyContact.count.zero?
     emergency_contact.save!
   end
 
-  puts "\tDuration: #{pretty_print(Time.now - @last_time)}   Elapsed: #{pretty_print(Time.now - @start_time)}"
-  @last_time = Time.now
+  puts "\tDuration: #{pretty_print(Time.current - @last_time)}   Elapsed: #{pretty_print(Time.current - @start_time)}"
+  @last_time = Time.current
 end

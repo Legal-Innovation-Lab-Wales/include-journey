@@ -47,7 +47,7 @@ class DiaryEntry < PermissionRecord
 
   def update_cache
     user.update!(
-      last_diary_entry_at: Date.today,
+      last_diary_entry_at: Date.current,
       diary_entries_count: user.diary_entries_count + 1,
       diary_entries_this_month_count: user.diary_entries_this_month_count + 1,
     )
