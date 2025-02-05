@@ -12,6 +12,11 @@
 require: rubocop-rails
 
 AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/migrate/**/*'
+    - 'db/schema.rb'
+    - 'spec/**/*'
   NewCops: enable
   SuggestExtensions: false
 
