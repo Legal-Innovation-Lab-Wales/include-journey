@@ -37,7 +37,8 @@ module TeamMembers
     private
 
     def team_member
-      @team_member = TeamMember.includes(:user_profile_view_logs).find(pagination_params[:team_member_id])
+      @team_member = TeamMember.includes(:user_profile_view_logs)
+        .find(pagination_params[:team_member_id])
     end
 
     def set_breadcrumbs

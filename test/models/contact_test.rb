@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class ContactTest < ActiveSupport::TestCase
-  fixtures :users
+  fixtures :users, :contacts
 
   def setup
     super
@@ -50,8 +50,7 @@ class ContactTest < ActiveSupport::TestCase
       name: 'Smith',
       description: 'Agent',
       email: 'agent.smith@example.com',
-      # TODO: currently, phone number regex does not allow spaces
-      # number: '07555 999999',
+      number: '07555 999999',
     )
 
     assert_valid contact
@@ -59,7 +58,7 @@ class ContactTest < ActiveSupport::TestCase
     assert_equal 'Smith', contact.name
     assert_equal 'Agent', contact.description
     assert_equal 'agent.smith@example.com', contact.email
-    # assert_equal '07555 999999', contact.number
+    assert_equal '07555 999999', contact.number
   end
 
   test 'contacts should load by associated user' do
