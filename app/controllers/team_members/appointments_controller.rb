@@ -61,7 +61,9 @@ module TeamMembers
     private
 
     def appointment
-      @appointment = user.appointments.where('team_member_id is null').find(params[:id])
+      @appointment = user.appointments
+        .where(team_member_id: nil)
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to appointments_path, flash: {error: 'No such appointment could be found'}
     end

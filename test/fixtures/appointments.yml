@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: alice
+  who_with: Some external agency
+  where: The agency headquarters
+  what: To have a chat
+  start: 2020-01-20 12:00
+  end: 2020-01-20 13:00
+
+two:
+  user: alice
+  team_member: barbara
+  who_with: Barbara Saunders
+  where: On-site
+  what: To drink coffee
+  start: 2020-01-22 10:00
+  end: 2020-01-22 11:30
