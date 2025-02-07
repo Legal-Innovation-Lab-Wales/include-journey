@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  survey: onboarding
+  order: 1
+  heading: Your favourite fruits
+  answer_labels: Yes; No
+
+two:
+  survey: onboarding
+  order: 2
+  heading: Your opinions on fruits
+  answer_labels: Strongly Agree; Agree; Neither Agree Nor Disagree; Disagree; Strongly Disagree; Not Applicable

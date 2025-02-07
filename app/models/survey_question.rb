@@ -12,4 +12,10 @@ class SurveyQuestion < ApplicationRecord
   }
 
   scope :invalid, -> { where.not("question <> ''") }
+
+  def answer_counts
+    len = survey_section.answer_labels_array.length
+    arr = [answer0, answer1, answer2, answer3, answer4, answer5]
+    arr[0...len]
+  end
 end

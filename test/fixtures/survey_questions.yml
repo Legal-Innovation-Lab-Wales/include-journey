@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# Section 1
+s1_q1:
+  survey_section: one
+  order: 1
+  question: Do you like apples?
+
+s1_q2:
+  survey_section: one
+  order: 2
+  question: But do you really like them?
+
+# Section 2
+s2_q1:
+  survey_section: two
+  order: 1
+  question: Apples are delicious
+
+s2_q2:
+  survey_section: two
+  order: 2
+  question: Apples are the best fruit
