@@ -4,7 +4,7 @@ require 'test_helper'
 
 class WellbeingScoreValueTest < ActiveSupport::TestCase
   test 'wellbeing-score value without name or color is invalid' do
-    skip 'currently, these fields are not required'
+    skip 'TODO: currently, these fields are not required'
 
     value = WellbeingScoreValue.new
     assert_invalid value, :name
@@ -12,7 +12,7 @@ class WellbeingScoreValueTest < ActiveSupport::TestCase
   end
 
   test 'wellbeing-score value with empty name is invalid' do
-    skip 'currently, name is not required'
+    skip 'TODO: currently, name is not required'
 
     value = WellbeingScoreValue.new name: ''
     assert_invalid value, :name

@@ -14,7 +14,7 @@ class SurveySectionTest < ActiveSupport::TestCase
     section = SurveySection.new
     assert_invalid section, :survey
 
-    skip 'Currently, this is enforced by a NOT NULL constraint but not ActiveRecord'
+    skip 'TODO: currently, this is enforced by a NOT NULL constraint but not ActiveRecord'
     assert_invalid section, :order
   end
 

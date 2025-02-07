@@ -43,6 +43,7 @@ class NoteTest < ActiveSupport::TestCase
     assert_equal @user, note.user
     assert_equal 'Very notable indeed', note.content
     assert_equal @time, note.dated
+    assert_not note.visible_to_user
   end
 
   test 'note with one version is latest' do

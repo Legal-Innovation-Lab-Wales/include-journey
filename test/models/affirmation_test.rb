@@ -37,7 +37,7 @@ class AffirmationTest < ActiveSupport::TestCase
   end
 
   test 'should not allow multiple affirmations on same date' do
-    skip 'Currently, this is enforced by a unique index but not ActiveRecord'
+    skip 'TODO: currently, this is enforced by a unique index but not ActiveRecord'
 
     Affirmation.create!(
       text: 'All is well',

@@ -145,7 +145,7 @@ class AchievementTest < ActiveSupport::TestCase
   end
 
   test 'user is not awarded monthly achievement medals for sessions outside of date range' do
-    skip "This is currently not implemented correctly"
+    skip 'TODO: this is currently not implemented correctly'
 
     # Achievement for number of sessions
     achievement = achievements(:familiar_face_jan)
