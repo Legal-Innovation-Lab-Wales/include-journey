@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team_member: alan
+  user: alice
+  visible_to_user: false
+  content: Alice is a real tough one
+  dated: 2021-01-10
+
+two_v1:
+  team_member: barbara
+  user: bob
+  visible_to_user: true
+  content: Bob could do with some help
+  dated: 2021-02-02
+  replaced_by: two_v2
+
+two_v2:
+  team_member: barbara
+  user: bob
+  visible_to_user: true
+  content: Bob is getting help
+  dated: 2021-02-03
+  replacing: two_v1
+  replaced_by: two_v3
+
+two_v3:
+  team_member: barbara
+  user: bob
+  visible_to_user: true
+  content: Bob doesn't need help any more
+  dated: 2021-02-04
+  replacing: two_v2

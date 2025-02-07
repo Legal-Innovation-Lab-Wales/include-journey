@@ -20,17 +20,22 @@ class Note < ApplicationRecord
 
   scope :past, -> { where('dated <= :one_month or notes.created_at <= :one_month', one_month: 1.month.ago) }
 
-  def chain(array)
-    array << self
-    return if replacing.blank?
-
-    replacing.chain(array)
+  def chain
+    arr = []
+    note = self
+    while note.present?
+      arr << note
+      note = note.replacing
+    end
+    arr
   end
 
   def latest
-    return self if replaced_by.nil?
-
-    replaced_by.latest
+    note = self
+    while note.replaced_by.present?
+      note = note.replaced_by
+    end
+    note
   end
 
   def changes?(note_params)

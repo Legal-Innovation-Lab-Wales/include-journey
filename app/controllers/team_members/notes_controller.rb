@@ -16,8 +16,7 @@ module TeamMembers
       if @note.replaced_by.present?
         redirect_to user_note_path(@user, @note.latest)
       else
-        @user_notes = []
-        @note.chain(@user_notes)
+        @user_notes = @note.chain
       end
     end
 
