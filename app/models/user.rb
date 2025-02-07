@@ -254,10 +254,14 @@ class User < DeviseRecord
 
   def verify_achievements
     ['sessions', 'wellbeing_assessments', 'diary_entries', 'goals_achieved'].each do |entities|
-      Achievement.all_time.for(entities).check(self) if changed.include?("#{entities}_count")
+      if changed.include?("#{entities}_count")
+        achievement = Achievement.all_time.for(entities)
+        achievement.check(self) if achievement.present?
+      end
 
-      if Achievement.this_month.for(entities).present? && changed.include?("#{entities}_this_month_count")
-        Achievement.this_month.for(entities).check(self)
+      if changed.include?("#{entities}_this_month_count")
+        achievement = Achievement.this_month.for(entities)
+        achievement.check(self) if achievement.present?
       end
     end
   end

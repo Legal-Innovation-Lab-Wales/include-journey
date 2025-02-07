@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class SurveyCommentTest < ActiveSupport::TestCase
-  fixtures :users, :surveys, :survey_comment_sections
+  fixtures :users, :surveys, :survey_sections, :survey_comment_sections
 
   def setup
     super

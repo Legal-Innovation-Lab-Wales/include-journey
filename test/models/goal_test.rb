@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class GoalTest < ActiveSupport::TestCase
-  fixtures :users, :goals, :goal_types
+  fixtures :users, :goals, :goal_types, :achievements
 
   def setup
     super
