@@ -4,8 +4,8 @@ require 'controllers/controller_test'
 
 module TeamMembersControllerTest
   class AppointmentsControllerTest < ControllerTest
-    test 'team member can create an appointment' do
-      params = {
+    def valid_params
+      {
         appointment: {
           where: 'The Moon',
           who_with: 'Neil Armstrong',
@@ -14,10 +14,12 @@ module TeamMembersControllerTest
           end: '1969-07-21 05:30',
         },
       }
+    end
 
+    test 'team member can create an appointment' do
       sign_in @team_member
       assert_difference 'Appointment.count', 1 do
-        post user_appointments_path(@user), params: params
+        post user_appointments_path(@user), params: valid_params
       end
 
       appointment = Appointment.where(where: 'The Moon').first
@@ -27,6 +29,49 @@ module TeamMembersControllerTest
       assert_equal 'Taking one small step', appointment.what
       assert_equal Time.zone.parse('1969-07-21 02:56'), appointment.start
       assert_equal Time.zone.parse('1969-07-21 05:30'), appointment.end
+      assert_not appointment.attended?
+    end
+
+    test 'appointment with missing params is not created' do
+      params = valid_params
+
+      sign_in @team_member
+      params.each_key do |key|
+        assert_no_difference 'Appointment.count' do
+          post user_appointments_path(@user), params: params.except(key)
+        rescue ActionController::ParameterMissing
+          # do nothing
+        end
+      end
+    end
+
+    test 'ordinary user cannot create an appointment' do
+      sign_in @user
+      assert_no_difference 'Appointment.count' do
+        post user_appointments_path(@user), params: valid_params
+      rescue ActionController::RoutingError
+        # do nothing
+      end
+    end
+
+    test 'team member can toggle an appointment as attended' do
+      appointment = appointments :one
+      assert_not appointment.attended?
+
+      sign_in @team_member
+      assert_no_difference 'Appointment.count' do
+        put toggle_attended_user_appointment_path(appointment.user, appointment)
+      end
+
+      appointment.reload
+      assert appointment.attended?
+
+      assert_no_difference 'Appointment.count' do
+        put toggle_attended_user_appointment_path(appointment.user, appointment)
+      end
+
+      appointment.reload
+      assert_not appointment.attended?
     end
   end
 end
