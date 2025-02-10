@@ -7,6 +7,10 @@ alan:
   mobile_number: 07887 665544
   encrypted_password: <%= Devise::Encryptor.digest(TeamMember, 'pass1234') %>
   admin: true
+  terms: true
+  confirmed_at: 2020-01-01 00:00:10
+  confirmation_sent_at: 2020-01-01 00:00:00
+  approved: true
 
 barbara:
   first_name: Barbara
@@ -14,3 +18,7 @@ barbara:
   email: b.saunders@example.com
   mobile_number: 07555 113355
   encrypted_password: <%= Devise::Encryptor.digest(TeamMember, 'pass1234') %>
+  terms: true
+  confirmed_at: 2020-01-01 00:00:10
+  confirmation_sent_at: 2020-01-01 00:00:00
+  approved: true

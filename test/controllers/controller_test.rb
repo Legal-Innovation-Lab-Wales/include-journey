@@ -5,11 +5,23 @@ require 'test_helper'
 class ControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  fixtures :users, :team_members
+  fixtures :all
 
   def setup
     super
     @user = users :alice
     @admin, @team_member = team_members :alan, :barbara
+
+    setup_2fa(@admin)
+    setup_2fa(@team_member)
+  end
+
+  private
+
+  def setup_2fa(team_member)
+    team_member.otp_secret = TeamMember.generate_otp_secret
+    team_member.otp_required_for_login = true
+    team_member.generate_otp_backup_codes!
+    team_member.save!
   end
 end
