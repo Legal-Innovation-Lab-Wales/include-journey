@@ -16,6 +16,31 @@ class ControllerTest < ActionDispatch::IntegrationTest
     setup_2fa(@team_member)
   end
 
+  protected
+
+  def assert_destroyed(record)
+    assert_raises ActiveRecord::RecordNotFound do
+      record.reload
+    end
+  end
+
+  def assert_not_destroyed(record)
+    record.reload
+  end
+
+  def valid_params
+    raise 'valid_params not implemented'
+  end
+
+  def each_missing_param(&block)
+    params = valid_params
+    params.each_key do |key|
+      block.call(params.except(key))
+    rescue ActionController::ParameterMissing
+      next
+    end
+  end
+
   private
 
   def setup_2fa(team_member)

@@ -6,20 +6,18 @@ module TeamMembersControllerTest
   class AppointmentsControllerTest < ControllerTest
     def valid_params
       {
-        appointment: {
-          where: 'The Moon',
-          who_with: 'Neil Armstrong',
-          what: 'Taking one small step',
-          start: '1969-07-21 02:56',
-          end: '1969-07-21 05:30',
-        },
+        where: 'The Moon',
+        who_with: 'Neil Armstrong',
+        what: 'Taking one small step',
+        start: '1969-07-21 02:56',
+        end: '1969-07-21 05:30',
       }
     end
 
     test 'team member can create an appointment' do
       sign_in @team_member
       assert_difference 'Appointment.count', 1 do
-        post user_appointments_path(@user), params: valid_params
+        post user_appointments_path(@user), params: {appointment: valid_params}
       end
 
       appointment = Appointment.where(where: 'The Moon').first
@@ -33,14 +31,10 @@ module TeamMembersControllerTest
     end
 
     test 'appointment with missing params is not created' do
-      params = valid_params
-
       sign_in @team_member
-      params.each_key do |key|
+      each_missing_param do |params|
         assert_no_difference 'Appointment.count' do
-          post user_appointments_path(@user), params: params.except(key)
-        rescue ActionController::ParameterMissing
-          # do nothing
+          post user_appointments_path(@user), params: {appointment: params}
         end
       end
     end
@@ -48,7 +42,7 @@ module TeamMembersControllerTest
     test 'ordinary user cannot create an appointment' do
       sign_in @user
       assert_no_difference 'Appointment.count' do
-        post user_appointments_path(@user), params: valid_params
+        post user_appointments_path(@user), params: {appointment: valid_params}
       rescue ActionController::RoutingError
         # do nothing
       end
@@ -68,6 +62,21 @@ module TeamMembersControllerTest
 
       assert_no_difference 'Appointment.count' do
         put toggle_attended_user_appointment_path(appointment.user, appointment)
+      end
+
+      appointment.reload
+      assert_not appointment.attended?
+    end
+
+    test 'ordinary user cannot toggle an appointment as attended' do
+      appointment = appointments :one
+      assert_not appointment.attended?
+
+      sign_in @user
+      assert_no_difference 'Appointment.count' do
+        put toggle_attended_user_appointment_path(appointment.user, appointment)
+      rescue ActionController::RoutingError
+        # do nothing
       end
 
       appointment.reload
