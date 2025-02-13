@@ -10,7 +10,7 @@ class TeamMember < DeviseRecord
     # options for two factor authentication
     :two_factor_authenticatable, :two_factor_backupable,
     otp_backup_code_length: 10, otp_number_of_backup_codes: 10,
-    otp_secret_encryption_key: ENV.fetch('MFA_OTP_SECRET_KEY')
+    otp_secret_encryption_key: ENV.fetch('MFA_OTP_SECRET_KEY', nil)
 
   has_many :notes
   has_many :messages, dependent: :destroy
