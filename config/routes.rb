@@ -88,6 +88,7 @@ Rails.application.routes.draw do
 
         resources :user_profile_view_logs, only: :index, on: :member
         resources :assign_users, only: %i[index create approve], on: :member, as: :users do
+          # TODO: this should be PUT or POST
           get 'approve', to: 'assign_users#approve', as: 'approve'
         end
         resources :diary_entry_view_logs, only: :index, on: :member
@@ -133,6 +134,7 @@ Rails.application.routes.draw do
         resources :uploads, only: %i[index new show create update destroy] do
           member do
             get 'download_file'
+            # TODO: this should be PUT or POST
             get :approve
           end
         end

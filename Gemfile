@@ -78,6 +78,8 @@ group :development do
 
   gem 'rubocop', '~> 1.71'
   gem 'rubocop-rails', '~> 2.29'
+
+  gem 'rails-route-checker'
 end
 
 group :test do

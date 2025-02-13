@@ -250,6 +250,8 @@ GEM
     rails-html-sanitizer (1.6.2)
       loofah (~> 2.21)
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
+    rails-route-checker (0.6.0)
+      rails
     railties (6.1.4.7)
       actionpack (= 6.1.4.7)
       activesupport (= 6.1.4.7)
@@ -400,6 +402,7 @@ DEPENDENCIES
   puma (~> 5.5)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4.4)
+  rails-route-checker
   recaptcha
   rest-client
   rqrcode
