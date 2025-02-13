@@ -71,7 +71,7 @@ class Notification < ApplicationRecord
   end
 
   def self.convert_to_duration(duration)
-    quantity, unit = duration.split(' ')
+    quantity, unit = duration.split
     quantity = quantity.to_i
     unit = unit.singularize
     unit_to_method = {

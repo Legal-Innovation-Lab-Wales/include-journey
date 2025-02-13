@@ -10,7 +10,9 @@ module Users
 
     # GET /appointments/upcoming
     def upcoming
-      @appointments = current_user.appointments.future.order(start: :asc)
+      @appointments = current_user.appointments
+        .future
+        .order(start: :asc)
       @count_in_next_week = @appointments.next_week.size
       render 'upcoming'
     end
@@ -92,7 +94,9 @@ module Users
     protected
 
     def resources
-      current_user.appointments.past.order(start: :desc)
+      current_user.appointments
+        .past
+        .order(start: :desc)
     end
 
     def resources_per_page
@@ -100,13 +104,17 @@ module Users
     end
 
     def search
-      current_user.appointments.where(appointment_search, wildcard_query).order(start: :desc)
+      current_user.appointments
+        .where(appointment_search, wildcard_query)
+        .order(start: :desc)
     end
 
     private
 
     def appointment
-      @appointment = current_user.appointments.where('team_member_id is null').find(params[:id])
+      @appointment = current_user.appointments
+        .where(team_member_id: nil)
+        .find(params[:id])
     rescue ActiveRecord::RecordNotFound
       redirect_to(
         appointments_path,
@@ -125,7 +133,8 @@ module Users
     end
 
     def appointment_params
-      params.require(:appointment).permit(:where, :who_with, :what, :start, :end)
+      params.require(:appointment)
+        .permit(:where, :who_with, :what, :start, :end)
     end
 
     def failure

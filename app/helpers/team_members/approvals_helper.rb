@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module TeamMembers::ApprovalsHelper
+module TeamMembers
+  module ApprovalsHelper
+  end
 end

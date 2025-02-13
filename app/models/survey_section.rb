@@ -14,7 +14,7 @@ class SurveySection < ApplicationRecord
     YES_NO_ANSWER_LABELS,
     LIKERT_5_ANSWER_LABELS,
     ALWAYS_NEVER_LABELS,
-  ]
+  ].freeze
 
   validates :heading, format: {
     with: Rails.application.config.regex_text_field,

@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module TeamMembers::FolderHelper
+module TeamMembers
+  module FolderHelper
+  end
 end

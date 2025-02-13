@@ -57,7 +57,7 @@ module TeamMembers
       folders = Folder.where(parent_folder_id: parent_id)
       uploads = Upload.joins(:upload_file)
         .where(parent_folder_id: parent_id)
-      
+
       folders + uploads
     end
 
@@ -112,11 +112,11 @@ module TeamMembers
     end
 
     def set_breadcrumbs
-      add_breadcrumb("#{@user.full_name}", user_path(@user), 'fas fa-user-edit')
+      add_breadcrumb(@user.full_name, user_path(@user), 'fas fa-user-edit')
       add_breadcrumb('Folders', user_folders_path(@user), 'fas fa-folder') unless action_name != 'index'
       store_folder_tree.each do |folder|
         if !folder
-          return
+          break
         elsif folder == store_folder_tree[-1]
           add_breadcrumb(folder.name, nil, 'fas fa-folder')
         else

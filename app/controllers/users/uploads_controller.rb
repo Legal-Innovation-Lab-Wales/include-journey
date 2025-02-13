@@ -81,14 +81,12 @@ module Users
       @upload_file = @upload.upload_file
       file_blob = @upload_file.data
 
-      case @upload_file.content_type
-      when 'application/pdf'
-        send_data file_blob, filename: @upload_file.name, type: 'application/pdf', disposition: 'attachment'
-      when 'image/jpeg'
-        send_data file_blob, filename: @upload_file.name, type: 'image/jpeg', disposition: 'attachment'
-      when 'image/png'
-        send_data file_blob, filename: @upload_file.name, type: 'image/png', disposition: 'attachment'
-      end
+      send_data(
+        file_blob,
+        filename: @upload_file.name,
+        type: @upload_file.content_type,
+        disposition: 'attachment',
+      )
     end
 
     def subheading_stats
@@ -176,7 +174,7 @@ module Users
     end
 
     def handle_failed_upload_creation
-      flash[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
+      flash.now[:error] = 'Something went wrong! Please check the error message below or try uploading the file again'
       render 'new', status: :unprocessable_entity
     end
 

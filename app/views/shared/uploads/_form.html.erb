@@ -16,7 +16,7 @@
                             </div>
                         </div>
                         <%= form.label "Change File", class: @upload_file.data.present? ? 'change-file' : 'd-none change-file', for: 'upload_file' %>
-                        <%= form.file_field :file, class: 'form-control d-none', accept: ' image/png,image/jpeg,application/pdf', id: 'upload_file' %>
+                        <%= form.file_field :file, class: 'form-control d-none', accept: 'image/png,image/jpeg,application/pdf', id: 'upload_file' %>
                         <%= form.hidden_field :cached_file, value: @upload_file.encoded_data  %>
                     
                         <p id="file-error" class="text-capitalize text-danger"></p>

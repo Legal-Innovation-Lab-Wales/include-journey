@@ -30,7 +30,7 @@ class Upload < ApplicationRecord
     if upload_file.content_type == 'application/pdf'
       'render default pdf image'
     else
-      ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % Base64.encode64(upload_file.data)).html_safe
+      upload_file.grab_upload_file
     end
   end
 

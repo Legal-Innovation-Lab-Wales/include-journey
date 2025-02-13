@@ -22,7 +22,9 @@ class UploadFile < ApplicationRecord
   def grab_upload_file
     return nil if data.nil?
 
-    ('<img class="img-fluid" src="data:image/jpg;base64,%s">' % encoded_data).html_safe
+    # This is safe because Base64 does not use any HTML special characters
+    img = "<img class=\"img-fluid\" src=\"data:image/jpg;base64,#{encoded_data}\">"
+    img.html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def file_content_type

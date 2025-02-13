@@ -32,6 +32,9 @@ Layout/CaseIndentation:
 Layout/EndAlignment:
   EnforcedStyleAlignWith: start_of_line
 
+Layout/ExtraSpacing:
+  AllowForAlignment: false
+
 Layout/MultilineAssignmentLayout:
   EnforcedStyle: same_line
 
@@ -67,6 +70,12 @@ Metrics/PerceivedComplexity:
 
 Rails/Delegate:
   Enabled: false
+
+Style/ArgumentsForwarding:
+  UseAnonymousForwarding: false
+
+Style/EmptyElse:
+  EnforcedStyle: empty
 
 Style/GuardClause:
   Enabled: false
