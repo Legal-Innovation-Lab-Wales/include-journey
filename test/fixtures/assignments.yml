@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice_to_alan:
+  user: alice
+  team_member: alan
+
+bob_to_barbara:
+  user: bob
+  team_member: barbara
+
+david_to_alan:
+  user: david
+  team_member: alan
+
+david_to_barbara:
+  user: david
+  team_member: barbara
