@@ -71,6 +71,12 @@ Metrics/PerceivedComplexity:
 Rails/Delegate:
   Enabled: false
 
+Rails/Output:
+  Exclude:
+    - 'bin/**/*'
+    - 'db/seeds/**/*'
+    - 'db/seeds.rb'
+
 Style/ArgumentsForwarding:
   UseAnonymousForwarding: false
 
