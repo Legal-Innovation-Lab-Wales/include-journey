@@ -11,5 +11,11 @@ module ActiveSupport
 
     # Add more helper methods to be used by all tests here...
     include AssertValid::Assertions
+
+    def assert_destroyed(model)
+      assert_raises ActiveRecord::RecordNotFound do
+        model.reload
+      end
+    end
   end
 end

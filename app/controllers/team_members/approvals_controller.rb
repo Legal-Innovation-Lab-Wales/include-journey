@@ -12,6 +12,7 @@ module TeamMembers
     end
 
     def approve
+      # TODO: this action has no route
       user = User.find(params[:user_id])
       user.approved = true
       user.save
@@ -26,7 +27,8 @@ module TeamMembers
     end
 
     def bulk_action
-      unless params[:user_ids]
+      user_ids = params.fetch(:user_ids, []).compact
+      if user_ids.empty?
         return redirect_to(
           approvals_path,
           flash: {error: 'No users selected'},
@@ -34,8 +36,7 @@ module TeamMembers
       end
 
       is_approve = params[:status] == '1'
-
-      @selected_users = User.where(id: params.fetch(:user_ids, []).compact)
+      @selected_users = User.where(id: user_ids, approved: false)
 
       @selected_users.each do |user|
         if is_approve

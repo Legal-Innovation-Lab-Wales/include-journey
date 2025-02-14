@@ -7,6 +7,7 @@ alice:
   mobile_number: 07223 445566
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
   terms: true
+  approved: true
 
 bob:
   first_name: Bob
@@ -15,6 +16,7 @@ bob:
   mobile_number: 07998 776655
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
   terms: true
+  approved: true
 
 clara:
   first_name: Clara
@@ -23,6 +25,7 @@ clara:
   mobile_number: 07678 123123
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
   terms: true
+  approved: true
 
 david:
   first_name: David
@@ -31,3 +34,23 @@ david:
   mobile_number: 07876 321321
   encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
   terms: true
+  approved: true
+
+eve:
+  first_name: Eve
+  last_name: Newman
+  email: eve.newman@example.com
+  mobile_number: 07987 432432
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
+  terms: true
+  approved: false
+
+fred:
+  first_name: Fred
+  last_name: Oldman
+  email: fred.oldman@example.com
+  mobile_number: 07468 864864
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'pass1234') %>
+  terms: true
+  approved: false
+
