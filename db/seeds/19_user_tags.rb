@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if UserTag.count.zero?
+if UserTag.none?
   print "#{pretty_print_name('User Tags')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     if user.id.even?

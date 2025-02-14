@@ -122,8 +122,12 @@ module TeamMembers
 
     def resources
       @new_folder = Folder.new
-      @has_folders = current_team_member.folders.where(parent_folder: nil).length > 0
-      @uploads = @user.uploads.joins(:upload_file).order(created_at: :desc)
+      @has_folders = current_team_member.folders
+        .where(parent_folder: nil)
+        .any?
+      @uploads = @user.uploads
+        .joins(:upload_file)
+        .order(created_at: :desc)
 
       filter_params = uploads_filter_params
 
@@ -157,7 +161,9 @@ module TeamMembers
     private
 
     def update_upload_activity_logs_before_delete
-      upload = Upload.includes(%i[user upload_file]).joins(%i[user upload_file]).find(params[:id])
+      upload = Upload.includes(%i[user upload_file])
+        .joins(%i[user upload_file])
+        .find(params[:id])
       user_full_name = upload.user.full_name
       upload_file_name = upload.upload_file.name
       file_created_date = upload.created_at
@@ -258,18 +264,16 @@ module TeamMembers
 
     def handle_check_file_size_result
       if check_file_size == 'exceeds individual file size'
-        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV.fetch('MAX_FILE_SIZE'))}"
+        flash[:error] = "File size exceeds the maximum limit of #{max_file_size} MiB"
         render 'new', status: :unprocessable_entity
       elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))} per person.
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{total_max_file_size} MiB per person.
                          It's recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
       end
     end
 
     def check_file_size
-      max_file_size = eval(ENV.fetch('MAX_FILE_SIZE'))
-      total_max_file_size = eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_team_member.total_upload_size + @upload_file.data.size >= total_max_file_size
@@ -280,8 +284,8 @@ module TeamMembers
     end
 
     def handle_destroyed_upload(action)
-      if Upload.where(user: user).count.zero?
-        flash[:notice] = "File was #{action} successfully!  This user has no files."
+      if Upload.where(user: user).none?
+        flash[:notice] = "File was #{action} successfully! This user has no files."
         redirect_to new_user_upload_path
       else
         flash[:notice] = "File was #{action} successfully!"

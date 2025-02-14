@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Contact.count.zero?
+if Contact.none?
   print "#{pretty_print_name('Contacts')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     Config::CONTACTS_FOR_EACH_USER.times do

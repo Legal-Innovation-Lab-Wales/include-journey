@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if DiaryEntryPermission.count.zero?
+if DiaryEntryPermission.none?
   print "#{pretty_print_name('Diary Permissions')}\tStart: #{pretty_print(Time.current - @start_time)}"
   DiaryEntry.find_each do |diary_entry|
     TeamMember.find_each do |team_member|

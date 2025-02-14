@@ -27,7 +27,7 @@
             <td><%= link_to survey.end, survey_path(survey) %></td>
             <td><%= link_to survey.survey_responses.count, survey_path(survey) %></td>
             <td>
-              <% if survey.survey_responses.count.zero? %>
+              <% if survey.survey_responses.none? %>
                 <%= link_to edit_survey_path(survey) do %><i class="fas fa-edit"></i><% end %>
               <% end %>
             </td>

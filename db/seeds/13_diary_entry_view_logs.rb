@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if DiaryEntryViewLog.count.zero?
+if DiaryEntryViewLog.none?
   print "#{pretty_print_name('Diary View Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
   DiaryEntry.find_each do |diary_entry|
     # Create View Log for every 7th diary entry

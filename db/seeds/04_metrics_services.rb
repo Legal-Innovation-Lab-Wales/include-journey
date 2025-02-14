@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if MetricsService.count.zero?
+if MetricsService.none?
   print "#{pretty_print_name('Metrics Services')}\tStart: #{pretty_print(Time.current - @start_time)}"
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 5) # Include --> Behaviour
   MetricsService.create!(wellbeing_service_id: 1, wellbeing_metric_id: 6) # Include --> Addiction

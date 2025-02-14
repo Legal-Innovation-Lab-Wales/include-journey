@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if ReferredFrom.count.zero?
+if ReferredFrom.none?
   print "#{pretty_print_name('Referred From')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   ReferredFrom.create!(name: 'Bro Myrddin')

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if WbaScore.count.zero?
+if WbaScore.none?
   print "#{pretty_print_name('WBA Scores')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     wellbeing_assessments = user.wellbeing_assessments.order(:id)

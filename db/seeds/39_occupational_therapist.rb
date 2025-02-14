@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if OccupationalTherapistAssessment.count.zero? && ENV['ORGANISATION_NAME'] == 'wallich-journey'
+if OccupationalTherapistAssessment.none? && ENV['ORGANISATION_NAME'] == 'wallich-journey'
   print "#{pretty_print_name('Occupational Therapist Assessment')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   # Create Occupational Therapist Metric

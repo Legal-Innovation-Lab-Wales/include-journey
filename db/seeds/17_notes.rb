@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Note.count.zero?
+if Note.none?
   print "#{pretty_print_name('Notes')}\tStart: #{pretty_print(Time.current - @start_time)}"
   Config::NOTES_COUNT.times do |index|
     note = Note.create!(

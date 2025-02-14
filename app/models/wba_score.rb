@@ -4,7 +4,7 @@
 class WbaScore < ApplicationRecord
   belongs_to :wellbeing_assessment
   belongs_to :wellbeing_metric
-  belongs_to :wellbeing_score_value, foreign_key: :value
+  belongs_to :wellbeing_score_value, foreign_key: :value, inverse_of: false
 
   def add_to_history(history)
     existing_dataset = history[:datasets].find { |dataset| dataset[:label] == wellbeing_metric.name }

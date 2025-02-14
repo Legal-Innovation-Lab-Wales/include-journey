@@ -27,4 +27,12 @@ module UploadsHelper
   def bytes_to_megabytes(bytes)
     (bytes.to_f / 1_048_576).round(2) # Convert bytes to MB and round to two decimal places
   end
+
+  def max_file_size
+    ENV.fetch('MAX_FILE_SIZE').to_i.megabytes
+  end
+
+  def total_max_file_size
+    ENV.fetch('TOTAL_MAX_FILE_SIZE').to_i.megabytes
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Session.count.zero?
+if Session.none?
   print "#{pretty_print_name('Sessions')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   User.find_each do |user|

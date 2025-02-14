@@ -51,7 +51,7 @@
               <i class="fas fa-tags"></i>
               <div class="nav-label hide">Tags</div>
             <% end %>
-            <%= link_to Survey.count.zero? ? new_survey_path : surveys_path, class: 'btn btn-nav' do %>
+            <%= link_to Survey.none? ? new_survey_path : surveys_path, class: 'btn btn-nav' do %>
               <i class="fas fa-clipboard-list"></i>
               <div class="nav-label hide">Surveys</div>
             <% end %>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Appointment.count.zero?
+if Appointment.none?
   print "#{pretty_print_name('Appointments')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     Config::APPOINTMENTS_FOR_EACH_USER.times do

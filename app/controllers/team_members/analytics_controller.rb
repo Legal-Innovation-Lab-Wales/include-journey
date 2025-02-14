@@ -201,10 +201,10 @@ module TeamMembers
 
     def find_filters
       @ages = ['Under 22', '23-30', '31-36', '37-45', '46-55', '56-69', '70 and Over']
-      @sexes = User.distinct.pluck(:sex).reject!(&:nil?)
-      @pronouns = User.distinct.pluck(:pronouns).reject!(&:nil?)
-      @ethnic_groups = User.distinct.pluck(:ethnic_group).reject!(&:nil?)
-      @religions = User.distinct.pluck(:religion).reject!(&:nil?)
+      @sexes = User.distinct.pluck(:sex).compact
+      @pronouns = User.distinct.pluck(:pronouns).compact
+      @ethnic_groups = User.distinct.pluck(:ethnic_group).compact
+      @religions = User.distinct.pluck(:religion).compact
       @team_member_emails = TeamMember.distinct.pluck(:email)
       @tags = Tag.distinct.pluck(:tag)
       return unless ENV['ORGANISATION_NAME'] == 'wallich-journey'

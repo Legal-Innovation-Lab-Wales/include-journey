@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Affirmation.count.zero?
+if Affirmation.none?
   print "#{pretty_print_name('Affirmations')}\tStart: #{pretty_print(Time.current - @start_time)}"
   Config::UPCOMING_AFFIRMATIONS.times.each do |index|
     text = if index < (Config::UPCOMING_AFFIRMATIONS / 3)

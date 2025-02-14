@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if WellbeingAssessment.count.zero?
+if WellbeingAssessment.none?
   print "#{pretty_print_name('Wellbeing Assessments')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     Config::WELLBEING_ASSESSMENTS_FOR_EACH_USER.times do |index|

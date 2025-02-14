@@ -52,7 +52,7 @@ module Users
     def destroy
       if @contact.destroy!
         redirect_to(
-          current_user.contacts.count.zero? ? authenticated_user_root_path : contacts_path,
+          current_user.contacts.none? ? authenticated_user_root_path : contacts_path,
           flash: {success: 'Contact removed'},
         )
       else

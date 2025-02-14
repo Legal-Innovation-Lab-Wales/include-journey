@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Folder.count.zero?
+if Folder.none?
   print "#{pretty_print_name('Folders')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   team_member = TeamMember.find_by(email: 'a.a.finbarrs-ezema@swansea.ac.uk')

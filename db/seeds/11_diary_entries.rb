@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if DiaryEntry.count.zero?
+if DiaryEntry.none?
   print "#{pretty_print_name('Diary Entries')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     Config::DIARY_ENTRIES_FOR_EACH_USER.times do

@@ -2,7 +2,7 @@
 
 survey = Survey.first
 
-if survey.survey_sections.count.zero?
+if survey.survey_sections.none?
   print "#{pretty_print_name('Survey Section 1')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   section1 = survey.survey_sections.create!(
@@ -15,17 +15,21 @@ if survey.survey_sections.count.zero?
   section1.survey_questions.create!(order: 2, question: 'I feel listened to at the Hub')
   section1.survey_questions.create!(order: 3, question: 'I feel respected at the Hub')
   section1.survey_questions.create!(order: 4, question: 'I can trust staff at the Hub')
-  section1.survey_questions.create!(order: 5, question: 'The Hub helps me to solve problems and improved my ability to cope')
+  section1.survey_questions.create!(order: 5,
+    question: 'The Hub helps me to solve problems and improved my ability to cope',)
   section1.survey_questions.create!(order: 6, question: 'The Hub helps me to make better choices')
-  section1.survey_questions.create!(order: 7, question: 'I feel I have more choice in accessing services because of the Hub')
+  section1.survey_questions.create!(order: 7,
+    question: 'I feel I have more choice in accessing services because of the Hub',)
   section1.survey_questions.create!(order: 8, question: 'I use my time more positively @ the Hub')
   section1.survey_questions.create!(order: 9, question: 'The Hub provides me support')
-  section1.survey_questions.create!(order: 10, question: 'The Hub has helped me to feel more positive and hopeful about my future')
+  section1.survey_questions.create!(order: 10,
+    question: 'The Hub has helped me to feel more positive and hopeful about my future',)
   section1.survey_questions.create!(order: 11, question: 'The Hub makes me feel more positive about myself')
   section1.survey_questions.create!(order: 12, question: 'The Hub inspires me to make changes')
   section1.survey_questions.create!(order: 13, question: 'The Hub has provided me with advice')
   section1.survey_questions.create!(order: 14, question: 'The Hub has increased my access to services the help me')
-  section1.survey_questions.create!(order: 15, question: 'The Hub has helped me to participate in positive activities of my choice')
+  section1.survey_questions.create!(order: 15,
+    question: 'The Hub has helped me to participate in positive activities of my choice',)
   section1.survey_questions.create!(order: 16, question: 'The Hub has helped me to improve my communication skills')
   section1.survey_questions.create!(order: 17, question: 'The Hub has helped me to access IT')
   section1.survey_questions.create!(order: 18, question: 'The Hub has helped improve my confidence')

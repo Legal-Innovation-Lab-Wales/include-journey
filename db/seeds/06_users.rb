@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if User.count.zero?
+if User.none?
   print "#{pretty_print_name('Users')}\tStart: #{pretty_print(Time.current - @start_time)}"
   user_counter = 0
 

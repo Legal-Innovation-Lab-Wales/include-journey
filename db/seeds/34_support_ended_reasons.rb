@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if SupportEndingReason.count.zero?
+if SupportEndingReason.none?
   print "#{pretty_print_name('Reasons For Ending Support')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   SupportEndingReason.create!(name: 'Entered a long stay hospital or hospice')

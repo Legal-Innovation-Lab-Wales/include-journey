@@ -29,10 +29,10 @@ module Users
       @upload_file.upload = @upload
 
       if check_file_size == 'exceeds individual file size'
-        flash[:error] = "File size exceeds the maximum limit of #{eval(ENV.fetch('MAX_FILE_SIZE'))}"
+        flash[:error] = "File size exceeds the maximum limit of #{max_file_size} MiB"
         render 'new', status: :unprocessable_entity
       elsif check_file_size == 'exceeds total file size per person'
-        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))} per person.
+        flash[:error] = "Your overall file usage has gone beyond the allocated limit of #{total_max_file_size} MiB per person.
                          It's recommended to create space by removing older files."
         render 'new', status: :unprocessable_entity
       elsif @upload.save && @upload_file.save
@@ -66,7 +66,7 @@ module Users
     def destroy
       if @upload.destroy
         current_user.decrement!(:total_upload_size, @upload.upload_file.data.size)
-        if Upload.where(user: current_user).count.zero?
+        if Upload.where(user: current_user).none?
           flash[:error] = 'You have no files to see.'
           redirect_to new_upload_path
         else
@@ -102,7 +102,10 @@ module Users
     protected
 
     def resources
-      current_user.uploads.where(visible_to_user: true).joins(:upload_file).order(created_at: :desc)
+      current_user.uploads
+        .where(visible_to_user: true)
+        .joins(:upload_file)
+        .order(created_at: :desc)
     end
 
     def resources_per_page
@@ -116,7 +119,8 @@ module Users
     private
 
     def upload_params
-      params.require(:upload).permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
+      params.require(:upload)
+        .permit(:comment, :file, :cached_file, :content_type, :name, :visible_to_user)
     end
 
     def upload
@@ -179,8 +183,6 @@ module Users
     end
 
     def check_file_size
-      max_file_size = eval(ENV.fetch('MAX_FILE_SIZE'))
-      total_max_file_size = eval(ENV.fetch('TOTAL_MAX_FILE_SIZE'))
       if @upload_file.data.size > max_file_size
         'exceeds individual file size'
       elsif current_user.total_upload_size + @upload_file.data.size >= total_max_file_size

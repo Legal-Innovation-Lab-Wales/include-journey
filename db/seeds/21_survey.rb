@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Survey.count.zero?
+if Survey.none?
   print "#{pretty_print_name('Survey')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   Survey.create!(

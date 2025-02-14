@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Priority.count.zero?
+if Priority.none?
   print "#{pretty_print_name('Priorities')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   Priority.create!(name: 'Low')

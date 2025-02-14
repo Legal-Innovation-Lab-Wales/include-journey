@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if EmergencyContact.count.zero?
+if EmergencyContact.none?
   print "#{pretty_print_name('Emergency Contacts')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   User.find_each do |user|

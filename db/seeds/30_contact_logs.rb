@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if ContactLog.count.zero?
+if ContactLog.none?
   print "#{pretty_print_name('Contact Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
   TeamMember.find_each do |team_member|
     Config::CONTACT_LOGS_FOR_EACH_TEAM_MEMBER.times do

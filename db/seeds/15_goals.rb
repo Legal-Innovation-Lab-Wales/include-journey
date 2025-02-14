@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Goal.count.zero?
+if Goal.none?
   print "#{pretty_print_name('Goals')}\tStart: #{pretty_print(Time.current - @start_time)}"
   User.find_each do |user|
     Config::GOALS_FOR_EACH_USER.times do |index|

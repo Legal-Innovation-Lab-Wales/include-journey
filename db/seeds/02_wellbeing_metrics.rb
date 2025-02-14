@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if WellbeingMetric.count.zero?
+if WellbeingMetric.none?
   print "#{pretty_print_name('Wellbeing Metrics')}\tStart: #{pretty_print(Time.current - @start_time)}"
   WellbeingMetric.create!(
     team_member_id: rand(1..TeamMember.count),

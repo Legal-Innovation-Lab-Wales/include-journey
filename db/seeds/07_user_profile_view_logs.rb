@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if UserProfileViewLog.count.zero?
+if UserProfileViewLog.none?
   print "#{pretty_print_name('User Profile View Logs')}\tStart: #{pretty_print(Time.current - @start_time)}"
   # Create a view log of every user for every team member
   User.find_each do |user|

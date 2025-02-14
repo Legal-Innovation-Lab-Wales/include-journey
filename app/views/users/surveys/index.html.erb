@@ -2,7 +2,7 @@
   <section class="row">
     <div class="col">
       <h3>Surveys</h3>
-      <% if @surveys.count.zero? %>
+      <% if @surveys.none? %>
         <p>There are currently no available surveys.</p>
       <% end %>
       <div class="container mt-4">

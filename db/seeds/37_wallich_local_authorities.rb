@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if WallichLocalAuthority.count.zero?
+if WallichLocalAuthority.none?
   print "#{pretty_print_name('Local Authorities')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   WallichLocalAuthority.create!(name: 'Swan')

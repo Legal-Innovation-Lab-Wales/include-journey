@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Achievement.count.zero?
+if Achievement.none?
   print "#{pretty_print_name('Achievements')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   # All time achievements

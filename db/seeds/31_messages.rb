@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if Message.count.zero?
+if Message.none?
   print "#{pretty_print_name('Message')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   Note.where(visible_to_user: true, replacing: nil).find_each do |note|

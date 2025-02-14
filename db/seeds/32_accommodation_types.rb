@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if AccommodationType.count.zero?
+if AccommodationType.none?
   print "#{pretty_print_name('Accommodation Types')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   AccommodationType.create!(name: 'Living with friends')

@@ -17,7 +17,7 @@
                      large_text: 'My Needs', text: 'Needs' %>
         </div>
         <div class="row">
-          <%= render 'shared/dashboard_btn', path: current_user.contacts.count.zero? ? new_contact_path : contacts_path, icon: 'fa-address-book',
+          <%= render 'shared/dashboard_btn', path: current_user.contacts.none? ? new_contact_path : contacts_path, icon: 'fa-address-book',
                      large_text: 'My Contacts', text: 'Contacts' %>
           <%= render 'shared/dashboard_btn', path: journey_path, icon: 'fa-road',
                      large_text: 'My Journey', text: 'Journey' %>
@@ -27,7 +27,7 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: goals_path, icon: 'fa-tasks',
                      large_text: 'My Goals', text: 'Goals' %>
-          <%= render 'shared/dashboard_btn', path: current_user_visible_uploads.count.zero? ? new_upload_path : correct_uploads_path, icon: 'fa-file',
+          <%= render 'shared/dashboard_btn', path: current_user_visible_uploads.none? ? new_upload_path : correct_uploads_path, icon: 'fa-file',
                      large_text: 'My Files', text: 'Files' %>
           <%= render 'shared/dashboard_btn', path: surveys_path, icon: 'fa-comments',
                      large_text: 'My Voice', text: 'Voice' %>

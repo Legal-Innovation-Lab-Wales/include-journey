@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if HousingProvider.count.zero?
+if HousingProvider.none?
   print "#{pretty_print_name('Housing Providers')}\tStart: #{pretty_print(Time.current - @start_time)}"
 
   HousingProvider.create!(name: 'Bro Myrddin')

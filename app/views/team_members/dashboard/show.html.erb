@@ -22,7 +22,7 @@
         <div class="row">
           <%= render 'shared/dashboard_btn', path: affirmations_path, icon: 'fa-smile', text: 'Daily Affirmations' %>
           <%= render 'shared/dashboard_btn', path: tags_path, icon: 'fa-tags', text: 'Tags' %>
-          <%= render 'shared/dashboard_btn', path: Survey.count.zero? ? new_survey_path : surveys_path,
+          <%= render 'shared/dashboard_btn', path: Survey.none? ? new_survey_path : surveys_path,
                      icon: 'fa-clipboard-list', text: 'Surveys' %>
         </div>
       </div>
