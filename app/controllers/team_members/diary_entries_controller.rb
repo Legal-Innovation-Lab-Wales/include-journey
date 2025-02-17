@@ -8,9 +8,29 @@ module TeamMembers
 
     # GET /diary_entries/:id
     def show
-      diary_entry
-      log_view
+      @diary_entry = current_team_member.diary_entries
+        .includes(:user)
+        .find_by(id: params[:id])
 
+      unless @diary_entry.present?
+        redirect_back(
+          fallback_location: diary_entries_path,
+          alert: "That diary entry doesn't exist or you do not have permission to view it",
+        )
+        return
+      end
+
+      begin
+        @diary_entry.log_view(current_team_member)
+      rescue ActiveRecord::RecordInvalid
+        # TODO: when would this happen?
+        redirect_back(
+          fallback_location: authenticated_team_member_root_path,
+          alert: 'View log could not be created',
+        )
+        return
+      end
+  
       add_breadcrumb('Diary Entries', diary_entries_path, 'fas fa-book-open')
       add_breadcrumb('This Diary Entry')
       render 'show'
@@ -38,25 +58,6 @@ module TeamMembers
     end
 
     private
-
-    def diary_entry
-      @diary_entry = current_team_member.diary_entries
-        .includes(:user)
-        .find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_back(
-        fallback_location: diary_entries_path,
-        alert: "That diary entry doesn't exist or you do not have permission to view it",
-      )
-    end
-
-    def log_view
-      view_log = current_team_member.diary_entry_view_logs.find_or_create_by!(diary_entry: @diary_entry)
-      view_log.increment_view_count
-      view_log.save!
-    rescue ActiveRecord::RecordInvalid
-      redirect_back(fallback_location: authenticated_team_member_root_path, alert: 'View log could not be created')
-    end
 
     def subheading_stats
       @created_in_last_week = @resources.created_in_last_week.size

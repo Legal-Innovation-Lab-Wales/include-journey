@@ -29,6 +29,32 @@ class DiaryEntry < PermissionRecord
     diary_entry_permissions
   end
 
+  def view_logs
+    diary_entry_view_logs
+  end
+
+  def give_permission(team_member)
+    diary_entry_permissions.find_or_create_by!(team_member: team_member)
+  end
+
+  def log_view(team_member)
+    view_log = diary_entry_view_logs.find_or_create_by!(team_member: team_member)
+    view_log.increment_view_count
+    view_log.save!
+  end
+
+  def visible_to?(team_member)
+    diary_entry_permissions
+      .where(team_member_id: team_member.id)
+      .exists?
+  end
+
+  def viewed_by?(team_member)
+    diary_entry_view_logs
+      .where(team_member_id: team_member.id)
+      .exists?
+  end
+
   def to_csv
     [id, created, feeling, entry] + user.to_csv
   end
