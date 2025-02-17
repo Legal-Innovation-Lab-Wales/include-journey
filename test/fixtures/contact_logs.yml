@@ -17,3 +17,30 @@ two:
   notes: Talking about food
   start: 2020-01-12 12:00
   end: 2020-01-12 12:10
+
+three:
+  user: alice
+  team_member: alan
+  contact_type: scheduled
+  contact_purpose: money
+  notes: Talking about money
+  start: 2021-01-15 14:00
+  end: 2021-01-10 14:15
+
+four:
+  user: alice
+  team_member: barbara
+  contact_type: app_support
+  contact_purpose: phone_use
+  notes: Talking about the app
+  start: 2021-01-17 12:00
+  end: 2021-01-12 12:10
+
+five:
+  user: bob
+  team_member: barbara
+  contact_type: drop_in
+  contact_purpose: mental_health
+  notes: Talking about mental health
+  start: 2021-01-15 14:00
+  end: 2021-01-10 14:15

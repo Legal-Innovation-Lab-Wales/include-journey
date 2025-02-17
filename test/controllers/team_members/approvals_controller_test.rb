@@ -56,7 +56,7 @@ module TeamMembersControllerTest
       assert_destroyed fred
     end
 
-    test 'team_member cannot bulk reject users' do
+    test 'team member cannot bulk reject users' do
       eve, fred = users :eve, :fred
       assert_not_approved eve
       assert_not_approved fred

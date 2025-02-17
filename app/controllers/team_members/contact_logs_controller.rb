@@ -11,14 +11,10 @@ module TeamMembers
 
     # GET /contact_logs/recent
     def recent
-      @contact_logs = if @user
-        ContactLog.where(user_id: @user.id)
-      elsif @team_member
-        ContactLog.where(team_member_id: @team_member.id)
-      else
-        current_team_member.contact_logs
-      end
-      @contact_logs = @contact_logs.recent.order(start: :desc)
+      @contact_logs = (@user || @team_member || current_team_member)
+        .contact_logs
+        .recent
+        .order(start: :desc)
       @count_in_last_week = @contact_logs.last_week.size
 
       render 'recent'
@@ -44,13 +40,7 @@ module TeamMembers
     # POST /contact_logs
     def create
       @contact_log = ContactLog.new(
-        user: @user || User.where(id: contact_log_params[:user_id]).first,
-        contact_type: ContactType.where(id: contact_log_params[:contact_type_id]).first,
-        contact_purpose: ContactPurpose.where(id: contact_log_params[:contact_purpose_id]).first,
-        notes: contact_log_params[:notes],
-        start: contact_log_params[:start],
-        end: contact_log_params[:end],
-        team_member: current_team_member,
+        contact_log_params.merge(team_member: current_team_member)
       )
 
       if @contact_log.save
@@ -70,7 +60,6 @@ module TeamMembers
     # PUT /contact_logs/:id
     def update
       if @contact_log.update(contact_log_params)
-        @contact_log.save
         redirect_to(
           recent_contact_logs_path,
           flash: {success: 'Contact log updated'},
@@ -155,7 +144,8 @@ module TeamMembers
     end
 
     def contact_log_params
-      params.require(:contact_log).permit(:user_id, :notes, :contact_type_id, :contact_purpose_id, :start, :end)
+      params.require(:contact_log)
+        .permit(:user_id, :notes, :contact_type_id, :contact_purpose_id, :start, :end)
     end
 
     def failure
@@ -166,6 +156,7 @@ module TeamMembers
     end
 
     def validate_dates
+      # TODO: this should be on the model
       start_date = Time.zone.parse(contact_log_params[:start])
       end_date = Time.zone.parse(contact_log_params[:end])
 

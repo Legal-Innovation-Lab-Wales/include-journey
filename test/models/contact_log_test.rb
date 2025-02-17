@@ -46,10 +46,10 @@ class ContactLogTest < ActiveSupport::TestCase
   end
 
   test 'contact logs should load by associated user' do
-    assert_equal contact_logs(:one, :two), @user.contact_logs.all
+    assert_equal contact_logs(:one, :two, :three, :four), @user.contact_logs.all
   end
 
   test 'contact logs should load by associated team member' do
-    assert_equal contact_logs(:one, :two), @team_member.contact_logs.all
+    assert_equal contact_logs(:one, :two, :four, :five), @team_member.contact_logs.all
   end
 end
