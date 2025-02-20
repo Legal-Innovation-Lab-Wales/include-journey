@@ -47,6 +47,17 @@ module TeamMembersControllerTest
       end
     end
 
+    test 'affirmation edit form shows correct details' do
+      affirmation = affirmations :one
+
+      sign_in @team_member
+      get edit_affirmation_path(affirmation)
+
+      assert_response :success
+      assert_textarea 'affirmation_text', affirmation.text
+      assert_input 'affirmation_scheduled_date', affirmation.scheduled_date
+    end
+
     test 'team member can update an affirmation' do
       affirmation = affirmations :one
 

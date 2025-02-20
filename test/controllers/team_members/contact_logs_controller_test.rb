@@ -135,15 +135,32 @@ module TeamMembersControllerTest
       end
     end
 
+    test 'contact log edit form shows correct details' do
+      contact_log = contact_logs :one
+      sign_in @team_member
+
+      get edit_contact_log_path(contact_log)
+
+      assert_response :success
+      assert_selected_option 'contact_log_user_id', contact_log.user_id, contact_log.user.full_name_with_email
+      assert_selected_option 'contact_log_contact_type_id', contact_log.contact_type_id, contact_log.contact_type.name
+      assert_selected_option 'contact_log_contact_purpose_id', contact_log.contact_purpose_id, contact_log.contact_purpose.name
+      assert_textarea 'contact_log_notes', contact_log.notes
+      assert_input 'contact_log_start_when', contact_log.start_date
+      assert_input 'contact_log_start_time', contact_log.start_time
+      assert_input 'contact_log_end_when', contact_log.end_date
+      assert_input 'contact_log_end_time', contact_log.end_time
+    end
+
     test 'team member can update their own contact log' do
       contact_log = contact_logs :one
       assert_equal @team_member, contact_log.team_member
-  
+
       sign_in @team_member
       assert_no_difference 'ContactLog.count' do
         put contact_log_path(contact_log), params: {contact_log: valid_params.merge(notes: 'Had a nice meeting')}
       end
-  
+
       contact_log.reload
       assert_equal @team_member, contact_log.team_member
       assert_equal @user, contact_log.user
