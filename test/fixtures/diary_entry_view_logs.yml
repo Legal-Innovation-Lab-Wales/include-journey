@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alan_one:
+  team_member: alan
+  diary_entry: one
+
+alan_four:
+  team_member: alan
+  diary_entry: four
+
+barbara_two:
+  team_member: barbara
+  diary_entry: two

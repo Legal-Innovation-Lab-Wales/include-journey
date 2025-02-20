@@ -17,3 +17,9 @@ three:
   entry: Sneaky sneaky
   feeling: 😊
   created_at: 2020-01-07 15:01
+
+four:
+  user: bob
+  entry: Just figuring stuff out.
+  feeling: 😔
+  created_at: 2020-01-03
