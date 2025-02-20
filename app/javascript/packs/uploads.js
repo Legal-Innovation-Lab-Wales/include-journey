@@ -35,7 +35,7 @@ drop_div.classList.remove('dragging')
 
 // Add function to display error
 function file_error_handler() {
-    file_error.innerHTML = 'Please ensure that your file selection is limited to JPEG, PNG, or PDF formats, with a maximum file size of 250MB.';
+    file_error.innerHTML = 'Please ensure that your file selection is limited to JPEG, PNG, or PDF formats.';
     upload_input.value = null; // Clear the file input to allow re-selection
 }
 

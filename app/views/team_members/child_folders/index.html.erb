@@ -53,7 +53,7 @@
                                   data: {
                                     "Last modified" => child_folder.updated_at.strftime('%d/%m/%Y'),
                                     "Created At" => child_folder.created_at.strftime('%d/%m/%Y'),
-                                    "Storage" => "#{250 - bytes_to_megabytes(current_team_member.total_upload_size)} MB remaining of 250MB."
+                                    "Storage" => "#{bytes_to_megabytes(total_max_file_size - current_team_member.total_upload_size)} MiB remaining of #{bytes_to_megabytes(total_max_file_size)} MiB."
                                   }
                           %>
                         </li>

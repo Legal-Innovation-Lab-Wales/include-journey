@@ -25,7 +25,7 @@ module UploadsHelper
   end
 
   def bytes_to_megabytes(bytes)
-    (bytes.to_f / 1_048_576).round(2) # Convert bytes to MB and round to two decimal places
+    (bytes.to_f / 1_048_576).round(2) # Convert bytes to MiB and round to two decimal places
   end
 
   def max_file_size
