@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team_member: barbara
+  user: clara
+  name: Some Clara Files
+
+two:
+  team_member: barbara
+  user: clara
+  name: More Clara Files
+  parent_folder: one
+
+three:
+  team_member: barbara
+  user: clara
+  name: So Many Clara Files
+  parent_folder: one
+
+four:
+  team_member: barbara
+  user: alice
+  name: Alice Files
+
+five:
+  team_member: alan
+  user: alice
+  name: More Alice Files
+
+six:
+  team_member: alan
+  user: bob
+  name: Some Bob Files

@@ -29,6 +29,7 @@ class User < DeviseRecord
   has_many :diary_entry_permissions
   has_many :diary_entry_permissions, through: :diary_entries
   has_many :team_members, through: :assignments
+  has_many :folders, dependent: :nullify
   has_many :uploads
   has_many :upload_activity_logs, through: :uploads
   has_many :notifications

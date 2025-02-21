@@ -4,17 +4,18 @@ module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class FoldersController < ApplicationController
     before_action :set_user
+    before_action :folder, only: [:update, :destroy]
     before_action :set_breadcrumbs
     before_action :new_folder, only: %i[index]
     before_action :folder_params, only: %i[create update]
     include Pagination
 
     def create
-      @folder = new_folder
-      @folder.name = folder_params[:name]
-      @folder.user_id = params[:user_id]
+      folder = new_folder
+      folder.name = folder_params[:name]
+      folder.user_id = params[:user_id]
 
-      flash = if @folder.save
+      flash = if folder.save
         {notice: 'Successfully created folder!'}
       else
         {error: 'Folder not created. Please only use standard characters and punctuation'}
@@ -23,8 +24,7 @@ module TeamMembers
     end
 
     def update
-      folder = Folder.find(params[:folder_id])
-      flash = if folder.update(name: folder_params[:name])
+      flash = if @folder.update(name: folder_params[:name])
         {success: 'Success'}
       else
         {error: 'An error occured'}
@@ -37,8 +37,7 @@ module TeamMembers
     end
 
     def destroy
-      folder = Folder.find(params[:folder_id])
-      flash = if folder.destroy!
+      flash = if @folder.destroy!
         {success: 'Success'}
       else
         {error: 'An error occured'}
@@ -80,7 +79,13 @@ module TeamMembers
     end
 
     def folder
-      @folder = Folder.find(params[:id])
+      @folder = Folder.find(params[:folder_id])
+      if @folder.team_member != current_team_member
+        redirect_back(
+          fallback_location: has_folders ? user_folders_path(@user) : user_path(@user),
+          flash: {error: 'This is not your folder'},
+        )
+      end
     end
 
     def folder_search

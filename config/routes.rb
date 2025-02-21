@@ -141,7 +141,6 @@ Rails.application.routes.draw do
         resources :folders, only: %i[index create update destroy], as: :folders do
           get 'children', to: 'child_folders#index', as: 'children'
           post 'children', to: 'child_folders#create', as: 'create_child'
-          delete 'children', to: 'child_folders#destroy', as: 'delete_child'
           delete '', to: 'folders#destroy', as: 'delete'
           put '', to: 'folders#update', as: 'update'
         end

@@ -3,53 +3,27 @@
 module TeamMembers
   # app/controllers/team_members/folder_controller.rb
   class ChildFoldersController < ApplicationController
-    before_action :set_user
-    before_action :current_parent_folder, except: %i[destroy]
+    before_action :set_user_and_parent_folder
     before_action :set_breadcrumbs
     before_action :new_child_folder, only: %i[index]
     before_action :child_folder_params, only: %i[create update]
     include Pagination
 
     def create
+      # TODO: just accept a parent_folder_id in FoldersController#create
       @child_folder = new_child_folder
       @child_folder.name = child_folder_params[:name]
-      @child_folder.parent_folder_id = child_folders_params[:folder_id]
-      @child_folder.user_id = current_parent_folder.user_id
+      @child_folder.parent_folder_id = params[:folder_id]
+      @child_folder.user_id = @current_parent_folder.user_id
       flash = if @child_folder.save
         {notice: 'Successfully created folder!'}
       else
         {error: 'Folder not created. Please only use standard characters and punctuation'}
       end
       redirect_to(
-        user_folder_children_path(@user, current_parent_folder),
+        user_folder_children_path(@user, @current_parent_folder),
         flash: flash,
       )
-    end
-
-    def destroy
-      folder = Folder.find(params[:folder_id])
-      parent = folder.parent_folder
-
-      destroyed = folder.destroy!
-
-      has_siblings = parent&.child_folders&.any? &&
-        Upload.where(user_id: @user.id, parent_folder_id: parent.id).any?
-
-      path = if has_siblings
-        user_folder_children_path(@user, parent)
-      elsif has_folders(parent)
-        user_folders_path(@user)
-      else
-        user_path(@user)
-      end
-
-      flash = if destroyed
-        {success: 'Success'}
-      else
-        {error: 'An error occured'}
-      end
-
-      redirect_to(path, flash: flash)
     end
 
     protected
@@ -68,6 +42,7 @@ module TeamMembers
     end
 
     def search
+      # TODO: this seems to be using upload ids as if they are folder ids
       resource_ids = resources.map(&:id)
 
       folder_results = Folder.where(id: resource_ids)
@@ -93,14 +68,6 @@ module TeamMembers
       params.require(:folder).permit(:name)
     end
 
-    def child_folders_params
-      params.permit(:query, :limit, :user_id, :folder_id, :folder, :commit, :authenticity_token)
-    end
-
-    def current_parent_folder
-      @current_parent_folder = Folder.find(child_folders_params[:folder_id])
-    end
-
     def child_folder_search
       'lower(name) similar to lower(:query)'
     end
@@ -109,8 +76,15 @@ module TeamMembers
       @new_child_folder = current_team_member.folders.new
     end
 
-    def set_user
+    def set_user_and_parent_folder
       @user = User.find(params[:user_id])
+      @current_parent_folder = Folder.find(params[:folder_id])
+      if @current_parent_folder.user != @user
+        redirect_to(
+          user_path(@user),
+          flash: {error: 'This folder does not belong to that user'},
+        )
+      end
     end
 
     def set_breadcrumbs
@@ -127,15 +101,11 @@ module TeamMembers
       end
     end
 
-    def find_folder(id)
-      Folder.find(id)
-    end
-
     def store_folder_tree
       folder_arr = [@current_parent_folder]
       child_folder = @current_parent_folder
       until !child_folder || child_folder.parent_folder_id.nil?
-        parent_folder = find_folder(child_folder.parent_folder_id)
+        parent_folder = child_folder.parent_folder
         folder_arr.unshift(parent_folder)
         child_folder = parent_folder
       end
